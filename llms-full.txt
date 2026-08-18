@@ -130,6 +130,58 @@ export const ArtifactCanvas: React.FC<ArtifactCanvasProps> = ({
 
 
 ================================================
+FILE: react/AudioWaveVisualizer.tsx
+================================================
+
+import React, { useEffect, useRef } from "react";
+
+export interface AudioWaveVisualizerProps {
+  isActive?: boolean;
+  barCount?: number;
+  color?: string;
+  className?: string;
+}
+
+export const AudioWaveVisualizer: React.FC<AudioWaveVisualizerProps> = ({
+  isActive = false,
+  barCount = 16,
+  color = "bg-amber-500",
+  className = "",
+}) => {
+  const bars = Array.from({ length: barCount }, (_, i) => i);
+
+  return (
+    <div
+      className={`inline-flex items-center justify-center gap-1 h-8 px-3 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/80 select-none ${className}`}
+      role="status"
+      aria-label={isActive ? "Audio active" : "Audio idle"}
+    >
+      {bars.map((idx) => {
+        // Pseudo-random animation delays and scales for a natural voice waveform
+        const delay = (idx * 0.08) % 0.8;
+        const duration = 0.6 + ((idx % 4) * 0.15);
+
+        return (
+          <span
+            key={idx}
+            style={{
+              animationDelay: `${delay}s`,
+              animationDuration: `${duration}s`,
+            }}
+            className={`w-1 rounded-full transition-all duration-300 ${color} ${
+              isActive
+                ? "h-full animate-[audio-pulse_0.8s_ease-in-out_infinite_alternate]"
+                : "h-1.5 opacity-40"
+            }`}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
+
+================================================
 FILE: react/AutoScrollAnchor.tsx
 ================================================
 
@@ -615,6 +667,89 @@ export const SourcesCitation: React.FC<SourcesCitationProps> = ({
 
 
 ================================================
+FILE: react/StatusIndicator.tsx
+================================================
+
+import React from "react";
+
+export type StatusType = "online" | "offline" | "busy" | "connecting" | "error";
+
+export interface StatusIndicatorProps {
+  status: StatusType;
+  label?: string;
+  pingMs?: number;
+  showDot?: boolean;
+  className?: string;
+}
+
+export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
+  status,
+  label,
+  pingMs,
+  showDot = true,
+  className = "",
+}) => {
+  const getStatusConfig = () => {
+    switch (status) {
+      case "online":
+        return {
+          dotBg: "bg-emerald-500",
+          pingBg: "bg-emerald-400",
+          text: "text-emerald-700 dark:text-emerald-400",
+          badgeBg: "bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/80 dark:border-emerald-800/60",
+          defaultLabel: "Online",
+        };
+      case "connecting":
+      case "busy":
+        return {
+          dotBg: "bg-amber-500",
+          pingBg: "bg-amber-400",
+          text: "text-amber-700 dark:text-amber-400",
+          badgeBg: "bg-amber-50 dark:bg-amber-950/40 border-amber-200/80 dark:border-amber-800/60",
+          defaultLabel: status === "busy" ? "Busy" : "Connecting",
+        };
+      case "error":
+      case "offline":
+      default:
+        return {
+          dotBg: "bg-rose-500",
+          pingBg: "bg-rose-400",
+          text: "text-rose-700 dark:text-rose-400",
+          badgeBg: "bg-rose-50 dark:bg-rose-950/40 border-rose-200/80 dark:border-rose-800/60",
+          defaultLabel: status === "error" ? "Error" : "Offline",
+        };
+    }
+  };
+
+  const config = getStatusConfig();
+  const displayLabel = label || config.defaultLabel;
+
+  return (
+    <div
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-medium ${config.badgeBg} ${config.text} ${className}`}
+    >
+      {showDot && (
+        <span className="relative flex h-2 w-2">
+          {status === "online" && (
+            <span
+              className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${config.pingBg}`}
+            />
+          )}
+          <span className={`relative inline-flex rounded-full h-2 w-2 ${config.dotBg}`} />
+        </span>
+      )}
+      <span className="font-semibold">{displayLabel}</span>
+      {pingMs !== undefined && (
+        <span className="font-mono text-[10px] opacity-75 ml-0.5">
+          ({pingMs}ms)
+        </span>
+      )}
+    </div>
+  );
+};
+
+
+================================================
 FILE: react/StreamMarkdown.tsx
 ================================================
 
@@ -699,6 +834,111 @@ export const StreamMarkdown: React.FC<StreamMarkdownProps> = ({
       {isStreaming && (
         <span className="inline-block w-2 h-4 ml-1 -mb-0.5 bg-zinc-900 dark:bg-zinc-100 animate-pulse rounded-sm" />
       )}
+    </div>
+  );
+};
+
+
+================================================
+FILE: react/ThemeToggle.tsx
+================================================
+
+import React, { useEffect, useState } from "react";
+import { Sun, Moon, Monitor } from "lucide-react";
+
+export type ThemeMode = "auto" | "light" | "dark";
+
+export interface ThemeToggleProps {
+  storageKey?: string;
+  onChange?: (mode: ThemeMode, resolved: "light" | "dark") => void;
+  className?: string;
+}
+
+export const ThemeToggle: React.FC<ThemeToggleProps> = ({
+  storageKey = "mango-theme",
+  onChange,
+  className = "",
+}) => {
+  const [mode, setMode] = useState<ThemeMode>("auto");
+
+  const resolveTheme = (m: ThemeMode): "light" | "dark" => {
+    if (m === "light" || m === "dark") return m;
+    const hour = new Date().getHours();
+    const isNight =
+      (typeof window !== "undefined" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches) ||
+      hour >= 19 ||
+      hour < 7;
+    return isNight ? "dark" : "light";
+  };
+
+  const applyTheme = (nextMode: ThemeMode) => {
+    const resolved = resolveTheme(nextMode);
+    document.documentElement.dataset.theme = nextMode;
+    document.documentElement.dataset.resolvedTheme = resolved;
+    document.documentElement.style.colorScheme = resolved;
+    if (resolved === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    setMode(nextMode);
+    localStorage.setItem(storageKey, nextMode);
+    if (onChange) onChange(nextMode, resolved);
+  };
+
+  useEffect(() => {
+    const saved = (localStorage.getItem(storageKey) as ThemeMode) || "auto";
+    applyTheme(saved);
+  }, []);
+
+  return (
+    <div
+      className={`inline-flex items-center p-1 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/80 text-xs font-medium text-zinc-500 dark:text-zinc-400 select-none ${className}`}
+      role="group"
+      aria-label="Theme toggle"
+    >
+      <button
+        type="button"
+        onClick={() => applyTheme("auto")}
+        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all ${
+          mode === "auto"
+            ? "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-xs font-semibold"
+            : "hover:text-zinc-900 dark:hover:text-zinc-100"
+        }`}
+        title="Follow System/Time"
+      >
+        <Monitor className="w-3.5 h-3.5" />
+        <span>Auto</span>
+      </button>
+
+      <button
+        type="button"
+        onClick={() => applyTheme("light")}
+        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all ${
+          mode === "light"
+            ? "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-xs font-semibold"
+            : "hover:text-zinc-900 dark:hover:text-zinc-100"
+        }`}
+        title="Light Mode"
+      >
+        <Sun className="w-3.5 h-3.5" />
+        <span>Light</span>
+      </button>
+
+      <button
+        type="button"
+        onClick={() => applyTheme("dark")}
+        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all ${
+          mode === "dark"
+            ? "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-xs font-semibold"
+            : "hover:text-zinc-900 dark:hover:text-zinc-100"
+        }`}
+        title="Dark Mode"
+      >
+        <Moon className="w-3.5 h-3.5" />
+        <span>Dark</span>
+      </button>
     </div>
   );
 };
@@ -1008,6 +1248,55 @@ const handleCopy = async () => {
   copied.value = true;
   setTimeout(() => (copied.value = false), 2000);
 };
+</script>
+
+
+================================================
+FILE: vue/AudioWaveVisualizer.vue
+================================================
+
+<template>
+  <div
+    :class="[
+      'inline-flex items-center justify-center gap-1 h-8 px-3 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/80 select-none',
+      className
+    ]"
+    role="status"
+    :aria-label="isActive ? 'Audio active' : 'Audio idle'"
+  >
+    <span
+      v-for="idx in barCount"
+      :key="idx"
+      :style="{
+        animationDelay: `${((idx - 1) * 0.08) % 0.8}s`,
+        animationDuration: `${0.6 + (((idx - 1) % 4) * 0.15)}s`
+      }"
+      :class="[
+        'w-1 rounded-full transition-all duration-300',
+        color,
+        isActive
+          ? 'h-full animate-[audio-pulse_0.8s_ease-in-out_infinite_alternate]'
+          : 'h-1.5 opacity-40'
+      ]"
+    ></span>
+  </div>
+</template>
+
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    isActive?: boolean;
+    barCount?: number;
+    color?: string;
+    className?: string;
+  }>(),
+  {
+    isActive: false,
+    barCount: 16,
+    color: 'bg-amber-500',
+    className: ''
+  }
+);
 </script>
 
 
@@ -1485,6 +1774,86 @@ const getDomain = (url: string, siteName?: string) => {
 
 
 ================================================
+FILE: vue/StatusIndicator.vue
+================================================
+
+<template>
+  <div
+    :class="[
+      'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-medium',
+      config.badgeBg,
+      config.text,
+      className
+    ]"
+  >
+    <span v-if="showDot" class="relative flex h-2 w-2">
+      <span
+        v-if="status === 'online'"
+        :class="['animate-ping absolute inline-flex h-full w-full rounded-full opacity-75', config.pingBg]"
+      ></span>
+      <span :class="['relative inline-flex rounded-full h-2 w-2', config.dotBg]"></span>
+    </span>
+    <span class="font-semibold">{{ label || config.defaultLabel }}</span>
+    <span v-if="pingMs !== undefined" class="font-mono text-[10px] opacity-75 ml-0.5">
+      ({{ pingMs }}ms)
+    </span>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+
+export type StatusType = 'online' | 'offline' | 'busy' | 'connecting' | 'error';
+
+const props = withDefaults(
+  defineProps<{
+    status: StatusType;
+    label?: string;
+    pingMs?: number;
+    showDot?: boolean;
+    className?: string;
+  }>(),
+  {
+    showDot: true,
+    className: ''
+  }
+);
+
+const config = computed(() => {
+  switch (props.status) {
+    case 'online':
+      return {
+        dotBg: 'bg-emerald-500',
+        pingBg: 'bg-emerald-400',
+        text: 'text-emerald-700 dark:text-emerald-400',
+        badgeBg: 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/80 dark:border-emerald-800/60',
+        defaultLabel: 'Online'
+      };
+    case 'connecting':
+    case 'busy':
+      return {
+        dotBg: 'bg-amber-500',
+        pingBg: 'bg-amber-400',
+        text: 'text-amber-700 dark:text-amber-400',
+        badgeBg: 'bg-amber-50 dark:bg-amber-950/40 border-amber-200/80 dark:border-amber-800/60',
+        defaultLabel: props.status === 'busy' ? 'Busy' : 'Connecting'
+      };
+    case 'error':
+    case 'offline':
+    default:
+      return {
+        dotBg: 'bg-rose-500',
+        pingBg: 'bg-rose-400',
+        text: 'text-rose-700 dark:text-rose-400',
+        badgeBg: 'bg-rose-50 dark:bg-rose-950/40 border-rose-200/80 dark:border-rose-800/60',
+        defaultLabel: props.status === 'error' ? 'Error' : 'Offline'
+      };
+  }
+});
+</script>
+
+
+================================================
 FILE: vue/StreamMarkdown.vue
 ================================================
 
@@ -1567,6 +1936,121 @@ const htmlContent = computed(() => {
   };
 
   return marked.parse(props.content || '', { renderer, breaks: true, gfm: true });
+});
+</script>
+
+
+================================================
+FILE: vue/ThemeToggle.vue
+================================================
+
+<template>
+  <div
+    :class="[
+      'inline-flex items-center p-1 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/80 text-xs font-medium text-zinc-500 dark:text-zinc-400 select-none',
+      className
+    ]"
+    role="group"
+    aria-label="Theme toggle"
+  >
+    <button
+      type="button"
+      @click="applyTheme('auto')"
+      :class="[
+        'flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all',
+        mode === 'auto'
+          ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-xs font-semibold'
+          : 'hover:text-zinc-900 dark:hover:text-zinc-100'
+      ]"
+      title="Follow System/Time"
+    >
+      <span>💻</span>
+      <span>Auto</span>
+    </button>
+
+    <button
+      type="button"
+      @click="applyTheme('light')"
+      :class="[
+        'flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all',
+        mode === 'light'
+          ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-xs font-semibold'
+          : 'hover:text-zinc-900 dark:hover:text-zinc-100'
+      ]"
+      title="Light Mode"
+    >
+      <span>☀️</span>
+      <span>Light</span>
+    </button>
+
+    <button
+      type="button"
+      @click="applyTheme('dark')"
+      :class="[
+        'flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all',
+        mode === 'dark'
+          ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-xs font-semibold'
+          : 'hover:text-zinc-900 dark:hover:text-zinc-100'
+      ]"
+      title="Dark Mode"
+    >
+      <span>🌙</span>
+      <span>Dark</span>
+    </button>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+
+export type ThemeMode = 'auto' | 'light' | 'dark';
+
+const props = withDefaults(
+  defineProps<{
+    storageKey?: string;
+    className?: string;
+  }>(),
+  {
+    storageKey: 'mango-theme',
+    className: ''
+  }
+);
+
+const emit = defineEmits<{
+  (e: 'change', mode: ThemeMode, resolved: 'light' | 'dark'): void;
+}>();
+
+const mode = ref<ThemeMode>('auto');
+
+const resolveTheme = (m: ThemeMode): 'light' | 'dark' => {
+  if (m === 'light' || m === 'dark') return m;
+  const hour = new Date().getHours();
+  const isNight =
+    (typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches) ||
+    hour >= 19 ||
+    hour < 7;
+  return isNight ? 'dark' : 'light';
+};
+
+const applyTheme = (nextMode: ThemeMode) => {
+  const resolved = resolveTheme(nextMode);
+  document.documentElement.dataset.theme = nextMode;
+  document.documentElement.dataset.resolvedTheme = resolved;
+  document.documentElement.style.colorScheme = resolved;
+  if (resolved === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+  mode.value = nextMode;
+  localStorage.setItem(props.storageKey, nextMode);
+  emit('change', nextMode, resolved);
+};
+
+onMounted(() => {
+  const saved = (localStorage.getItem(props.storageKey) as ThemeMode) || 'auto';
+  applyTheme(saved);
 });
 </script>
 
@@ -1837,6 +2321,55 @@ if (!customElements.get("artifact-canvas")) {
   customElements.define("artifact-canvas", ArtifactCanvas);
 }
 export default ArtifactCanvas;
+
+
+================================================
+FILE: vanilla/AudioWaveVisualizer.js
+================================================
+
+/**
+ * AudioWaveVisualizer - Vanilla Web Component
+ * Usage: <audio-wave-visualizer is-active bar-count="16"></audio-wave-visualizer>
+ */
+class AudioWaveVisualizer extends HTMLElement {
+  static get observedAttributes() {
+    return ["is-active", "bar-count", "color"];
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  render() {
+    const isActive = this.hasAttribute("is-active");
+    const barCount = parseInt(this.getAttribute("bar-count") || "16", 10);
+    const color = this.getAttribute("color") || "bg-amber-500";
+
+    const bars = [];
+    for (let idx = 0; idx < barCount; idx++) {
+      const delay = ((idx * 0.08) % 0.8).toFixed(2);
+      const duration = (0.6 + ((idx % 4) * 0.15)).toFixed(2);
+      bars.push(`
+        <span style="animation-delay:${delay}s; animation-duration:${duration}s;" class="w-1 rounded-full transition-all duration-300 ${color} ${isActive ? 'h-full animate-[audio-pulse_0.8s_ease-in-out_infinite_alternate]' : 'h-1.5 opacity-40'}"></span>
+      `);
+    }
+
+    this.innerHTML = `
+      <div class="inline-flex items-center justify-center gap-1 h-8 px-3 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/80 select-none" role="status" aria-label="${isActive ? 'Audio active' : 'Audio idle'}">
+        ${bars.join("")}
+      </div>
+    `;
+  }
+}
+
+if (!customElements.get("audio-wave-visualizer")) {
+  customElements.define("audio-wave-visualizer", AudioWaveVisualizer);
+}
+export default AudioWaveVisualizer;
 
 
 ================================================
@@ -2196,6 +2729,69 @@ export default SourcesCitation;
 
 
 ================================================
+FILE: vanilla/StatusIndicator.js
+================================================
+
+/**
+ * StatusIndicator - Vanilla Web Component
+ * Usage: <status-indicator status="online" label="VPS Connected" ping-ms="24"></status-indicator>
+ */
+class StatusIndicator extends HTMLElement {
+  static get observedAttributes() {
+    return ["status", "label", "ping-ms", "show-dot"];
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  render() {
+    const status = this.getAttribute("status") || "online";
+    const label = this.getAttribute("label");
+    const pingMs = this.getAttribute("ping-ms");
+    const showDot = this.getAttribute("show-dot") !== "false";
+
+    let dotBg = "bg-emerald-500", pingBg = "bg-emerald-400", text = "text-emerald-700 dark:text-emerald-400", badgeBg = "bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/80 dark:border-emerald-800/60", defaultLabel = "Online";
+    if (status === "connecting" || status === "busy") {
+      dotBg = "bg-amber-500";
+      pingBg = "bg-amber-400";
+      text = "text-amber-700 dark:text-amber-400";
+      badgeBg = "bg-amber-50 dark:bg-amber-950/40 border-amber-200/80 dark:border-amber-800/60";
+      defaultLabel = status === "busy" ? "Busy" : "Connecting";
+    } else if (status === "error" || status === "offline") {
+      dotBg = "bg-rose-500";
+      pingBg = "bg-rose-400";
+      text = "text-rose-700 dark:text-rose-400";
+      badgeBg = "bg-rose-50 dark:bg-rose-950/40 border-rose-200/80 dark:border-rose-800/60";
+      defaultLabel = status === "error" ? "Error" : "Offline";
+    }
+
+    this.innerHTML = `
+      <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-medium ${badgeBg} ${text}">
+        ${showDot ? `
+          <span class="relative flex h-2 w-2">
+            ${status === 'online' ? `<span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${pingBg}"></span>` : ''}
+            <span class="relative inline-flex rounded-full h-2 w-2 ${dotBg}"></span>
+          </span>
+        ` : ''}
+        <span class="font-semibold">${label || defaultLabel}</span>
+        ${pingMs !== null && pingMs !== undefined ? `<span class="font-mono text-[10px] opacity-75 ml-0.5">(${pingMs}ms)</span>` : ''}
+      </div>
+    `;
+  }
+}
+
+if (!customElements.get("status-indicator")) {
+  customElements.define("status-indicator", StatusIndicator);
+}
+export default StatusIndicator;
+
+
+================================================
 FILE: vanilla/StreamMarkdown.js
 ================================================
 
@@ -2290,6 +2886,96 @@ if (!customElements.get("stream-markdown")) {
   customElements.define("stream-markdown", StreamMarkdown);
 }
 export default StreamMarkdown;
+
+
+================================================
+FILE: vanilla/ThemeToggle.js
+================================================
+
+/**
+ * ThemeToggle - Vanilla Web Component (Auto / Light / Dark)
+ * Usage: <theme-toggle storage-key="mango-theme"></theme-toggle>
+ */
+class ThemeToggle extends HTMLElement {
+  static get observedAttributes() {
+    return ["storage-key"];
+  }
+
+  connectedCallback() {
+    this.storageKey = this.getAttribute("storage-key") || "mango-theme";
+    this.mode = localStorage.getItem(this.storageKey) || "auto";
+    this.render();
+    this.applyTheme(this.mode);
+    this.bindEvents();
+  }
+
+  resolveTheme(m) {
+    if (m === "light" || m === "dark") return m;
+    const hour = new Date().getHours();
+    const isNight = window.matchMedia("(prefers-color-scheme: dark)").matches || hour >= 19 || hour < 7;
+    return isNight ? "dark" : "light";
+  }
+
+  applyTheme(nextMode) {
+    this.mode = nextMode;
+    const resolved = this.resolveTheme(nextMode);
+    document.documentElement.dataset.theme = nextMode;
+    document.documentElement.dataset.resolvedTheme = resolved;
+    document.documentElement.style.colorScheme = resolved;
+    if (resolved === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem(this.storageKey, nextMode);
+    this.updateActiveButtons();
+    this.dispatchEvent(new CustomEvent("change", { detail: { mode: nextMode, resolved } }));
+  }
+
+  updateActiveButtons() {
+    this.querySelectorAll("[data-mode]").forEach((btn) => {
+      const isCurrent = btn.dataset.mode === this.mode;
+      btn.className = `flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all ${
+        isCurrent
+          ? "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-xs font-semibold"
+          : "hover:text-zinc-900 dark:hover:text-zinc-100"
+      }`;
+    });
+  }
+
+  render() {
+    this.innerHTML = `
+      <div class="inline-flex items-center p-1 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/80 text-xs font-medium text-zinc-500 dark:text-zinc-400 select-none" role="group" aria-label="Theme toggle">
+        <button type="button" data-mode="auto" title="Follow System/Time">
+          <span>💻</span>
+          <span>Auto</span>
+        </button>
+        <button type="button" data-mode="light" title="Light Mode">
+          <span>☀️</span>
+          <span>Light</span>
+        </button>
+        <button type="button" data-mode="dark" title="Dark Mode">
+          <span>🌙</span>
+          <span>Dark</span>
+        </button>
+      </div>
+    `;
+  }
+
+  bindEvents() {
+    this.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-mode]");
+      if (btn) {
+        this.applyTheme(btn.dataset.mode);
+      }
+    });
+  }
+}
+
+if (!customElements.get("theme-toggle")) {
+  customElements.define("theme-toggle", ThemeToggle);
+}
+export default ThemeToggle;
 
 
 ================================================

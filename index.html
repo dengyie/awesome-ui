@@ -8,11 +8,24 @@
   <script>
     tailwind.config = {
       darkMode: 'class',
+      theme: {
+        extend: {
+          keyframes: {
+            'audio-pulse': {
+              '0%': { height: '15%' },
+              '100%': { height: '100%' },
+            }
+          }
+        }
+      }
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css">
+  <script type="module" src="./vanilla/ThemeToggle.js"></script>
+  <script type="module" src="./vanilla/StatusIndicator.js"></script>
+  <script type="module" src="./vanilla/AudioWaveVisualizer.js"></script>
   <script type="module" src="./vanilla/ChatPromptInput.js"></script>
   <script type="module" src="./vanilla/StreamMarkdown.js"></script>
   <script type="module" src="./vanilla/ThinkingBlock.js"></script>
@@ -27,9 +40,11 @@
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.0.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.2.0</span>
+      <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
+      <theme-toggle></theme-toggle>
       <a href="https://github.com/dengyie/awesome-ui" target="_blank" class="hover:text-zinc-100 transition-colors">GitHub ↗</a>
     </div>
   </header>
@@ -41,6 +56,10 @@
       <p class="text-zinc-400 text-sm max-w-xl mx-auto">
         Copy-paste ready, zero-blackbox frontend components for AI Web Apps across React, Vue 3, and Vanilla Web Components.
       </p>
+      <div class="pt-2 flex items-center justify-center gap-3">
+        <audio-wave-visualizer is-active bar-count="20"></audio-wave-visualizer>
+        <span class="text-xs font-mono text-zinc-500">Live Audio Visualizer</span>
+      </div>
     </section>
 
     <!-- 1. Chat Prompt Input -->

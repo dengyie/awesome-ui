@@ -51,6 +51,21 @@
    - Vue 3: vue/PromptChips.vue
    - Vanilla: vanilla/PromptChips.js
 
+10. ThemeToggle: 3-state theme mode switcher (Auto/Light/Dark) with system color-scheme and time perception.
+   - React: react/ThemeToggle.tsx
+   - Vue 3: vue/ThemeToggle.vue
+   - Vanilla: vanilla/ThemeToggle.js
+
+11. StatusIndicator: Node/Service health status badge with live ping ms and breathing glow.
+   - React: react/StatusIndicator.tsx
+   - Vue 3: vue/StatusIndicator.vue
+   - Vanilla: vanilla/StatusIndicator.js
+
+12. AudioWaveVisualizer: Real-time voice/audio interaction animated waveform bars.
+   - React: react/AudioWaveVisualizer.tsx
+   - Vue 3: vue/AudioWaveVisualizer.vue
+   - Vanilla: vanilla/AudioWaveVisualizer.js
+
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 - Always read the exact single-file component from `react/`, `vue/`, or `vanilla/` and copy it into the user codebase.

@@ -29,6 +29,9 @@
 | **`SourcesCitation`** | RAG 引文来源 | 对标 Perplexity 搜索来源网格卡片，展示域名、序号、标题与摘要 |
 | **`MessageActionToolbar`** | 消息底部操作条 | 复制回答、重新生成、赞/踩反馈、多分支历史版本翻页器 |
 | **`PromptChips`** | 智能建议追问 | 气泡推荐问题标签，一键填入或发送 |
+| **`ThemeToggle`** | 三态主题切换 | Auto/Light/Dark 切换，时间与系统色系自适应，防闪烁与记忆 |
+| **`StatusIndicator`** | 状态指示徽章 | 节点与服务状态 (Online/Connecting/Error) 呼吸光晕与延迟指示 |
+| **`AudioWaveVisualizer`**| 语音交互波形 | 实时音频/语音交互波形跳动与呼吸动效 |
 
 ---
 
