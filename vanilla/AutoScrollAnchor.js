@@ -13,6 +13,12 @@ class AutoScrollAnchor extends HTMLElement {
     this.bindEvents();
   }
 
+  disconnectedCallback() {
+    if (this._scrollHandler) {
+      window.removeEventListener("scroll", this._scrollHandler);
+    }
+  }
+
   attributeChangedCallback(name, oldValue, newValue) {
     if (name === "is-streaming" && newValue !== null && this.isAtBottom) {
       this.scrollToBottom();
@@ -30,7 +36,7 @@ class AutoScrollAnchor extends HTMLElement {
 
   bindEvents() {
     const btn = this.querySelector("#back-to-bottom");
-    window.addEventListener("scroll", () => {
+    this._scrollHandler = () => {
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -38,8 +44,9 @@ class AutoScrollAnchor extends HTMLElement {
       this.isAtBottom = distanceFromBottom < 80;
 
       btn.classList.toggle("hidden", this.isAtBottom);
-    }, { passive: true });
+    };
 
+    window.addEventListener("scroll", this._scrollHandler, { passive: true });
     btn.addEventListener("click", () => this.scrollToBottom());
   }
 

@@ -1,5 +1,9 @@
 <template>
-  <div :class="['prose prose-zinc dark:prose-invert max-w-none text-sm leading-relaxed', className]">
+  <div
+    ref="containerRef"
+    @click="handleContainerClick"
+    :class="['prose prose-zinc dark:prose-invert max-w-none text-sm leading-relaxed', className]"
+  >
     <div v-html="htmlContent" class="inline-block w-full"></div>
     <span
       v-if="isStreaming"
@@ -9,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { marked } from 'marked';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
@@ -25,6 +29,21 @@ const props = withDefaults(
     className: ''
   }
 );
+
+const containerRef = ref<HTMLElement | null>(null);
+
+const handleContainerClick = (e: MouseEvent) => {
+  const target = (e.target as HTMLElement).closest('.copy-btn');
+  if (!target) return;
+  const rawCode = target.getAttribute('data-code');
+  if (rawCode) {
+    navigator.clipboard.writeText(decodeURIComponent(rawCode));
+    target.textContent = '✓ Copied';
+    setTimeout(() => {
+      target.textContent = 'Copy';
+    }, 2000);
+  }
+};
 
 const htmlContent = computed(() => {
   const renderer = new marked.Renderer();
@@ -46,7 +65,7 @@ const htmlContent = computed(() => {
           <span>${lang || 'code'}</span>
           <button 
             type="button" 
-            onclick="navigator.clipboard.writeText(decodeURIComponent('${encodeURIComponent(text)}'))" 
+            data-code="${encodeURIComponent(text)}" 
             class="copy-btn hover:text-zinc-100 flex items-center gap-1 transition-colors"
           >
             Copy
