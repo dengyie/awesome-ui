@@ -1,0 +1,67 @@
+# awesome-ui
+
+> **专为 AI 时代 / LLM 代码生成打造的精选前端原子组件库**  
+> 支持 **React (TSX)** / **Vue 3 (SFC)** / **Vanilla (原生 JS/Web Component)** 三端，Tailwind CSS 美学，单文件即拷即用，零黑盒依赖。
+
+---
+
+## 🎯 为什么需要 awesome-ui？
+
+传统组件库（AntD、Element、MUI）是为传统 CRUD 管理台设计的。当 AI（Cursor、v0、Claude Code、Codex）尝试生成现代 AI 网页（如类似 ChatGPT、Claude、Perplexity、v0 的交互）时，往往需要耗费大量 Token 反复调试流式打字、思维链折叠、自动跟底、代码分屏预览等复杂状态。
+
+**awesome-ui 的核心价值**：
+- **AI 友好（AI-to-AI First）**：组件全部为扁平 Props 设计，无深层嵌套对象，AI 生成命中率 100%。
+- **单文件 Copy-Paste**：无 npm 私有黑盒，AI 直接按需取用单文件复制进用户项目。
+- **全技术栈对齐**：React、Vue 3、Vanilla 三套代码的 API 与 Tailwind 样式 100% 对齐。
+
+---
+
+## 📦 组件列表 (精选 6 大核心场景)
+
+| 组件 | 对应场景 | 核心特性 |
+|---|---|---|
+| **`ChatPromptInput`** | 多模态输入框 | 高度自适应、快捷键发送/换行、附件/图片列表、生成中停止切换 |
+| **`StreamMarkdown`** | 流式渲染器 | 高性能局部渲染、打字呼吸光标、代码块一键 Copy、语法高亮 |
+| **`ThinkingBlock`** | 深度思考面板 | R1/o1 推理模型思维链折叠、流光动效、耗时展示 |
+| **`ToolCallBadge`** | Agent 工具调用 | 工具执行状态（Running/Success/Error）、入参/返回值一键抽屉折叠 |
+| **`AutoScrollAnchor`** | 智能跟底锚点 | 流式输出时自动平滑跟滚，用户手动回滚时暂停并浮现一键触底按钮 |
+| **`ArtifactCanvas`** | 分屏预览画布 | 类似 Claude Artifacts，代码与 HTML/SVG 即时沙盒渲染分屏切换 |
+
+---
+
+## 🚀 目录结构
+
+```text
+awesome-ui/
+├── SKILL.md                 # Agent 检索与规范文档
+├── react/                   # React (TSX)
+│   ├── ChatPromptInput.tsx
+│   ├── StreamMarkdown.tsx
+│   ├── ThinkingBlock.tsx
+│   ├── ToolCallBadge.tsx
+│   ├── AutoScrollAnchor.tsx
+│   └── ArtifactCanvas.tsx
+├── vue/                     # Vue 3 (SFC)
+│   ├── ChatPromptInput.vue
+│   ├── StreamMarkdown.vue
+│   ├── ThinkingBlock.vue
+│   ├── ToolCallBadge.vue
+│   ├── AutoScrollAnchor.vue
+│   └── ArtifactCanvas.vue
+└── vanilla/                 # 原生 JS / Web Components
+    ├── ChatPromptInput.js
+    ├── StreamMarkdown.js
+    ├── ThinkingBlock.js
+    ├── ToolCallBadge.js
+    ├── AutoScrollAnchor.js
+    └── ArtifactCanvas.js
+```
+
+---
+
+## 🛠️ 依赖说明 (Dependencies)
+
+- **样式**：Tailwind CSS (v3 / v4)
+- **React 端建议轻量依赖**：`lucide-react`, `marked`, `prismjs`
+- **Vue 3 端建议轻量依赖**：`marked`, `prismjs`
+- **Vanilla 端**：可直接通过 CDN 或浏览器原生运行
