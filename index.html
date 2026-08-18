@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>awesome-ui — AI Web Component Gallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script type="module" src="./vanilla/ChatPromptInput.js"></script>
+  <script type="module" src="./vanilla/StreamMarkdown.js"></script>
+  <script type="module" src="./vanilla/ThinkingBlock.js"></script>
+  <script type="module" src="./vanilla/ToolCallBadge.js"></script>
+  <script type="module" src="./vanilla/AutoScrollAnchor.js"></script>
+  <script type="module" src="./vanilla/ArtifactCanvas.js"></script>
+  <script type="module" src="./vanilla/MessageActionToolbar.js"></script>
+  <script type="module" src="./vanilla/PromptChips.js"></script>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
+  <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.0.0</span>
+    </div>
+    <div class="flex items-center gap-4 text-sm text-zinc-400">
+      <a href="https://github.com/dengyie/awesome-ui" target="_blank" class="hover:text-zinc-100 transition-colors">GitHub ↗</a>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-4xl w-full mx-auto p-6 space-y-12">
+    <!-- Intro -->
+    <section class="text-center py-6 space-y-3">
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">AI-to-AI Standard Component Kit</h1>
+      <p class="text-zinc-400 text-sm max-w-xl mx-auto">
+        Copy-paste ready, zero-blackbox frontend components for AI Web Apps across React, Vue 3, and Vanilla Web Components.
+      </p>
+    </section>
+
+    <!-- 1. Chat Prompt Input -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">1. ChatPromptInput (Multi-modal Input)</h2>
+        <span class="text-xs font-mono text-zinc-500">Auto-resize, Attachments, Keyboards</span>
+      </div>
+      <chat-prompt-input placeholder="Try typing, press Shift+Enter for newline, or click upload..."></chat-prompt-input>
+    </section>
+
+    <!-- 2. Thinking Block -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">2. ThinkingBlock (Reasoning Chain)</h2>
+        <span class="text-xs font-mono text-zinc-500">DeepSeek R1 / OpenAI o1 Style</span>
+      </div>
+      <thinking-block duration="4.8" content="Analyzing the AST structure of user input...&#10;Identified 2 tool calls and markdown formatting requests.&#10;Optimizing DOM diff algorithm for stream rendering."></thinking-block>
+    </section>
+
+    <!-- 3. Tool Call Badges -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">3. ToolCallBadge (Agent Tool Calls)</h2>
+        <span class="text-xs font-mono text-zinc-500">Running / Success / Error Traces</span>
+      </div>
+      <tool-call-badge name="web_search" status="success" args='{"query": "best frontend components for AI 2026"}' output='[{"title": "awesome-ui released", "url": "https://github.com/dengyie/awesome-ui"}]'></tool-call-badge>
+      <tool-call-badge name="python_interpreter" status="running" args='{"code": "import numpy as np; print(np.mean([1, 2, 3]))"}'></tool-call-badge>
+    </section>
+
+    <!-- 4. Stream Markdown -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">4. StreamMarkdown (Streaming & Code Copy)</h2>
+        <span class="text-xs font-mono text-zinc-500">Smooth Streaming + Pulse Cursor</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <stream-markdown is-streaming content="Here is a quick example of a **React hook** with streaming output:&#10;&#10;```typescript&#10;const useStream = (prompt: string) => {&#10;  const [tokens, setTokens] = useState<string[]>([]);&#10;  // streaming logic...&#10;  return { tokens };&#10;};&#10;```&#10;&#10;Everything is ready to use!"></stream-markdown>
+        <message-action-toolbar content="Here is a quick example..." total-branches="3" branch-index="1"></message-action-toolbar>
+      </div>
+    </section>
+
+    <!-- 5. Prompt Chips -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">5. PromptChips (Follow-up Suggestions)</h2>
+      </div>
+      <prompt-chips suggestions='["Explain this code in detail", "Optimize memory usage", "Convert to Vue 3"]'></prompt-chips>
+    </section>
+
+    <!-- 6. Artifact Canvas Trigger -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">6. ArtifactCanvas (Split-view Preview)</h2>
+        <button onclick="document.querySelector('artifact-canvas').setAttribute('is-open', '')" class="px-3 py-1.5 bg-zinc-100 text-zinc-900 rounded-lg text-xs font-medium hover:bg-white transition-colors">
+          Open Artifact Canvas
+        </button>
+      </div>
+      <artifact-canvas is-open title="ButtonComponent.html" language="html" code="<div style='display:flex;justify-content:center;align-items:center;height:100%;background:#09090b;color:#fff;font-family:sans-serif;'><h2>Hello from Artifact Canvas! 🎉</h2></div>"></artifact-canvas>
+    </section>
+  </main>
+
+  <auto-scroll-anchor></auto-scroll-anchor>
+</body>
+</html>

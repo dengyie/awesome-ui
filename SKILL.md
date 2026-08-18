@@ -57,5 +57,8 @@ awesome-ui/
 ### 5. `AutoScrollAnchor` (智能平滑跟底锚点)
 - **Props**: `isStreaming?: boolean`, `targetRef?: HTMLElement | null`
 
-### 6. `ArtifactCanvas` (分屏即席预览画布)
-- **Props**: `title?: string`, `code: string`, `language?: 'html' | 'svg' | 'react' | 'javascript'`, `isOpen?: boolean`, `onClose?: () => void`
+### 7. `MessageActionToolbar` (消息底部工具条)
+- **Props**: `content: string`, `role?: 'assistant' | 'user'`, `onRetry?: () => void`, `onFeedback?: (type: 'up' | 'down') => void`, `branchIndex?: number`, `totalBranches?: number`, `onBranchChange?: (index: number) => void`
+
+### 8. `PromptChips` (建议追问标签)
+- **Props**: `suggestions: string[]`, `onSelect: (prompt: string) => void`

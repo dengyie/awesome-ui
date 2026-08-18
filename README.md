@@ -26,6 +26,8 @@
 | **`ToolCallBadge`** | Agent 工具调用 | 工具执行状态（Running/Success/Error）、入参/返回值一键抽屉折叠 |
 | **`AutoScrollAnchor`** | 智能跟底锚点 | 流式输出时自动平滑跟滚，用户手动回滚时暂停并浮现一键触底按钮 |
 | **`ArtifactCanvas`** | 分屏预览画布 | 类似 Claude Artifacts，代码与 HTML/SVG 即时沙盒渲染分屏切换 |
+| **`MessageActionToolbar`** | 消息底部操作条 | 复制回答、重新生成、赞/踩反馈、多分支历史版本翻页器 |
+| **`PromptChips`** | 智能建议追问 | 气泡推荐问题标签，一键填入或发送 |
 
 ---
 
@@ -33,6 +35,7 @@
 
 ```text
 awesome-ui/
+├── index.html               # 交互式 Gallery 体验页面
 ├── SKILL.md                 # Agent 检索与规范文档
 ├── react/                   # React (TSX)
 │   ├── ChatPromptInput.tsx
@@ -40,21 +43,27 @@ awesome-ui/
 │   ├── ThinkingBlock.tsx
 │   ├── ToolCallBadge.tsx
 │   ├── AutoScrollAnchor.tsx
-│   └── ArtifactCanvas.tsx
+│   ├── ArtifactCanvas.tsx
+│   ├── MessageActionToolbar.tsx
+│   └── PromptChips.tsx
 ├── vue/                     # Vue 3 (SFC)
 │   ├── ChatPromptInput.vue
 │   ├── StreamMarkdown.vue
 │   ├── ThinkingBlock.vue
 │   ├── ToolCallBadge.vue
 │   ├── AutoScrollAnchor.vue
-│   └── ArtifactCanvas.vue
+│   ├── ArtifactCanvas.vue
+│   ├── MessageActionToolbar.vue
+│   └── PromptChips.vue
 └── vanilla/                 # 原生 JS / Web Components
     ├── ChatPromptInput.js
     ├── StreamMarkdown.js
     ├── ThinkingBlock.js
     ├── ToolCallBadge.js
     ├── AutoScrollAnchor.js
-    └── ArtifactCanvas.js
+    ├── ArtifactCanvas.js
+    ├── MessageActionToolbar.js
+    └── PromptChips.js
 ```
 
 ---
