@@ -2210,6 +2210,13 @@ class StreamMarkdown extends HTMLElement {
 
   connectedCallback() {
     this.render();
+    this.bindEvents();
+  }
+
+  disconnectedCallback() {
+    if (this._clickHandler) {
+      this.removeEventListener("click", this._clickHandler);
+    }
   }
 
   attributeChangedCallback() {
@@ -2223,7 +2230,35 @@ class StreamMarkdown extends HTMLElement {
     // Parse Markdown safely (falls back to text if marked not loaded)
     let parsedHtml = content;
     if (window.marked) {
-      parsedHtml = window.marked.parse(content, { breaks: true, gfm: true });
+      const renderer = new window.marked.Renderer();
+      renderer.code = function ({ text, lang }) {
+        const language = lang && window.Prism && window.Prism.languages[lang] ? lang : "javascript";
+        let highlighted = text;
+        try {
+          if (window.Prism && window.Prism.languages[language]) {
+            highlighted = window.Prism.highlight(text, window.Prism.languages[language], language);
+          }
+        } catch {
+          highlighted = text;
+        }
+
+        return `
+          <div class="relative group my-4 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-950">
+            <div class="flex items-center justify-between px-4 py-1.5 bg-zinc-900/80 border-b border-zinc-800 text-xs text-zinc-400 font-mono">
+              <span>${lang || "code"}</span>
+              <button 
+                type="button" 
+                data-code="${encodeURIComponent(text)}" 
+                class="copy-btn hover:text-zinc-100 flex items-center gap-1 transition-colors"
+              >
+                Copy
+              </button>
+            </div>
+            <pre class="p-4 overflow-x-auto text-sm text-zinc-100 font-mono leading-normal m-0 bg-transparent"><code>${highlighted}</code></pre>
+          </div>
+        `;
+      };
+      parsedHtml = window.marked.parse(content, { renderer, breaks: true, gfm: true });
     }
 
     this.innerHTML = `
@@ -2232,6 +2267,22 @@ class StreamMarkdown extends HTMLElement {
         ${isStreaming ? '<span class="inline-block w-2 h-4 ml-1 -mb-0.5 bg-zinc-900 dark:bg-zinc-100 animate-pulse rounded-sm"></span>' : ''}
       </div>
     `;
+  }
+
+  bindEvents() {
+    this._clickHandler = (e) => {
+      const target = e.target.closest(".copy-btn");
+      if (!target) return;
+      const rawCode = target.getAttribute("data-code");
+      if (rawCode) {
+        navigator.clipboard.writeText(decodeURIComponent(rawCode));
+        target.textContent = "✓ Copied";
+        setTimeout(() => {
+          target.textContent = "Copy";
+        }, 2000);
+      }
+    };
+    this.addEventListener("click", this._clickHandler);
   }
 }
 
