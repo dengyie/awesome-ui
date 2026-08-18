@@ -15,9 +15,9 @@ export const StreamMarkdown: React.FC<StreamMarkdownProps> = ({
   isStreaming = false,
   className = "",
 }) => {
-  const [copiedCodeIndex, setCopiedCodeIndex] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Configure marked renderer for code copy buttons and syntax highlighting
+  // Configure marked renderer for syntax highlighting & clean markup
   const htmlContent = useMemo(() => {
     const renderer = new marked.Renderer();
 
@@ -38,7 +38,7 @@ export const StreamMarkdown: React.FC<StreamMarkdownProps> = ({
             <span>${lang || "code"}</span>
             <button 
               type="button" 
-              onclick="navigator.clipboard.writeText(decodeURIComponent('${encodeURIComponent(text)}'))" 
+              data-code="${encodeURIComponent(text)}" 
               class="copy-btn hover:text-zinc-100 flex items-center gap-1 transition-colors"
             >
               Copy
@@ -52,8 +52,24 @@ export const StreamMarkdown: React.FC<StreamMarkdownProps> = ({
     return marked.parse(content || "", { renderer, breaks: true, gfm: true });
   }, [content]);
 
+  // Delegated safe copy handler (CSP safe, avoids inline onclick)
+  const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = (e.target as HTMLElement).closest(".copy-btn");
+    if (!target) return;
+    const rawCode = target.getAttribute("data-code");
+    if (rawCode) {
+      navigator.clipboard.writeText(decodeURIComponent(rawCode));
+      target.textContent = "✓ Copied";
+      setTimeout(() => {
+        target.textContent = "Copy";
+      }, 2000);
+    }
+  };
+
   return (
     <div
+      ref={containerRef}
+      onClick={handleContainerClick}
       className={`prose prose-zinc dark:prose-invert max-w-none text-sm leading-relaxed ${className}`}
     >
       <div

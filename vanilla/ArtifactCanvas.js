@@ -49,11 +49,24 @@ class ArtifactCanvas extends HTMLElement {
       </div>
     `;
 
-    const iframe = this.querySelector("#preview-frame");
-    if (iframe) {
-      iframe.srcdoc = language === "svg"
-        ? `<div style="display:flex;justify-content:center;align-items:center;height:100vh;margin:0;">${code}</div>`
-        : code;
+    let sandboxedDoc = code;
+    if (language === "svg") {
+      sandboxedDoc = `<div style="display:flex;justify-content:center;align-items:center;height:100vh;margin:0;background:#09090b;">${code}</div>`;
+    } else if (language === "html") {
+      sandboxedDoc = `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <script src="https://cdn.tailwindcss.com"></script>
+            <style>body { margin: 0; padding: 1rem; font-family: ui-sans-serif, system-ui, sans-serif; }</style>
+          </head>
+          <body>
+            ${code}
+          </body>
+        </html>
+      `;
     }
 
     this.querySelector("#tab-preview").addEventListener("click", () => {
