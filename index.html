@@ -17,6 +17,7 @@
   <script type="module" src="./vanilla/ToolCallBadge.js"></script>
   <script type="module" src="./vanilla/AutoScrollAnchor.js"></script>
   <script type="module" src="./vanilla/ArtifactCanvas.js"></script>
+  <script type="module" src="./vanilla/SourcesCitation.js"></script>
   <script type="module" src="./vanilla/MessageActionToolbar.js"></script>
   <script type="module" src="./vanilla/PromptChips.js"></script>
 </head>
@@ -68,7 +69,16 @@
       <tool-call-badge name="python_interpreter" status="running" args='{"code": "import numpy as np; print(np.mean([1, 2, 3]))"}'></tool-call-badge>
     </section>
 
-    <!-- 4. Stream Markdown -->
+    <!-- 4. Sources Citation -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">4. SourcesCitation (Perplexity / RAG Style)</h2>
+        <span class="text-xs font-mono text-zinc-500">Domains, Snippets, Favicons</span>
+      </div>
+      <sources-citation sources='[{"title": "OpenAI Platform & Realtime API Reference", "url": "https://platform.openai.com/docs", "snippet": "Build voice and streaming agent workflows directly in the browser."}, {"title": "Anthropic Claude Model Context Window", "url": "https://docs.anthropic.com", "snippet": "Prompt caching and long context optimization strategies."}]'></sources-citation>
+    </section>
+
+    <!-- 5. Stream Markdown -->
     <section class="space-y-3">
       <div class="flex items-center justify-between">
         <h2 class="text-base font-semibold text-zinc-200">4. StreamMarkdown (Streaming & Code Copy)</h2>

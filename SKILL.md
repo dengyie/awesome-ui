@@ -60,5 +60,9 @@ awesome-ui/
 ### 7. `MessageActionToolbar` (消息底部工具条)
 - **Props**: `content: string`, `role?: 'assistant' | 'user'`, `onRetry?: () => void`, `onFeedback?: (type: 'up' | 'down') => void`, `branchIndex?: number`, `totalBranches?: number`, `onBranchChange?: (index: number) => void`
 
-### 8. `PromptChips` (建议追问标签)
-- **Props**: `suggestions: string[]`, `onSelect: (prompt: string) => void`
+### 9. `SourcesCitation` (RAG 搜索引文卡片)
+- **Props**: `sources: Array<{ id?: string|number, title: string, url: string, snippet?: string, siteName?: string }>`
+
+## LLMs 专属摄取通道
+- 紧凑索引：[`llms.txt`](./llms.txt)
+- 全量单文件源码：[`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）
