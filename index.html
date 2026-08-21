@@ -35,6 +35,8 @@
   <script type="module" src="./vanilla/SourcesCitation.js"></script>
   <script type="module" src="./vanilla/MessageActionToolbar.js"></script>
   <script type="module" src="./vanilla/PromptChips.js"></script>
+  <script type="module" src="./vanilla/RoadmapTimeline.js"></script>
+  <script type="module" src="./vanilla/KnowledgeDrawer.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
@@ -119,10 +121,22 @@
       <prompt-chips suggestions='["Explain this code in detail", "Optimize memory usage", "Convert to Vue 3"]'></prompt-chips>
     </section>
 
-    <!-- 6. Artifact Canvas Trigger -->
+    <!-- 6. RoadmapTimeline & KnowledgeDrawer (Paper/Trail Map) -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">6. RoadmapTimeline & KnowledgeDrawer (Trail & Learning Path)</h2>
+        <span class="text-xs font-mono text-zinc-500">Milestone Pins + Topo Drawer</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <roadmap-timeline id="demo-roadmap"></roadmap-timeline>
+        <knowledge-drawer id="demo-drawer"></knowledge-drawer>
+      </div>
+    </section>
+
+    <!-- 7. Artifact Canvas Trigger -->
     <section class="space-y-3 pb-12">
       <div class="flex items-center justify-between">
-        <h2 class="text-base font-semibold text-zinc-200">6. ArtifactCanvas (Split-view Preview)</h2>
+        <h2 class="text-base font-semibold text-zinc-200">7. ArtifactCanvas (Split-view Preview)</h2>
         <button onclick="document.querySelector('artifact-canvas').setAttribute('is-open', '')" class="px-3 py-1.5 bg-zinc-100 text-zinc-900 rounded-lg text-xs font-medium hover:bg-white transition-colors">
           Open Artifact Canvas
         </button>
@@ -132,5 +146,44 @@
   </main>
 
   <auto-scroll-anchor></auto-scroll-anchor>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const roadmap = document.getElementById('demo-roadmap');
+      const drawer = document.getElementById('demo-drawer');
+
+      if (roadmap) {
+        roadmap.data = {
+          activeId: 2,
+          nodes: [
+            { id: 1, index: "01", title: "第一次对话", subtitle: "先获得一次真实结果", stageColor: "#1d4ed8", status: "completed", tags: ["入门"] },
+            { id: 2, index: "02", title: "词汇与认知地图", subtitle: "LLM, Token & RAG", stageColor: "#0f766e", status: "active", tags: ["核心"] },
+            { id: 3, index: "03", title: "从 Prompt 到 Harness", subtitle: "运行环境与边界", stageColor: "#c2410c", status: "locked", tags: ["进阶"] },
+            { id: 4, index: "04", title: "Multi-Agent 编排", subtitle: "Graph 与 Loop 协同", stageColor: "#b91c1c", status: "locked", tags: ["生产"] }
+          ]
+        };
+
+        roadmap.addEventListener('node-click', (e) => {
+          const node = e.detail;
+          if (drawer) {
+            drawer.data = {
+              isOpen: true,
+              index: node.index,
+              title: node.title,
+              subtitle: node.subtitle,
+              themeColor: node.stageColor,
+              conceptText: `阶段 ${node.index} 核心目标：理解 ${node.title} 在生产架构中的作用与边界。`,
+              dependencies: [
+                { type: "dependency", label: "前置基础: 基础 Prompt 结构" },
+                { type: "branch", label: "分支路线: 本地模型部署" },
+                { type: "convergent", label: "汇聚目标: 可靠生产上线" }
+              ],
+              actionLabel: `进入阶段 ${node.index} 实战`
+            };
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>

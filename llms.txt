@@ -61,10 +61,15 @@
    - Vue 3: vue/StatusIndicator.vue
    - Vanilla: vanilla/StatusIndicator.js
 
-12. AudioWaveVisualizer: Real-time voice/audio interaction animated waveform bars.
-   - React: react/AudioWaveVisualizer.tsx
-   - Vue 3: vue/AudioWaveVisualizer.vue
-   - Vanilla: vanilla/AudioWaveVisualizer.js
+13. RoadmapTimeline: Trail/Roadmap milestone progression with diamond pins, 8-stage color palette, and completion states.
+   - React: react/RoadmapTimeline.tsx
+   - Vue 3: vue/RoadmapTimeline.vue
+   - Vanilla: vanilla/RoadmapTimeline.js
+
+14. KnowledgeDrawer: Sliding knowledge graph drawer with dependency badges, stage color accent, and primary action CTA.
+   - React: react/KnowledgeDrawer.tsx
+   - Vue 3: vue/KnowledgeDrawer.vue
+   - Vanilla: vanilla/KnowledgeDrawer.js
 
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:

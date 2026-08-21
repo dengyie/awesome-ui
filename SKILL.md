@@ -63,6 +63,12 @@ awesome-ui/
 ### 9. `SourcesCitation` (RAG 搜索引文卡片)
 - **Props**: `sources: Array<{ id?: string|number, title: string, url: string, snippet?: string, siteName?: string }>`
 
+### 10. `RoadmapTimeline` (学习路径图谱)
+- **Props**: `nodes: Array<{ id: string|number, index: string, title: string, subtitle?: string, stageColor?: string, status: 'completed'|'active'|'locked', tags?: string[] }>`, `activeId?: string|number`, `onNodeClick?: (node: any) => void`
+
+### 11. `KnowledgeDrawer` (知识节点抽屉)
+- **Props**: `isOpen: boolean`, `onClose: () => void`, `index: string`, `title: string`, `subtitle?: string`, `themeColor?: string`, `conceptText?: string`, `dependencies?: Array<{ type: 'dependency'|'branch'|'parallel'|'convergent', label: string }>`, `actionLabel?: string`, `onAction?: () => void`
+
 ## LLMs 专属摄取通道
 - 紧凑索引：[`llms.txt`](./llms.txt)
 - 全量单文件源码：[`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）
