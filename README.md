@@ -16,7 +16,7 @@
 
 ---
 
-## 📦 组件列表 (精选 6 大核心场景)
+## 📦 组件列表 (精选核心场景)
 
 | 组件 | 对应场景 | 核心特性 |
 |---|---|---|
@@ -33,7 +33,8 @@
 | **`KnowledgeDrawer`** | 知识节点抽屉 | 阶段色系侧边抽屉、前置依赖/分支徽章、核心认知与行动 CTA |
 | **`ThemeToggle`** | 三态主题切换 | Auto/Light/Dark 切换，时间与系统色系自适应，防闪烁与记忆 |
 | **`StatusIndicator`** | 状态指示徽章 | 节点与服务状态 (Online/Connecting/Error) 呼吸光晕与延迟指示 |
-| **`AudioWaveVisualizer`**| 语音交互波形 | 实时音频/语音交互波形跳动与呼吸动效 |
+| **`AudioWaveVisualizer`** | 语音交互波形 | 实时音频/语音交互波形跳动与呼吸动效 |
+| **`HomepageDashboard`** | 仪表盘/个性首页 | 对标 gethomepage/homepage：分组服务卡片、折叠、即时搜索、实时时钟、状态点/胶囊、页脚版本 |
 
 ---
 
@@ -41,9 +42,9 @@
 
 ```text
 awesome-ui/
-├── index.html               # 交互式 Gallery 体验页面
-├── SKILL.md                 # Agent 检索与规范文档
-├── react/                   # React (TSX)
+├── index.html                 # 交互式 Gallery 体验页面
+├── SKILL.md                   # Agent 检索与规范文档
+├── react/                     # React (TSX) 单文件组件
 │   ├── ChatPromptInput.tsx
 │   ├── StreamMarkdown.tsx
 │   ├── ThinkingBlock.tsx
@@ -51,8 +52,15 @@ awesome-ui/
 │   ├── AutoScrollAnchor.tsx
 │   ├── ArtifactCanvas.tsx
 │   ├── MessageActionToolbar.tsx
-│   └── PromptChips.tsx
-├── vue/                     # Vue 3 (SFC)
+│   ├── PromptChips.tsx
+│   ├── SourcesCitation.tsx
+│   ├── StatusIndicator.tsx
+│   ├── ThemeToggle.tsx
+│   ├── AudioWaveVisualizer.tsx
+│   ├── RoadmapTimeline.tsx
+│   ├── KnowledgeDrawer.tsx
+│   └── HomepageDashboard.tsx
+├── vue/                       # Vue 3 (SFC) 单文件组件
 │   ├── ChatPromptInput.vue
 │   ├── StreamMarkdown.vue
 │   ├── ThinkingBlock.vue
@@ -60,8 +68,15 @@ awesome-ui/
 │   ├── AutoScrollAnchor.vue
 │   ├── ArtifactCanvas.vue
 │   ├── MessageActionToolbar.vue
-│   └── PromptChips.vue
-└── vanilla/                 # 原生 JS / Web Components
+│   ├── PromptChips.vue
+│   ├── SourcesCitation.vue
+│   ├── StatusIndicator.vue
+│   ├── ThemeToggle.vue
+│   ├── AudioWaveVisualizer.vue
+│   ├── RoadmapTimeline.vue
+│   ├── KnowledgeDrawer.vue
+│   └── HomepageDashboard.vue
+└── vanilla/                   # 原生 JS / Web Components 单文件
     ├── ChatPromptInput.js
     ├── StreamMarkdown.js
     ├── ThinkingBlock.js
@@ -69,7 +84,14 @@ awesome-ui/
     ├── AutoScrollAnchor.js
     ├── ArtifactCanvas.js
     ├── MessageActionToolbar.js
-    └── PromptChips.js
+    ├── PromptChips.js
+    ├── SourcesCitation.js
+    ├── StatusIndicator.js
+    ├── ThemeToggle.js
+    ├── AudioWaveVisualizer.js
+    ├── RoadmapTimeline.js
+    ├── KnowledgeDrawer.js
+    └── HomepageDashboard.js
 ```
 
 ---
@@ -80,3 +102,30 @@ awesome-ui/
 - **React 端建议轻量依赖**：`lucide-react`, `marked`, `prismjs`
 - **Vue 3 端建议轻量依赖**：`marked`, `prismjs`
 - **Vanilla 端**：可直接通过 CDN 或浏览器原生运行
+
+---
+
+## 🧩 HomepageDashboard（仪表盘主推组件）
+
+`HomepageDashboard` 以经典开源项目 [gethomepage/homepage](https://github.com/gethomepage/homepage) 为设计灵感（独立原创实现，非代码搬运），为自托管/内网应用提供「首页式」仪表盘：
+
+- **分组服务卡片**：`groups[].services[]` 扁平数据驱动，卡片含图标（URL 图片 / Emoji / 字母缩略图）、名称、描述。
+- **状态指示**：`statusStyle` 支持 `pill`（右上角胶囊文字）/ `dot`（圆点）/ `none`；状态由 `online/up/down/offline/warn/error/unknown` 控制颜色。
+- **交互能力**：分组头点击折叠、顶部搜索框即时过滤、页头实时时钟、页脚 GitHub 版本链接。
+- **Responsive 网格**：`md:1/2 · lg:1/3 · xl:1/4` 四档断点，与 homepage 默认列布局一致。
+- **三端 API 完全一致**，可从 `react/`、`vue/`、`vanilla/` 任选单文件复制使用。
+
+```html
+<!-- Vanilla 用法 -->
+<script type="module" src="./vanilla/HomepageDashboard.js"></script>
+<homepage-dashboard title="Homepage" subtitle="My homelab" status-style="pill" show-search></homepage-dashboard>
+<script>
+  const dash = document.querySelector("homepage-dashboard");
+  dash.groups = [{
+    name: "Media",
+    services: [
+      { name: "Jellyfin", description: "Movies & TV", icon: "jellyfin.png", href: "https://jellyfin.local", status: "online", pingText: "24ms" },
+    ],
+  }];
+</script>
+```

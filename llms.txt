@@ -71,6 +71,11 @@
    - Vue 3: vue/KnowledgeDrawer.vue
    - Vanilla: vanilla/KnowledgeDrawer.js
 
+15. HomepageDashboard: fenced/copy-paste homelab/startpage dashboard inspired by gethomepage/homepage — grouped service cards, collapsible groups, live clock, instant search filter, status dots/pills, version footer.
+   - React: react/HomepageDashboard.tsx
+   - Vue 3: vue/HomepageDashboard.vue
+   - Vanilla: vanilla/HomepageDashboard.js
+
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 - Always read the exact single-file component from `react/`, `vue/`, or `vanilla/` and copy it into the user codebase.

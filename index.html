@@ -37,6 +37,7 @@
   <script type="module" src="./vanilla/PromptChips.js"></script>
   <script type="module" src="./vanilla/RoadmapTimeline.js"></script>
   <script type="module" src="./vanilla/KnowledgeDrawer.js"></script>
+  <script type="module" src="./vanilla/HomepageDashboard.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
@@ -133,10 +134,19 @@
       </div>
     </section>
 
-    <!-- 7. Artifact Canvas Trigger -->
+    <!-- 7. HomepageDashboard (Homelab Startpage) -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">7. HomepageDashboard (Homelab Startpage)</h2>
+        <span class="text-xs font-mono text-zinc-500">gethomepage/homepage inspired — Groups, Search, Live Clock</span>
+      </div>
+      <homepage-dashboard id="demo-dashboard" title="Homepage" subtitle="A highly customizable homelab dashboard" status-style="pill" show-search collapsible></homepage-dashboard>
+    </section>
+
+    <!-- 8. Artifact Canvas Trigger -->
     <section class="space-y-3 pb-12">
       <div class="flex items-center justify-between">
-        <h2 class="text-base font-semibold text-zinc-200">7. ArtifactCanvas (Split-view Preview)</h2>
+        <h2 class="text-base font-semibold text-zinc-200">8. ArtifactCanvas (Split-view Preview)</h2>
         <button onclick="document.querySelector('artifact-canvas').setAttribute('is-open', '')" class="px-3 py-1.5 bg-zinc-100 text-zinc-900 rounded-lg text-xs font-medium hover:bg-white transition-colors">
           Open Artifact Canvas
         </button>
@@ -149,6 +159,44 @@
 
   <script>
     window.addEventListener('DOMContentLoaded', () => {
+      const dashboard = document.getElementById('demo-dashboard');
+      if (dashboard) {
+        dashboard.groups = [
+          {
+            name: 'Media', icon: '🎬', services: [
+              { name: 'Jellyfin', description: 'Movies & TV', icon: '🎞️', href: 'https://jellyfin.local', status: 'online', pingText: '24ms' },
+              { name: 'Plex', description: 'Streaming', icon: '▶️', href: 'https://plex.local', status: 'up', pingText: '18ms' },
+              { name: 'Emby', description: 'Media server', icon: '📽️', status: 'online' },
+              { name: 'qBittorrent', description: 'Downloads', icon: '↕️', status: 'warn', pingText: '302ms' },
+            ],
+          },
+          {
+            name: 'Automation', icon: '🤖', services: [
+              { name: 'Home Assistant', description: 'Smart home', icon: '🏠', href: 'https://hass.local', status: 'online', pingText: '8ms' },
+              { name: 'Node-RED', description: 'Flow automation', icon: '🔀', status: 'up' },
+              { name: 'Frigate', description: 'NVR & detection', icon: '📷', status: 'warn', pingText: 'slow' },
+              { name: 'ZLL Hub', description: 'Zigbee devices', icon: '📡', status: 'offline' },
+            ],
+          },
+          {
+            name: 'Networking', icon: '🌐', services: [
+              { name: 'Proxmox', description: 'Hypervisor', icon: '🖥️', href: 'https://proxmox.local', status: 'up', pingText: '6ms' },
+              { name: 'pfSense', description: 'Firewall', icon: '🛡️', status: 'online', pingText: '12ms' },
+              { name: 'Pi-hole', description: 'DNS & blocking', icon: '🕳️', status: 'online' },
+              { name: 'Tailscale', description: 'VPN mesh', icon: '🦦', status: 'up' },
+            ],
+          },
+          {
+            name: 'Tools', icon: '🧰', services: [
+              { name: 'Grafana', description: 'Metrics & dashboards', icon: '📊', href: 'https://grafana.local', status: 'online', pingText: '9ms' },
+              { name: 'Portainer', description: 'Container manager', icon: '🖼️', status: 'up' },
+              { name: 'Uptime Kuma', description: 'Status monitors', icon: '📈', status: 'warn', pingText: '10 up' },
+              { name: 'Vaultwarden', description: 'Password manager', icon: '🔐', status: 'online' },
+            ],
+          },
+        ];
+      }
+
       const roadmap = document.getElementById('demo-roadmap');
       const drawer = document.getElementById('demo-drawer');
 
