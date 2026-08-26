@@ -129,3 +129,11 @@ awesome-ui/
   }];
 </script>
 ```
+
+> **安全与健壮性**（三端 API 一致，含 TypeScript `id?: string` 稳定 key）：
+> - `href` 仅放行 `http(s)://`、`mailto:`、协议相对 `//`、根相对 `/`、`.`/`..` 相对路径，`javascript:`/`data:`/`vbscript:`/`file:` 一律不渲染为链接。
+> - 纯文本插值/实体转义，注入 `<script>`/`<img onerror>` 不产生节点。
+> - 搜索无命中时隐藏整组（与 React/Vue filter 行为对齐），缺失字段（name/href/description）安全降级不崩溃。
+> - 时钟随 `showClock` 动态启停；默认 `version` 不伪装上游版本号。
+>
+> - **测试**：`npm install && npm test` 运行 19 项回归（vanilla jsdom 行为 + React SSR + Vue SFC 编译/SSR），`npm run typecheck` 对 React 端做 strict TS 校验。

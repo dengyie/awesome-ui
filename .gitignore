@@ -1,0 +1,9 @@
+# Dependencies (installed locally for tests only)
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Editor / OS
+.DS_Store
+*.log

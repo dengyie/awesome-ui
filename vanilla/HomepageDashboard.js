@@ -21,7 +21,17 @@
  */
 class HomepageDashboardElement extends HTMLElement {
   static get observedAttributes() {
-    return ["title", "subtitle", "version", "header-style", "status-style", "search-placeholder", "collapsible", "show-search", "show-clock"];
+    return [
+      "title",
+      "subtitle",
+      "version",
+      "header-style",
+      "status-style",
+      "search-placeholder",
+      "collapsible",
+      "show-search",
+      "show-clock",
+    ];
   }
 
   constructor() {
@@ -45,23 +55,34 @@ class HomepageDashboardElement extends HTMLElement {
 
   // ----- lifecycle -----
   connectedCallback() {
-    this._render();
-    if (this._attrBool("show-clock", true)) {
-      this._clockTimer = setInterval(() => this._updateClock(), 1000);
-    }
+    this._manageClock();
     this.addEventListener("click", this._handleClick);
     this.addEventListener("input", this._handleInput);
+    this._render();
   }
 
   disconnectedCallback() {
-    if (this._clockTimer) clearInterval(this._clockTimer);
-    this._clockTimer = null;
+    this._clearClock();
     this.removeEventListener("click", this._handleClick);
     this.removeEventListener("input", this._handleInput);
   }
 
-  attributeChangedCallback() {
+  attributeChangedCallback(name) {
+    if (name === "show-clock") this._manageClock();
     if (this.isConnected) this._render();
+  }
+
+  // ----- clock ✓ toggled dynamically, never leaks -----
+  _clearClock() {
+    if (this._clockTimer) clearInterval(this._clockTimer);
+    this._clockTimer = null;
+  }
+
+  _manageClock() {
+    this._clearClock();
+    if (this._attrBool("show-clock", true) && this.isConnected) {
+      this._clockTimer = setInterval(() => this._updateClock(), 1000);
+    }
   }
 
   // convenience reads
@@ -99,6 +120,26 @@ class HomepageDashboardElement extends HTMLElement {
       .replace(/'/g, "&#39;");
   }
 
+  /**
+   * Only allow safe URL protocols into <a href>. Blocks javascript:, data:, vbscript:,
+   * file: and any other unsupported scheme while allowing http(s), mailto, protocol-
+   * relative, root-relative and dot-relative URLs.
+   */
+  static isSafeHref(href) {
+    if (typeof href !== "string") return false;
+    const t = href.trim();
+    if (t.length === 0) return false;
+    // protocol-relative //host, absolute path /x, relative ./ or ../
+    if (t.startsWith("//") || t.startsWith("/") || t.startsWith("./") || t.startsWith("../")) return true;
+    // intentional helper name
+    return /^(https?:\/\/|mailto:)/i.test(t);
+  }
+
+  _handleIconFallback(event) {
+    // remove the <img> when a remote icon fails to load (letter monogram shows)
+    if (event.target) event.target.style.display = "none";
+  }
+
   _iconHTML(service) {
     const icon = service?.icon;
     const name = service?.name || "?";
@@ -131,26 +172,30 @@ class HomepageDashboardElement extends HTMLElement {
     if (style === "none") return "";
 
     if (style === "dot") {
-      return `<span title="${this._esc(service.pingText || cfg.label)}" class="absolute top-1.5 right-1.5 h-3 w-3 rounded-full ${cfg.dot} service-status-dot"></span>`;
+      return `<span title="${this._esc(service.pingText || cfg.label)}" role="img" aria-label="${this._esc(service.pingText || cfg.label)}" class="absolute top-1.5 right-1.5 h-3 w-3 rounded-full ${cfg.dot} service-status-dot"></span>`;
     }
 
     const text = this._esc(service.pingText || cfg.label);
-    return `<span class="absolute top-1.5 right-1.5 text-[8px] font-bold uppercase tracking-wide px-1.5 py-1 rounded-md bg-zinc-500/10 dark:bg-zinc-400/10 ${cfg.pill} service-status-pill">${text}</span>`;
+    return `<span class="absolute top-1.5 right-1.5 text-[8px] font-bold uppercase tracking-wide px-1.5 py-1 rounded-md bg-zinc-500/10 dark:bg-zinc-400/10 ${cfg.pill} service-status-pill" role="img" aria-label="${text}">${text}</span>`;
   }
 
   _serviceHTML(service) {
     const query = this._search.trim().toLowerCase();
-    const matched = !query || (service.name || "").toLowerCase().includes(query) || (service.description || "").toLowerCase().includes(query);
+    const matched =
+      !query ||
+      (service.name || "").toLowerCase().includes(query) ||
+      (service.description || "").toLowerCase().includes(query);
     const outer = [
       "service-card",
       "relative overflow-clip rounded-md shadow-md shadow-zinc-900/10 dark:shadow-zinc-900/20",
       "bg-white hover:bg-zinc-50 dark:bg-white/5 dark:hover:bg-white/10 transition-all mb-2 p-0.5",
       matched ? "" : "hidden",
-    ].filter(Boolean).join(" ");
+    ]
+      .filter(Boolean)
+      .join(" ");
 
-    const linkAttrs = service.href && service.href !== "#"
-      ? `href="${this._esc(service.href)}" target="_blank" rel="noreferrer"`
-      : "";
+    const safeHref = HomepageDashboardElement.isSafeHref(service.href) ? service.href : "";
+    const linkAttrs = safeHref ? `href="${this._esc(safeHref)}" target="_blank" rel="noreferrer"` : "";
 
     return `
       <li class="${outer}" data-name="${this._esc(service.name || "")}">
@@ -181,7 +226,7 @@ class HomepageDashboardElement extends HTMLElement {
 
     return `
       <div class="services-group w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-1 pb-0" data-group="${this._esc(group.name)}">
-        <button type="button" class="group-header flex w-full select-none items-center gap-1 py-0.5 ${!this._collapsible() ? "cursor-default" : ""}" data-toggle-group="${this._esc(group.name)}">
+        <button type="button" class="group-header flex w-full select-none items-center gap-1 py-0.5 ${!this._collapsible() ? "cursor-default" : ""}" data-toggle-group="${this._esc(group.name)}" aria-expanded="${isCollapsed ? "false" : "true"}">
           ${groupIcon}
           <h2 class="text-xl font-medium text-zinc-800 dark:text-zinc-300 service-group-name">${groupName}</h2>
           ${this._collapsible() ? chevron : ""}
@@ -193,13 +238,10 @@ class HomepageDashboardElement extends HTMLElement {
 
   _clockHTML() {
     if (!this._attrBool("show-clock", true)) return "";
-    const now = new Date();
-    const time = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    const date = now.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" });
     return `
       <div class="text-right shrink-0 block min-w-28" data-el="clock">
-        <div class="text-2xl sm:text-3xl font-semibold tabular-nums text-zinc-800 dark:text-zinc-100 leading-tight" data-el="clock-time">${time}</div>
-        <div class="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400" data-el="clock-date">${date}</div>
+        <div class="text-2xl sm:text-3xl font-semibold tabular-nums text-zinc-800 dark:text-zinc-100 leading-tight" data-el="clock-time"></div>
+        <div class="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400" data-el="clock-date"></div>
       </div>
     `;
   }
@@ -208,11 +250,12 @@ class HomepageDashboardElement extends HTMLElement {
     const title = this._esc(this._attr("title", "Homepage"));
     const subtitle = this._esc(this._attr("subtitle", "A highly customizable homelab dashboard"));
     const style = this._headerStyle();
-    const headerCls = style === "boxed"
-      ? "m-3 sm:m-5 mb-0 rounded-lg bg-white dark:bg-white/5 shadow-md shadow-zinc-900/10 p-4"
-      : style === "clean"
-        ? "m-3 sm:m-5 mb-0"
-        : "m-3 sm:m-5 mb-1 border-b-2 border-zinc-300/70 dark:border-zinc-700 pb-4";
+    const headerCls =
+      style === "boxed"
+        ? "m-3 sm:m-5 mb-0 rounded-lg bg-white dark:bg-white/5 shadow-md shadow-zinc-900/10 p-4"
+        : style === "clean"
+          ? "m-3 sm:m-5 mb-0"
+          : "m-3 sm:m-5 mb-1 border-b-2 border-zinc-300/70 dark:border-zinc-700 pb-4";
 
     const search = this._attrBool("show-search", false)
       ? `
@@ -220,7 +263,7 @@ class HomepageDashboardElement extends HTMLElement {
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400">
             <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l2.328 2.328a.75.75 0 1 1-1.06 1.06l-2.328-2.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/>
           </svg>
-          <input type="search" data-el="search" value="${this._esc(this._search)}" placeholder="${this._esc(this._attr("search-placeholder", "Search services…"))}"
+          <input type="search" data-el="search" value="${this._esc(this._search)}" placeholder="${this._esc(this._attr("search-placeholder", "Search services…"))}" aria-label="Search services"
             class="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-white/5 px-9 py-2 text-sm text-zinc-800 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-400 dark:focus:ring-zinc-500"/>
         </div>`
       : "";
@@ -242,13 +285,13 @@ class HomepageDashboardElement extends HTMLElement {
   }
 
   _footerHTML() {
-    const version = this._esc(this._attr("version", "v2.1.0"));
+    const version = this._esc(this._attr("version", "Homepage · awesome-ui"));
     return `
       <footer class="px-5 py-6 text-right">
         <a href="https://github.com/gethomepage/homepage" target="_blank" rel="noreferrer"
           class="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.04-.72.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.35.95.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.27 5.67.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .31.21.68.8.56A11.53 11.53 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
           <span>${version}</span>
+          <span aria-hidden="true">↗</span>
         </a>
       </footer>
     `;
@@ -256,30 +299,55 @@ class HomepageDashboardElement extends HTMLElement {
 
   _render() {
     if (!this.isConnected) return;
-    const groupsHTML = this._groups.map((g, i) => this._groupHTML(g, i)).join("") || `<p class="p-4 text-sm text-zinc-400">No groups configured — assign <code>dash.groups = […]</code>.</p>`;
+    const emptyNote =
+      this._search.trim()
+        ? `<p class="p-4 text-sm text-zinc-400">No matching services for “${this._esc(this._search.trim())}”.</p>`
+        : `<p class="p-4 text-sm text-zinc-400">No groups configured — assign <code>dash.groups = […]</code>.</p>`;
+    const mainContent =
+      this._groups.length === 0
+        ? emptyNote
+        : this._groups.map((g, i) => this._groupHTML(g, i)).join("");
 
     this.innerHTML = `
       <div class="homepage-dashboard relative w-full rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 overflow-hidden"
         style="font-family: 'Manrope', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;">
         ${this._headerHTML()}
         <main class="flex flex-wrap items-start px-3 sm:px-5 pb-4">
-          ${groupsHTML}
+          ${mainContent}
         </main>
         ${this._footerHTML()}
       </div>
     `;
 
-    const clockEl = this.querySelector("[data-el='clock-time']");
-    if (clockEl) this._updateClock();
+    this._updateClock();
+    this._applySearchFiltering();
   }
 
   _updateClock() {
     const timeEl = this.querySelector("[data-el='clock-time']");
-    const dateEl = this.querySelector("[data-el='clock-date']");
-    if (!timeEl) return;
+    if (!timeEl || !this._attrBool("show-clock", true)) return;
     const now = new Date();
     timeEl.textContent = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const dateEl = this.querySelector("[data-el='clock-date']");
     if (dateEl) dateEl.textContent = now.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" });
+  }
+
+  // Hide non-matching cards AND sync group visibility so a no-match search leaves
+  // no empty group headers behind (parity with React/Vue filtering). ClassList-only;
+  // never rebuilds the DOM on keystroke.
+  _applySearchFiltering() {
+    const q = this._search.trim().toLowerCase();
+    this.querySelectorAll(".service-card").forEach((card) => {
+      const name = (card.dataset.name || "").toLowerCase();
+      const desc = (card.querySelector(".service-description")?.textContent || "").toLowerCase();
+      const matched = q.length === 0 || name.includes(q) || desc.includes(q);
+      card.classList.toggle("hidden", !matched);
+    });
+    this.querySelectorAll(".services-group").forEach((group) => {
+      const cards = [...group.querySelectorAll(".service-card")];
+      const anyVisible = cards.some((c) => !c.classList.contains("hidden"));
+      group.hidden = q.length > 0 && !anyVisible;
+    });
   }
 
   // ----- interactions (event delegation on root) -----
@@ -288,21 +356,19 @@ class HomepageDashboardElement extends HTMLElement {
     if (!groupBtn) return;
     const name = groupBtn.dataset.toggleGroup;
     if (!name || !this._collapsible()) return;
-    if (this._collapsedGroups.has(name)) this._collapsedGroups.delete(name);
+    const was = this._collapsedGroups.has(name);
+    if (was) this._collapsedGroups.delete(name);
     else this._collapsedGroups.add(name);
     this._render();
-    this.dispatchEvent(new CustomEvent("group-toggle", { detail: { group: name, collapsed: this._collapsedGroups.has(name) } }));
+    this.dispatchEvent(
+      new CustomEvent("group-toggle", { detail: { group: name, collapsed: !was } })
+    );
   };
 
   _handleInput = (event) => {
     if (event.target.dataset?.el !== "search") return;
     this._search = event.target.value;
-    this.querySelectorAll(".service-card").forEach((card) => {
-      const name = (card.dataset.name || "").toLowerCase();
-      const q = this._search.trim().toLowerCase();
-      const desc = (card.querySelector(".service-description")?.textContent || "").toLowerCase();
-      card.classList.toggle("hidden", q.length > 0 && !name.includes(q) && !desc.includes(q));
-    });
+    this._applySearchFiltering();
   };
 }
 
