@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { marked } from "marked";
 import Prism from "prismjs";
 import "prismjs/themes/prism-tomorrow.css";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy } from "./UiIcon";
 
 export interface StreamMarkdownProps {
   content: string;
@@ -59,7 +59,7 @@ export const StreamMarkdown: React.FC<StreamMarkdownProps> = ({
     const rawCode = target.getAttribute("data-code");
     if (rawCode) {
       navigator.clipboard.writeText(decodeURIComponent(rawCode));
-      target.textContent = "✓ Copied";
+      target.textContent = "Copied";
       setTimeout(() => {
         target.textContent = "Copy";
       }, 2000);

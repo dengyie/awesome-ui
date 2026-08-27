@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, KeyboardEvent } from "react";
-import { ArrowUp, Square, Paperclip, X, Image as ImageIcon } from "lucide-react";
+import { ArrowUp, Square, Paperclip, X, ImageIcon } from "./UiIcon";
 
 export interface Attachment {
   id: string;

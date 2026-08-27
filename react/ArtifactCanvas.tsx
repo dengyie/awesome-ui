@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, Code2, Eye, Copy, Check } from "lucide-react";
+import { X, Code2, Eye, Copy, Check } from "./UiIcon";
 
 export interface ArtifactCanvasProps {
   title?: string;

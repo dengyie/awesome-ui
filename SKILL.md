@@ -11,7 +11,8 @@ description: Use when building AI-native Web applications, chat interfaces, gene
 1. **零黑盒 / 复制即用 (Copy-Paste First)**：直接将对应框架的单文件组件复制到项目中。
 2. **极简扁平 Props**：不强绑复杂嵌套对象或特定后端 SDK，只接受最简基础类型。
 3. **Tailwind CSS 统一美学**：天然支持 Dark / Light 模式与响应式。
-4. **覆盖核心 AI 交互与仪表盘场景**。
+4. **覆盖核心 AI 交互与仪表盘场景，并统一基础 UI**（含图标体系）。
+5. **图标统一**：优先使用 `react/UiIcon.tsx`、`vue/UiIcon.vue` 或 `vanilla/UiIcon.js`，禁止 emoji、Unicode 符号和临时手写 SVG 作为界面图标。
 
 ## 目录结构
 ```text
@@ -19,6 +20,7 @@ awesome-ui/
 ├── SKILL.md                 # Agent 检索与消费指南
 ├── index.html               # 交互式 Gallery 体验页面
 ├── react/                   # React (TSX) 单文件组件 (React 18/19 + Tailwind)
+│   ├── UiIcon.tsx           # 统一零依赖 SVG 图标系统
 │   ├── ChatPromptInput.tsx  # 多模态自适应输入框
 │   ├── StreamMarkdown.tsx   # 流式 Markdown 渲染与代码高亮
 │   ├── ThinkingBlock.tsx    # 深度思考 / 思维链折叠面板
@@ -45,6 +47,7 @@ awesome-ui/
 │   ├── KnowledgeDrawer.vue
 │   └── HomepageDashboard.vue
 └── vanilla/                 # 原生 JS / Web Components 单文件 (HTML + Tailwind CDN)
+    ├── UiIcon.js            # uiIcon() SVG 图标工厂
     ├── ChatPromptInput.js
     ├── StreamMarkdown.js
     ├── ThinkingBlock.js
@@ -59,6 +62,12 @@ awesome-ui/
     ├── KnowledgeDrawer.js
     └── HomepageDashboard.js
 ```
+
+## 图标 API 速查
+- **React**: `import { UiIcon, Sparkles, Check } from './UiIcon'`; 使用 `<UiIcon name="sparkles" size={18} strokeWidth={1.8} />`
+- **Vue**: `<UiIcon name="sparkles" :size="18" />`
+- **Vanilla**: `import uiIcon from './UiIcon.js'`; 使用 `uiIcon('sparkles', { size: 18, className: 'text-cyan-500' })`
+- 命名图标覆盖箭头、状态、主题、文件、代码、工具调用、来源和反馈等常见 UI 语义。
 
 ## 组件 API 速查表
 

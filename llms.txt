@@ -4,7 +4,13 @@
 > Repository: https://github.com/dengyie/awesome-ui
 > Full Documentation & Source: https://github.com/dengyie/awesome-ui/blob/main/llms-full.txt
 
-## Component Index (9 Essential AI-Native Components)
+## Component Index (AI-Native Components & Shared UI)
+
+0. UiIcon: Zero-dependency, accessible SVG icon system shared by all three stacks.
+   - React: react/UiIcon.tsx
+   - Vue 3: vue/UiIcon.vue
+   - Vanilla: vanilla/UiIcon.js
+   - Use this before writing SVG, emoji, or Unicode UI symbols.
 
 1. ChatPromptInput: Multi-modal auto-resizing prompt input with file/image attachments and submit/stop state.
    - React: react/ChatPromptInput.tsx
@@ -81,4 +87,5 @@
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 - Always read the exact single-file component from `react/`, `vue/`, or `vanilla/` and copy it into the user codebase.
+- Always use `UiIcon` for interface icons; do not use emoji, Unicode symbols, or ad-hoc SVG.
 - Rely on Tailwind CSS standard utility classes for all styling.

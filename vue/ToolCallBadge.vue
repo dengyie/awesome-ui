@@ -11,9 +11,7 @@
       class="w-full flex items-center justify-between px-3.5 py-2 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors text-left select-none"
     >
       <div class="flex items-center gap-2.5">
-        <div class="p-1 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300">
-          🛠
-        </div>
+        <div class="p-1 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300"><UiIcon name="tool" :size="14" /></div>
         <span class="font-mono font-medium text-zinc-800 dark:text-zinc-200">
           {{ name }}
         </span>
@@ -21,19 +19,17 @@
 
       <div class="flex items-center gap-2">
         <span v-if="status === 'running'" class="flex items-center gap-1 text-amber-600 dark:text-amber-400 font-medium">
-          <span class="animate-spin inline-block">⏳</span>
+          <UiIcon name="loader" :size="14" class="animate-spin" />
           <span>Running...</span>
         </span>
         <span v-if="status === 'success'" class="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
-          <span>✓ Success</span>
+          <span class="flex items-center gap-1"><UiIcon name="check-circle" :size="14" /> Success</span>
         </span>
         <span v-if="status === 'error'" class="flex items-center gap-1 text-rose-600 dark:text-rose-400 font-medium">
-          <span>✕ Failed</span>
+          <span class="flex items-center gap-1"><UiIcon name="circle-x" :size="14" /> Failed</span>
         </span>
 
-        <span :class="['text-[10px] text-zinc-400 transition-transform duration-200 inline-block', isOpen ? 'rotate-90' : '']">
-          ▶
-        </span>
+        <UiIcon name="chevron-right" :size="14" :class="['text-zinc-400 transition-transform duration-200', isOpen ? 'rotate-90' : '']" />
       </div>
     </button>
 
@@ -62,6 +58,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import UiIcon from './UiIcon.vue';
 
 const props = withDefaults(
   defineProps<{

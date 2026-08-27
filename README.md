@@ -16,7 +16,7 @@
 
 ---
 
-## 📦 组件列表 (精选核心场景)
+## 📦 组件列表 (精选 AI 场景与基础 UI)
 
 | 组件 | 对应场景 | 核心特性 |
 |---|---|---|
@@ -35,6 +35,7 @@
 | **`StatusIndicator`** | 状态指示徽章 | 节点与服务状态 (Online/Connecting/Error) 呼吸光晕与延迟指示 |
 | **`AudioWaveVisualizer`** | 语音交互波形 | 实时音频/语音交互波形跳动与呼吸动效 |
 | **`HomepageDashboard`** | 仪表盘/个性首页 | 对标 gethomepage/homepage：分组服务卡片、折叠、即时搜索、实时时钟、状态点/胶囊、页脚版本 |
+| **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
 
@@ -45,6 +46,7 @@ awesome-ui/
 ├── index.html                 # 交互式 Gallery 体验页面
 ├── SKILL.md                   # Agent 检索与规范文档
 ├── react/                     # React (TSX) 单文件组件
+│   ├── UiIcon.tsx           # 统一零依赖 SVG 图标与命名图标
 │   ├── ChatPromptInput.tsx
 │   ├── StreamMarkdown.tsx
 │   ├── ThinkingBlock.tsx
@@ -61,6 +63,7 @@ awesome-ui/
 │   ├── KnowledgeDrawer.tsx
 │   └── HomepageDashboard.tsx
 ├── vue/                       # Vue 3 (SFC) 单文件组件
+│   ├── UiIcon.vue           # 统一零依赖 SVG 图标
 │   ├── ChatPromptInput.vue
 │   ├── StreamMarkdown.vue
 │   ├── ThinkingBlock.vue
@@ -77,6 +80,7 @@ awesome-ui/
 │   ├── KnowledgeDrawer.vue
 │   └── HomepageDashboard.vue
 └── vanilla/                   # 原生 JS / Web Components 单文件
+    ├── UiIcon.js            # uiIcon() SVG 工厂函数
     ├── ChatPromptInput.js
     ├── StreamMarkdown.js
     ├── ThinkingBlock.js
@@ -99,7 +103,8 @@ awesome-ui/
 ## 🛠️ 依赖说明 (Dependencies)
 
 - **样式**：Tailwind CSS (v3 / v4)
-- **React 端建议轻量依赖**：`lucide-react`, `marked`, `prismjs`
+- **React 端建议轻量依赖**：`marked`, `prismjs`；图标优先使用仓库内 `UiIcon`，不需要 `lucide-react`
+- **图标规范**：UI 图标统一使用 `UiIcon`，禁止 emoji、Unicode 字符箭头和临时手写 SVG；图标几何遵循 [Tabler Icons](https://github.com/tabler/tabler-icons) 的 MIT 许可规范；品牌 Logo 仍应使用品牌官方资源
 - **Vue 3 端建议轻量依赖**：`marked`, `prismjs`
 - **Vanilla 端**：可直接通过 CDN 或浏览器原生运行
 

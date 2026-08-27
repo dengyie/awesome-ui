@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown, Sparkles } from "lucide-react";
+import { ChevronDown, Sparkles } from "./UiIcon";
 
 export interface ThinkingBlockProps {
   content: string;

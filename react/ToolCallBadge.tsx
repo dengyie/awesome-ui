@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Wrench, CheckCircle2, XCircle, Loader2, ChevronRight } from "lucide-react";
+import { Wrench, CheckCircle2, XCircle, Loader2, ChevronRight } from "./UiIcon";
 
 export interface ToolCallBadgeProps {
   name: string;

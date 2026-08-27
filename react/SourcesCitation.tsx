@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ExternalLink, Globe } from "lucide-react";
+import { ExternalLink, Globe } from "./UiIcon";
 
 export interface SourceItem {
   id?: string | number;

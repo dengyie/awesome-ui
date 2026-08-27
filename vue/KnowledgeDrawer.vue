@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import UiIcon from './UiIcon.vue';
+
 export interface KnowledgeDependency {
   type: "dependency" | "branch" | "parallel" | "convergent";
   label: string;
@@ -69,7 +71,7 @@ const emit = defineEmits<{
           @click="emit('close')"
           class="p-1.5 rounded-sm hover:bg-[#e7e4d7] dark:hover:bg-[#0f1216] text-[#545b64] dark:text-[#a9a89c] transition-colors"
         >
-          ✕
+          <UiIcon name="x" :size="18" />
         </button>
       </div>
 

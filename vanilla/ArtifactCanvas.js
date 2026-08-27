@@ -1,3 +1,5 @@
+import uiIcon from './UiIcon.js';
+
 /**
  * ArtifactCanvas - Vanilla Web Component
  * Usage: <artifact-canvas title="Preview" language="html" code="<h1>Hello</h1>"></artifact-canvas>
@@ -39,7 +41,7 @@ class ArtifactCanvas extends HTMLElement {
           </div>
           <div class="flex items-center gap-1">
             <button type="button" id="copy-btn" class="p-1.5 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800 rounded-lg transition-colors text-xs font-mono">Copy</button>
-            <button type="button" id="close-btn" class="p-1.5 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800 rounded-lg transition-colors">✕</button>
+            <button type="button" id="close-btn" class="p-1.5 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800 rounded-lg transition-colors" title="Close panel">${uiIcon('x', { size: 18 })}</button>
           </div>
         </div>
         <div class="flex-1 overflow-hidden relative">
@@ -82,8 +84,8 @@ class ArtifactCanvas extends HTMLElement {
     this.querySelector("#copy-btn").addEventListener("click", async () => {
       await navigator.clipboard.writeText(code);
       const btn = this.querySelector("#copy-btn");
-      btn.innerText = "✓ Copied";
-      setTimeout(() => (btn.innerText = "Copy"), 2000);
+      btn.innerHTML = `${uiIcon('check', { size: 14 })} Copied`;
+      setTimeout(() => (btn.innerHTML = "Copy"), 2000);
     });
 
     this.querySelector("#close-btn").addEventListener("click", () => {

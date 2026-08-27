@@ -12,7 +12,7 @@
         class="hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-30 disabled:pointer-events-none p-0.5"
         title="Previous version"
       >
-        ‹
+        <UiIcon name="chevron-left" :size="14" />
       </button>
       <span>{{ branchIndex + 1 }}/{{ totalBranches }}</span>
       <button
@@ -22,7 +22,7 @@
         class="hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-30 disabled:pointer-events-none p-0.5"
         title="Next version"
       >
-        ›
+        <UiIcon name="chevron-right" :size="14" />
       </button>
     </div>
 
@@ -33,8 +33,8 @@
       class="p-1 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/60 rounded-md transition-colors"
       title="Copy response"
     >
-      <span v-if="copied" class="text-emerald-500 font-bold">✓</span>
-      <span v-else>📋</span>
+      <UiIcon v-if="copied" name="check" :size="16" class="text-emerald-500" />
+      <UiIcon v-else name="copy" :size="16" />
     </button>
 
     <!-- Retry / Regenerate -->
@@ -45,7 +45,7 @@
       class="p-1 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/60 rounded-md transition-colors"
       title="Regenerate response"
     >
-      🔄
+      <UiIcon name="refresh" :size="16" />
     </button>
 
     <!-- Thumbs Up / Down -->
@@ -59,7 +59,7 @@
         ]"
         title="Good response"
       >
-        👍
+        <UiIcon name="thumbs-up" :size="16" />
       </button>
       <button
         type="button"
@@ -70,7 +70,7 @@
         ]"
         title="Bad response"
       >
-        👎
+        <UiIcon name="thumbs-down" :size="16" />
       </button>
     </template>
   </div>
@@ -78,6 +78,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import UiIcon from './UiIcon.vue';
 
 const props = withDefaults(
   defineProps<{

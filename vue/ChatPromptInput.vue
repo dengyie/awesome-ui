@@ -18,7 +18,7 @@
           @click="$emit('removeAttachment', att.id)"
           class="p-0.5 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors"
         >
-          ✕
+          <UiIcon name="x" :size="14" />
         </button>
       </div>
     </div>
@@ -41,7 +41,7 @@
           class="p-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors disabled:opacity-40"
           title="Add attachment"
         >
-          📎
+          <UiIcon name="paperclip" :size="18" />
         </button>
       </template>
 
@@ -82,6 +82,7 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue';
+import UiIcon from './UiIcon.vue';
 
 export interface Attachment {
   id: string;

@@ -1,3 +1,5 @@
+import uiIcon from './UiIcon.js';
+
 /**
  * Vanilla Web Component: <knowledge-drawer>
  */
@@ -51,7 +53,7 @@ export class KnowledgeDrawerElement extends HTMLElement {
             </div>
 
             <button type="button" class="drawer-close p-1.5 rounded-sm hover:bg-[#e7e4d7] dark:hover:bg-[#0f1216] text-[#545b64] dark:text-[#a9a89c] transition-colors">
-              ✕
+              ${uiIcon('x', { size: 18 })}
             </button>
           </div>
 
@@ -105,7 +107,7 @@ export class KnowledgeDrawerElement extends HTMLElement {
               style="background-color: ${themeColor}; border-color: ${themeColor};"
             >
               <span>${actionLabel}</span>
-              <span>→</span>
+              ${uiIcon('arrow-right', { size: 16 })}
             </button>
           </div>
         </div>

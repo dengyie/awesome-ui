@@ -75,7 +75,7 @@ class StreamMarkdown extends HTMLElement {
       const rawCode = target.getAttribute("data-code");
       if (rawCode) {
         navigator.clipboard.writeText(decodeURIComponent(rawCode));
-        target.textContent = "✓ Copied";
+        target.textContent = "Copied";
         setTimeout(() => {
           target.textContent = "Copy";
         }, 2000);

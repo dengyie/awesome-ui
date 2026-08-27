@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown } from "./UiIcon";
 
 export interface AutoScrollAnchorProps {
   isStreaming?: boolean;

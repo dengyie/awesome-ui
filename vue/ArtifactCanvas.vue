@@ -49,7 +49,7 @@
           class="p-1.5 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800 rounded-lg transition-colors text-xs font-mono"
           title="Copy Code"
         >
-          <span v-if="copied" class="text-emerald-500 font-bold">✓ Copied</span>
+          <span v-if="copied" class="text-emerald-500 font-bold flex items-center gap-1"><UiIcon name="check" :size="14" /> Copied</span>
           <span v-else>Copy</span>
         </button>
         <button
@@ -58,7 +58,7 @@
           class="p-1.5 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800 rounded-lg transition-colors"
           title="Close Panel"
         >
-          ✕
+          <UiIcon name="x" :size="18" />
         </button>
       </div>
     </div>
@@ -88,6 +88,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import UiIcon from './UiIcon.vue';
 
 const props = withDefaults(
   defineProps<{

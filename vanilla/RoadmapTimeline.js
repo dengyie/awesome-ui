@@ -1,3 +1,5 @@
+import uiIcon from './UiIcon.js';
+
 /**
  * Vanilla Web Component: <roadmap-timeline>
  */
@@ -51,7 +53,7 @@ export class RoadmapTimelineElement extends HTMLElement {
                   }"
                 >
                   <div class="-rotate-45 font-mono text-xs font-bold flex items-center justify-center">
-                    ${isDone ? "✓" : node.status === "locked" ? "🔒" : `<span style="color: ${isActive ? color : ""}">${node.index}</span>`}
+                    ${isDone ? uiIcon("check", { size: 16 }) : node.status === "locked" ? uiIcon("lock", { size: 16 }) : `<span style="color: ${isActive ? color : ""}">${node.index}</span>`}
                   </div>
                 </div>
 

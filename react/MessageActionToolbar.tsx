@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Copy, Check, RotateCcw, ThumbsUp, ThumbsDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { Copy, Check, RotateCcw, ThumbsUp, ThumbsDown, ChevronLeft, ChevronRight } from "./UiIcon";
 
 export interface MessageActionToolbarProps {
   content: string;

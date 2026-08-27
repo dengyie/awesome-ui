@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import UiIcon from './UiIcon.vue';
 export interface RoadmapNode {
   id: string | number;
   index: string;
@@ -56,8 +57,8 @@ const emit = defineEmits<{
           ]"
         >
           <div class="-rotate-45 font-mono text-xs font-bold flex items-center justify-center">
-            <span v-if="node.status === 'completed'">✓</span>
-            <span v-else-if="node.status === 'locked'">🔒</span>
+            <UiIcon v-if="node.status === 'completed'" name="check" :size="16" />
+            <UiIcon v-else-if="node.status === 'locked'" name="lock" :size="16" />
             <span v-else :style="{ color: (activeId === node.id || node.status === 'active') ? (node.stageColor || '#c2410c') : undefined }">
               {{ node.index }}
             </span>

@@ -1,5 +1,5 @@
 import React from "react";
-import { X, ExternalLink, GitBranch, ArrowRight, Layers } from "lucide-react";
+import { X, ExternalLink, GitBranch, ArrowRight, Layers } from "./UiIcon";
 
 export interface KnowledgeDependency {
   type: "dependency" | "branch" | "parallel" | "convergent";
