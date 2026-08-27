@@ -1,6 +1,5 @@
 # installed only for tests (kept out of the repo)
 node_modules/
-package-lock.json
 pnpm-lock.yaml
 
 # editor / os

@@ -1,0 +1,32 @@
+name: awesome-ui CI (test + typecheck)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: tests/package-lock.json
+
+      - name: Install (locked)
+        run: npm ci
+
+      - name: Typecheck (React strict TS)
+        run: npm run typecheck
+
+      - name: Run regression tests
+        run: npm test
