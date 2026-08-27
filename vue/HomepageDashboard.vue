@@ -48,8 +48,8 @@
     <main class="flex flex-wrap items-start px-3 sm:px-5 pb-4">
       <p v-if="filteredGroups.length === 0" class="p-4 text-sm text-zinc-400">{{ emptyMessage }}</p>
       <div
-        v-for="group in filteredGroups"
-        :key="group.name"
+        v-for="(group, groupIndex) in filteredGroups"
+        :key="`${group.name}-${groupIndex}`"
         class="services-group w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-1 pb-0"
       >
         <button
@@ -108,6 +108,7 @@
                   width="32"
                   height="32"
                   class="w-8 h-8 object-contain"
+                  @error="onIconError"
                 />
                 <span v-else-if="service.icon" class="text-xl leading-none">{{ service.icon }}</span>
                 <span v-else class="text-xl font-bold text-zinc-500 dark:text-zinc-300">{{ monogram(service.name) }}</span>
@@ -124,7 +125,7 @@
             </component>
 
             <span
-              v-if="statusStyle === 'dot'"
+              v-if="effectiveStatusStyle === 'dot'"
               :title="statusLabel(service)"
               role="img"
               :aria-label="statusLabel(service)"
@@ -132,7 +133,7 @@
               :class="statusConfig(service.status).dot"
             />
             <span
-              v-else-if="statusStyle === 'pill'"
+              v-else-if="effectiveStatusStyle === 'pill'"
               role="img"
               :aria-label="statusLabel(service)"
               class="absolute top-1.5 right-1.5 text-[8px] font-bold uppercase tracking-wide px-1.5 py-1 rounded-md bg-zinc-500/10 dark:bg-zinc-400/10"
@@ -283,6 +284,16 @@ const toggleGroup = (name: string) => {
 };
 
 /* ---------- helpers ---------- */
+const effectiveStatusStyle = computed<'pill' | 'dot' | 'none'>(() =>
+  ['pill', 'dot', 'none'].includes(props.statusStyle) ? props.statusStyle : 'pill'
+);
+
+/** Hide an icon <img> on load failure (parity: letter monogram space is kept by container) */
+const onIconError = (e: Event) => {
+  const el = e.target as HTMLImageElement;
+  el.style.display = 'none';
+};
+
 const headerCls = computed(() =>
   props.headerStyle === 'boxed'
     ? 'm-3 sm:m-5 mb-0 rounded-lg bg-white dark:bg-white/5 shadow-md shadow-zinc-900/10 p-4'

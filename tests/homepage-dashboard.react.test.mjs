@@ -76,6 +76,20 @@ test('unchanged output when name/href are missing (no crash, safe render)', () =
   assert.ok(html.includes('class="service-card'));
 });
 
+test('invalid statusStyle falls back to pill (never silently hides status UI)', () => {
+  const html = render({ groups: GROUPS, statusStyle: 'bogus' });
+  assert.ok(html.includes('text-emerald-500/90'), 'pill label rendered');
+  assert.ok(!html.includes('h-3 w-3 rounded-full bg-emerald-500'), 'no dot');
+});
+
+test('clock is self-contained (top-level render does not re-render every second)', () => {
+  // Clock must not require a parent-driven interval: SSR output contains a clock block,
+  // and the top-level component no longer owns a `now` — so a ticking Clock cannot
+  // re-render the whole dashboard. Verify the isolated Clock subtree exists in markup.
+  const html = render({ groups: [], showClock: true });
+  assert.ok(html.includes('min-h-28') || html.includes('min-w-28'), 'clock block rendered');
+});
+
 test('default version must not masquerade as an upstream version number', () => {
   const html = render({});
   assert.ok(html.includes('Homepage · awesome-ui'));

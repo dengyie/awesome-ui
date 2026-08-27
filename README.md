@@ -136,4 +136,6 @@ awesome-ui/
 > - 搜索无命中时隐藏整组（与 React/Vue filter 行为对齐），缺失字段（name/href/description）安全降级不崩溃。
 > - 时钟随 `showClock` 动态启停；默认 `version` 不伪装上游版本号。
 >
-> - **测试**：`npm install && npm test` 运行 19 项回归（vanilla jsdom 行为 + React SSR + Vue SFC 编译/SSR），`npm run typecheck` 对 React 端做 strict TS 校验。
+> - **折叠事件**：React `onToggleGroup(group, collapsed)` / Vue `@toggle` / Vanilla `group-toggle` CustomEvent 三端对齐；`statusStyle` 未知值回退 `pill`，图标加载失败隐藏、时钟隔离秒刷新不重渲染整树。
+>
+> - **测试**：`npm install && npm test` 运行 22 项回归（vanilla jsdom 行为 + React SSR / Vue SFC 编译/SSR），`npm run typecheck` 对 React 端做 strict TS 校验。

@@ -135,11 +135,6 @@ class HomepageDashboardElement extends HTMLElement {
     return /^(https?:\/\/|mailto:)/i.test(t);
   }
 
-  _handleIconFallback(event) {
-    // remove the <img> when a remote icon fails to load (letter monogram shows)
-    if (event.target) event.target.style.display = "none";
-  }
-
   _iconHTML(service) {
     const icon = service?.icon;
     const name = service?.name || "?";
@@ -303,10 +298,15 @@ class HomepageDashboardElement extends HTMLElement {
       this._search.trim()
         ? `<p class="p-4 text-sm text-zinc-400">No matching services for “${this._esc(this._search.trim())}”.</p>`
         : `<p class="p-4 text-sm text-zinc-400">No groups configured — assign <code>dash.groups = […]</code>.</p>`;
+    const hasGroups = this._groups.length > 0;
     const mainContent =
-      this._groups.length === 0
+      !hasGroups
         ? emptyNote
         : this._groups.map((g, i) => this._groupHTML(g, i)).join("");
+    // persistent no-match note (shown only while a live search matches nothing)
+    const noMatchNote = hasGroups
+      ? `<p data-el='empty-search-note' class="px-3.5 pt-1 pb-2 text-sm text-zinc-400 hidden">No matching services for \u201c${this._esc(this._search.trim())}\u201d.</p>`
+      : "";
 
     this.innerHTML = `
       <div class="homepage-dashboard relative w-full rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 overflow-hidden"
@@ -314,6 +314,7 @@ class HomepageDashboardElement extends HTMLElement {
         ${this._headerHTML()}
         <main class="flex flex-wrap items-start px-3 sm:px-5 pb-4">
           ${mainContent}
+          ${noMatchNote}
         </main>
         ${this._footerHTML()}
       </div>
@@ -348,6 +349,14 @@ class HomepageDashboardElement extends HTMLElement {
       const anyVisible = cards.some((c) => !c.classList.contains("hidden"));
       group.hidden = q.length > 0 && !anyVisible;
     });
+    const note = this.querySelector("[data-el='empty-search-note']");
+    if (note) {
+      const cards = [...this.querySelectorAll(".service-card")];
+      const everythingHidden = cards.length > 0 && cards.every((c) => c.classList.contains("hidden"));
+      const show = q.length > 0 && everythingHidden;
+      note.classList.toggle("hidden", !show);
+      if (show) note.textContent = `No matching services for \u201c${this._search.trim()}\u201d.`;
+    }
   }
 
   // ----- interactions (event delegation on root) -----

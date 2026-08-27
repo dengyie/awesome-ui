@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 /**
  * HomepageDashboard — React
- * A copy-paste, zero-blackbox single-file homelab dashboard with the iconic
+ * A copy-paste, zero-backbox single-file homelab dashboard with the iconic
  * gethomepage/homepage look: header (title + live clock + search) + responsive
  * grouped service cards with status dots/pills + version footer.
  *
@@ -43,6 +43,8 @@ export interface HomepageDashboardProps {
   searchPlaceholder?: string;
   collapsible?: boolean;
   className?: string;
+  /** Emitted when a group is collapsed/expanded (parity with Vue `group-toggle` emit and Vanilla CustomEvent) */
+  onToggleGroup?: (group: string, collapsed: boolean) => void;
 }
 
 export const statusConfig = (
@@ -63,6 +65,13 @@ export const statusConfig = (
       return { dot: "bg-zinc-400/60 dark:bg-zinc-500/60", pill: "text-zinc-500 dark:text-zinc-400", label: "—" };
   }
 };
+
+const STATUS_STYLES = ["pill", "dot", "none"] as const;
+export type HomepageStatusStyle = (typeof STATUS_STYLES)[number];
+
+/** Unknown values quietly fall back to "pill" (they must never silently hide all status UI). */
+const resolveStatusStyle = (value?: string): HomepageStatusStyle =>
+  STATUS_STYLES.includes(value as HomepageStatusStyle) ? (value as HomepageStatusStyle) : "pill";
 
 /** Only allow safe URL protocols into the anchor. Blocks javascript:, data:, vbscript:, file: … */
 export const isSafeHref = (href?: string): boolean => {
@@ -87,13 +96,40 @@ const ServiceIcon: React.FC<{ service: HomepageService }> = ({ service }) => {
   if (/^(https?:|data:|\.|\/)/i.test(service.icon)) {
     return (
       <div className={wrap}>
-        <img src={service.icon} alt="" loading="lazy" width={32} height={32} className="w-8 h-8 object-contain" />
+        <img
+          src={service.icon}
+          alt=""
+          loading="lazy"
+          width={32}
+          height={32}
+          className="w-8 h-8 object-contain"
+          onError={(e) => (e.currentTarget.style.display = "none")}
+        />
       </div>
     );
   }
   return (
     <div className={wrap}>
       <span className="text-xl leading-none">{service.icon}</span>
+    </div>
+  );
+};
+
+/** Self-contained ticking clock — isolates re-render storms to this subtree only. */
+const Clock: React.FC = () => {
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
+  return (
+    <div className="text-right shrink-0 min-w-28">
+      <div className="text-2xl sm:text-3xl font-semibold tabular-nums text-zinc-800 dark:text-zinc-100 leading-tight">
+        {now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+      </div>
+      <div className="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+        {now.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" })}
+      </div>
     </div>
   );
 };
@@ -110,16 +146,11 @@ export const HomepageDashboard: React.FC<HomepageDashboardProps> = ({
   searchPlaceholder = "Search services…",
   collapsible = true,
   className = "",
+  onToggleGroup,
 }) => {
-  const [now, setNow] = useState(() => new Date());
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
   const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    if (!showClock) return;
-    const timer = window.setInterval(() => setNow(new Date()), 1000);
-    return () => window.clearInterval(timer);
-  }, [showClock]);
+  const effectiveStatusStyle = resolveStatusStyle(statusStyle);
 
   const trimmedQuery = query.trim().toLowerCase();
   const filteredGroups = useMemo(() => {
@@ -138,7 +169,11 @@ export const HomepageDashboard: React.FC<HomepageDashboardProps> = ({
 
   const toggleGroup = (name: string) => {
     if (!collapsible) return;
-    setCollapsed((prev) => ({ ...prev, [name]: !prev[name] }));
+    setCollapsed((prev) => {
+      const next = !prev[name];
+      onToggleGroup?.(name, next);
+      return { ...prev, [name]: next };
+    });
   };
 
   const headerCls =
@@ -189,16 +224,7 @@ export const HomepageDashboard: React.FC<HomepageDashboardProps> = ({
                   />
                 </div>
               )}
-              {showClock && (
-                <div className="text-right shrink-0 min-w-28">
-                  <div className="text-2xl sm:text-3xl font-semibold tabular-nums text-zinc-800 dark:text-zinc-100 leading-tight">
-                    {now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                  </div>
-                  <div className="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                    {now.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" })}
-                  </div>
-                </div>
-              )}
+              {showClock && <Clock />}
             </div>
           )}
         </div>
@@ -206,10 +232,10 @@ export const HomepageDashboard: React.FC<HomepageDashboardProps> = ({
 
       <main className="flex flex-wrap items-start px-3 sm:px-5 pb-4">
         {filteredGroups.length === 0 && <p className="p-4 text-sm text-zinc-400">{emptyMessage}</p>}
-        {filteredGroups.map((group) => {
+        {filteredGroups.map((group, groupIndex) => {
           const isCollapsed = Boolean(collapsed[group.name]);
           return (
-            <div key={group.name} className="services-group w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-1 pb-0">
+            <div key={`${group.name}-${groupIndex}`} className="services-group w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-1 pb-0">
               <button
                 type="button"
                 onClick={() => toggleGroup(group.name)}
@@ -273,7 +299,7 @@ export const HomepageDashboard: React.FC<HomepageDashboardProps> = ({
                         ) : (
                           <div className="flex select-none items-center">{content}</div>
                         )}
-                        {statusStyle === "dot" && (
+                        {effectiveStatusStyle === "dot" && (
                           <span
                             title={statusLabel}
                             role="img"
@@ -281,7 +307,7 @@ export const HomepageDashboard: React.FC<HomepageDashboardProps> = ({
                             className={`absolute top-1.5 right-1.5 h-3 w-3 rounded-full ${cfg.dot}`}
                           />
                         )}
-                        {statusStyle === "pill" && (
+                        {effectiveStatusStyle === "pill" && (
                           <span
                             role="img"
                             aria-label={statusLabel}

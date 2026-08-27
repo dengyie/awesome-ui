@@ -82,6 +82,12 @@ test('safe defaults — version text and title, no upstream version masquerade',
   assert.ok(!html.includes('v2.1.0'));
 });
 
+test('invalid statusStyle falls back to pill', async () => {
+  const html = await render({ groups: GROUPS, statusStyle: 'bogus' });
+  assert.ok(html.includes('text-emerald-500/90'), 'pill label present');
+  assert.ok(!html.includes('h-3 w-3 rounded-full bg-emerald-500'), 'no dot');
+});
+
 test('missing name/status does not crash SSR', async () => {
   const html = await render({ groups: [{ name: 'G', services: [{ status: 'up' }] }] });
   assert.ok(html.includes('service-card'));

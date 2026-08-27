@@ -139,8 +139,13 @@ test('search matches name and description and hides empty groups', () => {
     set('zzz-no-match');
     const visibleGroups = [...window.document.querySelectorAll('.services-group')].filter((g) => !g.hidden);
     assert.equal(visibleGroups.length, 0); // no empty group headers left behind (parity with React/Vue)
+    const note = window.document.querySelector('[data-el="empty-search-note"]');
+    assert.ok(note, 'no-match note exists');
+    assert.ok(!note.classList.contains('hidden'), 'no-match note visible');
+    assert.ok(note.textContent.includes('no-match'), 'note states the query');
     set('');
     assert.equal(window.document.querySelectorAll('.service-card:not(.hidden)').length, 4);
+    assert.ok(note.classList.contains('hidden'), 'note hidden after clearing search');
   } finally {
     dom.window.close();
   }
