@@ -138,4 +138,4 @@ awesome-ui/
 >
 > - **折叠事件**：React `onToggleGroup(group, collapsed)` / Vue `@toggle` / Vanilla `group-toggle` CustomEvent 三端对齐；`statusStyle` 未知值回退 `pill`，图标加载失败隐藏、时钟隔离秒刷新不重渲染整树。
 >
-> - **测试**：`npm install && npm test` 运行 22 项回归（vanilla jsdom 行为 + React SSR / Vue SFC 编译/SSR），`npm run typecheck` 对 React 端做 strict TS 校验。
+> - **测试**：仓库本身零依赖、即拷即用；回归在独立工程 `tests/`（`cd tests && npm install && npm test`，22 项：vanilla jsdom、React SSR、Vue SFC 编译/SSR；`npm run typecheck` 对 React 端 strict TS）。

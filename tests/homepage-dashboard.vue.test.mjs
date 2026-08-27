@@ -45,7 +45,7 @@ const runtime = ts.transpileModule(assembled, {
   },
 }).outputText;
 
-const tmpDir = join(root, 'node_modules', '.cache-homepage');
+const tmpDir = join(here, 'node_modules', '.cache-homepage');
 mkdirSync(tmpDir, { recursive: true });
 writeFileSync(join(tmpDir, 'vue.mjs'), runtime);
 const { default: Comp } = await import(join(tmpDir, 'vue.mjs'));

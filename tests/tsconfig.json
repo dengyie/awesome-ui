@@ -12,5 +12,5 @@
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["react/HomepageDashboard.tsx"]
+  "include": ["../react/HomepageDashboard.tsx"]
 }

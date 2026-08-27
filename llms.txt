@@ -76,7 +76,7 @@
    - Vue 3: vue/HomepageDashboard.vue
    - Vanilla: vanilla/HomepageDashboard.js
    - Hardening: href protocol whitelist (only http(s)/mailto:////./../), entity-escaped text, empty-state parity, optional stable id key.
-   - Tests: tests/*.test.mjs — npm test (jsdom + React SSR + Vue SFC/SSR), npm run typecheck (React strict TS)
+   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（22 项 jsdom/SSR）；npm run typecheck（React strict）；仓库根零依赖
 
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:

@@ -28,7 +28,7 @@ const out = ts.transpileModule(src, {
   },
 }).outputText;
 
-const tmpDir = join(root, 'node_modules', '.cache-homepage');
+const tmpDir = join(here, 'node_modules', '.cache-homepage');
 mkdirSync(tmpDir, { recursive: true });
 writeFileSync(join(tmpDir, 'react.mjs'), out);
 const { HomepageDashboard, isSafeHref } = await import(join(tmpDir, 'react.mjs'));

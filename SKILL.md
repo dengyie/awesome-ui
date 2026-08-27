@@ -95,7 +95,7 @@ awesome-ui/
 - **折叠事件 API**（三端对齐）: React `onToggleGroup(group, collapsed)` 回调 ／ Vue emit `'group-toggle'` ／ Vanilla `CustomEvent('group-toggle')`；`statusStyle` 非法值统一回退 `pill`，图标加载失败统一隐藏，同名组 key 用 name+index 防冲突，React 时钟已拆独立子组件避免整树 re-render。
 - **安全**: `href` 白名单 — 仅 `http(s)`/`mailto:`/`//`/`/`/`./`/`../` 渲染为链接，`javascript:`/`data:` 等一律不渲染；文本实体转义防注入，React 端额外导出 `isSafeHref`；`service.id` 为可选稳定 key，缺失时回落字符串 name。
 - **搜索一致性**: 无命中组隐藏于三端行为一致（不残留空 group header），搜索框 `aria-label`，点 dot/pill 带 `role` 标注。
-- **测试**: `npm install && npm test`（19 项：vanilla jsdom 行为 / React SSR / Vue SFC 编译+SSR），`npm run typecheck` strict TS 校验 React 端。
+- **测试**: 独立工程 `tests/`（`cd tests && npm install && npm test` — 22 项：vanilla jsdom / React SSR / Vue SFC 编译+SSR；`npm run typecheck` strict React TS）；仓库根零依赖、组件即拷即用。
 
 ## LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
