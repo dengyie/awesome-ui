@@ -38,15 +38,19 @@
   <script type="module" src="./vanilla/RoadmapTimeline.js"></script>
   <script type="module" src="./vanilla/KnowledgeDrawer.js"></script>
   <script type="module" src="./vanilla/HomepageDashboard.js"></script>
+  <script type="module" src="./vanilla/ContextUsageBadge.js"></script>
+  <script type="module" src="./vanilla/ModelSelector.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.2.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.3.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
+      <context-usage-badge id="header-context-badge" used-tokens="68500" max-tokens="128000" model-name="claude-3-5-sonnet"></context-usage-badge>
+      <model-selector id="header-model-selector" selected-id="claude-3-5-sonnet"></model-selector>
       <theme-toggle></theme-toggle>
       <a href="https://github.com/dengyie/awesome-ui" target="_blank" class="hover:text-zinc-100 transition-colors">GitHub ↗</a>
     </div>
@@ -230,6 +234,33 @@
             };
           }
         });
+      }
+
+      const modelSel = document.getElementById('header-model-selector');
+      const ctxBadge = document.getElementById('header-context-badge');
+
+      if (modelSel) {
+        modelSel.models = [
+          { id: 'claude-3-5-sonnet', name: 'Claude 3.5 Sonnet', provider: 'Anthropic', contextLength: '200k', tags: ['Default', 'Coding'] },
+          { id: 'gpt-4o', name: 'GPT-4o', provider: 'OpenAI', contextLength: '128k', tags: ['General'] },
+          { id: 'deepseek-r1', name: 'DeepSeek R1', provider: 'DeepSeek', contextLength: '64k', tags: ['Reasoning'] },
+          { id: 'gemini-1-5-pro', name: 'Gemini 1.5 Pro', provider: 'Google', contextLength: '2M', tags: ['Long Context'] }
+        ];
+
+        modelSel.addEventListener('select', (e) => {
+          const model = e.detail;
+          if (ctxBadge) {
+            ctxBadge.setAttribute('model-name', model.id);
+          }
+        });
+      }
+
+      if (ctxBadge) {
+        ctxBadge.breakdown = [
+          { label: 'System Prompt', count: 4200, colorClass: 'bg-purple-500' },
+          { label: 'Chat History', count: 48500, colorClass: 'bg-blue-500' },
+          { label: 'Active Turn', count: 15800, colorClass: 'bg-emerald-500' }
+        ];
       }
     });
   </script>

@@ -35,6 +35,8 @@
 | **`StatusIndicator`** | 状态指示徽章 | 节点与服务状态 (Online/Connecting/Error) 呼吸光晕与延迟指示 |
 | **`AudioWaveVisualizer`** | 语音交互波形 | 实时音频/语音交互波形跳动与呼吸动效 |
 | **`HomepageDashboard`** | 仪表盘/个性首页 | 对标 gethomepage/homepage：分组服务卡片、折叠、即时搜索、实时时钟、状态点/胶囊、页脚版本 |
+| **`ContextUsageBadge`** | 上下文与 Token 仪表 | Context Window 百分比进度条、分级色彩预警（70%/90%）、Prompt/History/Active 细分分布浮层 |
+| **`ModelSelector`** | 模型切换选择器 | 即时搜索过滤、Provider 与 Context 长度徽章、多模型平滑切换抽屉 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -61,7 +63,9 @@ awesome-ui/
 │   ├── AudioWaveVisualizer.tsx
 │   ├── RoadmapTimeline.tsx
 │   ├── KnowledgeDrawer.tsx
-│   └── HomepageDashboard.tsx
+│   ├── HomepageDashboard.tsx
+│   ├── ContextUsageBadge.tsx
+│   └── ModelSelector.tsx
 ├── vue/                       # Vue 3 (SFC) 单文件组件
 │   ├── UiIcon.vue           # 统一零依赖 SVG 图标
 │   ├── ChatPromptInput.vue
@@ -78,7 +82,9 @@ awesome-ui/
 │   ├── AudioWaveVisualizer.vue
 │   ├── RoadmapTimeline.vue
 │   ├── KnowledgeDrawer.vue
-│   └── HomepageDashboard.vue
+│   ├── HomepageDashboard.vue
+│   ├── ContextUsageBadge.vue
+│   └── ModelSelector.vue
 └── vanilla/                   # 原生 JS / Web Components 单文件
     ├── UiIcon.js            # uiIcon() SVG 工厂函数
     ├── ChatPromptInput.js
@@ -95,7 +101,9 @@ awesome-ui/
     ├── AudioWaveVisualizer.js
     ├── RoadmapTimeline.js
     ├── KnowledgeDrawer.js
-    └── HomepageDashboard.js
+    ├── HomepageDashboard.js
+    ├── ContextUsageBadge.js
+    └── ModelSelector.js
 ```
 
 ---

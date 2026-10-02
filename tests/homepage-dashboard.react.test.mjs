@@ -12,7 +12,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import ts from 'typescript';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -31,7 +31,7 @@ const out = ts.transpileModule(src, {
 const tmpDir = join(here, 'node_modules', '.cache-homepage');
 mkdirSync(tmpDir, { recursive: true });
 writeFileSync(join(tmpDir, 'react.mjs'), out);
-const { HomepageDashboard, isSafeHref } = await import(join(tmpDir, 'react.mjs'));
+const { HomepageDashboard, isSafeHref } = await import(pathToFileURL(join(tmpDir, 'react.mjs')).href);
 
 const GROUPS = [
   {

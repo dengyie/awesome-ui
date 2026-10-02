@@ -67,22 +67,32 @@
    - Vue 3: vue/StatusIndicator.vue
    - Vanilla: vanilla/StatusIndicator.js
 
-13. RoadmapTimeline: Trail/Roadmap milestone progression with diamond pins, 8-stage color palette, and completion states.
+12. ContextUsageBadge: LLM token usage telemetry badge with tiered threshold colors (<70% green, 70-90% amber, >=90% rose) and token breakdown popover.
+   - React: react/ContextUsageBadge.tsx
+   - Vue 3: vue/ContextUsageBadge.vue
+   - Vanilla: vanilla/ContextUsageBadge.js
+
+13. ModelSelector: Model routing switcher with instant search, provider badges, context window size tags, and dropdown drawer.
+   - React: react/ModelSelector.tsx
+   - Vue 3: vue/ModelSelector.vue
+   - Vanilla: vanilla/ModelSelector.js
+
+14. RoadmapTimeline: Trail/Roadmap milestone progression with diamond pins, 8-stage color palette, and completion states.
    - React: react/RoadmapTimeline.tsx
    - Vue 3: vue/RoadmapTimeline.vue
    - Vanilla: vanilla/RoadmapTimeline.js
 
-14. KnowledgeDrawer: Sliding knowledge graph drawer with dependency badges, stage color accent, and primary action CTA.
+15. KnowledgeDrawer: Sliding knowledge graph drawer with dependency badges, stage color accent, and primary action CTA.
    - React: react/KnowledgeDrawer.tsx
    - Vue 3: vue/KnowledgeDrawer.vue
    - Vanilla: vanilla/KnowledgeDrawer.js
 
-15. HomepageDashboard: fenced/copy-paste homelab/startpage dashboard inspired by gethomepage/homepage — grouped service cards, collapsible groups, live clock, instant search filter, status dots/pills, version footer.
+16. HomepageDashboard: fenced/copy-paste homelab/startpage dashboard inspired by gethomepage/homepage — grouped service cards, collapsible groups, live clock, instant search filter, status dots/pills, version footer.
    - React: react/HomepageDashboard.tsx
    - Vue 3: vue/HomepageDashboard.vue
    - Vanilla: vanilla/HomepageDashboard.js
    - Hardening: href protocol whitelist (only http(s)/mailto:////./../), entity-escaped text, empty-state parity, optional stable id key.
-   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（22 项 jsdom/SSR）；npm run typecheck（React strict）；仓库根零依赖
+   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（24 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
 
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:

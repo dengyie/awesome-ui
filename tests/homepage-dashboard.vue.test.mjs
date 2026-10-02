@@ -13,7 +13,7 @@ import { renderToString } from '@vue/server-renderer';
 import ts from 'typescript';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -48,7 +48,7 @@ const runtime = ts.transpileModule(assembled, {
 const tmpDir = join(here, 'node_modules', '.cache-homepage');
 mkdirSync(tmpDir, { recursive: true });
 writeFileSync(join(tmpDir, 'vue.mjs'), runtime);
-const { default: Comp } = await import(join(tmpDir, 'vue.mjs'));
+const { default: Comp } = await import(pathToFileURL(join(tmpDir, 'vue.mjs')).href);
 
 const GROUPS = [
   {

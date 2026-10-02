@@ -413,6 +413,125 @@ export const ChatPromptInput: React.FC<ChatPromptInputProps> = ({
 };
 
 ================================================================
+File: react/ContextUsageBadge.tsx
+================================================================
+
+import React, { useState } from "react";
+import { UiIcon, UiIconName } from "./UiIcon";
+
+export interface ContextUsageTokenBreakdown {
+  label: string;
+  count: number;
+  colorClass?: string;
+}
+
+export interface ContextUsageProps {
+  usedTokens: number;
+  maxTokens: number;
+  modelName?: string;
+  contextWindow?: number;
+  breakdown?: ContextUsageTokenBreakdown[];
+  compact?: boolean;
+  className?: string;
+}
+
+const formatNumber = (num: number): string => {
+  if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
+  if (num >= 1_000) return `${(num / 1_000).toFixed(1)}k`;
+  return String(num);
+};
+
+export const ContextUsageBadge: React.FC<ContextUsageProps> = ({
+  usedTokens,
+  maxTokens,
+  modelName,
+  breakdown = [],
+  compact = false,
+  className = "",
+}) => {
+  const [showPopover, setShowPopover] = useState(false);
+
+  const safeMax = Math.max(1, maxTokens);
+  const safeUsed = Math.max(0, usedTokens);
+  const percentage = Math.min(100, Math.round((safeUsed / safeMax) * 100));
+
+  let statusColor = "bg-emerald-500 text-emerald-500 border-emerald-500/20";
+  let barColor = "bg-emerald-500";
+  if (percentage >= 90) {
+    statusColor = "bg-rose-500 text-rose-500 border-rose-500/20";
+    barColor = "bg-rose-500";
+  } else if (percentage >= 70) {
+    statusColor = "bg-amber-500 text-amber-500 border-amber-500/20";
+    barColor = "bg-amber-500";
+  }
+
+  return (
+    <div className={`relative inline-block text-xs font-sans select-none ${className}`}>
+      <button
+        type="button"
+        onClick={() => setShowPopover(!showPopover)}
+        onBlur={() => setTimeout(() => setShowPopover(false), 200)}
+        className="flex items-center gap-2 px-2.5 py-1 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 transition-colors shadow-sm"
+        aria-label="Context Window Usage"
+        aria-expanded={showPopover}
+      >
+        <UiIcon name="cpu" size={14} className="text-zinc-500 dark:text-zinc-400 shrink-0" />
+        {modelName && !compact && (
+          <span className="font-mono text-zinc-700 dark:text-zinc-300 font-medium truncate max-w-[120px]">
+            {modelName}
+          </span>
+        )}
+        <div className="w-16 h-1.5 rounded-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden shrink-0">
+          <div
+            className={`h-full transition-all duration-300 ${barColor}`}
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
+        <span className="font-mono text-[11px] font-semibold text-zinc-700 dark:text-zinc-300">
+          {percentage}%
+        </span>
+      </button>
+
+      {showPopover && (
+        <div className="absolute right-0 bottom-full mb-2 w-64 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-xl z-30 animate-in fade-in zoom-in-95 duration-150">
+          <div className="flex items-center justify-between pb-2 border-b border-zinc-100 dark:border-zinc-800">
+            <span className="font-semibold text-zinc-800 dark:text-zinc-200">Context Window</span>
+            <span className="font-mono text-[11px] text-zinc-500">
+              {formatNumber(safeUsed)} / {formatNumber(safeMax)}
+            </span>
+          </div>
+
+          {modelName && (
+            <div className="pt-2 text-[11px] text-zinc-500 flex justify-between">
+              <span>Model</span>
+              <span className="font-mono text-zinc-700 dark:text-zinc-300 font-medium">{modelName}</span>
+            </div>
+          )}
+
+          {breakdown.length > 0 && (
+            <div className="pt-2.5 space-y-1.5">
+              <div className="text-[10px] uppercase font-semibold text-zinc-400 tracking-wider">Breakdown</div>
+              {breakdown.map((item, idx) => (
+                <div key={idx} className="flex items-center justify-between text-[11px]">
+                  <span className="flex items-center gap-1.5 text-zinc-600 dark:text-zinc-400">
+                    <span className={`w-2 h-2 rounded-full ${item.colorClass || 'bg-zinc-400'}`} />
+                    {item.label}
+                  </span>
+                  <span className="font-mono text-zinc-700 dark:text-zinc-300">
+                    {formatNumber(item.count)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+export default ContextUsageBadge;
+
+================================================================
 File: react/HomepageDashboard.tsx
 ================================================================
 
@@ -760,6 +879,7 @@ export const HomepageDashboard: React.FC<HomepageDashboardProps> = ({
 };
 
 export default HomepageDashboard;
+
 ================================================================
 File: react/KnowledgeDrawer.tsx
 ================================================================
@@ -1042,98 +1162,208 @@ export const MessageActionToolbar: React.FC<MessageActionToolbarProps> = ({
 };
 
 ================================================================
-File: react/paper-theme.ts
+File: react/ModelSelector.tsx
 ================================================================
 
-/**
- * Paper Atelier & Trail Theme System (aitubook.cn 风格设计资产规范与预设)
- * 纯 CSS 注入 / Tailwind 拓展方案
- */
+import React, { useState, useRef, useEffect, useMemo } from "react";
+import { UiIcon } from "./UiIcon";
 
-export const PaperTrailThemeCSS = `
-/* -------------------------------------------------------------
- * 1. 核心变量系统 (Paper, Ink & 8-Stage Colors)
- * ------------------------------------------------------------- */
-:root {
-  --font-serif: "Songti SC", "Noto Serif SC", "STSong", "SimSun", Georgia, serif;
-  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
-  --font-mono: "SF Mono", ui-monospace, "Cascadia Code", Menlo, monospace;
-
-  /* 基础纸墨调色盘 (Light Mode) */
-  --paper: #f1efe7;
-  --paper-raised: #faf8f1;
-  --paper-sunken: #e7e4d7;
-  --ink: #22262d;
-  --ink-soft: #545b64;
-  --ink-faint: #8d9298;
-  --line: #d6d2c2;
-  --line-strong: #b3ac97;
-  --accent: #c2410c;
-  --accent-ink: #1d4ed8;
-  --danger: #b91c1c;
-
-  /* 8 阶段里程碑色阶 */
-  --stage-1: #1d4ed8;
-  --stage-2: #0f766e;
-  --stage-3: #4d7c0f;
-  --stage-4: #a16207;
-  --stage-5: #c2410c;
-  --stage-6: #0e7490;
-  --stage-7: #be185d;
-  --stage-8: #b91c1c;
-
-  /* 材质微纹理 */
-  --contour: rgba(34, 38, 45, 0.055);
-  --graticule: rgba(29, 78, 216, 0.05);
-
-  /* 投影与动效 */
-  --shadow-card: 0 1px 0 rgba(34, 38, 45, .07), 0 5px 16px rgba(34, 38, 45, .07);
-  --shadow-lift: 0 2px 0 rgba(34, 38, 45, .08), 0 12px 28px rgba(34, 38, 45, .12);
-  --ease-survey: cubic-bezier(.16, 1, .3, 1);
-  --ease-stake: cubic-bezier(.34, 1.4, .64, 1);
+export interface ModelOption {
+  id: string;
+  name: string;
+  provider?: string;
+  description?: string;
+  contextLength?: string;
+  tags?: string[];
+  isDefault?: boolean;
 }
 
-:root[data-theme="dark"], .dark {
-  --paper: #14171c;
-  --paper-raised: #1b1f26;
-  --paper-sunken: #0f1216;
-  --ink: #e9e6db;
-  --ink-soft: #a9a89c;
-  --ink-faint: #6f7268;
-  --line: #2b3038;
-  --line-strong: #3e444e;
-  --accent: #f0692e;
-  --accent-ink: #6ea8fe;
-  --danger: #f87171;
-
-  --stage-1: #6ea8fe;
-  --stage-2: #2dd4bf;
-  --stage-3: #84cc16;
-  --stage-4: #eab308;
-  --stage-5: #f0692e;
-  --stage-6: #22d3ee;
-  --stage-7: #f472b6;
-  --stage-8: #f87171;
-
-  --contour: rgba(233, 230, 219, 0.06);
-  --graticule: rgba(110, 168, 254, 0.06);
-  --shadow-card: 0 1px 0 rgba(0, 0, 0, .4), 0 8px 22px rgba(0, 0, 0, .42);
-  --shadow-lift: 0 2px 0 rgba(0, 0, 0, .4), 0 14px 32px rgba(0, 0, 0, .52);
+export interface ModelSelectorProps {
+  models: ModelOption[];
+  selectedId: string;
+  onSelect?: (model: ModelOption) => void;
+  placeholder?: string;
+  showSearch?: boolean;
+  disabled?: boolean;
+  className?: string;
 }
 
-/* -------------------------------------------------------------
- * 2. 大地等高线与坐标网格背景 (Topography Texture)
- * ------------------------------------------------------------- */
-.bg-paper-topography {
-  background-color: var(--paper);
-  background-image:
-    repeating-radial-gradient(circle at 18% 12%, transparent 0 46px, var(--contour) 46px 47px),
-    repeating-radial-gradient(circle at 86% 88%, transparent 0 64px, var(--contour) 64px 65px),
-    linear-gradient(90deg, var(--graticule) 1px, transparent 1px),
-    linear-gradient(180deg, var(--graticule) 1px, transparent 1px);
-  background-size: auto, auto, 120px 120px, 120px 120px;
-}
-`;
+export const ModelSelector: React.FC<ModelSelectorProps> = ({
+  models = [],
+  selectedId,
+  onSelect,
+  placeholder = "Select model...",
+  showSearch = true,
+  disabled = false,
+  className = "",
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const selectedModel = useMemo(
+    () => models.find((m) => m.id === selectedId) || null,
+    [models, selectedId]
+  );
+
+  const filteredModels = useMemo(() => {
+    if (!searchQuery.trim()) return models;
+    const q = searchQuery.toLowerCase();
+    return models.filter(
+      (m) =>
+        m.name.toLowerCase().includes(q) ||
+        (m.provider && m.provider.toLowerCase().includes(q)) ||
+        (m.description && m.description.toLowerCase().includes(q)) ||
+        (m.tags && m.tags.some((t) => t.toLowerCase().includes(q)))
+    );
+  }, [models, searchQuery]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
+  const handleSelect = (model: ModelOption) => {
+    onSelect?.(model);
+    setIsOpen(false);
+    setSearchQuery("");
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className={`relative inline-block text-xs font-sans text-zinc-900 dark:text-zinc-100 ${className}`}
+    >
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => setIsOpen(!isOpen)}
+        className={`flex items-center justify-between gap-2.5 px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 transition-all shadow-sm ${
+          disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+        }`}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+      >
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="p-1 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 shrink-0">
+            <UiIcon name="sparkles" size={14} />
+          </div>
+          <div className="flex flex-col text-left truncate">
+            <span className="font-semibold text-zinc-800 dark:text-zinc-200 truncate">
+              {selectedModel ? selectedModel.name : placeholder}
+            </span>
+            {selectedModel?.provider && (
+              <span className="text-[10px] text-zinc-400 font-mono">
+                {selectedModel.provider}
+                {selectedModel.contextLength ? ` · ${selectedModel.contextLength}` : ""}
+              </span>
+            )}
+          </div>
+        </div>
+
+        <UiIcon
+          name="chevron-down"
+          size={14}
+          className={`text-zinc-400 shrink-0 transition-transform duration-200 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {isOpen && (
+        <div className="absolute left-0 mt-1.5 w-72 max-h-80 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-2xl z-40 flex flex-col animate-in fade-in zoom-in-95 duration-150">
+          {showSearch && (
+            <div className="p-2 border-b border-zinc-100 dark:border-zinc-800">
+              <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-zinc-100/80 dark:bg-zinc-800/80">
+                <UiIcon name="search" size={13} className="text-zinc-400 shrink-0" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search models..."
+                  className="w-full bg-transparent border-none text-xs text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 focus:outline-none"
+                  autoFocus
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="overflow-y-auto p-1.5 space-y-1 max-h-60" role="listbox">
+            {filteredModels.length === 0 ? (
+              <div className="p-3 text-center text-zinc-400 text-xs">No models found</div>
+            ) : (
+              filteredModels.map((model) => {
+                const isSelected = model.id === selectedId;
+                return (
+                  <button
+                    key={model.id}
+                    type="button"
+                    onClick={() => handleSelect(model)}
+                    role="option"
+                    aria-selected={isSelected}
+                    className={`w-full flex items-start justify-between gap-2 p-2 rounded-lg text-left transition-colors ${
+                      isSelected
+                        ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
+                        : "hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300"
+                    }`}
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="font-semibold text-zinc-900 dark:text-zinc-100 truncate">
+                          {model.name}
+                        </span>
+                        {model.contextLength && (
+                          <span className="text-[10px] px-1.5 py-0.2 rounded bg-zinc-200/60 dark:bg-zinc-700/60 text-zinc-500 dark:text-zinc-300 font-mono">
+                            {model.contextLength}
+                          </span>
+                        )}
+                        {model.tags?.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-[9px] px-1.5 py-0.2 rounded font-medium bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      {model.description && (
+                        <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate mt-0.5">
+                          {model.description}
+                        </p>
+                      )}
+                    </div>
+
+                    {isSelected && (
+                      <UiIcon
+                        name="check"
+                        size={14}
+                        className="text-emerald-500 shrink-0 mt-0.5"
+                      />
+                    )}
+                  </button>
+                );
+              })
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+export default ModelSelector;
 
 ================================================================
 File: react/PromptChips.tsx
@@ -1848,20 +2078,23 @@ import React from "react";
 
 export type UiIconName =
   | "arrow-down" | "arrow-left" | "arrow-right" | "arrow-up" | "check"
-  | "check-circle" | "chevron-down" | "chevron-left" | "chevron-right"
-  | "circle-x" | "code" | "copy" | "eye" | "external-link" | "globe"
-  | "git-branch" | "image" | "layers" | "lock" | "loader" | "moon"
-  | "monitor" | "paperclip" | "refresh" | "sparkles" | "square" | "sun"
-  | "thumbs-down" | "thumbs-up" | "tool" | "x";
+  | "check-circle" | "chevron-down" | "chevron-left" | "chevron-right" | "chevron-up"
+  | "circle-x" | "clock" | "code" | "copy" | "cpu" | "eye" | "external-link" | "globe"
+  | "git-branch" | "image" | "layers" | "lock" | "loader" | "minus" | "moon"
+  | "monitor" | "paperclip" | "plus" | "refresh" | "search" | "sliders" | "sparkles" | "square" | "sun"
+  | "terminal" | "thumbs-down" | "thumbs-up" | "tool" | "x" | "zap";
 
 const paths: Record<UiIconName, React.ReactNode> = {
   "arrow-down": <path d="m6 9 6 6 6-6" />, "arrow-left": <path d="m15 6-6 6 6 6" />,
   "arrow-right": <path d="m9 6 6 6-6 6" />, "arrow-up": <path d="m6 15 6-6 6 6" />,
   check: <path d="m5 12 4 4L19 6" />, "check-circle": <><circle cx="12" cy="12" r="9" /><path d="m8 12 2.5 2.5L16 9" /></>,
   "chevron-down": <path d="m6 9 6 6 6-6" />, "chevron-left": <path d="m14 6-6 6 6 6" />, "chevron-right": <path d="m10 6 6 6-6 6" />,
+  "chevron-up": <path d="m6 15 6-6 6 6" />,
   "circle-x": <><circle cx="12" cy="12" r="9" /><path d="m9 9 6 6m0-6-6 6" /></>,
+  clock: <><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" /></>,
   code: <><path d="m8 9-3 3 3 3m8-6 3 3-3 3" /><path d="m14 5-4 14" /></>,
   copy: <><rect x="8" y="8" width="11" height="11" rx="2" /><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" /></>,
+  cpu: <><rect x="5" y="5" width="14" height="14" rx="2" /><path d="M9 9h6v6H9zM9 1v4m6-4v4M9 19v4m6-4v4M1 9h4m-4 6h4M19 9h4m-4 6h4" /></>,
   eye: <><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.5" /></>,
   "external-link": <><path d="M14 5h5v5M19 5l-8 8" /><path d="M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" /></>,
   globe: <><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></>,
@@ -1869,12 +2102,19 @@ const paths: Record<UiIconName, React.ReactNode> = {
   image: <><rect x="3" y="4" width="18" height="16" rx="2" /><circle cx="8.5" cy="9" r="1.5" /><path d="m21 15-4-4L5 20" /></>,
   layers: <path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5" />, lock: <><rect x="5" y="10" width="14" height="11" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></>,
   loader: <><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1" /></>,
+  minus: <path d="M5 12h14" />,
   moon: <path d="M20 15.5A8 8 0 0 1 8.5 4 8 8 0 1 0 20 15.5Z" />, monitor: <><rect x="3" y="4" width="18" height="13" rx="2" /><path d="M8 21h8m-4-4v4" /></>,
-  paperclip: <path d="m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7" />, refresh: <><path d="M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5" /></>,
+  paperclip: <path d="m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7" />,
+  plus: <path d="M12 5v14M5 12h14" />,
+  refresh: <><path d="M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5" /></>,
+  search: <><circle cx="10" cy="10" r="7" /><path d="m21 21-6-6" /></>,
+  sliders: <path d="M4 8h4m4 0h8M4 16h8m4 0h4M8 6v4m8 4v4" />,
   sparkles: <><path d="m12 3-1.2 4.8L6 9l4.8 1.2L12 15l1.2-4.8L18 9l-4.8-1.2L12 3Z" /><path d="m19 15-.6 2.4L16 18l2.4.6L19 21l.6-2.4L22 18l-2.4-.6L19 15Z" /></>,
   square: <rect x="6" y="6" width="12" height="12" rx="1" />, sun: <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4m0-14.2-1.4 1.4M6.3 17.7l-1.4 1.4" /></>,
+  terminal: <path d="m4 17 6-6-6-6m8 14h8" />,
   "thumbs-down": <path d="M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3" />, "thumbs-up": <path d="M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2" />,
-  tool: <><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z" /></>, x: <path d="m6 6 12 12M18 6 6 18" />
+  tool: <><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z" /></>, x: <path d="m6 6 12 12M18 6 6 18" />,
+  zap: <path d="M13 3 4 14h7l-1 7 9-11h-7l1-7Z" />
 };
 
 export interface UiIconProps extends React.SVGProps<SVGSVGElement> { name: UiIconName; size?: number | string; strokeWidth?: number; }
@@ -1893,9 +2133,12 @@ export const CheckCircle2 = icon("check-circle");
 export const ChevronDown = icon("chevron-down");
 export const ChevronLeft = icon("chevron-left");
 export const ChevronRight = icon("chevron-right");
+export const ChevronUp = icon("chevron-up");
 export const CircleX = icon("circle-x");
+export const Clock = icon("clock");
 export const Code2 = icon("code");
 export const Copy = icon("copy");
+export const Cpu = icon("cpu");
 export const Eye = icon("eye");
 export const ExternalLink = icon("external-link");
 export const Globe = icon("globe");
@@ -1904,18 +2147,118 @@ export const ImageIcon = icon("image");
 export const Layers = icon("layers");
 export const Lock = icon("lock");
 export const Loader2 = icon("loader");
+export const Minus = icon("minus");
 export const Moon = icon("moon");
 export const Monitor = icon("monitor");
 export const Paperclip = icon("paperclip");
+export const Plus = icon("plus");
 export const RotateCcw = icon("refresh");
+export const Search = icon("search");
+export const Sliders = icon("sliders");
 export const Sparkles = icon("sparkles");
 export const Square = icon("square");
 export const Sun = icon("sun");
+export const Terminal = icon("terminal");
 export const ThumbsDown = icon("thumbs-down");
 export const ThumbsUp = icon("thumbs-up");
 export const Wrench = icon("tool");
 export const X = icon("x");
 export const XCircle = icon("circle-x");
+export const Zap = icon("zap");
+
+================================================================
+File: react/paper-theme.ts
+================================================================
+
+/**
+ * Paper Atelier & Trail Theme System (aitubook.cn 风格设计资产规范与预设)
+ * 纯 CSS 注入 / Tailwind 拓展方案
+ */
+
+export const PaperTrailThemeCSS = `
+/* -------------------------------------------------------------
+ * 1. 核心变量系统 (Paper, Ink & 8-Stage Colors)
+ * ------------------------------------------------------------- */
+:root {
+  --font-serif: "Songti SC", "Noto Serif SC", "STSong", "SimSun", Georgia, serif;
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, "Cascadia Code", Menlo, monospace;
+
+  /* 基础纸墨调色盘 (Light Mode) */
+  --paper: #f1efe7;
+  --paper-raised: #faf8f1;
+  --paper-sunken: #e7e4d7;
+  --ink: #22262d;
+  --ink-soft: #545b64;
+  --ink-faint: #8d9298;
+  --line: #d6d2c2;
+  --line-strong: #b3ac97;
+  --accent: #c2410c;
+  --accent-ink: #1d4ed8;
+  --danger: #b91c1c;
+
+  /* 8 阶段里程碑色阶 */
+  --stage-1: #1d4ed8;
+  --stage-2: #0f766e;
+  --stage-3: #4d7c0f;
+  --stage-4: #a16207;
+  --stage-5: #c2410c;
+  --stage-6: #0e7490;
+  --stage-7: #be185d;
+  --stage-8: #b91c1c;
+
+  /* 材质微纹理 */
+  --contour: rgba(34, 38, 45, 0.055);
+  --graticule: rgba(29, 78, 216, 0.05);
+
+  /* 投影与动效 */
+  --shadow-card: 0 1px 0 rgba(34, 38, 45, .07), 0 5px 16px rgba(34, 38, 45, .07);
+  --shadow-lift: 0 2px 0 rgba(34, 38, 45, .08), 0 12px 28px rgba(34, 38, 45, .12);
+  --ease-survey: cubic-bezier(.16, 1, .3, 1);
+  --ease-stake: cubic-bezier(.34, 1.4, .64, 1);
+}
+
+:root[data-theme="dark"], .dark {
+  --paper: #14171c;
+  --paper-raised: #1b1f26;
+  --paper-sunken: #0f1216;
+  --ink: #e9e6db;
+  --ink-soft: #a9a89c;
+  --ink-faint: #6f7268;
+  --line: #2b3038;
+  --line-strong: #3e444e;
+  --accent: #f0692e;
+  --accent-ink: #6ea8fe;
+  --danger: #f87171;
+
+  --stage-1: #6ea8fe;
+  --stage-2: #2dd4bf;
+  --stage-3: #84cc16;
+  --stage-4: #eab308;
+  --stage-5: #f0692e;
+  --stage-6: #22d3ee;
+  --stage-7: #f472b6;
+  --stage-8: #f87171;
+
+  --contour: rgba(233, 230, 219, 0.06);
+  --graticule: rgba(110, 168, 254, 0.06);
+  --shadow-card: 0 1px 0 rgba(0, 0, 0, .4), 0 8px 22px rgba(0, 0, 0, .42);
+  --shadow-lift: 0 2px 0 rgba(0, 0, 0, .4), 0 14px 32px rgba(0, 0, 0, .52);
+}
+
+/* -------------------------------------------------------------
+ * 2. 大地等高线与坐标网格背景 (Topography Texture)
+ * ------------------------------------------------------------- */
+.bg-paper-topography {
+  background-color: var(--paper);
+  background-image:
+    repeating-radial-gradient(circle at 18% 12%, transparent 0 46px, var(--contour) 46px 47px),
+    repeating-radial-gradient(circle at 86% 88%, transparent 0 64px, var(--contour) 64px 65px),
+    linear-gradient(90deg, var(--graticule) 1px, transparent 1px),
+    linear-gradient(180deg, var(--graticule) 1px, transparent 1px);
+  background-size: auto, auto, 120px 120px, 120px 120px;
+}
+`;
 
 ================================================================
 File: vue/ArtifactCanvas.vue
@@ -2330,6 +2673,128 @@ const handleSubmit = () => {
 </script>
 
 ================================================================
+File: vue/ContextUsageBadge.vue
+================================================================
+
+<template>
+  <div class="relative inline-block text-xs font-sans select-none" :class="className">
+    <button
+      type="button"
+      @click="showPopover = !showPopover"
+      @blur="onBlur"
+      class="flex items-center gap-2 px-2.5 py-1 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 transition-colors shadow-sm"
+      aria-label="Context Window Usage"
+      :aria-expanded="showPopover"
+    >
+      <UiIcon name="cpu" :size="14" class="text-zinc-500 dark:text-zinc-400 shrink-0" />
+      <span
+        v-if="modelName && !compact"
+        class="font-mono text-zinc-700 dark:text-zinc-300 font-medium truncate max-w-[120px]"
+      >
+        {{ modelName }}
+      </span>
+      <div class="w-16 h-1.5 rounded-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden shrink-0">
+        <div
+          class="h-full transition-all duration-300"
+          :class="barColor"
+          :style="{ width: `${percentage}%` }"
+        ></div>
+      </div>
+      <span class="font-mono text-[11px] font-semibold text-zinc-700 dark:text-zinc-300">
+        {{ percentage }}%
+      </span>
+    </button>
+
+    <div
+      v-if="showPopover"
+      class="absolute right-0 bottom-full mb-2 w-64 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-xl z-30 animate-in fade-in zoom-in-95 duration-150"
+    >
+      <div class="flex items-center justify-between pb-2 border-b border-zinc-100 dark:border-zinc-800">
+        <span class="font-semibold text-zinc-800 dark:text-zinc-200">Context Window</span>
+        <span class="font-mono text-[11px] text-zinc-500">
+          {{ formatNumber(safeUsed) }} / {{ formatNumber(safeMax) }}
+        </span>
+      </div>
+
+      <div v-if="modelName" class="pt-2 text-[11px] text-zinc-500 flex justify-between">
+        <span>Model</span>
+        <span class="font-mono text-zinc-700 dark:text-zinc-300 font-medium">{{ modelName }}</span>
+      </div>
+
+      <div v-if="breakdown && breakdown.length > 0" class="pt-2.5 space-y-1.5">
+        <div class="text-[10px] uppercase font-semibold text-zinc-400 tracking-wider">Breakdown</div>
+        <div
+          v-for="(item, idx) in breakdown"
+          :key="idx"
+          class="flex items-center justify-between text-[11px]"
+        >
+          <span class="flex items-center gap-1.5 text-zinc-600 dark:text-zinc-400">
+            <span class="w-2 h-2 rounded-full" :class="item.colorClass || 'bg-zinc-400'"></span>
+            {{ item.label }}
+          </span>
+          <span class="font-mono text-zinc-700 dark:text-zinc-300">
+            {{ formatNumber(item.count) }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed } from "vue";
+import UiIcon from "./UiIcon.vue";
+
+export interface ContextUsageTokenBreakdown {
+  label: string;
+  count: number;
+  colorClass?: string;
+}
+
+const props = withDefaults(
+  defineProps<{
+    usedTokens: number;
+    maxTokens: number;
+    modelName?: string;
+    breakdown?: ContextUsageTokenBreakdown[];
+    compact?: boolean;
+    className?: string;
+  }>(),
+  {
+    compact: false,
+    className: "",
+    breakdown: () => [],
+  }
+);
+
+const showPopover = ref(false);
+
+const safeMax = computed(() => Math.max(1, props.maxTokens));
+const safeUsed = computed(() => Math.max(0, props.usedTokens));
+const percentage = computed(() =>
+  Math.min(100, Math.round((safeUsed.value / safeMax.value) * 100))
+);
+
+const barColor = computed(() => {
+  if (percentage.value >= 90) return "bg-rose-500";
+  if (percentage.value >= 70) return "bg-amber-500";
+  return "bg-emerald-500";
+});
+
+function formatNumber(num: number): string {
+  if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
+  if (num >= 1_000) return `${(num / 1_000).toFixed(1)}k`;
+  return String(num);
+}
+
+function onBlur() {
+  setTimeout(() => {
+    showPopover.value = false;
+  }, 200);
+}
+</script>
+
+================================================================
 File: vue/HomepageDashboard.vue
 ================================================================
 
@@ -2671,6 +3136,7 @@ const monogram = (name?: string) => (name || '?').trim().charAt(0).toUpperCase()
 
 const statusLabel = (service: HomepageService) => service.pingText || statusConfig(service.status).label;
 </script>
+
 ================================================================
 File: vue/KnowledgeDrawer.vue
 ================================================================
@@ -2928,6 +3394,197 @@ const handleThumb = (type: 'up' | 'down') => {
   feedback.value = next;
   if (next) emit('feedback', next);
 };
+</script>
+
+================================================================
+File: vue/ModelSelector.vue
+================================================================
+
+<template>
+  <div
+    ref="containerRef"
+    class="relative inline-block text-xs font-sans text-zinc-900 dark:text-zinc-100"
+    :class="className"
+  >
+    <button
+      type="button"
+      :disabled="disabled"
+      @click="isOpen = !isOpen"
+      class="flex items-center justify-between gap-2.5 px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 transition-all shadow-sm"
+      :class="disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'"
+      aria-haspopup="listbox"
+      :aria-expanded="isOpen"
+    >
+      <div class="flex items-center gap-2 min-w-0">
+        <div class="p-1 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 shrink-0">
+          <UiIcon name="sparkles" :size="14" />
+        </div>
+        <div class="flex flex-col text-left truncate">
+          <span class="font-semibold text-zinc-800 dark:text-zinc-200 truncate">
+            {{ selectedModel ? selectedModel.name : placeholder }}
+          </span>
+          <span v-if="selectedModel?.provider" class="text-[10px] text-zinc-400 font-mono">
+            {{ selectedModel.provider }}
+            {{ selectedModel.contextLength ? ` · ${selectedModel.contextLength}` : '' }}
+          </span>
+        </div>
+      </div>
+
+      <UiIcon
+        name="chevron-down"
+        :size="14"
+        class="text-zinc-400 shrink-0 transition-transform duration-200"
+        :class="{ 'rotate-180': isOpen }"
+      />
+    </button>
+
+    <div
+      v-if="isOpen"
+      class="absolute left-0 mt-1.5 w-72 max-h-80 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-2xl z-40 flex flex-col animate-in fade-in zoom-in-95 duration-150"
+    >
+      <div v-if="showSearch" class="p-2 border-b border-zinc-100 dark:border-zinc-800">
+        <div class="flex items-center gap-2 px-2 py-1 rounded-lg bg-zinc-100/80 dark:bg-zinc-800/80">
+          <UiIcon name="search" :size="13" class="text-zinc-400 shrink-0" />
+          <input
+            type="text"
+            v-model="searchQuery"
+            placeholder="Search models..."
+            class="w-full bg-transparent border-none text-xs text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 focus:outline-none"
+            autofocus
+          />
+        </div>
+      </div>
+
+      <div class="overflow-y-auto p-1.5 space-y-1 max-h-60" role="listbox">
+        <div v-if="filteredModels.length === 0" class="p-3 text-center text-zinc-400 text-xs">
+          No models found
+        </div>
+        <button
+          v-else
+          v-for="model in filteredModels"
+          :key="model.id"
+          type="button"
+          @click="handleSelect(model)"
+          role="option"
+          :aria-selected="model.id === selectedId"
+          class="w-full flex items-start justify-between gap-2 p-2 rounded-lg text-left transition-colors"
+          :class="model.id === selectedId
+            ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100'
+            : 'hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300'"
+        >
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="font-semibold text-zinc-900 dark:text-zinc-100 truncate">
+                {{ model.name }}
+              </span>
+              <span
+                v-if="model.contextLength"
+                class="text-[10px] px-1.5 py-0.2 rounded bg-zinc-200/60 dark:bg-zinc-700/60 text-zinc-500 dark:text-zinc-300 font-mono"
+              >
+                {{ model.contextLength }}
+              </span>
+              <span
+                v-for="tag in model.tags || []"
+                :key="tag"
+                class="text-[9px] px-1.5 py-0.2 rounded font-medium bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50"
+              >
+                {{ tag }}
+              </span>
+            </div>
+            <p v-if="model.description" class="text-[11px] text-zinc-500 dark:text-zinc-400 truncate mt-0.5">
+              {{ model.description }}
+            </p>
+          </div>
+
+          <UiIcon
+            v-if="model.id === selectedId"
+            name="check"
+            :size="14"
+            class="text-emerald-500 shrink-0 mt-0.5"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import UiIcon from "./UiIcon.vue";
+
+export interface ModelOption {
+  id: string;
+  name: string;
+  provider?: string;
+  description?: string;
+  contextLength?: string;
+  tags?: string[];
+  isDefault?: boolean;
+}
+
+const props = withDefaults(
+  defineProps<{
+    models?: ModelOption[];
+    selectedId: string;
+    placeholder?: string;
+    showSearch?: boolean;
+    disabled?: boolean;
+    className?: string;
+  }>(),
+  {
+    models: () => [],
+    placeholder: "Select model...",
+    showSearch: true,
+    disabled: false,
+    className: "",
+  }
+);
+
+const emit = defineEmits<{
+  (e: "select", model: ModelOption): void;
+  (e: "update:selectedId", id: string): void;
+}>();
+
+const isOpen = ref(false);
+const searchQuery = ref("");
+const containerRef = ref<HTMLElement | null>(null);
+
+const selectedModel = computed(
+  () => props.models.find((m) => m.id === props.selectedId) || null
+);
+
+const filteredModels = computed(() => {
+  if (!searchQuery.value.trim()) return props.models;
+  const q = searchQuery.value.toLowerCase();
+  return props.models.filter(
+    (m) =>
+      m.name.toLowerCase().includes(q) ||
+      (m.provider && m.provider.toLowerCase().includes(q)) ||
+      (m.description && m.description.toLowerCase().includes(q)) ||
+      (m.tags && m.tags.some((t) => t.toLowerCase().includes(q)))
+  );
+});
+
+function handleSelect(model: ModelOption) {
+  emit("select", model);
+  emit("update:selectedId", model.id);
+  isOpen.value = false;
+  searchQuery.value = "";
+}
+
+function handleClickOutside(event: MouseEvent) {
+  if (containerRef.value && !containerRef.value.contains(event.target as Node)) {
+    isOpen.value = false;
+  }
+}
+
+onMounted(() => {
+  document.addEventListener("mousedown", handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("mousedown", handleClickOutside);
+});
 </script>
 
 ================================================================
@@ -3587,11 +4244,11 @@ File: vue/UiIcon.vue
 <script setup lang="ts">
 // Icon geometry follows the Tabler Icons visual conventions (MIT licensed): https://github.com/tabler/tabler-icons
 
-type IconName = 'arrow-down'|'arrow-left'|'arrow-right'|'arrow-up'|'check'|'check-circle'|'chevron-down'|'chevron-left'|'chevron-right'|'circle-x'|'code'|'copy'|'eye'|'external-link'|'globe'|'git-branch'|'image'|'layers'|'lock'|'loader'|'moon'|'monitor'|'paperclip'|'refresh'|'sparkles'|'square'|'sun'|'thumbs-down'|'thumbs-up'|'tool'|'x';
+type IconName = 'arrow-down'|'arrow-left'|'arrow-right'|'arrow-up'|'check'|'check-circle'|'chevron-down'|'chevron-left'|'chevron-right'|'chevron-up'|'circle-x'|'clock'|'code'|'copy'|'cpu'|'eye'|'external-link'|'globe'|'git-branch'|'image'|'layers'|'lock'|'loader'|'minus'|'moon'|'monitor'|'paperclip'|'plus'|'refresh'|'search'|'sliders'|'sparkles'|'square'|'sun'|'terminal'|'thumbs-down'|'thumbs-up'|'tool'|'x'|'zap';
 const props = withDefaults(defineProps<{ name: IconName; size?: number|string; strokeWidth?: number; ariaLabel?: string }>(), { size: 20, strokeWidth: 1.8 });
 const p = (tag: string, attrs: Record<string, string>) => ({ tag, attrs });
 const shapes: Record<IconName, ReturnType<typeof p>[]> = {
- 'arrow-down':[p('path',{d:'m6 9 6 6 6-6'})], 'arrow-left':[p('path',{d:'m15 6-6 6 6 6'})], 'arrow-right':[p('path',{d:'m9 6 6 6-6 6'})], 'arrow-up':[p('path',{d:'m6 15 6-6 6 6'})], check:[p('path',{d:'m5 12 4 4L19 6'})], 'check-circle':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m8 12 2.5 2.5L16 9'})], 'chevron-down':[p('path',{d:'m6 9 6 6 6-6'})], 'chevron-left':[p('path',{d:'m14 6-6 6 6 6'})], 'chevron-right':[p('path',{d:'m10 6 6 6-6 6'})], 'circle-x':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m9 9 6 6m0-6-6 6'})], code:[p('path',{d:'m8 9-3 3 3 3m8-6 3 3-3 3M14 5l-4 14'})], copy:[p('rect',{x:'8',y:'8',width:'11',height:'11',rx:'2'}),p('path',{d:'M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2'})], eye:[p('path',{d:'M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z'}),p('circle',{cx:'12',cy:'12',r:'2.5'})], 'external-link':[p('path',{d:'M14 5h5v5M19 5l-8 8'}),p('path',{d:'M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3'})], globe:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18'})], 'git-branch':[p('path',{d:'M6 3v12a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9'}),p('circle',{cx:'6',cy:'3',r:'2'}),p('circle',{cx:'18',cy:'7',r:'2'}),p('circle',{cx:'12',cy:'18',r:'2'})], image:[p('rect',{x:'3',y:'4',width:'18',height:'16',rx:'2'}),p('circle',{cx:'8.5',cy:'9',r:'1.5'}),p('path',{d:'m21 15-4-4L5 20'})], layers:[p('path',{d:'m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5'})], lock:[p('rect',{x:'5',y:'10',width:'14',height:'11',rx:'2'}),p('path',{d:'M8 10V7a4 4 0 0 1 8 0v3'})], loader:[p('path',{d:'M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1'})], moon:[p('path',{d:'M20 15.5A8 8 0 0 1 8.5 4 8 8 0 0 0 20 15.5Z'})], monitor:[p('rect',{x:'3',y:'4',width:'18',height:'13',rx:'2'}),p('path',{d:'M8 21h8m-4-4v4'})], paperclip:[p('path',{d:'m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7'})], refresh:[p('path',{d:'M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5'})], sparkles:[p('path',{d:'m12 3-1.2 4.8L6 9l4.8 1.2L12 15l1.2-4.8L18 9l-4.8-1.2L12 3Z'})], square:[p('rect',{x:'6',y:'6',width:'12',height:'12',rx:'1'})], sun:[p('circle',{cx:'12',cy:'12',r:'4'}),p('path',{d:'M12 2v2m0 16v2M2 12h2m16 0h2'})], 'thumbs-down':[p('path',{d:'M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3'})], 'thumbs-up':[p('path',{d:'M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2'})], tool:[p('path',{d:'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z'})], x:[p('path',{d:'m6 6 12 12M18 6 6 18'})]
+ 'arrow-down':[p('path',{d:'m6 9 6 6 6-6'})], 'arrow-left':[p('path',{d:'m15 6-6 6 6 6'})], 'arrow-right':[p('path',{d:'m9 6 6 6-6 6'})], 'arrow-up':[p('path',{d:'m6 15 6-6 6 6'})], check:[p('path',{d:'m5 12 4 4L19 6'})], 'check-circle':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m8 12 2.5 2.5L16 9'})], 'chevron-down':[p('path',{d:'m6 9 6 6 6-6'})], 'chevron-left':[p('path',{d:'m14 6-6 6 6 6'})], 'chevron-right':[p('path',{d:'m10 6 6 6-6 6'})], 'chevron-up':[p('path',{d:'m6 15 6-6 6 6'})], 'circle-x':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m9 9 6 6m0-6-6 6'})], clock:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M12 7v5l3 3'})], code:[p('path',{d:'m8 9-3 3 3 3m8-6 3 3-3 3M14 5l-4 14'})], copy:[p('rect',{x:'8',y:'8',width:'11',height:'11',rx:'2'}),p('path',{d:'M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2'})], cpu:[p('rect',{x:'5',y:'5',width:'14',height:'14',rx:'2'}),p('path',{d:'M9 9h6v6H9zM9 1v4m6-4v4M9 19v4m6-4v4M1 9h4m-4 6h4M19 9h4m-4 6h4'})], eye:[p('path',{d:'M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z'}),p('circle',{cx:'12',cy:'12',r:'2.5'})], 'external-link':[p('path',{d:'M14 5h5v5M19 5l-8 8'}),p('path',{d:'M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3'})], globe:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18'})], 'git-branch':[p('path',{d:'M6 3v12a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9'}),p('circle',{cx:'6',cy:'3',r:'2'}),p('circle',{cx:'18',cy:'7',r:'2'}),p('circle',{cx:'12',cy:'18',r:'2'})], image:[p('rect',{x:'3',y:'4',width:'18',height:'16',rx:'2'}),p('circle',{cx:'8.5',cy:'9',r:'1.5'}),p('path',{d:'m21 15-4-4L5 20'})], layers:[p('path',{d:'m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5'})], lock:[p('rect',{x:'5',y:'10',width:'14',height:'11',rx:'2'}),p('path',{d:'M8 10V7a4 4 0 0 1 8 0v3'})], loader:[p('path',{d:'M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1'})], minus:[p('path',{d:'M5 12h14'})], moon:[p('path',{d:'M20 15.5A8 8 0 0 1 8.5 4 8 8 0 0 0 20 15.5Z'})], monitor:[p('rect',{x:'3',y:'4',width:'18',height:'13',rx:'2'}),p('path',{d:'M8 21h8m-4-4v4'})], paperclip:[p('path',{d:'m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7'})], plus:[p('path',{d:'M12 5v14M5 12h14'})], refresh:[p('path',{d:'M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5'})], search:[p('circle',{cx:'10',cy:'10',r:'7'}),p('path',{d:'m21 21-6-6'})], sliders:[p('path',{d:'M4 8h4m4 0h8M4 16h8m4 0h4M8 6v4m8 4v4'})], sparkles:[p('path',{d:'m12 3-1.2 4.8L6 9l4.8 1.2L12 15l1.2-4.8L18 9l-4.8-1.2L12 3Z'}),p('path',{d:'m19 15-.6 2.4L16 18l2.4.6L19 21l.6-2.4L22 18l-2.4-.6L19 15Z'})], square:[p('rect',{x:'6',y:'6',width:'12',height:'12',rx:'1'})], sun:[p('circle',{cx:'12',cy:'12',r:'4'}),p('path',{d:'M12 2v2m0 16v2M2 12h2m16 0h2'})], terminal:[p('path',{d:'m4 17 6-6-6-6m8 14h8'})], 'thumbs-down':[p('path',{d:'M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3'})], 'thumbs-up':[p('path',{d:'M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2'})], tool:[p('path',{d:'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z'})], x:[p('path',{d:'m6 6 12 12M18 6 6 18'})], zap:[p('path',{d:'M13 3 4 14h7l-1 7 9-11h-7l1-7Z'})]
 };
 </script>
 
@@ -3896,6 +4553,139 @@ if (!customElements.get("chat-prompt-input")) {
   customElements.define("chat-prompt-input", ChatPromptInput);
 }
 export default ChatPromptInput;
+
+================================================================
+File: vanilla/ContextUsageBadge.js
+================================================================
+
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const formatNumber = (num) => {
+  const n = Number(num) || 0;
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
+  return String(n);
+};
+
+export class ContextUsageBadgeElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['used-tokens', 'max-tokens', 'model-name', 'compact'];
+  }
+
+  constructor() {
+    super();
+    this._breakdown = [];
+    this._isOpen = false;
+  }
+
+  get breakdown() {
+    return this._breakdown;
+  }
+
+  set breakdown(val) {
+    this._breakdown = Array.isArray(val) ? val : [];
+    this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  render() {
+    const used = Math.max(0, parseInt(this.getAttribute('used-tokens') || '0', 10) || 0);
+    const max = Math.max(1, parseInt(this.getAttribute('max-tokens') || '1', 10) || 1);
+    const model = this.getAttribute('model-name') || '';
+    const compact = this.hasAttribute('compact');
+    const percentage = Math.min(100, Math.round((used / max) * 100));
+
+    let barColor = 'bg-emerald-500';
+    if (percentage >= 90) barColor = 'bg-rose-500';
+    else if (percentage >= 70) barColor = 'bg-amber-500';
+
+    this.className = 'relative inline-block text-xs font-sans select-none';
+
+    this.innerHTML = `
+      <button
+        type="button"
+        class="ctx-btn flex items-center gap-2 px-2.5 py-1 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 transition-colors shadow-sm"
+        aria-label="Context Window Usage"
+        aria-expanded="${this._isOpen}"
+      >
+        ${uiIcon('cpu', { size: 14, className: 'text-zinc-500 dark:text-zinc-400 shrink-0' })}
+        ${model && !compact ? `<span class="font-mono text-zinc-700 dark:text-zinc-300 font-medium truncate max-w-[120px]">${escapeAttribute(model)}</span>` : ''}
+        <div class="w-16 h-1.5 rounded-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden shrink-0">
+          <div class="h-full transition-all duration-300 ${barColor}" style="width: ${percentage}%"></div>
+        </div>
+        <span class="font-mono text-[11px] font-semibold text-zinc-700 dark:text-zinc-300">${percentage}%</span>
+      </button>
+
+      <div
+        class="ctx-popover ${this._isOpen ? 'block' : 'hidden'} absolute right-0 bottom-full mb-2 w-64 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-xl z-30"
+      >
+        <div class="flex items-center justify-between pb-2 border-b border-zinc-100 dark:border-zinc-800">
+          <span class="font-semibold text-zinc-800 dark:text-zinc-200">Context Window</span>
+          <span class="font-mono text-[11px] text-zinc-500">${formatNumber(used)} / ${formatNumber(max)}</span>
+        </div>
+        ${model ? `
+          <div class="pt-2 text-[11px] text-zinc-500 flex justify-between">
+            <span>Model</span>
+            <span class="font-mono text-zinc-700 dark:text-zinc-300 font-medium">${escapeAttribute(model)}</span>
+          </div>
+        ` : ''}
+        ${this._breakdown.length > 0 ? `
+          <div class="pt-2.5 space-y-1.5">
+            <div class="text-[10px] uppercase font-semibold text-zinc-400 tracking-wider">Breakdown</div>
+            ${this._breakdown.map((item) => `
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="flex items-center gap-1.5 text-zinc-600 dark:text-zinc-400">
+                  <span class="w-2 h-2 rounded-full ${escapeAttribute(item.colorClass || 'bg-zinc-400')}"></span>
+                  ${escapeAttribute(item.label)}
+                </span>
+                <span class="font-mono text-zinc-700 dark:text-zinc-300">${formatNumber(item.count)}</span>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+
+    const btn = this.querySelector('.ctx-btn');
+    const pop = this.querySelector('.ctx-popover');
+    if (btn && pop) {
+      btn.addEventListener('click', () => {
+        this._isOpen = !this._isOpen;
+        btn.setAttribute('aria-expanded', String(this._isOpen));
+        if (this._isOpen) pop.classList.remove('hidden');
+        else pop.classList.add('hidden');
+      });
+      btn.addEventListener('blur', () => {
+        setTimeout(() => {
+          this._isOpen = false;
+          btn.setAttribute('aria-expanded', 'false');
+          pop.classList.add('hidden');
+        }, 200);
+      });
+    }
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('context-usage-badge')) {
+  customElements.define('context-usage-badge', ContextUsageBadgeElement);
+}
+export default ContextUsageBadgeElement;
 
 ================================================================
 File: vanilla/HomepageDashboard.js
@@ -4288,6 +5078,7 @@ if (typeof customElements !== "undefined" && !customElements.get("homepage-dashb
   customElements.define("homepage-dashboard", HomepageDashboardElement);
 }
 export default HomepageDashboardElement;
+
 ================================================================
 File: vanilla/KnowledgeDrawer.js
 ================================================================
@@ -4498,6 +5289,257 @@ if (!customElements.get("message-action-toolbar")) {
   customElements.define("message-action-toolbar", MessageActionToolbar);
 }
 export default MessageActionToolbar;
+
+================================================================
+File: vanilla/ModelSelector.js
+================================================================
+
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class ModelSelectorElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['selected-id', 'placeholder', 'show-search', 'disabled'];
+  }
+
+  constructor() {
+    super();
+    this._models = [];
+    this._isOpen = false;
+    this._searchQuery = '';
+    this._handleDocClick = this._handleDocClick.bind(this);
+  }
+
+  get models() {
+    return this._models;
+  }
+
+  set models(val) {
+    this._models = Array.isArray(val) ? val : [];
+    this.render();
+  }
+
+  get selectedId() {
+    return this.getAttribute('selected-id') || '';
+  }
+
+  set selectedId(val) {
+    this.setAttribute('selected-id', val);
+  }
+
+  connectedCallback() {
+    document.addEventListener('mousedown', this._handleDocClick);
+    this.render();
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('mousedown', this._handleDocClick);
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  _handleDocClick(event) {
+    if (!this.contains(event.target)) {
+      if (this._isOpen) {
+        this._isOpen = false;
+        this.render();
+      }
+    }
+  }
+
+  _getFilteredModels() {
+    if (!this._searchQuery.trim()) return this._models;
+    const q = this._searchQuery.toLowerCase();
+    return this._models.filter(
+      (m) =>
+        (m.name && m.name.toLowerCase().includes(q)) ||
+        (m.provider && m.provider.toLowerCase().includes(q)) ||
+        (m.description && m.description.toLowerCase().includes(q)) ||
+        (m.tags && m.tags.some((t) => t.toLowerCase().includes(q)))
+    );
+  }
+
+  render() {
+    const selectedId = this.selectedId;
+    const placeholder = this.getAttribute('placeholder') || 'Select model...';
+    const showSearch = this.getAttribute('show-search') !== 'false';
+    const disabled = this.hasAttribute('disabled');
+
+    const selectedModel = this._models.find((m) => m.id === selectedId) || null;
+    const filtered = this._getFilteredModels();
+
+    this.className = 'relative inline-block text-xs font-sans text-zinc-900 dark:text-zinc-100';
+
+    this.innerHTML = `
+      <button
+        type="button"
+        class="model-sel-btn flex items-center justify-between gap-2.5 px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 transition-all shadow-sm ${
+          disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+        }"
+        aria-haspopup="listbox"
+        aria-expanded="${this._isOpen}"
+        ${disabled ? 'disabled' : ''}
+      >
+        <div class="flex items-center gap-2 min-w-0">
+          <div class="p-1 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 shrink-0">
+            ${uiIcon('sparkles', { size: 14 })}
+          </div>
+          <div class="flex flex-col text-left truncate">
+            <span class="font-semibold text-zinc-800 dark:text-zinc-200 truncate">
+              ${selectedModel ? escapeAttribute(selectedModel.name) : escapeAttribute(placeholder)}
+            </span>
+            ${selectedModel?.provider ? `
+              <span class="text-[10px] text-zinc-400 font-mono">
+                ${escapeAttribute(selectedModel.provider)}
+                ${selectedModel.contextLength ? ` · ${escapeAttribute(selectedModel.contextLength)}` : ''}
+              </span>
+            ` : ''}
+          </div>
+        </div>
+
+        <span class="text-zinc-400 shrink-0 transition-transform duration-200 ${this._isOpen ? 'rotate-180' : ''}">
+          ${uiIcon('chevron-down', { size: 14 })}
+        </span>
+      </button>
+
+      ${this._isOpen ? `
+        <div class="absolute left-0 mt-1.5 w-72 max-h-80 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-2xl z-40 flex flex-col">
+          ${showSearch ? `
+            <div class="p-2 border-b border-zinc-100 dark:border-zinc-800">
+              <div class="flex items-center gap-2 px-2 py-1 rounded-lg bg-zinc-100/80 dark:bg-zinc-800/80">
+                ${uiIcon('search', { size: 13, className: 'text-zinc-400 shrink-0' })}
+                <input
+                  type="text"
+                  class="model-search-input w-full bg-transparent border-none text-xs text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 focus:outline-none"
+                  placeholder="Search models..."
+                  value="${escapeAttribute(this._searchQuery)}"
+                />
+              </div>
+            </div>
+          ` : ''}
+
+          <div class="overflow-y-auto p-1.5 space-y-1 max-h-60" role="listbox">
+            ${filtered.length === 0 ? `
+              <div class="p-3 text-center text-zinc-400 text-xs">No models found</div>
+            ` : filtered.map((m) => {
+              const isSelected = m.id === selectedId;
+              return `
+                <button
+                  type="button"
+                  data-model-id="${escapeAttribute(m.id)}"
+                  class="model-option-btn w-full flex items-start justify-between gap-2 p-2 rounded-lg text-left transition-colors ${
+                    isSelected
+                      ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100'
+                      : 'hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300'
+                  }"
+                  role="option"
+                  aria-selected="${isSelected}"
+                >
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="font-semibold text-zinc-900 dark:text-zinc-100 truncate">${escapeAttribute(m.name)}</span>
+                      ${m.contextLength ? `<span class="text-[10px] px-1.5 py-0.2 rounded bg-zinc-200/60 dark:bg-zinc-700/60 text-zinc-500 dark:text-zinc-300 font-mono">${escapeAttribute(m.contextLength)}</span>` : ''}
+                      ${(m.tags || []).map((t) => `<span class="text-[9px] px-1.5 py-0.2 rounded font-medium bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50">${escapeAttribute(t)}</span>`).join('')}
+                    </div>
+                    ${m.description ? `<p class="text-[11px] text-zinc-500 dark:text-zinc-400 truncate mt-0.5">${escapeAttribute(m.description)}</p>` : ''}
+                  </div>
+                  ${isSelected ? `<span class="text-emerald-500 shrink-0 mt-0.5">${uiIcon('check', { size: 14 })}</span>` : ''}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      ` : ''}
+    `;
+
+    const toggleBtn = this.querySelector('.model-sel-btn');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        this._isOpen = !this._isOpen;
+        this.render();
+        if (this._isOpen) {
+          const input = this.querySelector('.model-search-input');
+          if (input) input.focus();
+        }
+      });
+    }
+
+    const searchInput = this.querySelector('.model-search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        this._searchQuery = e.target.value;
+        const listbox = this.querySelector('[role="listbox"]');
+        if (listbox) {
+          const filtered = this._getFilteredModels();
+          if (filtered.length === 0) {
+            listbox.innerHTML = '<div class="p-3 text-center text-zinc-400 text-xs">No models found</div>';
+          } else {
+            listbox.innerHTML = filtered.map((m) => {
+              const isSelected = m.id === this.selectedId;
+              return `
+                <button
+                  type="button"
+                  data-model-id="${escapeAttribute(m.id)}"
+                  class="model-option-btn w-full flex items-start justify-between gap-2 p-2 rounded-lg text-left transition-colors ${
+                    isSelected
+                      ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100'
+                      : 'hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300'
+                  }"
+                  role="option"
+                  aria-selected="${isSelected}"
+                >
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="font-semibold text-zinc-900 dark:text-zinc-100 truncate">${escapeAttribute(m.name)}</span>
+                      ${m.contextLength ? `<span class="text-[10px] px-1.5 py-0.2 rounded bg-zinc-200/60 dark:bg-zinc-700/60 text-zinc-500 dark:text-zinc-300 font-mono">${escapeAttribute(m.contextLength)}</span>` : ''}
+                      ${(m.tags || []).map((t) => `<span class="text-[9px] px-1.5 py-0.2 rounded font-medium bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50">${escapeAttribute(t)}</span>`).join('')}
+                    </div>
+                    ${m.description ? `<p class="text-[11px] text-zinc-500 dark:text-zinc-400 truncate mt-0.5">${escapeAttribute(m.description)}</p>` : ''}
+                  </div>
+                  ${isSelected ? `<span class="text-emerald-500 shrink-0 mt-0.5">${uiIcon('check', { size: 14 })}</span>` : ''}
+                </button>
+              `;
+            }).join('');
+            this._bindOptionClicks();
+          }
+        }
+      });
+    }
+
+    this._bindOptionClicks();
+  }
+
+  _bindOptionClicks() {
+    this.querySelectorAll('.model-option-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-model-id');
+        const model = this._models.find((m) => m.id === id);
+        if (model) {
+          this.selectedId = model.id;
+          this._isOpen = false;
+          this._searchQuery = '';
+          this.dispatchEvent(new CustomEvent('select', { detail: model }));
+          this.render();
+        }
+      });
+    });
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('model-selector')) {
+  customElements.define('model-selector', ModelSelectorElement);
+}
+export default ModelSelectorElement;
 
 ================================================================
 File: vanilla/PromptChips.js
@@ -5126,8 +6168,9 @@ File: vanilla/UiIcon.js
 // Icon geometry follows the Tabler Icons visual conventions (MIT licensed): https://github.com/tabler/tabler-icons
 const ICONS = {
   'arrow-down':'<path d="m6 9 6 6 6-6"/>','arrow-left':'<path d="m15 6-6 6 6 6"/>','arrow-right':'<path d="m9 6 6 6-6 6"/>','arrow-up':'<path d="m6 15 6-6 6 6"/>',
-  check:'<path d="m5 12 4 4L19 6"/>','check-circle':'<circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/>','chevron-down':'<path d="m6 9 6 6 6-6"/>','chevron-left':'<path d="m14 6-6 6 6 6"/>','chevron-right':'<path d="m10 6 6 6-6 6"/>','circle-x':'<circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/>',
-  code:'<path d="m8 9-3 3 3 3m8-6 3 3-3 3M14 5l-4 14"/>','copy':'<rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>','eye':'<path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/>','external-link':'<path d="M14 5h5v5M19 5l-8 8M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/>','globe':'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>','git-branch':'<path d="M6 3v12a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/><circle cx="6" cy="3" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="18" r="2"/>','image':'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-4-4L5 20"/>','layers':'<path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5"/>','lock':'<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>','loader':'<path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1"/>','moon':'<path d="M20 15.5A8 8 0 0 1 8.5 4 8 8 0 0 0 20 15.5Z"/>','monitor':'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/>','paperclip':'<path d="m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7"/>','refresh':'<path d="M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5"/>','sparkles':'<path d="m12 3-1.2 4.8L6 9l4.8 1.2L12 15l1.2-4.8L18 9l-4.8-1.2L12 3Z"/>','square':'<rect x="6" y="6" width="12" height="12" rx="1"/>','sun':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/>','thumbs-down':'<path d="M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3"/>','thumbs-up':'<path d="M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2"/>','tool':'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z"/>','x':'<path d="m6 6 12 12M18 6 6 18"/>'
+  check:'<path d="m5 12 4 4L19 6"/>','check-circle':'<circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/>','chevron-down':'<path d="m6 9 6 6 6-6"/>','chevron-left':'<path d="m14 6-6 6 6 6"/>','chevron-right':'<path d="m10 6 6 6-6 6"/>','chevron-up':'<path d="m6 15 6-6 6 6"/>','circle-x':'<circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>',
+  code:'<path d="m8 9-3 3 3 3m8-6 3 3-3 3M14 5l-4 14"/>','copy':'<rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>','cpu':'<rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 9h6v6H9zM9 1v4m6-4v4M9 19v4m6-4v4M1 9h4m-4 6h4M19 9h4m-4 6h4"/>','eye':'<path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/>','external-link':'<path d="M14 5h5v5M19 5l-8 8M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/>','globe':'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>','git-branch':'<path d="M6 3v12a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/><circle cx="6" cy="3" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="18" r="2"/>','image':'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-4-4L5 20"/>','layers':'<path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5"/>','lock':'<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>','loader':'<path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1"/>','minus':'<path d="M5 12h14"/>','moon':'<path d="M20 15.5A8 8 0 0 1 8.5 4 8 8 0 0 0 20 15.5Z"/>','monitor':'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/>','paperclip':'<path d="m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7"/>','plus':'<path d="M12 5v14M5 12h14"/>','refresh':'<path d="M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5"/>','search':'<circle cx="10" cy="10" r="7"/><path d="m21 21-6-6"/>','sliders':'<path d="M4 8h4m4 0h8M4 16h8m4 0h4M8 6v4m8 4v4"/>','sparkles':'<path d="m12 3-1.2 4.8L6 9l4.8 1.2L12 15l1.2-4.8L18 9l-4.8-1.2L12 3Z"/>','square':'<rect x="6" y="6" width="12" height="12" rx="1"/>','sun':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/>','terminal':'<path d="m4 17 6-6-6-6m8 14h8"/>','thumbs-down':'<path d="M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3"/>','thumbs-up':'<path d="M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2"/>','tool':'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z"/>','x':'<path d="m6 6 12 12M18 6 6 18"/>','zap':'<path d="M13 3 4 14h7l-1 7 9-11h-7l1-7Z"/>'
 };
 const escapeAttribute = (value) => String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
 
@@ -5136,4 +6179,3 @@ export function uiIcon(name, { size = 20, strokeWidth = 1.8, label = '', classNa
   return `<svg width="${escapeAttribute(size)}" height="${escapeAttribute(size)}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${escapeAttribute(strokeWidth)}" stroke-linecap="round" stroke-linejoin="round" class="${escapeAttribute(className)}" ${aria}>${ICONS[name] || ''}</svg>`;
 }
 export default uiIcon;
-
