@@ -489,6 +489,97 @@ export const ChatPromptInput: React.FC<ChatPromptInputProps> = ({
 };
 
 
+====/File: react/ChatSessionList.tsx/====
+
+import React from "react";
+import { UiIcon } from "./UiIcon";
+
+export interface ChatSessionItem {
+  id: string | number;
+  title: string;
+  timeLabel?: string;
+}
+
+export interface ChatSessionListProps {
+  sessions: ChatSessionItem[];
+  activeId?: string | number | null;
+  onSelect?: (session: ChatSessionItem) => void;
+  onDelete?: (id: string | number) => void;
+  title?: string;
+  emptyText?: string;
+  className?: string;
+}
+
+export const ChatSessionList: React.FC<ChatSessionListProps> = ({
+  sessions = [],
+  activeId = null,
+  onSelect,
+  onDelete,
+  title = "Chats",
+  emptyText = "No conversations yet",
+  className = "",
+}) => {
+  return (
+    <div className={`flex flex-col w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden ${className}`}>
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-100 dark:border-zinc-800 text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+        <UiIcon name="sparkles" size={15} className="text-indigo-500" />
+        {title}
+        <span className="ml-auto text-[11px] font-mono font-normal text-zinc-400">{sessions.length}</span>
+      </div>
+
+      {sessions.length === 0 ? (
+        <div className="p-6 text-center text-xs text-zinc-400">{emptyText}</div>
+      ) : (
+        <ul className="flex-1 overflow-y-auto p-1.5 space-y-0.5">
+          {sessions.map((s) => {
+            const isActive = String(s.id) === String(activeId);
+            return (
+              <li key={s.id}>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => onSelect?.(s)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      onSelect?.(s);
+                    }
+                  }}
+                  className={`group w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-left text-sm cursor-pointer transition-colors ${
+                    isActive
+                      ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300"
+                      : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/70"
+                  }`}
+                >
+                  <span className="flex-1 min-w-0">
+                    <span className="block truncate font-medium">{s.title}</span>
+                    {s.timeLabel && <span className="block text-[11px] text-zinc-400">{s.timeLabel}</span>}
+                  </span>
+                  {onDelete && (
+                    <button
+                      type="button"
+                      aria-label="Delete session"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete(s.id);
+                      }}
+                      className="opacity-0 group-hover:opacity-100 focus:opacity-100 p-1 rounded-md text-zinc-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-all shrink-0"
+                    >
+                      <UiIcon name="x" size={13} />
+                    </button>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+};
+export default ChatSessionList;
+
+
 ====/File: react/CodeBlock.tsx/====
 
 import React, { useState } from "react";
@@ -876,6 +967,84 @@ export const ContextUsageBadge: React.FC<ContextUsageProps> = ({
   );
 };
 export default ContextUsageBadge;
+
+
+====/File: react/DiffViewer.tsx/====
+
+import React from "react";
+import { UiIcon } from "./UiIcon";
+
+export interface DiffLine {
+  type: "add" | "remove" | "context";
+  content: string;
+}
+
+export interface DiffViewerProps {
+  lines: DiffLine[];
+  filename?: string;
+  language?: string;
+  showLineNumbers?: boolean;
+  className?: string;
+}
+
+const LINE_STYLE: Record<DiffLine["type"], { row: string; gutter: string; sign: string }> = {
+  add: { row: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300", gutter: "text-emerald-500", sign: "+" },
+  remove: { row: "bg-rose-500/10 text-rose-700 dark:text-rose-300", gutter: "text-rose-500", sign: "-" },
+  context: { row: "text-zinc-600 dark:text-zinc-400", gutter: "text-zinc-300 dark:text-zinc-600", sign: " " },
+};
+
+export const DiffViewer: React.FC<DiffViewerProps> = ({
+  lines = [],
+  filename,
+  language,
+  showLineNumbers = true,
+  className = "",
+}) => {
+  const added = lines.filter((l) => l.type === "add").length;
+  const removed = lines.filter((l) => l.type === "remove").length;
+
+  let oldLine = 0;
+  let newLine = 0;
+
+  return (
+    <div className={`rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden ${className}`}>
+      <div className="flex items-center gap-2 px-3.5 py-2 border-b border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/60 text-xs">
+        <UiIcon name="git-branch" size={14} className="text-zinc-400 shrink-0" />
+        {filename && <span className="font-mono font-medium text-zinc-700 dark:text-zinc-300 truncate">{filename}</span>}
+        {language && (
+          <span className="px-1.5 py-0.5 rounded bg-zinc-200/70 dark:bg-zinc-700/70 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+            {language}
+          </span>
+        )}
+        <span className="ml-auto flex items-center gap-2 font-mono text-[11px]">
+          <span className="text-emerald-600 dark:text-emerald-400">+{added}</span>
+          <span className="text-rose-600 dark:text-rose-400">-{removed}</span>
+        </span>
+      </div>
+
+      <div className="overflow-x-auto text-[13px] font-mono leading-relaxed">
+        {lines.map((line, i) => {
+          const meta = LINE_STYLE[line.type] || LINE_STYLE.context;
+          if (line.type !== "add") oldLine += 1;
+          if (line.type !== "remove") newLine += 1;
+          return (
+            <div key={i} className={`flex ${meta.row}`}>
+              {showLineNumbers && (
+                <span className="w-16 shrink-0 select-none px-2 text-right text-[11px] text-zinc-400 dark:text-zinc-600 tabular-nums">
+                  {line.type !== "add" ? oldLine : ""} {line.type !== "remove" ? newLine : ""}
+                </span>
+              )}
+              <span className={`w-5 shrink-0 select-none text-center ${meta.gutter}`}>{meta.sign}</span>
+              <span className="flex-1 min-w-0 whitespace-pre-wrap break-words pr-3">{line.content}</span>
+            </div>
+          );
+        })}
+        {lines.length === 0 && <div className="p-4 text-center text-xs text-zinc-400">No changes</div>}
+      </div>
+    </div>
+  );
+};
+export default DiffViewer;
 
 
 ====/File: react/HomepageDashboard.tsx/====
@@ -2374,6 +2543,109 @@ export const ToastStack: React.FC<ToastStackProps> = ({
 export default ToastStack;
 
 
+====/File: react/ToolApprovalCard.tsx/====
+
+import React from "react";
+import { UiIcon } from "./UiIcon";
+
+export type ToolApprovalStatus = "pending" | "approved" | "rejected";
+
+export interface ToolApprovalCardProps {
+  toolName: string;
+  description?: string;
+  args?: Record<string, unknown> | string;
+  risk?: "low" | "high";
+  status?: ToolApprovalStatus;
+  onApprove?: () => void;
+  onReject?: () => void;
+  className?: string;
+}
+
+export const ToolApprovalCard: React.FC<ToolApprovalCardProps> = ({
+  toolName,
+  description,
+  args,
+  risk = "low",
+  status = "pending",
+  onApprove,
+  onReject,
+  className = "",
+}) => {
+  const isHigh = risk === "high";
+  const argsText = typeof args === "string" ? args : args ? JSON.stringify(args, null, 2) : "";
+
+  return (
+    <div
+      className={`rounded-xl border bg-white dark:bg-zinc-900 overflow-hidden ${
+        isHigh ? "border-amber-300 dark:border-amber-700/60" : "border-zinc-200 dark:border-zinc-700"
+      } ${className}`}
+    >
+      <div className="flex items-center gap-2.5 px-3.5 py-2.5">
+        <span
+          className={`p-1.5 rounded-lg shrink-0 ${
+            isHigh
+              ? "bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400"
+              : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400"
+          }`}
+        >
+          <UiIcon name={isHigh ? "lock" : "tool"} size={15} />
+        </span>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+            <span className="font-mono truncate">{toolName}</span>
+            {isHigh && (
+              <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 shrink-0">
+                high risk
+              </span>
+            )}
+          </div>
+          {description && <div className="text-xs text-zinc-500 dark:text-zinc-400 truncate">{description}</div>}
+        </div>
+      </div>
+
+      {argsText && (
+        <pre className="mx-3.5 mb-2.5 max-h-40 overflow-auto rounded-lg bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-100 dark:border-zinc-800 px-3 py-2 text-xs font-mono text-zinc-600 dark:text-zinc-400 whitespace-pre-wrap break-words">
+          {argsText}
+        </pre>
+      )}
+
+      <div className="flex items-center gap-2 px-3.5 pb-3">
+        {status === "pending" ? (
+          <>
+            <button
+              type="button"
+              onClick={onApprove}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium transition-colors"
+            >
+              <UiIcon name="check" size={13} />
+              Approve
+            </button>
+            <button
+              type="button"
+              onClick={onReject}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-medium transition-colors"
+            >
+              <UiIcon name="x" size={13} />
+              Reject
+            </button>
+          </>
+        ) : (
+          <span
+            className={`flex items-center gap-1.5 text-xs font-medium ${
+              status === "approved" ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
+            }`}
+          >
+            <UiIcon name={status === "approved" ? "check-circle" : "circle-x"} size={14} />
+            {status === "approved" ? "Approved" : "Rejected"}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+};
+export default ToolApprovalCard;
+
+
 ====/File: react/ToolCallBadge.tsx/====
 
 import React, { useState } from "react";
@@ -3198,6 +3470,75 @@ const handleSubmit = () => {
 </script>
 
 
+====/File: vue/ChatSessionList.vue/====
+
+<template>
+  <div class="flex flex-col w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden" :class="className">
+    <div class="flex items-center gap-2 px-4 py-3 border-b border-zinc-100 dark:border-zinc-800 text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+      <UiIcon name="sparkles" :size="15" class="text-indigo-500" />
+      {{ title }}
+      <span class="ml-auto text-[11px] font-mono font-normal text-zinc-400">{{ sessions.length }}</span>
+    </div>
+
+    <div v-if="sessions.length === 0" class="p-6 text-center text-xs text-zinc-400">{{ emptyText }}</div>
+    <ul v-else class="flex-1 overflow-y-auto p-1.5 space-y-0.5">
+      <li v-for="s in sessions" :key="s.id">
+        <div
+          role="button"
+          tabindex="0"
+          class="group w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-left text-sm cursor-pointer transition-colors"
+          :class="String(s.id) === String(activeId)
+            ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300'
+            : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/70'"
+          @click="emit('select', s)"
+          @keydown.enter.prevent="emit('select', s)"
+          @keydown.space.prevent="emit('select', s)"
+        >
+          <span class="flex-1 min-w-0">
+            <span class="block truncate font-medium">{{ s.title }}</span>
+            <span v-if="s.timeLabel" class="block text-[11px] text-zinc-400">{{ s.timeLabel }}</span>
+          </span>
+          <button
+            type="button"
+            aria-label="Delete session"
+            class="opacity-0 group-hover:opacity-100 focus:opacity-100 p-1 rounded-md text-zinc-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-all shrink-0"
+            @click.stop="emit('delete', s.id)"
+          >
+            <UiIcon name="x" :size="13" />
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script setup lang="ts">
+import UiIcon from "./UiIcon.vue";
+
+export interface ChatSessionItem {
+  id: string | number;
+  title: string;
+  timeLabel?: string;
+}
+
+withDefaults(
+  defineProps<{
+    sessions?: ChatSessionItem[];
+    activeId?: string | number | null;
+    title?: string;
+    emptyText?: string;
+    className?: string;
+  }>(),
+  { sessions: () => [], activeId: null, title: "Chats", emptyText: "No conversations yet", className: "" }
+);
+
+const emit = defineEmits<{
+  (e: "select", session: ChatSessionItem): void;
+  (e: "delete", id: string | number): void;
+}>();
+</script>
+
+
 ====/File: vue/CodeBlock.vue/====
 
 <template>
@@ -3547,6 +3888,84 @@ function onBlur() {
     showPopover.value = false;
   }, 200);
 }
+</script>
+
+
+====/File: vue/DiffViewer.vue/====
+
+<template>
+  <div class="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden" :class="className">
+    <div class="flex items-center gap-2 px-3.5 py-2 border-b border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/60 text-xs">
+      <UiIcon name="git-branch" :size="14" class="text-zinc-400 shrink-0" />
+      <span v-if="filename" class="font-mono font-medium text-zinc-700 dark:text-zinc-300 truncate">{{ filename }}</span>
+      <span v-if="language" class="px-1.5 py-0.5 rounded bg-zinc-200/70 dark:bg-zinc-700/70 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+        {{ language }}
+      </span>
+      <span class="ml-auto flex items-center gap-2 font-mono text-[11px]">
+        <span class="text-emerald-600 dark:text-emerald-400">+{{ added }}</span>
+        <span class="text-rose-600 dark:text-rose-400">-{{ removed }}</span>
+      </span>
+    </div>
+
+    <div class="overflow-x-auto text-[13px] font-mono leading-relaxed">
+      <div v-if="lines.length === 0" class="p-4 text-center text-xs text-zinc-400">No changes</div>
+      <div v-for="(row, i) in rows" :key="i" class="flex" :class="row.meta.row">
+        <span
+          v-if="showLineNumbers"
+          class="w-16 shrink-0 select-none px-2 text-right text-[11px] text-zinc-400 dark:text-zinc-600 tabular-nums"
+        >
+          {{ row.oldNo }} {{ row.newNo }}
+        </span>
+        <span class="w-5 shrink-0 select-none text-center" :class="row.meta.gutter">{{ row.meta.sign }}</span>
+        <span class="flex-1 min-w-0 whitespace-pre-wrap break-words pr-3">{{ row.line.content }}</span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from "vue";
+import UiIcon from "./UiIcon.vue";
+
+export interface DiffLine {
+  type: "add" | "remove" | "context";
+  content: string;
+}
+
+const LINE_STYLE: Record<string, { row: string; gutter: string; sign: string }> = {
+  add: { row: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300", gutter: "text-emerald-500", sign: "+" },
+  remove: { row: "bg-rose-500/10 text-rose-700 dark:text-rose-300", gutter: "text-rose-500", sign: "-" },
+  context: { row: "text-zinc-600 dark:text-zinc-400", gutter: "text-zinc-300 dark:text-zinc-600", sign: " " },
+};
+
+const props = withDefaults(
+  defineProps<{
+    lines?: DiffLine[];
+    filename?: string;
+    language?: string;
+    showLineNumbers?: boolean;
+    className?: string;
+  }>(),
+  { lines: () => [], showLineNumbers: true, className: "" }
+);
+
+const added = computed(() => props.lines.filter((l) => l.type === "add").length);
+const removed = computed(() => props.lines.filter((l) => l.type === "remove").length);
+
+const rows = computed(() => {
+  let oldLine = 0;
+  let newLine = 0;
+  return props.lines.map((line) => {
+    if (line.type !== "add") oldLine += 1;
+    if (line.type !== "remove") newLine += 1;
+    return {
+      line,
+      meta: LINE_STYLE[line.type] || LINE_STYLE.context,
+      oldNo: line.type !== "add" ? oldLine : "",
+      newNo: line.type !== "remove" ? newLine : "",
+    };
+  });
+});
 </script>
 
 
@@ -4985,6 +5404,100 @@ onUnmounted(() => {
 </script>
 
 
+====/File: vue/ToolApprovalCard.vue/====
+
+<template>
+  <div
+    class="rounded-xl border bg-white dark:bg-zinc-900 overflow-hidden"
+    :class="[isHigh ? 'border-amber-300 dark:border-amber-700/60' : 'border-zinc-200 dark:border-zinc-700', className]"
+  >
+    <div class="flex items-center gap-2.5 px-3.5 py-2.5">
+      <span
+        class="p-1.5 rounded-lg shrink-0"
+        :class="isHigh
+          ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400'
+          : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'"
+      >
+        <UiIcon :name="isHigh ? 'lock' : 'tool'" :size="15" />
+      </span>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+          <span class="font-mono truncate">{{ toolName }}</span>
+          <span
+            v-if="isHigh"
+            class="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 shrink-0"
+          >
+            high risk
+          </span>
+        </div>
+        <div v-if="description" class="text-xs text-zinc-500 dark:text-zinc-400 truncate">{{ description }}</div>
+      </div>
+    </div>
+
+    <pre
+      v-if="argsText"
+      class="mx-3.5 mb-2.5 max-h-40 overflow-auto rounded-lg bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-100 dark:border-zinc-800 px-3 py-2 text-xs font-mono text-zinc-600 dark:text-zinc-400 whitespace-pre-wrap break-words"
+    >{{ argsText }}</pre>
+
+    <div class="flex items-center gap-2 px-3.5 pb-3">
+      <template v-if="status === 'pending'">
+        <button
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium transition-colors"
+          @click="emit('approve')"
+        >
+          <UiIcon name="check" :size="13" />
+          Approve
+        </button>
+        <button
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-medium transition-colors"
+          @click="emit('reject')"
+        >
+          <UiIcon name="x" :size="13" />
+          Reject
+        </button>
+      </template>
+      <span
+        v-else
+        class="flex items-center gap-1.5 text-xs font-medium"
+        :class="status === 'approved' ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'"
+      >
+        <UiIcon :name="status === 'approved' ? 'check-circle' : 'circle-x'" :size="14" />
+        {{ status === 'approved' ? 'Approved' : 'Rejected' }}
+      </span>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from "vue";
+import UiIcon from "./UiIcon.vue";
+
+const props = withDefaults(
+  defineProps<{
+    toolName: string;
+    description?: string;
+    args?: Record<string, unknown> | string;
+    risk?: "low" | "high";
+    status?: "pending" | "approved" | "rejected";
+    className?: string;
+  }>(),
+  { risk: "low", status: "pending", className: "" }
+);
+
+const emit = defineEmits<{
+  (e: "approve"): void;
+  (e: "reject"): void;
+}>();
+
+const isHigh = computed(() => props.risk === "high");
+const argsText = computed(() =>
+  typeof props.args === "string" ? props.args : props.args ? JSON.stringify(props.args, null, 2) : ""
+);
+</script>
+
+
 ====/File: vue/ToolCallBadge.vue/====
 
 <template>
@@ -5544,6 +6057,136 @@ if (!customElements.get("chat-prompt-input")) {
 export default ChatPromptInput;
 
 
+====/File: vanilla/ChatSessionList.js/====
+
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class ChatSessionListElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['active-id', 'title', 'empty-text'];
+  }
+
+  constructor() {
+    super();
+    this._sessions = [];
+  }
+
+  get sessions() {
+    return this._sessions;
+  }
+
+  set sessions(val) {
+    this._sessions = Array.isArray(val) ? val : [];
+    this.render();
+  }
+
+  get activeId() {
+    return this.getAttribute('active-id');
+  }
+
+  set activeId(val) {
+    if (val === null || val === undefined) this.removeAttribute('active-id');
+    else this.setAttribute('active-id', String(val));
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  render() {
+    const title = this.getAttribute('title') || 'Chats';
+    const emptyText = this.getAttribute('empty-text') || 'No conversations yet';
+
+    const headerHtml = `
+      <div class="flex items-center gap-2 px-4 py-3 border-b border-zinc-100 dark:border-zinc-800 text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+        ${uiIcon('sparkles', { size: 15, className: 'text-indigo-500' })}
+        ${escapeAttribute(title)}
+        <span class="ml-auto text-[11px] font-mono font-normal text-zinc-400">${this._sessions.length}</span>
+      </div>`;
+
+    if (this._sessions.length === 0) {
+      this.className = 'flex flex-col w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden';
+      this.innerHTML = `${headerHtml}<div class="p-6 text-center text-xs text-zinc-400">${escapeAttribute(emptyText)}</div>`;
+      return;
+    }
+
+    const itemsHtml = this._sessions
+      .map((s) => {
+        const isActive = String(s.id) === String(this.activeId);
+        return `
+          <li>
+            <div
+              role="button"
+              tabindex="0"
+              data-session-id="${escapeAttribute(s.id)}"
+              class="session-item group w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-left text-sm cursor-pointer transition-colors ${
+                isActive
+                  ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300'
+                  : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/70'
+              }"
+            >
+              <span class="flex-1 min-w-0">
+                <span class="block truncate font-medium">${escapeAttribute(s.title)}</span>
+                ${s.timeLabel ? `<span class="block text-[11px] text-zinc-400">${escapeAttribute(s.timeLabel)}</span>` : ''}
+              </span>
+              <button
+                type="button"
+                data-delete-id="${escapeAttribute(s.id)}"
+                aria-label="Delete session"
+                class="session-delete opacity-0 group-hover:opacity-100 focus:opacity-100 p-1 rounded-md text-zinc-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-all shrink-0"
+              >${uiIcon('x', { size: 13 })}</button>
+            </div>
+          </li>`;
+      })
+      .join('');
+
+    this.className = 'flex flex-col w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden';
+    this.innerHTML = `${headerHtml}<ul class="flex-1 overflow-y-auto p-1.5 space-y-0.5">${itemsHtml}</ul>`;
+
+    this.querySelectorAll('.session-item').forEach((row) => {
+      const id = row.getAttribute('data-session-id');
+      const session = this._sessions.find((s) => String(s.id) === String(id));
+      if (!session) return;
+      const select = () => this.dispatchEvent(new CustomEvent('select', { detail: session }));
+      row.addEventListener('click', select);
+      row.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          select();
+        }
+      });
+    });
+
+    this.querySelectorAll('.session-delete').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-delete-id');
+        const session = this._sessions.find((s) => String(s.id) === String(id));
+        if (session) this.dispatchEvent(new CustomEvent('delete', { detail: { id: session.id } }));
+      });
+    });
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('chat-session-list')) {
+  customElements.define('chat-session-list', ChatSessionListElement);
+}
+export default ChatSessionListElement;
+
+
 ====/File: vanilla/CodeBlock.js/====
 
 import uiIcon from './UiIcon.js';
@@ -6009,6 +6652,106 @@ if (typeof customElements !== 'undefined' && !customElements.get('context-usage-
   customElements.define('context-usage-badge', ContextUsageBadgeElement);
 }
 export default ContextUsageBadgeElement;
+
+
+====/File: vanilla/DiffViewer.js/====
+
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const LINE_STYLE = {
+  add: { row: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300', gutter: 'text-emerald-500', sign: '+' },
+  remove: { row: 'bg-rose-500/10 text-rose-700 dark:text-rose-300', gutter: 'text-rose-500', sign: '-' },
+  context: { row: 'text-zinc-600 dark:text-zinc-400', gutter: 'text-zinc-300 dark:text-zinc-600', sign: ' ' },
+};
+
+export class DiffViewerElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['filename', 'language', 'show-line-numbers'];
+  }
+
+  constructor() {
+    super();
+    this._lines = [];
+  }
+
+  get lines() {
+    return this._lines;
+  }
+
+  set lines(val) {
+    this._lines = Array.isArray(val) ? val : [];
+    this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  render() {
+    const filename = this.getAttribute('filename') || '';
+    const language = this.getAttribute('language') || '';
+    const showLineNumbers = this.getAttribute('show-line-numbers') !== 'false';
+
+    const added = this._lines.filter((l) => l.type === 'add').length;
+    const removed = this._lines.filter((l) => l.type === 'remove').length;
+
+    const headerHtml = `
+      <div class="flex items-center gap-2 px-3.5 py-2 border-b border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/60 text-xs">
+        ${uiIcon('git-branch', { size: 14, className: 'text-zinc-400 shrink-0' })}
+        ${filename ? `<span class="font-mono font-medium text-zinc-700 dark:text-zinc-300 truncate">${escapeAttribute(filename)}</span>` : ''}
+        ${language ? `<span class="px-1.5 py-0.5 rounded bg-zinc-200/70 dark:bg-zinc-700/70 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">${escapeAttribute(language)}</span>` : ''}
+        <span class="ml-auto flex items-center gap-2 font-mono text-[11px]">
+          <span class="text-emerald-600 dark:text-emerald-400">+${added}</span>
+          <span class="text-rose-600 dark:text-rose-400">-${removed}</span>
+        </span>
+      </div>`;
+
+    let oldLine = 0;
+    let newLine = 0;
+    const rowsHtml = this._lines
+      .map((line) => {
+        const meta = LINE_STYLE[line.type] || LINE_STYLE.context;
+        if (line.type !== 'add') oldLine += 1;
+        if (line.type !== 'remove') newLine += 1;
+        return `
+          <div class="flex ${meta.row}">
+            ${
+              showLineNumbers
+                ? `<span class="w-16 shrink-0 select-none px-2 text-right text-[11px] text-zinc-400 dark:text-zinc-600 tabular-nums">${line.type !== 'add' ? oldLine : ''} ${line.type !== 'remove' ? newLine : ''}</span>`
+                : ''
+            }
+            <span class="w-5 shrink-0 select-none text-center ${meta.gutter}">${meta.sign}</span>
+            <span class="flex-1 min-w-0 whitespace-pre-wrap break-words pr-3">${escapeAttribute(line.content)}</span>
+          </div>`;
+      })
+      .join('');
+
+    this.className = 'block rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden';
+    this.innerHTML = `
+      ${headerHtml}
+      <div class="overflow-x-auto text-[13px] font-mono leading-relaxed">
+        ${rowsHtml || '<div class="p-4 text-center text-xs text-zinc-400">No changes</div>'}
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('diff-viewer')) {
+  customElements.define('diff-viewer', DiffViewerElement);
+}
+export default DiffViewerElement;
 
 
 ====/File: vanilla/HomepageDashboard.js/====
@@ -7544,6 +8287,129 @@ if (typeof customElements !== 'undefined' && !customElements.get('toast-stack'))
   customElements.define('toast-stack', ToastStackElement);
 }
 export default ToastStackElement;
+
+
+====/File: vanilla/ToolApprovalCard.js/====
+
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class ToolApprovalCardElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['tool-name', 'description', 'risk', 'status'];
+  }
+
+  constructor() {
+    super();
+    this._args = null;
+  }
+
+  get args() {
+    return this._args;
+  }
+
+  set args(val) {
+    this._args = val;
+    this.render();
+  }
+
+  get status() {
+    return this.getAttribute('status') || 'pending';
+  }
+
+  set status(val) {
+    this.setAttribute('status', String(val));
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  _resolve(nextStatus, eventName) {
+    this.dispatchEvent(new CustomEvent(eventName));
+    this.status = nextStatus;
+  }
+
+  render() {
+    const toolName = this.getAttribute('tool-name') || '';
+    const description = this.getAttribute('description') || '';
+    const isHigh = this.getAttribute('risk') === 'high';
+    const status = this.status;
+
+    const argsText =
+      typeof this._args === 'string' ? this._args : this._args ? JSON.stringify(this._args, null, 2) : '';
+
+    const actionsHtml =
+      status === 'pending'
+        ? `
+          <button type="button" class="approval-approve flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium transition-colors">
+            ${uiIcon('check', { size: 13 })}
+            Approve
+          </button>
+          <button type="button" class="approval-reject flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-medium transition-colors">
+            ${uiIcon('x', { size: 13 })}
+            Reject
+          </button>`
+        : `
+          <span class="flex items-center gap-1.5 text-xs font-medium ${
+            status === 'approved' ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
+          }">
+            ${uiIcon(status === 'approved' ? 'check-circle' : 'circle-x', { size: 14 })}
+            ${status === 'approved' ? 'Approved' : 'Rejected'}
+          </span>`;
+
+    this.className = `block rounded-xl border bg-white dark:bg-zinc-900 overflow-hidden ${
+      isHigh ? 'border-amber-300 dark:border-amber-700/60' : 'border-zinc-200 dark:border-zinc-700'
+    }`;
+    this.innerHTML = `
+      <div class="flex items-center gap-2.5 px-3.5 py-2.5">
+        <span class="p-1.5 rounded-lg shrink-0 ${
+          isHigh
+            ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400'
+            : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'
+        }">${uiIcon(isHigh ? 'lock' : 'tool', { size: 15 })}</span>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+            <span class="font-mono truncate">${escapeAttribute(toolName)}</span>
+            ${
+              isHigh
+                ? '<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 shrink-0">high risk</span>'
+                : ''
+            }
+          </div>
+          ${description ? `<div class="text-xs text-zinc-500 dark:text-zinc-400 truncate">${escapeAttribute(description)}</div>` : ''}
+        </div>
+      </div>
+      ${
+        argsText
+          ? `<pre class="mx-3.5 mb-2.5 max-h-40 overflow-auto rounded-lg bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-100 dark:border-zinc-800 px-3 py-2 text-xs font-mono text-zinc-600 dark:text-zinc-400 whitespace-pre-wrap break-words">${escapeAttribute(argsText)}</pre>`
+          : ''
+      }
+      <div class="flex items-center gap-2 px-3.5 pb-3">${actionsHtml}</div>`;
+
+    const approveBtn = this.querySelector('.approval-approve');
+    const rejectBtn = this.querySelector('.approval-reject');
+    if (approveBtn) approveBtn.addEventListener('click', () => this._resolve('approved', 'approve'));
+    if (rejectBtn) rejectBtn.addEventListener('click', () => this._resolve('rejected', 'reject'));
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('tool-approval-card')) {
+  customElements.define('tool-approval-card', ToolApprovalCardElement);
+}
+export default ToolApprovalCardElement;
 
 
 ====/File: vanilla/ToolCallBadge.js/====

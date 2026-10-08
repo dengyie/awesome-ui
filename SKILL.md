@@ -42,7 +42,10 @@ awesome-ui/
 │   ├── TypingIndicator.tsx  # AI 输入中三点加载指示器
 │   ├── ChatMessageRow.tsx   # 会话消息气泡行（User/Assistant/System）
 │   ├── CommandPalette.tsx   # Cmd+K 命令面板（搜索/键盘导航）
-│   └── ToastStack.tsx       # 全局通知栈（四类型/自动消除）
+│   ├── ToastStack.tsx       # 全局通知栈（四类型/自动消除）
+│   ├── ChatSessionList.tsx  # 会话历史侧边栏（高亮/悬停删除）
+│   ├── DiffViewer.tsx       # 代码差异对比（增删行高亮/行号）
+│   └── ToolApprovalCard.tsx # Agent 工具审批卡片（Approve/Reject）
 ├── vue/                     # Vue 3 (SFC) 单文件组件 (Vue 3 + Tailwind)
 │   ├── UiIcon.vue
 │   ├── ChatPromptInput.vue
@@ -66,7 +69,10 @@ awesome-ui/
 │   ├── TypingIndicator.vue
 │   ├── ChatMessageRow.vue
 │   ├── CommandPalette.vue
-│   └── ToastStack.vue
+│   ├── ToastStack.vue
+│   ├── ChatSessionList.vue
+│   ├── DiffViewer.vue
+│   └── ToolApprovalCard.vue
 └── vanilla/                 # 原生 JS / Web Components 单文件 (HTML + Tailwind CDN)
     ├── UiIcon.js            # uiIcon() SVG 图标工厂
     ├── ChatPromptInput.js
@@ -90,7 +96,10 @@ awesome-ui/
     ├── TypingIndicator.js
     ├── ChatMessageRow.js
     ├── CommandPalette.js
-    └── ToastStack.js
+    ├── ToastStack.js
+    ├── ChatSessionList.js
+    ├── DiffViewer.js
+    └── ToolApprovalCard.js
 ```
 
 ## 图标 API 速查
@@ -181,6 +190,21 @@ awesome-ui/
 - **Props**: `toasts: Array<{ id: string|number, message: string, type?: 'success'|'error'|'warning'|'info' }>`, `onDismiss?: (id) => void`, `duration?: number`（默认 4000，0 关闭自动消除）, `className?: string`
 - **Vanilla 用法**: `<toast-stack duration="4000">`，命令式 API `push(message, type)` / `dismiss(id)`；事件 `dismiss`（CustomEvent）
 - **特性**: 固定右下堆叠，类型图标+色彩（success 绿 / error 红 / warning 黄 / info 蓝），手动关闭按钮，`aria-live="polite"` 播报，组件卸载自动清理定时器。
+
+### 23. `ChatSessionList` (会话历史侧边栏)
+- **Props**: `sessions: Array<{ id: string|number, title: string, timeLabel?: string }>`, `activeId?: string|number|null`, `onSelect?: (session) => void`, `onDelete?: (id) => void`, `title?: string`（默认 `'Chats'`）, `emptyText?: string`, `className?: string`
+- **Vanilla 用法**: `<chat-session-list active-id="2">`，数据经 `sessions` 属性注入；事件 `select`（detail 为 session）/ `delete`（detail 为 `{ id }`）
+- **特性**: 当前会话高亮（indigo 底）、悬停显现删除按钮、键盘 Enter/Space 可选中、空态文案、头部会话计数徽章。
+
+### 24. `DiffViewer` (AI 代码差异对比)
+- **Props**: `lines: Array<{ type: 'add'|'remove'|'context', content: string }>`, `filename?: string`, `language?: string`, `showLineNumbers?: boolean`（默认 true）, `className?: string`
+- **Vanilla 用法**: `<diff-viewer filename="src/app.ts" language="ts">`，数据经 `lines` 属性注入；全量实体转义防注入
+- **特性**: 增行绿底/删行红底/上下文中性，`+`/`-` 槽位符号，头部 +/- 统计徽章，新旧双列行号（增行只显新号、删行只显旧号）。
+
+### 25. `ToolApprovalCard` (Agent 工具审批卡片)
+- **Props**: `toolName: string`, `description?: string`, `args?: Record<string, unknown>|string`, `risk?: 'low'|'high'`, `status?: 'pending'|'approved'|'rejected'`, `onApprove?: () => void`, `onReject?: () => void`, `className?: string`
+- **Vanilla 用法**: `<tool-approval-card tool-name="shell_execute" risk="high">`，参数经 `args` 属性注入；事件 `approve` / `reject`，点击后卡片自动更新 status 并切换为结果徽章
+- **特性**: 高风险 amber 描边 + `high risk` 徽章 + lock 图标，低风险中性 tool 图标；参数 JSON 美化预览（max-height 滚动）；适合 Agent Human-in-the-loop 审批流。
 
 ## LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)

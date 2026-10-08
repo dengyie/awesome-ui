@@ -118,7 +118,22 @@
    - Vue 3: vue/ToastStack.vue
    - Vanilla: vanilla/ToastStack.js (custom element `<toast-stack>`, API `push(message, type)` / `dismiss(id)`, event `dismiss`)
 
-   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（34 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
+22. ChatSessionList: Conversation history sidebar with active highlight, hover-reveal delete, keyboard-selectable rows, empty state, and session count badge.
+   - React: react/ChatSessionList.tsx
+   - Vue 3: vue/ChatSessionList.vue
+   - Vanilla: vanilla/ChatSessionList.js (custom element `<chat-session-list>`, events `select`/`delete`)
+
+23. DiffViewer: AI code-edit diff view with add/remove/context line highlighting, +/- summary counts, dual old/new line numbers, and filename/language badges.
+   - React: react/DiffViewer.tsx
+   - Vue 3: vue/DiffViewer.vue
+   - Vanilla: vanilla/DiffViewer.js (custom element `<diff-viewer>`, `lines` property)
+
+24. ToolApprovalCard: Agent human-in-the-loop permission prompt with Approve/Reject actions, low/high risk tiers, JSON args preview, and resolved-state badges.
+   - React: react/ToolApprovalCard.tsx
+   - Vue 3: vue/ToolApprovalCard.vue
+   - Vanilla: vanilla/ToolApprovalCard.js (custom element `<tool-approval-card>`, events `approve`/`reject`, self-updating status)
+
+   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（38 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
 
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:

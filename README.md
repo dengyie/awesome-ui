@@ -42,6 +42,9 @@
 | **`ChatMessageRow`** | 会话消息气泡 | User/Assistant/System 三角色、头像/初始图标、名称与时间戳、气泡对齐 |
 | **`CommandPalette`** | Cmd+K 命令面板 | 模糊搜索、分组标题、键盘上下导航/Enter 选中/Esc 关闭、快捷键提示 |
 | **`ToastStack`** | 全局通知栈 | Success/Error/Warning/Info 四类型、自动消除、手动关闭、`aria-live` 播报 |
+| **`ChatSessionList`** | 会话历史侧边栏 | 当前会话高亮、悬停删除、空态展示、会话计数徽章 |
+| **`DiffViewer`** | AI 代码差异对比 | 增/删/上下文行高亮、+/- 统计、双列行号、文件名与语言徽章 |
+| **`ToolApprovalCard`** | Agent 工具审批 | Approve/Reject 按钮、高/低风险分级、参数预览、状态自更新 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -75,7 +78,10 @@ awesome-ui/
 │   ├── TypingIndicator.tsx
 │   ├── ChatMessageRow.tsx
 │   ├── CommandPalette.tsx
-│   └── ToastStack.tsx
+│   ├── ToastStack.tsx
+│   ├── ChatSessionList.tsx
+│   ├── DiffViewer.tsx
+│   └── ToolApprovalCard.tsx
 ├── vue/                       # Vue 3 (SFC) 单文件组件
 │   ├── UiIcon.vue           # 统一零依赖 SVG 图标
 │   ├── ChatPromptInput.vue
@@ -99,7 +105,10 @@ awesome-ui/
 │   ├── TypingIndicator.vue
 │   ├── ChatMessageRow.vue
 │   ├── CommandPalette.vue
-│   └── ToastStack.vue
+│   ├── ToastStack.vue
+│   ├── ChatSessionList.vue
+│   ├── DiffViewer.vue
+│   └── ToolApprovalCard.vue
 └── vanilla/                   # 原生 JS / Web Components 单文件
     ├── UiIcon.js            # uiIcon() SVG 工厂函数
     ├── ChatPromptInput.js
@@ -123,7 +132,10 @@ awesome-ui/
     ├── TypingIndicator.js
     ├── ChatMessageRow.js
     ├── CommandPalette.js
-    └── ToastStack.js
+    ├── ToastStack.js
+    ├── ChatSessionList.js
+    ├── DiffViewer.js
+    └── ToolApprovalCard.js
 ```
 
 ---

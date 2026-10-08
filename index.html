@@ -45,12 +45,15 @@
   <script type="module" src="./vanilla/ChatMessageRow.js"></script>
   <script type="module" src="./vanilla/CommandPalette.js"></script>
   <script type="module" src="./vanilla/ToastStack.js"></script>
+  <script type="module" src="./vanilla/ChatSessionList.js"></script>
+  <script type="module" src="./vanilla/DiffViewer.js"></script>
+  <script type="module" src="./vanilla/ToolApprovalCard.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.5.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.6.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -199,7 +202,7 @@
     </section>
 
     <!-- 12. CommandPalette & ToastStack -->
-    <section class="space-y-3 pb-12">
+    <section class="space-y-3">
       <div class="flex items-center justify-between">
         <h2 class="text-base font-semibold text-zinc-200">12. CommandPalette & ToastStack</h2>
         <span class="text-xs font-mono text-zinc-500">Cmd+K Actions, Keyboard Navigation, Auto-dismiss Notifications</span>
@@ -214,6 +217,38 @@
       </div>
       <command-palette id="demo-palette"></command-palette>
       <toast-stack id="demo-toasts"></toast-stack>
+    </section>
+
+    <!-- 13. ChatSessionList -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">13. ChatSessionList (Conversation History Sidebar)</h2>
+        <span class="text-xs font-mono text-zinc-500">Active Highlight, Hover Delete, Empty State</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <chat-session-list id="demo-sessions" active-id="2"></chat-session-list>
+      </div>
+    </section>
+
+    <!-- 14. DiffViewer -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">14. DiffViewer (AI Code Edit Diff)</h2>
+        <span class="text-xs font-mono text-zinc-500">Add / Remove / Context Lines, +/- Counts, Line Numbers</span>
+      </div>
+      <diff-viewer id="demo-diff" filename="src/hooks/useStream.ts" language="ts"></diff-viewer>
+    </section>
+
+    <!-- 15. ToolApprovalCard -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">15. ToolApprovalCard (Agent Permission Prompt)</h2>
+        <span class="text-xs font-mono text-zinc-500">Approve / Reject, Risk Levels, Args Inspection</span>
+      </div>
+      <div class="space-y-3">
+        <tool-approval-card id="demo-approval-low" tool-name="web_search" description="Search the web for current documentation"></tool-approval-card>
+        <tool-approval-card id="demo-approval-high" tool-name="shell_execute" description="Run a shell command on this machine" risk="high"></tool-approval-card>
+      </div>
     </section>
   </main>
 
@@ -348,6 +383,55 @@
           if (toasts) toasts.push(toastMessages[type] || 'Notification', type);
         });
       });
+
+      const sessionList = document.getElementById('demo-sessions');
+      if (sessionList) {
+        let sessions = [
+          { id: 1, title: 'Scaffold a streaming chat UI', timeLabel: '2h ago' },
+          { id: 2, title: 'Deploy awesome-ui gallery to GitHub Pages', timeLabel: '5h ago' },
+          { id: 3, title: 'Review RAG citation accuracy', timeLabel: '1d ago' },
+          { id: 4, title: 'Migrate Vue 2 dashboard to Vue 3', timeLabel: '2d ago' },
+        ];
+        sessionList.sessions = sessions;
+        sessionList.addEventListener('select', (e) => {
+          sessionList.activeId = e.detail.id;
+          if (toasts) toasts.push(`Switched to: ${e.detail.title}`, 'info');
+        });
+        sessionList.addEventListener('delete', (e) => {
+          sessions = sessions.filter((s) => s.id !== e.detail.id);
+          sessionList.sessions = sessions;
+          if (toasts) toasts.push('Session deleted', 'warning');
+        });
+      }
+
+      const diffViewer = document.getElementById('demo-diff');
+      if (diffViewer) {
+        diffViewer.lines = [
+          { type: 'context', content: "import { useState, useEffect } from 'react';" },
+          { type: 'context', content: '' },
+          { type: 'remove', content: 'export function useStream(endpoint) {' },
+          { type: 'add', content: 'export function useStream(endpoint: string): string {' },
+          { type: 'remove', content: "  const [tokens, setTokens] = useState('');" },
+          { type: 'add', content: "  const [tokens, setTokens] = useState<string>('');" },
+          { type: 'context', content: '  useEffect(() => {' },
+          { type: 'context', content: '    const es = new EventSource(endpoint);' },
+          { type: 'add', content: '    es.onerror = () => es.close();' },
+          { type: 'context', content: '    return () => es.close();' },
+        ];
+      }
+
+      const approvalLow = document.getElementById('demo-approval-low');
+      if (approvalLow) {
+        approvalLow.args = { query: 'awesome-ui component library', limit: 5 };
+        approvalLow.addEventListener('approve', () => toasts && toasts.push('web_search approved', 'success'));
+        approvalLow.addEventListener('reject', () => toasts && toasts.push('web_search rejected', 'error'));
+      }
+      const approvalHigh = document.getElementById('demo-approval-high');
+      if (approvalHigh) {
+        approvalHigh.args = { cmd: 'npm run build && npm publish', cwd: '/repo/awesome-ui' };
+        approvalHigh.addEventListener('approve', () => toasts && toasts.push('shell_execute approved — running', 'warning'));
+        approvalHigh.addEventListener('reject', () => toasts && toasts.push('shell_execute rejected', 'error'));
+      }
 
       const modelSel = document.getElementById('header-model-selector');
       const ctxBadge = document.getElementById('header-context-badge');
