@@ -92,7 +92,18 @@
    - Vue 3: vue/HomepageDashboard.vue
    - Vanilla: vanilla/HomepageDashboard.js
    - Hardening: href protocol whitelist (only http(s)/mailto:////./../), entity-escaped text, empty-state parity, optional stable id key.
-   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（24 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
+
+17. CodeBlock: Standalone code card with language badge, filename, one-click copy feedback, optional line numbers, and max-height scrolling. All code text is entity-escaped.
+   - React: react/CodeBlock.tsx
+   - Vue 3: vue/CodeBlock.vue
+   - Vanilla: vanilla/CodeBlock.js
+
+18. TypingIndicator: AI composing / first-token-wait loading indicator with staggered bouncing dots or pulse variant, three sizes, and role="status" accessibility.
+   - React: react/TypingIndicator.tsx
+   - Vue 3: vue/TypingIndicator.vue
+   - Vanilla: vanilla/TypingIndicator.js
+
+   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（28 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
 
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:

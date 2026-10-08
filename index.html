@@ -40,12 +40,14 @@
   <script type="module" src="./vanilla/HomepageDashboard.js"></script>
   <script type="module" src="./vanilla/ContextUsageBadge.js"></script>
   <script type="module" src="./vanilla/ModelSelector.js"></script>
+  <script type="module" src="./vanilla/CodeBlock.js"></script>
+  <script type="module" src="./vanilla/TypingIndicator.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.3.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.4.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -157,6 +159,28 @@
       </div>
       <artifact-canvas is-open title="ButtonComponent.html" language="html" code="<div style='display:flex;justify-content:center;align-items:center;height:100%;background:#09090b;color:#fff;font-family:sans-serif;'><h2>Hello from Artifact Canvas! 🎉</h2></div>"></artifact-canvas>
     </section>
+
+    <!-- 9. CodeBlock -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">9. CodeBlock (Standalone Code Card)</h2>
+        <span class="text-xs font-mono text-zinc-500">Language Badge, Filename, One-click Copy, Line Numbers</span>
+      </div>
+      <code-block id="demo-codeblock" language="typescript" filename="stream.ts" show-line-numbers></code-block>
+    </section>
+
+    <!-- 10. TypingIndicator -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">10. TypingIndicator (AI Composing State)</h2>
+        <span class="text-xs font-mono text-zinc-500">Dots / Pulse Variants, Sizes, A11y role=status</span>
+      </div>
+      <div class="flex items-center gap-8 p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <typing-indicator label="AI is thinking"></typing-indicator>
+        <typing-indicator variant="pulse" size="sm" label="Streaming"></typing-indicator>
+        <typing-indicator size="lg"></typing-indicator>
+      </div>
+    </section>
   </main>
 
   <auto-scroll-anchor></auto-scroll-anchor>
@@ -234,6 +258,23 @@
             };
           }
         });
+      }
+
+      const codeBlock = document.getElementById('demo-codeblock');
+      if (codeBlock) {
+        codeBlock.code = [
+          "import { useState, useEffect } from 'react';",
+          '',
+          'export function useStream(endpoint: string) {',
+          "  const [tokens, setTokens] = useState<string>('');",
+          '  useEffect(() => {',
+          '    const es = new EventSource(endpoint);',
+          "    es.onmessage = (e) => setTokens((t) => t + e.data);",
+          '    return () => es.close();',
+          '  }, [endpoint]);',
+          '  return tokens;',
+          '}',
+        ].join('\n');
       }
 
       const modelSel = document.getElementById('header-model-selector');

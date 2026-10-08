@@ -37,7 +37,9 @@ awesome-ui/
 │   ├── KnowledgeDrawer.tsx  # 知识节点抽屉
 │   ├── HomepageDashboard.tsx # 仪表盘 / 个性化首页（gethomepage/homepage 风格）
 │   ├── ContextUsageBadge.tsx # Context Window 消耗量与 Token 分布指示器
-│   └── ModelSelector.tsx    # LLM 模型切换与搜索选择器
+│   ├── ModelSelector.tsx    # LLM 模型切换与搜索选择器
+│   ├── CodeBlock.tsx        # 独立代码块（语言徽章/复制/行号）
+│   └── TypingIndicator.tsx  # AI 输入中三点加载指示器
 ├── vue/                     # Vue 3 (SFC) 单文件组件 (Vue 3 + Tailwind)
 │   ├── UiIcon.vue
 │   ├── ChatPromptInput.vue
@@ -56,7 +58,9 @@ awesome-ui/
 │   ├── KnowledgeDrawer.vue
 │   ├── HomepageDashboard.vue
 │   ├── ContextUsageBadge.vue
-│   └── ModelSelector.vue
+│   ├── ModelSelector.vue
+│   ├── CodeBlock.vue
+│   └── TypingIndicator.vue
 └── vanilla/                 # 原生 JS / Web Components 单文件 (HTML + Tailwind CDN)
     ├── UiIcon.js            # uiIcon() SVG 图标工厂
     ├── ChatPromptInput.js
@@ -75,7 +79,9 @@ awesome-ui/
     ├── KnowledgeDrawer.js
     ├── HomepageDashboard.js
     ├── ContextUsageBadge.js
-    └── ModelSelector.js
+    ├── ModelSelector.js
+    ├── CodeBlock.js
+    └── TypingIndicator.js
 ```
 
 ## 图标 API 速查
@@ -142,6 +148,15 @@ awesome-ui/
 ### 17. `ModelSelector` (AI 模型切换选择器)
 - **Props**: `models: Array<{ id: string, name: string, provider?: string, description?: string, contextLength?: string, tags?: string[] }>`, `selectedId: string`, `onSelect?: (model: ModelOption) => void`, `placeholder?: string`, `showSearch?: boolean`, `disabled?: boolean`, `className?: string`
 - **特性**: 扁平数据驱动，即时搜索过滤，Provider 与 Context 长度徽章，完美适配各类 AI 桌面与聊天工具栏。
+
+### 18. `CodeBlock` (独立代码块卡片)
+- **Props**: `code: string`, `language?: string`, `filename?: string`, `showLineNumbers?: boolean`, `showCopy?: boolean`, `maxHeight?: string`, `className?: string`
+- **Vanilla 用法**: `<code-block language="typescript" filename="app.ts" show-line-numbers>`，代码通过属性 `code` 注入或直接写在标签文本内容内；复制成功自动切换为 `Copied` 反馈，2 秒后复位。
+- **安全**: 代码内容全量实体转义，注入 `<script>` 不产生节点。
+
+### 19. `TypingIndicator` (AI 输入中 / 加载指示器)
+- **Props**: `label?: string`, `variant?: 'dots'|'pulse'`, `size?: 'sm'|'md'|'lg'`, `className?: string`
+- **特性**: 三点交错弹跳（160ms 阶梯 delay）或脉冲变体，`role="status"` + `aria-label` 无障碍语义，适合等待首 Token / AI 正在输入场景。
 
 ## LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)

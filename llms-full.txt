@@ -413,6 +413,107 @@ export const ChatPromptInput: React.FC<ChatPromptInputProps> = ({
 };
 
 ================================================================
+File: react/CodeBlock.tsx
+================================================================
+
+import React, { useState } from "react";
+import { UiIcon } from "./UiIcon";
+
+export interface CodeBlockProps {
+  code: string;
+  language?: string;
+  filename?: string;
+  showLineNumbers?: boolean;
+  showCopy?: boolean;
+  maxHeight?: string;
+  className?: string;
+}
+
+export const CodeBlock: React.FC<CodeBlockProps> = ({
+  code,
+  language = "",
+  filename,
+  showLineNumbers = false,
+  showCopy = true,
+  maxHeight,
+  className = "",
+}) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  const lines = String(code ?? "").replace(/\n$/, "").split("\n");
+
+  return (
+    <div
+      className={`group relative rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 overflow-hidden text-sm font-mono ${className}`}
+    >
+      {/* Header */}
+      {(language || filename || showCopy) && (
+        <div className="flex items-center justify-between px-3.5 py-2 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-100/60 dark:bg-zinc-900/60">
+          <div className="flex items-center gap-2 min-w-0 text-xs text-zinc-500 dark:text-zinc-400">
+            <UiIcon name="terminal" size={13} className="shrink-0" />
+            {filename && (
+              <span className="font-medium text-zinc-700 dark:text-zinc-300 truncate">
+                {filename}
+              </span>
+            )}
+            {language && (
+              <span className="px-1.5 py-0.5 rounded bg-zinc-200/70 dark:bg-zinc-800 text-[10px] uppercase font-semibold tracking-wide shrink-0">
+                {language}
+              </span>
+            )}
+          </div>
+          {showCopy && (
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="flex items-center gap-1 px-2 py-1 rounded-md text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-200/70 dark:hover:bg-zinc-800 transition-colors shrink-0"
+              aria-label="Copy code"
+            >
+              <UiIcon name={copied ? "check" : "copy"} size={13} className={copied ? "text-emerald-500" : ""} />
+              <span className="hidden sm:inline">{copied ? "Copied" : "Copy"}</span>
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Body */}
+      <div
+        className="overflow-auto p-3.5 text-[13px] leading-relaxed text-zinc-800 dark:text-zinc-200"
+        style={maxHeight ? { maxHeight } : undefined}
+      >
+        <pre className="whitespace-pre">
+          {showLineNumbers ? (
+            <code>
+              {lines.map((line, idx) => (
+                <div key={idx} className="flex">
+                  <span className="w-8 shrink-0 select-none text-right pr-3 text-zinc-400 dark:text-zinc-600">
+                    {idx + 1}
+                  </span>
+                  <span className="flex-1">{line || " "}</span>
+                </div>
+              ))}
+            </code>
+          ) : (
+            <code>{code}</code>
+          )}
+        </pre>
+      </div>
+    </div>
+  );
+};
+export default CodeBlock;
+
+================================================================
 File: react/ContextUsageBadge.tsx
 ================================================================
 
@@ -2069,6 +2170,56 @@ export const ToolCallBadge: React.FC<ToolCallBadgeProps> = ({
 };
 
 ================================================================
+File: react/TypingIndicator.tsx
+================================================================
+
+import React from "react";
+
+export interface TypingIndicatorProps {
+  label?: string;
+  variant?: "dots" | "pulse";
+  size?: "sm" | "md" | "lg";
+  className?: string;
+}
+
+const SIZE_MAP: Record<string, { dot: string; gap: string }> = {
+  sm: { dot: "w-1.5 h-1.5", gap: "gap-1" },
+  md: { dot: "w-2 h-2", gap: "gap-1.5" },
+  lg: { dot: "w-2.5 h-2.5", gap: "gap-2" },
+};
+
+export const TypingIndicator: React.FC<TypingIndicatorProps> = ({
+  label,
+  variant = "dots",
+  size = "md",
+  className = "",
+}) => {
+  const { dot, gap } = SIZE_MAP[size] || SIZE_MAP.md;
+
+  return (
+    <div
+      className={`inline-flex items-center gap-2.5 text-zinc-500 dark:text-zinc-400 ${className}`}
+      role="status"
+      aria-label={label || "Loading"}
+    >
+      <span className={`inline-flex items-center ${gap}`}>
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            className={`${dot} rounded-full bg-current ${
+              variant === "pulse" ? "animate-pulse" : "animate-bounce"
+            }`}
+            style={{ animationDelay: `${i * 160}ms` }}
+          />
+        ))}
+      </span>
+      {label && <span className="text-xs font-sans">{label}</span>}
+    </div>
+  );
+};
+export default TypingIndicator;
+
+================================================================
 File: react/UiIcon.tsx
 ================================================================
 
@@ -2670,6 +2821,89 @@ const handleSubmit = () => {
     emit('submit');
   }
 };
+</script>
+
+================================================================
+File: vue/CodeBlock.vue
+================================================================
+
+<template>
+  <div
+    class="group relative rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 overflow-hidden text-sm font-mono"
+    :class="className"
+  >
+    <div
+      v-if="language || filename || showCopy"
+      class="flex items-center justify-between px-3.5 py-2 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-100/60 dark:bg-zinc-900/60"
+    >
+      <div class="flex items-center gap-2 min-w-0 text-xs text-zinc-500 dark:text-zinc-400">
+        <UiIcon name="terminal" :size="13" class="shrink-0" />
+        <span v-if="filename" class="font-medium text-zinc-700 dark:text-zinc-300 truncate">
+          {{ filename }}
+        </span>
+        <span
+          v-if="language"
+          class="px-1.5 py-0.5 rounded bg-zinc-200/70 dark:bg-zinc-800 text-[10px] uppercase font-semibold tracking-wide shrink-0"
+        >
+          {{ language }}
+        </span>
+      </div>
+      <button
+        v-if="showCopy"
+        type="button"
+        class="flex items-center gap-1 px-2 py-1 rounded-md text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-200/70 dark:hover:bg-zinc-800 transition-colors shrink-0"
+        aria-label="Copy code"
+        @click="handleCopy"
+      >
+        <UiIcon :name="copied ? 'check' : 'copy'" :size="13" :class="copied ? 'text-emerald-500' : ''" />
+        <span class="hidden sm:inline">{{ copied ? "Copied" : "Copy" }}</span>
+      </button>
+    </div>
+
+    <div
+      class="overflow-auto p-3.5 text-[13px] leading-relaxed text-zinc-800 dark:text-zinc-200"
+      :style="maxHeight ? { maxHeight } : undefined"
+    >
+      <pre class="whitespace-pre"><code v-if="showLineNumbers"><div v-for="(line, idx) in lines" :key="idx" class="flex"><span class="w-8 shrink-0 select-none text-right pr-3 text-zinc-400 dark:text-zinc-600">{{ idx + 1 }}</span><span class="flex-1">{{ line || " " }}</span></div></code><code v-else>{{ code }}</code></pre>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed } from "vue";
+import UiIcon from "./UiIcon.vue";
+
+const props = withDefaults(
+  defineProps<{
+    code: string;
+    language?: string;
+    filename?: string;
+    showLineNumbers?: boolean;
+    showCopy?: boolean;
+    maxHeight?: string;
+    className?: string;
+  }>(),
+  {
+    language: "",
+    showLineNumbers: false,
+    showCopy: true,
+    className: "",
+  }
+);
+
+const copied = ref(false);
+
+const lines = computed(() => String(props.code ?? "").replace(/\n$/, "").split("\n"));
+
+async function handleCopy() {
+  try {
+    await navigator.clipboard.writeText(props.code);
+    copied.value = true;
+    setTimeout(() => (copied.value = false), 2000);
+  } catch {
+    copied.value = false;
+  }
+}
 </script>
 
 ================================================================
@@ -4237,6 +4471,55 @@ const formattedOutput = computed(() => {
 </script>
 
 ================================================================
+File: vue/TypingIndicator.vue
+================================================================
+
+<template>
+  <div
+    class="inline-flex items-center gap-2.5 text-zinc-500 dark:text-zinc-400"
+    :class="className"
+    role="status"
+    :aria-label="label || 'Loading'"
+  >
+    <span class="inline-flex items-center" :class="gapClass">
+      <span
+        v-for="i in 3"
+        :key="i"
+        class="rounded-full bg-current"
+        :class="[dotClass, variant === 'pulse' ? 'animate-pulse' : 'animate-bounce']"
+        :style="{ animationDelay: `${(i - 1) * 160}ms` }"
+      ></span>
+    </span>
+    <span v-if="label" class="text-xs font-sans">{{ label }}</span>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from "vue";
+
+const props = withDefaults(
+  defineProps<{
+    label?: string;
+    variant?: "dots" | "pulse";
+    size?: "sm" | "md" | "lg";
+    className?: string;
+  }>(),
+  {
+    variant: "dots",
+    size: "md",
+    className: "",
+  }
+);
+
+const dotClass = computed(() =>
+  props.size === "sm" ? "w-1.5 h-1.5" : props.size === "lg" ? "w-2.5 h-2.5" : "w-2 h-2"
+);
+const gapClass = computed(() =>
+  props.size === "sm" ? "gap-1" : props.size === "lg" ? "gap-2" : "gap-1.5"
+);
+</script>
+
+================================================================
 File: vue/UiIcon.vue
 ================================================================
 
@@ -4553,6 +4836,126 @@ if (!customElements.get("chat-prompt-input")) {
   customElements.define("chat-prompt-input", ChatPromptInput);
 }
 export default ChatPromptInput;
+
+================================================================
+File: vanilla/CodeBlock.js
+================================================================
+
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const escapeText = escapeAttribute;
+
+export class CodeBlockElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['language', 'filename', 'show-line-numbers', 'show-copy', 'max-height'];
+  }
+
+  constructor() {
+    super();
+    this._code = '';
+    this._copied = false;
+  }
+
+  get code() {
+    return this._code;
+  }
+
+  set code(val) {
+    this._code = String(val ?? '');
+    this.render();
+  }
+
+  connectedCallback() {
+    if (!this._code && this.textContent.trim()) {
+      this._code = this.textContent;
+    }
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  async _handleCopy() {
+    try {
+      await navigator.clipboard.writeText(this._code);
+      this._copied = true;
+      this.render();
+      setTimeout(() => {
+        this._copied = false;
+        this.render();
+      }, 2000);
+    } catch {
+      this._copied = false;
+    }
+  }
+
+  render() {
+    const language = this.getAttribute('language') || '';
+    const filename = this.getAttribute('filename') || '';
+    const showLineNumbers = this.hasAttribute('show-line-numbers');
+    const showCopy = this.getAttribute('show-copy') !== 'false';
+    const maxHeight = this.getAttribute('max-height') || '';
+    const customClass = this.getAttribute('class') || '';
+
+    const lines = this._code.replace(/\n$/, '').split('\n');
+
+    const bodyHtml = showLineNumbers
+      ? `<code>${lines
+          .map(
+            (line, idx) =>
+              `<div class="flex"><span class="w-8 shrink-0 select-none text-right pr-3 text-zinc-400 dark:text-zinc-600">${idx + 1}</span><span class="flex-1">${escapeText(line) || ' '}</span></div>`
+          )
+          .join('')}</code>`
+      : `<code>${escapeText(this._code)}</code>`;
+
+    this.innerHTML = `
+      <div class="group relative rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 overflow-hidden text-sm font-mono ${escapeAttribute(customClass)}">
+        ${(language || filename || showCopy) ? `
+          <div class="flex items-center justify-between px-3.5 py-2 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-100/60 dark:bg-zinc-900/60">
+            <div class="flex items-center gap-2 min-w-0 text-xs text-zinc-500 dark:text-zinc-400">
+              ${uiIcon('terminal', { size: 13, className: 'shrink-0' })}
+              ${filename ? `<span class="font-medium text-zinc-700 dark:text-zinc-300 truncate">${escapeText(filename)}</span>` : ''}
+              ${language ? `<span class="px-1.5 py-0.5 rounded bg-zinc-200/70 dark:bg-zinc-800 text-[10px] uppercase font-semibold tracking-wide shrink-0">${escapeText(language)}</span>` : ''}
+            </div>
+            ${showCopy ? `
+              <button
+                type="button"
+                class="cb-copy-btn flex items-center gap-1 px-2 py-1 rounded-md text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-200/70 dark:hover:bg-zinc-800 transition-colors shrink-0"
+                aria-label="Copy code"
+              >
+                ${uiIcon(this._copied ? 'check' : 'copy', { size: 13, className: this._copied ? 'text-emerald-500' : '' })}
+                <span class="hidden sm:inline">${this._copied ? 'Copied' : 'Copy'}</span>
+              </button>
+            ` : ''}
+          </div>
+        ` : ''}
+        <div class="overflow-auto p-3.5 text-[13px] leading-relaxed text-zinc-800 dark:text-zinc-200" ${maxHeight ? `style="max-height: ${escapeAttribute(maxHeight)}"` : ''}>
+          <pre class="whitespace-pre">${bodyHtml}</pre>
+        </div>
+      </div>
+    `;
+
+    const copyBtn = this.querySelector('.cb-copy-btn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => this._handleCopy());
+    }
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('code-block')) {
+  customElements.define('code-block', CodeBlockElement);
+}
+export default CodeBlockElement;
 
 ================================================================
 File: vanilla/ContextUsageBadge.js
@@ -6160,6 +6563,64 @@ if (!customElements.get("tool-call-badge")) {
   customElements.define("tool-call-badge", ToolCallBadge);
 }
 export default ToolCallBadge;
+
+================================================================
+File: vanilla/TypingIndicator.js
+================================================================
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class TypingIndicatorElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['label', 'variant', 'size'];
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  render() {
+    const label = this.getAttribute('label') || '';
+    const variant = this.getAttribute('variant') || 'dots';
+    const size = this.getAttribute('size') || 'md';
+
+    const dotClass = size === 'sm' ? 'w-1.5 h-1.5' : size === 'lg' ? 'w-2.5 h-2.5' : 'w-2 h-2';
+    const gapClass = size === 'sm' ? 'gap-1' : size === 'lg' ? 'gap-2' : 'gap-1.5';
+    const animClass = variant === 'pulse' ? 'animate-pulse' : 'animate-bounce';
+
+    const dots = [0, 1, 2]
+      .map(
+        (i) =>
+          `<span class="${dotClass} rounded-full bg-current ${animClass}" style="animation-delay: ${i * 160}ms"></span>`
+      )
+      .join('');
+
+    this.className = 'inline-flex items-center gap-2.5 text-zinc-500 dark:text-zinc-400';
+    this.setAttribute('role', 'status');
+    this.setAttribute('aria-label', label || 'Loading');
+
+    this.innerHTML = `
+      <span class="inline-flex items-center ${gapClass}">${dots}</span>
+      ${label ? `<span class="text-xs font-sans">${escapeAttribute(label)}</span>` : ''}
+    `;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('typing-indicator')) {
+  customElements.define('typing-indicator', TypingIndicatorElement);
+}
+export default TypingIndicatorElement;
 
 ================================================================
 File: vanilla/UiIcon.js
