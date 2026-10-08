@@ -1,11 +1,10 @@
-# awesome-ui: Full Components & Source Code Bundle
+# awesome-ui: Full Source Dump for LLM Ingestion
+> Repository: https://github.com/dengyie/awesome-ui
+> Format: Each file is wrapped in ====/File: <path>/==== markers.
+> All components are single-file, zero-blackbox, Tailwind CSS styled, with 1:1 parity across React (TSX), Vue 3 (SFC), and Vanilla Web Components.
 
-## Shared Icon System
-Use `react/UiIcon.tsx`, `vue/UiIcon.vue`, or `vanilla/UiIcon.js` for all interface icons. Do not use emoji, Unicode symbols, or ad-hoc SVG. Icon geometry follows Tabler Icons visual conventions; MIT licensed: https://github.com/tabler/tabler-icons.
 
-================================================================
-File: react/ArtifactCanvas.tsx
-================================================================
+====/File: react/ArtifactCanvas.tsx/====
 
 import React, { useState } from "react";
 import { X, Code2, Eye, Copy, Check } from "./UiIcon";
@@ -129,9 +128,8 @@ export const ArtifactCanvas: React.FC<ArtifactCanvasProps> = ({
   );
 };
 
-================================================================
-File: react/AudioWaveVisualizer.tsx
-================================================================
+
+====/File: react/AudioWaveVisualizer.tsx/====
 
 import React, { useEffect, useRef } from "react";
 
@@ -180,9 +178,8 @@ export const AudioWaveVisualizer: React.FC<AudioWaveVisualizerProps> = ({
   );
 };
 
-================================================================
-File: react/AutoScrollAnchor.tsx
-================================================================
+
+====/File: react/AutoScrollAnchor.tsx/====
 
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowDown } from "./UiIcon";
@@ -247,9 +244,88 @@ export const AutoScrollAnchor: React.FC<AutoScrollAnchorProps> = ({
   );
 };
 
-================================================================
-File: react/ChatPromptInput.tsx
-================================================================
+
+====/File: react/ChatMessageRow.tsx/====
+
+import React from "react";
+import { UiIcon } from "./UiIcon";
+
+export interface ChatMessageRowProps {
+  role: "user" | "assistant" | "system";
+  content?: string;
+  name?: string;
+  avatar?: string;
+  timestamp?: string;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export const ChatMessageRow: React.FC<ChatMessageRowProps> = ({
+  role,
+  content,
+  name,
+  avatar,
+  timestamp,
+  className = "",
+  children,
+}) => {
+  if (role === "system") {
+    return (
+      <div className={`flex justify-center py-2 ${className}`}>
+        <span className="text-xs text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800/60 px-3 py-1 rounded-full">
+          {children ?? content}
+        </span>
+      </div>
+    );
+  }
+
+  const isUser = role === "user";
+
+  const avatarNode = avatar ? (
+    <img
+      src={avatar}
+      alt={name || role}
+      className="w-8 h-8 rounded-lg object-cover shrink-0 border border-zinc-200 dark:border-zinc-700"
+    />
+  ) : (
+    <div
+      className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+        isUser
+          ? "bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400"
+          : "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400"
+      }`}
+    >
+      <UiIcon name={isUser ? "user" : "sparkles"} size={16} />
+    </div>
+  );
+
+  return (
+    <div className={`flex gap-3 py-3 ${isUser ? "flex-row-reverse" : ""} ${className}`}>
+      {avatarNode}
+      <div className={`flex flex-col min-w-0 max-w-[85%] ${isUser ? "items-end" : "items-start"}`}>
+        {(name || timestamp) && (
+          <div className="flex items-center gap-2 mb-1 text-[11px] text-zinc-400 dark:text-zinc-500">
+            {name && <span className="font-medium">{name}</span>}
+            {timestamp && <span className="font-mono">{timestamp}</span>}
+          </div>
+        )}
+        <div
+          className={`rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed break-words whitespace-pre-wrap ${
+            isUser
+              ? "bg-indigo-600 text-white rounded-tr-sm"
+              : "bg-zinc-100 dark:bg-zinc-800/80 text-zinc-800 dark:text-zinc-200 rounded-tl-sm"
+          }`}
+        >
+          {children ?? content}
+        </div>
+      </div>
+    </div>
+  );
+};
+export default ChatMessageRow;
+
+
+====/File: react/ChatPromptInput.tsx/====
 
 import React, { useRef, useEffect, useState, KeyboardEvent } from "react";
 import { ArrowUp, Square, Paperclip, X, ImageIcon } from "./UiIcon";
@@ -412,9 +488,8 @@ export const ChatPromptInput: React.FC<ChatPromptInputProps> = ({
   );
 };
 
-================================================================
-File: react/CodeBlock.tsx
-================================================================
+
+====/File: react/CodeBlock.tsx/====
 
 import React, { useState } from "react";
 import { UiIcon } from "./UiIcon";
@@ -513,9 +588,179 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
 };
 export default CodeBlock;
 
-================================================================
-File: react/ContextUsageBadge.tsx
-================================================================
+
+====/File: react/CommandPalette.tsx/====
+
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import { UiIcon, UiIconName } from "./UiIcon";
+
+export interface CommandItem {
+  id: string;
+  label: string;
+  hint?: string;
+  icon?: UiIconName;
+  group?: string;
+  shortcut?: string;
+}
+
+export interface CommandPaletteProps {
+  items: CommandItem[];
+  isOpen: boolean;
+  onClose?: () => void;
+  onSelect?: (item: CommandItem) => void;
+  placeholder?: string;
+  className?: string;
+}
+
+export const CommandPalette: React.FC<CommandPaletteProps> = ({
+  items = [],
+  isOpen,
+  onClose,
+  onSelect,
+  placeholder = "Type a command or search...",
+  className = "",
+}) => {
+  const [query, setQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const filtered = useMemo(() => {
+    if (!query.trim()) return items;
+    const q = query.toLowerCase();
+    return items.filter(
+      (i) =>
+        i.label.toLowerCase().includes(q) ||
+        (i.hint && i.hint.toLowerCase().includes(q)) ||
+        (i.group && i.group.toLowerCase().includes(q))
+    );
+  }, [items, query]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setQuery("");
+      setActiveIndex(0);
+      setTimeout(() => inputRef.current?.focus(), 0);
+    }
+  }, [isOpen]);
+
+  useEffect(() => setActiveIndex(0), [query]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose?.();
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActiveIndex((i) => Math.min(filtered.length - 1, i + 1));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActiveIndex((i) => Math.max(0, i - 1));
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        const item = filtered[activeIndex];
+        if (item) {
+          onSelect?.(item);
+          onClose?.();
+        }
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [isOpen, filtered, activeIndex, onClose, onSelect]);
+
+  if (!isOpen) return null;
+
+  let lastGroup: string | undefined;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] bg-black/40 backdrop-blur-sm"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Command palette"
+    >
+      <div
+        className={`w-full max-w-lg mx-4 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 ${className}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center gap-2.5 px-4 py-3 border-b border-zinc-100 dark:border-zinc-800">
+          <UiIcon name="search" size={16} className="text-zinc-400 shrink-0" />
+          <input
+            ref={inputRef}
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={placeholder}
+            className="w-full bg-transparent border-none text-sm text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 focus:outline-none"
+          />
+          <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-zinc-400 bg-zinc-100 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700">
+            ESC
+          </kbd>
+        </div>
+
+        <div className="max-h-72 overflow-y-auto p-1.5" role="listbox">
+          {filtered.length === 0 ? (
+            <div className="p-4 text-center text-sm text-zinc-400">No results found</div>
+          ) : (
+            filtered.map((item, idx) => {
+              const showGroup = item.group && item.group !== lastGroup;
+              lastGroup = item.group;
+              const isActive = idx === activeIndex;
+              return (
+                <React.Fragment key={item.id}>
+                  {showGroup && (
+                    <div className="px-2.5 pt-2.5 pb-1 text-[10px] uppercase font-semibold tracking-wider text-zinc-400">
+                      {item.group}
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={isActive}
+                    onClick={() => {
+                      onSelect?.(item);
+                      onClose?.();
+                    }}
+                    onMouseEnter={() => setActiveIndex(idx)}
+                    className={`w-full flex items-center gap-3 px-2.5 py-2 rounded-lg text-left text-sm transition-colors ${
+                      isActive
+                        ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
+                        : "text-zinc-700 dark:text-zinc-300"
+                    }`}
+                  >
+                    {item.icon && (
+                      <span className="p-1 rounded-md bg-zinc-200/60 dark:bg-zinc-700/60 text-zinc-500 dark:text-zinc-400 shrink-0">
+                        <UiIcon name={item.icon} size={14} />
+                      </span>
+                    )}
+                    <span className="flex-1 min-w-0">
+                      <span className="block truncate font-medium">{item.label}</span>
+                      {item.hint && (
+                        <span className="block truncate text-[11px] text-zinc-400">{item.hint}</span>
+                      )}
+                    </span>
+                    {item.shortcut && (
+                      <kbd className="px-1.5 py-0.5 text-[10px] font-mono text-zinc-400 bg-zinc-100 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700 shrink-0">
+                        {item.shortcut}
+                      </kbd>
+                    )}
+                  </button>
+                </React.Fragment>
+              );
+            })
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+export default CommandPalette;
+
+
+====/File: react/ContextUsageBadge.tsx/====
 
 import React, { useState } from "react";
 import { UiIcon, UiIconName } from "./UiIcon";
@@ -632,9 +877,8 @@ export const ContextUsageBadge: React.FC<ContextUsageProps> = ({
 };
 export default ContextUsageBadge;
 
-================================================================
-File: react/HomepageDashboard.tsx
-================================================================
+
+====/File: react/HomepageDashboard.tsx/====
 
 import React, { useEffect, useMemo, useState } from "react";
 
@@ -981,9 +1225,7 @@ export const HomepageDashboard: React.FC<HomepageDashboardProps> = ({
 
 export default HomepageDashboard;
 
-================================================================
-File: react/KnowledgeDrawer.tsx
-================================================================
+====/File: react/KnowledgeDrawer.tsx/====
 
 import React from "react";
 import { X, ExternalLink, GitBranch, ArrowRight, Layers } from "./UiIcon";
@@ -1137,9 +1379,8 @@ export const KnowledgeDrawer: React.FC<KnowledgeDrawerProps> = ({
   );
 };
 
-================================================================
-File: react/MessageActionToolbar.tsx
-================================================================
+
+====/File: react/MessageActionToolbar.tsx/====
 
 import React, { useState } from "react";
 import { Copy, Check, RotateCcw, ThumbsUp, ThumbsDown, ChevronLeft, ChevronRight } from "./UiIcon";
@@ -1262,9 +1503,8 @@ export const MessageActionToolbar: React.FC<MessageActionToolbarProps> = ({
   );
 };
 
-================================================================
-File: react/ModelSelector.tsx
-================================================================
+
+====/File: react/ModelSelector.tsx/====
 
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { UiIcon } from "./UiIcon";
@@ -1466,9 +1706,8 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
 };
 export default ModelSelector;
 
-================================================================
-File: react/PromptChips.tsx
-================================================================
+
+====/File: react/PromptChips.tsx/====
 
 import React from "react";
 import { Sparkles } from "./UiIcon";
@@ -1503,9 +1742,8 @@ export const PromptChips: React.FC<PromptChipsProps> = ({
   );
 };
 
-================================================================
-File: react/RoadmapTimeline.tsx
-================================================================
+
+====/File: react/RoadmapTimeline.tsx/====
 
 import React from "react";
 import { Check, ChevronRight, Lock } from "./UiIcon";
@@ -1629,9 +1867,8 @@ export const RoadmapTimeline: React.FC<RoadmapTimelineProps> = ({
   );
 };
 
-================================================================
-File: react/SourcesCitation.tsx
-================================================================
+
+====/File: react/SourcesCitation.tsx/====
 
 import React, { useState } from "react";
 import { ExternalLink, Globe } from "./UiIcon";
@@ -1715,9 +1952,8 @@ export const SourcesCitation: React.FC<SourcesCitationProps> = ({
   );
 };
 
-================================================================
-File: react/StatusIndicator.tsx
-================================================================
+
+====/File: react/StatusIndicator.tsx/====
 
 import React from "react";
 
@@ -1797,9 +2033,8 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   );
 };
 
-================================================================
-File: react/StreamMarkdown.tsx
-================================================================
+
+====/File: react/StreamMarkdown.tsx/====
 
 import React, { useMemo, useState } from "react";
 import { marked } from "marked";
@@ -1886,9 +2121,8 @@ export const StreamMarkdown: React.FC<StreamMarkdownProps> = ({
   );
 };
 
-================================================================
-File: react/ThemeToggle.tsx
-================================================================
+
+====/File: react/ThemeToggle.tsx/====
 
 import React, { useEffect, useState } from "react";
 import { Sun, Moon, Monitor } from "./UiIcon";
@@ -1990,9 +2224,8 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   );
 };
 
-================================================================
-File: react/ThinkingBlock.tsx
-================================================================
+
+====/File: react/ThinkingBlock.tsx/====
 
 import React, { useState } from "react";
 import { ChevronDown, Sparkles } from "./UiIcon";
@@ -2059,9 +2292,89 @@ export const ThinkingBlock: React.FC<ThinkingBlockProps> = ({
   );
 };
 
-================================================================
-File: react/ToolCallBadge.tsx
-================================================================
+
+====/File: react/ToastStack.tsx/====
+
+import React, { useEffect, useRef } from "react";
+import { UiIcon, UiIconName } from "./UiIcon";
+
+export interface ToastItem {
+  id: string | number;
+  message: string;
+  type?: "success" | "error" | "warning" | "info";
+}
+
+export interface ToastStackProps {
+  toasts: ToastItem[];
+  onDismiss?: (id: string | number) => void;
+  duration?: number;
+  className?: string;
+}
+
+const TYPE_META: Record<string, { icon: UiIconName; color: string }> = {
+  success: { icon: "check-circle", color: "text-emerald-500" },
+  error: { icon: "circle-x", color: "text-rose-500" },
+  warning: { icon: "alert-triangle", color: "text-amber-500" },
+  info: { icon: "sparkles", color: "text-sky-500" },
+};
+
+const ToastCard: React.FC<{
+  toast: ToastItem;
+  duration: number;
+  onDismiss?: (id: string | number) => void;
+}> = ({ toast, duration, onDismiss }) => {
+  const onDismissRef = useRef(onDismiss);
+  onDismissRef.current = onDismiss;
+
+  useEffect(() => {
+    if (duration <= 0) return;
+    const timer = setTimeout(() => onDismissRef.current?.(toast.id), duration);
+    return () => clearTimeout(timer);
+  }, [toast.id, duration]);
+
+  const meta = TYPE_META[toast.type || "info"] || TYPE_META.info;
+
+  return (
+    <div
+      className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-lg text-sm text-zinc-800 dark:text-zinc-200 animate-in slide-in-from-right fade-in duration-200"
+      role="alert"
+    >
+      <UiIcon name={meta.icon} size={16} className={`${meta.color} shrink-0`} />
+      <span className="flex-1 min-w-0">{toast.message}</span>
+      <button
+        type="button"
+        onClick={() => onDismiss?.(toast.id)}
+        className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors shrink-0"
+        aria-label="Dismiss"
+      >
+        <UiIcon name="x" size={14} />
+      </button>
+    </div>
+  );
+};
+
+export const ToastStack: React.FC<ToastStackProps> = ({
+  toasts = [],
+  onDismiss,
+  duration = 4000,
+  className = "",
+}) => {
+  if (toasts.length === 0) return null;
+  return (
+    <div
+      className={`fixed bottom-4 right-4 z-50 flex flex-col gap-2 w-80 max-w-[calc(100vw-2rem)] ${className}`}
+      aria-live="polite"
+    >
+      {toasts.map((t) => (
+        <ToastCard key={t.id} toast={t} duration={duration} onDismiss={onDismiss} />
+      ))}
+    </div>
+  );
+};
+export default ToastStack;
+
+
+====/File: react/ToolCallBadge.tsx/====
 
 import React, { useState } from "react";
 import { Wrench, CheckCircle2, XCircle, Loader2, ChevronRight } from "./UiIcon";
@@ -2169,9 +2482,8 @@ export const ToolCallBadge: React.FC<ToolCallBadgeProps> = ({
   );
 };
 
-================================================================
-File: react/TypingIndicator.tsx
-================================================================
+
+====/File: react/TypingIndicator.tsx/====
 
 import React from "react";
 
@@ -2219,23 +2531,23 @@ export const TypingIndicator: React.FC<TypingIndicatorProps> = ({
 };
 export default TypingIndicator;
 
-================================================================
-File: react/UiIcon.tsx
-================================================================
+
+====/File: react/UiIcon.tsx/====
 
 import React from "react";
 
 // Icon geometry follows the Tabler Icons visual conventions (MIT licensed): https://github.com/tabler/tabler-icons
 
 export type UiIconName =
-  | "arrow-down" | "arrow-left" | "arrow-right" | "arrow-up" | "check"
+  | "alert-triangle" | "arrow-down" | "arrow-left" | "arrow-right" | "arrow-up" | "check"
   | "check-circle" | "chevron-down" | "chevron-left" | "chevron-right" | "chevron-up"
   | "circle-x" | "clock" | "code" | "copy" | "cpu" | "eye" | "external-link" | "globe"
   | "git-branch" | "image" | "layers" | "lock" | "loader" | "minus" | "moon"
   | "monitor" | "paperclip" | "plus" | "refresh" | "search" | "sliders" | "sparkles" | "square" | "sun"
-  | "terminal" | "thumbs-down" | "thumbs-up" | "tool" | "x" | "zap";
+  | "terminal" | "thumbs-down" | "thumbs-up" | "tool" | "user" | "x" | "zap";
 
 const paths: Record<UiIconName, React.ReactNode> = {
+  "alert-triangle": <><path d="M12 9v4" /><path d="M12 17h.01" /><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" /></>,
   "arrow-down": <path d="m6 9 6 6 6-6" />, "arrow-left": <path d="m15 6-6 6 6 6" />,
   "arrow-right": <path d="m9 6 6 6-6 6" />, "arrow-up": <path d="m6 15 6-6 6 6" />,
   check: <path d="m5 12 4 4L19 6" />, "check-circle": <><circle cx="12" cy="12" r="9" /><path d="m8 12 2.5 2.5L16 9" /></>,
@@ -2264,7 +2576,9 @@ const paths: Record<UiIconName, React.ReactNode> = {
   square: <rect x="6" y="6" width="12" height="12" rx="1" />, sun: <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4m0-14.2-1.4 1.4M6.3 17.7l-1.4 1.4" /></>,
   terminal: <path d="m4 17 6-6-6-6m8 14h8" />,
   "thumbs-down": <path d="M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3" />, "thumbs-up": <path d="M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2" />,
-  tool: <><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z" /></>, x: <path d="m6 6 12 12M18 6 6 18" />,
+  tool: <><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z" /></>,
+  user: <><path d="M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0" /><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" /></>,
+  x: <path d="m6 6 12 12M18 6 6 18" />,
   zap: <path d="M13 3 4 14h7l-1 7 9-11h-7l1-7Z" />
 };
 
@@ -2275,6 +2589,7 @@ export const UiIcon = React.forwardRef<SVGSVGElement, UiIconProps>(({ name, size
 UiIcon.displayName = "UiIcon";
 
 export const icon = (name: UiIconName) => (props: Omit<UiIconProps, "name">) => <UiIcon name={name} {...props} />;
+export const AlertTriangle = icon("alert-triangle");
 export const ArrowDown = icon("arrow-down");
 export const ArrowLeft = icon("arrow-left");
 export const ArrowRight = icon("arrow-right");
@@ -2312,14 +2627,14 @@ export const Sun = icon("sun");
 export const Terminal = icon("terminal");
 export const ThumbsDown = icon("thumbs-down");
 export const ThumbsUp = icon("thumbs-up");
+export const User = icon("user");
 export const Wrench = icon("tool");
 export const X = icon("x");
 export const XCircle = icon("circle-x");
 export const Zap = icon("zap");
 
-================================================================
-File: react/paper-theme.ts
-================================================================
+
+====/File: react/paper-theme.ts/====
 
 /**
  * Paper Atelier & Trail Theme System (aitubook.cn 风格设计资产规范与预设)
@@ -2411,9 +2726,8 @@ export const PaperTrailThemeCSS = `
 }
 `;
 
-================================================================
-File: vue/ArtifactCanvas.vue
-================================================================
+
+====/File: vue/ArtifactCanvas.vue/====
 
 <template>
   <div
@@ -2537,9 +2851,8 @@ const handleCopy = async () => {
 };
 </script>
 
-================================================================
-File: vue/AudioWaveVisualizer.vue
-================================================================
+
+====/File: vue/AudioWaveVisualizer.vue/====
 
 <template>
   <div
@@ -2585,9 +2898,8 @@ withDefaults(
 );
 </script>
 
-================================================================
-File: vue/AutoScrollAnchor.vue
-================================================================
+
+====/File: vue/AutoScrollAnchor.vue/====
 
 <template>
   <div :ref="(el) => { bottomEl = el as HTMLElement; }" :class="['h-px w-full pointer-events-none', className]"></div>
@@ -2652,9 +2964,71 @@ const scrollToBottom = () => {
 };
 </script>
 
-================================================================
-File: vue/ChatPromptInput.vue
-================================================================
+
+====/File: vue/ChatMessageRow.vue/====
+
+<template>
+  <div v-if="role === 'system'" class="flex justify-center py-2" :class="className">
+    <span class="text-xs text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800/60 px-3 py-1 rounded-full">
+      <slot>{{ content }}</slot>
+    </span>
+  </div>
+
+  <div v-else class="flex gap-3 py-3" :class="[isUser ? 'flex-row-reverse' : '', className]">
+    <img
+      v-if="avatar"
+      :src="avatar"
+      :alt="name || role"
+      class="w-8 h-8 rounded-lg object-cover shrink-0 border border-zinc-200 dark:border-zinc-700"
+    />
+    <div
+      v-else
+      class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+      :class="isUser
+        ? 'bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400'
+        : 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400'"
+    >
+      <UiIcon :name="isUser ? 'user' : 'sparkles'" :size="16" />
+    </div>
+
+    <div class="flex flex-col min-w-0 max-w-[85%]" :class="isUser ? 'items-end' : 'items-start'">
+      <div v-if="name || timestamp" class="flex items-center gap-2 mb-1 text-[11px] text-zinc-400 dark:text-zinc-500">
+        <span v-if="name" class="font-medium">{{ name }}</span>
+        <span v-if="timestamp" class="font-mono">{{ timestamp }}</span>
+      </div>
+      <div
+        class="rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed break-words whitespace-pre-wrap"
+        :class="isUser
+          ? 'bg-indigo-600 text-white rounded-tr-sm'
+          : 'bg-zinc-100 dark:bg-zinc-800/80 text-zinc-800 dark:text-zinc-200 rounded-tl-sm'"
+      >
+        <slot>{{ content }}</slot>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from "vue";
+import UiIcon from "./UiIcon.vue";
+
+const props = withDefaults(
+  defineProps<{
+    role: "user" | "assistant" | "system";
+    content?: string;
+    name?: string;
+    avatar?: string;
+    timestamp?: string;
+    className?: string;
+  }>(),
+  { className: "" }
+);
+
+const isUser = computed(() => props.role === "user");
+</script>
+
+
+====/File: vue/ChatPromptInput.vue/====
 
 <template>
   <div
@@ -2823,9 +3197,8 @@ const handleSubmit = () => {
 };
 </script>
 
-================================================================
-File: vue/CodeBlock.vue
-================================================================
+
+====/File: vue/CodeBlock.vue/====
 
 <template>
   <div
@@ -2906,9 +3279,157 @@ async function handleCopy() {
 }
 </script>
 
-================================================================
-File: vue/ContextUsageBadge.vue
-================================================================
+
+====/File: vue/CommandPalette.vue/====
+
+<template>
+  <div
+    v-if="isOpen"
+    class="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] bg-black/40 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Command palette"
+    @click="emit('close')"
+  >
+    <div
+      class="w-full max-w-lg mx-4 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150"
+      :class="className"
+      @click.stop
+    >
+      <div class="flex items-center gap-2.5 px-4 py-3 border-b border-zinc-100 dark:border-zinc-800">
+        <UiIcon name="search" :size="16" class="text-zinc-400 shrink-0" />
+        <input
+          ref="inputRef"
+          v-model="query"
+          type="text"
+          :placeholder="placeholder"
+          class="w-full bg-transparent border-none text-sm text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 focus:outline-none"
+        />
+        <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-zinc-400 bg-zinc-100 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700">ESC</kbd>
+      </div>
+
+      <div class="max-h-72 overflow-y-auto p-1.5" role="listbox">
+        <div v-if="filtered.length === 0" class="p-4 text-center text-sm text-zinc-400">No results found</div>
+        <template v-else v-for="(item, idx) in filtered" :key="item.id">
+          <div
+            v-if="item.group && item.group !== filtered[idx - 1]?.group"
+            class="px-2.5 pt-2.5 pb-1 text-[10px] uppercase font-semibold tracking-wider text-zinc-400"
+          >
+            {{ item.group }}
+          </div>
+          <button
+            type="button"
+            role="option"
+            :aria-selected="idx === activeIndex"
+            class="w-full flex items-center gap-3 px-2.5 py-2 rounded-lg text-left text-sm transition-colors"
+            :class="idx === activeIndex
+              ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100'
+              : 'text-zinc-700 dark:text-zinc-300'"
+            @click="select(item)"
+            @mouseenter="activeIndex = idx"
+          >
+            <span v-if="item.icon" class="p-1 rounded-md bg-zinc-200/60 dark:bg-zinc-700/60 text-zinc-500 dark:text-zinc-400 shrink-0">
+              <UiIcon :name="item.icon" :size="14" />
+            </span>
+            <span class="flex-1 min-w-0">
+              <span class="block truncate font-medium">{{ item.label }}</span>
+              <span v-if="item.hint" class="block truncate text-[11px] text-zinc-400">{{ item.hint }}</span>
+            </span>
+            <kbd v-if="item.shortcut" class="px-1.5 py-0.5 text-[10px] font-mono text-zinc-400 bg-zinc-100 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700 shrink-0">
+              {{ item.shortcut }}
+            </kbd>
+          </button>
+        </template>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, watch, nextTick, onMounted, onUnmounted } from "vue";
+import UiIcon from "./UiIcon.vue";
+
+export interface CommandItem {
+  id: string;
+  label: string;
+  hint?: string;
+  icon?: string;
+  group?: string;
+  shortcut?: string;
+}
+
+const props = withDefaults(
+  defineProps<{
+    items?: CommandItem[];
+    isOpen: boolean;
+    placeholder?: string;
+    className?: string;
+  }>(),
+  { items: () => [], placeholder: "Type a command or search...", className: "" }
+);
+
+const emit = defineEmits<{
+  (e: "select", item: CommandItem): void;
+  (e: "close"): void;
+}>();
+
+const query = ref("");
+const activeIndex = ref(0);
+const inputRef = ref<HTMLInputElement | null>(null);
+
+const filtered = computed(() => {
+  if (!query.value.trim()) return props.items;
+  const q = query.value.toLowerCase();
+  return props.items.filter(
+    (i) =>
+      i.label.toLowerCase().includes(q) ||
+      (i.hint && i.hint.toLowerCase().includes(q)) ||
+      (i.group && i.group.toLowerCase().includes(q))
+  );
+});
+
+function select(item: CommandItem) {
+  emit("select", item);
+  emit("close");
+}
+
+watch(
+  () => props.isOpen,
+  async (open) => {
+    if (open) {
+      query.value = "";
+      activeIndex.value = 0;
+      await nextTick();
+      inputRef.value?.focus();
+    }
+  }
+);
+watch(query, () => (activeIndex.value = 0));
+
+function onKey(e: KeyboardEvent) {
+  if (!props.isOpen) return;
+  if (e.key === "Escape") {
+    e.preventDefault();
+    emit("close");
+  } else if (e.key === "ArrowDown") {
+    e.preventDefault();
+    activeIndex.value = Math.min(filtered.value.length - 1, activeIndex.value + 1);
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    activeIndex.value = Math.max(0, activeIndex.value - 1);
+  } else if (e.key === "Enter") {
+    e.preventDefault();
+    const item = filtered.value[activeIndex.value];
+    if (item) select(item);
+  }
+}
+
+onMounted(() => document.addEventListener("keydown", onKey));
+onUnmounted(() => document.removeEventListener("keydown", onKey));
+</script>
+
+
+====/File: vue/ContextUsageBadge.vue/====
 
 <template>
   <div class="relative inline-block text-xs font-sans select-none" :class="className">
@@ -3028,9 +3549,8 @@ function onBlur() {
 }
 </script>
 
-================================================================
-File: vue/HomepageDashboard.vue
-================================================================
+
+====/File: vue/HomepageDashboard.vue/====
 
 <template>
   <div
@@ -3371,9 +3891,7 @@ const monogram = (name?: string) => (name || '?').trim().charAt(0).toUpperCase()
 const statusLabel = (service: HomepageService) => service.pingText || statusConfig(service.status).label;
 </script>
 
-================================================================
-File: vue/KnowledgeDrawer.vue
-================================================================
+====/File: vue/KnowledgeDrawer.vue/====
 
 <script setup lang="ts">
 import UiIcon from './UiIcon.vue';
@@ -3506,9 +4024,8 @@ const emit = defineEmits<{
   </div>
 </template>
 
-================================================================
-File: vue/MessageActionToolbar.vue
-================================================================
+
+====/File: vue/MessageActionToolbar.vue/====
 
 <template>
   <div :class="['flex items-center gap-1 text-zinc-400 dark:text-zinc-500 text-xs mt-1.5 select-none', className]">
@@ -3630,9 +4147,8 @@ const handleThumb = (type: 'up' | 'down') => {
 };
 </script>
 
-================================================================
-File: vue/ModelSelector.vue
-================================================================
+
+====/File: vue/ModelSelector.vue/====
 
 <template>
   <div
@@ -3821,9 +4337,8 @@ onUnmounted(() => {
 });
 </script>
 
-================================================================
-File: vue/PromptChips.vue
-================================================================
+
+====/File: vue/PromptChips.vue/====
 
 <template>
   <div v-if="suggestions && suggestions.length > 0" :class="['flex flex-wrap gap-2 my-3', className]">
@@ -3856,9 +4371,8 @@ defineEmits<{
 }>();
 </script>
 
-================================================================
-File: vue/RoadmapTimeline.vue
-================================================================
+
+====/File: vue/RoadmapTimeline.vue/====
 
 <script setup lang="ts">
 import UiIcon from './UiIcon.vue';
@@ -3964,9 +4478,8 @@ const emit = defineEmits<{
   </div>
 </template>
 
-================================================================
-File: vue/SourcesCitation.vue
-================================================================
+
+====/File: vue/SourcesCitation.vue/====
 
 <template>
   <div v-if="sources && sources.length > 0" :class="['my-3 space-y-2', className]">
@@ -4037,9 +4550,8 @@ const getDomain = (url: string, siteName?: string) => {
 };
 </script>
 
-================================================================
-File: vue/StatusIndicator.vue
-================================================================
+
+====/File: vue/StatusIndicator.vue/====
 
 <template>
   <div
@@ -4116,9 +4628,8 @@ const config = computed(() => {
 });
 </script>
 
-================================================================
-File: vue/StreamMarkdown.vue
-================================================================
+
+====/File: vue/StreamMarkdown.vue/====
 
 <template>
   <div
@@ -4202,9 +4713,8 @@ const htmlContent = computed(() => {
 });
 </script>
 
-================================================================
-File: vue/ThemeToggle.vue
-================================================================
+
+====/File: vue/ThemeToggle.vue/====
 
 <template>
   <div
@@ -4316,9 +4826,8 @@ onMounted(() => {
 });
 </script>
 
-================================================================
-File: vue/ThinkingBlock.vue
-================================================================
+
+====/File: vue/ThinkingBlock.vue/====
 
 <template>
   <div
@@ -4379,9 +4888,104 @@ const props = withDefaults(
 const isExpanded = ref(props.defaultExpanded || props.isThinking);
 </script>
 
-================================================================
-File: vue/ToolCallBadge.vue
-================================================================
+
+====/File: vue/ToastStack.vue/====
+
+<template>
+  <div
+    v-if="toasts.length > 0"
+    class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 w-80 max-w-[calc(100vw-2rem)]"
+    :class="className"
+    aria-live="polite"
+  >
+    <div
+      v-for="toast in toasts"
+      :key="toast.id"
+      class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-lg text-sm text-zinc-800 dark:text-zinc-200 animate-in slide-in-from-right fade-in duration-200"
+      role="alert"
+    >
+      <UiIcon :name="typeMeta(toast.type).icon" :size="16" class="shrink-0" :class="typeMeta(toast.type).color" />
+      <span class="flex-1 min-w-0">{{ toast.message }}</span>
+      <button
+        type="button"
+        class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors shrink-0"
+        aria-label="Dismiss"
+        @click="emit('dismiss', toast.id)"
+      >
+        <UiIcon name="x" :size="14" />
+      </button>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { watch, onUnmounted } from "vue";
+import UiIcon from "./UiIcon.vue";
+
+export interface ToastItem {
+  id: string | number;
+  message: string;
+  type?: "success" | "error" | "warning" | "info";
+}
+
+const props = withDefaults(
+  defineProps<{
+    toasts?: ToastItem[];
+    duration?: number;
+    className?: string;
+  }>(),
+  { toasts: () => [], duration: 4000, className: "" }
+);
+
+const emit = defineEmits<{
+  (e: "dismiss", id: string | number): void;
+}>();
+
+const META: Record<string, { icon: string; color: string }> = {
+  success: { icon: "check-circle", color: "text-emerald-500" },
+  error: { icon: "circle-x", color: "text-rose-500" },
+  warning: { icon: "alert-triangle", color: "text-amber-500" },
+  info: { icon: "sparkles", color: "text-sky-500" },
+};
+
+function typeMeta(type?: string) {
+  return META[type || "info"] || META.info;
+}
+
+const timers = new Map<string | number, ReturnType<typeof setTimeout>>();
+
+watch(
+  () => props.toasts.map((t) => t.id).join(","),
+  () => {
+    if (props.duration <= 0) {
+      for (const timer of timers.values()) clearTimeout(timer);
+      timers.clear();
+      return;
+    }
+    const alive = new Set(props.toasts.map((t) => t.id));
+    for (const [id, timer] of timers) {
+      if (!alive.has(id)) {
+        clearTimeout(timer);
+        timers.delete(id);
+      }
+    }
+    for (const t of props.toasts) {
+      if (!timers.has(t.id)) {
+        timers.set(t.id, setTimeout(() => emit("dismiss", t.id), props.duration));
+      }
+    }
+  },
+  { immediate: true }
+);
+
+onUnmounted(() => {
+  for (const timer of timers.values()) clearTimeout(timer);
+  timers.clear();
+});
+</script>
+
+
+====/File: vue/ToolCallBadge.vue/====
 
 <template>
   <div
@@ -4470,9 +5074,8 @@ const formattedOutput = computed(() => {
 });
 </script>
 
-================================================================
-File: vue/TypingIndicator.vue
-================================================================
+
+====/File: vue/TypingIndicator.vue/====
 
 <template>
   <div
@@ -4519,25 +5122,23 @@ const gapClass = computed(() =>
 );
 </script>
 
-================================================================
-File: vue/UiIcon.vue
-================================================================
+
+====/File: vue/UiIcon.vue/====
 
 <template><svg :width="props.size" :height="props.size" viewBox="0 0 24 24" fill="none" stroke="currentColor" :stroke-width="props.strokeWidth" stroke-linecap="round" stroke-linejoin="round" :aria-hidden="props.ariaLabel ? undefined : true" :aria-label="props.ariaLabel"><component v-for="(shape, index) in (shapes[props.name] || [])" :is="shape.tag" v-bind="shape.attrs" :key="index" /></svg></template>
 <script setup lang="ts">
 // Icon geometry follows the Tabler Icons visual conventions (MIT licensed): https://github.com/tabler/tabler-icons
 
-type IconName = 'arrow-down'|'arrow-left'|'arrow-right'|'arrow-up'|'check'|'check-circle'|'chevron-down'|'chevron-left'|'chevron-right'|'chevron-up'|'circle-x'|'clock'|'code'|'copy'|'cpu'|'eye'|'external-link'|'globe'|'git-branch'|'image'|'layers'|'lock'|'loader'|'minus'|'moon'|'monitor'|'paperclip'|'plus'|'refresh'|'search'|'sliders'|'sparkles'|'square'|'sun'|'terminal'|'thumbs-down'|'thumbs-up'|'tool'|'x'|'zap';
+type IconName = 'alert-triangle'|'arrow-down'|'arrow-left'|'arrow-right'|'arrow-up'|'check'|'check-circle'|'chevron-down'|'chevron-left'|'chevron-right'|'chevron-up'|'circle-x'|'clock'|'code'|'copy'|'cpu'|'eye'|'external-link'|'globe'|'git-branch'|'image'|'layers'|'lock'|'loader'|'minus'|'moon'|'monitor'|'paperclip'|'plus'|'refresh'|'search'|'sliders'|'sparkles'|'square'|'sun'|'terminal'|'thumbs-down'|'thumbs-up'|'tool'|'user'|'x'|'zap';
 const props = withDefaults(defineProps<{ name: IconName; size?: number|string; strokeWidth?: number; ariaLabel?: string }>(), { size: 20, strokeWidth: 1.8 });
 const p = (tag: string, attrs: Record<string, string>) => ({ tag, attrs });
 const shapes: Record<IconName, ReturnType<typeof p>[]> = {
- 'arrow-down':[p('path',{d:'m6 9 6 6 6-6'})], 'arrow-left':[p('path',{d:'m15 6-6 6 6 6'})], 'arrow-right':[p('path',{d:'m9 6 6 6-6 6'})], 'arrow-up':[p('path',{d:'m6 15 6-6 6 6'})], check:[p('path',{d:'m5 12 4 4L19 6'})], 'check-circle':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m8 12 2.5 2.5L16 9'})], 'chevron-down':[p('path',{d:'m6 9 6 6 6-6'})], 'chevron-left':[p('path',{d:'m14 6-6 6 6 6'})], 'chevron-right':[p('path',{d:'m10 6 6 6-6 6'})], 'chevron-up':[p('path',{d:'m6 15 6-6 6 6'})], 'circle-x':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m9 9 6 6m0-6-6 6'})], clock:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M12 7v5l3 3'})], code:[p('path',{d:'m8 9-3 3 3 3m8-6 3 3-3 3M14 5l-4 14'})], copy:[p('rect',{x:'8',y:'8',width:'11',height:'11',rx:'2'}),p('path',{d:'M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2'})], cpu:[p('rect',{x:'5',y:'5',width:'14',height:'14',rx:'2'}),p('path',{d:'M9 9h6v6H9zM9 1v4m6-4v4M9 19v4m6-4v4M1 9h4m-4 6h4M19 9h4m-4 6h4'})], eye:[p('path',{d:'M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z'}),p('circle',{cx:'12',cy:'12',r:'2.5'})], 'external-link':[p('path',{d:'M14 5h5v5M19 5l-8 8'}),p('path',{d:'M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3'})], globe:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18'})], 'git-branch':[p('path',{d:'M6 3v12a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9'}),p('circle',{cx:'6',cy:'3',r:'2'}),p('circle',{cx:'18',cy:'7',r:'2'}),p('circle',{cx:'12',cy:'18',r:'2'})], image:[p('rect',{x:'3',y:'4',width:'18',height:'16',rx:'2'}),p('circle',{cx:'8.5',cy:'9',r:'1.5'}),p('path',{d:'m21 15-4-4L5 20'})], layers:[p('path',{d:'m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5'})], lock:[p('rect',{x:'5',y:'10',width:'14',height:'11',rx:'2'}),p('path',{d:'M8 10V7a4 4 0 0 1 8 0v3'})], loader:[p('path',{d:'M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1'})], minus:[p('path',{d:'M5 12h14'})], moon:[p('path',{d:'M20 15.5A8 8 0 0 1 8.5 4 8 8 0 0 0 20 15.5Z'})], monitor:[p('rect',{x:'3',y:'4',width:'18',height:'13',rx:'2'}),p('path',{d:'M8 21h8m-4-4v4'})], paperclip:[p('path',{d:'m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7'})], plus:[p('path',{d:'M12 5v14M5 12h14'})], refresh:[p('path',{d:'M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5'})], search:[p('circle',{cx:'10',cy:'10',r:'7'}),p('path',{d:'m21 21-6-6'})], sliders:[p('path',{d:'M4 8h4m4 0h8M4 16h8m4 0h4M8 6v4m8 4v4'})], sparkles:[p('path',{d:'m12 3-1.2 4.8L6 9l4.8 1.2L12 15l1.2-4.8L18 9l-4.8-1.2L12 3Z'}),p('path',{d:'m19 15-.6 2.4L16 18l2.4.6L19 21l.6-2.4L22 18l-2.4-.6L19 15Z'})], square:[p('rect',{x:'6',y:'6',width:'12',height:'12',rx:'1'})], sun:[p('circle',{cx:'12',cy:'12',r:'4'}),p('path',{d:'M12 2v2m0 16v2M2 12h2m16 0h2'})], terminal:[p('path',{d:'m4 17 6-6-6-6m8 14h8'})], 'thumbs-down':[p('path',{d:'M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3'})], 'thumbs-up':[p('path',{d:'M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2'})], tool:[p('path',{d:'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z'})], x:[p('path',{d:'m6 6 12 12M18 6 6 18'})], zap:[p('path',{d:'M13 3 4 14h7l-1 7 9-11h-7l1-7Z'})]
+ 'alert-triangle':[p('path',{d:'M12 9v4'}),p('path',{d:'M12 17h.01'}),p('path',{d:'M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z'})], 'arrow-down':[p('path',{d:'m6 9 6 6 6-6'})], 'arrow-left':[p('path',{d:'m15 6-6 6 6 6'})], 'arrow-right':[p('path',{d:'m9 6 6 6-6 6'})], 'arrow-up':[p('path',{d:'m6 15 6-6 6 6'})], check:[p('path',{d:'m5 12 4 4L19 6'})], 'check-circle':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m8 12 2.5 2.5L16 9'})], 'chevron-down':[p('path',{d:'m6 9 6 6 6-6'})], 'chevron-left':[p('path',{d:'m14 6-6 6 6 6'})], 'chevron-right':[p('path',{d:'m10 6 6 6-6 6'})], 'chevron-up':[p('path',{d:'m6 15 6-6 6 6'})], 'circle-x':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m9 9 6 6m0-6-6 6'})], clock:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M12 7v5l3 3'})], code:[p('path',{d:'m8 9-3 3 3 3m8-6 3 3-3 3M14 5l-4 14'})], copy:[p('rect',{x:'8',y:'8',width:'11',height:'11',rx:'2'}),p('path',{d:'M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2'})], cpu:[p('rect',{x:'5',y:'5',width:'14',height:'14',rx:'2'}),p('path',{d:'M9 9h6v6H9zM9 1v4m6-4v4M9 19v4m6-4v4M1 9h4m-4 6h4M19 9h4m-4 6h4'})], eye:[p('path',{d:'M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z'}),p('circle',{cx:'12',cy:'12',r:'2.5'})], 'external-link':[p('path',{d:'M14 5h5v5M19 5l-8 8'}),p('path',{d:'M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3'})], globe:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18'})], 'git-branch':[p('path',{d:'M6 3v12a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9'}),p('circle',{cx:'6',cy:'3',r:'2'}),p('circle',{cx:'18',cy:'7',r:'2'}),p('circle',{cx:'12',cy:'18',r:'2'})], image:[p('rect',{x:'3',y:'4',width:'18',height:'16',rx:'2'}),p('circle',{cx:'8.5',cy:'9',r:'1.5'}),p('path',{d:'m21 15-4-4L5 20'})], layers:[p('path',{d:'m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5'})], lock:[p('rect',{x:'5',y:'10',width:'14',height:'11',rx:'2'}),p('path',{d:'M8 10V7a4 4 0 0 1 8 0v3'})], loader:[p('path',{d:'M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1'})], minus:[p('path',{d:'M5 12h14'})], moon:[p('path',{d:'M20 15.5A8 8 0 0 1 8.5 4 8 8 0 0 0 20 15.5Z'})], monitor:[p('rect',{x:'3',y:'4',width:'18',height:'13',rx:'2'}),p('path',{d:'M8 21h8m-4-4v4'})], paperclip:[p('path',{d:'m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7'})], plus:[p('path',{d:'M12 5v14M5 12h14'})], refresh:[p('path',{d:'M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5'})], search:[p('circle',{cx:'10',cy:'10',r:'7'}),p('path',{d:'m21 21-6-6'})], sliders:[p('path',{d:'M4 8h4m4 0h8M4 16h8m4 0h4M8 6v4m8 4v4'})], sparkles:[p('path',{d:'m12 3-1.2 4.8L6 9l4.8 1.2L12 15l1.2-4.8L18 9l-4.8-1.2L12 3Z'}),p('path',{d:'m19 15-.6 2.4L16 18l2.4.6L19 21l.6-2.4L22 18l-2.4-.6L19 15Z'})], square:[p('rect',{x:'6',y:'6',width:'12',height:'12',rx:'1'})], sun:[p('circle',{cx:'12',cy:'12',r:'4'}),p('path',{d:'M12 2v2m0 16v2M2 12h2m16 0h2'})], terminal:[p('path',{d:'m4 17 6-6-6-6m8 14h8'})], 'thumbs-down':[p('path',{d:'M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3'})], 'thumbs-up':[p('path',{d:'M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2'})], tool:[p('path',{d:'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z'})], user:[p('path',{d:'M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0'}),p('path',{d:'M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2'})], x:[p('path',{d:'m6 6 12 12M18 6 6 18'})], zap:[p('path',{d:'M13 3 4 14h7l-1 7 9-11h-7l1-7Z'})]
 };
 </script>
 
-================================================================
-File: vanilla/ArtifactCanvas.js
-================================================================
+
+====/File: vanilla/ArtifactCanvas.js/====
 
 import uiIcon from './UiIcon.js';
 
@@ -4645,9 +5246,8 @@ if (!customElements.get("artifact-canvas")) {
 }
 export default ArtifactCanvas;
 
-================================================================
-File: vanilla/AudioWaveVisualizer.js
-================================================================
+
+====/File: vanilla/AudioWaveVisualizer.js/====
 
 /**
  * AudioWaveVisualizer - Vanilla Web Component
@@ -4693,9 +5293,8 @@ if (!customElements.get("audio-wave-visualizer")) {
 }
 export default AudioWaveVisualizer;
 
-================================================================
-File: vanilla/AutoScrollAnchor.js
-================================================================
+
+====/File: vanilla/AutoScrollAnchor.js/====
 
 /**
  * AutoScrollAnchor - Vanilla Web Component
@@ -4759,9 +5358,116 @@ if (!customElements.get("auto-scroll-anchor")) {
 }
 export default AutoScrollAnchor;
 
-================================================================
-File: vanilla/ChatPromptInput.js
-================================================================
+
+====/File: vanilla/ChatMessageRow.js/====
+
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class ChatMessageRowElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['role', 'name', 'avatar', 'timestamp', 'content'];
+  }
+
+  constructor() {
+    super();
+    this._content = '';
+    this._appliedLayout = '';
+  }
+
+  get content() {
+    return this._content;
+  }
+
+  set content(val) {
+    this._content = String(val ?? '');
+    this.render();
+  }
+
+  connectedCallback() {
+    if (!this._content) {
+      const attr = this.getAttribute('content');
+      if (attr !== null) this._content = attr;
+      else if (this.textContent.trim()) this._content = this.textContent;
+    }
+    this.render();
+  }
+
+  attributeChangedCallback(name, oldVal, newVal) {
+    if (name === 'content' && newVal !== null && newVal !== oldVal) {
+      this._content = newVal;
+    }
+    this.render();
+  }
+
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
+  render() {
+    const role = this.getAttribute('role') || 'assistant';
+    const name = this.getAttribute('name') || '';
+    const avatar = this.getAttribute('avatar') || '';
+    const timestamp = this.getAttribute('timestamp') || '';
+
+    if (role === 'system') {
+      this._applyHostClass('flex justify-center py-2');
+      this.innerHTML = `
+        <span class="text-xs text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800/60 px-3 py-1 rounded-full">${escapeAttribute(this._content)}</span>
+      `;
+      return;
+    }
+
+    const isUser = role === 'user';
+
+    const avatarHtml = avatar
+      ? `<img src="${escapeAttribute(avatar)}" alt="${escapeAttribute(name || role)}" class="w-8 h-8 rounded-lg object-cover shrink-0 border border-zinc-200 dark:border-zinc-700" />`
+      : `<div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+          isUser
+            ? 'bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400'
+            : 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400'
+        }">${uiIcon(isUser ? 'user' : 'sparkles', { size: 16 })}</div>`;
+
+    this._applyHostClass(`flex gap-3 py-3 ${isUser ? 'flex-row-reverse' : ''}`);
+    this.innerHTML = `
+      ${avatarHtml}
+      <div class="flex flex-col min-w-0 max-w-[85%] ${isUser ? 'items-end' : 'items-start'}">
+        ${(name || timestamp) ? `
+          <div class="flex items-center gap-2 mb-1 text-[11px] text-zinc-400 dark:text-zinc-500">
+            ${name ? `<span class="font-medium">${escapeAttribute(name)}</span>` : ''}
+            ${timestamp ? `<span class="font-mono">${escapeAttribute(timestamp)}</span>` : ''}
+          </div>
+        ` : ''}
+        <div class="rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed break-words whitespace-pre-wrap ${
+          isUser
+            ? 'bg-indigo-600 text-white rounded-tr-sm'
+            : 'bg-zinc-100 dark:bg-zinc-800/80 text-zinc-800 dark:text-zinc-200 rounded-tl-sm'
+        }">${escapeAttribute(this._content)}</div>
+      </div>
+    `;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('chat-message-row')) {
+  customElements.define('chat-message-row', ChatMessageRowElement);
+}
+export default ChatMessageRowElement;
+
+
+====/File: vanilla/ChatPromptInput.js/====
 
 /**
  * ChatPromptInput - Vanilla HTML & Web Component
@@ -4837,9 +5543,8 @@ if (!customElements.get("chat-prompt-input")) {
 }
 export default ChatPromptInput;
 
-================================================================
-File: vanilla/CodeBlock.js
-================================================================
+
+====/File: vanilla/CodeBlock.js/====
 
 import uiIcon from './UiIcon.js';
 
@@ -4957,9 +5662,224 @@ if (typeof customElements !== 'undefined' && !customElements.get('code-block')) 
 }
 export default CodeBlockElement;
 
-================================================================
-File: vanilla/ContextUsageBadge.js
-================================================================
+
+====/File: vanilla/CommandPalette.js/====
+
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class CommandPaletteElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['open', 'placeholder'];
+  }
+
+  constructor() {
+    super();
+    this._items = [];
+    this._query = '';
+    this._activeIndex = 0;
+    this._handleKey = this._handleKey.bind(this);
+  }
+
+  get items() {
+    return this._items;
+  }
+
+  set items(val) {
+    this._items = Array.isArray(val) ? val : [];
+    this.render();
+  }
+
+  get open() {
+    return this.hasAttribute('open');
+  }
+
+  set open(val) {
+    if (val) this.setAttribute('open', '');
+    else this.removeAttribute('open');
+  }
+
+  connectedCallback() {
+    document.addEventListener('keydown', this._handleKey);
+    this.render();
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('keydown', this._handleKey);
+  }
+
+  attributeChangedCallback(name, oldVal, newVal) {
+    if (name === 'open' && this.open && oldVal !== newVal) {
+      this._query = '';
+      this._activeIndex = 0;
+    }
+    this.render();
+    if (name === 'open' && this.open) {
+      const input = this.querySelector('.cmd-input');
+      if (input) input.focus();
+    }
+  }
+
+  _getFiltered() {
+    if (!this._query.trim()) return this._items;
+    const q = this._query.toLowerCase();
+    return this._items.filter(
+      (i) =>
+        (i.label && i.label.toLowerCase().includes(q)) ||
+        (i.hint && i.hint.toLowerCase().includes(q)) ||
+        (i.group && i.group.toLowerCase().includes(q))
+    );
+  }
+
+  _handleKey(e) {
+    if (!this.open) return;
+    const filtered = this._getFiltered();
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      this._close();
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      this._activeIndex = Math.min(filtered.length - 1, this._activeIndex + 1);
+      this._renderList();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      this._activeIndex = Math.max(0, this._activeIndex - 1);
+      this._renderList();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const item = filtered[this._activeIndex];
+      if (item) this._select(item);
+    }
+  }
+
+  _close() {
+    this.open = false;
+    this.dispatchEvent(new CustomEvent('close'));
+  }
+
+  _select(item) {
+    this.dispatchEvent(new CustomEvent('select', { detail: item }));
+    this._close();
+  }
+
+  _itemHtml(item, idx, showGroup) {
+    const isActive = idx === this._activeIndex;
+    return `
+      ${showGroup ? `<div class="px-2.5 pt-2.5 pb-1 text-[10px] uppercase font-semibold tracking-wider text-zinc-400">${escapeAttribute(item.group)}</div>` : ''}
+      <button
+        type="button"
+        data-item-id="${escapeAttribute(item.id)}"
+        class="cmd-item w-full flex items-center gap-3 px-2.5 py-2 rounded-lg text-left text-sm transition-colors ${
+          isActive ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100' : 'text-zinc-700 dark:text-zinc-300'
+        }"
+        role="option"
+        aria-selected="${isActive}"
+      >
+        ${item.icon ? `<span class="p-1 rounded-md bg-zinc-200/60 dark:bg-zinc-700/60 text-zinc-500 dark:text-zinc-400 shrink-0">${uiIcon(item.icon, { size: 14 })}</span>` : ''}
+        <span class="flex-1 min-w-0">
+          <span class="block truncate font-medium">${escapeAttribute(item.label)}</span>
+          ${item.hint ? `<span class="block truncate text-[11px] text-zinc-400">${escapeAttribute(item.hint)}</span>` : ''}
+        </span>
+        ${item.shortcut ? `<kbd class="px-1.5 py-0.5 text-[10px] font-mono text-zinc-400 bg-zinc-100 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700 shrink-0">${escapeAttribute(item.shortcut)}</kbd>` : ''}
+      </button>
+    `;
+  }
+
+  _renderList() {
+    const listbox = this.querySelector('[role="listbox"]');
+    if (!listbox) return;
+    const filtered = this._getFiltered();
+    if (filtered.length === 0) {
+      listbox.innerHTML = '<div class="p-4 text-center text-sm text-zinc-400">No results found</div>';
+      return;
+    }
+    let lastGroup;
+    listbox.innerHTML = filtered
+      .map((item, idx) => {
+        const showGroup = item.group && item.group !== lastGroup;
+        lastGroup = item.group;
+        return this._itemHtml(item, idx, showGroup);
+      })
+      .join('');
+    this._bindItems();
+  }
+
+  _bindItems() {
+    this.querySelectorAll('.cmd-item').forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        const item = this._items.find((i) => i.id === btn.getAttribute('data-item-id'));
+        if (item) this._select(item);
+      });
+      btn.addEventListener('mouseenter', () => {
+        this._activeIndex = idx;
+        this.querySelectorAll('.cmd-item').forEach((b, i) => {
+          b.classList.toggle('bg-zinc-100', i === idx);
+          b.classList.toggle('dark:bg-zinc-800', i === idx);
+        });
+      });
+    });
+  }
+
+  render() {
+    if (!this.open) {
+      this.innerHTML = '';
+      return;
+    }
+    const placeholder = this.getAttribute('placeholder') || 'Type a command or search...';
+
+    this.innerHTML = `
+      <div class="cmd-backdrop fixed inset-0 z-50 flex items-start justify-center pt-[15vh] bg-black/40 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Command palette">
+        <div class="w-full max-w-lg mx-4 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-2xl overflow-hidden">
+          <div class="flex items-center gap-2.5 px-4 py-3 border-b border-zinc-100 dark:border-zinc-800">
+            ${uiIcon('search', { size: 16, className: 'text-zinc-400 shrink-0' })}
+            <input
+              type="text"
+              class="cmd-input w-full bg-transparent border-none text-sm text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 focus:outline-none"
+              placeholder="${escapeAttribute(placeholder)}"
+              value="${escapeAttribute(this._query)}"
+            />
+            <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-zinc-400 bg-zinc-100 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700">ESC</kbd>
+          </div>
+          <div class="max-h-72 overflow-y-auto p-1.5" role="listbox"></div>
+        </div>
+      </div>
+    `;
+
+    const backdrop = this.querySelector('.cmd-backdrop');
+    const panel = backdrop?.querySelector('div');
+    if (backdrop && panel) {
+      backdrop.addEventListener('click', () => this._close());
+      panel.addEventListener('click', (e) => e.stopPropagation());
+    }
+
+    const input = this.querySelector('.cmd-input');
+    if (input) {
+      input.addEventListener('input', (e) => {
+        this._query = e.target.value;
+        this._activeIndex = 0;
+        this._renderList();
+      });
+    }
+
+    this._renderList();
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('command-palette')) {
+  customElements.define('command-palette', CommandPaletteElement);
+}
+export default CommandPaletteElement;
+
+
+====/File: vanilla/ContextUsageBadge.js/====
 
 import uiIcon from './UiIcon.js';
 
@@ -5090,9 +6010,8 @@ if (typeof customElements !== 'undefined' && !customElements.get('context-usage-
 }
 export default ContextUsageBadgeElement;
 
-================================================================
-File: vanilla/HomepageDashboard.js
-================================================================
+
+====/File: vanilla/HomepageDashboard.js/====
 
 /**
  * HomepageDashboard — Vanilla Web Component
@@ -5482,9 +6401,7 @@ if (typeof customElements !== "undefined" && !customElements.get("homepage-dashb
 }
 export default HomepageDashboardElement;
 
-================================================================
-File: vanilla/KnowledgeDrawer.js
-================================================================
+====/File: vanilla/KnowledgeDrawer.js/====
 
 import uiIcon from './UiIcon.js';
 
@@ -5618,9 +6535,8 @@ if (typeof customElements !== "undefined" && !customElements.get("knowledge-draw
   customElements.define("knowledge-drawer", KnowledgeDrawerElement);
 }
 
-================================================================
-File: vanilla/MessageActionToolbar.js
-================================================================
+
+====/File: vanilla/MessageActionToolbar.js/====
 
 import uiIcon from './UiIcon.js';
 
@@ -5693,9 +6609,8 @@ if (!customElements.get("message-action-toolbar")) {
 }
 export default MessageActionToolbar;
 
-================================================================
-File: vanilla/ModelSelector.js
-================================================================
+
+====/File: vanilla/ModelSelector.js/====
 
 import uiIcon from './UiIcon.js';
 
@@ -5944,9 +6859,8 @@ if (typeof customElements !== 'undefined' && !customElements.get('model-selector
 }
 export default ModelSelectorElement;
 
-================================================================
-File: vanilla/PromptChips.js
-================================================================
+
+====/File: vanilla/PromptChips.js/====
 
 /**
  * PromptChips - Vanilla Web Component
@@ -6003,9 +6917,8 @@ if (!customElements.get("prompt-chips")) {
 }
 export default PromptChips;
 
-================================================================
-File: vanilla/RoadmapTimeline.js
-================================================================
+
+====/File: vanilla/RoadmapTimeline.js/====
 
 import uiIcon from './UiIcon.js';
 
@@ -6116,9 +7029,8 @@ if (typeof customElements !== "undefined" && !customElements.get("roadmap-timeli
   customElements.define("roadmap-timeline", RoadmapTimelineElement);
 }
 
-================================================================
-File: vanilla/SourcesCitation.js
-================================================================
+
+====/File: vanilla/SourcesCitation.js/====
 
 /**
  * SourcesCitation - Vanilla Web Component
@@ -6191,9 +7103,8 @@ if (!customElements.get("sources-citation")) {
 }
 export default SourcesCitation;
 
-================================================================
-File: vanilla/StatusIndicator.js
-================================================================
+
+====/File: vanilla/StatusIndicator.js/====
 
 /**
  * StatusIndicator - Vanilla Web Component
@@ -6253,9 +7164,8 @@ if (!customElements.get("status-indicator")) {
 }
 export default StatusIndicator;
 
-================================================================
-File: vanilla/StreamMarkdown.js
-================================================================
+
+====/File: vanilla/StreamMarkdown.js/====
 
 /**
  * StreamMarkdown - Vanilla Web Component (Powered by marked & Prism CDN)
@@ -6349,9 +7259,8 @@ if (!customElements.get("stream-markdown")) {
 }
 export default StreamMarkdown;
 
-================================================================
-File: vanilla/ThemeToggle.js
-================================================================
+
+====/File: vanilla/ThemeToggle.js/====
 
 /**
  * ThemeToggle - Vanilla Web Component (Auto / Light / Dark)
@@ -6438,9 +7347,8 @@ if (!customElements.get("theme-toggle")) {
 }
 export default ThemeToggle;
 
-================================================================
-File: vanilla/ThinkingBlock.js
-================================================================
+
+====/File: vanilla/ThinkingBlock.js/====
 
 /**
  * ThinkingBlock - Vanilla Web Component
@@ -6493,9 +7401,152 @@ if (!customElements.get("thinking-block")) {
 }
 export default ThinkingBlock;
 
-================================================================
-File: vanilla/ToolCallBadge.js
-================================================================
+
+====/File: vanilla/ToastStack.js/====
+
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const TYPE_META = {
+  success: { icon: 'check-circle', color: 'text-emerald-500' },
+  error: { icon: 'circle-x', color: 'text-rose-500' },
+  warning: { icon: 'alert-triangle', color: 'text-amber-500' },
+  info: { icon: 'sparkles', color: 'text-sky-500' },
+};
+
+export class ToastStackElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['duration'];
+  }
+
+  constructor() {
+    super();
+    this._toasts = [];
+    this._timers = new Map();
+    this._seq = 0;
+    this._appliedLayout = '';
+  }
+
+  get toasts() {
+    return this._toasts;
+  }
+
+  set toasts(val) {
+    this._toasts = Array.isArray(val) ? val : [];
+    this._syncTimers();
+    this.render();
+  }
+
+  get duration() {
+    const parsed = parseInt(this.getAttribute('duration') || '4000', 10);
+    return Number.isNaN(parsed) ? 4000 : parsed;
+  }
+
+  push(message, type = 'info') {
+    const id = ++this._seq;
+    this._toasts = [...this._toasts, { id, message, type }];
+    this._syncTimers();
+    this.render();
+    return id;
+  }
+
+  dismiss(id) {
+    const timer = this._timers.get(id);
+    if (timer) {
+      clearTimeout(timer);
+      this._timers.delete(id);
+    }
+    this._toasts = this._toasts.filter((t) => t.id !== id);
+    this.dispatchEvent(new CustomEvent('dismiss', { detail: { id } }));
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this._syncTimers();
+    this.render();
+  }
+
+  disconnectedCallback() {
+    for (const timer of this._timers.values()) clearTimeout(timer);
+    this._timers.clear();
+  }
+
+  _syncTimers() {
+    const duration = this.duration;
+    if (duration <= 0) {
+      for (const timer of this._timers.values()) clearTimeout(timer);
+      this._timers.clear();
+      return;
+    }
+    const alive = new Set(this._toasts.map((t) => t.id));
+    for (const [id, timer] of this._timers) {
+      if (!alive.has(id)) {
+        clearTimeout(timer);
+        this._timers.delete(id);
+      }
+    }
+    for (const t of this._toasts) {
+      if (!this._timers.has(t.id)) {
+        this._timers.set(t.id, setTimeout(() => this.dismiss(t.id), duration));
+      }
+    }
+  }
+
+  render() {
+    if (this._toasts.length === 0) {
+      this.innerHTML = '';
+      return;
+    }
+
+    const layoutClass = 'fixed bottom-4 right-4 z-50 flex flex-col gap-2 w-80 max-w-[calc(100vw-2rem)]';
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+    this.setAttribute('aria-live', 'polite');
+
+    this.innerHTML = this._toasts
+      .map((t) => {
+        const meta = TYPE_META[t.type] || TYPE_META.info;
+        return `
+          <div class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-lg text-sm text-zinc-800 dark:text-zinc-200" role="alert">
+            ${uiIcon(meta.icon, { size: 16, className: `${meta.color} shrink-0` })}
+            <span class="flex-1 min-w-0">${escapeAttribute(t.message)}</span>
+            <button type="button" data-toast-id="${escapeAttribute(t.id)}" class="toast-dismiss text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors shrink-0" aria-label="Dismiss">
+              ${uiIcon('x', { size: 14 })}
+            </button>
+          </div>
+        `;
+      })
+      .join('');
+
+    this.querySelectorAll('.toast-dismiss').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-toast-id');
+        const toast = this._toasts.find((t) => String(t.id) === String(id));
+        if (toast) this.dismiss(toast.id);
+      });
+    });
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('toast-stack')) {
+  customElements.define('toast-stack', ToastStackElement);
+}
+export default ToastStackElement;
+
+
+====/File: vanilla/ToolCallBadge.js/====
 
 /**
  * ToolCallBadge - Vanilla Web Component
@@ -6564,9 +7615,8 @@ if (!customElements.get("tool-call-badge")) {
 }
 export default ToolCallBadge;
 
-================================================================
-File: vanilla/TypingIndicator.js
-================================================================
+
+====/File: vanilla/TypingIndicator.js/====
 
 const escapeAttribute = (value) =>
   String(value).replace(/[&<>'"]/g, (char) => ({
@@ -6622,16 +7672,16 @@ if (typeof customElements !== 'undefined' && !customElements.get('typing-indicat
 }
 export default TypingIndicatorElement;
 
-================================================================
-File: vanilla/UiIcon.js
-================================================================
+
+====/File: vanilla/UiIcon.js/====
 
 // Icon geometry follows the Tabler Icons visual conventions (MIT licensed): https://github.com/tabler/tabler-icons
 const ICONS = {
+  'alert-triangle':'<path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/>',
   'arrow-down':'<path d="m6 9 6 6 6-6"/>','arrow-left':'<path d="m15 6-6 6 6 6"/>','arrow-right':'<path d="m9 6 6 6-6 6"/>','arrow-up':'<path d="m6 15 6-6 6 6"/>',
   check:'<path d="m5 12 4 4L19 6"/>','check-circle':'<circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/>','chevron-down':'<path d="m6 9 6 6 6-6"/>','chevron-left':'<path d="m14 6-6 6 6 6"/>','chevron-right':'<path d="m10 6 6 6-6 6"/>','chevron-up':'<path d="m6 15 6-6 6 6"/>','circle-x':'<circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/>',
   clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>',
-  code:'<path d="m8 9-3 3 3 3m8-6 3 3-3 3M14 5l-4 14"/>','copy':'<rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>','cpu':'<rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 9h6v6H9zM9 1v4m6-4v4M9 19v4m6-4v4M1 9h4m-4 6h4M19 9h4m-4 6h4"/>','eye':'<path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/>','external-link':'<path d="M14 5h5v5M19 5l-8 8M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/>','globe':'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>','git-branch':'<path d="M6 3v12a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/><circle cx="6" cy="3" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="18" r="2"/>','image':'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-4-4L5 20"/>','layers':'<path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5"/>','lock':'<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>','loader':'<path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1"/>','minus':'<path d="M5 12h14"/>','moon':'<path d="M20 15.5A8 8 0 0 1 8.5 4 8 8 0 0 0 20 15.5Z"/>','monitor':'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/>','paperclip':'<path d="m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7"/>','plus':'<path d="M12 5v14M5 12h14"/>','refresh':'<path d="M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5"/>','search':'<circle cx="10" cy="10" r="7"/><path d="m21 21-6-6"/>','sliders':'<path d="M4 8h4m4 0h8M4 16h8m4 0h4M8 6v4m8 4v4"/>','sparkles':'<path d="m12 3-1.2 4.8L6 9l4.8 1.2L12 15l1.2-4.8L18 9l-4.8-1.2L12 3Z"/>','square':'<rect x="6" y="6" width="12" height="12" rx="1"/>','sun':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/>','terminal':'<path d="m4 17 6-6-6-6m8 14h8"/>','thumbs-down':'<path d="M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3"/>','thumbs-up':'<path d="M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2"/>','tool':'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z"/>','x':'<path d="m6 6 12 12M18 6 6 18"/>','zap':'<path d="M13 3 4 14h7l-1 7 9-11h-7l1-7Z"/>'
+  code:'<path d="m8 9-3 3 3 3m8-6 3 3-3 3M14 5l-4 14"/>','copy':'<rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>','cpu':'<rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 9h6v6H9zM9 1v4m6-4v4M9 19v4m6-4v4M1 9h4m-4 6h4M19 9h4m-4 6h4"/>','eye':'<path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/>','external-link':'<path d="M14 5h5v5M19 5l-8 8M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/>','globe':'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>','git-branch':'<path d="M6 3v12a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/><circle cx="6" cy="3" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="18" r="2"/>','image':'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-4-4L5 20"/>','layers':'<path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5"/>','lock':'<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>','loader':'<path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1"/>','minus':'<path d="M5 12h14"/>','moon':'<path d="M20 15.5A8 8 0 0 1 8.5 4 8 8 0 0 0 20 15.5Z"/>','monitor':'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/>','paperclip':'<path d="m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7"/>','plus':'<path d="M12 5v14M5 12h14"/>','refresh':'<path d="M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5"/>','search':'<circle cx="10" cy="10" r="7"/><path d="m21 21-6-6"/>','sliders':'<path d="M4 8h4m4 0h8M4 16h8m4 0h4M8 6v4m8 4v4"/>','sparkles':'<path d="m12 3-1.2 4.8L6 9l4.8 1.2L12 15l1.2-4.8L18 9l-4.8-1.2L12 3Z"/>','square':'<rect x="6" y="6" width="12" height="12" rx="1"/>','sun':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/>','terminal':'<path d="m4 17 6-6-6-6m8 14h8"/>','thumbs-down':'<path d="M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3"/>','thumbs-up':'<path d="M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2"/>','tool':'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z"/>','user':'<path d="M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>','x':'<path d="m6 6 12 12M18 6 6 18"/>','zap':'<path d="M13 3 4 14h7l-1 7 9-11h-7l1-7Z"/>'
 };
 const escapeAttribute = (value) => String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
 
@@ -6640,3 +7690,4 @@ export function uiIcon(name, { size = 20, strokeWidth = 1.8, label = '', classNa
   return `<svg width="${escapeAttribute(size)}" height="${escapeAttribute(size)}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${escapeAttribute(strokeWidth)}" stroke-linecap="round" stroke-linejoin="round" class="${escapeAttribute(className)}" ${aria}>${ICONS[name] || ''}</svg>`;
 }
 export default uiIcon;
+

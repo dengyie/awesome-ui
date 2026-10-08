@@ -39,6 +39,9 @@
 | **`ModelSelector`** | 模型切换选择器 | 即时搜索过滤、Provider 与 Context 长度徽章、多模型平滑切换抽屉 |
 | **`CodeBlock`** | 独立代码块 | 语言徽章、文件名、一键复制反馈、行号模式、最大高度滚动 |
 | **`TypingIndicator`** | AI 输入中指示 | 三点弹跳/脉冲双变体、sm/md/lg 三档尺寸、`role="status"` 无障碍 |
+| **`ChatMessageRow`** | 会话消息气泡 | User/Assistant/System 三角色、头像/初始图标、名称与时间戳、气泡对齐 |
+| **`CommandPalette`** | Cmd+K 命令面板 | 模糊搜索、分组标题、键盘上下导航/Enter 选中/Esc 关闭、快捷键提示 |
+| **`ToastStack`** | 全局通知栈 | Success/Error/Warning/Info 四类型、自动消除、手动关闭、`aria-live` 播报 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -69,7 +72,10 @@ awesome-ui/
 │   ├── ContextUsageBadge.tsx
 │   ├── ModelSelector.tsx
 │   ├── CodeBlock.tsx
-│   └── TypingIndicator.tsx
+│   ├── TypingIndicator.tsx
+│   ├── ChatMessageRow.tsx
+│   ├── CommandPalette.tsx
+│   └── ToastStack.tsx
 ├── vue/                       # Vue 3 (SFC) 单文件组件
 │   ├── UiIcon.vue           # 统一零依赖 SVG 图标
 │   ├── ChatPromptInput.vue
@@ -90,7 +96,10 @@ awesome-ui/
 │   ├── ContextUsageBadge.vue
 │   ├── ModelSelector.vue
 │   ├── CodeBlock.vue
-│   └── TypingIndicator.vue
+│   ├── TypingIndicator.vue
+│   ├── ChatMessageRow.vue
+│   ├── CommandPalette.vue
+│   └── ToastStack.vue
 └── vanilla/                   # 原生 JS / Web Components 单文件
     ├── UiIcon.js            # uiIcon() SVG 工厂函数
     ├── ChatPromptInput.js
@@ -111,7 +120,10 @@ awesome-ui/
     ├── ContextUsageBadge.js
     ├── ModelSelector.js
     ├── CodeBlock.js
-    └── TypingIndicator.js
+    ├── TypingIndicator.js
+    ├── ChatMessageRow.js
+    ├── CommandPalette.js
+    └── ToastStack.js
 ```
 
 ---
@@ -159,4 +171,4 @@ awesome-ui/
 >
 > - **折叠事件**：React `onToggleGroup(group, collapsed)` / Vue `@toggle` / Vanilla `group-toggle` CustomEvent 三端对齐；`statusStyle` 未知值回退 `pill`，图标加载失败隐藏、时钟隔离秒刷新不重渲染整树。
 >
-> - **测试**：仓库本身零依赖、即拷即用；回归在独立工程 `tests/`（`cd tests && npm install && npm test`，28 项：vanilla jsdom、React SSR、Vue SFC 编译/SSR；`npm run typecheck` 对 React 端 strict TS）。
+> - **测试**：仓库本身零依赖、即拷即用；回归在独立工程 `tests/`（`cd tests && npm install && npm test`，31 项：vanilla jsdom、React SSR、Vue SFC 编译/SSR；`npm run typecheck` 对 React 端 strict TS）。

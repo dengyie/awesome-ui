@@ -39,7 +39,10 @@ awesome-ui/
 │   ├── ContextUsageBadge.tsx # Context Window 消耗量与 Token 分布指示器
 │   ├── ModelSelector.tsx    # LLM 模型切换与搜索选择器
 │   ├── CodeBlock.tsx        # 独立代码块（语言徽章/复制/行号）
-│   └── TypingIndicator.tsx  # AI 输入中三点加载指示器
+│   ├── TypingIndicator.tsx  # AI 输入中三点加载指示器
+│   ├── ChatMessageRow.tsx   # 会话消息气泡行（User/Assistant/System）
+│   ├── CommandPalette.tsx   # Cmd+K 命令面板（搜索/键盘导航）
+│   └── ToastStack.tsx       # 全局通知栈（四类型/自动消除）
 ├── vue/                     # Vue 3 (SFC) 单文件组件 (Vue 3 + Tailwind)
 │   ├── UiIcon.vue
 │   ├── ChatPromptInput.vue
@@ -60,7 +63,10 @@ awesome-ui/
 │   ├── ContextUsageBadge.vue
 │   ├── ModelSelector.vue
 │   ├── CodeBlock.vue
-│   └── TypingIndicator.vue
+│   ├── TypingIndicator.vue
+│   ├── ChatMessageRow.vue
+│   ├── CommandPalette.vue
+│   └── ToastStack.vue
 └── vanilla/                 # 原生 JS / Web Components 单文件 (HTML + Tailwind CDN)
     ├── UiIcon.js            # uiIcon() SVG 图标工厂
     ├── ChatPromptInput.js
@@ -81,7 +87,10 @@ awesome-ui/
     ├── ContextUsageBadge.js
     ├── ModelSelector.js
     ├── CodeBlock.js
-    └── TypingIndicator.js
+    ├── TypingIndicator.js
+    ├── ChatMessageRow.js
+    ├── CommandPalette.js
+    └── ToastStack.js
 ```
 
 ## 图标 API 速查
@@ -157,6 +166,21 @@ awesome-ui/
 ### 19. `TypingIndicator` (AI 输入中 / 加载指示器)
 - **Props**: `label?: string`, `variant?: 'dots'|'pulse'`, `size?: 'sm'|'md'|'lg'`, `className?: string`
 - **特性**: 三点交错弹跳（160ms 阶梯 delay）或脉冲变体，`role="status"` + `aria-label` 无障碍语义，适合等待首 Token / AI 正在输入场景。
+
+### 20. `ChatMessageRow` (会话消息气泡行)
+- **Props**: `role: 'user'|'assistant'|'system'`, `content?: string`, `name?: string`, `avatar?: string`, `timestamp?: string`, `className?: string`；React/Vue 支持 children/slot 覆盖气泡内容（可嵌套 StreamMarkdown）
+- **Vanilla 用法**: `<chat-message-row role="assistant" name="Claude" timestamp="21:30" content="...">`，内容也可直接写在标签文本内；全量实体转义防注入
+- **特性**: user 右对齐靛蓝气泡、assistant 左对齐中性气泡、system 居中胶囊；缺省头像自动回落为 `user`/`sparkles` 图标。
+
+### 21. `CommandPalette` (Cmd+K 命令面板)
+- **Props**: `items: Array<{ id: string, label: string, hint?: string, icon?: UiIconName, group?: string, shortcut?: string }>`, `isOpen: boolean`, `onClose?: () => void`, `onSelect?: (item) => void`, `placeholder?: string`, `className?: string`
+- **Vanilla 用法**: `<command-palette>`，数据经 `items` 属性注入，`open` 属性控制显隐；事件 `select` / `close`（CustomEvent）
+- **特性**: 即时搜索过滤 label/hint/group，分组标题去重展示，键盘 ↑↓ 导航 + Enter 选中 + Esc 关闭，背景遮罩点击关闭。
+
+### 22. `ToastStack` (全局通知栈)
+- **Props**: `toasts: Array<{ id: string|number, message: string, type?: 'success'|'error'|'warning'|'info' }>`, `onDismiss?: (id) => void`, `duration?: number`（默认 4000，0 关闭自动消除）, `className?: string`
+- **Vanilla 用法**: `<toast-stack duration="4000">`，命令式 API `push(message, type)` / `dismiss(id)`；事件 `dismiss`（CustomEvent）
+- **特性**: 固定右下堆叠，类型图标+色彩（success 绿 / error 红 / warning 黄 / info 蓝），手动关闭按钮，`aria-live="polite"` 播报，组件卸载自动清理定时器。
 
 ## LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)

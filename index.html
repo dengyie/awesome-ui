@@ -42,12 +42,15 @@
   <script type="module" src="./vanilla/ModelSelector.js"></script>
   <script type="module" src="./vanilla/CodeBlock.js"></script>
   <script type="module" src="./vanilla/TypingIndicator.js"></script>
+  <script type="module" src="./vanilla/ChatMessageRow.js"></script>
+  <script type="module" src="./vanilla/CommandPalette.js"></script>
+  <script type="module" src="./vanilla/ToastStack.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.4.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.5.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -170,7 +173,7 @@
     </section>
 
     <!-- 10. TypingIndicator -->
-    <section class="space-y-3 pb-12">
+    <section class="space-y-3">
       <div class="flex items-center justify-between">
         <h2 class="text-base font-semibold text-zinc-200">10. TypingIndicator (AI Composing State)</h2>
         <span class="text-xs font-mono text-zinc-500">Dots / Pulse Variants, Sizes, A11y role=status</span>
@@ -180,6 +183,37 @@
         <typing-indicator variant="pulse" size="sm" label="Streaming"></typing-indicator>
         <typing-indicator size="lg"></typing-indicator>
       </div>
+    </section>
+
+    <!-- 11. ChatMessageRow -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">11. ChatMessageRow (Conversation Bubbles)</h2>
+        <span class="text-xs font-mono text-zinc-500">User / Assistant / System Roles, Avatar, Timestamp</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <chat-message-row role="system" content="Session started · claude-3-5-sonnet"></chat-message-row>
+        <chat-message-row role="user" name="Mango" timestamp="21:30" content="Help me scaffold a streaming chat UI with Tailwind."></chat-message-row>
+        <chat-message-row role="assistant" name="Claude" timestamp="21:30" content="Sure — combine ChatPromptInput, StreamMarkdown and AutoScrollAnchor from this kit. Copy the single files and you're done."></chat-message-row>
+      </div>
+    </section>
+
+    <!-- 12. CommandPalette & ToastStack -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">12. CommandPalette & ToastStack</h2>
+        <span class="text-xs font-mono text-zinc-500">Cmd+K Actions, Keyboard Navigation, Auto-dismiss Notifications</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-3 p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <button id="open-palette-btn" class="flex items-center gap-2 px-3 py-1.5 bg-zinc-100 text-zinc-900 rounded-lg text-xs font-medium hover:bg-white transition-colors">
+          Open Command Palette <kbd class="px-1.5 py-0.5 text-[10px] font-mono bg-zinc-200 rounded border border-zinc-300">⌘K</kbd>
+        </button>
+        <button data-toast="success" class="toast-demo-btn px-3 py-1.5 bg-zinc-800 text-zinc-200 rounded-lg text-xs hover:bg-zinc-700 transition-colors border border-zinc-700">Success Toast</button>
+        <button data-toast="warning" class="toast-demo-btn px-3 py-1.5 bg-zinc-800 text-zinc-200 rounded-lg text-xs hover:bg-zinc-700 transition-colors border border-zinc-700">Warning Toast</button>
+        <button data-toast="error" class="toast-demo-btn px-3 py-1.5 bg-zinc-800 text-zinc-200 rounded-lg text-xs hover:bg-zinc-700 transition-colors border border-zinc-700">Error Toast</button>
+      </div>
+      <command-palette id="demo-palette"></command-palette>
+      <toast-stack id="demo-toasts"></toast-stack>
     </section>
   </main>
 
@@ -276,6 +310,44 @@
           '}',
         ].join('\n');
       }
+
+      const palette = document.getElementById('demo-palette');
+      const toasts = document.getElementById('demo-toasts');
+
+      if (palette) {
+        palette.items = [
+          { id: 'new-chat', label: 'New Chat', hint: 'Start a blank conversation', icon: 'plus', group: 'Chat', shortcut: '⌘N' },
+          { id: 'clear-history', label: 'Clear History', hint: 'Remove all local messages', icon: 'x', group: 'Chat' },
+          { id: 'toggle-theme', label: 'Toggle Theme', hint: 'Switch between light and dark', icon: 'sun', group: 'Settings', shortcut: '⌘J' },
+          { id: 'model-settings', label: 'Model Settings', hint: 'Temperature, context and providers', icon: 'sliders', group: 'Settings' },
+          { id: 'export-md', label: 'Export as Markdown', hint: 'Download conversation transcript', icon: 'copy', group: 'Actions' },
+        ];
+        palette.addEventListener('select', (e) => {
+          if (toasts) toasts.push(`Command executed: ${e.detail.label}`, 'success');
+        });
+      }
+
+      document.getElementById('open-palette-btn')?.addEventListener('click', () => {
+        if (palette) palette.open = true;
+      });
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          if (palette) palette.open = !palette.open;
+        }
+      });
+
+      const toastMessages = {
+        success: 'Model switched to Claude 3.5 Sonnet',
+        warning: 'Context window above 80%',
+        error: 'Request failed — rate limit reached',
+      };
+      document.querySelectorAll('.toast-demo-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const type = btn.getAttribute('data-toast');
+          if (toasts) toasts.push(toastMessages[type] || 'Notification', type);
+        });
+      });
 
       const modelSel = document.getElementById('header-model-selector');
       const ctxBadge = document.getElementById('header-context-badge');

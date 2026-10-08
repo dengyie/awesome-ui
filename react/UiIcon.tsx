@@ -3,14 +3,15 @@ import React from "react";
 // Icon geometry follows the Tabler Icons visual conventions (MIT licensed): https://github.com/tabler/tabler-icons
 
 export type UiIconName =
-  | "arrow-down" | "arrow-left" | "arrow-right" | "arrow-up" | "check"
+  | "alert-triangle" | "arrow-down" | "arrow-left" | "arrow-right" | "arrow-up" | "check"
   | "check-circle" | "chevron-down" | "chevron-left" | "chevron-right" | "chevron-up"
   | "circle-x" | "clock" | "code" | "copy" | "cpu" | "eye" | "external-link" | "globe"
   | "git-branch" | "image" | "layers" | "lock" | "loader" | "minus" | "moon"
   | "monitor" | "paperclip" | "plus" | "refresh" | "search" | "sliders" | "sparkles" | "square" | "sun"
-  | "terminal" | "thumbs-down" | "thumbs-up" | "tool" | "x" | "zap";
+  | "terminal" | "thumbs-down" | "thumbs-up" | "tool" | "user" | "x" | "zap";
 
 const paths: Record<UiIconName, React.ReactNode> = {
+  "alert-triangle": <><path d="M12 9v4" /><path d="M12 17h.01" /><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" /></>,
   "arrow-down": <path d="m6 9 6 6 6-6" />, "arrow-left": <path d="m15 6-6 6 6 6" />,
   "arrow-right": <path d="m9 6 6 6-6 6" />, "arrow-up": <path d="m6 15 6-6 6 6" />,
   check: <path d="m5 12 4 4L19 6" />, "check-circle": <><circle cx="12" cy="12" r="9" /><path d="m8 12 2.5 2.5L16 9" /></>,
@@ -39,7 +40,9 @@ const paths: Record<UiIconName, React.ReactNode> = {
   square: <rect x="6" y="6" width="12" height="12" rx="1" />, sun: <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4m0-14.2-1.4 1.4M6.3 17.7l-1.4 1.4" /></>,
   terminal: <path d="m4 17 6-6-6-6m8 14h8" />,
   "thumbs-down": <path d="M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3" />, "thumbs-up": <path d="M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2" />,
-  tool: <><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z" /></>, x: <path d="m6 6 12 12M18 6 6 18" />,
+  tool: <><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z" /></>,
+  user: <><path d="M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0" /><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" /></>,
+  x: <path d="m6 6 12 12M18 6 6 18" />,
   zap: <path d="M13 3 4 14h7l-1 7 9-11h-7l1-7Z" />
 };
 
@@ -50,6 +53,7 @@ export const UiIcon = React.forwardRef<SVGSVGElement, UiIconProps>(({ name, size
 UiIcon.displayName = "UiIcon";
 
 export const icon = (name: UiIconName) => (props: Omit<UiIconProps, "name">) => <UiIcon name={name} {...props} />;
+export const AlertTriangle = icon("alert-triangle");
 export const ArrowDown = icon("arrow-down");
 export const ArrowLeft = icon("arrow-left");
 export const ArrowRight = icon("arrow-right");
@@ -87,6 +91,7 @@ export const Sun = icon("sun");
 export const Terminal = icon("terminal");
 export const ThumbsDown = icon("thumbs-down");
 export const ThumbsUp = icon("thumbs-up");
+export const User = icon("user");
 export const Wrench = icon("tool");
 export const X = icon("x");
 export const XCircle = icon("circle-x");

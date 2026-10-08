@@ -103,7 +103,22 @@
    - Vue 3: vue/TypingIndicator.vue
    - Vanilla: vanilla/TypingIndicator.js
 
-   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（28 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
+19. ChatMessageRow: Conversation bubble row with user/assistant/system roles, avatar (custom or icon fallback), sender name, and timestamp. All text entity-escaped; vanilla supports both `content` attribute and property.
+   - React: react/ChatMessageRow.tsx
+   - Vue 3: vue/ChatMessageRow.vue
+   - Vanilla: vanilla/ChatMessageRow.js
+
+20. CommandPalette: Cmd+K command palette with instant search filter, group headers, keyboard navigation (arrows/Enter/Escape), icon and shortcut hints, and backdrop dismiss.
+   - React: react/CommandPalette.tsx
+   - Vue 3: vue/CommandPalette.vue
+   - Vanilla: vanilla/CommandPalette.js (custom element `<command-palette>`, events `select`/`close`)
+
+21. ToastStack: Global notification stack with success/error/warning/info types, manual dismiss, auto-dismiss (default 4000ms, `duration="0"` disables), and aria-live announcements.
+   - React: react/ToastStack.tsx
+   - Vue 3: vue/ToastStack.vue
+   - Vanilla: vanilla/ToastStack.js (custom element `<toast-stack>`, API `push(message, type)` / `dismiss(id)`, event `dismiss`)
+
+   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（34 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
 
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
