@@ -44,6 +44,15 @@ export class ContextUsageBadgeElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const used = Math.max(0, parseInt(this.getAttribute('used-tokens') || '0', 10) || 0);
     const max = Math.max(1, parseInt(this.getAttribute('max-tokens') || '1', 10) || 1);
@@ -55,7 +64,7 @@ export class ContextUsageBadgeElement extends HTMLElement {
     if (percentage >= 90) barColor = 'bg-rose-500';
     else if (percentage >= 70) barColor = 'bg-amber-500';
 
-    this.className = 'relative inline-block text-xs font-sans select-none';
+    this._applyHostClass('relative inline-block text-xs font-sans select-none');
 
     this.innerHTML = `
       <button

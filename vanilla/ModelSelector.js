@@ -73,6 +73,15 @@ export class ModelSelectorElement extends HTMLElement {
     );
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const selectedId = this.selectedId;
     const placeholder = this.getAttribute('placeholder') || 'Select model...';
@@ -82,7 +91,7 @@ export class ModelSelectorElement extends HTMLElement {
     const selectedModel = this._models.find((m) => m.id === selectedId) || null;
     const filtered = this._getFilteredModels();
 
-    this.className = 'relative inline-block text-xs font-sans text-zinc-900 dark:text-zinc-100';
+    this._applyHostClass('relative inline-block text-xs font-sans text-zinc-900 dark:text-zinc-100');
 
     this.innerHTML = `
       <button

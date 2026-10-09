@@ -42,6 +42,15 @@ export class AgentTaskChecklistElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const title = this.getAttribute('title') || 'Tasks';
     const doneCount = this._items.filter((i) => i.status === 'done').length;
@@ -67,7 +76,7 @@ export class AgentTaskChecklistElement extends HTMLElement {
       })
       .join('');
 
-    this.className = 'block rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden';
+    this._applyHostClass('block rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden');
     this.innerHTML = `
       <div class="flex items-center gap-2 px-3.5 py-2.5 border-b border-zinc-100 dark:border-zinc-800 text-sm font-semibold text-zinc-800 dark:text-zinc-200">
         ${uiIcon('layers', { size: 14, className: 'text-zinc-400' })}

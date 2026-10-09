@@ -28,13 +28,22 @@ export class PromptTemplateGridElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     if (this._templates.length === 0) {
       this.innerHTML = '';
       return;
     }
 
-    this.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3';
+    this._applyHostClass('grid grid-cols-1 sm:grid-cols-2 gap-3');
     this.innerHTML = this._templates
       .map(
         (t) => `

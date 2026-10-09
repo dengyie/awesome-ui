@@ -49,6 +49,15 @@ export class ToolApprovalCardElement extends HTMLElement {
     this.status = nextStatus;
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const toolName = this.getAttribute('tool-name') || '';
     const description = this.getAttribute('description') || '';
@@ -77,9 +86,9 @@ export class ToolApprovalCardElement extends HTMLElement {
             ${status === 'approved' ? 'Approved' : 'Rejected'}
           </span>`;
 
-    this.className = `block rounded-xl border bg-white dark:bg-zinc-900 overflow-hidden ${
+    this._applyHostClass(`block rounded-xl border bg-white dark:bg-zinc-900 overflow-hidden ${
       isHigh ? 'border-amber-300 dark:border-amber-700/60' : 'border-zinc-200 dark:border-zinc-700'
-    }`;
+    }`);
     this.innerHTML = `
       <div class="flex items-center gap-2.5 px-3.5 py-2.5">
         <span class="p-1.5 rounded-lg shrink-0 ${

@@ -163,7 +163,7 @@
    - Vue 3: vue/AgentTaskChecklist.vue
    - Vanilla: vanilla/AgentTaskChecklist.js (custom element `<agent-task-checklist>`, `items` property, event `toggle`)
 
-   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（44 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
+   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（48 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
 
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:

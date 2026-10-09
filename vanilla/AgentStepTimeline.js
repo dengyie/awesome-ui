@@ -35,13 +35,22 @@ export class AgentStepTimelineElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     if (this._steps.length === 0) {
       this.innerHTML = '';
       return;
     }
 
-    this.className = 'block';
+    this._applyHostClass('block');
     const items = this._steps
       .map((step, i) => {
         const meta = STATUS_META[step.status] || STATUS_META.pending;
@@ -61,7 +70,7 @@ export class AgentStepTimelineElement extends HTMLElement {
             <div class="flex-1 min-w-0 pb-1">
               <div class="flex items-center gap-2">
                 <span class="text-sm font-medium ${
-                  step.status === 'pending' ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-800 dark:text-zinc-200'
+                  meta === STATUS_META.pending ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-800 dark:text-zinc-200'
                 }">${escapeAttribute(step.title)}</span>
                 ${step.duration ? `<span class="text-[10px] font-mono text-zinc-400">${escapeAttribute(step.duration)}</span>` : ''}
               </div>

@@ -26,6 +26,15 @@ export class StreamingProgressBarElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const rawValue = this.getAttribute('value');
     const label = this.getAttribute('label') || '';
@@ -48,7 +57,7 @@ export class StreamingProgressBarElement extends HTMLElement {
       ? `<div class="h-full w-1/3 rounded-full ${barColor} animate-pulse"></div>`
       : `<div class="h-full rounded-full transition-all duration-300 ${barColor}" style="width: ${clamped}%"></div>`;
 
-    this.className = 'block w-full';
+    this._applyHostClass('block w-full');
     this.innerHTML = `
       ${labelHtml}
       <div

@@ -45,6 +45,15 @@ export class ChatSessionListElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const title = this.getAttribute('title') || 'Chats';
     const emptyText = this.getAttribute('empty-text') || 'No conversations yet';
@@ -57,7 +66,7 @@ export class ChatSessionListElement extends HTMLElement {
       </div>`;
 
     if (this._sessions.length === 0) {
-      this.className = 'flex flex-col w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden';
+      this._applyHostClass('flex flex-col w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden');
       this.innerHTML = `${headerHtml}<div class="p-6 text-center text-xs text-zinc-400">${escapeAttribute(emptyText)}</div>`;
       return;
     }
@@ -92,7 +101,7 @@ export class ChatSessionListElement extends HTMLElement {
       })
       .join('');
 
-    this.className = 'flex flex-col w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden';
+    this._applyHostClass('flex flex-col w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden');
     this.innerHTML = `${headerHtml}<ul class="flex-1 overflow-y-auto p-1.5 space-y-0.5">${itemsHtml}</ul>`;
 
     this.querySelectorAll('.session-item').forEach((row) => {

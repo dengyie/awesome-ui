@@ -22,13 +22,22 @@ export class EmptyStateElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const icon = this.getAttribute('icon') || 'sparkles';
     const title = this.getAttribute('title') || '';
     const description = this.getAttribute('description') || '';
     const actionLabel = this.getAttribute('action-label') || '';
 
-    this.className = 'flex flex-col items-center justify-center text-center px-6 py-12';
+    this._applyHostClass('flex flex-col items-center justify-center text-center px-6 py-12');
     this.innerHTML = `
       <div class="p-3 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 mb-4">
         ${uiIcon(icon, { size: 24 })}

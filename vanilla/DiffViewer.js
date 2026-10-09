@@ -42,6 +42,15 @@ export class DiffViewerElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const filename = this.getAttribute('filename') || '';
     const language = this.getAttribute('language') || '';
@@ -81,7 +90,7 @@ export class DiffViewerElement extends HTMLElement {
       })
       .join('');
 
-    this.className = 'block rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden';
+    this._applyHostClass('block rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden');
     this.innerHTML = `
       ${headerHtml}
       <div class="overflow-x-auto text-[13px] font-mono leading-relaxed">

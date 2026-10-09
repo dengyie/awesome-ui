@@ -45,7 +45,7 @@ export const AgentStepTimeline: React.FC<AgentStepTimelineProps> = ({ steps = []
               <div className="flex items-center gap-2">
                 <span
                   className={`text-sm font-medium ${
-                    step.status === "pending" ? "text-zinc-400 dark:text-zinc-500" : "text-zinc-800 dark:text-zinc-200"
+                    meta === STATUS_META.pending ? "text-zinc-400 dark:text-zinc-500" : "text-zinc-800 dark:text-zinc-200"
                   }`}
                 >
                   {step.title}

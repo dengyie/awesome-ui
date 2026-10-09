@@ -114,3 +114,64 @@ test('AgentTaskChecklist — renders progress, status icons, dispatches toggle',
   ];
   assert.ok(el.innerHTML.includes('3/3'), 'counter updates on items change');
 });
+
+test('vanilla host className — user classes survive renders across all three new components', () => {
+  const { el: timeline } = mount(timelineSource, 'AgentStepTimelineElement', 'agent-step-timeline', { class: 'my-6' });
+  timeline.steps = [{ id: 1, title: 'Step', status: 'done' }];
+  assert.ok(timeline.className.includes('block'), 'timeline keeps layout class');
+  assert.ok(timeline.className.includes('my-6'), 'timeline preserves user class');
+
+  const { el: grid } = mount(templateSource, 'PromptTemplateGridElement', 'prompt-template-grid', { class: 'mt-4' });
+  grid.templates = [{ id: 'a', title: 'T', prompt: 'P' }];
+  assert.ok(grid.className.includes('grid'), 'grid keeps layout class');
+  assert.ok(grid.className.includes('mt-4'), 'grid preserves user class');
+
+  const { el: checklist } = mount(checklistSource, 'AgentTaskChecklistElement', 'agent-task-checklist', { class: 'w-80' });
+  checklist.items = [{ id: 1, label: 'Task', status: 'pending' }];
+  assert.ok(checklist.className.includes('rounded-xl'), 'checklist keeps layout class');
+  assert.ok(checklist.className.includes('w-80'), 'checklist preserves user class');
+
+  // re-render via observed attribute must not clobber the user class either
+  checklist.setAttribute('title', 'Renamed');
+  assert.ok(checklist.innerHTML.includes('Renamed'), 'title attribute re-renders header');
+  assert.ok(checklist.className.includes('w-80'), 'user class survives attribute-driven re-render');
+});
+
+test('AgentTaskChecklist — keyboard Enter and Space dispatch toggle', () => {
+  const { window, el } = mount(checklistSource, 'AgentTaskChecklistElement', 'agent-task-checklist');
+  el.items = [{ id: 7, label: 'Keyboard task', status: 'pending' }];
+
+  const seen = [];
+  el.addEventListener('toggle', (e) => seen.push(e.detail.id));
+  const row = el.querySelector('.task-item');
+  row.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+  row.dispatchEvent(new window.KeyboardEvent('keydown', { key: ' ', bubbles: true }));
+  row.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'a', bubbles: true }));
+  assert.deepEqual(seen, [7, 7], 'Enter and Space toggle, other keys ignored');
+});
+
+test('PromptTemplateGrid — card without tag/description renders minimal body', () => {
+  const { el } = mount(templateSource, 'PromptTemplateGridElement', 'prompt-template-grid');
+  el.templates = [{ id: 'bare', title: 'Bare Template', prompt: 'Do the thing' }];
+
+  const card = el.querySelector('.template-card');
+  assert.ok(card, 'card rendered');
+  assert.ok(card.textContent.includes('Bare Template'), 'title rendered');
+  assert.equal(card.querySelectorAll('.bg-indigo-50').length, 0, 'no tag badge without tag');
+  assert.ok(!card.textContent.includes('undefined'), 'no undefined leakage for missing description');
+
+  let used = null;
+  el.addEventListener('use', (e) => (used = e.detail));
+  card.click();
+  assert.equal(used?.prompt, 'Do the thing', 'use event works on minimal card');
+});
+
+test('AgentStepTimeline — unknown status falls back to pending icon AND muted title color', () => {
+  const { el } = mount(timelineSource, 'AgentStepTimelineElement', 'agent-step-timeline');
+  el.steps = [{ id: 1, title: 'Mystery step', status: 'runnning' }];
+
+  const title = el.querySelector('li .text-sm');
+  assert.ok(title, 'title rendered');
+  assert.ok(title.className.includes('text-zinc-400'), 'unknown status title uses muted pending color');
+  assert.ok(!title.className.includes('text-zinc-800'), 'unknown status title not rendered as active');
+});

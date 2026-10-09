@@ -17,7 +17,7 @@
         <div class="flex items-center gap-2">
           <span
             class="text-sm font-medium"
-            :class="step.status === 'pending' ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-800 dark:text-zinc-200'"
+            :class="statusMeta(step.status) === STATUS_META.pending ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-800 dark:text-zinc-200'"
           >
             {{ step.title }}
           </span>

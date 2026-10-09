@@ -42,13 +42,22 @@ export class FileAttachmentListElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     if (this._files.length === 0) {
       this.innerHTML = '';
       return;
     }
 
-    this.className = 'flex flex-wrap gap-2';
+    this._applyHostClass('flex flex-wrap gap-2');
     this.innerHTML = this._files
       .map((f) => {
         const sizeText = formatFileSize(f.size);

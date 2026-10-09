@@ -252,7 +252,7 @@ awesome-ui/
 ### 31. `AgentTaskChecklist` (Agent 任务清单)
 - **Props**: `items: Array<{ id: string|number, label: string, status: 'pending'|'active'|'done' }>`, `title?: string`（默认 `'Tasks'`）, `onToggle?: (id) => void`, `className?: string`
 - **Vanilla 用法**: `<agent-task-checklist title="Release plan">`，数据经 `items` 属性注入；事件 `toggle`（detail 为 `{ id }`）
-- **特性**: 头部 done/total 进度计数；done 划线 + 绿勾，active 旋转 loader，pending 空方框；React 端不传 onToggle 时为纯展示态（无指针/键盘监听）。
+- **特性**: 头部 done/total 进度计数；done 划线 + 绿勾，active 旋转 loader，pending 空方框；React 端不传 onToggle 时为纯展示态（无指针/键盘监听）；Vue / Vanilla 端始终渲染交互样式，无监听器时点击为空操作。
 
 ## LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)

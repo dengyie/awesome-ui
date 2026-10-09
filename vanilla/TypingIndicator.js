@@ -20,6 +20,15 @@ export class TypingIndicatorElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const label = this.getAttribute('label') || '';
     const variant = this.getAttribute('variant') || 'dots';
@@ -36,7 +45,7 @@ export class TypingIndicatorElement extends HTMLElement {
       )
       .join('');
 
-    this.className = 'inline-flex items-center gap-2.5 text-zinc-500 dark:text-zinc-400';
+    this._applyHostClass('inline-flex items-center gap-2.5 text-zinc-500 dark:text-zinc-400');
     this.setAttribute('role', 'status');
     this.setAttribute('aria-label', label || 'Loading');
 

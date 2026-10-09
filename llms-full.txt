@@ -53,7 +53,7 @@ export const AgentStepTimeline: React.FC<AgentStepTimelineProps> = ({ steps = []
               <div className="flex items-center gap-2">
                 <span
                   className={`text-sm font-medium ${
-                    step.status === "pending" ? "text-zinc-400 dark:text-zinc-500" : "text-zinc-800 dark:text-zinc-200"
+                    meta === STATUS_META.pending ? "text-zinc-400 dark:text-zinc-500" : "text-zinc-800 dark:text-zinc-200"
                   }`}
                 >
                   {step.title}
@@ -3384,7 +3384,7 @@ export const PaperTrailThemeCSS = `
         <div class="flex items-center gap-2">
           <span
             class="text-sm font-medium"
-            :class="step.status === 'pending' ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-800 dark:text-zinc-200'"
+            :class="statusMeta(step.status) === STATUS_META.pending ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-800 dark:text-zinc-200'"
           >
             {{ step.title }}
           </span>
@@ -6389,13 +6389,22 @@ export class AgentStepTimelineElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     if (this._steps.length === 0) {
       this.innerHTML = '';
       return;
     }
 
-    this.className = 'block';
+    this._applyHostClass('block');
     const items = this._steps
       .map((step, i) => {
         const meta = STATUS_META[step.status] || STATUS_META.pending;
@@ -6415,7 +6424,7 @@ export class AgentStepTimelineElement extends HTMLElement {
             <div class="flex-1 min-w-0 pb-1">
               <div class="flex items-center gap-2">
                 <span class="text-sm font-medium ${
-                  step.status === 'pending' ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-800 dark:text-zinc-200'
+                  meta === STATUS_META.pending ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-800 dark:text-zinc-200'
                 }">${escapeAttribute(step.title)}</span>
                 ${step.duration ? `<span class="text-[10px] font-mono text-zinc-400">${escapeAttribute(step.duration)}</span>` : ''}
               </div>
@@ -6481,6 +6490,15 @@ export class AgentTaskChecklistElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const title = this.getAttribute('title') || 'Tasks';
     const doneCount = this._items.filter((i) => i.status === 'done').length;
@@ -6506,7 +6524,7 @@ export class AgentTaskChecklistElement extends HTMLElement {
       })
       .join('');
 
-    this.className = 'block rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden';
+    this._applyHostClass('block rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden');
     this.innerHTML = `
       <div class="flex items-center gap-2 px-3.5 py-2.5 border-b border-zinc-100 dark:border-zinc-800 text-sm font-semibold text-zinc-800 dark:text-zinc-200">
         ${uiIcon('layers', { size: 14, className: 'text-zinc-400' })}
@@ -6992,6 +7010,15 @@ export class ChatSessionListElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const title = this.getAttribute('title') || 'Chats';
     const emptyText = this.getAttribute('empty-text') || 'No conversations yet';
@@ -7004,7 +7031,7 @@ export class ChatSessionListElement extends HTMLElement {
       </div>`;
 
     if (this._sessions.length === 0) {
-      this.className = 'flex flex-col w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden';
+      this._applyHostClass('flex flex-col w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden');
       this.innerHTML = `${headerHtml}<div class="p-6 text-center text-xs text-zinc-400">${escapeAttribute(emptyText)}</div>`;
       return;
     }
@@ -7039,7 +7066,7 @@ export class ChatSessionListElement extends HTMLElement {
       })
       .join('');
 
-    this.className = 'flex flex-col w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden';
+    this._applyHostClass('flex flex-col w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden');
     this.innerHTML = `${headerHtml}<ul class="flex-1 overflow-y-auto p-1.5 space-y-0.5">${itemsHtml}</ul>`;
 
     this.querySelectorAll('.session-item').forEach((row) => {
@@ -7456,6 +7483,15 @@ export class ContextUsageBadgeElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const used = Math.max(0, parseInt(this.getAttribute('used-tokens') || '0', 10) || 0);
     const max = Math.max(1, parseInt(this.getAttribute('max-tokens') || '1', 10) || 1);
@@ -7467,7 +7503,7 @@ export class ContextUsageBadgeElement extends HTMLElement {
     if (percentage >= 90) barColor = 'bg-rose-500';
     else if (percentage >= 70) barColor = 'bg-amber-500';
 
-    this.className = 'relative inline-block text-xs font-sans select-none';
+    this._applyHostClass('relative inline-block text-xs font-sans select-none');
 
     this.innerHTML = `
       <button
@@ -7586,6 +7622,15 @@ export class DiffViewerElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const filename = this.getAttribute('filename') || '';
     const language = this.getAttribute('language') || '';
@@ -7625,7 +7670,7 @@ export class DiffViewerElement extends HTMLElement {
       })
       .join('');
 
-    this.className = 'block rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden';
+    this._applyHostClass('block rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden');
     this.innerHTML = `
       ${headerHtml}
       <div class="overflow-x-auto text-[13px] font-mono leading-relaxed">
@@ -7666,13 +7711,22 @@ export class EmptyStateElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const icon = this.getAttribute('icon') || 'sparkles';
     const title = this.getAttribute('title') || '';
     const description = this.getAttribute('description') || '';
     const actionLabel = this.getAttribute('action-label') || '';
 
-    this.className = 'flex flex-col items-center justify-center text-center px-6 py-12';
+    this._applyHostClass('flex flex-col items-center justify-center text-center px-6 py-12');
     this.innerHTML = `
       <div class="p-3 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 mb-4">
         ${uiIcon(icon, { size: 24 })}
@@ -7742,13 +7796,22 @@ export class FileAttachmentListElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     if (this._files.length === 0) {
       this.innerHTML = '';
       return;
     }
 
-    this.className = 'flex flex-wrap gap-2';
+    this._applyHostClass('flex flex-wrap gap-2');
     this.innerHTML = this._files
       .map((f) => {
         const sizeText = formatFileSize(f.size);
@@ -8459,6 +8522,15 @@ export class ModelSelectorElement extends HTMLElement {
     );
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const selectedId = this.selectedId;
     const placeholder = this.getAttribute('placeholder') || 'Select model...';
@@ -8468,7 +8540,7 @@ export class ModelSelectorElement extends HTMLElement {
     const selectedModel = this._models.find((m) => m.id === selectedId) || null;
     const filtered = this._getFilteredModels();
 
-    this.className = 'relative inline-block text-xs font-sans text-zinc-900 dark:text-zinc-100';
+    this._applyHostClass('relative inline-block text-xs font-sans text-zinc-900 dark:text-zinc-100');
 
     this.innerHTML = `
       <button
@@ -8722,13 +8794,22 @@ export class PromptTemplateGridElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     if (this._templates.length === 0) {
       this.innerHTML = '';
       return;
     }
 
-    this.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3';
+    this._applyHostClass('grid grid-cols-1 sm:grid-cols-2 gap-3');
     this.innerHTML = this._templates
       .map(
         (t) => `
@@ -9142,6 +9223,15 @@ export class StreamingProgressBarElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const rawValue = this.getAttribute('value');
     const label = this.getAttribute('label') || '';
@@ -9164,7 +9254,7 @@ export class StreamingProgressBarElement extends HTMLElement {
       ? `<div class="h-full w-1/3 rounded-full ${barColor} animate-pulse"></div>`
       : `<div class="h-full rounded-full transition-all duration-300 ${barColor}" style="width: ${clamped}%"></div>`;
 
-    this.className = 'block w-full';
+    this._applyHostClass('block w-full');
     this.innerHTML = `
       ${labelHtml}
       <div
@@ -9523,6 +9613,15 @@ export class ToolApprovalCardElement extends HTMLElement {
     this.status = nextStatus;
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const toolName = this.getAttribute('tool-name') || '';
     const description = this.getAttribute('description') || '';
@@ -9551,9 +9650,9 @@ export class ToolApprovalCardElement extends HTMLElement {
             ${status === 'approved' ? 'Approved' : 'Rejected'}
           </span>`;
 
-    this.className = `block rounded-xl border bg-white dark:bg-zinc-900 overflow-hidden ${
+    this._applyHostClass(`block rounded-xl border bg-white dark:bg-zinc-900 overflow-hidden ${
       isHigh ? 'border-amber-300 dark:border-amber-700/60' : 'border-zinc-200 dark:border-zinc-700'
-    }`;
+    }`);
     this.innerHTML = `
       <div class="flex items-center gap-2.5 px-3.5 py-2.5">
         <span class="p-1.5 rounded-lg shrink-0 ${
@@ -9687,6 +9786,15 @@ export class TypingIndicatorElement extends HTMLElement {
     this.render();
   }
 
+  _applyHostClass(layoutClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = layoutClass;
+    const next = `${layoutClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
   render() {
     const label = this.getAttribute('label') || '';
     const variant = this.getAttribute('variant') || 'dots';
@@ -9703,7 +9811,7 @@ export class TypingIndicatorElement extends HTMLElement {
       )
       .join('');
 
-    this.className = 'inline-flex items-center gap-2.5 text-zinc-500 dark:text-zinc-400';
+    this._applyHostClass('inline-flex items-center gap-2.5 text-zinc-500 dark:text-zinc-400');
     this.setAttribute('role', 'status');
     this.setAttribute('aria-label', label || 'Loading');
 
