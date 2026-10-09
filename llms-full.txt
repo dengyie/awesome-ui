@@ -4,6 +4,153 @@
 > All components are single-file, zero-blackbox, Tailwind CSS styled, with 1:1 parity across React (TSX), Vue 3 (SFC), and Vanilla Web Components.
 
 
+====/File: react/AgentStepTimeline.tsx/====
+
+import React from "react";
+import { UiIcon, UiIconName } from "./UiIcon";
+
+export interface AgentStep {
+  id: string | number;
+  title: string;
+  description?: string;
+  status: "pending" | "running" | "done" | "error";
+  duration?: string;
+}
+
+export interface AgentStepTimelineProps {
+  steps: AgentStep[];
+  className?: string;
+}
+
+const STATUS_META: Record<AgentStep["status"], { icon: UiIconName; cls: string; pulse?: boolean }> = {
+  pending: { icon: "clock", cls: "text-zinc-300 dark:text-zinc-600 bg-zinc-100 dark:bg-zinc-800" },
+  running: { icon: "loader", cls: "text-indigo-500 bg-indigo-100 dark:bg-indigo-950/60", pulse: true },
+  done: { icon: "check-circle", cls: "text-emerald-500 bg-emerald-100 dark:bg-emerald-950/60" },
+  error: { icon: "circle-x", cls: "text-rose-500 bg-rose-100 dark:bg-rose-950/60" },
+};
+
+export const AgentStepTimeline: React.FC<AgentStepTimelineProps> = ({ steps = [], className = "" }) => {
+  if (steps.length === 0) return null;
+  return (
+    <ol className={`relative space-y-4 ${className}`}>
+      {steps.map((step, i) => {
+        const meta = STATUS_META[step.status] || STATUS_META.pending;
+        const isLast = i === steps.length - 1;
+        return (
+          <li key={step.id} className="relative flex gap-3">
+            {!isLast && (
+              <span
+                aria-hidden="true"
+                className={`absolute left-[13px] top-7 bottom-[-16px] w-px ${
+                  step.status === "done" ? "bg-emerald-300 dark:bg-emerald-800" : "bg-zinc-200 dark:bg-zinc-700"
+                }`}
+              />
+            )}
+            <span className={`relative z-10 flex items-center justify-center w-7 h-7 rounded-full shrink-0 ${meta.cls}`}>
+              <UiIcon name={meta.icon} size={15} className={meta.pulse ? "animate-spin" : ""} />
+            </span>
+            <div className="flex-1 min-w-0 pb-1">
+              <div className="flex items-center gap-2">
+                <span
+                  className={`text-sm font-medium ${
+                    step.status === "pending" ? "text-zinc-400 dark:text-zinc-500" : "text-zinc-800 dark:text-zinc-200"
+                  }`}
+                >
+                  {step.title}
+                </span>
+                {step.duration && <span className="text-[10px] font-mono text-zinc-400">{step.duration}</span>}
+              </div>
+              {step.description && (
+                <div className="mt-0.5 text-xs text-zinc-400 dark:text-zinc-500">{step.description}</div>
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  );
+};
+export default AgentStepTimeline;
+
+
+====/File: react/AgentTaskChecklist.tsx/====
+
+import React from "react";
+import { UiIcon, UiIconName } from "./UiIcon";
+
+export interface AgentTaskItem {
+  id: string | number;
+  label: string;
+  status: "pending" | "active" | "done";
+}
+
+export interface AgentTaskChecklistProps {
+  items: AgentTaskItem[];
+  title?: string;
+  onToggle?: (id: string | number) => void;
+  className?: string;
+}
+
+const STATUS_ICON: Record<AgentTaskItem["status"], { icon: UiIconName; cls: string }> = {
+  pending: { icon: "square", cls: "text-zinc-300 dark:text-zinc-600" },
+  active: { icon: "loader", cls: "text-indigo-500 animate-spin" },
+  done: { icon: "check-circle", cls: "text-emerald-500" },
+};
+
+export const AgentTaskChecklist: React.FC<AgentTaskChecklistProps> = ({
+  items = [],
+  title = "Tasks",
+  onToggle,
+  className = "",
+}) => {
+  const doneCount = items.filter((i) => i.status === "done").length;
+
+  return (
+    <div className={`rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden ${className}`}>
+      <div className="flex items-center gap-2 px-3.5 py-2.5 border-b border-zinc-100 dark:border-zinc-800 text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+        <UiIcon name="layers" size={14} className="text-zinc-400" />
+        {title}
+        <span className="ml-auto text-[11px] font-mono font-normal text-zinc-400">
+          {doneCount}/{items.length}
+        </span>
+      </div>
+      <ul className="p-1.5 space-y-0.5">
+        {items.map((item) => {
+          const meta = STATUS_ICON[item.status] || STATUS_ICON.pending;
+          const isDone = item.status === "done";
+          return (
+            <li key={item.id}>
+              <div
+                role={onToggle ? "button" : undefined}
+                tabIndex={onToggle ? 0 : undefined}
+                onClick={onToggle ? () => onToggle(item.id) : undefined}
+                onKeyDown={
+                  onToggle
+                    ? (e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          onToggle(item.id);
+                        }
+                      }
+                    : undefined
+                }
+                className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm transition-colors ${
+                  onToggle ? "cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800/60" : ""
+                } ${isDone ? "text-zinc-400 dark:text-zinc-500" : "text-zinc-700 dark:text-zinc-300"}`}
+              >
+                <UiIcon name={meta.icon} size={15} className={`shrink-0 ${meta.cls}`} />
+                <span className={`flex-1 min-w-0 truncate ${isDone ? "line-through" : ""}`}>{item.label}</span>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+export default AgentTaskChecklist;
+
+
 ====/File: react/ArtifactCanvas.tsx/====
 
 import React, { useState } from "react";
@@ -2021,6 +2168,59 @@ export const PromptChips: React.FC<PromptChipsProps> = ({
 };
 
 
+====/File: react/PromptTemplateGrid.tsx/====
+
+import React from "react";
+import { UiIcon } from "./UiIcon";
+
+export interface PromptTemplate {
+  id: string | number;
+  title: string;
+  description?: string;
+  prompt: string;
+  tag?: string;
+}
+
+export interface PromptTemplateGridProps {
+  templates: PromptTemplate[];
+  onUse?: (template: PromptTemplate) => void;
+  className?: string;
+}
+
+export const PromptTemplateGrid: React.FC<PromptTemplateGridProps> = ({ templates = [], onUse, className = "" }) => {
+  if (templates.length === 0) return null;
+  return (
+    <div className={`grid grid-cols-1 sm:grid-cols-2 gap-3 ${className}`}>
+      {templates.map((t) => (
+        <button
+          key={t.id}
+          type="button"
+          onClick={() => onUse?.(t)}
+          className="group flex flex-col text-left p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-md transition-all"
+        >
+          <div className="flex items-center gap-2 w-full">
+            <span className="text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">{t.title}</span>
+            {t.tag && (
+              <span className="ml-auto px-1.5 py-0.5 rounded text-[10px] font-medium bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 shrink-0">
+                {t.tag}
+              </span>
+            )}
+          </div>
+          {t.description && (
+            <div className="mt-1 text-xs text-zinc-400 dark:text-zinc-500 line-clamp-2">{t.description}</div>
+          )}
+          <div className="mt-2 flex items-center gap-1 text-[11px] font-medium text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">
+            <UiIcon name="arrow-right" size={12} />
+            Use template
+          </div>
+        </button>
+      ))}
+    </div>
+  );
+};
+export default PromptTemplateGrid;
+
+
 ====/File: react/RoadmapTimeline.tsx/====
 
 import React from "react";
@@ -3161,6 +3361,136 @@ export const PaperTrailThemeCSS = `
   background-size: auto, auto, 120px 120px, 120px 120px;
 }
 `;
+
+
+====/File: vue/AgentStepTimeline.vue/====
+
+<template>
+  <ol v-if="steps.length > 0" class="relative space-y-4" :class="className">
+    <li v-for="(step, i) in steps" :key="step.id" class="relative flex gap-3">
+      <span
+        v-if="i < steps.length - 1"
+        aria-hidden="true"
+        class="absolute left-[13px] top-7 bottom-[-16px] w-px"
+        :class="step.status === 'done' ? 'bg-emerald-300 dark:bg-emerald-800' : 'bg-zinc-200 dark:bg-zinc-700'"
+      />
+      <span
+        class="relative z-10 flex items-center justify-center w-7 h-7 rounded-full shrink-0"
+        :class="statusMeta(step.status).cls"
+      >
+        <UiIcon :name="statusMeta(step.status).icon" :size="15" :class="statusMeta(step.status).pulse ? 'animate-spin' : ''" />
+      </span>
+      <div class="flex-1 min-w-0 pb-1">
+        <div class="flex items-center gap-2">
+          <span
+            class="text-sm font-medium"
+            :class="step.status === 'pending' ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-800 dark:text-zinc-200'"
+          >
+            {{ step.title }}
+          </span>
+          <span v-if="step.duration" class="text-[10px] font-mono text-zinc-400">{{ step.duration }}</span>
+        </div>
+        <div v-if="step.description" class="mt-0.5 text-xs text-zinc-400 dark:text-zinc-500">{{ step.description }}</div>
+      </div>
+    </li>
+  </ol>
+</template>
+
+<script setup lang="ts">
+import UiIcon from "./UiIcon.vue";
+
+export interface AgentStep {
+  id: string | number;
+  title: string;
+  description?: string;
+  status: "pending" | "running" | "done" | "error";
+  duration?: string;
+}
+
+withDefaults(
+  defineProps<{
+    steps?: AgentStep[];
+    className?: string;
+  }>(),
+  { steps: () => [], className: "" }
+);
+
+const STATUS_META: Record<string, { icon: string; cls: string; pulse?: boolean }> = {
+  pending: { icon: "clock", cls: "text-zinc-300 dark:text-zinc-600 bg-zinc-100 dark:bg-zinc-800" },
+  running: { icon: "loader", cls: "text-indigo-500 bg-indigo-100 dark:bg-indigo-950/60", pulse: true },
+  done: { icon: "check-circle", cls: "text-emerald-500 bg-emerald-100 dark:bg-emerald-950/60" },
+  error: { icon: "circle-x", cls: "text-rose-500 bg-rose-100 dark:bg-rose-950/60" },
+};
+
+function statusMeta(status: string) {
+  return STATUS_META[status] || STATUS_META.pending;
+}
+</script>
+
+
+====/File: vue/AgentTaskChecklist.vue/====
+
+<template>
+  <div class="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden" :class="className">
+    <div class="flex items-center gap-2 px-3.5 py-2.5 border-b border-zinc-100 dark:border-zinc-800 text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+      <UiIcon name="layers" :size="14" class="text-zinc-400" />
+      {{ title }}
+      <span class="ml-auto text-[11px] font-mono font-normal text-zinc-400">{{ doneCount }}/{{ items.length }}</span>
+    </div>
+    <ul class="p-1.5 space-y-0.5">
+      <li v-for="item in items" :key="item.id">
+        <div
+          role="button"
+          tabindex="0"
+          class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm transition-colors cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
+          :class="item.status === 'done' ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-700 dark:text-zinc-300'"
+          @click="emit('toggle', item.id)"
+          @keydown.enter.prevent="emit('toggle', item.id)"
+          @keydown.space.prevent="emit('toggle', item.id)"
+        >
+          <UiIcon :name="statusIcon(item.status).icon" :size="15" class="shrink-0" :class="statusIcon(item.status).cls" />
+          <span class="flex-1 min-w-0 truncate" :class="item.status === 'done' ? 'line-through' : ''">{{ item.label }}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from "vue";
+import UiIcon from "./UiIcon.vue";
+
+export interface AgentTaskItem {
+  id: string | number;
+  label: string;
+  status: "pending" | "active" | "done";
+}
+
+const props = withDefaults(
+  defineProps<{
+    items?: AgentTaskItem[];
+    title?: string;
+    className?: string;
+  }>(),
+  { items: () => [], title: "Tasks", className: "" }
+);
+
+const emit = defineEmits<{
+  (e: "toggle", id: string | number): void;
+}>();
+
+const doneCount = computed(() => props.items.filter((i) => i.status === "done").length);
+
+const STATUS_ICON: Record<string, { icon: string; cls: string }> = {
+  pending: { icon: "square", cls: "text-zinc-300 dark:text-zinc-600" },
+  active: { icon: "loader", cls: "text-indigo-500 animate-spin" },
+  done: { icon: "check-circle", cls: "text-emerald-500" },
+};
+
+function statusIcon(status: string) {
+  return STATUS_ICON[status] || STATUS_ICON.pending;
+}
+</script>
 
 
 ====/File: vue/ArtifactCanvas.vue/====
@@ -5057,6 +5387,60 @@ defineEmits<{
 </script>
 
 
+====/File: vue/PromptTemplateGrid.vue/====
+
+<template>
+  <div v-if="templates.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-3" :class="className">
+    <button
+      v-for="t in templates"
+      :key="t.id"
+      type="button"
+      class="group flex flex-col text-left p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-md transition-all"
+      @click="emit('use', t)"
+    >
+      <div class="flex items-center gap-2 w-full">
+        <span class="text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">{{ t.title }}</span>
+        <span
+          v-if="t.tag"
+          class="ml-auto px-1.5 py-0.5 rounded text-[10px] font-medium bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 shrink-0"
+        >
+          {{ t.tag }}
+        </span>
+      </div>
+      <div v-if="t.description" class="mt-1 text-xs text-zinc-400 dark:text-zinc-500 line-clamp-2">{{ t.description }}</div>
+      <div class="mt-2 flex items-center gap-1 text-[11px] font-medium text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">
+        <UiIcon name="arrow-right" :size="12" />
+        Use template
+      </div>
+    </button>
+  </div>
+</template>
+
+<script setup lang="ts">
+import UiIcon from "./UiIcon.vue";
+
+export interface PromptTemplate {
+  id: string | number;
+  title: string;
+  description?: string;
+  prompt: string;
+  tag?: string;
+}
+
+withDefaults(
+  defineProps<{
+    templates?: PromptTemplate[];
+    className?: string;
+  }>(),
+  { templates: () => [], className: "" }
+);
+
+const emit = defineEmits<{
+  (e: "use", template: PromptTemplate): void;
+}>();
+</script>
+
+
 ====/File: vue/RoadmapTimeline.vue/====
 
 <script setup lang="ts">
@@ -5964,6 +6348,193 @@ const shapes: Record<IconName, ReturnType<typeof p>[]> = {
  'alert-triangle':[p('path',{d:'M12 9v4'}),p('path',{d:'M12 17h.01'}),p('path',{d:'M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z'})], 'arrow-down':[p('path',{d:'m6 9 6 6 6-6'})], 'arrow-left':[p('path',{d:'m15 6-6 6 6 6'})], 'arrow-right':[p('path',{d:'m9 6 6 6-6 6'})], 'arrow-up':[p('path',{d:'m6 15 6-6 6 6'})], check:[p('path',{d:'m5 12 4 4L19 6'})], 'check-circle':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m8 12 2.5 2.5L16 9'})], 'chevron-down':[p('path',{d:'m6 9 6 6 6-6'})], 'chevron-left':[p('path',{d:'m14 6-6 6 6 6'})], 'chevron-right':[p('path',{d:'m10 6 6 6-6 6'})], 'chevron-up':[p('path',{d:'m6 15 6-6 6 6'})], 'circle-x':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m9 9 6 6m0-6-6 6'})], clock:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M12 7v5l3 3'})], code:[p('path',{d:'m8 9-3 3 3 3m8-6 3 3-3 3M14 5l-4 14'})], copy:[p('rect',{x:'8',y:'8',width:'11',height:'11',rx:'2'}),p('path',{d:'M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2'})], cpu:[p('rect',{x:'5',y:'5',width:'14',height:'14',rx:'2'}),p('path',{d:'M9 9h6v6H9zM9 1v4m6-4v4M9 19v4m6-4v4M1 9h4m-4 6h4M19 9h4m-4 6h4'})], eye:[p('path',{d:'M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z'}),p('circle',{cx:'12',cy:'12',r:'2.5'})], 'external-link':[p('path',{d:'M14 5h5v5M19 5l-8 8'}),p('path',{d:'M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3'})], globe:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18'})], 'git-branch':[p('path',{d:'M6 3v12a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9'}),p('circle',{cx:'6',cy:'3',r:'2'}),p('circle',{cx:'18',cy:'7',r:'2'}),p('circle',{cx:'12',cy:'18',r:'2'})], image:[p('rect',{x:'3',y:'4',width:'18',height:'16',rx:'2'}),p('circle',{cx:'8.5',cy:'9',r:'1.5'}),p('path',{d:'m21 15-4-4L5 20'})], layers:[p('path',{d:'m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5'})], lock:[p('rect',{x:'5',y:'10',width:'14',height:'11',rx:'2'}),p('path',{d:'M8 10V7a4 4 0 0 1 8 0v3'})], loader:[p('path',{d:'M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1'})], minus:[p('path',{d:'M5 12h14'})], moon:[p('path',{d:'M20 15.5A8 8 0 0 1 8.5 4 8 8 0 0 0 20 15.5Z'})], monitor:[p('rect',{x:'3',y:'4',width:'18',height:'13',rx:'2'}),p('path',{d:'M8 21h8m-4-4v4'})], paperclip:[p('path',{d:'m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7'})], plus:[p('path',{d:'M12 5v14M5 12h14'})], refresh:[p('path',{d:'M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5'})], search:[p('circle',{cx:'10',cy:'10',r:'7'}),p('path',{d:'m21 21-6-6'})], sliders:[p('path',{d:'M4 8h4m4 0h8M4 16h8m4 0h4M8 6v4m8 4v4'})], sparkles:[p('path',{d:'m12 3-1.2 4.8L6 9l4.8 1.2L12 15l1.2-4.8L18 9l-4.8-1.2L12 3Z'}),p('path',{d:'m19 15-.6 2.4L16 18l2.4.6L19 21l.6-2.4L22 18l-2.4-.6L19 15Z'})], square:[p('rect',{x:'6',y:'6',width:'12',height:'12',rx:'1'})], sun:[p('circle',{cx:'12',cy:'12',r:'4'}),p('path',{d:'M12 2v2m0 16v2M2 12h2m16 0h2'})], terminal:[p('path',{d:'m4 17 6-6-6-6m8 14h8'})], 'thumbs-down':[p('path',{d:'M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3'})], 'thumbs-up':[p('path',{d:'M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2'})], tool:[p('path',{d:'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z'})], user:[p('path',{d:'M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0'}),p('path',{d:'M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2'})], x:[p('path',{d:'m6 6 12 12M18 6 6 18'})], zap:[p('path',{d:'M13 3 4 14h7l-1 7 9-11h-7l1-7Z'})]
 };
 </script>
+
+
+====/File: vanilla/AgentStepTimeline.js/====
+
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const STATUS_META = {
+  pending: { icon: 'clock', cls: 'text-zinc-300 dark:text-zinc-600 bg-zinc-100 dark:bg-zinc-800' },
+  running: { icon: 'loader', cls: 'text-indigo-500 bg-indigo-100 dark:bg-indigo-950/60', pulse: true },
+  done: { icon: 'check-circle', cls: 'text-emerald-500 bg-emerald-100 dark:bg-emerald-950/60' },
+  error: { icon: 'circle-x', cls: 'text-rose-500 bg-rose-100 dark:bg-rose-950/60' },
+};
+
+export class AgentStepTimelineElement extends HTMLElement {
+  constructor() {
+    super();
+    this._steps = [];
+  }
+
+  get steps() {
+    return this._steps;
+  }
+
+  set steps(val) {
+    this._steps = Array.isArray(val) ? val : [];
+    this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    if (this._steps.length === 0) {
+      this.innerHTML = '';
+      return;
+    }
+
+    this.className = 'block';
+    const items = this._steps
+      .map((step, i) => {
+        const meta = STATUS_META[step.status] || STATUS_META.pending;
+        const isLast = i === this._steps.length - 1;
+        return `
+          <li class="relative flex gap-3">
+            ${
+              !isLast
+                ? `<span aria-hidden="true" class="absolute left-[13px] top-7 bottom-[-16px] w-px ${
+                    step.status === 'done' ? 'bg-emerald-300 dark:bg-emerald-800' : 'bg-zinc-200 dark:bg-zinc-700'
+                  }"></span>`
+                : ''
+            }
+            <span class="relative z-10 flex items-center justify-center w-7 h-7 rounded-full shrink-0 ${meta.cls}">
+              ${uiIcon(meta.icon, { size: 15, className: meta.pulse ? 'animate-spin' : '' })}
+            </span>
+            <div class="flex-1 min-w-0 pb-1">
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-medium ${
+                  step.status === 'pending' ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-800 dark:text-zinc-200'
+                }">${escapeAttribute(step.title)}</span>
+                ${step.duration ? `<span class="text-[10px] font-mono text-zinc-400">${escapeAttribute(step.duration)}</span>` : ''}
+              </div>
+              ${step.description ? `<div class="mt-0.5 text-xs text-zinc-400 dark:text-zinc-500">${escapeAttribute(step.description)}</div>` : ''}
+            </div>
+          </li>`;
+      })
+      .join('');
+
+    this.innerHTML = `<ol class="relative space-y-4">${items}</ol>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('agent-step-timeline')) {
+  customElements.define('agent-step-timeline', AgentStepTimelineElement);
+}
+export default AgentStepTimelineElement;
+
+
+====/File: vanilla/AgentTaskChecklist.js/====
+
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const STATUS_ICON = {
+  pending: { icon: 'square', cls: 'text-zinc-300 dark:text-zinc-600' },
+  active: { icon: 'loader', cls: 'text-indigo-500 animate-spin' },
+  done: { icon: 'check-circle', cls: 'text-emerald-500' },
+};
+
+export class AgentTaskChecklistElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title'];
+  }
+
+  constructor() {
+    super();
+    this._items = [];
+  }
+
+  get items() {
+    return this._items;
+  }
+
+  set items(val) {
+    this._items = Array.isArray(val) ? val : [];
+    this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  render() {
+    const title = this.getAttribute('title') || 'Tasks';
+    const doneCount = this._items.filter((i) => i.status === 'done').length;
+
+    const itemsHtml = this._items
+      .map((item) => {
+        const meta = STATUS_ICON[item.status] || STATUS_ICON.pending;
+        const isDone = item.status === 'done';
+        return `
+          <li>
+            <div
+              role="button"
+              tabindex="0"
+              data-task-id="${escapeAttribute(item.id)}"
+              class="task-item flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm transition-colors cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800/60 ${
+                isDone ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-700 dark:text-zinc-300'
+              }"
+            >
+              ${uiIcon(meta.icon, { size: 15, className: `shrink-0 ${meta.cls}` })}
+              <span class="flex-1 min-w-0 truncate ${isDone ? 'line-through' : ''}">${escapeAttribute(item.label)}</span>
+            </div>
+          </li>`;
+      })
+      .join('');
+
+    this.className = 'block rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden';
+    this.innerHTML = `
+      <div class="flex items-center gap-2 px-3.5 py-2.5 border-b border-zinc-100 dark:border-zinc-800 text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+        ${uiIcon('layers', { size: 14, className: 'text-zinc-400' })}
+        ${escapeAttribute(title)}
+        <span class="ml-auto text-[11px] font-mono font-normal text-zinc-400">${doneCount}/${this._items.length}</span>
+      </div>
+      <ul class="p-1.5 space-y-0.5">${itemsHtml}</ul>`;
+
+    this.querySelectorAll('.task-item').forEach((row) => {
+      const id = row.getAttribute('data-task-id');
+      const item = this._items.find((t) => String(t.id) === String(id));
+      if (!item) return;
+      const toggle = () => this.dispatchEvent(new CustomEvent('toggle', { detail: { id: item.id } }));
+      row.addEventListener('click', toggle);
+      row.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle();
+        }
+      });
+    });
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('agent-task-checklist')) {
+  customElements.define('agent-task-checklist', AgentTaskChecklistElement);
+}
+export default AgentTaskChecklistElement;
 
 
 ====/File: vanilla/ArtifactCanvas.js/====
@@ -8117,6 +8688,86 @@ if (!customElements.get("prompt-chips")) {
   customElements.define("prompt-chips", PromptChips);
 }
 export default PromptChips;
+
+
+====/File: vanilla/PromptTemplateGrid.js/====
+
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class PromptTemplateGridElement extends HTMLElement {
+  constructor() {
+    super();
+    this._templates = [];
+  }
+
+  get templates() {
+    return this._templates;
+  }
+
+  set templates(val) {
+    this._templates = Array.isArray(val) ? val : [];
+    this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    if (this._templates.length === 0) {
+      this.innerHTML = '';
+      return;
+    }
+
+    this.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3';
+    this.innerHTML = this._templates
+      .map(
+        (t) => `
+        <button
+          type="button"
+          data-template-id="${escapeAttribute(t.id)}"
+          class="template-card group flex flex-col text-left p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-md transition-all"
+        >
+          <div class="flex items-center gap-2 w-full">
+            <span class="text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">${escapeAttribute(t.title)}</span>
+            ${
+              t.tag
+                ? `<span class="ml-auto px-1.5 py-0.5 rounded text-[10px] font-medium bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 shrink-0">${escapeAttribute(t.tag)}</span>`
+                : ''
+            }
+          </div>
+          ${t.description ? `<div class="mt-1 text-xs text-zinc-400 dark:text-zinc-500 line-clamp-2">${escapeAttribute(t.description)}</div>` : ''}
+          <div class="mt-2 flex items-center gap-1 text-[11px] font-medium text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">
+            ${uiIcon('arrow-right', { size: 12 })}
+            Use template
+          </div>
+        </button>`
+      )
+      .join('');
+
+    this.querySelectorAll('.template-card').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-template-id');
+        const template = this._templates.find((t) => String(t.id) === String(id));
+        if (template) this.dispatchEvent(new CustomEvent('use', { detail: template }));
+      });
+    });
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('prompt-template-grid')) {
+  customElements.define('prompt-template-grid', PromptTemplateGridElement);
+}
+export default PromptTemplateGridElement;
 
 
 ====/File: vanilla/RoadmapTimeline.js/====

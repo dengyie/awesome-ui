@@ -48,7 +48,10 @@ awesome-ui/
 │   ├── ToolApprovalCard.tsx # Agent 工具审批卡片（Approve/Reject）
 │   ├── FileAttachmentList.tsx # 输入框附件列表（类型图标/大小/移除）
 │   ├── StreamingProgressBar.tsx # 流式生成进度条（确定/不确定/三色）
-│   └── EmptyState.tsx       # 空态占位页（图标/标题/CTA）
+│   ├── EmptyState.tsx       # 空态占位页（图标/标题/CTA）
+│   ├── AgentStepTimeline.tsx # Agent 多步执行轨迹（四态/连接线）
+│   ├── PromptTemplateGrid.tsx # 提示词模板卡片网格（标签/Use）
+│   └── AgentTaskChecklist.tsx # Agent 任务清单（进度/切换）
 ├── vue/                     # Vue 3 (SFC) 单文件组件 (Vue 3 + Tailwind)
 │   ├── UiIcon.vue
 │   ├── ChatPromptInput.vue
@@ -78,7 +81,10 @@ awesome-ui/
 │   ├── ToolApprovalCard.vue
 │   ├── FileAttachmentList.vue
 │   ├── StreamingProgressBar.vue
-│   └── EmptyState.vue
+│   ├── EmptyState.vue
+│   ├── AgentStepTimeline.vue
+│   ├── PromptTemplateGrid.vue
+│   └── AgentTaskChecklist.vue
 └── vanilla/                 # 原生 JS / Web Components 单文件 (HTML + Tailwind CDN)
     ├── UiIcon.js            # uiIcon() SVG 图标工厂
     ├── ChatPromptInput.js
@@ -108,7 +114,10 @@ awesome-ui/
     ├── ToolApprovalCard.js
     ├── FileAttachmentList.js
     ├── StreamingProgressBar.js
-    └── EmptyState.js
+    ├── EmptyState.js
+    ├── AgentStepTimeline.js
+    ├── PromptTemplateGrid.js
+    └── AgentTaskChecklist.js
 ```
 
 ## 图标 API 速查
@@ -229,6 +238,21 @@ awesome-ui/
 - **Props**: `icon?: UiIconName`（默认 `'sparkles'`）, `title: string`, `description?: string`, `actionLabel?: string`, `onAction?: () => void`, `className?: string`
 - **Vanilla 用法**: `<empty-state icon="search" title="..." action-label="New Chat">`，事件 `action`（CustomEvent）
 - **特性**: 居中图标块 + 标题 + 描述 + 可选 CTA 按钮；全量实体转义；适合零结果搜索、空会话列表、空白画布。
+
+### 29. `AgentStepTimeline` (Agent 多步执行轨迹)
+- **Props**: `steps: Array<{ id: string|number, title: string, description?: string, status: 'pending'|'running'|'done'|'error', duration?: string }>`, `className?: string`
+- **Vanilla 用法**: `<agent-step-timeline>`，数据经 `steps` 属性注入；空数组不渲染
+- **特性**: 竖向时间线，running 步骤 loader 旋转；步骤间连接线，done 步骤连接线染绿；耗时徽章；全量实体转义。适合 Devin/Cline 风格 Agent 执行过程回放。
+
+### 30. `PromptTemplateGrid` (提示词模板卡片网格)
+- **Props**: `templates: Array<{ id: string|number, title: string, description?: string, prompt: string, tag?: string }>`, `onUse?: (template) => void`, `className?: string`
+- **Vanilla 用法**: `<prompt-template-grid>`，数据经 `templates` 属性注入；事件 `use`（detail 为完整 template，含 prompt）
+- **特性**: 响应式 1/2 列网格，tag 徽章，悬停显现 "Use template"；点击卡片派发模板。适合提示词库/快捷指令面板。
+
+### 31. `AgentTaskChecklist` (Agent 任务清单)
+- **Props**: `items: Array<{ id: string|number, label: string, status: 'pending'|'active'|'done' }>`, `title?: string`（默认 `'Tasks'`）, `onToggle?: (id) => void`, `className?: string`
+- **Vanilla 用法**: `<agent-task-checklist title="Release plan">`，数据经 `items` 属性注入；事件 `toggle`（detail 为 `{ id }`）
+- **特性**: 头部 done/total 进度计数；done 划线 + 绿勾，active 旋转 loader，pending 空方框；React 端不传 onToggle 时为纯展示态（无指针/键盘监听）。
 
 ## LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)

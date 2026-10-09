@@ -148,7 +148,22 @@
    - Vue 3: vue/EmptyState.vue
    - Vanilla: vanilla/EmptyState.js (custom element `<empty-state>`, event `action`)
 
-   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（41 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
+28. AgentStepTimeline: Multi-step agent execution trace with pending/running/done/error status icons, tinted connectors, and duration badges.
+   - React: react/AgentStepTimeline.tsx
+   - Vue 3: vue/AgentStepTimeline.vue
+   - Vanilla: vanilla/AgentStepTimeline.js (custom element `<agent-step-timeline>`, `steps` property)
+
+29. PromptTemplateGrid: Prompt template card grid with tag badges and hover Use action; clicking a card emits the full template including its prompt text.
+   - React: react/PromptTemplateGrid.tsx
+   - Vue 3: vue/PromptTemplateGrid.vue
+   - Vanilla: vanilla/PromptTemplateGrid.js (custom element `<prompt-template-grid>`, `templates` property, event `use`)
+
+30. AgentTaskChecklist: Agent task plan with done/total progress counter, status icons (done strike-through, active spinner), and optional toggle interaction.
+   - React: react/AgentTaskChecklist.tsx
+   - Vue 3: vue/AgentTaskChecklist.vue
+   - Vanilla: vanilla/AgentTaskChecklist.js (custom element `<agent-task-checklist>`, `items` property, event `toggle`)
+
+   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（44 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
 
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:

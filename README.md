@@ -48,6 +48,9 @@
 | **`FileAttachmentList`** | 输入框附件列表 | 类型图标（图片/代码/文件）、大小格式化、可移除 Chip |
 | **`StreamingProgressBar`** | 流式生成进度 | 确定/不确定双模式、状态三色（streaming/done/error）、`role="progressbar"` |
 | **`EmptyState`** | 空态占位页 | 图标、标题、描述、CTA 按钮，适配零结果/空列表场景 |
+| **`AgentStepTimeline`** | Agent 执行轨迹 | Pending/Running/Done/Error 四态图标、步骤连接线、耗时展示 |
+| **`PromptTemplateGrid`** | 提示词模板库 | 卡片网格、标签徽章、悬停 Use 操作、点击载入模板 |
+| **`AgentTaskChecklist`** | Agent 任务清单 | 进度计数、状态图标（含 active 旋转）、点击切换完成态 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -87,7 +90,10 @@ awesome-ui/
 │   ├── ToolApprovalCard.tsx
 │   ├── FileAttachmentList.tsx
 │   ├── StreamingProgressBar.tsx
-│   └── EmptyState.tsx
+│   ├── EmptyState.tsx
+│   ├── AgentStepTimeline.tsx
+│   ├── PromptTemplateGrid.tsx
+│   └── AgentTaskChecklist.tsx
 ├── vue/                       # Vue 3 (SFC) 单文件组件
 │   ├── UiIcon.vue           # 统一零依赖 SVG 图标
 │   ├── ChatPromptInput.vue
@@ -117,7 +123,10 @@ awesome-ui/
 │   ├── ToolApprovalCard.vue
 │   ├── FileAttachmentList.vue
 │   ├── StreamingProgressBar.vue
-│   └── EmptyState.vue
+│   ├── EmptyState.vue
+│   ├── AgentStepTimeline.vue
+│   ├── PromptTemplateGrid.vue
+│   └── AgentTaskChecklist.vue
 └── vanilla/                   # 原生 JS / Web Components 单文件
     ├── UiIcon.js            # uiIcon() SVG 工厂函数
     ├── ChatPromptInput.js
@@ -147,7 +156,10 @@ awesome-ui/
     ├── ToolApprovalCard.js
     ├── FileAttachmentList.js
     ├── StreamingProgressBar.js
-    └── EmptyState.js
+    ├── EmptyState.js
+    ├── AgentStepTimeline.js
+    ├── PromptTemplateGrid.js
+    └── AgentTaskChecklist.js
 ```
 
 ---
