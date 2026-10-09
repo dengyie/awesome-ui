@@ -133,7 +133,22 @@
    - Vue 3: vue/ToolApprovalCard.vue
    - Vanilla: vanilla/ToolApprovalCard.js (custom element `<tool-approval-card>`, events `approve`/`reject`, self-updating status)
 
-   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（38 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
+25. FileAttachmentList: Prompt attachment chips with per-type icons (image/code/file), B/KB/MB size formatting, and removable chips. Pairs with ChatPromptInput.
+   - React: react/FileAttachmentList.tsx
+   - Vue 3: vue/FileAttachmentList.vue
+   - Vanilla: vanilla/FileAttachmentList.js (custom element `<file-attachment-list>`, `files` property, event `remove`)
+
+26. StreamingProgressBar: Generation progress bar with determinate (clamped 0-100) and indeterminate pulse modes, streaming/done/error status colors, and role="progressbar".
+   - React: react/StreamingProgressBar.tsx
+   - Vue 3: vue/StreamingProgressBar.vue
+   - Vanilla: vanilla/StreamingProgressBar.js (custom element `<streaming-progress-bar>`)
+
+27. EmptyState: Zero-result placeholder with icon, title, description, and optional CTA action button. All text entity-escaped.
+   - React: react/EmptyState.tsx
+   - Vue 3: vue/EmptyState.vue
+   - Vanilla: vanilla/EmptyState.js (custom element `<empty-state>`, event `action`)
+
+   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（41 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
 
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:

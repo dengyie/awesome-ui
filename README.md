@@ -45,6 +45,9 @@
 | **`ChatSessionList`** | 会话历史侧边栏 | 当前会话高亮、悬停删除、空态展示、会话计数徽章 |
 | **`DiffViewer`** | AI 代码差异对比 | 增/删/上下文行高亮、+/- 统计、双列行号、文件名与语言徽章 |
 | **`ToolApprovalCard`** | Agent 工具审批 | Approve/Reject 按钮、高/低风险分级、参数预览、状态自更新 |
+| **`FileAttachmentList`** | 输入框附件列表 | 类型图标（图片/代码/文件）、大小格式化、可移除 Chip |
+| **`StreamingProgressBar`** | 流式生成进度 | 确定/不确定双模式、状态三色（streaming/done/error）、`role="progressbar"` |
+| **`EmptyState`** | 空态占位页 | 图标、标题、描述、CTA 按钮，适配零结果/空列表场景 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -81,7 +84,10 @@ awesome-ui/
 │   ├── ToastStack.tsx
 │   ├── ChatSessionList.tsx
 │   ├── DiffViewer.tsx
-│   └── ToolApprovalCard.tsx
+│   ├── ToolApprovalCard.tsx
+│   ├── FileAttachmentList.tsx
+│   ├── StreamingProgressBar.tsx
+│   └── EmptyState.tsx
 ├── vue/                       # Vue 3 (SFC) 单文件组件
 │   ├── UiIcon.vue           # 统一零依赖 SVG 图标
 │   ├── ChatPromptInput.vue
@@ -108,7 +114,10 @@ awesome-ui/
 │   ├── ToastStack.vue
 │   ├── ChatSessionList.vue
 │   ├── DiffViewer.vue
-│   └── ToolApprovalCard.vue
+│   ├── ToolApprovalCard.vue
+│   ├── FileAttachmentList.vue
+│   ├── StreamingProgressBar.vue
+│   └── EmptyState.vue
 └── vanilla/                   # 原生 JS / Web Components 单文件
     ├── UiIcon.js            # uiIcon() SVG 工厂函数
     ├── ChatPromptInput.js
@@ -135,7 +144,10 @@ awesome-ui/
     ├── ToastStack.js
     ├── ChatSessionList.js
     ├── DiffViewer.js
-    └── ToolApprovalCard.js
+    ├── ToolApprovalCard.js
+    ├── FileAttachmentList.js
+    ├── StreamingProgressBar.js
+    └── EmptyState.js
 ```
 
 ---

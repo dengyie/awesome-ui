@@ -45,7 +45,10 @@ awesome-ui/
 │   ├── ToastStack.tsx       # 全局通知栈（四类型/自动消除）
 │   ├── ChatSessionList.tsx  # 会话历史侧边栏（高亮/悬停删除）
 │   ├── DiffViewer.tsx       # 代码差异对比（增删行高亮/行号）
-│   └── ToolApprovalCard.tsx # Agent 工具审批卡片（Approve/Reject）
+│   ├── ToolApprovalCard.tsx # Agent 工具审批卡片（Approve/Reject）
+│   ├── FileAttachmentList.tsx # 输入框附件列表（类型图标/大小/移除）
+│   ├── StreamingProgressBar.tsx # 流式生成进度条（确定/不确定/三色）
+│   └── EmptyState.tsx       # 空态占位页（图标/标题/CTA）
 ├── vue/                     # Vue 3 (SFC) 单文件组件 (Vue 3 + Tailwind)
 │   ├── UiIcon.vue
 │   ├── ChatPromptInput.vue
@@ -72,7 +75,10 @@ awesome-ui/
 │   ├── ToastStack.vue
 │   ├── ChatSessionList.vue
 │   ├── DiffViewer.vue
-│   └── ToolApprovalCard.vue
+│   ├── ToolApprovalCard.vue
+│   ├── FileAttachmentList.vue
+│   ├── StreamingProgressBar.vue
+│   └── EmptyState.vue
 └── vanilla/                 # 原生 JS / Web Components 单文件 (HTML + Tailwind CDN)
     ├── UiIcon.js            # uiIcon() SVG 图标工厂
     ├── ChatPromptInput.js
@@ -99,7 +105,10 @@ awesome-ui/
     ├── ToastStack.js
     ├── ChatSessionList.js
     ├── DiffViewer.js
-    └── ToolApprovalCard.js
+    ├── ToolApprovalCard.js
+    ├── FileAttachmentList.js
+    ├── StreamingProgressBar.js
+    └── EmptyState.js
 ```
 
 ## 图标 API 速查
@@ -205,6 +214,21 @@ awesome-ui/
 - **Props**: `toolName: string`, `description?: string`, `args?: Record<string, unknown>|string`, `risk?: 'low'|'high'`, `status?: 'pending'|'approved'|'rejected'`, `onApprove?: () => void`, `onReject?: () => void`, `className?: string`
 - **Vanilla 用法**: `<tool-approval-card tool-name="shell_execute" risk="high">`，参数经 `args` 属性注入；事件 `approve` / `reject`，点击后卡片自动更新 status 并切换为结果徽章
 - **特性**: 高风险 amber 描边 + `high risk` 徽章 + lock 图标，低风险中性 tool 图标；参数 JSON 美化预览（max-height 滚动）；适合 Agent Human-in-the-loop 审批流。
+
+### 26. `FileAttachmentList` (输入框附件列表)
+- **Props**: `files: Array<{ id: string|number, name: string, size?: number, type?: string }>`, `onRemove?: (id) => void`, `className?: string`；React 端额外导出 `formatFileSize(bytes)`
+- **Vanilla 用法**: `<file-attachment-list>`，数据经 `files` 属性注入；事件 `remove`（detail 为 `{ id }`）
+- **特性**: 按 MIME/扩展名自动选图标（image→`image`，代码后缀→`code`，其他→`paperclip`），大小格式化 B/KB/MB，文件名截断 + 实体转义，空数组不渲染；与 ChatPromptInput 附件流配套。
+
+### 27. `StreamingProgressBar` (流式生成进度条)
+- **Props**: `value?: number|null`（0-100，省略/null 为不确定模式，自动钳位）, `label?: string`, `status?: 'streaming'|'done'|'error'`, `className?: string`
+- **Vanilla 用法**: `<streaming-progress-bar value="64" label="Generating" status="streaming">`，属性变更即时重渲染
+- **特性**: 不确定模式渲染 1/3 宽脉冲条，确定模式平滑过渡宽度；`role="progressbar"` + `aria-valuenow`（不确定时省略）；状态三色 indigo/emerald/rose。
+
+### 28. `EmptyState` (空态占位页)
+- **Props**: `icon?: UiIconName`（默认 `'sparkles'`）, `title: string`, `description?: string`, `actionLabel?: string`, `onAction?: () => void`, `className?: string`
+- **Vanilla 用法**: `<empty-state icon="search" title="..." action-label="New Chat">`，事件 `action`（CustomEvent）
+- **特性**: 居中图标块 + 标题 + 描述 + 可选 CTA 按钮；全量实体转义；适合零结果搜索、空会话列表、空白画布。
 
 ## LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)

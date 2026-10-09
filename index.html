@@ -48,12 +48,15 @@
   <script type="module" src="./vanilla/ChatSessionList.js"></script>
   <script type="module" src="./vanilla/DiffViewer.js"></script>
   <script type="module" src="./vanilla/ToolApprovalCard.js"></script>
+  <script type="module" src="./vanilla/FileAttachmentList.js"></script>
+  <script type="module" src="./vanilla/StreamingProgressBar.js"></script>
+  <script type="module" src="./vanilla/EmptyState.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.6.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.7.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -240,7 +243,7 @@
     </section>
 
     <!-- 15. ToolApprovalCard -->
-    <section class="space-y-3 pb-12">
+    <section class="space-y-3">
       <div class="flex items-center justify-between">
         <h2 class="text-base font-semibold text-zinc-200">15. ToolApprovalCard (Agent Permission Prompt)</h2>
         <span class="text-xs font-mono text-zinc-500">Approve / Reject, Risk Levels, Args Inspection</span>
@@ -248,6 +251,42 @@
       <div class="space-y-3">
         <tool-approval-card id="demo-approval-low" tool-name="web_search" description="Search the web for current documentation"></tool-approval-card>
         <tool-approval-card id="demo-approval-high" tool-name="shell_execute" description="Run a shell command on this machine" risk="high"></tool-approval-card>
+      </div>
+    </section>
+
+    <!-- 16. FileAttachmentList -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">16. FileAttachmentList (Prompt Attachments)</h2>
+        <span class="text-xs font-mono text-zinc-500">Type Icons, Size Formatting, Remove Chips</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <file-attachment-list id="demo-attachments"></file-attachment-list>
+      </div>
+    </section>
+
+    <!-- 17. StreamingProgressBar -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">17. StreamingProgressBar (Generation Progress)</h2>
+        <span class="text-xs font-mono text-zinc-500">Determinate / Indeterminate, Status Colors, A11y progressbar</span>
+      </div>
+      <div class="space-y-5 p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <streaming-progress-bar id="demo-progress" value="64" label="Generating response"></streaming-progress-bar>
+        <streaming-progress-bar label="Indexing workspace"></streaming-progress-bar>
+        <streaming-progress-bar value="100" label="Upload complete" status="done"></streaming-progress-bar>
+        <streaming-progress-bar value="37" label="Model request failed" status="error"></streaming-progress-bar>
+      </div>
+    </section>
+
+    <!-- 18. EmptyState -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">18. EmptyState (Zero-result Placeholder)</h2>
+        <span class="text-xs font-mono text-zinc-500">Icon, Title, Description, CTA Action</span>
+      </div>
+      <div class="rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <empty-state id="demo-empty" icon="search" title="No conversations found" description="Try a different keyword, or start a brand new chat." action-label="New Chat"></empty-state>
       </div>
     </section>
   </main>
@@ -431,6 +470,26 @@
         approvalHigh.args = { cmd: 'npm run build && npm publish', cwd: '/repo/awesome-ui' };
         approvalHigh.addEventListener('approve', () => toasts && toasts.push('shell_execute approved — running', 'warning'));
         approvalHigh.addEventListener('reject', () => toasts && toasts.push('shell_execute rejected', 'error'));
+      }
+
+      const attachments = document.getElementById('demo-attachments');
+      if (attachments) {
+        let files = [
+          { id: 1, name: 'architecture-diagram.png', size: 245760, type: 'image/png' },
+          { id: 2, name: 'useStream.ts', size: 2048 },
+          { id: 3, name: 'requirements.pdf', size: 1835008 },
+        ];
+        attachments.files = files;
+        attachments.addEventListener('remove', (e) => {
+          files = files.filter((f) => f.id !== e.detail.id);
+          attachments.files = files;
+          if (toasts) toasts.push('Attachment removed', 'info');
+        });
+      }
+
+      const demoEmpty = document.getElementById('demo-empty');
+      if (demoEmpty) {
+        demoEmpty.addEventListener('action', () => toasts && toasts.push('New chat created', 'success'));
       }
 
       const modelSel = document.getElementById('header-model-selector');
