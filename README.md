@@ -52,6 +52,11 @@
 | **`PromptTemplateGrid`** | 提示词模板库 | 卡片网格、标签徽章、悬停 Use 操作、点击载入模板 |
 | **`AgentTaskChecklist`** | Agent 任务清单 | 进度计数、状态图标（含 active 旋转）、点击切换完成态 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
+| **`FluidContourBackdrop`** | WebGL 等高线流体背景 | 2D/3D Simplex 噪声等高线着色器、光标引力变形、减弱动态与隐藏唤醒保活，触感大地美学 |
+| **`SpotlightGlareCard`** | 3D 光标镜面高光卡片 | 触感纸质与 OKLCH 调色、实时计算相对光标坐标并呈现径向反射光晕与微 3D 悬浮倾斜 |
+| **`AnimatedCounter`** | 平滑缓动指标计数器 | IntersectionObserver 视口触发展示、easeOutCubic 曲线平滑步进计数、前后缀与延时定制 |
+| **`PointerRipples`** | WebGL 多彩流体鼠标涟漪背景 | Navier-Stokes 流体仿真（平流/散度/压力泊松/涡度约束）、彩虹 HSV 色相旋转染料拖尾、3D 漫反射着色、coalesced 指针轨迹、空闲休眠与 `prefers-reduced-motion` 降级 |
+| **`LiquidGlass`** | 液体玻璃材质容器 | Apple 原生级 (macOS 26+ NSGlassEffectView) 真实背景折射取样、迎光微镜面倒角、光标焦散高光与无障碍实色降级 |
 
 ---
 
@@ -93,7 +98,12 @@ awesome-ui/
 │   ├── EmptyState.tsx
 │   ├── AgentStepTimeline.tsx
 │   ├── PromptTemplateGrid.tsx
-│   └── AgentTaskChecklist.tsx
+│   ├── AgentTaskChecklist.tsx
+│   ├── FluidContourBackdrop.tsx
+│   ├── SpotlightGlareCard.tsx
+│   ├── AnimatedCounter.tsx
+│   ├── PointerRipples.tsx
+│   └── LiquidGlass.tsx
 ├── vue/                       # Vue 3 (SFC) 单文件组件
 │   ├── UiIcon.vue           # 统一零依赖 SVG 图标
 │   ├── ChatPromptInput.vue
@@ -126,7 +136,12 @@ awesome-ui/
 │   ├── EmptyState.vue
 │   ├── AgentStepTimeline.vue
 │   ├── PromptTemplateGrid.vue
-│   └── AgentTaskChecklist.vue
+│   ├── AgentTaskChecklist.vue
+│   ├── FluidContourBackdrop.vue
+│   ├── SpotlightGlareCard.vue
+│   ├── AnimatedCounter.vue
+│   ├── PointerRipples.vue
+│   └── LiquidGlass.vue
 └── vanilla/                   # 原生 JS / Web Components 单文件
     ├── UiIcon.js            # uiIcon() SVG 工厂函数
     ├── ChatPromptInput.js
@@ -159,7 +174,12 @@ awesome-ui/
     ├── EmptyState.js
     ├── AgentStepTimeline.js
     ├── PromptTemplateGrid.js
-    └── AgentTaskChecklist.js
+    ├── AgentTaskChecklist.js
+    ├── FluidContourBackdrop.js
+    ├── SpotlightGlareCard.js
+    ├── AnimatedCounter.js
+    ├── PointerRipples.js
+    └── LiquidGlass.js
 ```
 
 ---
@@ -207,4 +227,33 @@ awesome-ui/
 >
 > - **折叠事件**：React `onToggleGroup(group, collapsed)` / Vue `@toggle` / Vanilla `group-toggle` CustomEvent 三端对齐；`statusStyle` 未知值回退 `pill`，图标加载失败隐藏、时钟隔离秒刷新不重渲染整树。
 >
-> - **测试**：仓库本身零依赖、即拷即用；回归在独立工程 `tests/`（`cd tests && npm install && npm test`，31 项：vanilla jsdom、React SSR、Vue SFC 编译/SSR；`npm run typecheck` 对 React 端 strict TS）。
+> - **测试**：仓库本身零依赖、即拷即用；回归在独立工程 `tests/`（`cd tests && npm install && npm test`，51 项：vanilla jsdom、React SSR、Vue SFC 编译/SSR；`npm run typecheck` 对 React 端 strict TS）。
+
+---
+
+## 🌈 PointerRipples（多彩流体鼠标涟漪背景）
+
+以 Navier-Stokes 流体动力学驱动的交互式多色背景：光标移动时注入彩虹染料并推动流体，产生漩涡、扩散与 3D 漫反射着色的涟漪拖尾（还原 `api.poxiao.vip/home` 的灵动光标特效）。
+
+```tsx
+// React
+import { PointerRipples } from "./react/PointerRipples";
+
+<PointerRipples curl={18} splatRadius={0.38} idleMs={5000} />
+```
+
+```vue
+<!-- Vue 3 -->
+<PointerRipples :curl="18" :splat-radius="0.38" :idle-ms="5000" />
+```
+
+```html
+<!-- Vanilla Web Component -->
+<script type="module" src="./vanilla/PointerRipples.js"></script>
+<pointer-ripples curl="18" splat-radius="0.38" idle-ms="5000"></pointer-ripples>
+```
+
+- **物理**：半拉格朗日平流、Jacobi 压力迭代、涡度约束（curl），WebGL2 半浮点 FBO ping-pong，WebGL1 自动降级
+- **配色**：HSV 色相随时间与拖尾步进自动旋转，`colorSaturation` / `colorValue` / `colorIntensity` 可调
+- **性能**：`getCoalescedEvents` 高刷轨迹合并、`idleMs` 空闲自动停帧、`visibilitychange` 休眠、DPR 上限 `maxPixelRatio`
+- **无障碍**：`prefers-reduced-motion` 下完全不启动仿真，保留静态背景

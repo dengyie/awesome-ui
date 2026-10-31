@@ -54,8 +54,15 @@
   <script type="module" src="./vanilla/AgentStepTimeline.js"></script>
   <script type="module" src="./vanilla/PromptTemplateGrid.js"></script>
   <script type="module" src="./vanilla/AgentTaskChecklist.js"></script>
+  <script type="module" src="./vanilla/FluidContourBackdrop.js"></script>
+  <script type="module" src="./vanilla/SpotlightGlareCard.js"></script>
+  <script type="module" src="./vanilla/AnimatedCounter.js"></script>
+  <script type="module" src="./vanilla/PointerRipples.js"></script>
+  <script type="module" src="./vanilla/LiquidGlass.js"></script>
 </head>
-<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
+<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased relative">
+  <!-- Interactive WebGL Fluid Ripples Background following pointer -->
+  <pointer-ripples opacity="0.58" curl="13" idle-ms="4000"></pointer-ripples>
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
@@ -162,7 +169,7 @@
     </section>
 
     <!-- 8. Artifact Canvas Trigger -->
-    <section class="space-y-3 pb-12">
+    <section class="space-y-3">
       <div class="flex items-center justify-between">
         <h2 class="text-base font-semibold text-zinc-200">8. ArtifactCanvas (Split-view Preview)</h2>
         <button onclick="document.querySelector('artifact-canvas').setAttribute('is-open', '')" class="px-3 py-1.5 bg-zinc-100 text-zinc-900 rounded-lg text-xs font-medium hover:bg-white transition-colors">
@@ -314,12 +321,86 @@
     </section>
 
     <!-- 21. AgentTaskChecklist -->
-    <section class="space-y-3 pb-12">
+    <section class="space-y-3 pb-8">
       <div class="flex items-center justify-between">
         <h2 class="text-base font-semibold text-zinc-200">21. AgentTaskChecklist (Agent Task Plan)</h2>
         <span class="text-xs font-mono text-zinc-500">Progress Counter, Status Icons, Toggle</span>
       </div>
       <agent-task-checklist id="demo-tasks" title="Release plan"></agent-task-checklist>
+    </section>
+
+    <!-- 22. PointerRipples & Tactile Demo -->
+    <section class="space-y-3 pb-8">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">22. PointerRipples (Interactive Fluid Ripple Backdrop)</h2>
+        <span class="text-xs text-zinc-400 font-mono">Move cursor across window to generate dye swirls</span>
+      </div>
+      <div class="p-6 rounded-2xl border border-zinc-800/80 bg-zinc-900/40 backdrop-blur space-y-3">
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          Navier-Stokes fluid dynamics simulation powered by WebGL: high-refresh cursor tracking via coalesced pointer events, continuous HSV rainbow hue shifting, Jacobi pressure Poisson solver, vorticity confinement, and 3D diffuse normal shading.
+        </p>
+        <div class="flex flex-wrap gap-4 pt-2">
+          <div class="flex items-center gap-2 text-xs font-mono text-zinc-300 bg-zinc-800/60 px-3 py-1.5 rounded-lg border border-zinc-700/60">
+            <span>Simulation:</span>
+            <span class="text-emerald-400">128 × 128 FBO</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono text-zinc-300 bg-zinc-800/60 px-3 py-1.5 rounded-lg border border-zinc-700/60">
+            <span>Dye Textures:</span>
+            <span class="text-amber-400">768 × 768 Ping-Pong</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono text-zinc-300 bg-zinc-800/60 px-3 py-1.5 rounded-lg border border-zinc-700/60">
+            <span>Target Frame:</span>
+            <animated-counter target="60" suffix=" FPS" duration="800"></animated-counter>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 23. LiquidGlass (Apple Native Liquid Glass Material) -->
+    <section class="space-y-4 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">23. LiquidGlass (Apple Liquid Glass Material)</h2>
+        <span class="text-xs text-zinc-400 font-mono">Backdrop Refraction, Specular Rim & Caustics</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Card Variant -->
+        <liquid-glass variant="card" intensity="regular" enable-tilt="true" glare-opacity="0.45">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono uppercase tracking-wider text-amber-500 font-semibold">Native Refraction</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/20 dark:bg-white/10 text-zinc-300 border border-white/20">macOS 26+ Spec</span>
+            </div>
+            <h3 class="text-lg font-bold">Liquid Glass Surface</h3>
+            <p class="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              True background sampling with <code class="font-mono text-amber-600 dark:text-amber-300">backdrop-blur-xl</code> and <code class="font-mono text-amber-600 dark:text-amber-300">saturate-180%</code>. Hover and tilt to observe dynamic caustics and specular rim reflection bending light across the background.
+            </p>
+            <div class="pt-2 flex items-center gap-3">
+              <button class="px-3.5 py-1.5 rounded-xl bg-zinc-900/80 hover:bg-zinc-900 text-white dark:bg-white/90 dark:hover:bg-white dark:text-zinc-900 text-xs font-medium transition-all shadow-sm">
+                Interact
+              </button>
+              <span class="text-xs text-zinc-500 font-mono">3D Tilt + Specular Bevel</span>
+            </div>
+          </div>
+        </liquid-glass>
+
+        <!-- Capsule Toolbar Variant -->
+        <div class="flex flex-col justify-center items-center gap-4 p-6 rounded-2xl border border-zinc-800/80 bg-zinc-900/20">
+          <span class="text-xs text-zinc-400 font-mono">Floating Toolbar Capsule (Fused Spacing)</span>
+          <liquid-glass variant="capsule" intensity="thick" enable-tilt="true" glare-opacity="0.4">
+            <div class="flex items-center gap-4 text-xs font-medium">
+              <span class="hover:text-amber-400 cursor-pointer transition-colors">✨ Generate</span>
+              <span class="w-px h-3 bg-zinc-400/40"></span>
+              <span class="hover:text-amber-400 cursor-pointer transition-colors">🔍 Inspect</span>
+              <span class="w-px h-3 bg-zinc-400/40"></span>
+              <span class="hover:text-amber-400 cursor-pointer transition-colors">⚡ Optimize</span>
+            </div>
+          </liquid-glass>
+          <p class="text-[11px] text-zinc-500 text-center max-w-xs">
+            Inspired by AppKit <code class="font-mono">NSGlassEffectContainerView</code> capsule fusion and zero-blackbox single-file architecture.
+          </p>
+        </div>
+      </div>
+    </section>
     </section>
   </main>
 

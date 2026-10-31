@@ -163,7 +163,32 @@
    - Vue 3: vue/AgentTaskChecklist.vue
    - Vanilla: vanilla/AgentTaskChecklist.js (custom element `<agent-task-checklist>`, `items` property, event `toggle`)
 
-   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（48 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
+31. FluidContourBackdrop: WebGL simplex noise contour backdrop with interactive pointer gravity, reduced-motion fallback, and low-power hibernation.
+   - React: react/FluidContourBackdrop.tsx
+   - Vue 3: vue/FluidContourBackdrop.vue
+   - Vanilla: vanilla/FluidContourBackdrop.js
+
+32. SpotlightGlareCard: 3D cursor-tracking mirror spotlight glare card with OKLCH tactile styling, radial overlay specular highlights, and subtle 3D tilt.
+   - React: react/SpotlightGlareCard.tsx
+   - Vue 3: vue/SpotlightGlareCard.vue
+   - Vanilla: vanilla/SpotlightGlareCard.js
+
+33. AnimatedCounter: Smooth easing metric number counter triggered on viewport intersection with easeOutCubic curve and prefixes/suffixes.
+   - React: react/AnimatedCounter.tsx
+   - Vue 3: vue/AnimatedCounter.vue
+   - Vanilla: vanilla/AnimatedCounter.js
+
+34. PointerRipples: WebGL Navier-Stokes fluid dynamics multi-color ripple backdrop following mouse movement with rainbow HSV hue cycle, vorticity swirls, and 3D diffuse normal shading.
+   - React: react/PointerRipples.tsx
+   - Vue 3: vue/PointerRipples.vue
+   - Vanilla: vanilla/PointerRipples.js
+
+35. LiquidGlass: Apple-grade Liquid Glass material container (macOS 26+ NSGlassEffectView inspired) with backdrop blur, specular rim reflection, caustics sheen, capsule/card/sidebar variants, and reduced-transparency fallback.
+   - React: react/LiquidGlass.tsx
+   - Vue 3: vue/LiquidGlass.vue
+   - Vanilla: vanilla/LiquidGlass.js
+
+   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（51 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
 
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:

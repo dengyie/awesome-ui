@@ -51,7 +51,12 @@ awesome-ui/
 │   ├── EmptyState.tsx       # 空态占位页（图标/标题/CTA）
 │   ├── AgentStepTimeline.tsx # Agent 多步执行轨迹（四态/连接线）
 │   ├── PromptTemplateGrid.tsx # 提示词模板卡片网格（标签/Use）
-│   └── AgentTaskChecklist.tsx # Agent 任务清单（进度/切换）
+│   ├── AgentTaskChecklist.tsx # Agent 任务清单（进度/切换）
+│   ├── FluidContourBackdrop.tsx # WebGL 等高线流体背景
+│   ├── SpotlightGlareCard.tsx # 3D 光标镜面高光反射卡片
+│   ├── AnimatedCounter.tsx  # 平滑缓动指标计数器
+│   ├── PointerRipples.tsx   # WebGL 多彩流体鼠标涟漪背景
+│   └── LiquidGlass.tsx      # Apple 原生级液体玻璃材质容器（macOS 26+ NSGlassEffectView 规范）
 ├── vue/                     # Vue 3 (SFC) 单文件组件 (Vue 3 + Tailwind)
 │   ├── UiIcon.vue
 │   ├── ChatPromptInput.vue
@@ -84,7 +89,12 @@ awesome-ui/
 │   ├── EmptyState.vue
 │   ├── AgentStepTimeline.vue
 │   ├── PromptTemplateGrid.vue
-│   └── AgentTaskChecklist.vue
+│   ├── AgentTaskChecklist.vue
+│   ├── FluidContourBackdrop.vue
+│   ├── SpotlightGlareCard.vue
+│   ├── AnimatedCounter.vue
+│   ├── PointerRipples.vue
+│   └── LiquidGlass.vue
 └── vanilla/                 # 原生 JS / Web Components 单文件 (HTML + Tailwind CDN)
     ├── UiIcon.js            # uiIcon() SVG 图标工厂
     ├── ChatPromptInput.js
@@ -117,7 +127,12 @@ awesome-ui/
     ├── EmptyState.js
     ├── AgentStepTimeline.js
     ├── PromptTemplateGrid.js
-    └── AgentTaskChecklist.js
+    ├── AgentTaskChecklist.js
+    ├── FluidContourBackdrop.js
+    ├── SpotlightGlareCard.js
+    ├── AnimatedCounter.js
+    ├── PointerRipples.js
+    └── LiquidGlass.js
 ```
 
 ## 图标 API 速查
@@ -253,6 +268,36 @@ awesome-ui/
 - **Props**: `items: Array<{ id: string|number, label: string, status: 'pending'|'active'|'done' }>`, `title?: string`（默认 `'Tasks'`）, `onToggle?: (id) => void`, `className?: string`
 - **Vanilla 用法**: `<agent-task-checklist title="Release plan">`，数据经 `items` 属性注入；事件 `toggle`（detail 为 `{ id }`）
 - **特性**: 头部 done/total 进度计数；done 划线 + 绿勾，active 旋转 loader，pending 空方框；React 端不传 onToggle 时为纯展示态（无指针/键盘监听）；Vue / Vanilla 端始终渲染交互样式，无监听器时点击为空操作。
+
+### 13. `FluidContourBackdrop` (WebGL 等高线流体背景)
+- **场景**: 具有顶级触感审美的大地纸质 / AI 探索 / 科技展台等高线流体动态背景。
+- **特性**: 纯原生 WebGL 着色器，集成 2D/3D Simplex 噪声算法与硬件微分抗锯齿；支持随指针/光标平滑引力形变；自动监听 `prefers-reduced-motion` 静态降级；页面后台失焦时休眠 RAF 保活节电。
+- **Props (React / Vue)**: `inkColor?: [number, number, number]` (默认 `[0.17, 0.23, 0.19]`), `paperColor?: [number, number, number]` (默认 `[0.98, 0.98, 0.96]`), `speed?: number` (默认 `0.035`), `interactive?: boolean` (默认 `true`), `className?: string`
+- **Vanilla 用法**: `<fluid-contour-backdrop speed="0.035" interactive="true"></fluid-contour-backdrop>`
+
+### 14. `SpotlightGlareCard` (3D 光标镜面高光反射卡片)
+- **场景**: 聚合目录网格、产品卡片、定价表格、AI 工具箱卡片。
+- **特性**: 动态追踪光标相对卡片坐标，注入 `--gx`/`--gy` 产生高拟真径向光晕（`radial-gradient` + `overlay` 混合模式）；可选开启三维微倾斜（`enableTilt` + `maxTilt`）；纸质 tactile 投影与 hover elevation 浮起动效。
+- **Props (React / Vue)**: `glareOpacity?: number` (默认 `0.45`), `glareRadius?: number` (默认 `55`), `enableTilt?: boolean` (默认 `false`), `maxTilt?: number` (默认 `5`), `className?: string`, `onClick?: (e) => void`
+- **Vanilla 用法**: `<spotlight-glare-card enable-tilt="true" glare-opacity="0.5">...</spotlight-glare-card>`
+
+### 15. `AnimatedCounter` (平滑缓动指标计数器)
+- **场景**: 官网首页数据展示条、转化率指标、产品特性数值累加器。
+- **特性**: 基于 `IntersectionObserver` 在元素进入视口 20% 时触发展示；采用 `easeOutCubic` 曲线从起始值平滑计数至目标值；支持前后缀（如 `+`, `%`, `k`, `$`, `¥`）与独立启动延时。
+- **Props (React / Vue)**: `target: number` (必填), `start?: number` (默认 `0`), `duration?: number` (默认 `1500`), `delay?: number` (默认 `0`), `suffix?: string`, `prefix?: string`, `className?: string`
+- **Vanilla 用法**: `<animated-counter target="270" suffix="+" duration="1500"></animated-counter>`
+
+### 16. `PointerRipples` (WebGL 多彩流体鼠标涟漪背景)
+- **场景**: 需要光标跟随的灵动多色流体背景 —— AI 产品首页、Landing Page、活动大屏（还原 `api.poxiao.vip/home` 的鼠标涟漪特效）。
+- **特性**: Navier-Stokes 流体仿真（半拉格朗日平流 / 散度 / Jacobi 压力泊松求解 / 涡度约束）；HSV 彩虹色相随时间与拖尾步进自动旋转；染料密度差分法线 + 漫反射着色与 Gamma 校正；`getCoalescedEvents` 高刷指针轨迹插值；`idleMs` 空闲自动停帧与 `visibilitychange` 休眠；WebGL2 半浮点 FBO，WebGL1 自动回退；`prefers-reduced-motion` 不启动仿真。
+- **Props (React / Vue)**: `simResolution?: number` (默认 `128`), `dyeResolution?: number` (默认 `768`), `densityDissipation?: number` (默认 `1.2`), `velocityDissipation?: number` (默认 `0.7`), `pressure?: number` (默认 `0.8`), `pressureIterations?: number` (默认 `20`), `curl?: number` (默认 `18`), `splatRadius?: number` (默认 `0.38`), `splatForce?: number` (默认 `5200`), `shading?: boolean` (默认 `true`), `colorSpeed?: number` (默认 `0.055`), `colorStep?: number` (默认 `0.012`), `colorSaturation?: number` (默认 `0.86`), `colorValue?: number` (默认 `1.0`), `colorIntensity?: number` (默认 `0.38`), `idleMs?: number` (默认 `5000`), `maxPixelRatio?: number` (默认 `1.5`), `className?: string`, `opacity?: number` (默认 `0.9`)
+- **Vanilla 用法**: `<pointer-ripples curl="18" splat-radius="0.38" idle-ms="5000" opacity="0.9"></pointer-ripples>`（HTML 属性为 kebab-case，数字属性同 Props）
+
+### 17. `LiquidGlass` (Apple 原生级液体玻璃材质组件)
+- **场景**: 现代化桌面/Web 应用导航侧栏 (Sidebar)、悬浮胶囊工具条 (Capsule Dock)、卡片浮层 (Card/HUD) 与高质感面板。
+- **特性**: 深度研习 Apple 原生 Liquid Glass（macOS 26+ `NSGlassEffectView` 与 `NSGlassEffectContainerView` 胶囊融合几何哲学）；采用 `backdrop-blur-xl` + `backdrop-saturate-[180%]` 真实取样背景与高透光折射；微镜面边缘高光（Specular Rim Light）与双层内阴影微倒角；支持指针跟随的光学焦散微光动效（Caustics Sheen）；三维视角微倾斜（`enableTilt`）；三端原生降级与无障碍处理（`prefers-reduced-transparency` / `prefers-reduced-motion` 自动降级为高对比雅致实色表面）。
+- **Props (React / Vue)**: `variant?: 'capsule' | 'card' | 'sidebar'` (默认 `'card'`), `intensity?: 'light' | 'regular' | 'thick'` (默认 `'regular'`), `interactive?: boolean` (默认 `true`), `enableTilt?: boolean` (默认 `false`), `maxTilt?: number` (默认 `4`), `glareOpacity?: number` (默认 `0.35`), `className?: string`, `onClick?: (e) => void`
+- **Vanilla 用法**: `<liquid-glass variant="capsule" intensity="regular" enable-tilt="true">...</liquid-glass>` (属性包括 `variant`, `intensity`, `interactive`, `enable-tilt`, `max-tilt`, `glare-opacity`)
 
 ## LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)

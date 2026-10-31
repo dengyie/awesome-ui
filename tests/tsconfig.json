@@ -29,6 +29,11 @@
     }
   },
   "include": [
-    "../react/HomepageDashboard.tsx"
+    "../react/HomepageDashboard.tsx",
+    "../react/AnimatedCounter.tsx",
+    "../react/SpotlightGlareCard.tsx",
+    "../react/FluidContourBackdrop.tsx",
+    "../react/PointerRipples.tsx",
+    "../react/LiquidGlass.tsx"
   ]
 }
