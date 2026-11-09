@@ -1,259 +1,211 @@
-# awesome-ui
+<!-- markdownlint-disable-file MD033 MD045 -->
+<div align="center">
 
-> **专为 AI 时代 / LLM 代码生成打造的精选前端原子组件库**  
-> 支持 **React (TSX)** / **Vue 3 (SFC)** / **Vanilla (原生 JS/Web Component)** 三端，Tailwind CSS 美学，单文件即拷即用，零黑盒依赖。
+# AwesomeUI
 
----
+**Curated Atomic UI Component Library for the AI Era, Supporting React, Vue 3, and Vanilla Web Components with Zero Black-Box Dependencies**
 
-## 🎯 为什么需要 awesome-ui？
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE)
+[![Frameworks](https://img.shields.io/badge/Frameworks-React_%7C_Vue_3_%7C_Vanilla-61DAFB.svg?style=flat-square)](react/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC.svg?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Components](https://img.shields.io/badge/Components-37+_Production_Ready-blue.svg?style=flat-square)](vanilla/)
+[![Architecture](https://img.shields.io/badge/Architecture-Single--File_Copy--Paste-orange.svg?style=flat-square)](./)
+[![Tests](https://img.shields.io/badge/tests-51%20passed-brightgreen.svg?style=flat-square)]()
 
-传统组件库（AntD、Element、MUI）是为传统 CRUD 管理台设计的。当 AI（Cursor、v0、Claude Code、Codex）尝试生成现代 AI 网页（如类似 ChatGPT、Claude、Perplexity、v0 的交互）时，往往需要耗费大量 Token 反复调试流式打字、思维链折叠、自动跟底、代码分屏预览等复杂状态。
+[English](./README.md) · [简体中文](./README.zh-CN.md) · [Why AwesomeUI](#why-awesomeui) · [Component Catalog](#component-catalog) · [Architecture](#system-architecture--specifications) · [Quick Start](#quick-start) · [Testing](#quality-assurance--testing)
 
-**awesome-ui 的核心价值**：
-- **AI 友好（AI-to-AI First）**：组件全部为扁平 Props 设计，无深层嵌套对象，AI 生成命中率 100%。
-- **单文件 Copy-Paste**：无 npm 私有黑盒，AI 直接按需取用单文件复制进用户项目。
-- **全技术栈对齐**：React、Vue 3、Vanilla 三套代码的 API 与 Tailwind 样式 100% 对齐。
+<br>
 
----
+<p align="center">
+  <b>Terminates token-burning UI debugging, tangled commercial design system bloat, and mismatched component APIs across AI chat applications.</b><br>
+  Engineered strictly as single-file copy-paste components with 100% aligned props and Tailwind CSS aesthetics across React (TSX), Vue 3 (SFC), and Vanilla Web Components.<br>
+  Provides 37+ production-grade primitives covering streaming markdown with breathing cursors, collapsible thinking chain inspectors, Agent tool approval drawers, and WebGL fluid backdrops.
+</p>
 
-## 📦 组件列表 (精选 AI 场景与基础 UI)
-
-| 组件 | 对应场景 | 核心特性 |
-|---|---|---|
-| **`ChatPromptInput`** | 多模态输入框 | 高度自适应、快捷键发送/换行、附件/图片列表、生成中停止切换 |
-| **`StreamMarkdown`** | 流式渲染器 | 高性能局部渲染、打字呼吸光标、代码块一键 Copy、语法高亮 |
-| **`ThinkingBlock`** | 深度思考面板 | R1/o1 推理模型思维链折叠、流光动效、耗时展示 |
-| **`ToolCallBadge`** | Agent 工具调用 | 工具执行状态（Running/Success/Error）、入参/返回值一键抽屉折叠 |
-| **`AutoScrollAnchor`** | 智能跟底锚点 | 流式输出时自动平滑跟滚，用户手动回滚时暂停并浮现一键触底按钮 |
-| **`ArtifactCanvas`** | 分屏预览画布 | 类似 Claude Artifacts，代码与 HTML/SVG 即时沙盒渲染分屏切换 |
-| **`SourcesCitation`** | RAG 引文来源 | 对标 Perplexity 搜索来源网格卡片，展示域名、序号、标题与摘要 |
-| **`MessageActionToolbar`** | 消息底部操作条 | 复制回答、重新生成、赞/踩反馈、多分支历史版本翻页器 |
-| **`PromptChips`** | 智能建议追问 | 气泡推荐问题标签，一键填入或发送 |
-| **`RoadmapTimeline`** | 学习路径图谱 | 纸质手账/工坊地图风格阶段进度条、菱形地标、完成态与锁态 |
-| **`KnowledgeDrawer`** | 知识节点抽屉 | 阶段色系侧边抽屉、前置依赖/分支徽章、核心认知与行动 CTA |
-| **`ThemeToggle`** | 三态主题切换 | Auto/Light/Dark 切换，时间与系统色系自适应，防闪烁与记忆 |
-| **`StatusIndicator`** | 状态指示徽章 | 节点与服务状态 (Online/Connecting/Error) 呼吸光晕与延迟指示 |
-| **`AudioWaveVisualizer`** | 语音交互波形 | 实时音频/语音交互波形跳动与呼吸动效 |
-| **`HomepageDashboard`** | 仪表盘/个性首页 | 对标 gethomepage/homepage：分组服务卡片、折叠、即时搜索、实时时钟、状态点/胶囊、页脚版本 |
-| **`ContextUsageBadge`** | 上下文与 Token 仪表 | Context Window 百分比进度条、分级色彩预警（70%/90%）、Prompt/History/Active 细分分布浮层 |
-| **`ModelSelector`** | 模型切换选择器 | 即时搜索过滤、Provider 与 Context 长度徽章、多模型平滑切换抽屉 |
-| **`CodeBlock`** | 独立代码块 | 语言徽章、文件名、一键复制反馈、行号模式、最大高度滚动 |
-| **`TypingIndicator`** | AI 输入中指示 | 三点弹跳/脉冲双变体、sm/md/lg 三档尺寸、`role="status"` 无障碍 |
-| **`ChatMessageRow`** | 会话消息气泡 | User/Assistant/System 三角色、头像/初始图标、名称与时间戳、气泡对齐 |
-| **`CommandPalette`** | Cmd+K 命令面板 | 模糊搜索、分组标题、键盘上下导航/Enter 选中/Esc 关闭、快捷键提示 |
-| **`ToastStack`** | 全局通知栈 | Success/Error/Warning/Info 四类型、自动消除、手动关闭、`aria-live` 播报 |
-| **`ChatSessionList`** | 会话历史侧边栏 | 当前会话高亮、悬停删除、空态展示、会话计数徽章 |
-| **`DiffViewer`** | AI 代码差异对比 | 增/删/上下文行高亮、+/- 统计、双列行号、文件名与语言徽章 |
-| **`ToolApprovalCard`** | Agent 工具审批 | Approve/Reject 按钮、高/低风险分级、参数预览、状态自更新 |
-| **`FileAttachmentList`** | 输入框附件列表 | 类型图标（图片/代码/文件）、大小格式化、可移除 Chip |
-| **`StreamingProgressBar`** | 流式生成进度 | 确定/不确定双模式、状态三色（streaming/done/error）、`role="progressbar"` |
-| **`EmptyState`** | 空态占位页 | 图标、标题、描述、CTA 按钮，适配零结果/空列表场景 |
-| **`AgentStepTimeline`** | Agent 执行轨迹 | Pending/Running/Done/Error 四态图标、步骤连接线、耗时展示 |
-| **`PromptTemplateGrid`** | 提示词模板库 | 卡片网格、标签徽章、悬停 Use 操作、点击载入模板 |
-| **`AgentTaskChecklist`** | Agent 任务清单 | 进度计数、状态图标（含 active 旋转）、点击切换完成态 |
-| **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
-| **`FluidContourBackdrop`** | WebGL 等高线流体背景 | 2D/3D Simplex 噪声等高线着色器、光标引力变形、减弱动态与隐藏唤醒保活，触感大地美学 |
-| **`SpotlightGlareCard`** | 3D 光标镜面高光卡片 | 触感纸质与 OKLCH 调色、实时计算相对光标坐标并呈现径向反射光晕与微 3D 悬浮倾斜 |
-| **`AnimatedCounter`** | 平滑缓动指标计数器 | IntersectionObserver 视口触发展示、easeOutCubic 曲线平滑步进计数、前后缀与延时定制 |
-| **`PointerRipples`** | WebGL 多彩流体鼠标涟漪背景 | Navier-Stokes 流体仿真（平流/散度/压力泊松/涡度约束）、彩虹 HSV 色相旋转染料拖尾、3D 漫反射着色、coalesced 指针轨迹、空闲休眠与 `prefers-reduced-motion` 降级 |
-| **`LiquidGlass`** | 液体玻璃材质容器 | Apple 原生级 (macOS 26+ NSGlassEffectView) 真实背景折射取样、迎光微镜面倒角、光标焦散高光与无障碍实色降级 |
+</div>
 
 ---
 
-## 🚀 目录结构
+## Why AwesomeUI?
+
+Conventional UI component libraries (Ant Design, Element Plus, Material-UI) were architected for traditional database-driven CRUD dashboards. When modern AI assistants (Cursor, Claude Code, Codex, v0) generate conversational interfaces and AI-native applications (like ChatGPT, Claude, Perplexity, or v0), developers waste massive token quotas debugging streaming typography, collapsible reasoning chains, scroll-lock anchors, and split-screen artifact canvases. Heavy external npm dependencies frequently break builds or introduce security vulnerabilities.
+
+**Core Architectural Tenets**:
+- **AI-to-AI First**: Every component exposes a flat prop signature without deep nested objects, ensuring near-100% generation accuracy by LLM coders.
+- **Single-File Copy-Paste**: Zero private npm packages or bloated runtimes. Copy a single file directly into your application directory and run immediately.
+- **Complete Tri-Framework Alignment**: React (TSX), Vue 3 (SFC), and Vanilla Web Components maintain strict 1:1 parity in prop names, emitted events, and Tailwind CSS class styling.
+- **Accessibility & Tactile Ergonomics**: Comprehensive WAI-ARIA compliance (`role="status"`, `aria-live`, full keyboard navigation) with automatic reduced-motion adaptations and tactile physics.
+
+---
+
+## Component Catalog
+
+| Component | Target Interaction | Technical Highlights & Value |
+| :--- | :--- | :--- |
+| **`ChatPromptInput`** | Multimodal Input Area | Auto-expanding textarea, shortcut submission/newlines, attachment chips, abort generation toggle. |
+| **`StreamMarkdown`** | Streaming Markdown | High-performance chunk rendering, breathing typing cursor, 1-click code copying, syntax highlighting. |
+| **`ThinkingBlock`** | Deep Reasoning Inspector | Collapsible chain-of-thought for R1/o1 models, shimmer animations, and duration counters. |
+| **`ToolCallBadge`** | Agent Tool Invocation | Real-time status indicators (Running/Success/Error) with collapsible payload and result inspection drawers. |
+| **`AutoScrollAnchor`** | Smart Scroll Anchor | Smooth auto-scrolling during stream generation; pauses when user scrolls upward and displays quick-jump CTA. |
+| **`ArtifactCanvas`** | Split-Screen Preview | Claude-style artifact pane with side-by-side tabs for live HTML/SVG sandbox execution and source code. |
+| **`SourcesCitation`** | RAG Source References | Perplexity-grade citation grid displaying favicon domains, sequence indices, titles, and snippets. |
+| **`MessageActionToolbar`**| Message Footer Actions | Copy responses, regenerate completions, thumbs up/down feedback, and multi-branch history navigators. |
+| **`PromptChips`** | Suggested Questions | Bubble recommendation chips for instant 1-click query population and dispatch. |
+| **`RoadmapTimeline`** | Progress Roadmap | Tactile map-style milestone tracker with diamond landmarks, lock states, and completion states. |
+| **`KnowledgeDrawer`** | Knowledge Node Drawer | Color-coded slide-over drawer showing prerequisites, child branches, core insights, and call-to-actions. |
+| **`ThemeToggle`** | Tri-State Theme Switcher| Auto/Light/Dark switching with system clock and OS preference synchronization, eliminating flicker. |
+| **`StatusIndicator`** | Node & Service Status | Real-time service status badge (Online/Connecting/Error) with breathing halos and latency metrics. |
+| **`AudioWaveVisualizer`** | Voice Interaction Wave | Dynamic voice activity visualizer with reactive frequency bars and breathing transitions. |
+| **`HomepageDashboard`** | Personal Service Portal | Grouped service cards, collapsible sections, instant filtering, live clock, and status pills. |
+| **`ContextUsageBadge`** | Context Window Gauge | Visual context capacity progress bar with tiered alerts (70%/90%) and token breakdown tooltips. |
+| **`ModelSelector`** | Model Switching Modal | Fast search filter, provider badges, context window length markers, and smooth drawer transitions. |
+| **`CodeBlock`** | Standalone Code Block | Language badge, filename header, copy feedback, line-number toggle, and max-height scrolling. |
+| **`TypingIndicator`** | AI Typing State | Staggered bouncing or pulsing 3-dot animation, sm/md/lg sizing, and accessible `role="status"` tags. |
+| **`ChatMessageRow`** | Chat Message Bubble | User/Assistant/System role variants, avatars/monograms, timestamps, and responsive alignments. |
+| **`CommandPalette`** | Cmd+K Command Palette | Fuzzy search filtering, grouped categories, arrow-key navigation, Enter selection, and Escape dismissal. |
+| **`ToastStack`** | Notification Stack | Success/Error/Warning/Info alerts with auto-dismiss timers, manual close, and `aria-live` announcements. |
+| **`ChatSessionList`** | Chat History Sidebar | Active session highlighting, hover deletion, empty-state placeholder, and session counter chips. |
+| **`DiffViewer`** | AI Code Diff Review | Line-by-line added/removed/context coloring, delta tallies, dual-column numbers, and file metadata. |
+| **`ToolApprovalCard`** | Agent Action Approval | Explicit Approve/Reject controls, risk classification badges, parameter review, and state persistence. |
+| **`FileAttachmentList`** | Input Attachment Strip | Type icons (image/code/doc), size formatting, and removable chips. |
+| **`StreamingProgressBar`**| Generation Progress | Determinate/indeterminate dual modes, status colors (streaming/done/error), and `role="progressbar"`. |
+| **`EmptyState`** | Empty State Placeholder | Clean illustration, title, description, and action CTA for zero-result scenarios. |
+| **`AgentStepTimeline`** | Agent Execution Trace | Pending/Running/Done/Error indicators, path connectors, and step latency measurements. |
+| **`PromptTemplateGrid`** | Prompt Library Grid | Card grid with category tags, hover preview, and 1-click template insertion. |
+| **`AgentTaskChecklist`** | Agent Task Checklist | Step completion counter, interactive status icons, and keyboard-driven toggling. |
+| **`UiIcon`** | Unified Icon System | Zero-dependency SVG icons with identical APIs across React, Vue, and Vanilla. |
+| **`FluidContourBackdrop`**| WebGL Contour Backdrop | 2D/3D Simplex noise contour shader with cursor gravity distortion and reduced-motion fallbacks. |
+| **`SpotlightGlareCard`** | 3D Cursor Glare Card | Tactile paper card computing cursor coordinates for realistic radial specular glare and 3D tilts. |
+| **`AnimatedCounter`** | Smooth Metric Counter | IntersectionObserver-triggered easing counter with prefix/suffix formatting and custom durations. |
+| **`PointerRipples`** | WebGL Fluid Ripples | Navier-Stokes fluid simulation with rainbow dye trails, 3D diffuse lighting, and idle sleep. |
+| **`LiquidGlass`** | Liquid Glass Container | Native macOS-grade backdrop refraction, micro-bevel highlights, and high-contrast solid fallbacks. |
+
+---
+
+## System Architecture & Specifications
 
 ```text
-awesome-ui/
-├── index.html                 # 交互式 Gallery 体验页面
-├── SKILL.md                   # Agent 检索与规范文档
-├── react/                     # React (TSX) 单文件组件
-│   ├── UiIcon.tsx           # 统一零依赖 SVG 图标与命名图标
-│   ├── ChatPromptInput.tsx
-│   ├── StreamMarkdown.tsx
-│   ├── ThinkingBlock.tsx
-│   ├── ToolCallBadge.tsx
-│   ├── AutoScrollAnchor.tsx
-│   ├── ArtifactCanvas.tsx
-│   ├── MessageActionToolbar.tsx
-│   ├── PromptChips.tsx
-│   ├── SourcesCitation.tsx
-│   ├── StatusIndicator.tsx
-│   ├── ThemeToggle.tsx
-│   ├── AudioWaveVisualizer.tsx
-│   ├── RoadmapTimeline.tsx
-│   ├── KnowledgeDrawer.tsx
-│   ├── HomepageDashboard.tsx
-│   ├── ContextUsageBadge.tsx
-│   ├── ModelSelector.tsx
-│   ├── CodeBlock.tsx
-│   ├── TypingIndicator.tsx
-│   ├── ChatMessageRow.tsx
-│   ├── CommandPalette.tsx
-│   ├── ToastStack.tsx
-│   ├── ChatSessionList.tsx
-│   ├── DiffViewer.tsx
-│   ├── ToolApprovalCard.tsx
-│   ├── FileAttachmentList.tsx
-│   ├── StreamingProgressBar.tsx
-│   ├── EmptyState.tsx
-│   ├── AgentStepTimeline.tsx
-│   ├── PromptTemplateGrid.tsx
-│   ├── AgentTaskChecklist.tsx
-│   ├── FluidContourBackdrop.tsx
-│   ├── SpotlightGlareCard.tsx
-│   ├── AnimatedCounter.tsx
-│   ├── PointerRipples.tsx
-│   └── LiquidGlass.tsx
-├── vue/                       # Vue 3 (SFC) 单文件组件
-│   ├── UiIcon.vue           # 统一零依赖 SVG 图标
-│   ├── ChatPromptInput.vue
-│   ├── StreamMarkdown.vue
-│   ├── ThinkingBlock.vue
-│   ├── ToolCallBadge.vue
-│   ├── AutoScrollAnchor.vue
-│   ├── ArtifactCanvas.vue
-│   ├── MessageActionToolbar.vue
-│   ├── PromptChips.vue
-│   ├── SourcesCitation.vue
-│   ├── StatusIndicator.vue
-│   ├── ThemeToggle.vue
-│   ├── AudioWaveVisualizer.vue
-│   ├── RoadmapTimeline.vue
-│   ├── KnowledgeDrawer.vue
-│   ├── HomepageDashboard.vue
-│   ├── ContextUsageBadge.vue
-│   ├── ModelSelector.vue
-│   ├── CodeBlock.vue
-│   ├── TypingIndicator.vue
-│   ├── ChatMessageRow.vue
-│   ├── CommandPalette.vue
-│   ├── ToastStack.vue
-│   ├── ChatSessionList.vue
-│   ├── DiffViewer.vue
-│   ├── ToolApprovalCard.vue
-│   ├── FileAttachmentList.vue
-│   ├── StreamingProgressBar.vue
-│   ├── EmptyState.vue
-│   ├── AgentStepTimeline.vue
-│   ├── PromptTemplateGrid.vue
-│   ├── AgentTaskChecklist.vue
-│   ├── FluidContourBackdrop.vue
-│   ├── SpotlightGlareCard.vue
-│   ├── AnimatedCounter.vue
-│   ├── PointerRipples.vue
-│   └── LiquidGlass.vue
-└── vanilla/                   # 原生 JS / Web Components 单文件
-    ├── UiIcon.js            # uiIcon() SVG 工厂函数
-    ├── ChatPromptInput.js
-    ├── StreamMarkdown.js
-    ├── ThinkingBlock.js
-    ├── ToolCallBadge.js
-    ├── AutoScrollAnchor.js
-    ├── ArtifactCanvas.js
-    ├── MessageActionToolbar.js
-    ├── PromptChips.js
-    ├── SourcesCitation.js
-    ├── StatusIndicator.js
-    ├── ThemeToggle.js
-    ├── AudioWaveVisualizer.js
-    ├── RoadmapTimeline.js
-    ├── KnowledgeDrawer.js
-    ├── HomepageDashboard.js
-    ├── ContextUsageBadge.js
-    ├── ModelSelector.js
-    ├── CodeBlock.js
-    ├── TypingIndicator.js
-    ├── ChatMessageRow.js
-    ├── CommandPalette.js
-    ├── ToastStack.js
-    ├── ChatSessionList.js
-    ├── DiffViewer.js
-    ├── ToolApprovalCard.js
-    ├── FileAttachmentList.js
-    ├── StreamingProgressBar.js
-    ├── EmptyState.js
-    ├── AgentStepTimeline.js
-    ├── PromptTemplateGrid.js
-    ├── AgentTaskChecklist.js
-    ├── FluidContourBackdrop.js
-    ├── SpotlightGlareCard.js
-    ├── AnimatedCounter.js
-    ├── PointerRipples.js
-    └── LiquidGlass.js
+┌────────────────────────────────────────────────────────────────────────┐
+│                        AwesomeUI Design System                         │
+│           Tailwind CSS v4 Utility Classes · WAI-ARIA Specifications    │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│               Unified Props / Events / Slots Interface Protocol        │
+│  ┌───────────────────────┬───────────────────────┬──────────────────┐  │
+│  │ React (TSX)           │ Vue 3 (SFC)           │ Vanilla          │  │
+│  │ • Functional component│ • <script setup lang> │ • Web Components │  │
+│  │ • TypeScript generics │ • defineProps types   │ • Custom elements│  │
+│  │ • Zero bundled deps   │ • Zero bundled deps   │ • Zero runtimes  │  │
+│  └───────────────────────┴───────────────────────┴──────────────────┘  │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                   Direct Project Integration (Copy-Paste)              │
+│       Compatible with Next.js, Vite, Nuxt, Astro, SvelteKit, and HTML5 │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🛠️ 依赖说明 (Dependencies)
+## Quick Start
 
-- **样式**：Tailwind CSS (v3 / v4)
-- **React 端建议轻量依赖**：`marked`, `prismjs`；图标优先使用仓库内 `UiIcon`，不需要 `lucide-react`
-- **图标规范**：UI 图标统一使用 `UiIcon`，禁止 emoji、Unicode 字符箭头和临时手写 SVG；图标几何遵循 [Tabler Icons](https://github.com/tabler/tabler-icons) 的 MIT 许可规范；品牌 Logo 仍应使用品牌官方资源
-- **Vue 3 端建议轻量依赖**：`marked`, `prismjs`
-- **Vanilla 端**：可直接通过 CDN 或浏览器原生运行
+### 1. Interactive Component Showcase
 
----
+Clone the repository and launch the local preview server:
 
-## 🧩 HomepageDashboard（仪表盘主推组件）
-
-`HomepageDashboard` 以经典开源项目 [gethomepage/homepage](https://github.com/gethomepage/homepage) 为设计灵感（独立原创实现，非代码搬运），为自托管/内网应用提供「首页式」仪表盘：
-
-- **分组服务卡片**：`groups[].services[]` 扁平数据驱动，卡片含图标（URL 图片 / Emoji / 字母缩略图）、名称、描述。
-- **状态指示**：`statusStyle` 支持 `pill`（右上角胶囊文字）/ `dot`（圆点）/ `none`；状态由 `online/up/down/offline/warn/error/unknown` 控制颜色。
-- **交互能力**：分组头点击折叠、顶部搜索框即时过滤、页头实时时钟、页脚 GitHub 版本链接。
-- **Responsive 网格**：`md:1/2 · lg:1/3 · xl:1/4` 四档断点，与 homepage 默认列布局一致。
-- **三端 API 完全一致**，可从 `react/`、`vue/`、`vanilla/` 任选单文件复制使用。
-
-```html
-<!-- Vanilla 用法 -->
-<script type="module" src="./vanilla/HomepageDashboard.js"></script>
-<homepage-dashboard title="Homepage" subtitle="My homelab" status-style="pill" show-search></homepage-dashboard>
-<script>
-  const dash = document.querySelector("homepage-dashboard");
-  dash.groups = [{
-    name: "Media",
-    services: [
-      { name: "Jellyfin", description: "Movies & TV", icon: "jellyfin.png", href: "https://jellyfin.local", status: "online", pingText: "24ms" },
-    ],
-  }];
-</script>
+```bash
+git clone https://github.com/dengyie/awesome-ui.git
+cd awesome-ui
+npx serve .
 ```
 
-> **安全与健壮性**（三端 API 一致，含 TypeScript `id?: string` 稳定 key）：
-> - `href` 仅放行 `http(s)://`、`mailto:`、协议相对 `//`、根相对 `/`、`.`/`..` 相对路径，`javascript:`/`data:`/`vbscript:`/`file:` 一律不渲染为链接。
-> - 纯文本插值/实体转义，注入 `<script>`/`<img onerror>` 不产生节点。
-> - 搜索无命中时隐藏整组（与 React/Vue filter 行为对齐），缺失字段（name/href/description）安全降级不崩溃。
-> - 时钟随 `showClock` 动态启停；默认 `version` 不伪装上游版本号。
->
-> - **折叠事件**：React `onToggleGroup(group, collapsed)` / Vue `@toggle` / Vanilla `group-toggle` CustomEvent 三端对齐；`statusStyle` 未知值回退 `pill`，图标加载失败隐藏、时钟隔离秒刷新不重渲染整树。
->
-> - **测试**：仓库本身零依赖、即拷即用；回归在独立工程 `tests/`（`cd tests && npm install && npm test`，51 项：vanilla jsdom、React SSR、Vue SFC 编译/SSR；`npm run typecheck` 对 React 端 strict TS）。
+Open `http://localhost:3000/index.html` in your browser to explore interactive live demos and component source code.
 
----
+### 2. React Integration
 
-## 🌈 PointerRipples（多彩流体鼠标涟漪背景）
-
-以 Navier-Stokes 流体动力学驱动的交互式多色背景：光标移动时注入彩虹染料并推动流体，产生漩涡、扩散与 3D 漫反射着色的涟漪拖尾（还原 `api.poxiao.vip/home` 的灵动光标特效）。
+Copy `react/<ComponentName>.tsx` into your application (e.g., `src/components/ui/`):
 
 ```tsx
-// React
-import { PointerRipples } from "./react/PointerRipples";
+import { ThinkingBlock } from './components/ui/ThinkingBlock';
 
-<PointerRipples curl={18} splatRadius={0.38} idleMs={5000} />
+export default function ChatDemo() {
+  return (
+    <ThinkingBlock
+      thought="Retrieving relevant context from local vector store..."
+      duration="1.8s"
+      defaultExpanded={true}
+    />
+  );
+}
 ```
+
+### 3. Vue 3 Integration
+
+Copy `vue/<ComponentName>.vue` into your project:
 
 ```vue
-<!-- Vue 3 -->
-<PointerRipples :curl="18" :splat-radius="0.38" :idle-ms="5000" />
+<script setup lang="ts">
+import ThinkingBlock from './components/ui/ThinkingBlock.vue';
+</script>
+
+<template>
+  <ThinkingBlock
+    thought="Synthesizing knowledge graph and planning next steps..."
+    duration="2.4s"
+    :default-expanded="true"
+  />
+</template>
 ```
+
+### 4. Vanilla HTML5 / Web Components
+
+Import `vanilla/<ComponentName>.js` in your HTML header and use native custom elements:
 
 ```html
-<!-- Vanilla Web Component -->
-<script type="module" src="./vanilla/PointerRipples.js"></script>
-<pointer-ripples curl="18" splat-radius="0.38" idle-ms="5000"></pointer-ripples>
+<script src="./vanilla/ThinkingBlock.js"></script>
+
+<thinking-block
+  thought="Analyzing multi-turn dialogue history and validating tool parameters..."
+  duration="1.2s"
+  expanded
+></thinking-block>
 ```
 
-- **物理**：半拉格朗日平流、Jacobi 压力迭代、涡度约束（curl），WebGL2 半浮点 FBO ping-pong，WebGL1 自动降级
-- **配色**：HSV 色相随时间与拖尾步进自动旋转，`colorSaturation` / `colorValue` / `colorIntensity` 可调
-- **性能**：`getCoalescedEvents` 高刷轨迹合并、`idleMs` 空闲自动停帧、`visibilitychange` 休眠、DPR 上限 `maxPixelRatio`
-- **无障碍**：`prefers-reduced-motion` 下完全不启动仿真，保留静态背景
+---
+
+## Quality Assurance & Testing
+
+AwesomeUI enforces strict automated testing in `tests/` utilizing native Node.js `node:test` and jsdom:
+
+```bash
+cd tests
+npm test
+```
+
+### Verified Test Vectors
+
+- **Vanilla Custom Elements**: Validates element lifecycle callbacks, attribute reflection, and safe DOM rendering.
+- **React SSR**: Validates server-side rendering, HTML entity escaping, and prop forwarding without hydration errors.
+- **Vue SFC**: Verifies compilation syntax and reactive state bindings across single-file components.
+- **XSS Sanitization**: Enforces strict protocol whitelisting (blocking `javascript:` and `data:` URI attacks).
+- **Accessibility**: Verifies keyboard focus capture, `aria-expanded` and `aria-live` state synchronization.
+
+---
+
+## Technology Stack
+
+- **Styling Architecture**: Tailwind CSS v4, OKLCH Color Spaces, CSS Variables
+- **Component Runtimes**: React 18/19, Vue 3.5+, Web Components (Custom Elements v1)
+- **Visuals & Graphics**: WebGL Shaders (Navier-Stokes fluid dynamics, Simplex noise), SVG
+- **Quality Assurance**: Native Node.js `node:test`, jsdom, ESLint
+
+---
+
+## Contributing & License
+
+Contributions, component submissions, and enhancements are welcome. When submitting a new component, please ensure all three framework implementations (React, Vue 3, and Vanilla) are provided alongside regression tests.
+
+This project is licensed under the [MIT License](LICENSE).
