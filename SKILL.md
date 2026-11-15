@@ -1035,6 +1035,21 @@ awesome-ui/
 - **Vanilla 用法**: `<zendesk-field-suggest>` + `fields` JSON 属性或 `fields` property；事件 `apply {field}`（点击即从条中移除）/ `dismiss`
 - **特性**: 琥珀色建议条（✦ Suggested fields 标签）、字段 chips（标签: 值 + mono 置信度 %）点击即应用、右下 Ignore 按钮、dismiss / 应用完清空 chips。
 
+### 178. `AiSuggestionCard` (AI 建议卡)
+- **Props**: `message?: string`, `chips?: string[]`, `className?`, `onChipClick?(chip)`, `onClose?()`
+- **Vanilla 用法**: `<ai-suggestion-card>` + `message`/`chips` JSON 属性或 `message`/`chips` property；事件 `chip-click {chip}` / `close`
+- **特性**: ✦ 黑底圆形头像、建议消息段落、圆角跟进 chips 行（点击即派发）、右上 ✕ 关闭按钮（aria-label Dismiss suggestion）、chips 为空时隐藏 chips 行。
+
+### 179. `JumpBackIn` (续聊卡片行)
+- **Props**: `cards?: [{id,kind,title,subtitle,image?}]`, `className?`, `onCardClick?(card)`
+- **Vanilla 用法**: `<jump-back-in>` + `cards` JSON 属性或 `cards` property；事件 `card-click {card}`
+- **特性**: "Jump back in" 标题 + See all、卡片网格（h-32 缩略图，无 image 时 sky→indigo→slate 渐变占位）、底部渐变遮罩 + Trip（sky）/Chat（zinc）类型徽章、标题与副标题 truncate、hover 轻微放大。
+
+### 180. `HelpResourcesPanel` (帮助资源面板)
+- **Props**: `resources?: [{id,badge,title,description,minutes?}]`, `links?: string[]`, `className?`, `onResourceClick?(resource)`, `onLinkClick?(link)`
+- **Vanilla 用法**: `<help-resources-panel>` + `resources`/`links` JSON 属性或 property；事件 `resource-click {resource}` / `link-click {link}`
+- **特性**: Help 标题行、Tutorials & resources 分组标签、资源卡（indigo Reference / emerald Tutorial 徽章 + 可选 "N minutes" 时长 + 标题 / 描述）、底部链接行（links 为空隐藏）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

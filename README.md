@@ -195,6 +195,9 @@
 | **`ImageGenMetaBar`** | 生成结果元信息条 | fal 结果页脚：左下模型徽标浮层 + 等宽 job id / 时长 / 单图费用元信息行 |
 | **`GammaImageDetail`** | 图片详情面板 | Gamma AI 图片详情：大图预览、下载 / 缩放 / 删除与点赞 / 点踩工具行、完整 Prompt 阅读块 |
 | **`WriterStyleGuide`** | 写作风格指南卡 | Writer 术语/风格指南：Company / Team / My 标签页、编号指南条目（标题 / 描述 / 阅读时长）与虚线新增 CTA |
+| **`AiSuggestionCard`** | AI 建议卡 | Mindtrip 主动建议：✦ 头像、建议消息段落、跟进操作 chips 与 ✕ 关闭按钮 |
+| **`JumpBackIn`** | 续聊卡片行 | Mindtrip "Jump back in"：缩略图（或渐变占位）、Trip/Chat 类型徽章、标题与副标题卡片行 |
+| **`HelpResourcesPanel`** | 帮助资源面板 | Graphite Help 侧栏：Reference/Tutorial 徽章资源卡（可选阅读时长）与底部链接行 |
 | **`CampsiteHandoff`** | 设计交付面板 | Campsite 设计 handoff：完成态检查清单（负责人首字母头像 + 截止日期）、x/y done 计数与 AI 摘要块 |
 | **`ZendeskFieldSuggest`** | 工单字段建议条 | Zendesk AI 字段建议：琥珀色建议条、字段 chips（标签: 值 + 置信度 %）点击即应用、Ignore 忽略按钮 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
@@ -378,6 +381,9 @@ awesome-ui/
 │   ├── WriterStyleGuide.tsx
 │   ├── CampsiteHandoff.tsx
 │   ├── ZendeskFieldSuggest.tsx
+│   ├── AiSuggestionCard.tsx
+│   ├── JumpBackIn.tsx
+│   ├── HelpResourcesPanel.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -553,6 +559,9 @@ awesome-ui/
 │   ├── WriterStyleGuide.vue
 │   ├── CampsiteHandoff.vue
 │   ├── ZendeskFieldSuggest.vue
+│   ├── AiSuggestionCard.vue
+│   ├── JumpBackIn.vue
+│   ├── HelpResourcesPanel.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -728,6 +737,9 @@ awesome-ui/
 │   ├── WriterStyleGuide.js
 │   ├── CampsiteHandoff.js
 │   └── ZendeskFieldSuggest.js
+│   ├── AiSuggestionCard.js
+│   ├── JumpBackIn.js
+│   └── HelpResourcesPanel.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

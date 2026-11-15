@@ -204,12 +204,15 @@
   <script type="module" src="./vanilla/WriterStyleGuide.js"></script>
   <script type="module" src="./vanilla/CampsiteHandoff.js"></script>
   <script type="module" src="./vanilla/ZendeskFieldSuggest.js"></script>
+  <script type="module" src="./vanilla/AiSuggestionCard.js"></script>
+  <script type="module" src="./vanilla/JumpBackIn.js"></script>
+  <script type="module" src="./vanilla/HelpResourcesPanel.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.43.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.44.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -2826,6 +2829,75 @@
             <span id="demo-field-suggest-status" class="text-[11px] text-zinc-500">Apply a chip / Ignore — events report here.</span>
           </div>
           <button type="button" id="demo-field-suggest-reopen" class="mt-2 rounded border border-zinc-700 px-2.5 py-1 text-[11px] font-medium text-zinc-300 hover:bg-zinc-800">Restore suggestions</button>
+        </div>
+      </div>
+    </section>
+    <section id="section-168" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">168 · AiSuggestionCard</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.44.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Proactive AI suggestion — sparkle avatar, message paragraph, follow-up action chips and a dismiss close button (Mindtrip pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/AiSuggestionCard.tsx">
+          <div id="demo-suggestion-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/AiSuggestionCard.vue">
+          <div id="demo-suggestion-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/AiSuggestionCard.js">
+          <ai-suggestion-card id="demo-suggestion"></ai-suggestion-card>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-suggestion-status" class="text-[11px] text-zinc-500">Click a chip / dismiss — events report here.</span>
+          </div>
+          <button type="button" id="demo-suggestion-reopen" class="mt-2 rounded border border-zinc-700 px-2.5 py-1 text-[11px] font-medium text-zinc-300 hover:bg-zinc-800">Restore suggestion</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-169" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">169 · JumpBackIn</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.44.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">"Jump back in" resume cards — thumbnail (or gradient placeholder), kind badge, title and subtitle per card (Mindtrip pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/JumpBackIn.tsx">
+          <div id="demo-jumpback-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/JumpBackIn.vue">
+          <div id="demo-jumpback-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/JumpBackIn.js">
+          <jump-back-in id="demo-jumpback"></jump-back-in>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-jumpback-status" class="text-[11px] text-zinc-500">Click a card — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-170" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">170 · HelpResourcesPanel</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.44.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Help resources panel — Reference/Tutorial badge cards with optional reading time and footer link rows (Graphite pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/HelpResourcesPanel.tsx">
+          <div id="demo-help-res-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/HelpResourcesPanel.vue">
+          <div id="demo-help-res-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/HelpResourcesPanel.js">
+          <help-resources-panel id="demo-help-res"></help-resources-panel>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-help-res-status" class="text-[11px] text-zinc-500">Open a resource / link — events report here.</span>
+          </div>
         </div>
       </div>
     </section>
@@ -5803,6 +5875,52 @@ FAIL tests/ui.test.mjs
           ];
           fieldSuggestStatus43.textContent = 'Suggestions restored.';
         });
+      }
+
+      const suggestion44 = document.getElementById('demo-suggestion');
+      const suggestionStatus44 = document.getElementById('demo-suggestion-status');
+      const suggestionReopen44 = document.getElementById('demo-suggestion-reopen');
+      if (suggestion44) {
+        suggestion44.chips = [
+          'Weather for tomorrow',
+          'Summarize tomorrow',
+          'View Senso-ji details'
+        ];
+        suggestion44.addEventListener('chip-click', (event) => { suggestionStatus44.textContent = 'Chip → ' + event.detail.chip; });
+        suggestion44.addEventListener('close', () => { suggestionStatus44.textContent = 'Suggestion dismissed.'; });
+      }
+      if (suggestionReopen44 && suggestion44) {
+        suggestionReopen44.addEventListener('click', () => {
+          suggestion44.chips = [
+            'Weather for tomorrow',
+            'Summarize tomorrow',
+            'View Senso-ji details'
+          ];
+          suggestionStatus44.textContent = 'Suggestion restored.';
+        });
+      }
+
+      const jumpback44 = document.getElementById('demo-jumpback');
+      const jumpbackStatus44 = document.getElementById('demo-jumpback-status');
+      if (jumpback44) {
+        jumpback44.cards = [
+          { id: 'c1', kind: 'Trip', title: 'Trip to Japan, September 2026', subtitle: 'Tokyo · Starting 14 Sept' },
+          { id: 'c2', kind: 'Chat', title: 'Mount Fuji Trip Planning', subtitle: 'Last touched 2 days ago' },
+          { id: 'c3', kind: 'Trip', title: 'Kyoto Autumn Walk', subtitle: 'Kyoto · Draft itinerary' }
+        ];
+        jumpback44.addEventListener('card-click', (event) => { jumpbackStatus44.textContent = 'Card → ' + event.detail.card.title; });
+      }
+
+      const helpRes44 = document.getElementById('demo-help-res');
+      const helpResStatus44 = document.getElementById('demo-help-res-status');
+      if (helpRes44) {
+        helpRes44.resources = [
+          { id: 'r1', badge: 'Reference', title: 'Get started', description: 'Learn how to use Graphite for fast, simple code review.' },
+          { id: 'r2', badge: 'Reference', title: 'Cheatsheet', description: 'A bookmarkable reference for common commands & workflows.' },
+          { id: 'r3', badge: 'Tutorial', title: 'CLI quick start', description: 'Learn to author pull requests and stacks with the Graphite CLI.', minutes: 10 }
+        ];
+        helpRes44.addEventListener('resource-click', (event) => { helpResStatus44.textContent = 'Resource → ' + event.detail.resource.title; });
+        helpRes44.addEventListener('link-click', (event) => { helpResStatus44.textContent = 'Link → ' + event.detail.link; });
       }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');

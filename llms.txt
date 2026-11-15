@@ -758,6 +758,9 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 175. WriterStyleGuide: Writer term/style guide card — Company/Team/My tabs, numbered guide entries with title, description and reading time, dashed Add guideline CTA.
 176. CampsiteHandoff: Campsite design handoff panel — checklist with done state, assignee initials avatar and due date, x/y done counter and an AI summary block.
 177. ZendeskFieldSuggest: Zendesk AI ticket-field suggestion bar — amber bar with field chips (label: value + confidence %) that apply on click, plus an Ignore dismiss.
+178. AiSuggestionCard: Mindtrip proactive suggestion card — sparkle avatar, message paragraph, follow-up action chips and a dismiss close button.
+179. JumpBackIn: Mindtrip "Jump back in" resume cards — thumbnail (or gradient placeholder), kind badge, title and subtitle per card.
+180. HelpResourcesPanel: Graphite help resources panel — Reference/Tutorial badge cards with optional reading time and footer link rows.
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)
