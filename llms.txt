@@ -764,6 +764,9 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 181. VisionAnalysisCard: Claude image-analysis structured reply — clickable section headings over key/value attribute row grids.
 182. PrReviewQueue: Graphite grouped PR review queue — collapsible groups with count badges, author-initial rows and `author · repo #n` meta.
 183. IterationActionBar: Luma iteration bar — Show More / Brainstorm / Reply pills, overflow slot and prev/next pager with page label.
+184. MonitorRunList: Adaline monitor run history — filter + time-range pills over a request histogram, run rows with status icon and latency.
+185. EvalTurnBuilder: Vapi evals turn builder — role-tagged system/user/assistant/tool turns with mock tags, turn numbers and an add-turn footer.
+186. AgentSessionTimeline: Browserbase agent session — summary chips + segmented activity strip, Reason/Tool step list and request panel.
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)

@@ -834,6 +834,146 @@ export const AgentRunLog: React.FC<AgentRunLogProps> = ({
 
 export default AgentRunLog;
 
+====/File: react/AgentSessionTimeline.tsx/====
+
+/**
+ * AgentSessionTimeline - Agent browser-session timeline: summary header with
+ * status/duration/steps chips, a segmented activity strip, a step list with
+ * Reason/Tool badges and a request panel (Browserbase session pattern).
+ */
+import React from "react";
+
+export type AgentStepKind = "prompt" | "reason" | "tool";
+
+export interface AgentStep {
+  id: string;
+  kind: AgentStepKind;
+  label: string;
+  at: string;
+}
+
+export interface AgentRequest {
+  id: string;
+  url: string;
+  method?: string;
+  status: string;
+  duration: string;
+  ok?: boolean;
+}
+
+export interface AgentSessionTimelineProps {
+  title?: string;
+  status?: string;
+  duration?: string;
+  stepsCount?: number;
+  steps?: AgentStep[];
+  requests?: AgentRequest[];
+  className?: string;
+  onStepClick?: (step: AgentStep) => void;
+}
+
+const KIND_STYLES: Record<AgentStepKind, { badge: string }> = {
+  prompt: { badge: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300" },
+  reason: { badge: "bg-sky-100 text-sky-700 dark:bg-sky-950/60 dark:text-sky-300" },
+  tool: { badge: "bg-orange-100 text-orange-700 dark:bg-orange-950/60 dark:text-orange-300" },
+};
+
+const DEFAULT_STEPS: AgentStep[] = [
+  { id: "s1", kind: "prompt", label: "Summarize the top 5 trending tech articles", at: "0:00" },
+  { id: "s2", kind: "reason", label: "Plan fetch strategy", at: "0:03" },
+  { id: "s3", kind: "tool", label: "HTTP probe", at: "0:03" },
+  { id: "s4", kind: "tool", label: "Fetch API", at: "0:14" },
+  { id: "s5", kind: "reason", label: "Need to actually fetch the pages", at: "0:14" },
+  { id: "s6", kind: "tool", label: "Search HTML", at: "0:26" },
+  { id: "s7", kind: "tool", label: "Run code", at: "0:31" },
+];
+
+const DEFAULT_REQUESTS: AgentRequest[] = [
+  { id: "q1", url: "techcrunch.com", method: "HTTP probe", status: "HTTP 200", duration: "0:03", ok: true },
+  { id: "q2", url: "techcrunch.com/2026/08/02/sam-altman-an…", method: "Fetch API", status: "HTTP 200", duration: "0:50", ok: true },
+  { id: "q3", url: "techcrunch.com/2026/08/01/inside-one-lond…", method: "Fetch API", status: "HTTP 200", duration: "0:50", ok: true },
+  { id: "q4", url: "techcrunch.com/2026/08/02/the-global-me…", method: "Fetch API", status: "HTTP 429", duration: "0:50", ok: false },
+];
+
+export default function AgentSessionTimeline({
+  title = "Go to techcrunch.com and summarize the top 5 trending tech articles",
+  status = "Complete",
+  duration = "1m 11s",
+  stepsCount = 11,
+  steps = DEFAULT_STEPS,
+  requests = DEFAULT_REQUESTS,
+  className = "",
+  onStepClick,
+}: AgentSessionTimelineProps) {
+  const segments = steps.slice(0, 24);
+  return (
+    <div data-agent-session-timeline className={`w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <div data-agent-session-header className="border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+        <p data-agent-session-title className="mb-2 truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</p>
+        <div className="flex flex-wrap items-center gap-2">
+          <span data-agent-session-status className="rounded-md bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">
+            {status}
+          </span>
+          <span data-agent-session-duration className="text-[11px] text-zinc-400 dark:text-zinc-500">⏱ {duration}</span>
+          <span data-agent-session-steps-count className="text-[11px] text-zinc-400 dark:text-zinc-500">≡ {stepsCount} steps</span>
+        </div>
+        <div data-agent-session-strip className="mt-3 flex h-2 items-stretch gap-0.5 overflow-hidden rounded-full">
+          {segments.map((s) => (
+            <span
+              key={s.id}
+              title={`${s.kind} · ${s.label}`}
+              className={`flex-1 rounded-sm ${
+                s.kind === "prompt"
+                  ? "bg-emerald-400 dark:bg-emerald-500"
+                  : s.kind === "reason"
+                    ? "bg-sky-400 dark:bg-sky-500"
+                    : "bg-orange-400 dark:bg-orange-500"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+      <div data-agent-session-body className="grid grid-cols-1 md:grid-cols-2">
+        <ol data-agent-steps className="divide-y divide-zinc-50 border-b border-zinc-100 md:border-b-0 md:border-r dark:divide-zinc-800/60 dark:border-zinc-800">
+          {steps.map((step) => (
+            <li key={step.id}>
+              <button
+                type="button"
+                data-agent-step={step.id}
+                onClick={() => onStepClick?.(step)}
+                className="flex w-full items-center gap-2 px-4 py-2 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
+              >
+                <span data-agent-step-badge={step.kind} className={`inline-flex shrink-0 items-center rounded px-1.5 py-0.5 text-[9px] font-bold tracking-wide ${KIND_STYLES[step.kind].badge}`}>
+                  {step.kind}
+                </span>
+                <span data-agent-step-label className="min-w-0 flex-1 truncate text-xs text-zinc-700 dark:text-zinc-200">{step.label}</span>
+                <span data-agent-step-at className="shrink-0 text-[10px] text-zinc-400 dark:text-zinc-500">{step.at}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
+        <div data-agent-requests className="divide-y divide-zinc-50 dark:divide-zinc-800/60">
+          {requests.map((req) => (
+            <div key={req.id} data-agent-request={req.id} className="flex items-center gap-2 px-4 py-2">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-[9px] font-bold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400" aria-hidden="true">
+                ⌾
+              </span>
+              <span className="min-w-0 flex-1">
+                <span data-agent-request-url className="block truncate text-xs font-medium text-zinc-800 dark:text-zinc-100">{req.url}</span>
+                <span data-agent-request-status className={`block truncate text-[10px] ${(req.ok ?? true) ? "text-zinc-400 dark:text-zinc-500" : "text-red-500 dark:text-red-400"}`}>
+                  {req.status}
+                  {req.method ? ` · ${req.method}` : ""}
+                </span>
+              </span>
+              <span data-agent-request-duration className="shrink-0 text-[10px] text-zinc-400 dark:text-zinc-500">{req.duration}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 ====/File: react/AgentStepTimeline.tsx/====
 
 import React from "react";
@@ -7069,6 +7209,118 @@ export default function EvalScoreTable({
   );
 }
 
+====/File: react/EvalTurnBuilder.tsx/====
+
+/**
+ * EvalTurnBuilder - Evaluation scenario builder: role-tagged conversation
+ * turns (system / user / assistant / tool response) with per-turn mock
+ * content and an add-turn footer (Vapi Evals pattern).
+ */
+import React from "react";
+
+export type EvalTurnRole = "system" | "user" | "assistant" | "tool";
+
+export interface EvalTurn {
+  id: string;
+  role: EvalTurnRole;
+  turn: number;
+  content: string;
+  mock?: boolean;
+}
+
+export interface EvalTurnBuilderProps {
+  turns?: EvalTurn[];
+  className?: string;
+  onTurnRemove?: (turn: EvalTurn) => void;
+  onAddTurn?: (role: EvalTurnRole) => void;
+}
+
+const ROLE_STYLES: Record<EvalTurnRole, { label: string; badge: string; icon: string }> = {
+  system: { label: "SYSTEM", badge: "bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300", icon: ">" },
+  user: { label: "USER", badge: "bg-sky-100 text-sky-700 dark:bg-sky-950/60 dark:text-sky-300", icon: "?" },
+  assistant: { label: "ASSISTANT", badge: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300", icon: "A" },
+  tool: { label: "TOOL RESPONSE", badge: "bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300", icon: "T" },
+};
+
+const DEFAULT_TURNS: EvalTurn[] = [
+  {
+    id: "t1",
+    role: "system",
+    turn: 0,
+    content: "# Appointment Scheduling Agent Prompt\n\nYou are Riley, an appointment scheduling voice assistant for Wellness Partners, a multi-specialty health clinic.",
+    mock: false,
+  },
+  { id: "t2", role: "user", turn: 1, content: "Hi, can I reschedule my appointment to another time this week?", mock: true },
+  { id: "t3", role: "assistant", turn: 2, content: "Sure, I can help with that. What day and time would you like to reschedule your appointment to?", mock: true },
+  { id: "t4", role: "tool", turn: 3, content: 'reschedule_appointment \u2192 { "status": "success", "new_time": "Thursday at 2 PM" }', mock: true },
+];
+
+export default function EvalTurnBuilder({
+  turns = DEFAULT_TURNS,
+  className = "",
+  onTurnRemove,
+  onAddTurn,
+}: EvalTurnBuilderProps) {
+  return (
+    <div data-eval-turn-builder className={`w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <div data-eval-turns className="divide-y divide-zinc-100 dark:divide-zinc-800">
+        {turns.map((t) => {
+          const style = ROLE_STYLES[t.role];
+          return (
+            <div key={t.id} data-eval-turn={t.id} data-eval-role={t.role} className="p-4">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <span className="flex items-center gap-2">
+                  <span data-eval-turn-badge className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-bold tracking-wider ${style.badge}`}>
+                    <span aria-hidden="true">{style.icon}</span> {style.label}
+                  </span>
+                  {t.mock && (
+                    <span data-eval-turn-mock className="rounded-md bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+                      Mock
+                    </span>
+                  )}
+                </span>
+                <span className="flex items-center gap-2">
+                  {t.turn > 0 && (
+                    <span data-eval-turn-number className="text-[10px] text-zinc-400 dark:text-zinc-500">Turn {t.turn}</span>
+                  )}
+                  <button
+                    type="button"
+                    data-eval-turn-remove
+                    aria-label={`Remove ${style.label.toLowerCase()} turn`}
+                    className="text-zinc-300 transition-colors hover:text-red-500 dark:text-zinc-600 dark:hover:text-red-400"
+                    onClick={() => onTurnRemove?.(t)}
+                  >
+                    ✕
+                  </button>
+                </span>
+              </div>
+              <pre
+                data-eval-turn-content
+                className="max-h-40 overflow-y-auto whitespace-pre-wrap rounded-lg border border-zinc-100 bg-zinc-50 px-3 py-2 text-xs leading-relaxed text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-300"
+              >
+                {t.content}
+              </pre>
+            </div>
+          );
+        })}
+      </div>
+      <div data-eval-turn-add className="grid grid-cols-3 divide-x divide-zinc-100 border-t border-zinc-100 dark:divide-zinc-800 dark:border-zinc-800">
+        {(["user", "assistant", "tool"] as const).map((role) => (
+          <button
+            key={role}
+            type="button"
+            data-eval-add-turn={role}
+            className="py-2.5 text-center text-xs font-medium text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+            onClick={() => onAddTurn?.(role)}
+          >
+            + Add {role === "tool" ? "Tool Response" : role.charAt(0).toUpperCase() + role.slice(1)}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 ====/File: react/FalRunCard.tsx/====
 
 /**
@@ -11492,6 +11744,154 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
   );
 };
 export default ModelSelector;
+
+====/File: react/MonitorRunList.tsx/====
+
+/**
+ * MonitorRunList - LLM monitor run history: filter + time-range pills over a
+ * mini request histogram, then run rows with success icon, timestamp, name
+ * and latency (Adaline Monitor pattern).
+ */
+import React from "react";
+
+export interface RunRow {
+  id: string;
+  name: string;
+  startedAt: string;
+  latencyMs: number;
+  ok?: boolean;
+}
+
+export interface HistogramBar {
+  label: string;
+  value: number;
+}
+
+export interface MonitorRunListProps {
+  runs?: RunRow[];
+  histogram?: HistogramBar[];
+  ranges?: string[];
+  activeRange?: string;
+  className?: string;
+  onRunClick?: (run: RunRow) => void;
+  onRangeChange?: (range: string) => void;
+}
+
+export const formatLatency = (ms: number) => {
+  if (ms < 1000) return `${ms} ms`;
+  const s = Math.floor(ms / 1000);
+  const rem = ms % 1000;
+  return rem === 0 ? `${s} s` : `${s} s ${rem} ms`;
+};
+
+const DEFAULT_RUNS: RunRow[] = [
+  { id: "r1", name: "Product Performance Metrics", startedAt: "Oct 14, 1:00 AM", latencyMs: 7000, ok: true },
+  { id: "r2", name: "Q2 Financial Overview", startedAt: "Oct 14, 12:59 AM", latencyMs: 6688, ok: true },
+  { id: "r3", name: "Customer Retention Strategy", startedAt: "Oct 14, 12:37 AM", latencyMs: 1819, ok: true },
+  { id: "r4", name: "Employee Satisfaction Survey 2025", startedAt: "Oct 13, 10:44 PM", latencyMs: 903, ok: true },
+];
+
+const DEFAULT_HISTOGRAM: HistogramBar[] = [
+  { label: "13:00", value: 40 },
+  { label: "15:00", value: 25 },
+  { label: "17:00", value: 55 },
+  { label: "19:00", value: 30 },
+  { label: "21:00", value: 70 },
+  { label: "23:00", value: 45 },
+  { label: "01:00", value: 60 },
+  { label: "03:00", value: 35 },
+  { label: "05:00", value: 80 },
+  { label: "07:00", value: 50 },
+  { label: "09:00", value: 65 },
+  { label: "11:00", value: 20 },
+];
+
+export default function MonitorRunList({
+  runs = DEFAULT_RUNS,
+  histogram = DEFAULT_HISTOGRAM,
+  ranges = ["24 hrs", "7 days", "30 days", "6 months"],
+  activeRange = "24 hrs",
+  className = "",
+  onRunClick,
+  onRangeChange,
+}: MonitorRunListProps) {
+  const max = Math.max(1, ...histogram.map((b) => b.value));
+  return (
+    <div data-monitor-run-list className={`w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <div data-monitor-toolbar className="flex items-center justify-between gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+        <button
+          type="button"
+          data-monitor-filter
+          className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        >
+          <span aria-hidden="true">⏳</span> Filter
+        </button>
+        <div data-monitor-ranges className="inline-flex items-center gap-1">
+          {ranges.map((range) => (
+            <button
+              key={range}
+              type="button"
+              data-monitor-range={range}
+              aria-pressed={range === activeRange}
+              className={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${
+                range === activeRange
+                  ? "bg-emerald-600 text-white"
+                  : "text-zinc-500 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-800"
+              }`}
+              onClick={() => onRangeChange?.(range)}
+            >
+              {range}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div data-monitor-histogram className="flex h-20 items-end gap-1 border-b border-zinc-100 px-4 pt-3 dark:border-zinc-800">
+        {histogram.map((bar) => (
+          <div key={bar.label} data-monitor-bar={bar.label} className="flex min-w-0 flex-1 flex-col items-center gap-1">
+            <div
+              className="w-full rounded-sm bg-emerald-600/85 transition-colors hover:bg-emerald-500"
+              style={{ height: `${Math.max(4, (bar.value / max) * 56)}px` }}
+              title={`${bar.label} · ${bar.value}`}
+            />
+            <span className="w-full truncate text-center text-[9px] text-zinc-400 dark:text-zinc-500">{bar.label}</span>
+          </div>
+        ))}
+      </div>
+      <table data-monitor-runs className="w-full">
+        <thead>
+          <tr className="border-b border-zinc-100 text-left text-[11px] font-medium text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+            <th className="px-4 py-2 font-medium">Started At</th>
+            <th className="px-2 py-2 font-medium">Name</th>
+            <th className="px-4 py-2 text-right font-medium">Latency</th>
+          </tr>
+        </thead>
+        <tbody>
+          {runs.map((run) => (
+            <tr
+              key={run.id}
+              data-monitor-run={run.id}
+              tabIndex={0}
+              onClick={() => onRunClick?.(run)}
+              onKeyDown={(e) => { if (e.key === "Enter") onRunClick?.(run); }}
+              className="cursor-pointer border-b border-zinc-50 text-xs transition-colors last:border-b-0 hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/60"
+            >
+              <td data-monitor-run-time className="whitespace-nowrap px-4 py-2.5 text-zinc-400 dark:text-zinc-500">
+                <span className="mr-1.5 inline-flex items-center" aria-hidden="true">
+                  {run.ok !== false ? "✅" : "⚠️"}
+                </span>
+                {run.startedAt}
+              </td>
+              <td data-monitor-run-name className="max-w-0 truncate px-2 py-2.5 font-medium text-zinc-800 dark:text-zinc-100">{run.name}</td>
+              <td data-monitor-run-latency className="whitespace-nowrap px-4 py-2.5 text-right text-zinc-500 dark:text-zinc-400">
+                {formatLatency(run.latencyMs)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 ====/File: react/Navbar.tsx/====
 
@@ -21464,6 +21864,120 @@ const toggle = (id: string) => {
 };
 </script>
 
+====/File: vue/AgentSessionTimeline.vue/====
+
+<script setup lang="ts">
+export type AgentStepKind = "prompt" | "reason" | "tool";
+export interface AgentStep {
+  id: string;
+  kind: AgentStepKind;
+  label: string;
+  at: string;
+}
+export interface AgentRequest {
+  id: string;
+  url: string;
+  method?: string;
+  status: string;
+  duration: string;
+  ok?: boolean;
+}
+export interface AgentSessionTimelineProps {
+  title?: string;
+  status?: string;
+  duration?: string;
+  stepsCount?: number;
+  steps?: AgentStep[];
+  requests?: AgentRequest[];
+  class?: string;
+}
+const props = withDefaults(defineProps<AgentSessionTimelineProps>(), {
+  title: "Go to techcrunch.com and summarize the top 5 trending tech articles",
+  status: "Complete",
+  duration: "1m 11s",
+  stepsCount: 11,
+  steps: () => [
+    { id: "s1", kind: "prompt", label: "Summarize the top 5 trending tech articles", at: "0:00" },
+    { id: "s2", kind: "reason", label: "Plan fetch strategy", at: "0:03" },
+    { id: "s3", kind: "tool", label: "HTTP probe", at: "0:03" },
+    { id: "s4", kind: "tool", label: "Fetch API", at: "0:14" },
+    { id: "s5", kind: "reason", label: "Need to actually fetch the pages", at: "0:14" },
+    { id: "s6", kind: "tool", label: "Search HTML", at: "0:26" },
+    { id: "s7", kind: "tool", label: "Run code", at: "0:31" },
+  ],
+  requests: () => [
+    { id: "q1", url: "techcrunch.com", method: "HTTP probe", status: "HTTP 200", duration: "0:03", ok: true },
+    { id: "q2", url: "techcrunch.com/2026/08/02/sam-altman-an…", method: "Fetch API", status: "HTTP 200", duration: "0:50", ok: true },
+    { id: "q3", url: "techcrunch.com/2026/08/01/inside-one-lond…", method: "Fetch API", status: "HTTP 200", duration: "0:50", ok: true },
+    { id: "q4", url: "techcrunch.com/2026/08/02/the-global-me…", method: "Fetch API", status: "HTTP 429", duration: "0:50", ok: false },
+  ],
+  class: "",
+});
+defineEmits(["step-click"]);
+
+const kindStyles: Record<AgentStepKind, string> = {
+  prompt: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300",
+  reason: "bg-sky-100 text-sky-700 dark:bg-sky-950/60 dark:text-sky-300",
+  tool: "bg-orange-100 text-orange-700 dark:bg-orange-950/60 dark:text-orange-300",
+};
+const stripColor = (kind: AgentStepKind) =>
+  kind === "prompt"
+    ? "bg-emerald-400 dark:bg-emerald-500"
+    : kind === "reason"
+      ? "bg-sky-400 dark:bg-sky-500"
+      : "bg-orange-400 dark:bg-orange-500";
+</script>
+
+<template>
+  <div data-agent-session-timeline class="w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900" :class="props.class">
+    <div data-agent-session-header class="border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+      <p data-agent-session-title class="mb-2 truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</p>
+      <div class="flex flex-wrap items-center gap-2">
+        <span data-agent-session-status class="rounded-md bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">{{ props.status }}</span>
+        <span data-agent-session-duration class="text-[11px] text-zinc-400 dark:text-zinc-500">⏱ {{ props.duration }}</span>
+        <span data-agent-session-steps-count class="text-[11px] text-zinc-400 dark:text-zinc-500">≡ {{ props.stepsCount }} steps</span>
+      </div>
+      <div data-agent-session-strip class="mt-3 flex h-2 items-stretch gap-0.5 overflow-hidden rounded-full">
+        <span
+          v-for="s in props.steps.slice(0, 24)"
+          :key="s.id"
+          :title="s.kind + ' · ' + s.label"
+          class="flex-1 rounded-sm"
+          :class="stripColor(s.kind)"
+        />
+      </div>
+    </div>
+    <div data-agent-session-body class="grid grid-cols-1 md:grid-cols-2">
+      <ol data-agent-steps class="divide-y divide-zinc-50 border-b border-zinc-100 md:border-b-0 md:border-r dark:divide-zinc-800/60 dark:border-zinc-800">
+        <li v-for="step in props.steps" :key="step.id">
+          <button
+            type="button"
+            :data-agent-step="step.id"
+            class="flex w-full items-center gap-2 px-4 py-2 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
+            @click="$emit('step-click', step)"
+          >
+            <span :data-agent-step-badge="step.kind" class="inline-flex shrink-0 items-center rounded px-1.5 py-0.5 text-[9px] font-bold tracking-wide" :class="kindStyles[step.kind]">{{ step.kind }}</span>
+            <span data-agent-step-label class="min-w-0 flex-1 truncate text-xs text-zinc-700 dark:text-zinc-200">{{ step.label }}</span>
+            <span data-agent-step-at class="shrink-0 text-[10px] text-zinc-400 dark:text-zinc-500">{{ step.at }}</span>
+          </button>
+        </li>
+      </ol>
+      <div data-agent-requests class="divide-y divide-zinc-50 dark:divide-zinc-800/60">
+        <div v-for="req in props.requests" :key="req.id" :data-agent-request="req.id" class="flex items-center gap-2 px-4 py-2">
+          <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-[9px] font-bold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400" aria-hidden="true">⌾</span>
+          <span class="min-w-0 flex-1">
+            <span data-agent-request-url class="block truncate text-xs font-medium text-zinc-800 dark:text-zinc-100">{{ req.url }}</span>
+            <span data-agent-request-status :class="(req.ok ?? true) ? 'block truncate text-[10px] text-zinc-400 dark:text-zinc-500' : 'block truncate text-[10px] text-red-500 dark:text-red-400'">
+              {{ req.status }}<template v-if="req.method"> · {{ req.method }}</template>
+            </span>
+          </span>
+          <span data-agent-request-duration class="shrink-0 text-[10px] text-zinc-400 dark:text-zinc-500">{{ req.duration }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 ====/File: vue/AgentStepTimeline.vue/====
 
 <template>
@@ -26829,6 +27343,91 @@ const toneBar = (tone?: EvalScoreTone) => {
   </div>
 </template>
 
+====/File: vue/EvalTurnBuilder.vue/====
+
+<script setup lang="ts">
+export type EvalTurnRole = "system" | "user" | "assistant" | "tool";
+export interface EvalTurn {
+  id: string;
+  role: EvalTurnRole;
+  turn: number;
+  content: string;
+  mock?: boolean;
+}
+export interface EvalTurnBuilderProps {
+  turns?: EvalTurn[];
+  class?: string;
+}
+const props = withDefaults(defineProps<EvalTurnBuilderProps>(), {
+  turns: () => [
+    {
+      id: "t1",
+      role: "system",
+      turn: 0,
+      content: "# Appointment Scheduling Agent Prompt\n\nYou are Riley, an appointment scheduling voice assistant for Wellness Partners, a multi-specialty health clinic.",
+      mock: false,
+    },
+    { id: "t2", role: "user", turn: 1, content: "Hi, can I reschedule my appointment to another time this week?", mock: true },
+    { id: "t3", role: "assistant", turn: 2, content: "Sure, I can help with that. What day and time would you like to reschedule your appointment to?", mock: true },
+    { id: "t4", role: "tool", turn: 3, content: 'reschedule_appointment \u2192 { "status": "success", "new_time": "Thursday at 2 PM" }', mock: true },
+  ],
+  class: "",
+});
+const emit = defineEmits(["turn-remove", "add-turn"]);
+
+const roleStyles: Record<EvalTurnRole, { label: string; badge: string; icon: string }> = {
+  system: { label: "SYSTEM", badge: "bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300", icon: ">" },
+  user: { label: "USER", badge: "bg-sky-100 text-sky-700 dark:bg-sky-950/60 dark:text-sky-300", icon: "?" },
+  assistant: { label: "ASSISTANT", badge: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300", icon: "A" },
+  tool: { label: "TOOL RESPONSE", badge: "bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300", icon: "T" },
+};
+const addRoles: EvalTurnRole[] = ["user", "assistant", "tool"];
+const addLabel = (role: EvalTurnRole) =>
+  role === "tool" ? "Tool Response" : role.charAt(0).toUpperCase() + role.slice(1);
+</script>
+
+<template>
+  <div data-eval-turn-builder class="w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900" :class="props.class">
+    <div data-eval-turns class="divide-y divide-zinc-100 dark:divide-zinc-800">
+      <div v-for="t in props.turns" :key="t.id" :data-eval-turn="t.id" :data-eval-role="t.role" class="p-4">
+        <div class="mb-2 flex items-center justify-between gap-2">
+          <span class="flex items-center gap-2">
+            <span :data-eval-turn-badge="t.role" class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-bold tracking-wider" :class="roleStyles[t.role].badge">
+              <span aria-hidden="true">{{ roleStyles[t.role].icon }}</span> {{ roleStyles[t.role].label }}
+            </span>
+            <span v-if="t.mock" data-eval-turn-mock class="rounded-md bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">Mock</span>
+          </span>
+          <span class="flex items-center gap-2">
+            <span v-if="t.turn > 0" data-eval-turn-number class="text-[10px] text-zinc-400 dark:text-zinc-500">Turn {{ t.turn }}</span>
+            <button
+              type="button"
+              data-eval-turn-remove
+              :aria-label="'Remove ' + roleStyles[t.role].label.toLowerCase() + ' turn'"
+              class="text-zinc-300 transition-colors hover:text-red-500 dark:text-zinc-600 dark:hover:text-red-400"
+              @click="emit('turn-remove', t)"
+            >
+              ✕
+            </button>
+          </span>
+        </div>
+        <pre data-eval-turn-content class="max-h-40 overflow-y-auto whitespace-pre-wrap rounded-lg border border-zinc-100 bg-zinc-50 px-3 py-2 text-xs leading-relaxed text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-300">{{ t.content }}</pre>
+      </div>
+    </div>
+    <div data-eval-turn-add class="grid grid-cols-3 divide-x divide-zinc-100 border-t border-zinc-100 dark:divide-zinc-800 dark:border-zinc-800">
+      <button
+        v-for="role in addRoles"
+        :key="role"
+        type="button"
+        :data-eval-add-turn="role"
+        class="py-2.5 text-center text-xs font-medium text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+        @click="emit('add-turn', role)"
+      >
+        + Add {{ addLabel(role) }}
+      </button>
+    </div>
+  </div>
+</template>
+
 ====/File: vue/FalRunCard.vue/====
 
 <script setup lang="ts">
@@ -30538,6 +31137,113 @@ onUnmounted(() => {
   document.removeEventListener("mousedown", handleClickOutside);
 });
 </script>
+
+====/File: vue/MonitorRunList.vue/====
+
+<script setup lang="ts">
+export interface RunRow {
+  id: string;
+  name: string;
+  startedAt: string;
+  latencyMs: number;
+  ok?: boolean;
+}
+export interface HistogramBar {
+  label: string;
+  value: number;
+}
+export interface MonitorRunListProps {
+  runs?: RunRow[];
+  histogram?: HistogramBar[];
+  ranges?: string[];
+  activeRange?: string;
+  class?: string;
+}
+const props = withDefaults(defineProps<MonitorRunListProps>(), {
+  runs: () => [
+    { id: "r1", name: "Product Performance Metrics", startedAt: "Oct 14, 1:00 AM", latencyMs: 7000, ok: true },
+    { id: "r2", name: "Q2 Financial Overview", startedAt: "Oct 14, 12:59 AM", latencyMs: 6688, ok: true },
+    { id: "r3", name: "Customer Retention Strategy", startedAt: "Oct 14, 12:37 AM", latencyMs: 1819, ok: true },
+    { id: "r4", name: "Employee Satisfaction Survey 2025", startedAt: "Oct 13, 10:44 PM", latencyMs: 903, ok: true },
+  ],
+  histogram: () => [
+    { label: "13:00", value: 40 }, { label: "15:00", value: 25 }, { label: "17:00", value: 55 },
+    { label: "19:00", value: 30 }, { label: "21:00", value: 70 }, { label: "23:00", value: 45 },
+    { label: "01:00", value: 60 }, { label: "03:00", value: 35 }, { label: "05:00", value: 80 },
+    { label: "07:00", value: 50 }, { label: "09:00", value: 65 }, { label: "11:00", value: 20 },
+  ],
+  ranges: () => ["24 hrs", "7 days", "30 days", "6 months"],
+  activeRange: "24 hrs",
+  class: "",
+});
+const emit = defineEmits(["run-click", "range-change"]);
+const formatLatency = (ms: number) => {
+  if (ms < 1000) return `${ms} ms`;
+  const s = Math.floor(ms / 1000);
+  const rem = ms % 1000;
+  return rem === 0 ? `${s} s` : `${s} s ${rem} ms`;
+};
+const max = () => Math.max(1, ...props.histogram.map((b) => b.value));
+const barHeight = (value: number) => `${Math.max(4, (value / max()) * 56)}px`;
+</script>
+
+<template>
+  <div data-monitor-run-list class="w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900" :class="props.class">
+    <div data-monitor-toolbar class="flex items-center justify-between gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+      <button type="button" data-monitor-filter class="inline-flex items-center gap-1.5 rounded-md border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">
+        <span aria-hidden="true">⏳</span> Filter
+      </button>
+      <div data-monitor-ranges class="inline-flex items-center gap-1">
+        <button
+          v-for="range in props.ranges"
+          :key="range"
+          type="button"
+          :data-monitor-range="range"
+          :aria-pressed="range === props.activeRange"
+          :class="range === props.activeRange
+            ? 'rounded-md bg-emerald-600 px-2 py-1 text-xs font-medium text-white'
+            : 'rounded-md px-2 py-1 text-xs font-medium text-zinc-500 transition-colors hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-800'"
+          @click="emit('range-change', range)"
+        >
+          {{ range }}
+        </button>
+      </div>
+    </div>
+    <div data-monitor-histogram class="flex h-20 items-end gap-1 border-b border-zinc-100 px-4 pt-3 dark:border-zinc-800">
+      <div v-for="bar in props.histogram" :key="bar.label" :data-monitor-bar="bar.label" class="flex min-w-0 flex-1 flex-col items-center gap-1">
+        <div class="w-full rounded-sm bg-emerald-600/85 transition-colors hover:bg-emerald-500" :style="{ height: barHeight(bar.value) }" :title="bar.label + ' · ' + bar.value" />
+        <span class="w-full truncate text-center text-[9px] text-zinc-400 dark:text-zinc-500">{{ bar.label }}</span>
+      </div>
+    </div>
+    <table data-monitor-runs class="w-full">
+      <thead>
+        <tr class="border-b border-zinc-100 text-left text-[11px] font-medium text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+          <th class="px-4 py-2 font-medium">Started At</th>
+          <th class="px-2 py-2 font-medium">Name</th>
+          <th class="px-4 py-2 text-right font-medium">Latency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="run in props.runs"
+          :key="run.id"
+          :data-monitor-run="run.id"
+          tabindex="0"
+          class="cursor-pointer border-b border-zinc-50 text-xs transition-colors last:border-b-0 hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/60"
+          @click="emit('run-click', run)"
+          @keydown.enter="emit('run-click', run)"
+        >
+          <td data-monitor-run-time class="whitespace-nowrap px-4 py-2.5 text-zinc-400 dark:text-zinc-500">
+            <span class="mr-1.5 inline-flex items-center" aria-hidden="true">{{ run.ok !== false ? '✅' : '⚠️' }}</span>
+            {{ run.startedAt }}
+          </td>
+          <td data-monitor-run-name class="max-w-0 truncate px-2 py-2.5 font-medium text-zinc-800 dark:text-zinc-100">{{ run.name }}</td>
+          <td data-monitor-run-latency class="whitespace-nowrap px-4 py-2.5 text-right text-zinc-500 dark:text-zinc-400">{{ formatLatency(run.latencyMs) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
 
 ====/File: vue/Navbar.vue/====
 
@@ -39049,6 +39755,183 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-run-log'
 }
 export default AgentRunLogElement;
 
+====/File: vanilla/AgentSessionTimeline.js/====
+
+/**
+ * AgentSessionTimeline - Agent browser-session timeline: summary header with
+ * status/duration/steps chips, a segmented activity strip, a step list with
+ * Reason/Tool badges and a request panel (Browserbase session pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const KIND_STYLES = {
+  prompt: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300',
+  reason: 'bg-sky-100 text-sky-700 dark:bg-sky-950/60 dark:text-sky-300',
+  tool: 'bg-orange-100 text-orange-700 dark:bg-orange-950/60 dark:text-orange-300',
+};
+
+const STRIP_COLORS = {
+  prompt: 'bg-emerald-400 dark:bg-emerald-500',
+  reason: 'bg-sky-400 dark:bg-sky-500',
+  tool: 'bg-orange-400 dark:bg-orange-500',
+};
+
+const DEFAULT_STEPS = () => [
+  { id: 's1', kind: 'prompt', label: 'Summarize the top 5 trending tech articles', at: '0:00' },
+  { id: 's2', kind: 'reason', label: 'Plan fetch strategy', at: '0:03' },
+  { id: 's3', kind: 'tool', label: 'HTTP probe', at: '0:03' },
+  { id: 's4', kind: 'tool', label: 'Fetch API', at: '0:14' },
+  { id: 's5', kind: 'reason', label: 'Need to actually fetch the pages', at: '0:14' },
+  { id: 's6', kind: 'tool', label: 'Search HTML', at: '0:26' },
+  { id: 's7', kind: 'tool', label: 'Run code', at: '0:31' },
+];
+
+const DEFAULT_REQUESTS = () => [
+  { id: 'q1', url: 'techcrunch.com', method: 'HTTP probe', status: 'HTTP 200', duration: '0:03', ok: true },
+  { id: 'q2', url: 'techcrunch.com/2026/08/02/sam-altman-an…', method: 'Fetch API', status: 'HTTP 200', duration: '0:50', ok: true },
+  { id: 'q3', url: 'techcrunch.com/2026/08/01/inside-one-lond…', method: 'Fetch API', status: 'HTTP 200', duration: '0:50', ok: true },
+  { id: 'q4', url: 'techcrunch.com/2026/08/02/the-global-me…', method: 'Fetch API', status: 'HTTP 429', duration: '0:50', ok: false },
+];
+
+class AgentSessionTimelineElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['steps', 'requests', 'title', 'status', 'duration', 'steps-count'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._steps = [];
+    this._requests = [];
+    this._title = 'Go to techcrunch.com and summarize the top 5 trending tech articles';
+    this._status = 'Complete';
+    this._duration = '1m 11s';
+    this._stepsCount = 11;
+  }
+
+  connectedCallback() {
+    if (!this._steps.length) this._steps = parseJsonAttr(this.getAttribute('steps'), DEFAULT_STEPS());
+    if (!this._requests.length) this._requests = parseJsonAttr(this.getAttribute('requests'), DEFAULT_REQUESTS());
+    this._title = this.getAttribute('title') || this._title;
+    this._status = this.getAttribute('status') || this._status;
+    this._duration = this.getAttribute('duration') || this._duration;
+    const sc = this.getAttribute('steps-count');
+    if (sc) this._stepsCount = Number(sc) || this._stepsCount;
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    if (name === 'steps' && !this._steps.length) this._steps = parseJsonAttr(newValue, []);
+    if (name === 'requests' && !this._requests.length) this._requests = parseJsonAttr(newValue, []);
+    if (name === 'title') this._title = newValue || '';
+    if (name === 'status') this._status = newValue || '';
+    if (name === 'duration') this._duration = newValue || '';
+    if (name === 'steps-count') this._stepsCount = Number(newValue) || 0;
+    this._render();
+  }
+
+  get steps() { return this._steps; }
+  set steps(value) { this._steps = Array.isArray(value) ? value : []; this._render(); }
+
+  get requests() { return this._requests; }
+  set requests(value) { this._requests = Array.isArray(value) ? value : []; this._render(); }
+
+  _onClick(event) {
+    const stepEl = event.target.closest('[data-agent-step]');
+    if (stepEl) {
+      const step = this._steps.find((s) => s.id === stepEl.getAttribute('data-agent-step'));
+      if (step) {
+        this.dispatchEvent(new CustomEvent('step-click', { detail: { step }, bubbles: true }));
+      }
+    }
+  }
+
+  _render() {
+    const stripHtml = this._steps
+      .slice(0, 24)
+      .map(
+        (s) =>
+          `<span title="${escapeAttribute(s.kind)} · ${escapeAttribute(s.label)}" class="flex-1 rounded-sm ${STRIP_COLORS[s.kind] || STRIP_COLORS.tool}"></span>`
+      )
+      .join('');
+
+    const stepsHtml = this._steps
+      .map(
+        (step) => `
+        <li>
+          <button type="button" data-agent-step="${escapeAttribute(step.id)}" class="flex w-full items-center gap-2 px-4 py-2 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60">
+            <span data-agent-step-badge="${escapeAttribute(step.kind)}" class="inline-flex shrink-0 items-center rounded px-1.5 py-0.5 text-[9px] font-bold tracking-wide ${KIND_STYLES[step.kind] || KIND_STYLES.tool}">${escapeAttribute(step.kind)}</span>
+            <span data-agent-step-label class="min-w-0 flex-1 truncate text-xs text-zinc-700 dark:text-zinc-200">${escapeAttribute(step.label)}</span>
+            <span data-agent-step-at class="shrink-0 text-[10px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(step.at)}</span>
+          </button>
+        </li>`
+      )
+      .join('');
+
+    const requestsHtml = this._requests
+      .map(
+        (req) => `
+        <div data-agent-request="${escapeAttribute(req.id)}" class="flex items-center gap-2 px-4 py-2">
+          <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-[9px] font-bold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400" aria-hidden="true">⌾</span>
+          <span class="min-w-0 flex-1">
+            <span data-agent-request-url class="block truncate text-xs font-medium text-zinc-800 dark:text-zinc-100">${escapeAttribute(req.url)}</span>
+            <span data-agent-request-status class="block truncate text-[10px] ${(req.ok ?? true) ? 'text-zinc-400 dark:text-zinc-500' : 'text-red-500 dark:text-red-400'}">${escapeAttribute(req.status)}${req.method ? ' · ' + escapeAttribute(req.method) : ''}</span>
+          </span>
+          <span data-agent-request-duration class="shrink-0 text-[10px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(req.duration)}</span>
+        </div>`
+      )
+      .join('');
+
+    this.innerHTML = `
+      <div data-agent-session-timeline class="w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div data-agent-session-header class="border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+          <p data-agent-session-title class="mb-2 truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this._title)}</p>
+          <div class="flex flex-wrap items-center gap-2">
+            <span data-agent-session-status class="rounded-md bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">${escapeAttribute(this._status)}</span>
+            <span data-agent-session-duration class="text-[11px] text-zinc-400 dark:text-zinc-500">⏱ ${escapeAttribute(this._duration)}</span>
+            <span data-agent-session-steps-count class="text-[11px] text-zinc-400 dark:text-zinc-500">≡ ${this._stepsCount} steps</span>
+          </div>
+          <div data-agent-session-strip class="mt-3 flex h-2 items-stretch gap-0.5 overflow-hidden rounded-full">${stripHtml}</div>
+        </div>
+        <div data-agent-session-body class="grid grid-cols-1 md:grid-cols-2">
+          <ol data-agent-steps class="divide-y divide-zinc-50 border-b border-zinc-100 md:border-b-0 md:border-r dark:divide-zinc-800/60 dark:border-zinc-800">${stepsHtml}</ol>
+          <div data-agent-requests class="divide-y divide-zinc-50 dark:divide-zinc-800/60">${requestsHtml}</div>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('agent-session-timeline')) {
+  customElements.define('agent-session-timeline', AgentSessionTimelineElement);
+}
+
+export default AgentSessionTimelineElement;
+
 ====/File: vanilla/AgentStepTimeline.js/====
 
 import uiIcon from './UiIcon.js';
@@ -46539,6 +47422,153 @@ if (typeof customElements !== 'undefined' && !customElements.get('eval-score-tab
 
 export default EvalScoreTableElement;
 
+====/File: vanilla/EvalTurnBuilder.js/====
+
+/**
+ * EvalTurnBuilder - Evaluation scenario builder: role-tagged conversation
+ * turns (system / user / assistant / tool response) with per-turn mock
+ * content and an add-turn footer (Vapi Evals pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const ROLE_STYLES = {
+  system: { label: 'SYSTEM', badge: 'bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300', icon: '>' },
+  user: { label: 'USER', badge: 'bg-sky-100 text-sky-700 dark:bg-sky-950/60 dark:text-sky-300', icon: '?' },
+  assistant: { label: 'ASSISTANT', badge: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300', icon: 'A' },
+  tool: { label: 'TOOL RESPONSE', badge: 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300', icon: 'T' },
+};
+
+const DEFAULT_TURNS = () => [
+  {
+    id: 't1',
+    role: 'system',
+    turn: 0,
+    content: '# Appointment Scheduling Agent Prompt\n\nYou are Riley, an appointment scheduling voice assistant for Wellness Partners, a multi-specialty health clinic.',
+    mock: false,
+  },
+  { id: 't2', role: 'user', turn: 1, content: 'Hi, can I reschedule my appointment to another time this week?', mock: true },
+  { id: 't3', role: 'assistant', turn: 2, content: 'Sure, I can help with that. What day and time would you like to reschedule your appointment to?', mock: true },
+  { id: 't4', role: 'tool', turn: 3, content: 'reschedule_appointment \u2192 { "status": "success", "new_time": "Thursday at 2 PM" }', mock: true },
+];
+
+class EvalTurnBuilderElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['turns'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._turns = [];
+  }
+
+  connectedCallback() {
+    if (!this._turns.length) {
+      this._turns = parseJsonAttr(this.getAttribute('turns'), DEFAULT_TURNS());
+    }
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'turns' && !this._turns.length) {
+      this._turns = parseJsonAttr(newValue, []);
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get turns() { return this._turns; }
+  set turns(value) {
+    this._turns = Array.isArray(value) ? value : [];
+    this._render();
+  }
+
+  _onClick(event) {
+    const removeEl = event.target.closest('[data-eval-turn-remove]');
+    if (removeEl) {
+      const turnEl = removeEl.closest('[data-eval-turn]');
+      const turn = this._turns.find((t) => t.id === turnEl?.getAttribute('data-eval-turn'));
+      if (turn) {
+        this._turns = this._turns.filter((t) => t.id !== turn.id);
+        this._render();
+        this.dispatchEvent(new CustomEvent('turn-remove', { detail: { turn }, bubbles: true }));
+      }
+      return;
+    }
+    const addEl = event.target.closest('[data-eval-add-turn]');
+    if (addEl) {
+      const role = addEl.getAttribute('data-eval-add-turn');
+      this.dispatchEvent(new CustomEvent('add-turn', { detail: { role }, bubbles: true }));
+    }
+  }
+
+  _render() {
+    const turnsHtml = this._turns
+      .map((t) => {
+        const style = ROLE_STYLES[t.role] || ROLE_STYLES.user;
+        return `
+        <div data-eval-turn="${escapeAttribute(t.id)}" data-eval-role="${escapeAttribute(t.role)}" class="p-4">
+          <div class="mb-2 flex items-center justify-between gap-2">
+            <span class="flex items-center gap-2">
+              <span data-eval-turn-badge="${escapeAttribute(t.role)}" class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-bold tracking-wider ${style.badge}"><span aria-hidden="true">${style.icon}</span> ${style.label}</span>
+              ${t.mock ? '<span data-eval-turn-mock class="rounded-md bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">Mock</span>' : ''}
+            </span>
+            <span class="flex items-center gap-2">
+              ${t.turn > 0 ? `<span data-eval-turn-number class="text-[10px] text-zinc-400 dark:text-zinc-500">Turn ${t.turn}</span>` : ''}
+              <button type="button" data-eval-turn-remove aria-label="Remove ${style.label.toLowerCase()} turn" class="text-zinc-300 transition-colors hover:text-red-500 dark:text-zinc-600 dark:hover:text-red-400">✕</button>
+            </span>
+          </div>
+          <pre data-eval-turn-content class="max-h-40 overflow-y-auto whitespace-pre-wrap rounded-lg border border-zinc-100 bg-zinc-50 px-3 py-2 text-xs leading-relaxed text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-300">${escapeAttribute(t.content)}</pre>
+        </div>`;
+      })
+      .join('');
+
+    const addLabels = { user: 'User', assistant: 'Assistant', tool: 'Tool Response' };
+    const addHtml = Object.entries(addLabels)
+      .map(
+        ([role, label]) => `
+        <button type="button" data-eval-add-turn="${role}" class="py-2.5 text-center text-xs font-medium text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">+ Add ${label}</button>`
+      )
+      .join('');
+
+    this.innerHTML = `
+      <div data-eval-turn-builder class="w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div data-eval-turns class="divide-y divide-zinc-100 dark:divide-zinc-800">${turnsHtml}</div>
+        <div data-eval-turn-add class="grid grid-cols-3 divide-x divide-zinc-100 border-t border-zinc-100 dark:divide-zinc-800 dark:border-zinc-800">${addHtml}</div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('eval-turn-builder')) {
+  customElements.define('eval-turn-builder', EvalTurnBuilderElement);
+}
+
+export default EvalTurnBuilderElement;
+
 ====/File: vanilla/FalRunCard.js/====
 
 /**
@@ -51965,6 +52995,175 @@ if (typeof customElements !== 'undefined' && !customElements.get('model-selector
   customElements.define('model-selector', ModelSelectorElement);
 }
 export default ModelSelectorElement;
+
+====/File: vanilla/MonitorRunList.js/====
+
+/**
+ * MonitorRunList - LLM monitor run history: filter + time-range pills over a
+ * mini request histogram, then run rows with success icon, timestamp, name
+ * and latency (Adaline Monitor pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_RUNS = () => [
+  { id: 'r1', name: 'Product Performance Metrics', startedAt: 'Oct 14, 1:00 AM', latencyMs: 7000, ok: true },
+  { id: 'r2', name: 'Q2 Financial Overview', startedAt: 'Oct 14, 12:59 AM', latencyMs: 6688, ok: true },
+  { id: 'r3', name: 'Customer Retention Strategy', startedAt: 'Oct 14, 12:37 AM', latencyMs: 1819, ok: true },
+  { id: 'r4', name: 'Employee Satisfaction Survey 2025', startedAt: 'Oct 13, 10:44 PM', latencyMs: 903, ok: true },
+];
+
+const DEFAULT_HISTOGRAM = () => [
+  { label: '13:00', value: 40 }, { label: '15:00', value: 25 }, { label: '17:00', value: 55 },
+  { label: '19:00', value: 30 }, { label: '21:00', value: 70 }, { label: '23:00', value: 45 },
+  { label: '01:00', value: 60 }, { label: '03:00', value: 35 }, { label: '05:00', value: 80 },
+  { label: '07:00', value: 50 }, { label: '09:00', value: 65 }, { label: '11:00', value: 20 },
+];
+
+const formatLatency = (ms) => {
+  if (ms < 1000) return `${ms} ms`;
+  const s = Math.floor(ms / 1000);
+  const rem = ms % 1000;
+  return rem === 0 ? `${s} s` : `${s} s ${rem} ms`;
+};
+
+class MonitorRunListElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['runs', 'histogram', 'ranges', 'active-range'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._runs = [];
+    this._histogram = [];
+    this._ranges = [];
+    this._activeRange = '24 hrs';
+  }
+
+  connectedCallback() {
+    if (!this._runs.length) this._runs = parseJsonAttr(this.getAttribute('runs'), DEFAULT_RUNS());
+    if (!this._histogram.length) this._histogram = parseJsonAttr(this.getAttribute('histogram'), DEFAULT_HISTOGRAM());
+    if (!this._ranges.length) this._ranges = parseJsonAttr(this.getAttribute('ranges'), ['24 hrs', '7 days', '30 days', '6 months']);
+    const ar = this.getAttribute('active-range');
+    if (ar) this._activeRange = ar;
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    if (name === 'runs' && !this._runs.length) this._runs = parseJsonAttr(newValue, []);
+    if (name === 'histogram' && !this._histogram.length) this._histogram = parseJsonAttr(newValue, []);
+    if (name === 'ranges' && !this._ranges.length) this._ranges = parseJsonAttr(newValue, []);
+    if (name === 'active-range') this._activeRange = newValue || '24 hrs';
+    this._render();
+  }
+
+  get runs() { return this._runs; }
+  set runs(value) { this._runs = Array.isArray(value) ? value : []; this._render(); }
+
+  get histogram() { return this._histogram; }
+  set histogram(value) { this._histogram = Array.isArray(value) ? value : []; this._render(); }
+
+  get activeRange() { return this._activeRange; }
+  set activeRange(value) { this._activeRange = String(value); this._render(); }
+
+  _onClick(event) {
+    const rangeEl = event.target.closest('[data-monitor-range]');
+    if (rangeEl) {
+      this._activeRange = rangeEl.getAttribute('data-monitor-range');
+      this._render();
+      this.dispatchEvent(new CustomEvent('range-change', { detail: { range: this._activeRange }, bubbles: true }));
+      return;
+    }
+    const runEl = event.target.closest('[data-monitor-run]');
+    if (runEl) {
+      const run = this._runs.find((r) => r.id === runEl.getAttribute('data-monitor-run'));
+      if (run) {
+        this.dispatchEvent(new CustomEvent('run-click', { detail: { run }, bubbles: true }));
+      }
+    }
+  }
+
+  _render() {
+    const max = Math.max(1, ...this._histogram.map((b) => b.value));
+    const barsHtml = this._histogram
+      .map(
+        (bar) => `
+        <div data-monitor-bar="${escapeAttribute(bar.label)}" class="flex min-w-0 flex-1 flex-col items-center gap-1">
+          <div class="w-full rounded-sm bg-emerald-600/85 transition-colors hover:bg-emerald-500" style="height:${Math.max(4, (bar.value / max) * 56)}px" title="${escapeAttribute(bar.label)} · ${bar.value}"></div>
+          <span class="w-full truncate text-center text-[9px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(bar.label)}</span>
+        </div>`
+      )
+      .join('');
+
+    const rangesHtml = this._ranges
+      .map((range) => {
+        const active = range === this._activeRange;
+        return `<button type="button" data-monitor-range="${escapeAttribute(range)}" aria-pressed="${active}" class="${active ? 'rounded-md bg-emerald-600 px-2 py-1 text-xs font-medium text-white' : 'rounded-md px-2 py-1 text-xs font-medium text-zinc-500 transition-colors hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-800'}">${escapeAttribute(range)}</button>`;
+      })
+      .join('');
+
+    const rowsHtml = this._runs
+      .map(
+        (run) => `
+        <tr data-monitor-run="${escapeAttribute(run.id)}" tabindex="0" class="cursor-pointer border-b border-zinc-50 text-xs transition-colors last:border-b-0 hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/60">
+          <td data-monitor-run-time class="whitespace-nowrap px-4 py-2.5 text-zinc-400 dark:text-zinc-500"><span class="mr-1.5 inline-flex items-center" aria-hidden="true">${run.ok !== false ? '✅' : '⚠️'}</span>${escapeAttribute(run.startedAt)}</td>
+          <td data-monitor-run-name class="max-w-0 truncate px-2 py-2.5 font-medium text-zinc-800 dark:text-zinc-100">${escapeAttribute(run.name)}</td>
+          <td data-monitor-run-latency class="whitespace-nowrap px-4 py-2.5 text-right text-zinc-500 dark:text-zinc-400">${escapeAttribute(formatLatency(run.latencyMs))}</td>
+        </tr>`
+      )
+      .join('');
+
+    this.innerHTML = `
+      <div data-monitor-run-list class="w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div data-monitor-toolbar class="flex items-center justify-between gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+          <button type="button" data-monitor-filter class="inline-flex items-center gap-1.5 rounded-md border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"><span aria-hidden="true">⏳</span> Filter</button>
+          <div data-monitor-ranges class="inline-flex items-center gap-1">${rangesHtml}</div>
+        </div>
+        <div data-monitor-histogram class="flex h-20 items-end gap-1 border-b border-zinc-100 px-4 pt-3 dark:border-zinc-800">${barsHtml}</div>
+        <table data-monitor-runs class="w-full">
+          <thead>
+            <tr class="border-b border-zinc-100 text-left text-[11px] font-medium text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+              <th class="px-4 py-2 font-medium">Started At</th>
+              <th class="px-2 py-2 font-medium">Name</th>
+              <th class="px-4 py-2 text-right font-medium">Latency</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('monitor-run-list')) {
+  customElements.define('monitor-run-list', MonitorRunListElement);
+}
+
+export default MonitorRunListElement;
 
 ====/File: vanilla/Navbar.js/====
 

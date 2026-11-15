@@ -1065,6 +1065,21 @@ awesome-ui/
 - **Vanilla 用法**: `<iteration-action-bar>` + `page`/`total-pages` 属性；事件 `action {action}` / `page-change {page}`（翻页按钮内部更新页码）
 - **特性**: Show More / Brainstorm / Reply 圆角 pills + ··· 溢出位（aria-label "More actions"）、‹ › 翻页器（边界禁用）与 `{page}/{totalPages}` 页码标签。
 
+### 184. `MonitorRunList` (监控运行列表)
+- **Props**: `runs?: [{id,name,startedAt,latencyMs,ok?}]`, `histogram?: [{label,value}]`, `ranges?: string[]`, `activeRange?: string`, `className?`, `onRunClick?(run)`, `onRangeChange?(range)`
+- **Vanilla 用法**: `<monitor-run-list>` + `runs`/`histogram`/`ranges`/`active-range` 属性；事件 `run-click {run}` / `range-change {range}`（时段点击内部更新激活态）
+- **特性**: Filter 按钮 + 时段 pills（激活态 emerald 实底）、迷你请求直方图（emerald 条形按值缩放）、运行行（✅/⚠️ 状态图标 + Started At + 名称 + 格式化延迟 "7 s 668 ms"）。
+
+### 185. `EvalTurnBuilder` (评估回合编排器)
+- **Props**: `turns?: [{id,role,turn,content,mock?}]`, `className?`, `onTurnRemove?(turn)`, `onAddTurn?(role)`
+- **Vanilla 用法**: `<eval-turn-builder>` + `turns` JSON 属性或 property；事件 `turn-remove {turn}`（点击 ✕ 同时从 DOM 移除回合）/ `add-turn {role}`
+- **特性**: 角色徽章（SYSTEM 紫 / USER 天蓝 / ASSISTANT 翠绿 / TOOL RESPONSE 琥珀）+ Mock 标签 + Turn 序号、`pre` 内容块（max-h 滚动）、底部 + Add User / Assistant / Tool Response 三列页脚。
+
+### 186. `AgentSessionTimeline` (会话时间线)
+- **Props**: `title?`, `status?`, `duration?`, `stepsCount?`, `steps?: [{id,kind,label,at}]`, `requests?: [{id,url,method?,status,duration,ok?}]`, `className?`, `onStepClick?(step)`
+- **Vanilla 用法**: `<agent-session-timeline>` + `steps`/`requests` JSON 属性；事件 `step-click {step}`
+- **特性**: 标题 + Complete 徽章 / ⏱ 时长 / ≡ 步骤数 chips、prompt/reason/tool 三色分段活动条、步骤列表（kind 徽章 + 标签 + 时间戳）、请求面板（失败状态红色显示）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

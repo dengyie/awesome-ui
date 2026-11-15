@@ -201,6 +201,9 @@
 | **`VisionAnalysisCard`** | 视觉分析卡 | Claude 图片分析结构化回复：可点击分区标题 + key/value 属性行网格 |
 | **`PrReviewQueue`** | PR 评审队列 | Graphite 分组 PR 队列：可折叠分组（计数徽章 + 标签）、作者首字母头像行、`作者 · 仓库 #编号` 元信息 |
 | **`IterationActionBar`** | 迭代操作条 | Luma 生成迭代条：Show More / Brainstorm / Reply 圆角 pills、··· 溢出位与 ‹ › 翻页器（页码标签） |
+| **`MonitorRunList`** | 监控运行列表 | Adaline Monitor 运行历史：Filter + 时段 pills、请求量迷你直方图、状态图标 + 时间戳 + 延迟行 |
+| **`EvalTurnBuilder`** | 评估回合编排器 | Vapi Evals 角色回合块：SYSTEM/USER/ASSISTANT/TOOL 徽章、Mock 标签、Turn 序号与 + Add 回合页脚 |
+| **`AgentSessionTimeline`** | 会话时间线 | Browserbase 会话：状态/时长/步骤 chips、分段活动条、Reason/Tool 步骤列表与请求面板 |
 | **`CampsiteHandoff`** | 设计交付面板 | Campsite 设计 handoff：完成态检查清单（负责人首字母头像 + 截止日期）、x/y done 计数与 AI 摘要块 |
 | **`ZendeskFieldSuggest`** | 工单字段建议条 | Zendesk AI 字段建议：琥珀色建议条、字段 chips（标签: 值 + 置信度 %）点击即应用、Ignore 忽略按钮 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
@@ -390,6 +393,9 @@ awesome-ui/
 │   ├── VisionAnalysisCard.tsx
 │   ├── PrReviewQueue.tsx
 │   ├── IterationActionBar.tsx
+│   ├── MonitorRunList.tsx
+│   ├── EvalTurnBuilder.tsx
+│   └── AgentSessionTimeline.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -571,6 +577,9 @@ awesome-ui/
 │   ├── VisionAnalysisCard.vue
 │   ├── PrReviewQueue.vue
 │   ├── IterationActionBar.vue
+│   ├── MonitorRunList.vue
+│   ├── EvalTurnBuilder.vue
+│   └── AgentSessionTimeline.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -752,6 +761,9 @@ awesome-ui/
 │   ├── VisionAnalysisCard.js
 │   ├── PrReviewQueue.js
 │   └── IterationActionBar.js
+│   ├── MonitorRunList.js
+│   ├── EvalTurnBuilder.js
+│   └── AgentSessionTimeline.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js
