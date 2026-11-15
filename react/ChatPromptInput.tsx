@@ -1,11 +1,18 @@
-import React, { useRef, useEffect, useState, KeyboardEvent } from "react";
-import { ArrowUp, Square, Paperclip, X, ImageIcon } from "./UiIcon";
+import React, { useRef, useEffect, KeyboardEvent } from "react";
+import { UiIcon, type UiIconName, ArrowUp, Square, Paperclip, X, ImageIcon } from "./UiIcon";
 
 export interface Attachment {
   id: string;
   name: string;
   url?: string;
   type: "image" | "file";
+}
+
+export interface PromptChip {
+  id: string;
+  label: string;
+  icon?: UiIconName | null;
+  active?: boolean;
 }
 
 export interface ChatPromptInputProps {
@@ -20,6 +27,8 @@ export interface ChatPromptInputProps {
   attachments?: Attachment[];
   onAddAttachment?: (file: File) => void;
   onRemoveAttachment?: (id: string) => void;
+  chips?: PromptChip[];
+  onChipClick?: (chip: PromptChip) => void;
   className?: string;
 }
 
@@ -35,6 +44,8 @@ export const ChatPromptInput: React.FC<ChatPromptInputProps> = ({
   attachments = [],
   onAddAttachment,
   onRemoveAttachment,
+  chips = [],
+  onChipClick,
   className = "",
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -155,6 +166,30 @@ export const ChatPromptInput: React.FC<ChatPromptInputProps> = ({
           </button>
         )}
       </div>
+
+      {/* Chips Row (model / tools) */}
+      {chips.length > 0 && (
+        <div className="flex flex-wrap items-center gap-1.5 px-3 pt-2 pb-2.5 border-t border-zinc-100 dark:border-zinc-800">
+          {chips.map((chip) => (
+            <button
+              key={chip.id}
+              type="button"
+              onClick={() => onChipClick?.(chip)}
+              aria-pressed={!!chip.active}
+              className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+                chip.active
+                  ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400"
+                  : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+              }`}
+            >
+              {chip.icon && <UiIcon name={chip.icon} size={12} />}
+              {chip.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
+
+export default ChatPromptInput;

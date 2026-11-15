@@ -57,6 +57,20 @@
           </button>
         </template>
       </div>
+
+      <!-- Shortcut hint bar -->
+      <div class="flex items-center justify-end gap-3 px-4 py-2 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30 text-[10px] text-zinc-400 dark:text-zinc-500">
+        <span v-for="hint in shortcutHints" :key="hint.label" class="flex items-center gap-1">
+          <kbd
+            v-for="k in hint.keys"
+            :key="k"
+            class="inline-flex min-w-[1.25rem] justify-center px-1 py-0.5 font-mono bg-zinc-100 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700"
+          >
+            {{ k }}
+          </kbd>
+          <span>{{ hint.label }}</span>
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -92,6 +106,12 @@ const emit = defineEmits<{
 const query = ref("");
 const activeIndex = ref(0);
 const inputRef = ref<HTMLInputElement | null>(null);
+
+const shortcutHints = [
+  { keys: ["↑", "↓"], label: "Navigate" },
+  { keys: ["↵"], label: "Select" },
+  { keys: ["esc"], label: "Close" },
+] as const;
 
 const filtered = computed(() => {
   if (!query.value.trim()) return props.items;

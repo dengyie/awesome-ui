@@ -160,6 +160,27 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             })
           )}
         </div>
+
+        {/* Shortcut hint bar */}
+        <div className="flex items-center justify-end gap-3 px-4 py-2 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30 text-[10px] text-zinc-400 dark:text-zinc-500">
+          {[
+            { keys: ["↑", "↓"], label: "Navigate" },
+            { keys: ["↵"], label: "Select" },
+            { keys: ["esc"], label: "Close" },
+          ].map(({ keys, label }) => (
+            <span key={label} className="flex items-center gap-1">
+              {keys.map((k) => (
+                <kbd
+                  key={k}
+                  className="inline-flex min-w-[1.25rem] justify-center px-1 py-0.5 font-mono bg-zinc-100 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700"
+                >
+                  {k}
+                </kbd>
+              ))}
+              <span>{label}</span>
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -29,6 +29,7 @@
     }
   },
   "include": [
-    "../react/HomepageDashboard.tsx"
+    "../react/**/*.tsx",
+    "./shims.d.ts"
   ]
 }

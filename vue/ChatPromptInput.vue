@@ -64,17 +64,35 @@
         class="p-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-sm flex-shrink-0"
         title="Stop generation"
       >
-        ■
+        <UiIcon name="square" :size="16" class="fill-current" />
       </button>
       <button
         v-else
         type="button"
         @click="handleSubmit"
         :disabled="!modelValue.trim() || disabled"
-        class="p-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-xl hover:opacity-90 active:scale-95 transition-all disabled:opacity-30 disabled:pointer-events-none shadow-sm flex-shrink-0 font-bold"
+        class="p-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-xl hover:opacity-90 active:scale-95 transition-all disabled:opacity-30 disabled:pointer-events-none shadow-sm flex-shrink-0"
         title="Send message"
       >
-        ↑
+        <UiIcon name="arrow-up" :size="16" />
+      </button>
+    </div>
+
+    <!-- Chips Row (model / tools) -->
+    <div v-if="chips.length > 0" class="flex flex-wrap items-center gap-1.5 px-3 pt-2 pb-2.5 border-t border-zinc-100 dark:border-zinc-800">
+      <button
+        v-for="chip in chips"
+        :key="chip.id"
+        type="button"
+        :aria-pressed="!!chip.active"
+        :class="['flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
+          chip.active
+            ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400'
+            : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700']"
+        @click="emit('chipClick', chip)"
+      >
+        <UiIcon v-if="chip.icon" :name="chip.icon" :size="12" />
+        {{ chip.label }}
       </button>
     </div>
   </div>
@@ -91,6 +109,13 @@ export interface Attachment {
   type: 'image' | 'file';
 }
 
+export interface PromptChip {
+  id: string;
+  label: string;
+  icon?: string;
+  active?: boolean;
+}
+
 const props = withDefaults(
   defineProps<{
     modelValue: string;
@@ -99,6 +124,7 @@ const props = withDefaults(
     disabled?: boolean;
     allowAttachments?: boolean;
     attachments?: Attachment[];
+    chips?: PromptChip[];
     className?: string;
   }>(),
   {
@@ -107,6 +133,7 @@ const props = withDefaults(
     disabled: false,
     allowAttachments: true,
     attachments: () => [],
+    chips: () => [],
     className: ''
   }
 );
@@ -117,6 +144,7 @@ const emit = defineEmits<{
   (e: 'stop'): void;
   (e: 'addAttachment', file: File): void;
   (e: 'removeAttachment', id: string): void;
+  (e: 'chipClick', chip: PromptChip): void;
 }>();
 
 const textareaRef = ref<HTMLTextAreaElement | null>(null);

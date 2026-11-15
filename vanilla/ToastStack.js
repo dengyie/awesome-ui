@@ -10,12 +10,20 @@ const escapeAttribute = (value) =>
   }[char]));
 
 const TYPE_META = {
-  success: { icon: 'check-circle', color: 'text-emerald-500' },
-  error: { icon: 'circle-x', color: 'text-rose-500' },
-  warning: { icon: 'alert-triangle', color: 'text-amber-500' },
-  info: { icon: 'sparkles', color: 'text-sky-500' },
+  success: { icon: 'check-circle', color: 'text-emerald-500', bar: 'bg-emerald-500' },
+  error: { icon: 'circle-x', color: 'text-rose-500', bar: 'bg-rose-500' },
+  warning: { icon: 'alert-triangle', color: 'text-amber-500', bar: 'bg-amber-500' },
+  info: { icon: 'sparkles', color: 'text-sky-500', bar: 'bg-sky-500' },
 };
 
+/**
+ * ToastStack - Vanilla Web Component
+ * Usage: <toast-stack duration="4000"></toast-stack>
+ * JS API: el.push(message, type); el.dismiss(id); el.toasts = [...]
+ * Events: dismiss (detail: { id })
+ * Each toast carries a bottom countdown bar (h-0.5) that shrinks to 0 over
+ * `duration` ms and pauses while hovered. duration="0" = sticky toasts.
+ */
 export class ToastStackElement extends HTMLElement {
   static get observedAttributes() {
     return ['duration'];
@@ -24,7 +32,7 @@ export class ToastStackElement extends HTMLElement {
   constructor() {
     super();
     this._toasts = [];
-    this._timers = new Map();
+    this._clocks = new Map(); // id -> { started, startPct, total, timer, ticker }
     this._seq = 0;
     this._appliedLayout = '';
   }
@@ -35,7 +43,7 @@ export class ToastStackElement extends HTMLElement {
 
   set toasts(val) {
     this._toasts = Array.isArray(val) ? val : [];
-    this._syncTimers();
+    this._syncClocks();
     this.render();
   }
 
@@ -47,49 +55,82 @@ export class ToastStackElement extends HTMLElement {
   push(message, type = 'info') {
     const id = ++this._seq;
     this._toasts = [...this._toasts, { id, message, type }];
-    this._syncTimers();
+    this._syncClocks();
     this.render();
     return id;
   }
 
   dismiss(id) {
-    const timer = this._timers.get(id);
-    if (timer) {
-      clearTimeout(timer);
-      this._timers.delete(id);
-    }
+    this._stopClock(id);
     this._toasts = this._toasts.filter((t) => t.id !== id);
     this.dispatchEvent(new CustomEvent('dismiss', { detail: { id } }));
     this.render();
   }
 
   attributeChangedCallback() {
-    this._syncTimers();
+    this._syncClocks();
     this.render();
   }
 
   disconnectedCallback() {
-    for (const timer of this._timers.values()) clearTimeout(timer);
-    this._timers.clear();
+    for (const id of [...this._clocks.keys()]) this._stopClock(id);
   }
 
-  _syncTimers() {
-    const duration = this.duration;
-    if (duration <= 0) {
-      for (const timer of this._timers.values()) clearTimeout(timer);
-      this._timers.clear();
+  _stopClock(id) {
+    const clock = this._clocks.get(id);
+    if (clock) {
+      if (clock.timer) clearTimeout(clock.timer);
+      if (clock.ticker) clearInterval(clock.ticker);
+      this._clocks.delete(id);
+    }
+  }
+
+  _startClock(id) {
+    const clock = this._clocks.get(id);
+    if (!clock || clock.total <= 0 || this.duration <= 0) return;
+    const started = Date.now();
+    clock.started = started;
+    clock.timer = setTimeout(() => {
+      clock.pct = 0;
+      this._updateBar(id, 0);
+      this._stopClock(id);
+      this.dismiss(id);
+    }, clock.total);
+    clock.ticker = setInterval(() => {
+      const pct = Math.max(0, clock.startPct * (1 - (Date.now() - started) / clock.total));
+      clock.pct = pct;
+      this._updateBar(id, pct);
+    }, 100);
+  }
+
+  _updateBar(id, pct) {
+    const bar = this.querySelector(`[data-bar-id="${id}"]`);
+    if (bar) bar.style.width = `${pct}%`;
+  }
+
+  _pauseClock(id) {
+    const clock = this._clocks.get(id);
+    if (!clock) return;
+    if (clock.timer) clearTimeout(clock.timer);
+    if (clock.ticker) clearInterval(clock.ticker);
+    const elapsed = Date.now() - clock.started;
+    clock.startPct = Math.max(0, clock.startPct * (1 - elapsed / clock.total));
+    clock.total = Math.max(0, clock.total - elapsed);
+  }
+
+  _syncClocks() {
+    if (this.duration <= 0) {
+      for (const id of [...this._clocks.keys()]) this._stopClock(id);
       return;
     }
     const alive = new Set(this._toasts.map((t) => t.id));
-    for (const [id, timer] of this._timers) {
-      if (!alive.has(id)) {
-        clearTimeout(timer);
-        this._timers.delete(id);
-      }
+    for (const id of [...this._clocks.keys()]) {
+      if (!alive.has(id)) this._stopClock(id);
     }
     for (const t of this._toasts) {
-      if (!this._timers.has(t.id)) {
-        this._timers.set(t.id, setTimeout(() => this.dismiss(t.id), duration));
+      if (!this._clocks.has(t.id)) {
+        this._clocks.set(t.id, { started: Date.now(), startPct: 100, total: this.duration, pct: 100 });
+        this._startClock(t.id);
       }
     }
   }
@@ -112,21 +153,31 @@ export class ToastStackElement extends HTMLElement {
     this.innerHTML = this._toasts
       .map((t) => {
         const meta = TYPE_META[t.type] || TYPE_META.info;
+        const clock = this._clocks.get(t.id);
+        const pct = clock ? (clock.pct ?? 100) : 100;
         return `
-          <div class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-lg text-sm text-zinc-800 dark:text-zinc-200" role="alert">
+          <div class="toast-card relative overflow-hidden flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-lg text-sm text-zinc-800 dark:text-zinc-200" role="alert" data-toast-id="${escapeAttribute(t.id)}">
             ${uiIcon(meta.icon, { size: 16, className: `${meta.color} shrink-0` })}
             <span class="flex-1 min-w-0">${escapeAttribute(t.message)}</span>
-            <button type="button" data-toast-id="${escapeAttribute(t.id)}" class="toast-dismiss text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors shrink-0" aria-label="Dismiss">
+            <button type="button" data-dismiss-id="${escapeAttribute(t.id)}" class="toast-dismiss text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors shrink-0" aria-label="Dismiss">
               ${uiIcon('x', { size: 14 })}
             </button>
+            ${this.duration > 0 ? `<span data-bar-id="${escapeAttribute(t.id)}" aria-hidden="true" class="absolute bottom-0 left-0 h-0.5 ${meta.bar} transition-[width] duration-100 ease-linear" style="width:${pct}%"></span>` : ''}
           </div>
         `;
       })
       .join('');
 
+    this.querySelectorAll('.toast-card').forEach((card) => {
+      const id = card.getAttribute('data-toast-id');
+      const toast = this._toasts.find((t) => String(t.id) === String(id));
+      if (!toast) return;
+      card.addEventListener('mouseenter', () => this._pauseClock(toast.id));
+      card.addEventListener('mouseleave', () => this._startClock(toast.id));
+    });
     this.querySelectorAll('.toast-dismiss').forEach((btn) => {
       btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-toast-id');
+        const id = btn.getAttribute('data-dismiss-id');
         const toast = this._toasts.find((t) => String(t.id) === String(id));
         if (toast) this.dismiss(toast.id);
       });

@@ -1,0 +1,25 @@
+{
+  "name": "awesome-ui-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Standalone regression tests for awesome-ui's HomepageDashboard (three-port parity). Install & run from this directory — the repo root stays dependency-free.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test *.test.mjs",
+    "test:vanilla": "node --test homepage-dashboard.vanilla.test.mjs",
+    "test:react": "node --test homepage-dashboard.react.test.mjs",
+    "test:vue": "node --test homepage-dashboard.vue.test.mjs",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vue/compiler-sfc": "^3.4.0",
+    "@vue/server-renderer": "^3.4.0",
+    "jsdom": "^24.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.5.0",
+    "vue": "^3.4.0"
+  }
+}

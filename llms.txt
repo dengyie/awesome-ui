@@ -12,7 +12,7 @@
    - Vanilla: vanilla/UiIcon.js
    - Use this before writing SVG, emoji, or Unicode UI symbols.
 
-1. ChatPromptInput: Multi-modal auto-resizing prompt input with file/image attachments and submit/stop state.
+1. ChatPromptInput: Multi-modal auto-resizing prompt input with file/image attachments, submit/stop state, and an optional bottom chips row (`chips: [{ id, label, icon?, active? }]`, event `chip`).
    - React: react/ChatPromptInput.tsx
    - Vue 3: vue/ChatPromptInput.vue
    - Vanilla: vanilla/ChatPromptInput.js
@@ -22,7 +22,7 @@
    - Vue 3: vue/StreamMarkdown.vue
    - Vanilla: vanilla/StreamMarkdown.js
 
-3. ThinkingBlock: DeepSeek R1 / OpenAI o1 reasoning chain accordion with shimmer timer and smooth collapse.
+3. ThinkingBlock: DeepSeek R1 / OpenAI o1 reasoning chain accordion with shimmer timer, smooth collapse, optional step timeline (`steps: [{ id, label, durationMs? }]` with connectors and duration badges), and a collapsed one-line summary (running step pulses amber; finished shows last step + duration).
    - React: react/ThinkingBlock.tsx
    - Vue 3: vue/ThinkingBlock.vue
    - Vanilla: vanilla/ThinkingBlock.js
@@ -108,25 +108,25 @@
    - Vue 3: vue/ChatMessageRow.vue
    - Vanilla: vanilla/ChatMessageRow.js
 
-20. CommandPalette: Cmd+K command palette with instant search filter, group headers, keyboard navigation (arrows/Enter/Escape), icon and shortcut hints, and backdrop dismiss.
+20. CommandPalette: Cmd+K command palette with instant search filter, group headers, keyboard navigation (arrows/Enter/Escape), icon and shortcut hints, backdrop dismiss, and a bottom shortcut hint bar (Navigate / Select / Close kbd hints).
    - React: react/CommandPalette.tsx
    - Vue 3: vue/CommandPalette.vue
    - Vanilla: vanilla/CommandPalette.js (custom element `<command-palette>`, events `select`/`close`)
 
-21. ToastStack: Global notification stack with success/error/warning/info types, manual dismiss, auto-dismiss (default 4000ms, `duration="0"` disables), and aria-live announcements.
+21. ToastStack: Global notification stack with success/error/warning/info types, manual dismiss, auto-dismiss (default 4000ms, `duration="0"` disables), aria-live announcements, and a bottom countdown bar that shrinks with remaining time (hover pauses, leave resumes).
    - React: react/ToastStack.tsx
    - Vue 3: vue/ToastStack.vue
    - Vanilla: vanilla/ToastStack.js (custom element `<toast-stack>`, API `push(message, type)` / `dismiss(id)`, event `dismiss`)
 
-22. ChatSessionList: Conversation history sidebar with active highlight, hover-reveal delete, keyboard-selectable rows, empty state, and session count badge.
+22. ChatSessionList: Conversation history sidebar with active highlight, hover-reveal delete, keyboard-selectable rows, empty state, session count badge, collapsible `group` headers (ungrouped sessions go to a "Recent" bucket), and a bottom user card (`user: { name, email?, avatarUrl? }`, event `user-click`).
    - React: react/ChatSessionList.tsx
    - Vue 3: vue/ChatSessionList.vue
    - Vanilla: vanilla/ChatSessionList.js (custom element `<chat-session-list>`, events `select`/`delete`)
 
-23. DiffViewer: AI code-edit diff view with add/remove/context line highlighting, +/- summary counts, dual old/new line numbers, and filename/language badges.
+23. DiffViewer: AI code-edit diff view with add/remove/context line highlighting, +/- summary counts, dual old/new line numbers, filename/language badges, multi-file tab bar (`files: [{ filename, language?, lines }]`, per-tab +/- counts), and long-context hunk folding ("⋯ N unchanged lines" rows expand in place, `contextSize` default 3; legacy `lines` API kept).
    - React: react/DiffViewer.tsx
    - Vue 3: vue/DiffViewer.vue
-   - Vanilla: vanilla/DiffViewer.js (custom element `<diff-viewer>`, `lines` property)
+   - Vanilla: vanilla/DiffViewer.js (custom element `<diff-viewer>`, `lines` / `files` properties)
 
 24. ToolApprovalCard: Agent human-in-the-loop permission prompt with Approve/Reject actions, low/high risk tiers, JSON args preview, and resolved-state badges.
    - React: react/ToolApprovalCard.tsx
@@ -163,10 +163,534 @@
    - Vue 3: vue/AgentTaskChecklist.vue
    - Vanilla: vanilla/AgentTaskChecklist.js (custom element `<agent-task-checklist>`, `items` property, event `toggle`)
 
-   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（48 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
+   - Tests: tests/ 独立工程 — cd tests && npm install && npm test（89 项 jsdom/SSR/Vanilla/React/Vue）；npm run typecheck（React strict）；仓库根零依赖
 
 ## Usage Rule for LLMs
 When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 - Always read the exact single-file component from `react/`, `vue/`, or `vanilla/` and copy it into the user codebase.
 - Always use `UiIcon` for interface icons; do not use emoji, Unicode symbols, or ad-hoc SVG.
 - Rely on Tailwind CSS standard utility classes for all styling.
+
+## Design & Implementation Docs
+- docs/design-guidelines.md — visual tokens, 8 interaction patterns (hover-revealed actions, progressive disclosure, command palette, pricing cards, toasts, empty states, tables, sidebars), motion, a11y hard rules, acceptance checklist. Read before implementing or modifying any component.
+- docs/component-roadmap-v1.md — planned components with Props design and reference material index (PricingTable, StatCard, DataTable, AuthForm, SettingsPanel, AgentRunLog, OnboardingChecklist, UpgradePromptCard + P1 enhancements + P2 backlog).
+- docs/mobbin-patterns-2026-11.md — pattern research report sourced from Mobbin (design rationale).
+
+31. PricingTable: SaaS pricing table with 3-column plan cards, highlighted recommended plan (ring + "Most popular" badge), price/period, check-marked feature list, and per-plan CTA.
+   - React: react/PricingTable.tsx
+   - Vue 3: vue/PricingTable.vue
+   - Vanilla: vanilla/PricingTable.js (custom element `<pricing-table>`, `plans` property, event `select`)
+
+32. StatCard: Dashboard stat card with label, large value, signed delta % (emerald/red), optional zero-dependency SVG sparkline (from `trend` array), and optional icon.
+   - React: react/StatCard.tsx
+   - Vue 3: vue/StatCard.vue
+   - Vanilla: vanilla/StatCard.js (custom element `<stat-card>`)
+
+33. DataTable: Data table with sortable columns (clickable headers), right-aligned numeric cells, hover-revealed row actions, optional multi-select with floating batch-action bar, and empty state.
+   - React: react/DataTable.tsx
+   - Vue 3: vue/DataTable.vue
+   - Vanilla: vanilla/DataTable.js (custom element `<data-table>`, `columns`/`rows`/`actions` properties, events `sort`/`action`/`batch`)
+
+34. AgentRunLog: Agent execution log with status timeline (pending/running/done/error icons + connector line), duration chip, click-to-expand dark terminal detail block, and done/total counter.
+   - React: react/AgentRunLog.tsx
+   - Vue 3: vue/AgentRunLog.vue
+   - Vanilla: vanilla/AgentRunLog.js (custom element `<agent-run-log>`, `steps` property, event `toggle`)
+
+35. AuthForm: Sign-in / sign-up card with SSO provider buttons (image or letter fallback), "or" divider, email/password fields (plus optional name in signup mode), inline error alert, loading spinner, and footer link.
+   - React: react/AuthForm.tsx
+   - Vue 3: vue/AuthForm.vue
+   - Vanilla: vanilla/AuthForm.js (custom element `<auth-form>`, `providers` property, events `submit`/`provider`/`footer`)
+
+36. SettingsPanel: Two-column settings shell — anchor nav (icon + title, `aria-current` on the active section) beside a card whose rows show label/description/value plus an inline action link, with an optional footer save row and loading state.
+   - React: react/SettingsPanel.tsx
+   - Vue 3: vue/SettingsPanel.vue
+   - Vanilla: vanilla/SettingsPanel.js (custom element `<settings-panel>`, `sections` property, events `section-change`/`item-action`/`save`)
+
+37. OnboardingChecklist: Activation checklist with done/total counter, progress bar, strikethrough completed tasks, per-task action link, and an all-done celebration state.
+   - React: react/OnboardingChecklist.tsx
+   - Vue 3: vue/OnboardingChecklist.vue
+   - Vanilla: vanilla/OnboardingChecklist.js (custom element `<onboarding-checklist>`, `tasks` property, events `toggle`/`action`)
+
+38. UpgradePromptCard: Usage-based upsell card with threshold-colored progress bar (emerald <70%, amber <90%, red ≥90%), used/limit formatting, feature checklist, and upgrade CTA. Clamps to 0–100% and guards a zero limit.
+   - React: react/UpgradePromptCard.tsx
+   - Vue 3: vue/UpgradePromptCard.vue
+   - Vanilla: vanilla/UpgradePromptCard.js (custom element `<upgrade-prompt-card>`, `features` property, event `upgrade`)
+
+39. ConfirmDialog: Destructive-action guard with danger/warning/default tones, optional type-to-confirm gate (`requireText`), loading lock that disables both buttons and ignores Esc/backdrop, Esc + backdrop close. Renders nothing while `isOpen` is false.
+   - React: react/ConfirmDialog.tsx
+   - Vue 3: vue/ConfirmDialog.vue
+   - Vanilla: vanilla/ConfirmDialog.js (custom element `<confirm-dialog>`, attributes `open`/`title`/`description`/`confirm-text`/`cancel-text`/`tone`/`require-text`/`loading`, events `confirm`/`cancel`)
+
+40. ShortcutsOverlay: Keyboard cheat sheet with grouped shortcut sections, kbd keycaps, live search over labels and keys, Esc/backdrop close. Accepts either `groups` or a flat `shortcuts` list bucketed by `item.group` (fallback "General").
+   - React: react/ShortcutsOverlay.tsx
+   - Vue 3: vue/ShortcutsOverlay.vue
+   - Vanilla: vanilla/ShortcutsOverlay.js (custom element `<shortcuts-overlay>`, `groups`/`shortcuts` properties, attribute `open`, event `close`)
+
+41. FileDropzone: Drag-and-drop upload zone with click and keyboard activation, `accept` type filtering (extensions, exact MIME, `type/*` wildcards), `maxSizeMb` size guard, per-file rows with formatted sizes and remove buttons, and an inline `role="alert"` error line. Exports `matchesAccept(file, accept)` and `formatBytes` helpers.
+   - React: react/FileDropzone.tsx
+   - Vue 3: vue/FileDropzone.vue
+   - Vanilla: vanilla/FileDropzone.js (custom element `<file-dropzone>`, attributes `accept`/`max-size-mb`/`multiple`/`hint`/`disabled`, `files` property, events `files`/`reject`/`remove`)
+
+42. NotificationCenter: Inbox panel with unread badge ("N new"), All/Unread filter row with inline counts, per-item read state, "Mark all read", typed icon chips (info/success/warning/error) and an empty state. Renders nothing while `isOpen` is false.
+   - React: react/NotificationCenter.tsx
+   - Vue 3: vue/NotificationCenter.vue
+   - Vanilla: vanilla/NotificationCenter.js (custom element `<notification-center>`, attributes `open`/`title`/`empty-text`/`show-filter`, `notifications` property, events `select`/`mark-read`/`mark-all-read`/`close`)
+
+43. CommentThread: Nested discussion built from a flat `comments` array linked by `parentId` (auto-nested up to 3 levels), with initials/avatar, like counts, inline reply composer, resolve/reopen toggle and a root composer. Exports `flattenComments(comments)` returning `{comment, depth}` rows.
+   - React: react/CommentThread.tsx
+   - Vue 3: vue/CommentThread.vue
+   - Vanilla: vanilla/CommentThread.js (custom element `<comment-thread>`, attributes `placeholder`/`submit-text`/`allow-comment`/`empty-text`, `comments` property, events `submit`/`like`/`resolve`)
+
+44. DatePicker: Month-grid date picker with prev/next month navigation, ISO `YYYY-MM-DD` values, `min`/`max` day blocking, configurable `weekStartsOn` (0 = Sunday, 1 = Monday) and an optional Today shortcut.
+   - React: react/DatePicker.tsx
+   - Vue 3: vue/DatePicker.vue
+   - Vanilla: vanilla/DatePicker.js (custom element `<date-picker>`, attributes `value`/`min`/`max`/`week-starts-on`/`show-today`/`disabled`, event `change` with ISO detail)
+
+45. KanbanBoard: Drag-and-drop kanban board over flat `columns` + `cards` data (cards reference `columnId`), WIP `limit` counters, priority chips, tag chips, assignee initials, and ArrowLeft/ArrowRight keyboard moves.
+   - React: react/KanbanBoard.tsx
+   - Vue 3: vue/KanbanBoard.vue
+   - Vanilla: vanilla/KanbanBoard.js (custom element `<kanban-board>`, `columns`/`cards` properties, events `move-card` with `{cardId, from, to}`/`card-click`/`add-card`)
+
+46. SideDrawer: Right- or left-anchored modal drawer with `sm`/`md`/`lg` widths, header + scrollable body + footer slots, Esc and backdrop dismissal, `role="dialog"`/`aria-modal` semantics.
+   - React: react/SideDrawer.tsx
+   - Vue 3: vue/SideDrawer.vue
+   - Vanilla: vanilla/SideDrawer.js (custom element `<side-drawer>`, attributes `open`/`title`/`description`/`side`/`size`, light-DOM body plus `slot="footer"` children, event `close`)
+
+47. AccountSwitcher: Workspace switcher trigger showing the current account with a dropdown of all accounts (role · plan meta), add-account and sign-out actions, and outside-click/Escape dismissal.
+   - React: react/AccountSwitcher.tsx
+   - Vue 3: vue/AccountSwitcher.vue
+   - Vanilla: vanilla/AccountSwitcher.js (custom element `<account-switcher>`, attribute `current-id`, `accounts` property, events `switch`/`add-account`/`sign-out`/`open-change`)
+
+48. SchedulerSlots: Appointment slot picker grouped into morning/afternoon/evening with 12-hour labels, an open-slot count, blocked slots (lock icon + disabled), optional per-group notes and a timezone caption.
+   - React: react/SchedulerSlots.tsx
+   - Vue 3: vue/SchedulerSlots.vue
+   - Vanilla: vanilla/SchedulerSlots.js (custom element `<scheduler-slots>`, attributes `date`/`selected-id`/`timezone`/`empty-text`, `slots` property, event `select`)
+
+49. RichToolbar: Formatting toolbar with separated button groups (dividers), icon-or-text glyph buttons, `active` toggle state (`aria-pressed`), disabled items and optional `shortcut` tooltips; `role="toolbar"` per group.
+   - React: react/RichToolbar.tsx
+   - Vue 3: vue/RichToolbar.vue
+   - Vanilla: vanilla/RichToolbar.js (custom element `<rich-toolbar>`, `groups` property, event `action` with the item id)
+
+50. HeroSection: Marketing hero with an eyebrow pill, headline, description, primary/secondary CTAs and a check-mark highlight row; centered or left-aligned.
+   - React: react/HeroSection.tsx
+   - Vue 3: vue/HeroSection.vue
+   - Vanilla: vanilla/HeroSection.js (custom element `<hero-section>`, attributes `eyebrow`/`title`/`description`/`primary-cta`/`secondary-cta`/`align`, `highlights` property, events `primary`/`secondary`)
+
+51. FooterSection: Marketing footer with a brand block + tagline, multi-column link lists, a social-icons row and a generated-or-custom copyright line.
+   - React: react/FooterSection.tsx
+   - Vue 3: vue/FooterSection.vue
+   - Vanilla: vanilla/FooterSection.js (custom element `<footer-section>`, attributes `brand`/`tagline`/`copyright`, `columns`/`socials` properties, event `link-click` with the full link)
+
+52. TestimonialGrid: Customer quote cards in a 2- or 3-column grid with star ratings, avatar-or-initials attribution and role/company meta; empty state included.
+   - React: react/TestimonialGrid.tsx
+   - Vue 3: vue/TestimonialGrid.vue
+   - Vanilla: vanilla/TestimonialGrid.js (custom element `<testimonial-grid>`, attribute `columns`, `testimonials` property, event `select`)
+
+53. VoiceModePanel: Voice-conversation surface with a four-state orb (idle / listening / thinking / speaking), pulsing halo, animated waveform bars, live transcript and reply lines, and an optional end-session action.
+   - React: react/VoiceModePanel.tsx
+   - Vue 3: vue/VoiceModePanel.vue
+   - Vanilla: vanilla/VoiceModePanel.js (custom element `<voice-mode-panel>`, attributes `state`/`transcript`/`reply`/`show-end`, events `toggle` and `end`)
+
+54. PromptLibrary: Saved-prompt browser with free-text search across title/description/body/tags, category chips, favorite stars, monospace prompt previews and a Use action.
+   - React: react/PromptLibrary.tsx
+   - Vue 3: vue/PromptLibrary.vue
+   - Vanilla: vanilla/PromptLibrary.js (custom element `<prompt-library>`, attribute `searchable`, `prompts`/`categories` properties, events `use` and `toggle-favorite`)
+
+55. Tabs: Accessible tab strip in underline or pills form with icons, badges, disabled tabs, controlled or uncontrolled selection and Arrow/Home/End keyboard navigation.
+   - React: react/Tabs.tsx
+   - Vue 3: vue/Tabs.vue
+   - Vanilla: vanilla/Tabs.js (custom element `<tabs-bar>`, attributes `active-id`/`variant`/`aria-label`, `tabs` property, event `change`)
+
+56. Accordion: Disclosure list with optional icons and descriptions, single-open or `allowMultiple` behavior, animated chevron and `aria-expanded` + region semantics.
+   - React: react/Accordion.tsx
+   - Vue 3: vue/Accordion.vue
+   - Vanilla: vanilla/Accordion.js (custom element `<accordion-list>`, attributes `allow-multiple`/`default-open-ids`, `items` property, event `toggle`)
+
+57. AvatarGroup: Overlapping collaborator avatars with initials/image/user-icon fallbacks, +N overflow chip, optional presence dots and sm/md/lg sizes.
+   - React: react/AvatarGroup.tsx
+   - Vue 3: vue/AvatarGroup.vue
+   - Vanilla: vanilla/AvatarGroup.js (custom element `<avatar-group>`, attributes `max`/`size`, `members` property, event `member-click`)
+
+58. FilterBar: Multi-select filter chips with dropdown option lists, per-option counts, active-count badges, Clear all, and outside-click/Escape dismissal.
+   - React: react/FilterBar.tsx
+   - Vue 3: vue/FilterBar.vue
+   - Vanilla: vanilla/FilterBar.js (custom element `<filter-bar>`, `filters`/`selected` properties, events `change` and `clear`)
+
+59. Tooltip: Hover/focus hint bubble positioned on any of four sides, linked to its trigger via `aria-describedby`, with pure-CSS fade and light-DOM children preserved.
+   - React: react/Tooltip.tsx
+   - Vue 3: vue/Tooltip.vue
+   - Vanilla: vanilla/Tooltip.js (custom element `<tooltip-hint>`, attributes `content`/`side`, light-DOM children kept across renders)
+
+60. Breadcrumb: Trail navigation with icon + label crumbs rendered as links, buttons or the current page, optional `maxItems` middle collapse and `aria-current="page"`.
+   - React: react/Breadcrumb.tsx
+   - Vue 3: vue/Breadcrumb.vue
+   - Vanilla: vanilla/Breadcrumb.js (custom element `<breadcrumb-trail>`, attributes `max-items`/`aria-label`, `items` property, event `navigate`)
+
+61. Pagination: Page-number navigation with ellipsis gaps, adjustable sibling count, optional first/last jump buttons, disabled bounds and `aria-current="page"`.
+   - React: react/Pagination.tsx
+   - Vue 3: vue/Pagination.vue
+   - Vanilla: vanilla/Pagination.js (custom element `<pagination-bar>`, attributes `page`/`page-count`/`sibling-count`/`show-edges`, event `change`)
+
+62. AlertBanner: Inline status banner in info/success/warning/danger tones with optional action and dismiss buttons, using `role="status"` or `role="alert"` by severity.
+   - React: react/AlertBanner.tsx
+   - Vue 3: vue/AlertBanner.vue
+   - Vanilla: vanilla/AlertBanner.js (custom element `<alert-banner>`, attributes `tone`/`title`/`description`/`action-text`/`dismissible`, events `action` and `dismiss`)
+
+63. ComboBox: Searchable dropdown select with input filtering, ArrowUp/Down + Enter keyboard navigation, selected check, clear button, and outside-click/Escape dismissal.
+   - React: react/ComboBox.tsx
+   - Vue 3: vue/ComboBox.vue
+   - Vanilla: vanilla/ComboBox.js (custom element `<combo-select>`, attributes `placeholder`/`empty-text`, `options` property, event `change`)
+
+64. Navbar: Site navigation bar with multi-column mega menu panels (headings, icons, badges), plain links, and a CTA button; panels close on outside click or Escape.
+   - React: react/Navbar.tsx
+   - Vue 3: vue/Navbar.vue
+   - Vanilla: vanilla/Navbar.js (custom element `<nav-bar>`, attributes `brand`/`cta-text`, `links`/`menus` properties, event `cta`)
+
+65. ActivityFeed: Timeline feed with six event kinds (event/comment/merge/deploy/flag/alert) mapped to tone chips, vertical connector line, monospace target pills, detail lines and relative timestamps.
+   - React: react/ActivityFeed.tsx
+   - Vue 3: vue/ActivityFeed.vue
+   - Vanilla: vanilla/ActivityFeed.js (custom element `<activity-feed>`, attribute `title`, `entries` property)
+
+66. UsageMeter: Quota progress bar with 70%/90% threshold tones (indigo/amber/rose), percent + used/limit caption and optional remaining legend; safe at limit<=0.
+   - React: react/UsageMeter.tsx
+   - Vue 3: vue/UsageMeter.vue
+   - Vanilla: vanilla/UsageMeter.js (custom element `<usage-meter>`, attributes `label`/`used`/`limit`/`unit`/`show-legend`)
+
+67. ToggleSwitch: Accessible switch (role=switch + aria-checked) with sm/md track sizes, optional label/description block, disabled state; fires change with { checked }.
+   - React: react/ToggleSwitch.tsx
+   - Vue 3: vue/ToggleSwitch.vue
+   - Vanilla: vanilla/ToggleSwitch.js (custom element `<toggle-switch>`, attributes `label`/`description`/`checked`/`disabled`/`size`, event `change`)
+
+68. Stepper: Horizontal progress flow with complete/current/upcoming/error circle states, colored connectors, optional descriptions, click-to-jump for non-upcoming steps and a static read-only mode.
+   - React: react/Stepper.tsx
+   - Vue 3: vue/Stepper.vue
+   - Vanilla: vanilla/Stepper.js (custom element `<step-flow>`, attribute `current` (1-based), `steps` property, `static` attribute, event `step-click`)
+
+69. SearchInput: Search field with controlled/uncontrolled modes, ⌘K shortcut hint chip, clear button once a query exists, loading spinner, Enter→search and Escape→clear semantics.
+   - React: react/SearchInput.tsx
+   - Vue 3: vue/SearchInput.vue
+   - Vanilla: vanilla/SearchInput.js (custom element `<search-field>`, attributes `value`/`placeholder`/`shortcut`/`loading`/`autofocus`, events `change`/`search`/`clear`)
+
+70. Tag: Pill label in six tones (neutral/indigo/emerald/amber/rose/sky) with sm/md sizing, optional icon, removable variant (remove event) and clickable variant (tag-click event).
+   - React: react/Tag.tsx
+   - Vue 3: vue/Tag.vue
+   - Vanilla: vanilla/Tag.js (custom element `<ui-tag>`, attributes `label`/`tone`/`size`/`icon`/`removable`/`clickable`, events `remove`/`tag-click`)
+
+71. Modal: Centered dialog over blurred backdrop with title/description header, body children, footer slot bar, close button, Escape/backdrop dismissal gated by dismissible and show-close flags.
+   - React: react/Modal.tsx
+   - Vue 3: vue/Modal.vue
+   - Vanilla: vanilla/Modal.js (custom element `<modal-dialog>`, attributes `open`/`title`/`description`/`dismissible`/`show-close`, slot="footer" children, event `close`)
+
+72. ProfileHeader: Profile page header with gradient cover and Pro pill, overlapping avatar (image or initials), status dot + text, stats as definition list, action buttons (primary/secondary/ghost), and tab row with aria-current.
+   - React: react/ProfileHeader.tsx
+   - Vue 3: vue/ProfileHeader.vue
+   - Vanilla: vanilla/ProfileHeader.js (custom element `<profile-header>`, attributes `name`/`handle`/`headline`/`avatar-url`/`initials`/`cover-class`/`status-text`/`status-tone`/`tabs`/`active-tab`, properties `stats`/`actions`, events `action`/`tab-change`)
+73. BillingPanel: Upgrade/billing panel with monthly/annual period toggle (aria-pressed), price block, feature checklist, line items as definition list with emphasized total row, primary CTA and info note.
+   - React: react/BillingPanel.tsx
+   - Vue 3: vue/BillingPanel.vue
+   - Vanilla: vanilla/BillingPanel.js (custom element `<billing-panel>`, attributes `plan-name`/`period`/`price`/`price-suffix`/`features`/`line-items` (JSON)/`cta-label`/`note`, events `period-change`/`cta`)
+74. StepSlider: Discrete slider with per-stop buttons, filled track portion, ArrowLeft/Right/Home/End keyboard support on role=slider, highlight-from forward markers, and aria-valuetext from the step labels.
+   - React: react/StepSlider.tsx
+   - Vue 3: vue/StepSlider.vue
+   - Vanilla: vanilla/StepSlider.js (custom element `<step-slider>`, attributes `steps`/`value`/`highlight-from`/`label`/`disabled`, event `change` with `{ index, step }`)
+75. InboxList: Inbox rows with unread dot, sender column, optional tag pill (rose/emerald/indigo), subject + snippet truncation, monospace date, active row highlight via active-id, and empty state.
+   - React: react/InboxList.tsx
+   - Vue 3: vue/InboxList.vue
+   - Vanilla: vanilla/InboxList.js (custom element `<inbox-list>`, properties `messages` `{ id, sender, count?, subject, snippet?, dateLabel, unread?, tag?, tagTone? }[]`, attribute `active-id`, event `select`)
+76. ChangelogFeed: Changelog aside with sparkles header, badge-toned entries (rose/emerald/indigo/amber) in a divided list, optional selectable rows, footer link button and empty state.
+   - React: react/ChangelogFeed.tsx
+   - Vue 3: vue/ChangelogFeed.vue
+   - Vanilla: vanilla/ChangelogFeed.js (custom element `<changelog-feed>`, attributes `title`/`footer-link`/`empty-text`/`selectable`, property `entries`, events `select`/`footer-click`)
+77. MetricStrip: One-row KPI strip with divided clickable cells, optional leading icon, delta chip (trending-up emerald / trending-down rose / minus zinc) formatted `+N%` or custom deltaLabel, active cell highlight via activeIndex, and empty render without metrics.
+   - React: react/MetricStrip.tsx
+   - Vue 3: vue/MetricStrip.vue
+   - Vanilla: vanilla/MetricStrip.js (custom element `<metric-strip>`, attribute `active-index`, property `metrics` `{ label, value, delta?, deltaLabel?, icon? }[]`, event `metric-click`)
+78. RankList: Ranked value list with peak-normalized inline ratio bars (4% minimum clamp), optional row icons, monospace value column, value-header column caption, maxItems truncation, optional row selection and empty state.
+   - React: react/RankList.tsx
+   - Vue 3: vue/RankList.vue
+   - Vanilla: vanilla/RankList.js (custom element `<rank-list>`, attributes `title`/`value-header`/`show-ratio`/`max-items`/`empty-text`/`selectable`, property `items` `{ label, value, ratio?, icon? }[]`, optional `onSelect` property, event `select`)
+79. SideNav: Grouped sidebar navigation with uppercase group titles, icon + truncated label entries, count badges (rose when >0, zinc when 0), active entry highlight via activeId and navigate event.
+   - React: react/SideNav.tsx
+   - Vue 3: vue/SideNav.vue
+   - Vanilla: vanilla/SideNav.js (custom element `<side-nav>`, attributes `heading`/`active-id`/`groups` (JSON array of `{ title?, items: { id, label, icon?, count? }[] }`), property `groups`, event `navigate`)
+80. PageHeader: Dashboard page header with title, emerald Live status pill, description, action button group (primary/secondary/ghost variants, optional icons) and underline tab nav with optional count badges; emits action and tab-change.
+   - React: react/PageHeader.tsx
+   - Vue 3: vue/PageHeader.vue
+   - Vanilla: vanilla/PageHeader.js (custom element `<page-header>`, properties `actions` `{ label, variant?, icon? }[]` / `tabs` `{ label, count? }[]` (also accepted as JSON attributes), attributes `title`/`description`/`status-text`/`active-tab`, events `action`/`tab-change`, tab click syncs `active-tab`)
+81. TimeframePicker: Segmented timeframe presets with aria-pressed active state, previous/next period step buttons flanking a calendar range label, disabled state styling and change/step events.
+   - React: react/TimeframePicker.tsx
+   - Vue 3: vue/TimeframePicker.vue
+   - Vanilla: vanilla/TimeframePicker.js (custom element `<timeframe-picker>`, attributes `presets` (comma-separated, default "Today,7d,30d,90d,12mo")/`value`/`range-label`/`disabled`, events `change`/`step`)
+82. WizardSteps: Multi-step form wizard navigator with a vertical variant (numbered circles in done/active/todo states, connector lines, optional "(Optional)" tags, clickable completed steps for back navigation) and a bar variant ("N of M steps | Next: …" caption over a violet progressbar).
+   - React: react/WizardSteps.tsx
+   - Vue 3: vue/WizardSteps.vue
+   - Vanilla: vanilla/WizardSteps.js (custom element `<wizard-steps>`, attributes `current`/`variant` (vertical|bar)/`next-label`, property `steps` `{ label, hint?, optional? }[]`, optional `onStepClick` callback property, event `step-click` — the event always fires, the callback is an optional extra)
+83. FormField: Single labeled field skeleton with required star / "(Optional)" tag, error (alert icon + aria-invalid) or hint paragraph, N/M character counter, helper footer note and a default slot for the control (vanilla preserves live control state across re-renders).
+   - React: react/FormField.tsx
+   - Vue 3: vue/FormField.vue
+   - Vanilla: vanilla/FormField.js (custom element `<form-field>`, attributes `label`/`for`/`required`/`optional`/`hint`/`error`/`counter-value`/`counter-max`/`helper-footer`, default slot for the control)
+84. GanttTimeline: Table-shaped gantt chart with row labels (depth indentation), numbered column headers, task bars in four tones with optional progress overlay + percent label, a rose "today" marker line and optional task-click.
+   - React: react/GanttTimeline.tsx
+   - Vue 3: vue/GanttTimeline.vue
+   - Vanilla: vanilla/GanttTimeline.js (custom element `<gantt-timeline>`, attributes `columns`/`today`/`column-label`/`row-label`/`empty-text`, property `tasks` `{ label, start, span, progress?, tone?, depth? }[]`, optional `onTaskClick` callback, event `task-click` — the event always fires, the callback is an optional extra)
+85. ApprovalCard: Approval panel with stacked initials avatars + approved/total counter, due date row, decision line in approved (emerald) / rejected (rose) / pending (zinc) tones, optional note and Approve / Request change buttons (always rendered while decision is pending; request-change plus-button appears with an onRequestChange handler).
+   - React: react/ApprovalCard.tsx
+   - Vue 3: vue/ApprovalCard.vue
+   - Vanilla: vanilla/ApprovalCard.js (custom element `<approval-card>`, attributes `title`/`approved-count`/`due-date`/`decision`/`note`, property `approvers` `{ initials, tone? }[]`, optional `onApprove`/`onReject`/`onRequestChange` properties, events `approve`/`reject`/`request-change`)
+86. ResourceList: Data-resource list rows with icon tile, name + monospace path, time label and kind badge (zinc/indigo/emerald/amber), header with total count, maxItems truncation, optional row selection and empty state.
+   - React: react/ResourceList.tsx
+   - Vue 3: vue/ResourceList.vue
+   - Vanilla: vanilla/ResourceList.js (custom element `<resource-list>`, attributes `title`/`empty-text`/`max-items`/`selectable`, property `items` `{ name, path?, kind?, kindTone?, timeLabel?, icon? }[]`, optional `onSelect` property, event `select`)
+87. SegmentBreakdownBars: Headline metric + per-segment horizontal bars with value column and vs-total delta column (green/red pp), five bar tones and a share footer.
+   - React: react/SegmentBreakdownBars.tsx
+   - Vue 3: vue/SegmentBreakdownBars.vue
+   - Vanilla: vanilla/SegmentBreakdownBars.js (custom element `<segment-breakdown>`, attributes `headline`/`headline-unit`/`caption`/`unit`, property `items` `{ label, value, unit?, delta?, deltaUnit?, tone? }[]`)
+88. TargetGauge: Semicircle KPI gauge with three zone bands (rose/amber/emerald), rotating needle, min/value-chip/max scale labels and an optional remaining line.
+   - React: react/TargetGauge.tsx
+   - Vue 3: vue/TargetGauge.vue
+   - Vanilla: vanilla/TargetGauge.js (custom element `<target-gauge>`, attributes `value`/`target`/`label`/`value-prefix`/`value-suffix`/`remaining-label`, optional `zones` property `{ from, tone }[]`)
+89. HealthDonutStats: Card grid of conic-gradient donuts with center percent, per-slice legend with shares, captions and optional action buttons.
+   - React: react/HealthDonutStats.tsx
+   - Vue 3: vue/HealthDonutStats.vue
+   - Vanilla: vanilla/HealthDonutStats.js (custom element `<health-donut-stats>`, property `cards` `{ title, caption?, slices: { label, value, tone }[], action?: { label } }[]`, event `action-click`)
+90. ForecastTrendChart: Column trend that distinguishes solid actual bars from dashed forecast columns, with headline + delta badge (trending icon), note line and Actual/Forecast legend.
+   - React: react/ForecastTrendChart.tsx
+   - Vue 3: vue/ForecastTrendChart.vue
+   - Vanilla: vanilla/ForecastTrendChart.js (custom element `<forecast-trend>`, attributes `headline`/`unit`/`delta-label`/`delta-tone`/`note`, property `points` `{ label, value, forecast? }[]`)
+91. GroupedBarCompare: Grouped two-bar comparison chart (violet estimated vs lime actual) with per-bar value labels, row names and a legend header.
+   - React: react/GroupedBarCompare.tsx
+   - Vue 3: vue/GroupedBarCompare.vue
+   - Vanilla: vanilla/GroupedBarCompare.js (custom element `<grouped-bar-compare>`, attributes `title`/`legend-estimated`/`legend-actual`/`unit`, property `rows` `{ name, estimated, actual, unit? }[]`)
+92. QuoteMasonry: Customer quote wall in a CSS-columns masonry (columns-1 sm:columns-2 lg:columns-3, break-inside-avoid) with curly quote marks (opt out via marked:false), uppercase name attribution and company badge.
+   - React: react/QuoteMasonry.tsx
+   - Vue 3: vue/QuoteMasonry.vue
+   - Vanilla: vanilla/QuoteMasonry.js (custom element `<quote-masonry>`, attribute `columns` (2|3|4), property `quotes` `{ quote, name, role?, company?, marked? }[]`)
+93. SiteFooter: Dark site footer (bg-zinc-950) with link columns, compliance badge circles (icon + emerald/amber/zinc status text) and a tagline + copyright bottom row.
+   - React: react/SiteFooter.tsx
+   - Vue 3: vue/SiteFooter.vue
+   - Vanilla: vanilla/SiteFooter.js (custom element `<site-footer>`, attributes `tagline`/`copyright`, properties `columns` `{ heading, links }[]` and `badges` `{ title, status, statusTone?, icon? }[]`)
+94. MarqueeWall: Alternating marquee rows of testimonial cards (keyframes marquee-scroll, odd rows reversed, cards doubled for seamless loop), hover pauses, `paused` attribute freezes, initials avatars, anonymous cards hide the handle.
+   - React: react/MarqueeWall.tsx
+   - Vue 3: vue/MarqueeWall.vue
+   - Vanilla: vanilla/MarqueeWall.js (custom element `<marquee-wall>`, attributes `speed-seconds`/`paused`, property `rows` `{ name, handle?, text, anonymous? }[][]`)
+95. OnboardingStepper: Onboarding step chain (`>` separators, current step underlined indigo, progress bar at ((active+1)/total)%) with a segmented description control (role=tablist), example rows and a continue button.
+   - React: react/OnboardingStepper.tsx
+   - Vue 3: vue/OnboardingStepper.vue
+   - Vanilla: vanilla/OnboardingStepper.js (custom element `<onboarding-stepper>`, attributes `current`/`title`/`continue-label`, properties `steps` string[] and `segments` `{ label, description, examples? }[]`; events `step-click`/`continue`, event always fires)
+96. FilterToolbar: Filter chip toolbar with tone value pills (rose/emerald/amber/indigo), removable chips (× buttons), search input, list/grid view toggle (view:"none" hides it; React renders the toggle when viewOnChange is provided) and an action button.
+   - React: react/FilterToolbar.tsx
+   - Vue 3: vue/FilterToolbar.vue
+   - Vanilla: vanilla/FilterToolbar.js (custom element `<filter-toolbar>`, attributes `search-placeholder`/`search-value`/`view`/`action-label`, property `chips`; events `chip-remove`/`search`/`view-change`/`action`, events always fire)
+97. OtpInput: Verification code entry with six cells (auto-advance, backspace to previous, full-code paste auto-submit), error state (rose cells + alert line), Continue button and resend hint.
+   - React: react/OtpInput.tsx
+   - Vue 3: vue/OtpInput.vue
+   - Vanilla: vanilla/OtpInput.js (custom element `<otp-input>`, attributes `heading`/`subtext`/`status`/`error-text`/`continue-label`/`resend-hint`/`length`, property `value`; events `change`/`complete`/`continue`/`resend`)
+98. SearchTypeahead: Page-level search with underline input, yellow <mark> substring highlighting, suggestion rows with mono type badges, grouped Top results with badges, footer hint + Help Center link and a clear button.
+   - React: react/SearchTypeahead.tsx
+   - Vue 3: vue/SearchTypeahead.vue
+   - Vanilla: vanilla/SearchTypeahead.js (custom element `<search-typeahead>`, attributes `query`/`placeholder`/`highlight`/`results-heading`/`footer-hint`, properties `suggestions`/`results`; events `select`/`submit`)
+99. TourTooltip: Anchored coach-mark card with triangular caret (top/bottom/none), Step N of M counter, light/dark themes, optional thumbs feedback, Previous hidden on step 1 and "Finish tour" on the last step.
+   - React: react/TourTooltip.tsx
+   - Vue 3: vue/TourTooltip.vue
+   - Vanilla: vanilla/TourTooltip.js (custom element `<tour-tooltip>`, attributes `step`/`total-steps`/`title`/`body`/`theme`/`caret`/`feedback`; events `prev`/`next`/`dismiss`/`feedback`)
+100. CookieConsent: Cookie preference dialog with collapsible <details> categories, "Always Active" locked rows, mono cookie-name lists and Accept All / Reject All / Confirm bulk actions emitting the accepted id list.
+   - React: react/CookieConsent.tsx
+   - Vue 3: vue/CookieConsent.vue
+   - Vanilla: vanilla/CookieConsent.js (custom element `<cookie-consent>`, attributes `title`/`description`/`policy-label`/`accept-label`/`reject-label`/`save-label`, property `categories`; event `confirm` detail `{accepted}`)
+101. SettingsSideDrawer: Side-anchored settings panel over a fixed overlay with tab strip, setting rows (title + description + toggle/select/3-tone button controls) and a sticky footer (primary + secondary).
+   - React: react/SettingsSideDrawer.tsx
+   - Vue 3: vue/SettingsSideDrawer.vue
+   - Vanilla: vanilla/SettingsSideDrawer.js (custom element `<settings-side-drawer>`, attributes `title`/`side`/`active-tab`/`footer-primary`/`footer-secondary`, properties `tabs`/`sections`; events `close`/`tab-change`/`row-toggle`/`row-action`/`footer-primary`)
+102. ClarifyQuestionCard: Indigo-bordered clarification card with "?" badge, paging "N of M" (only when total > 1), answered state pill vs Enter-to-answer input and an emerald check + step label footer.
+   - React: react/ClarifyQuestionCard.tsx
+   - Vue 3: vue/ClarifyQuestionCard.vue
+   - Vanilla: vanilla/ClarifyQuestionCard.js (custom element `<clarify-question>`, attributes `question`/`title`/`value`/`placeholder`/`index`/`total`/`answered`/`step-label`; events `answer` detail `{value}`/`prev`/`next`)
+103. AgentTaskProgress: Agent task progress with context banner, hint line, stacked step cards (done play icon / active spinner + substeps rail / pending chevron) and feedback + Refine/Next footer.
+   - React: react/AgentTaskProgress.tsx
+   - Vue 3: vue/AgentTaskProgress.vue
+   - Vanilla: vanilla/AgentTaskProgress.js (custom element `<agent-task-progress>`, attributes `title`/`context-label`/`context-text`/`hint`, property `steps` [{label, state, substeps?}]; events `refine`/`next`)
+104. UsageQuotaCard: Credit/quota meter in card variant (label, used-of-total, sky progress bar, upgrade line, full-width CTA) or emerald banner variant with inline CTA.
+   - React: react/UsageQuotaCard.tsx
+   - Vue 3: vue/UsageQuotaCard.vue
+   - Vanilla: vanilla/UsageQuotaCard.js (custom element `<usage-quota>`, attributes `variant`/`label`/`used`/`total`/`unit`/`summary`/`upgrade-line`/`cta-label`/`cta-tone`; event `cta`)
+105. WorkspaceSwitcherMenu: Workspace picker with gradient-initials or logo rows, "N members · You are an Admin/Editor" role lines, current highlight, create button and footer user row with logout.
+   - React: react/WorkspaceSwitcherMenu.tsx
+   - Vue 3: vue/WorkspaceSwitcherMenu.vue
+   - Vanilla: vanilla/WorkspaceSwitcherMenu.js (custom element `<workspace-switcher>`, attributes `variant`/`title`/`subtitle`/`create-label`/`logout-label`/`footer-name`/`footer-email`/`footer-initials`, properties `workspaces`/`footerUser`; events `select` detail `{workspace}`/`create-new`/`logout`)
+106. AttachmentChip: Compact file chip with kind tone badge (pdf=rose / doc=sky / csv=emerald / image=violet), mono glyph, name + size/meta line and round black X remove button.
+   - React: react/AttachmentChip.tsx
+   - Vue 3: vue/AttachmentChip.vue
+   - Vanilla: vanilla/AttachmentChip.js (custom element `<attachment-chip>`, attributes `name`/`kind`/`size`/`meta`/`removable`; event `remove` detail `{name}`)
+107. DeploymentCard: Single deployment record with status pill (building pulse / live / failed), mono commit sha + message line, source + relative time, Cancel deploy while building and Visit on terminal states.
+   - React: react/DeploymentCard.tsx
+   - Vue 3: vue/DeploymentCard.vue
+   - Vanilla: vanilla/DeploymentCard.js (custom element `<deployment-card>`, attributes `deploy-id`/`status`/`sha`/`commit-message`/`created-at`/`source`/`url`; events `cancel`/`visit` detail `{url}`)
+108. LiveTailLogConsole: Dark streaming log terminal with source-filter select, search input, Live tail follow toggle, timezone chip and severity-dot log lines (info/warn/error/success) capped by maxLines.
+   - React: react/LiveTailLogConsole.tsx
+   - Vue 3: vue/LiveTailLogConsole.vue
+   - Vanilla: vanilla/LiveTailLogConsole.js (custom element `<live-tail-log-console>`, attributes `search-placeholder`/`timezone`/`sources`/`max-lines`, property `lines`; events `search` detail `{query}`/`source-change`/`live-tail-change` detail `{enabled}`)
+109. PipelineStageList: Grouped CI pipeline accordion with phase headers (dashed circle or running spinner, current step, summed duration) and nested stage rows with mono status (Pending/Running/Completed/Failed) + per-stage durations.
+   - React: react/PipelineStageList.tsx
+   - Vue 3: vue/PipelineStageList.vue
+   - Vanilla: vanilla/PipelineStageList.js (custom element `<pipeline-stage-list>`, attributes `show-duration`/`collapsible`/`expanded`, property `groups`; events `stage-click` detail `{stage}`/`group-toggle` detail `{id, open}`)
+110. ChangedFilesList: PR changed-file card with collapsible header (title + total +N/−N diffstat), file rows (extension badge, mono path, status tag, per-file diffstat) and optional folder grouping.
+   - React: react/ChangedFilesList.tsx
+   - Vue 3: vue/ChangedFilesList.vue
+   - Vanilla: vanilla/ChangedFilesList.js (custom element `<changed-files-list>`, attributes `title`/`grouped`/`show-diffstat`/`default-expanded`, property `files`; events `file-click` detail `{file}`/`toggle` detail `{open}`)
+111. ServiceStatusList: Dev-environment service table (name, command code chip, running/stopped/failed/starting status, dark URL chip) with a verification checklist below (green check + code + detail or gray dot) and a duration footer.
+   - React: react/ServiceStatusList.tsx
+   - Vue 3: vue/ServiceStatusList.vue
+   - Vanilla: vanilla/ServiceStatusList.js (custom element `<service-status-list>`, attributes `duration-label`/`services`/`checks`, properties `services`/`checks`; event `service-click` detail `{service}`)
+112. FilterQueryBuilder: Filter row builder with conjunction chips (where/and), field select, mono operator select (=, <>, >, <, ~, >=, <=), borderless value input and round X remove; "+ Add filter" ghost button with maxRows cap and "Clear filters" link.
+   - React: react/FilterQueryBuilder.tsx
+   - Vue 3: vue/FilterQueryBuilder.vue
+   - Vanilla: vanilla/FilterQueryBuilder.js (custom element `<filter-query-builder>`, attributes `add-label`/`clear-label`/`max-rows`, properties `fields`/`rows`; events `change` detail `{rows}`/`clear`)
+113. ColumnVisibilityMenu: Column visibility popover with "Showing X of Y" header, reset link, grip/lock/eye/reorder rows and optional apply-button mode (draft set + footer Apply).
+   - React: react/ColumnVisibilityMenu.tsx
+   - Vue 3: vue/ColumnVisibilityMenu.vue
+   - Vanilla: vanilla/ColumnVisibilityMenu.js (custom element `<column-visibility-menu>`, attributes `columns`/`visible-ids`/`show-reorder-handles`/`apply-mode`, properties `columns`/`visibleIds`; events `toggle` detail `{id, visible}`/`reorder` detail `{from, to}`/`reset`/`apply` detail `{visibleIds}`)
+114. StatusCountTabs: Segmented tab strip with live counts that docks flush onto a table card (rounded-t-lg, border-b-0); active tab is white with inset bottom shadow.
+   - React: react/StatusCountTabs.tsx
+   - Vue 3: vue/StatusCountTabs.vue
+   - Vanilla: vanilla/StatusCountTabs.js (custom element `<status-count-tabs>`, attributes `tabs`/`value`/`size`/`full-width`, properties `tabs`/`value`; event `change` detail `{id}`)
+115. EntityMultiSelectPicker: Searchable checkbox multi-pick with avatar rows (image / rotating-tone initials / system dot tile), blue-50 selected rows and Cancel / "Insert results" footer.
+   - React: react/EntityMultiSelectPicker.tsx
+   - Vue 3: vue/EntityMultiSelectPicker.vue
+   - Vanilla: vanilla/EntityMultiSelectPicker.js (custom element `<entity-picker>`, attributes `options`/`selected`/`searchable`, properties `options`/`selected`; events `select` detail `{ids}`/`search` detail `{query}`/`dismiss`)
+116. FederatedSearchResultsPanel: Full-text federated search overlay with source filter chips (toggle set, aria-pressed), snippet results with `<mark>` highlight and keyboard legend + "Press Tab to Ask AI" pill.
+   - React: react/FederatedSearchResultsPanel.tsx
+   - Vue 3: vue/FederatedSearchResultsPanel.vue
+   - Vanilla: vanilla/FederatedSearchResultsPanel.js (custom element `<federated-search>`, attributes `results`/`source-filters`/`selected-sources`/`query`, properties `results`/`query`; events `query-change` detail `{query}`/`source-change` detail `{ids}`/`result-select` detail `{result}`)
+117. TimeSlotPicker: Appointment booking with horizontal date chip strip, Morning/Afternoon/Evening grouped slot grids, availability counts (green N available / gray Fully booked) and indigo selected slot.
+   - React: react/TimeSlotPicker.tsx
+   - Vue 3: vue/TimeSlotPicker.vue
+   - Vanilla: vanilla/TimeSlotPicker.js (custom element `<time-slot-picker>`, attributes `days`/`value`/`timezone`/`days-label`/`slots-label`, properties `days`/`value`; event `select` detail `{dayId, slotId, slot}`)
+118. OrderTracker: Order fulfillment tracker with dot-connector variant (green check dots, current ring, ETA line, Track shipment link) and bar variant (continuous progress + stage labels); canceled state goes all-gray with reason copy.
+   - React: react/OrderTracker.tsx
+   - Vue 3: vue/OrderTracker.vue
+   - Vanilla: vanilla/OrderTracker.js (custom element `<order-tracker>`, attributes `stages`/`current`/`variant`/`eta`/`tracking-number`/`tracking-url`/`canceled-reason`, property `stages`; event `track`)
+119. OrderSummaryPanel: Checkout price breakdown with kind-toned rows (discount/fee green, total bold with top border, strikeValue, notes), applied promo chips, promo input (Enter/Apply) and dark pill CTA carrying amount + trust footer.
+   - React: react/OrderSummaryPanel.tsx
+   - Vue 3: vue/OrderSummaryPanel.vue
+   - Vanilla: vanilla/OrderSummaryPanel.js (custom element `<order-summary>`, attributes `rows`/`heading`/`cta-label`/`cta-amount`/`applied-promos`/`trust-footer`, property `rows`; events `cta`/`apply-promo` detail `{code}`/`remove-promo` detail `{code}`)
+120. PaymentMethodCard: Saved payment method with brand tile (VISA blue / MC black / AMEX sky), masked "Ending in" number, expiry, optional right-aligned amount, billing holder block and Change / "+ Add new payment" actions.
+   - React: react/PaymentMethodCard.tsx
+   - Vue 3: vue/PaymentMethodCard.vue
+   - Vanilla: vanilla/PaymentMethodCard.js (custom element `<payment-method-card>`, attributes `brand`/`last4`/`exp`/`amount`/`holder-label`/`holder`/`show-add-new`; events `change`/`add-new`)
+121. OrderCard: Purchase-history card with gray header strip (Order# + Placed + View details pill), fulfillment verb + bold ETA + store line, six-state status badge, item thumbnails with qty/price and Buy it again / Total footer.
+   - React: react/OrderCard.tsx
+   - Vue 3: vue/OrderCard.vue
+   - Vanilla: vanilla/OrderCard.js (custom element `<order-card>`, attributes `order-number`/`placed-at`/`status`/`total`/`status-note`/`fulfillment`/`items`, properties `items`/`fulfillment`; events `open`/`action` detail `{action}`)
+122. ColorPickerPopover: Solid color picker with 6-row hue shade grid (selected ring + check, light swatches auto-gray check), live hex input, R/G/B channel inputs, eyedropper button, Document colors / Custom colors sections with dashed add tile.
+   - React: react/ColorPickerPopover.tsx
+   - Vue 3: vue/ColorPickerPopover.vue
+   - Vanilla: vanilla/ColorPickerPopover.js (custom element `<color-picker-popover>`, attributes `value`/`show-eyedropper`/`show-rgb-inputs`/`show-hex-input`, properties `value`/`swatches`/`documentColors`/`customColors`; events `change` detail `{hex}`, `eyedropper-click`, `add-custom` detail `{hex}`)
+123. EditorToolPalette: Floating canvas tool picker with per-tool kbd number hints, blue active-tool highlight, selection count badge, horizontal pill or vertical rail orientation.
+   - React: react/EditorToolPalette.tsx
+   - Vue 3: vue/EditorToolPalette.vue
+   - Vanilla: vanilla/EditorToolPalette.js (custom element `<editor-tool-palette>`, attributes `active-id`/`orientation`/`active-count`/`show-kbd-hints`, property `tools`; event `select` detail `{id}`)
+124. ShortcutCheatSheet: Two-column grouped editor shortcut list with icons, markdown-syntax mono hints, keycap chip groups (bordered, subtle bottom shadow), live search filter with empty state.
+   - React: react/ShortcutCheatSheet.tsx
+   - Vue 3: vue/ShortcutCheatSheet.vue
+   - Vanilla: vanilla/ShortcutCheatSheet.js (custom element `<shortcut-cheat-sheet>`, attributes `title`/`columns`/`searchable`, property `shortcuts`)
+125. ZoomControlBar: Canvas viewport zoom in three variants (stepper −/%/+, dropdown with upward preset menu + Fit, slider with live label), optional undo/redo pair with divider, value clamped to [min,max].
+   - React: react/ZoomControlBar.tsx
+   - Vue 3: vue/ZoomControlBar.vue
+   - Vanilla: vanilla/ZoomControlBar.js (custom element `<zoom-control-bar>`, attributes `value`/`variant`/`presets`/`show-fit`/`show-undo-redo`/`min`/`max`/`step`, property `value`; events `zoom-change` detail `{value}`, `fit`, `undo`, `redo`)
+126. AIInlineMenu: Selection-anchored floating AI pill with sparkle badge chip (indigo or brand-emerald tone), action buttons with upward option menus, loading pulse + "Working…", red error border, dismiss round button.
+   - React: react/AIInlineMenu.tsx
+   - Vue 3: vue/AIInlineMenu.vue
+   - Vanilla: vanilla/AIInlineMenu.js (custom element `<ai-inline-menu>`, attributes `loading`/`error`/`tone`, property `actions`; events `action` detail `{id, option?}`, `dismiss`)
+127. EmptyStateStarter: First-run "nothing here yet" starter with illustration slot, plain/dashed/card variants, md/sm sizes and solid/outline/link action styles.
+   - React: react/EmptyStateStarter.tsx
+   - Vue 3: vue/EmptyStateStarter.vue
+   - Vanilla: vanilla/EmptyStateStarter.js (custom element `<empty-state-starter>`, attributes `title`/`description`/`action-label`/`variant`/`size`/`action-variant`, property `illustration`; event `action`)
+128. AuthGatePrompt: Soft contextual sign-in gate with SSO pill stack (white/#1877F2/dark tones), hairline divider, secondary outlined pill and "Not now" guest-skip link.
+   - React: react/AuthGatePrompt.tsx
+   - Vue 3: vue/AuthGatePrompt.vue
+   - Vanilla: vanilla/AuthGatePrompt.js (custom element `<auth-gate-prompt>`, attributes `title`/`secondary-label`/`divider-text`/`skip-label`, property `providers`; events `provider` detail `{id}`, `secondary`, `skip`)
+129. AuthSplitPanel: Two-column welcome/auth shell — tinted brand panel (title + subtitle) or dark cover variant beside auth content, with blue legal footer links.
+   - React: react/AuthSplitPanel.tsx
+   - Vue 3: vue/AuthSplitPanel.vue
+   - Vanilla: vanilla/AuthSplitPanel.js (custom element `<auth-split-panel>`, attributes `media-side`/`media-title`/`media-subtitle`/`media-background`, properties `media`/`footerLinks`; light-DOM children captured into auth column)
+130. SuccessToast: Self-dismissing mint confirmation toast (emerald-100 bg + dark-green check icon), fixed top-right or bottom-right, auto-dismiss timer reset on message change, close button.
+   - React: react/SuccessToast.tsx
+   - Vue 3: vue/SuccessToast.vue
+   - Vanilla: vanilla/SuccessToast.js (custom element `<success-toast>`, attributes `message`/`duration`/`position`; event `close`, method `show()`)
+131. EditableHeading: Inline-editable object title — heading when idle, click switches to highlighted input (yellow bg + teal focus ring), Enter/blur commits, Esc cancels, breadcrumb + meta rows around it.
+   - React: react/EditableHeading.tsx
+   - Vue 3: vue/EditableHeading.vue
+   - Vanilla: vanilla/EditableHeading.js (custom element `<editable-heading>`, attributes `value`/`size`/`breadcrumb`/`meta`; events `change` detail `{value}`, `cancel`)
+132. PlanComparisonTable: Linear/Sprig style feature-comparison matrix — grouped section headers (dark band), per-cell check / note values ("G Suite + SAML"), highlighted plan column with tinted bg and per-plan CTA row.
+   - React: react/PlanComparisonTable.tsx
+   - Vue 3: vue/PlanComparisonTable.vue
+   - Vanilla: vanilla/PlanComparisonTable.js (custom element `<plan-comparison-table>`, properties `plans`/`sections`, attribute `cta-text`; event `select` detail `{planId}`)
+133. UpgradeCheckoutPanel: Clockwise/Attio style upgrade checkout — billing cadence segmented switch, seat stepper (min/max clamp), line-item summary with strikethrough list price, discount row, terms fine print and confirm CTA.
+   - React: react/UpgradeCheckoutPanel.tsx
+   - Vue 3: vue/UpgradeCheckoutPanel.vue
+   - Vanilla: vanilla/UpgradeCheckoutPanel.js (custom element `<upgrade-checkout-panel>`, attributes `seats`/`billing-period`/`total`/`discount`/`terms`, property `lineItems`; events `billing-period-change` detail `{period}`, `seats-change` detail `{seats}`, `confirm`)
+134. TrialBanner: Later style trial countdown banner — days-left pill (pulses when <=3 days), plan-aware default message, unlock CTA, dismissible variant with X button and `show()` restore.
+   - React: react/TrialBanner.tsx
+   - Vue 3: vue/TrialBanner.vue
+   - Vanilla: vanilla/TrialBanner.js (custom element `<trial-banner>`, attributes `days-left`/`plan-name`/`cta-text`/`tone`/`dismissible`; events `cta`, `dismiss`, method `show()`)
+135. MembershipTierGrid: Patreon style creator membership tiers — cover image, price + period, "Limited (N remaining)" stock note, trial CTA, badge chip and perk bullet list.
+   - React: react/MembershipTierGrid.tsx
+   - Vue 3: vue/MembershipTierGrid.vue
+   - Vanilla: vanilla/MembershipTierGrid.js (custom element `<membership-tier-grid>`, property `tiers`; event `select` detail `{tier}`)
+136. AddonPicker: User Interviews/Attio style add-on selector — checkbox rows with price or "Let's talk" contact link, disabled rows, checked indigo fill and running total footer.
+   - React: react/AddonPicker.tsx
+   - Vue 3: vue/AddonPicker.vue
+   - Vanilla: vanilla/AddonPicker.js (custom element `<addon-picker>`, properties `options`/`selectedIds`, attribute `total-text`; event `change` detail `{selectedIds}`)
+137. ImageGenGallery: AI image studio — prompt bar with Generate CTA, tile grid (aspect ratios, model badges), hover actions (download / variant / delete) and pulsing generating skeleton.
+   - React: react/ImageGenGallery.tsx
+   - Vue 3: vue/ImageGenGallery.vue
+   - Vanilla: vanilla/ImageGenGallery.js (custom element `<image-gen-gallery>`, property `images`, attributes `title`/`placeholder`/`generate-text`/`prompt`; events `generate` detail `{prompt}`, `tile-action` detail `{id, action}`)
+138. SharedChatViewer: public read-only page for a shared AI conversation — brand header with meta, user/assistant bubbles and a bottom "Try it yourself" CTA bar.
+   - React: react/SharedChatViewer.tsx
+   - Vue 3: vue/SharedChatViewer.vue
+   - Vanilla: vanilla/SharedChatViewer.js (custom element `<shared-chat-viewer>`, property `messages`, attributes `app-name`/`title`/`meta`/`cta-text`/`cta-note`; event `cta`)
+139. MemoryPanel: ChatGPT-style memory manager — remembered facts with source captions, inline editing (Save/Cancel), per-row delete, add input and clear-all.
+   - React: react/MemoryPanel.tsx
+   - Vue 3: vue/MemoryPanel.vue
+   - Vanilla: vanilla/MemoryPanel.js (custom element `<memory-panel>`, property `items`, attributes `title`/`note`/`add-placeholder`/`add-text`; events `add` detail `{text}`, `edit` detail `{id, text}`, `delete` detail `{id}`, `clear`)
+140. ConnectorGrid: "Apps & Connectors" integration panel — icon cards with description, Connect / Connected toggle buttons and a live N/M connected badge.
+   - React: react/ConnectorGrid.tsx
+   - Vue 3: vue/ConnectorGrid.vue
+   - Vanilla: vanilla/ConnectorGrid.js (custom element `<connector-grid>`, property `connectors`, attributes `title`/`connect-text`/`connected-text`; event `toggle` detail `{id, connected}`)
+141. ModelComparePane: LMArena style side-by-side model comparison — shared prompt chip, two model output columns (streaming dots / error state) and an A / Tie / B vote bar.
+   - React: react/ModelComparePane.tsx
+   - Vue 3: vue/ModelComparePane.vue
+   - Vanilla: vanilla/ModelComparePane.js (custom element `<model-compare-pane>`, properties `outputA`/`outputB`/`statusA`/`statusB`, attributes `prompt`/`model-a`/`model-b`; event `vote` detail `{choice}`)
+142. SystemPromptEditor: system prompt workspace — version chip, Saved/Unsaved dirty state, live token estimate, {{variable}} chips and a temperature slider (0–2); Save disabled while clean.
+   - React: react/SystemPromptEditor.tsx
+   - Vue 3: vue/SystemPromptEditor.vue
+   - Vanilla: vanilla/SystemPromptEditor.js (custom element `<system-prompt-editor>`, attributes `title`/`value`/`saved-value`/`version`/`variables` (JSON)/`temperature`; events `save` detail `{text}`, `reset`, `temperature-change` detail `{value}`)
+143. ToolSchemaEditor: agent tool registry — tool cards with method badge (GET/POST), endpoint, typed parameter chips (string/number/boolean, required marker), enable toggles with N/M count badge and per-tool schema validation.
+   - React: react/ToolSchemaEditor.tsx
+   - Vue 3: vue/ToolSchemaEditor.vue
+   - Vanilla: vanilla/ToolSchemaEditor.js (custom element `<tool-schema-editor>`, property `tools`, event `toggle` detail `{tool, enabled}`, `validate` detail `{tool}`)
+144. FineTuneJobList: fine-tune job list — status chips (queued/training/completed/failed), training progress bar with %, cost + ETA meta, cancel link for active jobs, "New fine-tune" CTA and empty state.
+   - React: react/FineTuneJobList.tsx
+   - Vue 3: vue/FineTuneJobList.vue
+   - Vanilla: vanilla/FineTuneJobList.js (custom element `<finetune-job-list>`, property `jobs`; events `cancel` detail `{job}`, `new`)
+145. PersonaPresetGrid: persona preset cards — gradient emoji tiles, name + description, per-persona `temp` chip, moving selection ring (indigo border + ring-2 + check bubble).
+   - React: react/PersonaPresetGrid.tsx
+   - Vue 3: vue/PersonaPresetGrid.vue
+   - Vanilla: vanilla/PersonaPresetGrid.js (custom element `<persona-preset-grid>`, property `presets`; event `select` detail `{preset}`)
+146. AgentBuilderCard: agent workflow card — vertical node chain (trigger/tool/llm/output icons + type chips), status dots (active pulse / done / error), node count, Edit button and Run agent CTA disabled while running.
+   - React: react/AgentBuilderCard.tsx
+   - Vue 3: vue/AgentBuilderCard.vue
+   - Vanilla: vanilla/AgentBuilderCard.js (custom element `<agent-builder-card>`, attributes `agent-name`/`running`, property `nodes`; events `run`, `edit`)
+147. VoiceOrb: voice conversation orb — gradient disc per conversation state (listening sky/indigo, speaking emerald/teal, thinking amber/orange, idle zinc), waveform bars, Mute / End call controls; sizes sm/md/lg.
+   - React: react/VoiceOrb.tsx
+   - Vue 3: vue/VoiceOrb.vue
+   - Vanilla: vanilla/VoiceOrb.js (custom element `<voice-orb>`, attributes `state`/`label`/`hint`/`size`/`show-controls`/`muted`; events `toggle-mute {muted}`, `end`)
+148. ShareChatDialog: share conversation dialog — private vs public-link option cards, link code row with Copy link, Create link CTA when shared but no link yet; renders nothing when closed.
+   - React: react/ShareChatDialog.tsx
+   - Vue 3: vue/ShareChatDialog.vue
+   - Vanilla: vanilla/ShareChatDialog.js (custom element `<share-chat-dialog>`, attributes `open`/`title`/`description`/`link`/`shared`; events `toggle-shared {shared}`, `create-link`, `copy-link {link}`, `close`)
+149. BrandPromptTable: AI brand-visibility prompt table — visibility %, sentiment score color coded (>=70 emerald, >=50 amber, else red), rank position, quota badge N / M prompts, + Add Prompt CTA, empty state.
+   - React: react/BrandPromptTable.tsx
+   - Vue 3: vue/BrandPromptTable.vue
+   - Vanilla: vanilla/BrandPromptTable.js (custom element `<brand-prompt-table>`, attributes `title`/`quota-used`/`quota-total`, property `rows`; events `add-prompt`, `row-click {row}`)
+

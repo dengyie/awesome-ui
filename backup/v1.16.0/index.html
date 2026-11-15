@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>awesome-ui — AI Web Component Gallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          keyframes: {
+            'audio-pulse': {
+              '0%': { height: '15%' },
+              '100%': { height: '100%' },
+            },
+            'voice-bar': {
+              '0%': { height: '20%' },
+              '100%': { height: '100%' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css">
+  <script type="module" src="./vanilla/ThemeToggle.js"></script>
+  <script type="module" src="./vanilla/StatusIndicator.js"></script>
+  <script type="module" src="./vanilla/AudioWaveVisualizer.js"></script>
+  <script type="module" src="./vanilla/ChatPromptInput.js?v=p1"></script>
+  <script type="module" src="./vanilla/StreamMarkdown.js"></script>
+  <script type="module" src="./vanilla/ThinkingBlock.js?v=p1"></script>
+  <script type="module" src="./vanilla/ToolCallBadge.js"></script>
+  <script type="module" src="./vanilla/AutoScrollAnchor.js"></script>
+  <script type="module" src="./vanilla/ArtifactCanvas.js"></script>
+  <script type="module" src="./vanilla/SourcesCitation.js"></script>
+  <script type="module" src="./vanilla/MessageActionToolbar.js"></script>
+  <script type="module" src="./vanilla/PromptChips.js"></script>
+  <script type="module" src="./vanilla/RoadmapTimeline.js"></script>
+  <script type="module" src="./vanilla/KnowledgeDrawer.js"></script>
+  <script type="module" src="./vanilla/HomepageDashboard.js"></script>
+  <script type="module" src="./vanilla/ContextUsageBadge.js"></script>
+  <script type="module" src="./vanilla/ModelSelector.js"></script>
+  <script type="module" src="./vanilla/CodeBlock.js"></script>
+  <script type="module" src="./vanilla/TypingIndicator.js"></script>
+  <script type="module" src="./vanilla/ChatMessageRow.js"></script>
+  <script type="module" src="./vanilla/CommandPalette.js?v=p1"></script>
+  <script type="module" src="./vanilla/ToastStack.js?v=p1"></script>
+  <script type="module" src="./vanilla/ChatSessionList.js?v=p1"></script>
+  <script type="module" src="./vanilla/DiffViewer.js?v=p1"></script>
+  <script type="module" src="./vanilla/ToolApprovalCard.js"></script>
+  <script type="module" src="./vanilla/FileAttachmentList.js"></script>
+  <script type="module" src="./vanilla/StreamingProgressBar.js"></script>
+  <script type="module" src="./vanilla/EmptyState.js"></script>
+  <script type="module" src="./vanilla/AgentStepTimeline.js"></script>
+  <script type="module" src="./vanilla/PromptTemplateGrid.js"></script>
+  <script type="module" src="./vanilla/AgentTaskChecklist.js"></script>
+  <script type="module" src="./vanilla/PricingTable.js"></script>
+  <script type="module" src="./vanilla/StatCard.js"></script>
+  <script type="module" src="./vanilla/DataTable.js"></script>
+  <script type="module" src="./vanilla/AgentRunLog.js"></script>
+  <script type="module" src="./vanilla/AuthForm.js"></script>
+  <script type="module" src="./vanilla/SettingsPanel.js"></script>
+  <script type="module" src="./vanilla/OnboardingChecklist.js"></script>
+  <script type="module" src="./vanilla/UpgradePromptCard.js"></script>
+  <script type="module" src="./vanilla/ConfirmDialog.js"></script>
+  <script type="module" src="./vanilla/ShortcutsOverlay.js"></script>
+  <script type="module" src="./vanilla/FileDropzone.js"></script>
+  <script type="module" src="./vanilla/NotificationCenter.js"></script>
+  <script type="module" src="./vanilla/CommentThread.js"></script>
+  <script type="module" src="./vanilla/DatePicker.js"></script>
+  <script type="module" src="./vanilla/KanbanBoard.js"></script>
+  <script type="module" src="./vanilla/SideDrawer.js"></script>
+  <script type="module" src="./vanilla/AccountSwitcher.js"></script>
+  <script type="module" src="./vanilla/SchedulerSlots.js"></script>
+  <script type="module" src="./vanilla/RichToolbar.js"></script>
+  <script type="module" src="./vanilla/HeroSection.js"></script>
+  <script type="module" src="./vanilla/FooterSection.js"></script>
+  <script type="module" src="./vanilla/TestimonialGrid.js"></script>
+  <script type="module" src="./vanilla/VoiceModePanel.js"></script>
+  <script type="module" src="./vanilla/PromptLibrary.js"></script>
+  <script type="module" src="./vanilla/Tabs.js"></script>
+  <script type="module" src="./vanilla/Accordion.js"></script>
+  <script type="module" src="./vanilla/AvatarGroup.js"></script>
+  <script type="module" src="./vanilla/FilterBar.js"></script>
+  <script type="module" src="./vanilla/Tooltip.js"></script>
+  <script type="module" src="./vanilla/Breadcrumb.js"></script>
+  <script type="module" src="./vanilla/Pagination.js"></script>
+  <script type="module" src="./vanilla/AlertBanner.js"></script>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
+  <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.16.0</span>
+      <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
+    </div>
+    <div class="flex items-center gap-4 text-sm text-zinc-400">
+      <context-usage-badge id="header-context-badge" used-tokens="68500" max-tokens="128000" model-name="claude-3-5-sonnet"></context-usage-badge>
+      <model-selector id="header-model-selector" selected-id="claude-3-5-sonnet"></model-selector>
+      <theme-toggle></theme-toggle>
+      <a href="https://github.com/dengyie/awesome-ui" target="_blank" class="hover:text-zinc-100 transition-colors">GitHub ↗</a>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-4xl w-full mx-auto p-6 space-y-12">
+    <!-- Intro -->
+    <section class="text-center py-6 space-y-3">
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">AI-to-AI Standard Component Kit</h1>
+      <p class="text-zinc-400 text-sm max-w-xl mx-auto">
+        Copy-paste ready, zero-blackbox frontend components for AI Web Apps across React, Vue 3, and Vanilla Web Components.
+      </p>
+      <div class="pt-2 flex items-center justify-center gap-3">
+        <audio-wave-visualizer is-active bar-count="20"></audio-wave-visualizer>
+        <span class="text-xs font-mono text-zinc-500">Live Audio Visualizer</span>
+      </div>
+    </section>
+
+    <!-- 1. Chat Prompt Input -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">1. ChatPromptInput (Multi-modal Input)</h2>
+        <span class="text-xs font-mono text-zinc-500">Auto-resize, Attachments, Keyboards</span>
+      </div>
+      <chat-prompt-input id="demo-prompt" placeholder="Try typing, press Shift+Enter for newline, or click upload..."></chat-prompt-input>
+    </section>
+
+    <!-- 2. Thinking Block -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">2. ThinkingBlock (Reasoning Chain)</h2>
+        <span class="text-xs font-mono text-zinc-500">DeepSeek R1 / OpenAI o1 Style</span>
+      </div>
+      <thinking-block id="demo-thinking" duration="4.8" content="Analyzing the AST structure of user input...&#10;Identified 2 tool calls and markdown formatting requests.&#10;Optimizing DOM diff algorithm for stream rendering."></thinking-block>
+    </section>
+
+    <!-- 3. Tool Call Badges -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">3. ToolCallBadge (Agent Tool Calls)</h2>
+        <span class="text-xs font-mono text-zinc-500">Running / Success / Error Traces</span>
+      </div>
+      <tool-call-badge name="web_search" status="success" args='{"query": "best frontend components for AI 2026"}' output='[{"title": "awesome-ui released", "url": "https://github.com/dengyie/awesome-ui"}]'></tool-call-badge>
+      <tool-call-badge name="python_interpreter" status="running" args='{"code": "import numpy as np; print(np.mean([1, 2, 3]))"}'></tool-call-badge>
+    </section>
+
+    <!-- 4. Sources Citation -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">4. SourcesCitation (Perplexity / RAG Style)</h2>
+        <span class="text-xs font-mono text-zinc-500">Domains, Snippets, Favicons</span>
+      </div>
+      <sources-citation sources='[{"title": "OpenAI Platform & Realtime API Reference", "url": "https://platform.openai.com/docs", "snippet": "Build voice and streaming agent workflows directly in the browser."}, {"title": "Anthropic Claude Model Context Window", "url": "https://docs.anthropic.com", "snippet": "Prompt caching and long context optimization strategies."}]'></sources-citation>
+    </section>
+
+    <!-- 5. Stream Markdown -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">4. StreamMarkdown (Streaming & Code Copy)</h2>
+        <span class="text-xs font-mono text-zinc-500">Smooth Streaming + Pulse Cursor</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <stream-markdown is-streaming content="Here is a quick example of a **React hook** with streaming output:&#10;&#10;```typescript&#10;const useStream = (prompt: string) => {&#10;  const [tokens, setTokens] = useState<string[]>([]);&#10;  // streaming logic...&#10;  return { tokens };&#10;};&#10;```&#10;&#10;Everything is ready to use!"></stream-markdown>
+        <message-action-toolbar content="Here is a quick example..." total-branches="3" branch-index="1"></message-action-toolbar>
+      </div>
+    </section>
+
+    <!-- 5. Prompt Chips -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">5. PromptChips (Follow-up Suggestions)</h2>
+      </div>
+      <prompt-chips suggestions='["Explain this code in detail", "Optimize memory usage", "Convert to Vue 3"]'></prompt-chips>
+    </section>
+
+    <!-- 6. RoadmapTimeline & KnowledgeDrawer (Paper/Trail Map) -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">6. RoadmapTimeline & KnowledgeDrawer (Trail & Learning Path)</h2>
+        <span class="text-xs font-mono text-zinc-500">Milestone Pins + Topo Drawer</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <roadmap-timeline id="demo-roadmap"></roadmap-timeline>
+        <knowledge-drawer id="demo-drawer"></knowledge-drawer>
+      </div>
+    </section>
+
+    <!-- 7. HomepageDashboard (Homelab Startpage) -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">7. HomepageDashboard (Homelab Startpage)</h2>
+        <span class="text-xs font-mono text-zinc-500">gethomepage/homepage inspired — Groups, Search, Live Clock</span>
+      </div>
+      <homepage-dashboard id="demo-dashboard" title="Homepage" subtitle="A highly customizable homelab dashboard" status-style="pill" show-search collapsible></homepage-dashboard>
+    </section>
+
+    <!-- 8. Artifact Canvas Trigger -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">8. ArtifactCanvas (Split-view Preview)</h2>
+        <button onclick="document.querySelector('artifact-canvas').setAttribute('is-open', '')" class="px-3 py-1.5 bg-zinc-100 text-zinc-900 rounded-lg text-xs font-medium hover:bg-white transition-colors">
+          Open Artifact Canvas
+        </button>
+      </div>
+      <artifact-canvas is-open title="ButtonComponent.html" language="html" code="<div style='display:flex;justify-content:center;align-items:center;height:100%;background:#09090b;color:#fff;font-family:sans-serif;'><h2>Hello from Artifact Canvas! 🎉</h2></div>"></artifact-canvas>
+    </section>
+
+    <!-- 9. CodeBlock -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">9. CodeBlock (Standalone Code Card)</h2>
+        <span class="text-xs font-mono text-zinc-500">Language Badge, Filename, One-click Copy, Line Numbers</span>
+      </div>
+      <code-block id="demo-codeblock" language="typescript" filename="stream.ts" show-line-numbers></code-block>
+    </section>
+
+    <!-- 10. TypingIndicator -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">10. TypingIndicator (AI Composing State)</h2>
+        <span class="text-xs font-mono text-zinc-500">Dots / Pulse Variants, Sizes, A11y role=status</span>
+      </div>
+      <div class="flex items-center gap-8 p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <typing-indicator label="AI is thinking"></typing-indicator>
+        <typing-indicator variant="pulse" size="sm" label="Streaming"></typing-indicator>
+        <typing-indicator size="lg"></typing-indicator>
+      </div>
+    </section>
+
+    <!-- 11. ChatMessageRow -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">11. ChatMessageRow (Conversation Bubbles)</h2>
+        <span class="text-xs font-mono text-zinc-500">User / Assistant / System Roles, Avatar, Timestamp</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <chat-message-row role="system" content="Session started · claude-3-5-sonnet"></chat-message-row>
+        <chat-message-row role="user" name="Mango" timestamp="21:30" content="Help me scaffold a streaming chat UI with Tailwind."></chat-message-row>
+        <chat-message-row role="assistant" name="Claude" timestamp="21:30" content="Sure — combine ChatPromptInput, StreamMarkdown and AutoScrollAnchor from this kit. Copy the single files and you're done."></chat-message-row>
+      </div>
+    </section>
+
+    <!-- 12. CommandPalette & ToastStack -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">12. CommandPalette & ToastStack</h2>
+        <span class="text-xs font-mono text-zinc-500">Cmd+K Actions, Keyboard Navigation, Auto-dismiss Notifications</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-3 p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <button id="open-palette-btn" class="flex items-center gap-2 px-3 py-1.5 bg-zinc-100 text-zinc-900 rounded-lg text-xs font-medium hover:bg-white transition-colors">
+          Open Command Palette <kbd class="px-1.5 py-0.5 text-[10px] font-mono bg-zinc-200 rounded border border-zinc-300">⌘K</kbd>
+        </button>
+        <button data-toast="success" class="toast-demo-btn px-3 py-1.5 bg-zinc-800 text-zinc-200 rounded-lg text-xs hover:bg-zinc-700 transition-colors border border-zinc-700">Success Toast</button>
+        <button data-toast="warning" class="toast-demo-btn px-3 py-1.5 bg-zinc-800 text-zinc-200 rounded-lg text-xs hover:bg-zinc-700 transition-colors border border-zinc-700">Warning Toast</button>
+        <button data-toast="error" class="toast-demo-btn px-3 py-1.5 bg-zinc-800 text-zinc-200 rounded-lg text-xs hover:bg-zinc-700 transition-colors border border-zinc-700">Error Toast</button>
+      </div>
+      <command-palette id="demo-palette"></command-palette>
+      <toast-stack id="demo-toasts"></toast-stack>
+    </section>
+
+    <!-- 13. ChatSessionList -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">13. ChatSessionList (Conversation History Sidebar)</h2>
+        <span class="text-xs font-mono text-zinc-500">Active Highlight, Hover Delete, Empty State</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <chat-session-list id="demo-sessions" active-id="2"></chat-session-list>
+      </div>
+    </section>
+
+    <!-- 14. DiffViewer -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">14. DiffViewer (AI Code Edit Diff)</h2>
+        <span class="text-xs font-mono text-zinc-500">Add / Remove / Context Lines, +/- Counts, Line Numbers</span>
+      </div>
+      <diff-viewer id="demo-diff" filename="src/hooks/useStream.ts" language="ts"></diff-viewer>
+    </section>
+
+    <!-- 15. ToolApprovalCard -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">15. ToolApprovalCard (Agent Permission Prompt)</h2>
+        <span class="text-xs font-mono text-zinc-500">Approve / Reject, Risk Levels, Args Inspection</span>
+      </div>
+      <div class="space-y-3">
+        <tool-approval-card id="demo-approval-low" tool-name="web_search" description="Search the web for current documentation"></tool-approval-card>
+        <tool-approval-card id="demo-approval-high" tool-name="shell_execute" description="Run a shell command on this machine" risk="high"></tool-approval-card>
+      </div>
+    </section>
+
+    <!-- 16. FileAttachmentList -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">16. FileAttachmentList (Prompt Attachments)</h2>
+        <span class="text-xs font-mono text-zinc-500">Type Icons, Size Formatting, Remove Chips</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <file-attachment-list id="demo-attachments"></file-attachment-list>
+      </div>
+    </section>
+
+    <!-- 17. StreamingProgressBar -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">17. StreamingProgressBar (Generation Progress)</h2>
+        <span class="text-xs font-mono text-zinc-500">Determinate / Indeterminate, Status Colors, A11y progressbar</span>
+      </div>
+      <div class="space-y-5 p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <streaming-progress-bar id="demo-progress" value="64" label="Generating response"></streaming-progress-bar>
+        <streaming-progress-bar label="Indexing workspace"></streaming-progress-bar>
+        <streaming-progress-bar value="100" label="Upload complete" status="done"></streaming-progress-bar>
+        <streaming-progress-bar value="37" label="Model request failed" status="error"></streaming-progress-bar>
+      </div>
+    </section>
+
+    <!-- 18. EmptyState -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">18. EmptyState (Zero-result Placeholder)</h2>
+        <span class="text-xs font-mono text-zinc-500">Icon, Title, Description, CTA Action</span>
+      </div>
+      <div class="rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <empty-state id="demo-empty" icon="search" title="No conversations found" description="Try a different keyword, or start a brand new chat." action-label="New Chat"></empty-state>
+      </div>
+    </section>
+
+    <!-- 19. AgentStepTimeline -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">19. AgentStepTimeline (Multi-step Agent Trace)</h2>
+        <span class="text-xs font-mono text-zinc-500">Pending / Running / Done / Error, Connectors, Durations</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+        <agent-step-timeline id="demo-steps"></agent-step-timeline>
+      </div>
+    </section>
+
+    <!-- 20. PromptTemplateGrid -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">20. PromptTemplateGrid (Template Library)</h2>
+        <span class="text-xs font-mono text-zinc-500">Card Grid, Tags, Hover Use Action</span>
+      </div>
+      <prompt-template-grid id="demo-templates"></prompt-template-grid>
+    </section>
+
+    <!-- 21. AgentTaskChecklist -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">21. AgentTaskChecklist (Agent Task Plan)</h2>
+        <span class="text-xs font-mono text-zinc-500">Progress Counter, Status Icons, Toggle</span>
+      </div>
+      <agent-task-checklist id="demo-tasks" title="Release plan"></agent-task-checklist>
+    </section>
+
+    <!-- 22. PricingTable -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">22. PricingTable (SaaS Plan Comparison)</h2>
+        <span class="text-xs font-mono text-zinc-500">Highlighted Plan, Feature Checks, CTA</span>
+      </div>
+      <pricing-table id="demo-pricing"></pricing-table>
+    </section>
+
+    <!-- 23. StatCard -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">23. StatCard (Dashboard Metric)</h2>
+        <span class="text-xs font-mono text-zinc-500">Delta %, Sparkline, Icon</span>
+      </div>
+      <div id="demo-stats" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
+
+    <!-- 24. DataTable -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">24. DataTable (Sortable + Batch Select)</h2>
+        <span class="text-xs font-mono text-zinc-500">Sort, Row Actions, Floating Batch Bar</span>
+      </div>
+      <data-table id="demo-table"></data-table>
+    </section>
+
+    <!-- 25. AgentRunLog -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">25. AgentRunLog (Agent Execution Log)</h2>
+        <span class="text-xs font-mono text-zinc-500">Status Timeline, Duration, Terminal Detail</span>
+      </div>
+      <agent-run-log id="demo-runlog" title="Deploy pipeline"></agent-run-log>
+    </section>
+
+    <!-- 26. AuthForm -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">26. AuthForm (Sign in / Sign up)</h2>
+        <span class="text-xs font-mono text-zinc-500">SSO Row, Divider, Inline Error, Loading</span>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        <auth-form id="demo-auth-signin" footer-text="New here? Create an account"></auth-form>
+        <auth-form id="demo-auth-signup" mode="signup"></auth-form>
+      </div>
+    </section>
+
+    <!-- 27. SettingsPanel -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">27. SettingsPanel (Sectioned Settings)</h2>
+        <span class="text-xs font-mono text-zinc-500">Anchor Nav, Card Sections, Save Row</span>
+      </div>
+      <settings-panel id="demo-settings"></settings-panel>
+    </section>
+
+    <!-- 28. OnboardingChecklist -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">28. OnboardingChecklist (Activation Tasks)</h2>
+        <span class="text-xs font-mono text-zinc-500">Progress, Strikethrough, All-done State</span>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        <onboarding-checklist id="demo-onboarding" title="Get started"></onboarding-checklist>
+      </div>
+    </section>
+
+    <!-- 29. UpgradePromptCard -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">29. UpgradePromptCard (Usage Upsell)</h2>
+        <span class="text-xs font-mono text-zinc-500">Usage Bar Thresholds, Feature List, CTA</span>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        <upgrade-prompt-card id="demo-upgrade" unit="credits" limit="1000" used="820"
+          plan-name="Starter" cta-text="Upgrade to Pro"></upgrade-prompt-card>
+      </div>
+    </section>
+
+    <!-- 30. ConfirmDialog -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">30. ConfirmDialog (Destructive Action Guard)</h2>
+        <span class="text-xs font-mono text-zinc-500">Tone, Type-to-Confirm, Loading Lock</span>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <confirm-dialog id="demo-confirm" title="Delete workspace?" tone="danger"
+          description="All 12 projects, 48 sessions and uploaded files will be permanently removed."
+          confirm-text="Delete workspace" cancel-text="Keep it"></confirm-dialog>
+        <button type="button" id="demo-confirm-trigger"
+          class="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-2 text-xs font-medium text-red-300 transition-colors hover:bg-red-500/20">
+          Open type-to-confirm dialog
+        </button>
+      </div>
+    </section>
+
+    <!-- 31. ShortcutsOverlay -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">31. ShortcutsOverlay (Keyboard Cheat Sheet)</h2>
+        <span class="text-xs font-mono text-zinc-500">Grouped, Searchable, Esc to Close</span>
+      </div>
+      <button type="button" id="demo-shortcuts-trigger"
+        class="rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-800">
+        Press <kbd class="mx-1 rounded border border-zinc-600 bg-zinc-800 px-1 font-mono text-[10px]">?</kbd> or click to open shortcuts
+      </button>
+      <shortcuts-overlay id="demo-shortcuts" title="Keyboard shortcuts"></shortcuts-overlay>
+    </section>
+
+    <!-- 32. FileDropzone -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">32. FileDropzone (Drag &amp; Drop Upload)</h2>
+        <span class="text-xs font-mono text-zinc-500">Accept Filter, Size Guard, Remove</span>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <file-dropzone id="demo-dropzone" accept="image/*,.pdf" max-size-mb="2" multiple
+          hint="PNG, JPG or PDF · up to 2 MB each"></file-dropzone>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3">
+          <p class="mb-2 text-[11px] font-medium uppercase tracking-wide text-zinc-500">Event log</p>
+          <ul id="demo-dropzone-log" class="space-y-1 font-mono text-[11px] text-zinc-400">
+            <li class="text-zinc-600">Drop a file to see events…</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 33. NotificationCenter -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">33. NotificationCenter (Inbox Panel)</h2>
+        <span class="text-xs font-mono text-zinc-500">Unread Badge, Filter, Mark All Read</span>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <notification-center id="demo-notifications" open title="Notifications"></notification-center>
+        <div class="flex flex-col items-start gap-2">
+          <button type="button" id="demo-notif-push"
+            class="rounded-lg border border-indigo-500/40 bg-indigo-500/10 px-4 py-2 text-xs font-medium text-indigo-300 transition-colors hover:bg-indigo-500/20">
+            Push a new notification
+          </button>
+          <p id="demo-notif-status" class="text-[11px] text-zinc-500">Click an item to mark it read.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 34. CommentThread -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">34. CommentThread (Nested Discussion)</h2>
+        <span class="text-xs font-mono text-zinc-500">parentId Nesting, Like, Resolve</span>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <comment-thread id="demo-comments" placeholder="Leave a review…" submit-text="Post"></comment-thread>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3">
+          <p class="mb-2 text-[11px] font-medium uppercase tracking-wide text-zinc-500">Thread state</p>
+          <pre id="demo-comments-state" class="whitespace-pre-wrap font-mono text-[11px] leading-relaxed text-zinc-400"></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 35. DatePicker -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">35. DatePicker (Month Grid)</h2>
+        <span class="text-xs font-mono text-zinc-500">Min/Max, Week Start, Today</span>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <date-picker id="demo-datepicker" value="2026-11-14" min="2026-11-05" max="2026-12-20"></date-picker>
+        <div class="flex flex-col items-start gap-2">
+          <p class="text-[11px] text-zinc-500">Selected: <span id="demo-datepicker-value" class="font-mono text-indigo-300">2026-11-14</span></p>
+          <button type="button" id="demo-datepicker-today"
+            class="rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-800">
+            Jump to today
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 36. KanbanBoard -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">36. KanbanBoard (Drag &amp; Drop Columns)</h2>
+        <span class="text-xs font-mono text-zinc-500">HTML5 DnD, Arrow-Key Move, WIP Limit</span>
+      </div>
+      <kanban-board id="demo-kanban"></kanban-board>
+      <p id="demo-kanban-status" class="text-[11px] text-zinc-500">Drag a card between columns, or focus one and press ← / →.</p>
+    </section>
+
+    <!-- 37. SideDrawer -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">37. SideDrawer (Edge Panel)</h2>
+        <span class="text-xs font-mono text-zinc-500">Left/Right, Esc, Backdrop, Footer Slot</span>
+      </div>
+      <button type="button" id="demo-drawer-trigger"
+        class="rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-800">
+        Open filters drawer
+      </button>
+      <side-drawer id="demo-side-drawer" title="Filters" description="Narrow the agent run list"
+        side="right" size="md">
+        <div class="space-y-3">
+          <label class="block text-[11px] font-medium text-zinc-300">Status
+            <select class="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 text-xs text-zinc-200">
+              <option>Any status</option><option>Running</option><option>Completed</option><option>Failed</option>
+            </select>
+          </label>
+          <label class="block text-[11px] font-medium text-zinc-300">Search
+            <input type="text" placeholder="Run id or prompt…"
+              class="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 text-xs text-zinc-200 placeholder-zinc-500" />
+          </label>
+          <p class="text-[11px] leading-relaxed text-zinc-500">
+            Body content is real light-DOM markup — the drawer moves it into the scroll area without cloning.
+          </p>
+        </div>
+        <button slot="footer" type="button" id="demo-drawer-apply"
+          class="w-full rounded-lg bg-indigo-600 px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-indigo-500">
+          Apply filters
+        </button>
+      </side-drawer>
+    </section>
+
+    <!-- 38. AccountSwitcher -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">38. AccountSwitcher (Workspace Menu)</h2>
+        <span class="text-xs font-mono text-zinc-500">Dropdown, Active Check, Esc/Outside Close</span>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <account-switcher id="demo-accounts" current-id="a1"></account-switcher>
+        <p id="demo-accounts-status" class="text-[11px] text-zinc-500">Click the trigger to switch workspace.</p>
+      </div>
+    </section>
+
+    <!-- 39. SchedulerSlots -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">39. SchedulerSlots (Booking Grid)</h2>
+        <span class="text-xs font-mono text-zinc-500">Period Groups, Disabled Slots, Open Count</span>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <scheduler-slots id="demo-scheduler" date="2026-11-20" timezone="GMT+8"></scheduler-slots>
+        <p id="demo-scheduler-status" class="text-[11px] text-zinc-500">Pick an open slot to see it selected.</p>
+      </div>
+    </section>
+
+    <!-- 40. RichToolbar -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">40. RichToolbar (Formatting Bar)</h2>
+        <span class="text-xs font-mono text-zinc-500">Grouped Actions, Active State, Disabled</span>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <rich-toolbar id="demo-toolbar"></rich-toolbar>
+        <p id="demo-toolbar-status" class="text-[11px] text-zinc-500">Click an action — the “Bold” toggle stays active.</p>
+      </div>
+    </section>
+
+    <!-- 41. HeroSection -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">41. HeroSection (Marketing Hero)</h2>
+        <span class="text-xs font-mono text-zinc-500">Eyebrow, CTAs, Proof Points</span>
+      </div>
+      <div class="rounded-2xl border border-zinc-800 bg-gradient-to-b from-zinc-900 to-zinc-950 p-8">
+        <hero-section id="demo-hero" eyebrow="New"
+          title="Copy-paste components, zero dependencies"
+          description="Single-file React, Vue and Vanilla components for AI-native surfaces — ship faster without a design system migration."
+          primary-cta="Browse the gallery" secondary-cta="Read the docs"></hero-section>
+        <p id="demo-hero-status" class="mt-4 text-center text-[11px] text-zinc-500">Try the CTAs — the status line updates.</p>
+      </div>
+    </section>
+
+    <!-- 42. FooterSection -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">42. FooterSection (Marketing Footer)</h2>
+        <span class="text-xs font-mono text-zinc-500">Link Columns, Brand, Socials, Copyright</span>
+      </div>
+      <footer-section id="demo-footer" brand="awesome-ui" tagline="An open-source copy-paste UI kit for AI-native interfaces."
+        copyright="© 2026 awesome-ui. MIT licensed."></footer-section>
+    </section>
+
+    <!-- 43. TestimonialGrid -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">43. TestimonialGrid (Customer Quotes)</h2>
+        <span class="text-xs font-mono text-zinc-500">Star Rating, Avatar Initials, 3 Columns</span>
+      </div>
+      <testimonial-grid id="demo-testimonials" columns="3"></testimonial-grid>
+      <p id="demo-testimonials-status" class="text-[11px] text-zinc-500">Click a quote card to select it.</p>
+    </section>
+
+    <!-- 44. VoiceModePanel -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">44. VoiceModePanel (Voice Conversation)</h2>
+        <span class="text-xs font-mono text-zinc-500">Orb States, Waveform, Transcript</span>
+      </div>
+      <voice-mode-panel id="demo-voice" state="idle" show-end></voice-mode-panel>
+      <p id="demo-voice-status" class="text-[11px] text-zinc-500">Press the orb — it cycles idle → listening → thinking → speaking. “End voice session” resets.</p>
+    </section>
+
+    <!-- 45. PromptLibrary -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">45. PromptLibrary (Saved Prompts)</h2>
+        <span class="text-xs font-mono text-zinc-500">Search, Category Chips, Favorites</span>
+      </div>
+      <prompt-library id="demo-prompts" searchable></prompt-library>
+      <p id="demo-prompt-status" class="text-[11px] text-zinc-500">Filter by category or search. Star a prompt to favorite it.</p>
+    </section>
+
+    <!-- 46. Tabs -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">46. Tabs (Segmented Views)</h2>
+        <span class="text-xs font-mono text-zinc-500">Underline / Pills, Badges, Keyboard Nav</span>
+      </div>
+      <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+        <tabs-bar id="demo-tabs"></tabs-bar>
+        <p id="demo-tabs-panel" class="mt-3 rounded-lg bg-zinc-950 px-3 py-2 text-[11px] text-zinc-400">Select a tab to switch the panel.</p>
+        <tabs-bar id="demo-tabs-pills" variant="pills" class="mt-4"></tabs-bar>
+      </div>
+    </section>
+
+    <!-- 47. Accordion -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">47. Accordion (FAQ / Disclosure)</h2>
+        <span class="text-xs font-mono text-zinc-500">Single / Multi Open, ARIA Regions</span>
+      </div>
+      <accordion-list id="demo-accordion"></accordion-list>
+      <p id="demo-accordion-status" class="text-[11px] text-zinc-500">Single-open by default — opening one closes the other.</p>
+    </section>
+
+    <!-- 48. AvatarGroup -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">48. AvatarGroup (Collaborators)</h2>
+        <span class="text-xs font-mono text-zinc-500">Stacked Avatars, +N Overflow, Status Dots</span>
+      </div>
+      <div class="space-y-3 rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+        <avatar-group id="demo-avatars" max="4"></avatar-group>
+        <div class="flex flex-wrap items-center gap-4">
+          <avatar-group id="demo-avatars-sm" size="sm" max="3"></avatar-group>
+          <avatar-group id="demo-avatars-lg" size="lg" max="5"></avatar-group>
+        </div>
+        <p id="demo-avatar-status" class="text-[11px] text-zinc-500">Click an avatar to select a collaborator.</p>
+      </div>
+    </section>
+
+    <!-- 49. FilterBar -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">49. FilterBar (Multi-Select Filters)</h2>
+        <span class="text-xs font-mono text-zinc-500">Dropdown Chips, Counts, Clear All</span>
+      </div>
+      <div class="space-y-3 rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+        <filter-bar id="demo-filters"></filter-bar>
+        <p id="demo-filter-status" class="text-[11px] text-zinc-500">No filters applied.</p>
+      </div>
+    </section>
+    <!-- 50. Tooltip -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">50. Tooltip (Hover / Focus Hint)</h2>
+        <span class="text-xs font-mono text-zinc-500">Four Sides, Light-DOM Children, ARIA</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+        <tooltip-hint content="Copy to clipboard">
+          <button type="button" class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-700 px-3 py-1.5 text-xs text-zinc-300 hover:bg-zinc-800">
+            Copy
+          </button>
+        </tooltip-hint>
+        <tooltip-hint content="Share with your team" side="bottom">
+          <button type="button" class="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-500">Share</button>
+        </tooltip-hint>
+        <tooltip-hint content="Archive this session" side="left">
+          <button type="button" class="rounded-lg border border-zinc-700 px-3 py-1.5 text-xs text-zinc-300 hover:bg-zinc-800">Archive</button>
+        </tooltip-hint>
+        <tooltip-hint content="Delete permanently" side="right">
+          <button type="button" class="rounded-lg border border-rose-900/60 bg-rose-950/40 px-3 py-1.5 text-xs text-rose-300 hover:bg-rose-900/40">Delete</button>
+        </tooltip-hint>
+        <span class="text-[11px] text-zinc-500">Hover or Tab into a button to reveal the tooltip.</span>
+      </div>
+    </section>
+
+    <!-- 51. Breadcrumb -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">51. Breadcrumb (Trail Navigation)</h2>
+        <span class="text-xs font-mono text-zinc-500">Icons, Collapse, Current Page</span>
+      </div>
+      <div class="space-y-3 rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+        <breadcrumb-trail id="demo-breadcrumb" max-items="4"></breadcrumb-trail>
+        <breadcrumb-trail id="demo-breadcrumb-short"></breadcrumb-trail>
+        <p id="demo-breadcrumb-status" class="text-[11px] text-zinc-500">Click a crumb to navigate.</p>
+      </div>
+    </section>
+
+    <!-- 52. Pagination -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">52. Pagination (Page Numbers)</h2>
+        <span class="text-xs font-mono text-zinc-500">Ellipsis Gaps, Edges, Bounds</span>
+      </div>
+      <div class="space-y-3 rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+        <pagination-bar id="demo-pagination" page="5" page-count="12"></pagination-bar>
+        <pagination-bar id="demo-pagination-compact" page="1" page-count="5" show-edges="false"></pagination-bar>
+        <p id="demo-pagination-status" class="text-[11px] text-zinc-500">Showing page 5 of 12.</p>
+      </div>
+    </section>
+
+    <!-- 53. AlertBanner -->
+    <section class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">53. AlertBanner (Inline Status)</h2>
+        <span class="text-xs font-mono text-zinc-500">Four Tones, Action, Dismiss</span>
+      </div>
+      <div class="space-y-2.5 rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+        <alert-banner tone="info" title="New model available"
+          description="Claude Sonnet 4.6 is now selectable from the model menu."></alert-banner>
+        <alert-banner tone="success" title="Deployment complete"
+          description="Build 248 shipped to production in 42 seconds."></alert-banner>
+        <alert-banner id="demo-alert-warning" tone="warning" title="Approaching context limit"
+          description="You have used 92% of this session's context window." action-text="Compact now" dismissible></alert-banner>
+        <alert-banner id="demo-alert-danger" tone="danger" title="Connection lost"
+          description="The agent stream disconnected. Unsaved tool output may be lost." action-text="Retry" dismissible></alert-banner>
+        <p id="demo-alert-status" class="text-[11px] text-zinc-500">Try the action or dismiss buttons.</p>
+      </div>
+    </section>
+  </main>
+
+  <auto-scroll-anchor></auto-scroll-anchor>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const dashboard = document.getElementById('demo-dashboard');
+      if (dashboard) {
+        dashboard.groups = [
+          {
+            name: 'Media', icon: '🎬', services: [
+              { name: 'Jellyfin', description: 'Movies & TV', icon: '🎞️', href: 'https://jellyfin.local', status: 'online', pingText: '24ms' },
+              { name: 'Plex', description: 'Streaming', icon: '▶️', href: 'https://plex.local', status: 'up', pingText: '18ms' },
+              { name: 'Emby', description: 'Media server', icon: '📽️', status: 'online' },
+              { name: 'qBittorrent', description: 'Downloads', icon: '↕️', status: 'warn', pingText: '302ms' },
+            ],
+          },
+          {
+            name: 'Automation', icon: '🤖', services: [
+              { name: 'Home Assistant', description: 'Smart home', icon: '🏠', href: 'https://hass.local', status: 'online', pingText: '8ms' },
+              { name: 'Node-RED', description: 'Flow automation', icon: '🔀', status: 'up' },
+              { name: 'Frigate', description: 'NVR & detection', icon: '📷', status: 'warn', pingText: 'slow' },
+              { name: 'ZLL Hub', description: 'Zigbee devices', icon: '📡', status: 'offline' },
+            ],
+          },
+          {
+            name: 'Networking', icon: '🌐', services: [
+              { name: 'Proxmox', description: 'Hypervisor', icon: '🖥️', href: 'https://proxmox.local', status: 'up', pingText: '6ms' },
+              { name: 'pfSense', description: 'Firewall', icon: '🛡️', status: 'online', pingText: '12ms' },
+              { name: 'Pi-hole', description: 'DNS & blocking', icon: '🕳️', status: 'online' },
+              { name: 'Tailscale', description: 'VPN mesh', icon: '🦦', status: 'up' },
+            ],
+          },
+          {
+            name: 'Tools', icon: '🧰', services: [
+              { name: 'Grafana', description: 'Metrics & dashboards', icon: '📊', href: 'https://grafana.local', status: 'online', pingText: '9ms' },
+              { name: 'Portainer', description: 'Container manager', icon: '🖼️', status: 'up' },
+              { name: 'Uptime Kuma', description: 'Status monitors', icon: '📈', status: 'warn', pingText: '10 up' },
+              { name: 'Vaultwarden', description: 'Password manager', icon: '🔐', status: 'online' },
+            ],
+          },
+        ];
+      }
+
+      const roadmap = document.getElementById('demo-roadmap');
+      const drawer = document.getElementById('demo-drawer');
+
+      if (roadmap) {
+        roadmap.data = {
+          activeId: 2,
+          nodes: [
+            { id: 1, index: "01", title: "第一次对话", subtitle: "先获得一次真实结果", stageColor: "#1d4ed8", status: "completed", tags: ["入门"] },
+            { id: 2, index: "02", title: "词汇与认知地图", subtitle: "LLM, Token & RAG", stageColor: "#0f766e", status: "active", tags: ["核心"] },
+            { id: 3, index: "03", title: "从 Prompt 到 Harness", subtitle: "运行环境与边界", stageColor: "#c2410c", status: "locked", tags: ["进阶"] },
+            { id: 4, index: "04", title: "Multi-Agent 编排", subtitle: "Graph 与 Loop 协同", stageColor: "#b91c1c", status: "locked", tags: ["生产"] }
+          ]
+        };
+
+        roadmap.addEventListener('node-click', (e) => {
+          const node = e.detail;
+          if (drawer) {
+            drawer.data = {
+              isOpen: true,
+              index: node.index,
+              title: node.title,
+              subtitle: node.subtitle,
+              themeColor: node.stageColor,
+              conceptText: `阶段 ${node.index} 核心目标：理解 ${node.title} 在生产架构中的作用与边界。`,
+              dependencies: [
+                { type: "dependency", label: "前置基础: 基础 Prompt 结构" },
+                { type: "branch", label: "分支路线: 本地模型部署" },
+                { type: "convergent", label: "汇聚目标: 可靠生产上线" }
+              ],
+              actionLabel: `进入阶段 ${node.index} 实战`
+            };
+          }
+        });
+      }
+
+      const codeBlock = document.getElementById('demo-codeblock');
+      if (codeBlock) {
+        codeBlock.code = [
+          "import { useState, useEffect } from 'react';",
+          '',
+          'export function useStream(endpoint: string) {',
+          "  const [tokens, setTokens] = useState<string>('');",
+          '  useEffect(() => {',
+          '    const es = new EventSource(endpoint);',
+          "    es.onmessage = (e) => setTokens((t) => t + e.data);",
+          '    return () => es.close();',
+          '  }, [endpoint]);',
+          '  return tokens;',
+          '}',
+        ].join('\n');
+      }
+
+      const palette = document.getElementById('demo-palette');
+      const toasts = document.getElementById('demo-toasts');
+
+      // P1 enhancements: prompt chips + thinking steps
+      const demoPrompt = document.getElementById('demo-prompt');
+      if (demoPrompt) {
+        demoPrompt.chips = [
+          { id: 'model', label: 'Claude 3.5 Sonnet', icon: 'sparkles', active: true },
+          { id: 'web', label: 'Web search', icon: 'globe' },
+          { id: 'deep', label: 'Deep think', icon: 'cpu' },
+        ];
+        demoPrompt.addEventListener('chip', (e) => {
+          const chip = e.detail;
+          demoPrompt.chips = demoPrompt.chips.map((c) => ({ ...c, active: c.id === chip.id ? !c.active : c.id === 'model' ? false : c.active }));
+          if (toasts) toasts.push(`Toggled: ${chip.label}`, 'info');
+        });
+      }
+
+      const demoThinking = document.getElementById('demo-thinking');
+      if (demoThinking) {
+        demoThinking.steps = [
+          { id: 's1', label: 'Parsing user intent', durationMs: 640 },
+          { id: 's2', label: 'Searching component registry', durationMs: 1240 },
+          { id: 's3', label: 'Composing response', durationMs: 2900 },
+        ];
+      }
+
+      if (palette) {
+        palette.items = [
+          { id: 'new-chat', label: 'New Chat', hint: 'Start a blank conversation', icon: 'plus', group: 'Chat', shortcut: '⌘N' },
+          { id: 'clear-history', label: 'Clear History', hint: 'Remove all local messages', icon: 'x', group: 'Chat' },
+          { id: 'toggle-theme', label: 'Toggle Theme', hint: 'Switch between light and dark', icon: 'sun', group: 'Settings', shortcut: '⌘J' },
+          { id: 'model-settings', label: 'Model Settings', hint: 'Temperature, context and providers', icon: 'sliders', group: 'Settings' },
+          { id: 'export-md', label: 'Export as Markdown', hint: 'Download conversation transcript', icon: 'copy', group: 'Actions' },
+        ];
+        palette.addEventListener('select', (e) => {
+          if (toasts) toasts.push(`Command executed: ${e.detail.label}`, 'success');
+        });
+      }
+
+      document.getElementById('open-palette-btn')?.addEventListener('click', () => {
+        if (palette) palette.open = true;
+      });
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          if (palette) palette.open = !palette.open;
+        }
+      });
+
+      const toastMessages = {
+        success: 'Model switched to Claude 3.5 Sonnet',
+        warning: 'Context window above 80%',
+        error: 'Request failed — rate limit reached',
+      };
+      document.querySelectorAll('.toast-demo-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const type = btn.getAttribute('data-toast');
+          if (toasts) toasts.push(toastMessages[type] || 'Notification', type);
+        });
+      });
+
+      const sessionList = document.getElementById('demo-sessions');
+      if (sessionList) {
+        let sessions = [
+          { id: 1, title: 'Scaffold a streaming chat UI', timeLabel: '2h ago', group: 'Today' },
+          { id: 2, title: 'Deploy awesome-ui gallery to GitHub Pages', timeLabel: '5h ago', group: 'Today' },
+          { id: 3, title: 'Review RAG citation accuracy', timeLabel: '1d ago', group: 'Previous 7 days' },
+          { id: 4, title: 'Migrate Vue 2 dashboard to Vue 3', timeLabel: '2d ago', group: 'Previous 7 days' },
+          { id: 5, title: 'Design token naming conventions', timeLabel: '3w ago' },
+        ];
+        sessionList.sessions = sessions;
+        sessionList.user = { name: 'Mango', email: 'mango@awesome-ui.dev' };
+        sessionList.addEventListener('select', (e) => {
+          sessionList.activeId = e.detail.id;
+          if (toasts) toasts.push(`Switched to: ${e.detail.title}`, 'info');
+        });
+        sessionList.addEventListener('delete', (e) => {
+          sessions = sessions.filter((s) => s.id !== e.detail.id);
+          sessionList.sessions = sessions;
+          if (toasts) toasts.push('Session deleted', 'warning');
+        });
+        sessionList.addEventListener('user-click', () => {
+          if (toasts) toasts.push('Opening account settings…', 'info');
+        });
+      }
+
+      const diffViewer = document.getElementById('demo-diff');
+      if (diffViewer) {
+        // Multi-file diff with tabs + long-context folding (contextSize 3).
+        const mk = (n, i) => ({ type: 'context', content: `${n}${i}` });
+        diffViewer.files = [
+          {
+            filename: 'src/hooks/useStream.ts',
+            language: 'ts',
+            lines: [
+              { type: 'context', content: "import { useState, useEffect } from 'react';" },
+              { type: 'context', content: '' },
+              { type: 'remove', content: 'export function useStream(endpoint) {' },
+              { type: 'add', content: 'export function useStream(endpoint: string): string {' },
+              { type: 'remove', content: "  const [tokens, setTokens] = useState('');" },
+              { type: 'add', content: "  const [tokens, setTokens] = useState<string>('');" },
+              { type: 'context', content: '  useEffect(() => {' },
+              { type: 'context', content: '    const es = new EventSource(endpoint);' },
+              { type: 'add', content: '    es.onerror = () => es.close();' },
+              { type: 'context', content: '    return () => es.close();' },
+              ...Array.from({ length: 10 }, (_, i) => mk('log line ', i)),
+            ],
+          },
+          {
+            filename: 'src/components/ChatPanel.tsx',
+            language: 'tsx',
+            lines: [
+              { type: 'remove', content: 'export const ChatPanel = () => {' },
+              { type: 'add', content: 'export const ChatPanel: React.FC = () => {' },
+              { type: 'context', content: '  return <stream-markdown content={tokens} />;' },
+              { type: 'add', content: '  return <stream-markdown content={tokens} thinking={steps} />;' },
+              { type: 'context', content: '};' },
+            ],
+          },
+        ];
+      }
+
+      const approvalLow = document.getElementById('demo-approval-low');
+      if (approvalLow) {
+        approvalLow.args = { query: 'awesome-ui component library', limit: 5 };
+        approvalLow.addEventListener('approve', () => toasts && toasts.push('web_search approved', 'success'));
+        approvalLow.addEventListener('reject', () => toasts && toasts.push('web_search rejected', 'error'));
+      }
+      const approvalHigh = document.getElementById('demo-approval-high');
+      if (approvalHigh) {
+        approvalHigh.args = { cmd: 'npm run build && npm publish', cwd: '/repo/awesome-ui' };
+        approvalHigh.addEventListener('approve', () => toasts && toasts.push('shell_execute approved — running', 'warning'));
+        approvalHigh.addEventListener('reject', () => toasts && toasts.push('shell_execute rejected', 'error'));
+      }
+
+      const attachments = document.getElementById('demo-attachments');
+      if (attachments) {
+        let files = [
+          { id: 1, name: 'architecture-diagram.png', size: 245760, type: 'image/png' },
+          { id: 2, name: 'useStream.ts', size: 2048 },
+          { id: 3, name: 'requirements.pdf', size: 1835008 },
+        ];
+        attachments.files = files;
+        attachments.addEventListener('remove', (e) => {
+          files = files.filter((f) => f.id !== e.detail.id);
+          attachments.files = files;
+          if (toasts) toasts.push('Attachment removed', 'info');
+        });
+      }
+
+      const demoEmpty = document.getElementById('demo-empty');
+      if (demoEmpty) {
+        demoEmpty.addEventListener('action', () => toasts && toasts.push('New chat created', 'success'));
+      }
+
+      const stepTimeline = document.getElementById('demo-steps');
+      if (stepTimeline) {
+        stepTimeline.steps = [
+          { id: 1, title: 'Read repository structure', status: 'done', duration: '1.2s' },
+          { id: 2, title: 'Generate component code', status: 'done', duration: '4.8s' },
+          { id: 3, title: 'Apply patch to 3 files', status: 'running', description: 'Editing ChatMessageRow, CommandPalette, ToastStack' },
+          { id: 4, title: 'Run test suite', status: 'pending' },
+          { id: 5, title: 'Commit & push', status: 'pending' },
+        ];
+      }
+
+      const templateGrid = document.getElementById('demo-templates');
+      if (templateGrid) {
+        templateGrid.templates = [
+          { id: 't1', title: 'Senior Code Review', description: 'Review a diff for correctness, security and maintainability', prompt: 'Review this diff like a senior engineer...', tag: 'Dev' },
+          { id: 't2', title: 'SQL Optimizer', description: 'Rewrite slow queries with index hints', prompt: 'Optimize this query...', tag: 'Data' },
+          { id: 't3', title: 'Commit Message', description: 'Conventional commits from a git diff', prompt: 'Write a commit message for...', tag: 'Dev' },
+          { id: 't4', title: 'Explain Like I\'m 5', description: 'Break down any concept simply', prompt: 'Explain ... simply', tag: 'Learn' },
+        ];
+        templateGrid.addEventListener('use', (e) => {
+          if (toasts) toasts.push(`Template loaded: ${e.detail.title}`, 'success');
+        });
+      }
+
+      const taskChecklist = document.getElementById('demo-tasks');
+      if (taskChecklist) {
+        let tasks = [
+          { id: 1, label: 'Write component sources (react/vue/vanilla)', status: 'done' },
+          { id: 2, label: 'Add jsdom coverage for vanilla elements', status: 'done' },
+          { id: 3, label: 'Update gallery demos', status: 'active' },
+          { id: 4, label: 'Regenerate llms-full.txt', status: 'pending' },
+          { id: 5, label: 'Push release to GitHub', status: 'pending' },
+        ];
+        taskChecklist.items = tasks;
+        taskChecklist.addEventListener('toggle', (e) => {
+          tasks = tasks.map((t) =>
+            t.id === e.detail.id ? { ...t, status: t.status === 'done' ? 'pending' : 'done' } : t
+          );
+          taskChecklist.items = tasks;
+        });
+      }
+
+      const modelSel = document.getElementById('header-model-selector');
+      const ctxBadge = document.getElementById('header-context-badge');
+
+      if (modelSel) {
+        modelSel.models = [
+          { id: 'claude-3-5-sonnet', name: 'Claude 3.5 Sonnet', provider: 'Anthropic', contextLength: '200k', tags: ['Default', 'Coding'] },
+          { id: 'gpt-4o', name: 'GPT-4o', provider: 'OpenAI', contextLength: '128k', tags: ['General'] },
+          { id: 'deepseek-r1', name: 'DeepSeek R1', provider: 'DeepSeek', contextLength: '64k', tags: ['Reasoning'] },
+          { id: 'gemini-1-5-pro', name: 'Gemini 1.5 Pro', provider: 'Google', contextLength: '2M', tags: ['Long Context'] }
+        ];
+
+        modelSel.addEventListener('select', (e) => {
+          const model = e.detail;
+          if (ctxBadge) {
+            ctxBadge.setAttribute('model-name', model.id);
+          }
+        });
+      }
+
+      const pricing = document.getElementById('demo-pricing');
+      if (pricing) {
+        pricing.plans = [
+          { name: 'Free', price: '$0', description: 'For personal projects', features: ['1 workspace', '1k requests / mo', 'Community support'], ctaText: 'Start free' },
+          { name: 'Pro', price: '$20', period: 'mo', description: 'For solo builders', features: ['Unlimited workspaces', '100k requests / mo', 'Priority support', 'Custom models'], highlighted: true, ctaText: 'Upgrade to Pro' },
+          { name: 'Team', price: '$40', period: 'mo', description: 'For growing teams', features: ['Everything in Pro', 'SSO & audit log', 'Shared prompt library'], ctaText: 'Contact sales' },
+        ];
+      }
+
+      const stats = document.getElementById('demo-stats');
+      if (stats) {
+        [
+          { label: 'Total requests', value: '128,402', delta: 12.4, 'delta-label': 'vs last month', trend: '[42,48,45,61,58,72,80,76,92]', icon: 'zap' },
+          { label: 'Error rate', value: '0.32%', delta: -1.8, 'delta-label': 'vs last month', trend: '[31,28,29,22,19,17,12,9,6]', icon: 'alert-triangle' },
+          { label: 'Avg latency', value: '284ms', delta: -6.2, 'delta-label': 'vs last month', trend: '[420,400,390,340,330,310,300,290,284]', icon: 'clock' },
+        ].forEach((config) => {
+          const card = document.createElement('stat-card');
+          Object.entries(config).forEach(([key, value]) => card.setAttribute(key, value));
+          stats.appendChild(card);
+        });
+      }
+
+      const table = document.getElementById('demo-table');
+      if (table) {
+        table.columns = [
+          { key: 'model', label: 'Model' },
+          { key: 'context', label: 'Context', align: 'right' },
+          { key: 'price', label: 'Input / 1M', align: 'right' },
+          { key: 'calls', label: 'Calls', align: 'right' },
+        ];
+        table.rows = [
+          { model: 'Claude 3.5 Sonnet', context: '200k', price: '$3.00', calls: 12840 },
+          { model: 'GPT-4o', context: '128k', price: '$2.50', calls: 9320 },
+          { model: 'DeepSeek R1', context: '64k', price: '$0.55', calls: 7415 },
+          { model: 'Gemini 1.5 Pro', context: '2M', price: '$1.25', calls: 3110 },
+        ];
+        table.actions = [
+          { label: 'Open', icon: 'external-link', onClick: () => toasts && toasts.push('Opening model', 'info') },
+          { label: 'Remove', icon: 'trash', onClick: () => toasts && toasts.push('Removed from list', 'success') },
+        ];
+      }
+
+      const runLog = document.getElementById('demo-runlog');
+      if (runLog) {
+        runLog.steps = [
+          { id: 'a1', label: 'Clone repository', status: 'done', durationMs: 1240 },
+          { id: 'a2', label: 'Install dependencies', status: 'done', durationMs: 8420, detail: `$ npm ci
+added 412 packages in 8.4s` },
+          { id: 'a3', label: 'Run test suite', status: 'error', durationMs: 2310, detail: `$ npm test
+FAIL tests/ui.test.mjs
+  expected 3 rows, got 2` },
+          { id: 'a4', label: 'Deploy to preview', status: 'pending' },
+        ];
+      }
+
+      const signInForm = document.getElementById('demo-auth-signin');
+      if (signInForm) {
+        signInForm.providers = [{ name: 'GitHub' }, { name: 'Google' }];
+        signInForm.addEventListener('submit', (event) => {
+          toasts && toasts.push(`Signed in as ${(event.detail || {}).email || 'guest'}`, 'success');
+        });
+      }
+
+      const signUpForm = document.getElementById('demo-auth-signup');
+      if (signUpForm) {
+        signUpForm.providers = [{ name: 'GitHub' }];
+        signUpForm.addEventListener('provider', (event) => {
+          toasts && toasts.push(`Continue with ${event.detail.name}`, 'info');
+        });
+      }
+
+      const settingsPanel = document.getElementById('demo-settings');
+      if (settingsPanel) {
+        settingsPanel.sections = [
+          {
+            id: 'account',
+            title: 'Account',
+            icon: 'user',
+            description: 'Profile, identity and sign-in details',
+            items: [
+              { id: 'email', label: 'Email address', value: 'ada@example.com', actionText: 'Change' },
+              { id: 'name', label: 'Display name', description: 'Shown on shared artifacts', value: 'Ada Lovelace', actionText: 'Edit' },
+              { id: 'plan', label: 'Current plan', value: 'Pro · monthly' },
+            ],
+          },
+          {
+            id: 'workspace',
+            title: 'Workspace',
+            icon: 'users',
+            description: 'Members and access control',
+            items: [
+              { id: 'members', label: 'Members', value: '12 seats', actionText: 'Manage' },
+              { id: 'role', label: 'Default role', value: 'Editor', actionText: 'Change' },
+            ],
+          },
+          {
+            id: 'billing',
+            title: 'Billing',
+            icon: 'credit-card',
+            description: 'Invoices and payment method',
+            items: [
+              { id: 'card', label: 'Payment method', value: 'Visa ···· 4242', actionText: 'Update' },
+              { id: 'invoices', label: 'Invoices', description: 'Last 12 months', actionText: 'Download' },
+            ],
+          },
+        ];
+        settingsPanel.addEventListener('item-action', (event) => {
+          toasts && toasts.push(`${event.detail.item.label} → ${event.detail.item.actionText}`, 'info');
+        });
+        settingsPanel.addEventListener('save', () => {
+          toasts && toasts.push('Settings saved', 'success');
+        });
+      }
+
+      const onboarding = document.getElementById('demo-onboarding');
+      if (onboarding) {
+        const tasks = [
+          { id: 'o1', title: 'Create your first workspace', done: true },
+          { id: 'o2', title: 'Invite a teammate', description: 'Collaboration unlocks shared artifacts', done: false, actionText: 'Invite' },
+          { id: 'o3', title: 'Connect a data source', description: 'Postgres, Notion or Google Drive', done: false, actionText: 'Connect' },
+          { id: 'o4', title: 'Run your first agent', done: false, actionText: 'Run' },
+        ];
+        onboarding.tasks = tasks;
+        onboarding.addEventListener('toggle', (event) => {
+          const task = tasks.find((item) => item.id === event.detail.id);
+          if (task) task.done = !task.done;
+          onboarding.tasks = [...tasks];
+        });
+        onboarding.addEventListener('action', (event) => {
+          toasts && toasts.push(`Action: ${event.detail.actionText}`, 'info');
+        });
+      }
+
+      const upgrade = document.getElementById('demo-upgrade');
+      if (upgrade) {
+        upgrade.features = ['Unlimited agents and runs', 'Priority queue', 'SSO and audit log'];
+        upgrade.addEventListener('upgrade', () => {
+          toasts && toasts.push('Opening plans…', 'info');
+        });
+      }
+
+      // 30. ConfirmDialog — type-to-confirm guard with a loading lock.
+      const confirmDialog = document.getElementById('demo-confirm');
+      const confirmTrigger = document.getElementById('demo-confirm-trigger');
+      if (confirmDialog) {
+        const openGuarded = () => {
+          confirmDialog.setAttribute('title', 'Delete "acme-prod" workspace?');
+          confirmDialog.setAttribute('require-text', 'acme-prod');
+          confirmDialog.setAttribute('confirm-text', 'Delete forever');
+          confirmDialog.setAttribute('open', '');
+        };
+        confirmTrigger && confirmTrigger.addEventListener('click', openGuarded);
+        confirmDialog.addEventListener('confirm', () => {
+          confirmDialog.setAttribute('loading', '');
+          setTimeout(() => {
+            confirmDialog.removeAttribute('loading');
+            confirmDialog.removeAttribute('open');
+            toasts && toasts.push('Workspace deleted', 'error');
+          }, 900);
+        });
+        confirmDialog.addEventListener('cancel', () => {
+          confirmDialog.removeAttribute('open');
+          confirmDialog.removeAttribute('require-text');
+          toasts && toasts.push('Cancelled — nothing deleted', 'info');
+        });
+      }
+
+      // 31. ShortcutsOverlay — grouped cheat sheet, searchable, Esc closes.
+      const shortcuts = document.getElementById('demo-shortcuts');
+      const shortcutsTrigger = document.getElementById('demo-shortcuts-trigger');
+      if (shortcuts) {
+        shortcuts.groups = [
+          {
+            id: 'navigation', label: 'Navigation', items: [
+              { keys: ['⌘', 'K'], label: 'Open command palette' },
+              { keys: ['⌘', 'B'], label: 'Toggle sidebar' },
+              { keys: ['⌘', '/'], label: 'Focus prompt input' },
+              { keys: ['?'], label: 'Show this cheat sheet' },
+            ],
+          },
+          {
+            id: 'composer', label: 'Composer', items: [
+              { keys: ['↵'], label: 'Send message' },
+              { keys: ['⇧', '↵'], label: 'Insert newline' },
+              { keys: ['⌘', '↵'], label: 'Send with current tools' },
+              { keys: ['esc'], label: 'Stop generation' },
+            ],
+          },
+          {
+            id: 'session', label: 'Session', items: [
+              { keys: ['⌘', 'N'], label: 'New chat' },
+              { keys: ['⌘', '⇧', 'D'], label: 'Duplicate chat' },
+              { keys: ['⌘', '⇧', '⌫'], label: 'Delete chat' },
+            ],
+          },
+        ];
+        const openShortcuts = () => shortcuts.setAttribute('open', '');
+        shortcutsTrigger && shortcutsTrigger.addEventListener('click', openShortcuts);
+        document.addEventListener('keydown', (event) => {
+          const tag = (event.target && event.target.tagName) || '';
+          if (event.key === '?' && tag !== 'INPUT' && tag !== 'TEXTAREA') {
+            event.preventDefault();
+            openShortcuts();
+          }
+        });
+        shortcuts.addEventListener('close', () => shortcuts.removeAttribute('open'));
+      }
+
+      // 32. FileDropzone — accept/size guard with a live event log.
+      const dropzone = document.getElementById('demo-dropzone');
+      const dropzoneLog = document.getElementById('demo-dropzone-log');
+      if (dropzone && dropzoneLog) {
+        const logLine = (text, tone) => {
+          const li = document.createElement('li');
+          li.textContent = text;
+          li.className = tone === 'error' ? 'text-red-400' : tone === 'ok' ? 'text-emerald-400' : 'text-zinc-400';
+          dropzoneLog.prepend(li);
+          while (dropzoneLog.children.length > 6) dropzoneLog.lastElementChild.remove();
+        };
+        dropzone.addEventListener('files', (event) => {
+          const names = event.detail.map((file) => file.name).join(', ');
+          dropzone.files = [...dropzone.files, ...event.detail];
+          logLine(`files → ${names}`, 'ok');
+        });
+        dropzone.addEventListener('reject', (event) => {
+          event.detail.forEach((entry) => logLine(`reject → ${entry.name} (${entry.reason})`, 'error'));
+        });
+        dropzone.addEventListener('remove', (event) => {
+          dropzone.files = dropzone.files.filter((_, index) => index !== event.detail.index);
+          logLine(`remove → ${event.detail.file.name}`);
+        });
+      }
+
+      // 33. NotificationCenter — unread badge, filter and mark-all-read.
+      const notifications = document.getElementById('demo-notifications');
+      const notifPush = document.getElementById('demo-notif-push');
+      const notifStatus = document.getElementById('demo-notif-status');
+      if (notifications) {
+        let notifSeq = 4;
+        notifications.notifications = [
+          { id: 1, title: 'Deploy finished', description: 'v1.11.0 is live on production', time: '2m ago', type: 'success', unread: true },
+          { id: 2, title: 'New comment on "Auth flow"', description: 'Ada mentioned you in a thread', time: '18m ago', unread: true },
+          { id: 3, title: 'Weekly usage report', description: 'You used 82% of your quota', time: '1h ago', type: 'warning' },
+        ];
+        const setStatus = (text) => notifStatus && (notifStatus.textContent = text);
+
+        notifPush && notifPush.addEventListener('click', () => {
+          notifSeq += 1;
+          notifications.setAttribute('open', '');
+          notifications.notifications = [
+            { id: notifSeq, title: `Agent run #${notifSeq} completed`, description: '3 steps · 12.4s', time: 'just now', type: 'info', unread: true },
+            ...notifications.notifications,
+          ];
+          setStatus(`Pushed notification #${notifSeq}`);
+        });
+        notifications.addEventListener('mark-read', (event) => {
+          const ids = event.detail.map(String);
+          notifications.notifications = notifications.notifications.map((item) =>
+            ids.includes(String(item.id)) ? { ...item, unread: false } : item
+          );
+          setStatus(`Marked ${ids.length} as read`);
+        });
+        notifications.addEventListener('mark-all-read', () => {
+          notifications.notifications = notifications.notifications.map((item) => ({ ...item, unread: false }));
+          setStatus('All notifications marked read');
+        });
+        notifications.addEventListener('select', (event) => setStatus(`Selected: ${event.detail.title}`));
+        notifications.addEventListener('close', () => {
+          notifications.removeAttribute('open');
+          setStatus('Panel closed — click "Push" to reopen');
+        });
+      }
+
+      // 34. CommentThread — nested replies, likes and resolve toggles.
+      const comments = document.getElementById('demo-comments');
+      const commentsState = document.getElementById('demo-comments-state');
+      if (comments) {
+        let commentSeq = 4;
+        comments.comments = [
+          { id: 1, author: 'Ada Lovelace', time: '2h ago', text: 'The empty state reads well now. Nice work on the copy.', likes: 4 },
+          { id: 2, parentId: 1, author: 'Grace Hopper', time: '1h ago', text: 'Agreed — the CTA is much clearer than the old one.', likes: 1 },
+          { id: 3, parentId: 2, author: 'Alan Turing', time: '40m ago', text: 'One nit: the icon spacing is 2px tight on mobile.' },
+        ];
+        const syncState = () => {
+          if (!commentsState) return;
+          commentsState.textContent = comments.comments
+            .map((item) => `${item.parentId ? '  ' : ''}#${item.id} ${item.author}${item.resolved ? ' [resolved]' : ''} ♥${item.likes || 0}`)
+            .join('\n');
+        };
+        syncState();
+
+        comments.addEventListener('submit', (event) => {
+          commentSeq += 1;
+          comments.comments = [
+            ...comments.comments,
+            {
+              id: commentSeq,
+              parentId: event.detail.parentId,
+              author: 'You',
+              time: 'just now',
+              text: event.detail.text,
+              likes: 0,
+            },
+          ];
+          syncState();
+        });
+        comments.addEventListener('like', (event) => {
+          comments.comments = comments.comments.map((item) =>
+            String(item.id) === String(event.detail.id) ? { ...item, likes: (item.likes || 0) + 1 } : item
+          );
+          syncState();
+        });
+        comments.addEventListener('resolve', (event) => {
+          comments.comments = comments.comments.map((item) =>
+            String(item.id) === String(event.detail.id) ? { ...item, resolved: !item.resolved } : item
+          );
+          syncState();
+        });
+      }
+
+      // 35. DatePicker — min/max window with a live selected value.
+      const datePicker = document.getElementById('demo-datepicker');
+      const dateValue = document.getElementById('demo-datepicker-value');
+      const dateToday = document.getElementById('demo-datepicker-today');
+      if (datePicker) {
+        datePicker.addEventListener('change', (event) => {
+          datePicker.setAttribute('value', event.detail);
+          if (dateValue) dateValue.textContent = event.detail;
+        });
+        dateToday && dateToday.addEventListener('click', () => {
+          const now = new Date();
+          const iso = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+          datePicker.setAttribute('value', iso);
+          if (dateValue) dateValue.textContent = iso;
+        });
+      }
+
+      // 36. KanbanBoard — drag or arrow-key moves with a live status line.
+      const kanban = document.getElementById('demo-kanban');
+      const kanbanStatus = document.getElementById('demo-kanban-status');
+      if (kanban) {
+        let kanbanSeq = 4;
+        kanban.columns = [
+          { id: 'backlog', title: 'Backlog', accent: 'bg-zinc-400' },
+          { id: 'doing', title: 'In progress', accent: 'bg-indigo-500', limit: 3 },
+          { id: 'review', title: 'Review', accent: 'bg-amber-500' },
+          { id: 'done', title: 'Done', accent: 'bg-emerald-500' },
+        ];
+        kanban.cards = [
+          { id: 'k1', columnId: 'backlog', title: 'Add retry budget to tool calls', priority: 'high', tags: ['agent'], assignee: 'Ada Lovelace' },
+          { id: 'k2', columnId: 'backlog', title: 'Document streaming protocol', description: 'SSE vs WebSocket trade-offs', priority: 'low' },
+          { id: 'k3', columnId: 'doing', title: 'Token usage breakdown', priority: 'medium', tags: ['ui'], assignee: 'Grace Hopper' },
+          { id: 'k4', columnId: 'review', title: 'Diff viewer hunk folding' },
+          { id: 'k5', columnId: 'done', title: 'Session list grouping' },
+        ];
+        const setKanbanStatus = (text) => kanbanStatus && (kanbanStatus.textContent = text);
+
+        kanban.addEventListener('move-card', (event) => {
+          const { cardId, from, to } = event.detail;
+          kanban.cards = kanban.cards.map((card) => (card.id === cardId ? { ...card, columnId: to } : card));
+          setKanbanStatus(`Moved ${cardId}: ${from} → ${to}`);
+        });
+        kanban.addEventListener('card-click', (event) => setKanbanStatus(`Opened "${event.detail.title}"`));
+        kanban.addEventListener('add-card', (event) => {
+          kanbanSeq += 1;
+          kanban.cards = [
+            ...kanban.cards,
+            { id: `k${kanbanSeq}`, columnId: event.detail, title: `New task #${kanbanSeq}`, priority: 'medium' },
+          ];
+          setKanbanStatus(`Added a card to ${event.detail}`);
+        });
+      }
+
+      // 37. SideDrawer — open/close with a footer action.
+      const sideDrawer = document.getElementById('demo-side-drawer');
+      const drawerTrigger = document.getElementById('demo-drawer-trigger');
+      const drawerApply = document.getElementById('demo-drawer-apply');
+      if (sideDrawer) {
+        drawerTrigger && drawerTrigger.addEventListener('click', () => sideDrawer.setAttribute('open', ''));
+        sideDrawer.addEventListener('close', () => sideDrawer.removeAttribute('open'));
+        drawerApply && drawerApply.addEventListener('click', () => {
+          sideDrawer.removeAttribute('open');
+          toasts && toasts.push('Filters applied', 'success');
+        });
+      }
+
+      // 38. AccountSwitcher — switch workspace and reflect it in the trigger.
+      const accounts = document.getElementById('demo-accounts');
+      const accountsStatus = document.getElementById('demo-accounts-status');
+      if (accounts) {
+        accounts.accounts = [
+          { id: 'a1', name: 'Acme Production', email: 'ops@acme.dev', role: 'Owner', plan: 'Enterprise' },
+          { id: 'a2', name: 'Acme Staging', email: 'staging@acme.dev', role: 'Admin', plan: 'Pro' },
+          { id: 'a3', name: 'Ada (personal)', email: 'ada@lovelace.dev', role: 'Member', plan: 'Free' },
+        ];
+        accounts.addEventListener('switch', (event) => {
+          accounts.setAttribute('current-id', event.detail.id);
+          if (accountsStatus) accountsStatus.textContent = `Switched to ${event.detail.name}`;
+        });
+        accounts.addEventListener('add-account', () => {
+          if (accountsStatus) accountsStatus.textContent = 'Add-account flow requested';
+        });
+        accounts.addEventListener('sign-out', () => {
+          if (accountsStatus) accountsStatus.textContent = 'Sign-out requested';
+        });
+      }
+
+      // 39. SchedulerSlots — select an open slot.
+      const scheduler = document.getElementById('demo-scheduler');
+      const schedulerStatus = document.getElementById('demo-scheduler-status');
+      if (scheduler) {
+        scheduler.slots = [
+          { id: 't1', time: '09:00' },
+          { id: 't2', time: '09:30' },
+          { id: 't3', time: '10:00', available: false, note: 'Standup' },
+          { id: 't4', time: '11:00' },
+          { id: 't5', time: '13:30' },
+          { id: 't6', time: '15:00', available: false },
+          { id: 't7', time: '16:30' },
+          { id: 't8', time: '18:00' },
+        ];
+        scheduler.addEventListener('select', (event) => {
+          scheduler.setAttribute('selected-id', event.detail.id);
+          if (schedulerStatus) schedulerStatus.textContent = `Booked ${event.detail.time} on 2026-11-20`;
+        });
+      }
+
+      // 40. RichToolbar — toggle bold, report other actions.
+      const toolbar = document.getElementById('demo-toolbar');
+      const toolbarStatus = document.getElementById('demo-toolbar-status');
+      if (toolbar) {
+        toolbar.groups = [
+          {
+            id: 'text', label: 'Text', items: [
+              { id: 'bold', label: 'Bold', text: 'B', shortcut: '⌘B', active: true },
+              { id: 'italic', label: 'Italic', text: 'I', shortcut: '⌘I' },
+              { id: 'underline', label: 'Underline', text: 'U', shortcut: '⌘U' },
+              { id: 'strike', label: 'Strikethrough', text: 'S' },
+            ],
+          },
+          {
+            id: 'blocks', label: 'Blocks', items: [
+              { id: 'h2', label: 'Heading', text: 'H2' },
+              { id: 'quote', label: 'Quote', text: '❝' },
+              { id: 'code', label: 'Code block', icon: 'code' },
+            ],
+          },
+          {
+            id: 'insert', label: 'Insert', items: [
+              { id: 'image', label: 'Image', icon: 'image' },
+              { id: 'link', label: 'Link', icon: 'paperclip' },
+              { id: 'upload', label: 'Upload', icon: 'upload', disabled: true },
+            ],
+          },
+        ];
+        toolbar.addEventListener('action', (event) => {
+          const id = event.detail;
+          if (id === 'bold') {
+            const groups = toolbar.groups.map((group) => ({
+              ...group,
+              items: group.items.map((item) => (item.id === 'bold' ? { ...item, active: !item.active } : item)),
+            }));
+            toolbar.groups = groups;
+            toolbarStatus.textContent = toolbar.groups[0].items[0].active ? 'Bold on' : 'Bold off';
+          } else {
+            toolbarStatus.textContent = `Action: ${id}`;
+          }
+        });
+      }
+
+      // 41. HeroSection — CTAs update the status line.
+      const hero = document.getElementById('demo-hero');
+      const heroStatus = document.getElementById('demo-hero-status');
+      if (hero) {
+        hero.highlights = ['React / Vue / Vanilla', 'Zero blackbox CSS', 'MIT licensed'];
+        hero.addEventListener('primary', () => {
+          if (heroStatus) heroStatus.textContent = 'Primary CTA clicked — scroll down to explore.';
+        });
+        hero.addEventListener('secondary', () => {
+          if (heroStatus) heroStatus.textContent = 'Secondary CTA clicked — check SKILL.md.';
+        });
+      }
+
+      // 42. FooterSection — link columns and socials.
+      const footer = document.getElementById('demo-footer');
+      if (footer) {
+        footer.columns = [
+          { title: 'Components', links: [{ label: 'React' }, { label: 'Vue' }, { label: 'Vanilla' }] },
+          { title: 'Resources', links: [{ label: 'SKILL.md' }, { label: 'Roadmap' }, { label: 'Design' }] },
+          { title: 'Community', links: [{ label: 'GitHub' }, { label: 'npm' }] },
+        ];
+        footer.socials = [
+          { label: 'GitHub', icon: 'git-branch' },
+          { label: 'Twitter', icon: 'send' },
+          { label: 'Website', icon: 'globe' },
+        ];
+        footer.addEventListener('link-click', (event) => {
+          if (heroStatus) heroStatus.textContent = `Footer link: ${event.detail.label}`;
+        });
+      }
+
+      // 43. TestimonialGrid — select a card.
+      const testimonials = document.getElementById('demo-testimonials');
+      const testimonialStatus = document.getElementById('demo-testimonials-status');
+      if (testimonials) {
+        testimonials.testimonials = [
+          { id: 'v1', quote: 'The only kit I copy from these days — every component is genuinely production-ready.', name: 'Ada Lovelace', role: 'CTO', company: 'Acme Labs', rating: 5 },
+          { id: 'v2', quote: 'Three ports, one API. Upgrading our UI took an afternoon instead of a sprint.', name: 'Grace Hopper', role: 'Staff Engineer', company: 'Navy Systems', rating: 5 },
+          { id: 'v3', quote: 'Studio-quality polish with zero dependency weight. Our bundle got smaller.', name: 'Alan Turing', role: 'Founder', company: 'Turing Works', rating: 4 },
+          { id: 'v4', quote: 'The accessibility defaults alone are worth it — focus rings and aria done right.', name: 'Margaret Hamilton', role: 'Principal Developer', company: 'Apollo SWE', rating: 5 },
+        ];
+        testimonials.addEventListener('select', (event) => {
+          if (testimonialStatus) testimonialStatus.textContent = `Selected quote by ${event.detail.name}`;
+        });
+      }
+
+      // 44. VoiceModePanel — cycle orb states, reset on end.
+      const voice = document.getElementById('demo-voice');
+      const voiceStatus = document.getElementById('demo-voice-status');
+      if (voice) {
+        const VOICE_STATES = ['idle', 'listening', 'thinking', 'speaking'];
+        const VOICE_COPY = {
+          idle: { transcript: '', reply: '' },
+          listening: { transcript: 'Summarize the last three messages', reply: '' },
+          thinking: { transcript: 'Summarize the last three messages', reply: 'Working on a response…' },
+          speaking: { transcript: 'Summarize the last three messages', reply: 'Here is a short summary of the thread.' },
+        };
+        const applyVoice = (state) => {
+          voice.setAttribute('state', state);
+          voice.setAttribute('transcript', VOICE_COPY[state].transcript);
+          voice.setAttribute('reply', VOICE_COPY[state].reply);
+          if (voiceStatus) voiceStatus.textContent = `State: ${state}`;
+        };
+        voice.addEventListener('toggle', () => {
+          const current = voice.getAttribute('state') || 'idle';
+          const next = VOICE_STATES[(VOICE_STATES.indexOf(current) + 1) % VOICE_STATES.length];
+          applyVoice(next);
+        });
+        voice.addEventListener('end', () => applyVoice('idle'));
+      }
+
+      // 45. PromptLibrary — search, categories, favorites.
+      const prompts = document.getElementById('demo-prompts');
+      const promptStatus = document.getElementById('demo-prompt-status');
+      if (prompts) {
+        prompts.prompts = [
+          { id: 'pr1', title: 'Summarize thread', description: 'Condense a long conversation into key points.', prompt: 'Summarize the following conversation in five bullet points…', category: 'Writing', tags: ['summary', 'chat'], favorite: true },
+          { id: 'pr2', title: 'Refactor function', description: 'Improve readability without changing behavior.', prompt: 'Refactor this function for readability and add tests…', category: 'Code', tags: ['refactor', 'tests'] },
+          { id: 'pr3', title: 'Cold outreach email', description: 'Short, specific, no fluff.', prompt: 'Write a three-sentence cold email to a developer tool founder…', category: 'Writing', tags: ['email'] },
+          { id: 'pr4', title: 'Explain a stack trace', description: 'Turn an error into a fix plan.', prompt: 'Explain this stack trace and propose the smallest safe fix…', category: 'Code', tags: ['debug'] },
+          { id: 'pr5', title: 'Meeting notes', description: 'Decisions, owners, follow-ups.', prompt: 'Turn this transcript into decisions, owners and follow-ups…', category: 'Productivity', tags: ['notes'] },
+          { id: 'pr6', title: 'SQL from question', description: 'Natural language to a safe query.', prompt: 'Write a read-only SQL query that answers this question…', category: 'Data', tags: ['sql'] },
+        ];
+        prompts.addEventListener('use', (event) => {
+          if (promptStatus) promptStatus.textContent = `Using “${event.detail.title}”`;
+        });
+        prompts.addEventListener('toggle-favorite', (event) => {
+          const target = prompts.prompts.find((item) => item.id === event.detail.id);
+          if (target) target.favorite = !target.favorite;
+          prompts.prompts = prompts.prompts.slice();
+          if (promptStatus) promptStatus.textContent = `${target && target.favorite ? 'Favorited' : 'Unfavorited'} “${event.detail.title}”`;
+        });
+      }
+
+      // 46. Tabs — switch the demo panel.
+      const tabsEl = document.getElementById('demo-tabs');
+      const tabsPills = document.getElementById('demo-tabs-pills');
+      const tabsPanel = document.getElementById('demo-tabs-panel');
+      if (tabsEl) {
+        const TABS = [
+          { id: 'overview', label: 'Overview', icon: 'layers' },
+          { id: 'activity', label: 'Activity', icon: 'clock', badge: 3 },
+          { id: 'usage', label: 'Usage', icon: 'trending-up' },
+          { id: 'billing', label: 'Billing', icon: 'credit-card', disabled: true },
+        ];
+        const PANELS = {
+          overview: 'Overview — workspace summary, pinned projects and quick actions.',
+          activity: 'Activity — 3 new agent runs finished in the last hour.',
+          usage: 'Usage — 68.5K of 128K context tokens consumed this session.',
+          billing: 'Billing — plan, invoices and payment method.',
+        };
+        tabsEl.tabs = TABS;
+        tabsEl.addEventListener('change', (event) => {
+          if (tabsPanel) tabsPanel.textContent = PANELS[event.detail.id] || '';
+        });
+      }
+      if (tabsPills) {
+        tabsPills.tabs = [
+          { id: 'all', label: 'All' },
+          { id: 'mine', label: 'Mine', badge: 7 },
+          { id: 'shared', label: 'Shared' },
+        ];
+        tabsPills.addEventListener('change', (event) => {
+          if (tabsPanel) tabsPanel.textContent = `Pills filter: ${event.detail.id}`;
+        });
+      }
+
+      // 47. Accordion — FAQ disclosure.
+      const accordionEl = document.getElementById('demo-accordion');
+      const accordionStatus = document.getElementById('demo-accordion-status');
+      if (accordionEl) {
+        accordionEl.items = [
+          { id: 'what', title: 'What is awesome-ui?', description: 'Zero-dependency component kit', icon: 'layers', defaultOpen: true,
+            content: 'A copy-paste collection of single-file components with identical APIs across React, Vue 3 and Vanilla Web Components.' },
+          { id: 'ports', title: 'How do the three ports stay in sync?', icon: 'git-branch',
+            content: 'Every batch ships React, Vue and Vanilla implementations together, then React SSR and Vanilla jsdom suites plus a full Vue SFC compile check run before the index docs are updated.' },
+          { id: 'style', title: 'Can I change the look?', icon: 'sliders',
+            content: 'Yes. Everything is Tailwind utility classes — pass className / class to override layout, or edit the single file directly since there is no runtime black box.' },
+          { id: 'icons', title: 'Do I need an icon library?', icon: 'sparkles',
+            content: 'No. UiIcon ships inline SVG geometry for every icon the kit uses, with a shared name union across all three ports.' },
+        ];
+        accordionEl.addEventListener('toggle', (event) => {
+          if (accordionStatus) accordionStatus.textContent = `${event.detail.open ? 'Opened' : 'Closed'} “${event.detail.id}”`;
+        });
+      }
+
+      // 48. AvatarGroup — collaborator stacks.
+      const avatarsEl = document.getElementById('demo-avatars');
+      const avatarsSm = document.getElementById('demo-avatars-sm');
+      const avatarsLg = document.getElementById('demo-avatars-lg');
+      const avatarStatus = document.getElementById('demo-avatar-status');
+      if (avatarsEl) {
+        const MEMBERS = [
+          { id: 'm1', name: 'Ada Lovelace', status: 'online' },
+          { id: 'm2', name: 'Grace Hopper', status: 'away' },
+          { id: 'm3', name: 'Alan Turing' },
+          { id: 'm4', name: 'Margaret Hamilton', status: 'online' },
+          { id: 'm5', name: 'Katherine Johnson', status: 'offline' },
+          { id: 'm6', name: 'Radia Perlman' },
+          { id: 'm7', name: 'Barbara Liskov' },
+        ];
+        avatarsEl.members = MEMBERS;
+        if (avatarsSm) avatarsSm.members = MEMBERS;
+        if (avatarsLg) avatarsLg.members = MEMBERS;
+        [avatarsEl, avatarsSm, avatarsLg].forEach((group) => {
+          if (!group) return;
+          group.addEventListener('member-click', (event) => {
+            if (avatarStatus) avatarStatus.textContent = `Selected ${event.detail.name}${event.detail.status ? ` (${event.detail.status})` : ''}`;
+          });
+        });
+      }
+
+      // 49. FilterBar — multi-select filters.
+      const filtersEl = document.getElementById('demo-filters');
+      const filterStatus = document.getElementById('demo-filter-status');
+      if (filtersEl) {
+        filtersEl.filters = [
+          { id: 'status', label: 'Status', options: [
+            { value: 'running', label: 'Running', count: 3 },
+            { value: 'paused', label: 'Paused', count: 2 },
+            { value: 'failed', label: 'Failed', count: 1 },
+            { value: 'done', label: 'Done', count: 14 },
+          ] },
+          { id: 'model', label: 'Model', options: [
+            { value: 'sonnet', label: 'Claude Sonnet', count: 9 },
+            { value: 'gpt', label: 'GPT-5', count: 6 },
+            { value: 'local', label: 'Local Llama', count: 5 },
+          ] },
+          { id: 'owner', label: 'Owner', options: [
+            { value: 'me', label: 'Me', count: 11 },
+            { value: 'team', label: 'Team', count: 9 },
+          ] },
+        ];
+        const describeFilters = (selected) => {
+          const parts = Object.entries(selected).map(([key, values]) => `${key}: ${values.join(', ')}`);
+          if (filterStatus) filterStatus.textContent = parts.length ? `Filters — ${parts.join(' · ')}` : 'No filters applied.';
+        };
+        filtersEl.addEventListener('change', (event) => describeFilters(event.detail));
+        filtersEl.addEventListener('clear', () => describeFilters({}));
+      }
+
+      // 51. Breadcrumb — trail navigation.
+      const breadcrumbEl = document.getElementById('demo-breadcrumb');
+      const breadcrumbShort = document.getElementById('demo-breadcrumb-short');
+      const breadcrumbStatus = document.getElementById('demo-breadcrumb-status');
+      if (breadcrumbEl) {
+        const TRAIL = [
+          { id: 'ws', label: 'Workspace', href: '#', icon: 'layers' },
+          { id: 'proj', label: 'awesome-ui', href: '#' },
+          { id: 'docs', label: 'Components', href: '#' },
+          { id: 'p3', label: 'P3 Primitives', href: '#' },
+          { id: 'current', label: 'Tooltip' },
+        ];
+        breadcrumbEl.items = TRAIL;
+        if (breadcrumbShort) breadcrumbShort.items = TRAIL.slice(0, 3);
+        [breadcrumbEl, breadcrumbShort].forEach((trail) => {
+          if (!trail) return;
+          trail.addEventListener('navigate', (event) => {
+            if (breadcrumbStatus) breadcrumbStatus.textContent = `Navigate → ${event.detail.item.label} (index ${event.detail.index})`;
+          });
+        });
+      }
+
+      // 52. Pagination — page changes.
+      const paginationEl = document.getElementById('demo-pagination');
+      const paginationCompact = document.getElementById('demo-pagination-compact');
+      const paginationStatus = document.getElementById('demo-pagination-status');
+      const describePage = (page, count) => {
+        if (paginationStatus) paginationStatus.textContent = `Showing page ${page} of ${count}.`;
+      };
+      if (paginationEl) {
+        paginationEl.addEventListener('change', (event) => describePage(event.detail.page, paginationEl.pageCount));
+      }
+      if (paginationCompact) {
+        paginationCompact.addEventListener('change', (event) => describePage(event.detail.page, paginationCompact.pageCount));
+      }
+
+      // 53. AlertBanner — action and dismiss.
+      const alertStatus = document.getElementById('demo-alert-status');
+      const warningAlert = document.getElementById('demo-alert-warning');
+      const dangerAlert = document.getElementById('demo-alert-danger');
+      [warningAlert, dangerAlert].forEach((banner) => {
+        if (!banner) return;
+        banner.addEventListener('action', () => {
+          if (alertStatus) alertStatus.textContent = `Action triggered on “${banner.getAttribute('title')}”`;
+        });
+        banner.addEventListener('dismiss', () => {
+          banner.hidden = true;
+          if (alertStatus) alertStatus.textContent = `Dismissed “${banner.getAttribute('title')}”`;
+        });
+      });
+
+      if (ctxBadge) {
+        ctxBadge.breakdown = [
+          { label: 'System Prompt', count: 4200, colorClass: 'bg-purple-500' },
+          { label: 'Chat History', count: 48500, colorClass: 'bg-blue-500' },
+          { label: 'Active Turn', count: 15800, colorClass: 'bg-emerald-500' }
+        ];
+      }
+    });
+  </script>
+</body>
+</html>

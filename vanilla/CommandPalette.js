@@ -182,6 +182,20 @@ export class CommandPaletteElement extends HTMLElement {
             <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-zinc-400 bg-zinc-100 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700">ESC</kbd>
           </div>
           <div class="max-h-72 overflow-y-auto p-1.5" role="listbox"></div>
+          <div class="flex items-center justify-end gap-3 px-4 py-2 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30 text-[10px] text-zinc-400 dark:text-zinc-500">
+            ${[
+              { keys: ['↑', '↓'], label: 'Navigate' },
+              { keys: ['↵'], label: 'Select' },
+              { keys: ['esc'], label: 'Close' },
+            ]
+              .map(
+                ({ keys, label }) => `<span class="flex items-center gap-1">
+                  ${keys.map((k) => `<kbd class="inline-flex min-w-[1.25rem] justify-center px-1 py-0.5 font-mono bg-zinc-100 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700">${k}</kbd>`).join('')}
+                  <span>${label}</span>
+                </span>`
+              )
+              .join('')}
+          </div>
         </div>
       </div>
     `;

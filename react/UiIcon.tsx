@@ -8,7 +8,10 @@ export type UiIconName =
   | "circle-x" | "clock" | "code" | "copy" | "cpu" | "eye" | "external-link" | "globe"
   | "git-branch" | "image" | "layers" | "lock" | "loader" | "minus" | "moon"
   | "monitor" | "paperclip" | "plus" | "refresh" | "search" | "sliders" | "sparkles" | "square" | "sun"
-  | "terminal" | "thumbs-down" | "thumbs-up" | "tool" | "user" | "x" | "zap";
+  | "terminal" | "thumbs-down" | "thumbs-up" | "tool" | "user" | "x" | "zap"
+  | "trending-up" | "trending-down" | "filter" | "more-horizontal" | "trash" | "mail"
+  | "settings" | "users" | "bell" | "calendar" | "upload" | "send" | "star" | "info" | "credit-card"
+  | "mic";
 
 const paths: Record<UiIconName, React.ReactNode> = {
   "alert-triangle": <><path d="M12 9v4" /><path d="M12 17h.01" /><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" /></>,
@@ -43,7 +46,23 @@ const paths: Record<UiIconName, React.ReactNode> = {
   tool: <><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z" /></>,
   user: <><path d="M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0" /><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" /></>,
   x: <path d="m6 6 12 12M18 6 6 18" />,
-  zap: <path d="M13 3 4 14h7l-1 7 9-11h-7l1-7Z" />
+  zap: <path d="M13 3 4 14h7l-1 7 9-11h-7l1-7Z" />,
+  "trending-up": <><path d="m3 17 6-6 4 4 8-8" /><path d="M14 7h7v7" /></>,
+  "trending-down": <><path d="m3 7 6 6 4-4 8 8" /><path d="M14 17h7v-7" /></>,
+  filter: <path d="M4 4h16v2.2a2 2 0 0 1-.59 1.41L15 12v7l-6 2v-9L4.59 7.59A2 2 0 0 1 4 6.2V4Z" />,
+  "more-horizontal": <><circle cx="5" cy="12" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /></>,
+  trash: <><path d="M4 7h16M10 11v6M14 11v6" /><path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" /></>,
+  mail: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></>,
+  settings: <><path d="M3 6h10m4 0h4M3 12h4m4 0h10M3 18h10m4 0h4" /><circle cx="15" cy="6" r="2" /><circle cx="9" cy="12" r="2" /><circle cx="15" cy="18" r="2" /></>,
+  users: <><path d="M9 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0" /><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.1a4 4 0 0 1 0 7.8M21 21v-2a4 4 0 0 0-3-3.87" /></>,
+  bell: <><path d="M10 5a2 2 0 1 1 4 0 7 7 0 0 1 4 6v3l1 2H5l1-2v-3a7 7 0 0 1 4-6Z" /><path d="M9 19a3 3 0 0 0 6 0" /></>,
+  calendar: <><rect x="4" y="5" width="16" height="16" rx="2" /><path d="M16 3v4M8 3v4M4 11h16" /></>,
+  upload: <><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" /><path d="m7 9 5-5 5 5M12 4v12" /></>,
+  send: <><path d="m22 2-7 20-4-9-9-4 20-7Z" /><path d="M22 2 11 13" /></>,
+  star: <path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3Z" />,
+  info: <><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></>,
+  "credit-card": <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 10h18" /></>,
+  mic: <><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></>
 };
 
 export interface UiIconProps extends React.SVGProps<SVGSVGElement> { name: UiIconName; size?: number | string; strokeWidth?: number; }
@@ -96,3 +115,18 @@ export const Wrench = icon("tool");
 export const X = icon("x");
 export const XCircle = icon("circle-x");
 export const Zap = icon("zap");
+export const TrendingUp = icon("trending-up");
+export const TrendingDown = icon("trending-down");
+export const Filter = icon("filter");
+export const MoreHorizontal = icon("more-horizontal");
+export const Trash = icon("trash");
+export const Mail = icon("mail");
+export const Settings = icon("settings");
+export const Users = icon("users");
+export const Bell = icon("bell");
+export const Calendar = icon("calendar");
+export const Upload = icon("upload");
+export const Send = icon("send");
+export const Star = icon("star");
+export const Info = icon("info");
+export const CreditCard = icon("credit-card");
