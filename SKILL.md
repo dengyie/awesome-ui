@@ -1005,6 +1005,21 @@ awesome-ui/
 - **Vanilla 用法**: `<image-action-menu>` + `actions` JSON 属性或 `actions`/`open` property；事件 `action {action}`
 - **特性**: w-56 白底圆角菜单、每项图标（Fullscreen ⛶ / Vary ↻ / Edit ✎ / Make video ▶ / Download ↓ 默认映射 + 自定义 icon）、danger 红色态、Download 前分隔线、空态提示、`open=false` 清空内容。
 
+### 172. `FalRunCard` (运行信息卡)
+- **Props**: `type?='Text To Image'`, `models?=4`, `time?='22 minutes ago'`, `prompt?`, `aspect?='1:1'`, `cost?='$0.241'`, `costTone?='green'`, `className?`, `onDuplicate?()`, `onRerun?()`, `onDelete?()`
+- **Vanilla 用法**: `<fal-run-card>` + `type`/`models`/`time`/`prompt`/`aspect`/`cost`/`cost-tone` 属性；事件 `duplicate` / `rerun` / `delete`
+- **特性**: 紫色任务类型徽标（Text To Image ▸）、模型数 · 相对时间头部、Prompt 段落、AspectRatio mono 角标 + Total Cost 等宽绿色费用行、⚑ 收藏、底部 ⧉ / ↻ / 🗑 动作行（删除悬停红色）+ ⇗ 分享。
+
+### 173. `ImageGenMetaBar` (生成结果元信息条)
+- **Props**: `model?='openai/gpt-image-2'`, `jobId?='# 019f1ba4'`, `duration?='169.0s'`, `cost?='$ 0.211'`, `className?`
+- **Vanilla 用法**: `<image-gen-meta-bar>` + `model`/`job-id`/`duration`/`cost` 属性（纯展示，无事件）
+- **特性**: 左下模型徽标浮层（毛玻璃深色 pill）、等宽元信息行（job id · ◷ 时长 · 右对齐费用）、贴合生成图底部的页脚条。
+
+### 174. `GammaImageDetail` (图片详情面板)
+- **Props**: `title?='AI images'`, `preview?`, `prompt?`, `liked?=false`, `className?`, `onDownload?()`, `onZoom?()`, `onDelete?()`, `onLike?()`, `onDislike?()`
+- **Vanilla 用法**: `<gamma-image-detail>` + `title`/`preview`/`prompt` 属性、`liked` property；事件 `download` / `zoom` / `delete` / `like` / `dislike` / `close`
+- **特性**: 大图预览区（无 preview 时 🖼 占位）、↓ / 🔍 / 🗑 工具行（删除悬停红色）+ 👎 / 👍 反馈对（liked 时玫红高亮 + aria-pressed）、标题行 ✕ 关闭、完整 Prompt 边框阅读块。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

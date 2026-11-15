@@ -198,12 +198,15 @@
   <script type="module" src="./vanilla/AiNoteAnswer.js"></script>
   <script type="module" src="./vanilla/AudioNotePlayer.js"></script>
   <script type="module" src="./vanilla/ImageActionMenu.js"></script>
+  <script type="module" src="./vanilla/FalRunCard.js"></script>
+  <script type="module" src="./vanilla/ImageGenMetaBar.js"></script>
+  <script type="module" src="./vanilla/GammaImageDetail.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.41.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.42.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -2680,6 +2683,77 @@
             <span id="demo-image-action-status" class="text-[11px] text-zinc-500">Pick an action — events report here.</span>
           </div>
           <button type="button" id="demo-image-action-reopen" class="mt-2 rounded border border-zinc-700 px-2.5 py-1 text-[11px] font-medium text-zinc-300 hover:bg-zinc-800">Reopen menu</button>
+        </div>
+      </div>
+    </section>
+    <section id="section-162" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">162 · FalRunCard</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.42.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">fal generate-run info card — task type badge, model count + relative time header, prompt paragraph, Aspect Ratio / Total Cost metadata rows and duplicate / rerun / delete / share action row (fal pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/FalRunCard.tsx">
+          <div id="demo-fal-run-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/FalRunCard.vue">
+          <div id="demo-fal-run-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/FalRunCard.js">
+          <fal-run-card id="demo-fal-run"></fal-run-card>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-fal-run-status" class="text-[11px] text-zinc-500">Duplicate / rerun / delete — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-163" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">163 · ImageGenMetaBar</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.42.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">fal generation result footer — model badge pill overlaying the image bottom-left plus a mono metadata row with job id, wall-clock duration and per-image cost (fal pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/ImageGenMetaBar.tsx">
+          <div id="demo-gen-meta-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/ImageGenMetaBar.vue">
+          <div id="demo-gen-meta-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/ImageGenMetaBar.js">
+          <div class="relative overflow-hidden rounded-lg">
+            <div class="flex h-40 items-center justify-center bg-gradient-to-br from-orange-300 via-rose-300 to-sky-300 text-sm text-white/90">generated image</div>
+            <image-gen-meta-bar id="demo-gen-meta"></image-gen-meta-bar>
+          </div>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-gen-meta-status" class="text-[11px] text-zinc-500">Footer metadata bar for generation results.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-164" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">164 · GammaImageDetail</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.42.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Gamma AI-images detail pane — large preview with download / zoom / delete row and like / dislike pair, plus the full generation prompt in a bordered reading block (Gamma pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/GammaImageDetail.tsx">
+          <div id="demo-gamma-detail-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/GammaImageDetail.vue">
+          <div id="demo-gamma-detail-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/GammaImageDetail.js">
+          <gamma-image-detail id="demo-gamma-detail"></gamma-image-detail>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-gamma-detail-status" class="text-[11px] text-zinc-500">Toolbar actions — events report here.</span>
+          </div>
         </div>
       </div>
     </section>
@@ -5574,6 +5648,43 @@ FAIL tests/ui.test.mjs
           imageAction41.open = true;
           imageActionStatus41.textContent = 'Menu reopened.';
         });
+      }
+
+      const falRun42 = document.getElementById('demo-fal-run');
+      const falRunStatus42 = document.getElementById('demo-fal-run-status');
+      if (falRun42) {
+        falRun42.type = 'Text To Image';
+        falRun42.models = 4;
+        falRun42.time = '22 minutes ago';
+        falRun42.prompt = 'a calm, morning, beach scenery';
+        falRun42.aspect = '1:1';
+        falRun42.cost = '$0.241';
+        falRun42.addEventListener('duplicate', () => { falRunStatus42.textContent = 'Run duplicated.'; });
+        falRun42.addEventListener('rerun', () => { falRunStatus42.textContent = 'Run queued again — 4 models.'; });
+        falRun42.addEventListener('delete', () => { falRunStatus42.textContent = 'Run deleted.'; });
+      }
+
+      const genMeta42 = document.getElementById('demo-gen-meta');
+      const genMetaStatus42 = document.getElementById('demo-gen-meta-status');
+      if (genMeta42) {
+        genMeta42.model = 'openai/gpt-image-2';
+        genMeta42.jobId = '# 019f1ba4';
+        genMeta42.duration = '169.0s';
+        genMeta42.cost = '$ 0.211';
+        genMeta42.addEventListener('click', () => { genMetaStatus42.textContent = 'Metadata bar clicked.'; });
+      }
+
+      const gammaDetail42 = document.getElementById('demo-gamma-detail');
+      const gammaDetailStatus42 = document.getElementById('demo-gamma-detail-status');
+      if (gammaDetail42) {
+        gammaDetail42.title = 'AI images';
+        gammaDetail42.prompt = 'Generate the following image: Mobile-first social media carousel content slide with professional creative aesthetic. Portrait orientation with split-screen vertical composition showing dramatic contrast.';
+        gammaDetail42.addEventListener('download', () => { gammaDetailStatus42.textContent = 'Image downloaded.'; });
+        gammaDetail42.addEventListener('zoom', () => { gammaDetailStatus42.textContent = 'Zoomed to fullscreen preview.'; });
+        gammaDetail42.addEventListener('delete', () => { gammaDetailStatus42.textContent = 'Image deleted.'; });
+        gammaDetail42.addEventListener('like', () => { gammaDetail42.liked = !gammaDetail42.liked; gammaDetailStatus42.textContent = gammaDetail42.liked ? 'Marked as good result.' : 'Like removed.'; });
+        gammaDetail42.addEventListener('dislike', () => { gammaDetailStatus42.textContent = 'Marked as bad result.'; });
+        gammaDetail42.addEventListener('close', () => { gammaDetailStatus42.textContent = 'Detail pane closed.'; });
       }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');

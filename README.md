@@ -191,6 +191,9 @@
 | **`AiNoteAnswer`** | AI 笔记回答卡 | Voicenotes Ask AI 回答卡：波形提问行、回答段落、"Other sources" 引用列表与 Copy 按钮 |
 | **`AudioNotePlayer`** | 音频笔记播放器 | Voicenotes 底部音频条：播放/暂停按钮、波形条带（播放时前半段高亮）与标题 / 时长元信息行 |
 | **`ImageActionMenu`** | 图片操作菜单 | Krea 生成图右键菜单：Fullscreen / Vary / Edit / Upscale & enhance / Make video / Download 动作、每项图标与 Download 前分隔线 |
+| **`FalRunCard`** | 运行信息卡 | fal 生成任务卡：任务类型徽标、模型数 + 相对时间、Prompt 段落、AspectRatio / TotalCost 元信息行与复制 / 重跑 / 删除 / 分享动作行 |
+| **`ImageGenMetaBar`** | 生成结果元信息条 | fal 结果页脚：左下模型徽标浮层 + 等宽 job id / 时长 / 单图费用元信息行 |
+| **`GammaImageDetail`** | 图片详情面板 | Gamma AI 图片详情：大图预览、下载 / 缩放 / 删除与点赞 / 点踩工具行、完整 Prompt 阅读块 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -366,6 +369,9 @@ awesome-ui/
 │   ├── AiNoteAnswer.tsx
 │   ├── AudioNotePlayer.tsx
 │   ├── ImageActionMenu.tsx
+│   ├── FalRunCard.tsx
+│   ├── ImageGenMetaBar.tsx
+│   ├── GammaImageDetail.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -535,6 +541,9 @@ awesome-ui/
 │   ├── AiNoteAnswer.vue
 │   ├── AudioNotePlayer.vue
 │   ├── ImageActionMenu.vue
+│   ├── FalRunCard.vue
+│   ├── ImageGenMetaBar.vue
+│   ├── GammaImageDetail.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -704,6 +713,9 @@ awesome-ui/
 │   ├── AiNoteAnswer.js
 │   ├── AudioNotePlayer.js
 │   └── ImageActionMenu.js
+│   ├── FalRunCard.js
+│   ├── ImageGenMetaBar.js
+│   └── GammaImageDetail.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

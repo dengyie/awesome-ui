@@ -6916,6 +6916,86 @@ export default function EvalScoreTable({
   );
 }
 
+====/File: react/FalRunCard.tsx/====
+
+/**
+ * FalRunCard - fal generate-run info card: task type badge, model count and
+ * relative time header, prompt paragraph, aspect ratio / total cost metadata
+ * rows and a bottom action icon row (duplicate / rerun / delete / share).
+ */
+import React from "react";
+
+export interface FalRunCardProps {
+  type?: string;
+  models?: number;
+  time?: string;
+  prompt?: string;
+  aspect?: string;
+  cost?: string;
+  costTone?: "green" | "zinc";
+  className?: string;
+  onDuplicate?: () => void;
+  onRerun?: () => void;
+  onDelete?: () => void;
+}
+
+export default function FalRunCard({
+  type = "Text To Image",
+  models = 4,
+  time = "22 minutes ago",
+  prompt = "a calm, morning, beach scenery",
+  aspect = "1:1",
+  cost = "$0.241",
+  costTone = "green",
+  className = "",
+  onDuplicate,
+  onRerun,
+  onDelete,
+}: FalRunCardProps) {
+  const costClass = costTone === "green" ? "text-emerald-500" : "text-zinc-600 dark:text-zinc-300";
+  return (
+    <div data-fal-run-card className={`w-full rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <div className="flex items-center justify-between gap-2">
+        <span data-fal-run-type className="inline-flex items-center gap-1.5 rounded-md border border-purple-200 bg-purple-50 px-2 py-1 text-[11px] font-medium text-purple-600 dark:border-purple-800 dark:bg-purple-950/40 dark:text-purple-300">
+          <span aria-hidden="true">⌨</span>
+          {type}
+          <span aria-hidden="true" className="text-purple-300 dark:text-purple-700">▸</span>
+        </span>
+        <button type="button" data-fal-run-bookmark aria-label="Bookmark run" className="text-zinc-400 transition-colors hover:text-zinc-600 dark:hover:text-zinc-200">
+          ⚑
+        </button>
+      </div>
+      <p data-fal-run-meta className="mt-2 text-[11px] text-zinc-500 dark:text-zinc-400">
+        <span data-fal-run-models>{models} models</span>
+        <span className="mx-1.5">·</span>
+        <span data-fal-run-time>{time}</span>
+      </p>
+      <div className="mt-3">
+        <p className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500">Prompt</p>
+        <p data-fal-run-prompt className="mt-1 text-sm leading-relaxed text-zinc-800 dark:text-zinc-200">{prompt}</p>
+      </div>
+      <div data-fal-run-rows className="mt-3 space-y-1.5">
+        <div className="flex items-center justify-between text-xs">
+          <span className="text-zinc-500 dark:text-zinc-400">Aspect Ratio:</span>
+          <span data-fal-run-aspect className="rounded border border-zinc-200 px-1.5 py-0.5 font-mono text-[10px] text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">{aspect}</span>
+        </div>
+        <div className="flex items-center justify-between text-xs">
+          <span className="text-zinc-500 dark:text-zinc-400">Total Cost:</span>
+          <span data-fal-run-cost className={`font-mono text-[11px] font-medium ${costClass}`}>{cost}</span>
+        </div>
+      </div>
+      <div data-fal-run-actions className="mt-4 flex items-center justify-between border-t border-zinc-100 pt-3 dark:border-zinc-800">
+        <div className="flex items-center gap-1">
+          <button type="button" data-fal-run-duplicate aria-label="Duplicate run" onClick={() => onDuplicate?.()} className="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-400 transition-colors hover:bg-zinc-50 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">⧉</button>
+          <button type="button" data-fal-run-rerun aria-label="Rerun run" onClick={() => onRerun?.()} className="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-400 transition-colors hover:bg-zinc-50 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">↻</button>
+          <button type="button" data-fal-run-delete aria-label="Delete run" onClick={() => onDelete?.()} className="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-950/40">🗑</button>
+        </div>
+        <button type="button" data-fal-run-share aria-label="Share run" className="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-400 transition-colors hover:bg-zinc-50 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">⇗</button>
+      </div>
+    </div>
+  );
+}
+
 ====/File: react/FederatedSearchResultsPanel.tsx/====
 
 import React from "react";
@@ -8146,6 +8226,72 @@ export const FormField: React.FC<FormFieldProps> = ({
 
 export default FormField;
 
+====/File: react/GammaImageDetail.tsx/====
+
+/**
+ * GammaImageDetail - Gamma AI-images detail pane: large preview with a
+ * download / zoom / delete icon row and like / dislike pair, plus the full
+ * generation prompt in a bordered reading block.
+ */
+import React from "react";
+
+export interface GammaImageDetailProps {
+  title?: string;
+  preview?: string;
+  prompt?: string;
+  liked?: boolean;
+  className?: string;
+  onDownload?: () => void;
+  onZoom?: () => void;
+  onDelete?: () => void;
+  onLike?: () => void;
+  onDislike?: () => void;
+}
+
+export default function GammaImageDetail({
+  title = "AI images",
+  preview = "",
+  prompt = "Generate the following image: Mobile-first social media carousel content slide with professional creative aesthetic.",
+  liked = false,
+  className = "",
+  onDownload,
+  onZoom,
+  onDelete,
+  onLike,
+  onDislike,
+}: GammaImageDetailProps) {
+  return (
+    <div data-gamma-image-detail className={`w-full rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <div className="flex items-center justify-between">
+        <h3 data-gamma-detail-title className="text-base font-semibold text-zinc-900 dark:text-zinc-50">{title}</h3>
+        <button type="button" data-gamma-detail-close aria-label="Close detail" className="text-zinc-400 transition-colors hover:text-zinc-600 dark:hover:text-zinc-200">✕</button>
+      </div>
+      <div data-gamma-detail-preview className="mt-3 flex items-center justify-center overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800" style={{ minHeight: 160 }}>
+        {preview ? (
+          <img src={preview} alt={title} className="max-h-64 w-auto object-cover" />
+        ) : (
+          <span aria-hidden="true" className="text-3xl text-zinc-300 dark:text-zinc-600">🖼</span>
+        )}
+      </div>
+      <div data-gamma-detail-toolbar className="mt-3 flex items-center justify-between">
+        <div className="flex items-center gap-1">
+          <button type="button" data-gamma-detail-download aria-label="Download image" onClick={() => onDownload?.()} className="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">↓</button>
+          <button type="button" data-gamma-detail-zoom aria-label="Zoom image" onClick={() => onZoom?.()} className="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">🔍</button>
+          <button type="button" data-gamma-detail-delete aria-label="Delete image" onClick={() => onDelete?.()} className="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-500 transition-colors hover:bg-red-50 hover:text-red-500 dark:text-zinc-400 dark:hover:bg-red-950/40">🗑</button>
+        </div>
+        <div className="flex items-center gap-1">
+          <button type="button" data-gamma-detail-dislike aria-label="Dislike image" onClick={() => onDislike?.()} className="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">👎</button>
+          <button type="button" data-gamma-detail-like aria-pressed={liked} aria-label="Like image" onClick={() => onLike?.()} className={`flex h-8 w-8 items-center justify-center rounded-md text-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800 ${liked ? "text-rose-500" : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"}`}>👍</button>
+        </div>
+      </div>
+      <div className="mt-3">
+        <p className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500">Prompt</p>
+        <p data-gamma-detail-prompt className="mt-1.5 rounded-lg border border-zinc-200 p-3 text-xs leading-relaxed text-zinc-700 dark:border-zinc-700 dark:text-zinc-300">{prompt}</p>
+      </div>
+    </div>
+  );
+}
+
 ====/File: react/GanttTimeline.tsx/====
 
 import React from "react";
@@ -9281,6 +9427,44 @@ export default function ImageGenGallery({
           })}
         </div>
       )}
+    </div>
+  );
+}
+
+====/File: react/ImageGenMetaBar.tsx/====
+
+/**
+ * ImageGenMetaBar - fal generation result footer bar: model badge pill
+ * overlaying the image bottom-left plus a mono metadata row with the job id,
+ * wall-clock duration and per-image cost.
+ */
+import React from "react";
+
+export interface ImageGenMetaBarProps {
+  model?: string;
+  jobId?: string;
+  duration?: string;
+  cost?: string;
+  className?: string;
+}
+
+export default function ImageGenMetaBar({
+  model = "openai/gpt-image-2",
+  jobId = "# 019f1ba4",
+  duration = "169.0s",
+  cost = "$ 0.211",
+  className = "",
+}: ImageGenMetaBarProps) {
+  return (
+    <div data-image-gen-meta className={`w-full border-t border-zinc-200 bg-white px-2.5 py-1.5 dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+        <span data-image-gen-job>{jobId}</span>
+        <span data-image-gen-clock aria-hidden="true" className="text-zinc-300 dark:text-zinc-600">◷</span>
+        <span data-image-gen-duration>{duration}</span>
+        <span className="ml-auto" />
+        <span data-image-gen-cost className="font-medium text-zinc-600 dark:text-zinc-300">{cost}</span>
+      </div>
+      <span data-image-gen-model className="absolute left-2 bottom-11 inline-flex items-center rounded bg-zinc-900/70 px-1.5 py-0.5 text-[10px] font-medium text-zinc-100 backdrop-blur dark:bg-zinc-950/70">{model}</span>
     </div>
   );
 }
@@ -25769,6 +25953,76 @@ const toneBar = (tone?: EvalScoreTone) => {
   </div>
 </template>
 
+====/File: vue/FalRunCard.vue/====
+
+<script setup lang="ts">
+export interface FalRunCardProps {
+  type?: string;
+  models?: number;
+  time?: string;
+  prompt?: string;
+  aspect?: string;
+  cost?: string;
+  costTone?: "green" | "zinc";
+  class?: string;
+  onDuplicate?: () => void;
+  onRerun?: () => void;
+  onDelete?: () => void;
+}
+
+const props = withDefaults(defineProps<FalRunCardProps>(), {
+  type: "Text To Image",
+  models: 4,
+  time: "22 minutes ago",
+  prompt: "a calm, morning, beach scenery",
+  aspect: "1:1",
+  cost: "$0.241",
+  costTone: "green",
+  class: "",
+});
+defineEmits(["duplicate", "rerun", "delete"]);
+</script>
+
+<template>
+  <div data-fal-run-card class="w-full rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900" :class="props.class">
+    <div class="flex items-center justify-between gap-2">
+      <span data-fal-run-type class="inline-flex items-center gap-1.5 rounded-md border border-purple-200 bg-purple-50 px-2 py-1 text-[11px] font-medium text-purple-600 dark:border-purple-800 dark:bg-purple-950/40 dark:text-purple-300">
+        <span aria-hidden="true">⌨</span>
+        {{ props.type }}
+        <span aria-hidden="true" class="text-purple-300 dark:text-purple-700">▸</span>
+      </span>
+      <button type="button" data-fal-run-bookmark aria-label="Bookmark run" class="text-zinc-400 transition-colors hover:text-zinc-600 dark:hover:text-zinc-200">⚑</button>
+    </div>
+    <p data-fal-run-meta class="mt-2 text-[11px] text-zinc-500 dark:text-zinc-400">
+      <span data-fal-run-models>{{ props.models }} models</span>
+      <span class="mx-1.5">·</span>
+      <span data-fal-run-time>{{ props.time }}</span>
+    </p>
+    <div class="mt-3">
+      <p class="text-[11px] font-medium text-zinc-400 dark:text-zinc-500">Prompt</p>
+      <p data-fal-run-prompt class="mt-1 text-sm leading-relaxed text-zinc-800 dark:text-zinc-200">{{ props.prompt }}</p>
+    </div>
+    <div data-fal-run-rows class="mt-3 space-y-1.5">
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-zinc-500 dark:text-zinc-400">Aspect Ratio:</span>
+        <span data-fal-run-aspect class="rounded border border-zinc-200 px-1.5 py-0.5 font-mono text-[10px] text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">{{ props.aspect }}</span>
+      </div>
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-zinc-500 dark:text-zinc-400">Total Cost:</span>
+        <span data-fal-run-cost :class="['font-mono text-[11px] font-medium', props.costTone === 'green' ? 'text-emerald-500' : 'text-zinc-600 dark:text-zinc-300']">{{ props.cost }}</span>
+      </div>
+    </div>
+    <div data-fal-run-actions class="mt-4 flex items-center justify-between border-t border-zinc-100 pt-3 dark:border-zinc-800">
+      <div class="flex items-center gap-1">
+        <button type="button" data-fal-run-duplicate aria-label="Duplicate run" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-400 transition-colors hover:bg-zinc-50 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200" @click="$emit('duplicate')">⧉</button>
+        <button type="button" data-fal-run-rerun aria-label="Rerun run" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-400 transition-colors hover:bg-zinc-50 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200" @click="$emit('rerun')">↻</button>
+        <button type="button" data-fal-run-delete aria-label="Delete run" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-950/40" @click="$emit('delete')">🗑</button>
+      </div>
+      <button type="button" data-fal-run-share aria-label="Share run" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-400 transition-colors hover:bg-zinc-50 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">⇗</button>
+    </div>
+  </div>
+</template>
+
 ====/File: vue/FederatedSearchResultsPanel.vue/====
 
 <template>
@@ -26754,6 +27008,55 @@ withDefaults(
   { required: false, optional: false, className: '' }
 );
 </script>
+
+====/File: vue/GammaImageDetail.vue/====
+
+<script setup lang="ts">
+export interface GammaImageDetailProps {
+  title?: string;
+  preview?: string;
+  prompt?: string;
+  liked?: boolean;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<GammaImageDetailProps>(), {
+  title: "AI images",
+  preview: "",
+  prompt: "Generate the following image: Mobile-first social media carousel content slide with professional creative aesthetic.",
+  liked: false,
+  class: "",
+});
+defineEmits(["download", "zoom", "delete", "like", "dislike"]);
+</script>
+
+<template>
+  <div data-gamma-image-detail class="w-full rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900" :class="props.class">
+    <div class="flex items-center justify-between">
+      <h3 data-gamma-detail-title class="text-base font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</h3>
+      <button type="button" data-gamma-detail-close aria-label="Close detail" class="text-zinc-400 transition-colors hover:text-zinc-600 dark:hover:text-zinc-200">✕</button>
+    </div>
+    <div data-gamma-detail-preview class="mt-3 flex items-center justify-center overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800" style="min-height: 160px">
+      <img v-if="props.preview" :src="props.preview" :alt="props.title" class="max-h-64 w-auto object-cover" />
+      <span v-else aria-hidden="true" class="text-3xl text-zinc-300 dark:text-zinc-600">🖼</span>
+    </div>
+    <div data-gamma-detail-toolbar class="mt-3 flex items-center justify-between">
+      <div class="flex items-center gap-1">
+        <button type="button" data-gamma-detail-download aria-label="Download image" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200" @click="$emit('download')">↓</button>
+        <button type="button" data-gamma-detail-zoom aria-label="Zoom image" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200" @click="$emit('zoom')">🔍</button>
+        <button type="button" data-gamma-detail-delete aria-label="Delete image" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-500 transition-colors hover:bg-red-50 hover:text-red-500 dark:text-zinc-400 dark:hover:bg-red-950/40" @click="$emit('delete')">🗑</button>
+      </div>
+      <div class="flex items-center gap-1">
+        <button type="button" data-gamma-detail-dislike aria-label="Dislike image" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200" @click="$emit('dislike')">👎</button>
+        <button type="button" data-gamma-detail-like :aria-pressed="props.liked" aria-label="Like image" :class="['flex h-8 w-8 items-center justify-center rounded-md text-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800', props.liked ? 'text-rose-500' : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200']" @click="$emit('like')">👍</button>
+      </div>
+    </div>
+    <div class="mt-3">
+      <p class="text-[11px] font-medium text-zinc-400 dark:text-zinc-500">Prompt</p>
+      <p data-gamma-detail-prompt class="mt-1.5 rounded-lg border border-zinc-200 p-3 text-xs leading-relaxed text-zinc-700 dark:border-zinc-700 dark:text-zinc-300">{{ props.prompt }}</p>
+    </div>
+  </div>
+</template>
 
 ====/File: vue/GanttTimeline.vue/====
 
@@ -27789,6 +28092,39 @@ const submit = () => {
         </div>
         <figcaption v-if="img.model && img.status !== 'generating'" class="absolute left-1.5 top-1.5 rounded bg-black/55 px-1.5 py-0.5 text-[10px] font-medium text-white/90 backdrop-blur">{{ img.model }}</figcaption>
       </figure>
+    </div>
+  </div>
+</template>
+
+====/File: vue/ImageGenMetaBar.vue/====
+
+<script setup lang="ts">
+export interface ImageGenMetaBarProps {
+  model?: string;
+  jobId?: string;
+  duration?: string;
+  cost?: string;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<ImageGenMetaBarProps>(), {
+  model: "openai/gpt-image-2",
+  jobId: "# 019f1ba4",
+  duration: "169.0s",
+  cost: "$ 0.211",
+  class: "",
+});
+</script>
+
+<template>
+  <div data-image-gen-meta class="relative w-full border-t border-zinc-200 bg-white px-2.5 py-1.5 dark:border-zinc-800 dark:bg-zinc-900" :class="props.class">
+    <span data-image-gen-model class="absolute left-2 bottom-11 inline-flex items-center rounded bg-zinc-900/70 px-1.5 py-0.5 text-[10px] font-medium text-zinc-100 backdrop-blur dark:bg-zinc-950/70">{{ props.model }}</span>
+    <div class="flex items-center gap-2 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+      <span data-image-gen-job>{{ props.jobId }}</span>
+      <span data-image-gen-clock aria-hidden="true" class="text-zinc-300 dark:text-zinc-600">◷</span>
+      <span data-image-gen-duration>{{ props.duration }}</span>
+      <span class="ml-auto" />
+      <span data-image-gen-cost class="font-medium text-zinc-600 dark:text-zinc-300">{{ props.cost }}</span>
     </div>
   </div>
 </template>
@@ -44625,6 +44961,160 @@ if (typeof customElements !== 'undefined' && !customElements.get('eval-score-tab
 
 export default EvalScoreTableElement;
 
+====/File: vanilla/FalRunCard.js/====
+
+/**
+ * FalRunCard - fal generate-run info card: task type badge, model count and
+ * relative time header, prompt paragraph, aspect ratio / total cost metadata
+ * rows and a bottom action icon row (duplicate / rerun / delete / share).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+class FalRunCardElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['type', 'models', 'time', 'prompt', 'aspect', 'cost', 'cost-tone'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get type() {
+    return this.getAttribute('type') ?? 'Text To Image';
+  }
+  set type(value) {
+    this.setAttribute('type', value);
+  }
+
+  get models() {
+    const raw = this.getAttribute('models');
+    const n = raw === null ? NaN : Number(raw);
+    return Number.isFinite(n) ? n : 4;
+  }
+  set models(value) {
+    this.setAttribute('models', String(value));
+  }
+
+  get time() {
+    return this.getAttribute('time') ?? '22 minutes ago';
+  }
+  set time(value) {
+    this.setAttribute('time', value);
+  }
+
+  get prompt() {
+    return this.getAttribute('prompt') ?? 'a calm, morning, beach scenery';
+  }
+  set prompt(value) {
+    this.setAttribute('prompt', value);
+  }
+
+  get aspect() {
+    return this.getAttribute('aspect') ?? '1:1';
+  }
+  set aspect(value) {
+    this.setAttribute('aspect', value);
+  }
+
+  get cost() {
+    return this.getAttribute('cost') ?? '$0.241';
+  }
+  set cost(value) {
+    this.setAttribute('cost', value);
+  }
+
+  get costTone() {
+    return this.getAttribute('cost-tone') ?? 'green';
+  }
+  set costTone(value) {
+    this.setAttribute('cost-tone', value);
+  }
+
+  _onClick(event) {
+    const actionEl = event.target.closest('[data-fal-run-duplicate], [data-fal-run-rerun], [data-fal-run-delete]');
+    if (!actionEl) return;
+    if (actionEl.hasAttribute('data-fal-run-duplicate')) {
+      this.dispatchEvent(new CustomEvent('duplicate', { bubbles: true }));
+    } else if (actionEl.hasAttribute('data-fal-run-rerun')) {
+      this.dispatchEvent(new CustomEvent('rerun', { bubbles: true }));
+    } else {
+      this.dispatchEvent(new CustomEvent('delete', { bubbles: true }));
+    }
+  }
+
+  _render() {
+    const costClass = this.costTone === 'green' ? 'text-emerald-500' : 'text-zinc-600 dark:text-zinc-300';
+    this.innerHTML = `
+      <div data-fal-run-card class="w-full rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div class="flex items-center justify-between gap-2">
+          <span data-fal-run-type class="inline-flex items-center gap-1.5 rounded-md border border-purple-200 bg-purple-50 px-2 py-1 text-[11px] font-medium text-purple-600 dark:border-purple-800 dark:bg-purple-950/40 dark:text-purple-300">
+            <span aria-hidden="true">⌨</span>
+            ${escapeAttribute(this.type)}
+            <span aria-hidden="true" class="text-purple-300 dark:text-purple-700">▸</span>
+          </span>
+          <button type="button" data-fal-run-bookmark aria-label="Bookmark run" class="text-zinc-400 transition-colors hover:text-zinc-600 dark:hover:text-zinc-200">⚑</button>
+        </div>
+        <p data-fal-run-meta class="mt-2 text-[11px] text-zinc-500 dark:text-zinc-400">
+          <span data-fal-run-models>${escapeAttribute(this.models)} models</span>
+          <span class="mx-1.5">·</span>
+          <span data-fal-run-time>${escapeAttribute(this.time)}</span>
+        </p>
+        <div class="mt-3">
+          <p class="text-[11px] font-medium text-zinc-400 dark:text-zinc-500">Prompt</p>
+          <p data-fal-run-prompt class="mt-1 text-sm leading-relaxed text-zinc-800 dark:text-zinc-200">${escapeAttribute(this.prompt)}</p>
+        </div>
+        <div data-fal-run-rows class="mt-3 space-y-1.5">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-zinc-500 dark:text-zinc-400">Aspect Ratio:</span>
+            <span data-fal-run-aspect class="rounded border border-zinc-200 px-1.5 py-0.5 font-mono text-[10px] text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">${escapeAttribute(this.aspect)}</span>
+          </div>
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-zinc-500 dark:text-zinc-400">Total Cost:</span>
+            <span data-fal-run-cost class="font-mono text-[11px] font-medium ${costClass}">${escapeAttribute(this.cost)}</span>
+          </div>
+        </div>
+        <div data-fal-run-actions class="mt-4 flex items-center justify-between border-t border-zinc-100 pt-3 dark:border-zinc-800">
+          <div class="flex items-center gap-1">
+            <button type="button" data-fal-run-duplicate aria-label="Duplicate run" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-400 transition-colors hover:bg-zinc-50 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">⧉</button>
+            <button type="button" data-fal-run-rerun aria-label="Rerun run" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-400 transition-colors hover:bg-zinc-50 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">↻</button>
+            <button type="button" data-fal-run-delete aria-label="Delete run" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-950/40">🗑</button>
+          </div>
+          <button type="button" data-fal-run-share aria-label="Share run" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-400 transition-colors hover:bg-zinc-50 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">⇗</button>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('fal-run-card')) {
+  customElements.define('fal-run-card', FalRunCardElement);
+}
+
+export default FalRunCardElement;
+
 ====/File: vanilla/FederatedSearchResultsPanel.js/====
 
 /**
@@ -46177,6 +46667,137 @@ if (typeof customElements !== 'undefined' && !customElements.get('form-field')) 
 }
 export default FormFieldElement;
 
+====/File: vanilla/GammaImageDetail.js/====
+
+/**
+ * GammaImageDetail - Gamma AI-images detail pane: large preview with a
+ * download / zoom / delete icon row and like / dislike pair, plus the full
+ * generation prompt in a bordered reading block.
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+class GammaImageDetailElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'preview', 'prompt', 'liked'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._liked = false;
+  }
+
+  connectedCallback() {
+    if (this.getAttribute('liked') === 'true') {
+      this._liked = true;
+    }
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'liked') {
+      this._liked = newValue === 'true';
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get title() {
+    return this.getAttribute('title') ?? 'AI images';
+  }
+  set title(value) {
+    this.setAttribute('title', value);
+  }
+
+  get preview() {
+    return this.getAttribute('preview') ?? '';
+  }
+  set preview(value) {
+    this.setAttribute('preview', value);
+  }
+
+  get prompt() {
+    return this.getAttribute('prompt') ?? 'Generate the following image: Mobile-first social media carousel content slide with professional creative aesthetic.';
+  }
+  set prompt(value) {
+    this.setAttribute('prompt', value);
+  }
+
+  get liked() {
+    return this._liked;
+  }
+  set liked(value) {
+    this._liked = Boolean(value);
+    this._render();
+  }
+
+  _onClick(event) {
+    const map = [
+      ['[data-gamma-detail-download]', 'download'],
+      ['[data-gamma-detail-zoom]', 'zoom'],
+      ['[data-gamma-detail-delete]', 'delete'],
+      ['[data-gamma-detail-dislike]', 'dislike'],
+      ['[data-gamma-detail-like]', 'like'],
+      ['[data-gamma-detail-close]', 'close'],
+    ];
+    for (const [selector, name] of map) {
+      if (event.target.closest(selector)) {
+        this.dispatchEvent(new CustomEvent(name, { bubbles: true }));
+        return;
+      }
+    }
+  }
+
+  _render() {
+    const preview = this.preview
+      ? `<img src="${escapeAttribute(this.preview)}" alt="${escapeAttribute(this.title)}" class="max-h-64 w-auto object-cover" />`
+      : '<span aria-hidden="true" class="text-3xl text-zinc-300 dark:text-zinc-600">🖼</span>';
+    this.innerHTML = `
+      <div data-gamma-image-detail class="w-full rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div class="flex items-center justify-between">
+          <h3 data-gamma-detail-title class="text-base font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this.title)}</h3>
+          <button type="button" data-gamma-detail-close aria-label="Close detail" class="text-zinc-400 transition-colors hover:text-zinc-600 dark:hover:text-zinc-200">✕</button>
+        </div>
+        <div data-gamma-detail-preview class="mt-3 flex items-center justify-center overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800" style="min-height:160px">${preview}</div>
+        <div data-gamma-detail-toolbar class="mt-3 flex items-center justify-between">
+          <div class="flex items-center gap-1">
+            <button type="button" data-gamma-detail-download aria-label="Download image" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">↓</button>
+            <button type="button" data-gamma-detail-zoom aria-label="Zoom image" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">🔍</button>
+            <button type="button" data-gamma-detail-delete aria-label="Delete image" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-500 transition-colors hover:bg-red-50 hover:text-red-500 dark:text-zinc-400 dark:hover:bg-red-950/40">🗑</button>
+          </div>
+          <div class="flex items-center gap-1">
+            <button type="button" data-gamma-detail-dislike aria-label="Dislike image" class="flex h-8 w-8 items-center justify-center rounded-md text-sm text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">👎</button>
+            <button type="button" data-gamma-detail-like aria-pressed="${this._liked}" aria-label="Like image" class="flex h-8 w-8 items-center justify-center rounded-md text-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800 ${this._liked ? 'text-rose-500' : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'}">👍</button>
+          </div>
+        </div>
+        <div class="mt-3">
+          <p class="text-[11px] font-medium text-zinc-400 dark:text-zinc-500">Prompt</p>
+          <p data-gamma-detail-prompt class="mt-1.5 rounded-lg border border-zinc-200 p-3 text-xs leading-relaxed text-zinc-700 dark:border-zinc-700 dark:text-zinc-300">${escapeAttribute(this.prompt)}</p>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('gamma-image-detail')) {
+  customElements.define('gamma-image-detail', GammaImageDetailElement);
+}
+
+export default GammaImageDetailElement;
+
 ====/File: vanilla/GanttTimeline.js/====
 
 /**
@@ -47466,6 +48087,92 @@ if (typeof customElements !== 'undefined' && !customElements.get('image-gen-gall
 }
 
 export default ImageGenGalleryElement;
+
+====/File: vanilla/ImageGenMetaBar.js/====
+
+/**
+ * ImageGenMetaBar - fal generation result footer bar: model badge pill
+ * overlaying the image bottom-left plus a mono metadata row with the job id,
+ * wall-clock duration and per-image cost.
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+class ImageGenMetaBarElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['model', 'job-id', 'duration', 'cost'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get model() {
+    return this.getAttribute('model') ?? 'openai/gpt-image-2';
+  }
+  set model(value) {
+    this.setAttribute('model', value);
+  }
+
+  get jobId() {
+    return this.getAttribute('job-id') ?? '# 019f1ba4';
+  }
+  set jobId(value) {
+    this.setAttribute('job-id', value);
+  }
+
+  get duration() {
+    return this.getAttribute('duration') ?? '169.0s';
+  }
+  set duration(value) {
+    this.setAttribute('duration', value);
+  }
+
+  get cost() {
+    return this.getAttribute('cost') ?? '$ 0.211';
+  }
+  set cost(value) {
+    this.setAttribute('cost', value);
+  }
+
+  _render() {
+    this.innerHTML = `
+      <div data-image-gen-meta class="relative w-full border-t border-zinc-200 bg-white px-2.5 py-1.5 dark:border-zinc-800 dark:bg-zinc-900">
+        <span data-image-gen-model class="absolute left-2 bottom-11 inline-flex items-center rounded bg-zinc-900/70 px-1.5 py-0.5 text-[10px] font-medium text-zinc-100 backdrop-blur dark:bg-zinc-950/70">${escapeAttribute(this.model)}</span>
+        <div class="flex items-center gap-2 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+          <span data-image-gen-job>${escapeAttribute(this.jobId)}</span>
+          <span data-image-gen-clock aria-hidden="true" class="text-zinc-300 dark:text-zinc-600">◷</span>
+          <span data-image-gen-duration>${escapeAttribute(this.duration)}</span>
+          <span class="ml-auto"></span>
+          <span data-image-gen-cost class="font-medium text-zinc-600 dark:text-zinc-300">${escapeAttribute(this.cost)}</span>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('image-gen-meta-bar')) {
+  customElements.define('image-gen-meta-bar', ImageGenMetaBarElement);
+}
+
+export default ImageGenMetaBarElement;
 
 ====/File: vanilla/InboxList.js/====
 

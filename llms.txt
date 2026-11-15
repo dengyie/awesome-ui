@@ -752,6 +752,9 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 169. AiNoteAnswer: Voicenotes Ask AI answer card — waveform question row with play button, answer paragraph, "Other sources" link list and Copy pill.
 170. AudioNotePlayer: Voicenotes audio note player — play/pause toggle button, waveform strip (played half highlights while playing) and title/duration metadata row.
 171. ImageActionMenu: Krea generated-image context menu — Fullscreen/Vary/Edit/Upscale & enhance/Make video/Download actions with per-action icons, divider before Download, open/close control.
+172. FalRunCard: fal generate-run info card — task type badge, model count + relative time header, prompt paragraph, Aspect Ratio / Total Cost metadata rows and duplicate/rerun/delete/share actions.
+173. ImageGenMetaBar: fal generation result footer — model badge pill overlay plus mono metadata row with job id, duration and per-image cost.
+174. GammaImageDetail: Gamma AI-images detail pane — large preview, download/zoom/delete + like/dislike toolbar and the full generation prompt in a bordered block.
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)
