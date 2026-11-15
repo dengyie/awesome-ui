@@ -930,6 +930,21 @@ awesome-ui/
 - **Props**: `segments?: [{id,label,amountUsd,color?}]`, `usageRows?: [{id,label,tokens,percent,barColor?}]`, `title?`, `spendUsed?`, `spendTotal?`, `onSegmentSelect?(segment)`
 - **Vanilla 用法**: `<token-cost-breakdown spend-used="34.49" spend-total="55">` + `segments`/`usageRows` property；事件 `segment-select {segment}`
 - **特性**: 头部 "$used of $total"、堆叠消费条（默认 6 色 cycle）、图例行金额 + 百分比、Token usage 分区（大写小标题 + 输入/输出/推理行进度条）。
+### 157. `PromptVariantDiff` (Prompt 版本对比)
+- **Props**: `variants?: [{id,label,text}]`（需恰好 2 个：base + compare）, `variables?: string[]`, `title?`, `onApply?(variant)`
+- **Vanilla 用法**: `<prompt-variant-diff title="Support bot">` + `variants` property；事件 `apply {variant}`
+- **特性**: 双栏 A/B 面板（zinc 基线圆点 + violet 对比圆点 + Base 徽章）、{{var}} indigo chips 内联渲染、头部 +N/−N/~text 变更统计、Use this version 按钮、底部变量增删 chips（emerald + / red −）、不足 2 个变体不渲染。
+
+### 158. `GuardrailReviewQueue` (审核队列)
+- **Props**: `items?: [{id,author,content,reasons:string[],rule?,confidence?,verdict?: 'pending'|'approved'|'rejected'}]`, `title?`, `onApprove?(item)`, `onReject?(item)`
+- **Vanilla 用法**: `<guardrail-review-queue title="Moderation queue">` + `items` property；事件 `approve {item}` / `reject {item}`
+- **特性**: 头部 "{n} flagged" 红色计数徽章、待审卡（作者 + 置信度 chip ≥90% 红否则琥珀 + 规则 chip + 内容面板 + 琥珀原因 tags）、Approve（emerald）/ Reject（red）按钮、已决项折叠为一行 verdict chip + 作者 + 截断内容、空状态提示。
+
+### 159. `ContentReviewTable` (内容审核表)
+- **Props**: `rows?: [{id,text,tags?,extraTags?,time?,status: 'valid'|'error'}]`, `title?`, `draftsLabel?`, `scheduleLabel?`, `onRowSelect?(row)`, `onSaveDrafts?()`, `onSchedule?()`
+- **Vanilla 用法**: `<content-review-table title="Review content">` + `rows` property；事件 `row-select {row}` / `save-drafts` / `schedule`
+- **特性**: 头部 ✓ {n} valid / ⚠ {n} errors 计数、# / Text / Tags / Posting time / Status 表格（首 tag sky chip + +{n}、时间默认 Add to Queue）、行点击回调、底部 Save as Drafts（描边）+ Schedule Posts（emerald）CTA。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

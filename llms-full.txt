@@ -4561,6 +4561,146 @@ export default function ConnectorGrid({
   );
 }
 
+====/File: react/ContentReviewTable.tsx/====
+
+import React from "react";
+
+export type ContentReviewStatus = "valid" | "error";
+
+export interface ContentReviewRow {
+  id: string;
+  text: string;
+  tags?: string[];
+  extraTags?: number;
+  time?: string;
+  status: ContentReviewStatus;
+}
+
+export interface ContentReviewTableProps {
+  rows: ContentReviewRow[];
+  title?: string;
+  draftsLabel?: string;
+  scheduleLabel?: string;
+  className?: string;
+  onRowSelect?: (row: ContentReviewRow) => void;
+  onSaveDrafts?: () => void;
+  onSchedule?: () => void;
+}
+
+/**
+ * ContentReviewTable - pre-publish content review table (Buffer bulk-upload
+ * pattern): numbered rows with validity icons, tag chips, and footer
+ * draft/schedule actions.
+ */
+export default function ContentReviewTable({
+  rows,
+  title = "Review content",
+  draftsLabel = "Save as Drafts",
+  scheduleLabel = "Schedule Posts",
+  className = "",
+  onRowSelect,
+  onSaveDrafts,
+  onSchedule,
+}: ContentReviewTableProps) {
+  const errors = rows.filter((r) => r.status === "error").length;
+  const valid = rows.length - errors;
+
+  return (
+    <div
+      data-content-review
+      className={`w-full overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div className="flex flex-col items-center gap-1 border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+        <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">{title}</span>
+        <span className="flex items-center gap-3 text-[11px] text-zinc-500 dark:text-zinc-400">
+          <span data-review-valid-count className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+            ✓ {valid} valid
+          </span>
+          <span data-review-error-count className="flex items-center gap-1 text-red-500 dark:text-red-400">
+            ⚠ {errors} {errors === 1 ? "error" : "errors"}
+          </span>
+        </span>
+      </div>
+
+      <table data-review-table className="w-full text-left">
+        <thead>
+          <tr className="border-b border-zinc-100 text-[10px] uppercase tracking-wider text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+            <th className="w-10 py-2 pl-4 font-medium">#</th>
+            <th className="py-2 pr-3 font-medium">Text</th>
+            <th className="py-2 pr-3 font-medium">Tags</th>
+            <th className="py-2 pr-3 font-medium">Posting time</th>
+            <th className="py-2 pr-4 font-medium">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, index) => (
+            <tr
+              key={row.id}
+              data-review-row={row.id}
+              onClick={() => onRowSelect?.(row)}
+              className={`border-b border-zinc-50 text-xs transition-colors dark:border-zinc-800/60 ${
+                onRowSelect ? "cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800/60" : ""
+              }`}
+            >
+              <td className="py-2.5 pl-4 tabular-nums text-zinc-400 dark:text-zinc-500">{index + 1}</td>
+              <td data-review-text className="max-w-48 truncate py-2.5 pr-3 text-zinc-800 dark:text-zinc-100">
+                {row.text}
+              </td>
+              <td className="py-2.5 pr-3">
+                <span className="flex items-center gap-1">
+                  {(row.tags ?? []).slice(0, 1).map((tag) => (
+                    <span
+                      key={tag}
+                      data-review-tag
+                      className="inline rounded bg-sky-100 px-1.5 py-0.5 text-[10px] font-medium text-sky-700 dark:bg-sky-950/60 dark:text-sky-300"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                  {typeof row.extraTags === "number" && row.extraTags > 0 && (
+                    <span data-review-extra-tags className="text-[10px] text-zinc-400 dark:text-zinc-500">
+                      +{row.extraTags}
+                    </span>
+                  )}
+                </span>
+              </td>
+              <td className="py-2.5 pr-3 text-zinc-500 dark:text-zinc-400">{row.time ?? "Add to Queue"}</td>
+              <td className="py-2.5 pr-4">
+                <span aria-label={row.status}>
+                  {row.status === "valid" ? (
+                    <span data-review-status className="text-emerald-500">✓</span>
+                  ) : (
+                    <span data-review-status className="text-red-500">⚠</span>
+                  )}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className="flex items-center justify-end gap-2 border-t border-zinc-100 px-4 py-3 dark:border-zinc-800">
+        <button
+          type="button"
+          data-review-drafts
+          onClick={() => onSaveDrafts?.()}
+          className="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800"
+        >
+          {draftsLabel}
+        </button>
+        <button
+          type="button"
+          data-review-schedule
+          onClick={() => onSchedule?.()}
+          className="rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-emerald-500"
+        >
+          {scheduleLabel}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 ====/File: react/ContextUsageBadge.tsx/====
 
 import React, { useState } from "react";
@@ -7679,6 +7819,157 @@ export const GroupedBarCompare: React.FC<GroupedBarCompareProps> = ({
 };
 
 export default GroupedBarCompare;
+
+====/File: react/GuardrailReviewQueue.tsx/====
+
+import React from "react";
+
+export type GuardrailVerdict = "pending" | "approved" | "rejected";
+
+export interface GuardrailItem {
+  id: string;
+  author: string;
+  content: string;
+  reasons: string[];
+  rule?: string;
+  confidence?: number;
+  verdict?: GuardrailVerdict;
+}
+
+export interface GuardrailReviewQueueProps {
+  items: GuardrailItem[];
+  title?: string;
+  className?: string;
+  onApprove?: (item: GuardrailItem) => void;
+  onReject?: (item: GuardrailItem) => void;
+}
+
+/**
+ * GuardrailReviewQueue - moderation review queue for AI-flagged content:
+ * cards with reason chips, rule hit and confidence, approve/reject actions
+ * that collapse the card (Circle moderation / X moderation log pattern).
+ */
+export default function GuardrailReviewQueue({
+  items,
+  title = "Moderation queue",
+  className = "",
+  onApprove,
+  onReject,
+}: GuardrailReviewQueueProps) {
+  const pending = items.filter((i) => (i.verdict ?? "pending") === "pending");
+
+  return (
+    <div
+      data-guardrail-queue
+      className={`w-full rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div className="flex items-center gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+        <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-200">{title}</span>
+        <span
+          data-guardrail-count
+          className="ml-auto rounded-full bg-red-100 px-2 py-0.5 text-[11px] font-semibold tabular-nums text-red-700 dark:bg-red-950/60 dark:text-red-300"
+        >
+          {pending.length} flagged
+        </span>
+      </div>
+
+      <div data-guardrail-list className="divide-y divide-zinc-100 dark:divide-zinc-800">
+        {items.map((item) => {
+          const verdict = item.verdict ?? "pending";
+          if (verdict !== "pending") {
+            return (
+              <div
+                key={item.id}
+                data-guardrail-resolved={item.id}
+                className="flex items-center gap-2 px-4 py-2.5 text-[11px] text-zinc-400 dark:text-zinc-500"
+              >
+                <span
+                  className={`inline rounded px-1.5 py-0.5 font-medium ${
+                    verdict === "approved"
+                      ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300"
+                      : "bg-red-50 text-red-700 dark:bg-red-950/60 dark:text-red-300"
+                  }`}
+                >
+                  {verdict === "approved" ? "✓ Approved" : "✕ Rejected"}
+                </span>
+                <span data-guardrail-resolved-author>{item.author}</span>
+                <span className="min-w-0 flex-1 truncate">{item.content}</span>
+              </div>
+            );
+          }
+          return (
+            <div key={item.id} data-guardrail-card={item.id} className="p-4">
+              <div className="flex items-center gap-2">
+                <span data-guardrail-author className="text-xs font-semibold text-zinc-800 dark:text-zinc-100">
+                  {item.author}
+                </span>
+                {typeof item.confidence === "number" && (
+                  <span
+                    data-guardrail-confidence
+                    className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold tabular-nums ${
+                      item.confidence >= 0.9
+                        ? "bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300"
+                        : "bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300"
+                    }`}
+                  >
+                    {Math.round(item.confidence * 100)}% confidence
+                  </span>
+                )}
+                {item.rule && (
+                  <span data-guardrail-rule className="rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+                    {item.rule}
+                  </span>
+                )}
+              </div>
+              <p
+                data-guardrail-content
+                className="mt-2 rounded-lg bg-zinc-50 px-3 py-2 text-xs leading-relaxed text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200"
+              >
+                {item.content}
+              </p>
+              {item.reasons.length > 0 && (
+                <div data-guardrail-reasons className="mt-2 flex flex-wrap gap-1.5">
+                  {item.reasons.map((reason) => (
+                    <span
+                      key={reason}
+                      data-guardrail-reason
+                      className="inline rounded bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-950/60 dark:text-amber-300"
+                    >
+                      {reason}
+                    </span>
+                  ))}
+                </div>
+              )}
+              <div className="mt-3 flex gap-2">
+                <button
+                  type="button"
+                  data-guardrail-approve
+                  onClick={() => onApprove?.(item)}
+                  className="flex-1 rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-emerald-500"
+                >
+                  Approve
+                </button>
+                <button
+                  type="button"
+                  data-guardrail-reject
+                  onClick={() => onReject?.(item)}
+                  className="flex-1 rounded-md bg-red-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-red-500"
+                >
+                  Reject
+                </button>
+              </div>
+            </div>
+          );
+        })}
+        {items.length === 0 && (
+          <p data-guardrail-empty className="px-4 py-8 text-center text-xs text-zinc-500 dark:text-zinc-400">
+            No flagged content in the queue.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
 
 ====/File: react/HealthDonutStats.tsx/====
 
@@ -12192,6 +12483,127 @@ export const PromptTemplateGrid: React.FC<PromptTemplateGridProps> = ({ template
   );
 };
 export default PromptTemplateGrid;
+
+====/File: react/PromptVariantDiff.tsx/====
+
+import React from "react";
+
+export interface PromptVariant {
+  id: string;
+  label: string;
+  text: string;
+}
+
+export interface PromptVariantDiffProps {
+  variants: PromptVariant[];
+  variables?: string[];
+  title?: string;
+  className?: string;
+  onApply?: (variant: PromptVariant) => void;
+}
+
+const VAR_CHIP =
+  "inline rounded bg-indigo-50 px-1 py-0.5 font-mono text-[11px] font-medium text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300";
+
+/** Render prompt text with {{var}} tokens as chips. */
+const renderText = (text: string) =>
+  text.split(/(\{\{\s*[\w.]+\s*\}\})/g).map((part, i) =>
+    /^\{\{/.test(part) ? (
+      <span key={i} className={VAR_CHIP}>
+        {part.replace(/^\{\{\s*|\s*\}\}$/g, "")}
+      </span>
+    ) : (
+      <React.Fragment key={i}>{part}</React.Fragment>
+    )
+  );
+
+/**
+ * PromptVariantDiff - side-by-side prompt version A/B comparison with
+ * variable-chip highlighting and change stats (Braintrust playground /
+ * LangSmith compare pattern).
+ */
+export default function PromptVariantDiff({
+  variants,
+  variables = [],
+  title = "Prompt variants",
+  className = "",
+  onApply,
+}: PromptVariantDiffProps) {
+  const [base, compare] = variants;
+  if (!base || !compare) return null;
+
+  const baseVars = (base.text.match(/\{\{\s*[\w.]+\s*\}\}/g) ?? []).map((v) => v.replace(/^\{\{\s*|\s*\}\}$/g, ""));
+  const cmpVars = (compare.text.match(/\{\{\s*[\w.]+\s*\}\}/g) ?? []).map((v) => v.replace(/^\{\{\s*|\s*\}\}$/g, ""));
+  const addedVars = cmpVars.filter((v) => !baseVars.includes(v));
+  const removedVars = baseVars.filter((v) => !cmpVars.includes(v));
+  const changedText = base.text !== compare.text;
+
+  return (
+    <div
+      data-prompt-variant-diff
+      className={`w-full overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div className="flex items-center gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+        <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-200">{title}</span>
+        <span className="flex items-center gap-2 text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">
+          <span data-diff-added className="text-emerald-600 dark:text-emerald-400">+{addedVars.length}</span>
+          <span data-diff-removed className="text-red-500 dark:text-red-400">−{removedVars.length}</span>
+          {changedText && <span data-diff-text className="text-amber-600 dark:text-amber-400">~text</span>}
+        </span>
+      </div>
+
+      <div className="grid gap-0 divide-x divide-zinc-100 sm:grid-cols-2 dark:divide-zinc-800">
+        {variants.map((variant, index) => (
+          <div key={variant.id} data-variant-panel={variant.id} className="flex flex-col p-4">
+            <div className="flex items-center gap-2 pb-2">
+              <span
+                className={`h-2 w-2 rounded-full ${index === 0 ? "bg-zinc-400" : "bg-violet-500"}`}
+                aria-hidden="true"
+              />
+              <span data-variant-label className="text-xs font-semibold text-zinc-800 dark:text-zinc-100">
+                {variant.label}
+              </span>
+              {index === 0 && (
+                <span className="rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+                  Base
+                </span>
+              )}
+            </div>
+            <p
+              data-variant-text
+              className="min-h-16 flex-1 whitespace-pre-wrap rounded-lg bg-zinc-50 px-3 py-2 text-xs leading-relaxed text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200"
+            >
+              {renderText(variant.text)}
+            </p>
+            <button
+              type="button"
+              data-variant-apply
+              onClick={() => onApply?.(variant)}
+              className="mt-3 w-full rounded-md border border-zinc-300 px-2 py-1.5 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            >
+              Use this version
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {(addedVars.length > 0 || removedVars.length > 0) && (
+        <div data-variant-varlist className="flex flex-wrap items-center gap-1.5 border-t border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+          {addedVars.map((v) => (
+            <span key={`add-${v}`} data-var-added className="inline rounded bg-emerald-50 px-1.5 py-0.5 font-mono text-[11px] text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">
+              + {v}
+            </span>
+          ))}
+          {removedVars.map((v) => (
+            <span key={`rm-${v}`} data-var-removed className="inline rounded bg-red-50 px-1.5 py-0.5 font-mono text-[11px] text-red-700 dark:bg-red-950/60 dark:text-red-300">
+              − {v}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 ====/File: react/QuoteMasonry.tsx/====
 
@@ -22102,6 +22514,132 @@ const connectedCount = props.connectors.filter((c) => c.connected).length;
   </div>
 </template>
 
+====/File: vue/ContentReviewTable.vue/====
+
+<script setup lang="ts">
+export type ContentReviewStatus = 'valid' | 'error';
+
+export interface ContentReviewRow {
+  id: string;
+  text: string;
+  tags?: string[];
+  extraTags?: number;
+  time?: string;
+  status: ContentReviewStatus;
+}
+
+interface Props {
+  rows?: ContentReviewRow[];
+  title?: string;
+  draftsLabel?: string;
+  scheduleLabel?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  rows: () => [],
+  title: 'Review content',
+  draftsLabel: 'Save as Drafts',
+  scheduleLabel: 'Schedule Posts',
+});
+
+const emit = defineEmits<{
+  (e: 'row-select', row: ContentReviewRow): void;
+  (e: 'save-drafts'): void;
+  (e: 'schedule'): void;
+}>();
+
+const errors = props.rows.filter((r) => r.status === 'error').length;
+const valid = props.rows.length - errors;
+</script>
+
+<template>
+  <div
+    data-content-review
+    class="w-full overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900"
+  >
+    <div class="flex flex-col items-center gap-1 border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+      <span class="text-sm font-semibold text-zinc-800 dark:text-zinc-100">{{ props.title }}</span>
+      <span class="flex items-center gap-3 text-[11px] text-zinc-500 dark:text-zinc-400">
+        <span data-review-valid-count class="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+          ✓ {{ valid }} valid
+        </span>
+        <span data-review-error-count class="flex items-center gap-1 text-red-500 dark:text-red-400">
+          ⚠ {{ errors }} {{ errors === 1 ? 'error' : 'errors' }}
+        </span>
+      </span>
+    </div>
+
+    <table data-review-table class="w-full text-left">
+      <thead>
+        <tr class="border-b border-zinc-100 text-[10px] uppercase tracking-wider text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+          <th class="w-10 py-2 pl-4 font-medium">#</th>
+          <th class="py-2 pr-3 font-medium">Text</th>
+          <th class="py-2 pr-3 font-medium">Tags</th>
+          <th class="py-2 pr-3 font-medium">Posting time</th>
+          <th class="py-2 pr-4 font-medium">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(row, index) in props.rows"
+          :key="row.id"
+          :data-review-row="row.id"
+          class="cursor-pointer border-b border-zinc-50 text-xs transition-colors hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/60"
+          @click="emit('row-select', row)"
+        >
+          <td class="py-2.5 pl-4 tabular-nums text-zinc-400 dark:text-zinc-500">{{ index + 1 }}</td>
+          <td data-review-text class="max-w-48 truncate py-2.5 pr-3 text-zinc-800 dark:text-zinc-100">
+            {{ row.text }}
+          </td>
+          <td class="py-2.5 pr-3">
+            <span class="flex items-center gap-1">
+              <span
+                v-for="tag in (row.tags ?? []).slice(0, 1)"
+                :key="tag"
+                data-review-tag
+                class="inline rounded bg-sky-100 px-1.5 py-0.5 text-[10px] font-medium text-sky-700 dark:bg-sky-950/60 dark:text-sky-300"
+              >
+                {{ tag }}
+              </span>
+              <span
+                v-if="typeof row.extraTags === 'number' && row.extraTags > 0"
+                data-review-extra-tags
+                class="text-[10px] text-zinc-400 dark:text-zinc-500"
+              >+{{ row.extraTags }}</span>
+            </span>
+          </td>
+          <td class="py-2.5 pr-3 text-zinc-500 dark:text-zinc-400">{{ row.time ?? 'Add to Queue' }}</td>
+          <td class="py-2.5 pr-4">
+            <span :aria-label="row.status">
+              <span v-if="row.status === 'valid'" data-review-status class="text-emerald-500">✓</span>
+              <span v-else data-review-status class="text-red-500">⚠</span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="flex items-center justify-end gap-2 border-t border-zinc-100 px-4 py-3 dark:border-zinc-800">
+      <button
+        type="button"
+        data-review-drafts
+        class="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800"
+        @click="emit('save-drafts')"
+      >
+        {{ props.draftsLabel }}
+      </button>
+      <button
+        type="button"
+        data-review-schedule
+        class="rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-emerald-500"
+        @click="emit('schedule')"
+      >
+        {{ props.scheduleLabel }}
+      </button>
+    </div>
+  </div>
+</template>
+
 ====/File: vue/ContextUsageBadge.vue/====
 
 <template>
@@ -24731,6 +25269,120 @@ const props = withDefaults(
 const max = computed(() => Math.max(...props.rows.flatMap((row) => [row.estimated, row.actual]), 0.0001));
 const heightOf = (value: number) => Math.max(4, Math.round((value / max.value) * 100));
 </script>
+
+====/File: vue/GuardrailReviewQueue.vue/====
+
+<script setup lang="ts">
+export type GuardrailVerdict = 'pending' | 'approved' | 'rejected';
+
+export interface GuardrailItem {
+  id: string;
+  author: string;
+  content: string;
+  reasons: string[];
+  rule?: string;
+  confidence?: number;
+  verdict?: GuardrailVerdict;
+}
+
+interface Props {
+  items?: GuardrailItem[];
+  title?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  items: () => [],
+  title: 'Moderation queue',
+});
+
+const emit = defineEmits<{
+  (e: 'approve', item: GuardrailItem): void;
+  (e: 'reject', item: GuardrailItem): void;
+}>();
+
+const pending = props.items.filter((i) => (i.verdict ?? 'pending') === 'pending');
+</script>
+
+<template>
+  <div
+    data-guardrail-queue
+    class="w-full rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900"
+  >
+    <div class="flex items-center gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+      <span class="text-xs font-semibold text-zinc-700 dark:text-zinc-200">{{ props.title }}</span>
+      <span
+        data-guardrail-count
+        class="ml-auto rounded-full bg-red-100 px-2 py-0.5 text-[11px] font-semibold tabular-nums text-red-700 dark:bg-red-950/60 dark:text-red-300"
+      >{{ pending.length }} flagged</span>
+    </div>
+
+    <div data-guardrail-list class="divide-y divide-zinc-100 dark:divide-zinc-800">
+      <template v-for="item in props.items" :key="item.id">
+        <div
+          v-if="(item.verdict ?? 'pending') !== 'pending'"
+          :data-guardrail-resolved="item.id"
+          class="flex items-center gap-2 px-4 py-2.5 text-[11px] text-zinc-400 dark:text-zinc-500"
+        >
+          <span
+            class="inline rounded px-1.5 py-0.5 font-medium"
+            :class="item.verdict === 'approved'
+              ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300'
+              : 'bg-red-50 text-red-700 dark:bg-red-950/60 dark:text-red-300'"
+          >{{ item.verdict === 'approved' ? '✓ Approved' : '✕ Rejected' }}</span>
+          <span data-guardrail-resolved-author>{{ item.author }}</span>
+          <span class="min-w-0 flex-1 truncate">{{ item.content }}</span>
+        </div>
+        <div v-else :data-guardrail-card="item.id" class="p-4">
+          <div class="flex items-center gap-2">
+            <span data-guardrail-author class="text-xs font-semibold text-zinc-800 dark:text-zinc-100">{{ item.author }}</span>
+            <span
+              v-if="typeof item.confidence === 'number'"
+              data-guardrail-confidence
+              class="rounded-full px-1.5 py-0.5 text-[10px] font-semibold tabular-nums"
+              :class="item.confidence >= 0.9
+                ? 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300'
+                : 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300'"
+            >{{ Math.round(item.confidence * 100) }}% confidence</span>
+            <span
+              v-if="item.rule"
+              data-guardrail-rule
+              class="rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400"
+            >{{ item.rule }}</span>
+          </div>
+          <p
+            data-guardrail-content
+            class="mt-2 rounded-lg bg-zinc-50 px-3 py-2 text-xs leading-relaxed text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200"
+          >{{ item.content }}</p>
+          <div v-if="item.reasons.length > 0" data-guardrail-reasons class="mt-2 flex flex-wrap gap-1.5">
+            <span
+              v-for="reason in item.reasons"
+              :key="reason"
+              data-guardrail-reason
+              class="inline rounded bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-950/60 dark:text-amber-300"
+            >{{ reason }}</span>
+          </div>
+          <div class="mt-3 flex gap-2">
+            <button
+              type="button"
+              data-guardrail-approve
+              class="flex-1 rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-emerald-500"
+              @click="emit('approve', item)"
+            >Approve</button>
+            <button
+              type="button"
+              data-guardrail-reject
+              class="flex-1 rounded-md bg-red-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-red-500"
+              @click="emit('reject', item)"
+            >Reject</button>
+          </div>
+        </div>
+      </template>
+      <p v-if="props.items.length === 0" data-guardrail-empty class="px-4 py-8 text-center text-xs text-zinc-500 dark:text-zinc-400">
+        No flagged content in the queue.
+      </p>
+    </div>
+  </div>
+</template>
 
 ====/File: vue/HealthDonutStats.vue/====
 
@@ -28434,6 +29086,125 @@ const emit = defineEmits<{
   (e: "use", template: PromptTemplate): void;
 }>();
 </script>
+
+====/File: vue/PromptVariantDiff.vue/====
+
+<script setup lang="ts">
+export interface PromptVariant {
+  id: string;
+  label: string;
+  text: string;
+}
+
+interface Props {
+  variants?: PromptVariant[];
+  variables?: string[];
+  title?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  variants: () => [],
+  variables: () => [],
+  title: 'Prompt variants',
+});
+
+const emit = defineEmits<{
+  (e: 'apply', variant: PromptVariant): void;
+}>();
+
+const varChipClass =
+  'inline rounded bg-indigo-50 px-1 py-0.5 font-mono text-[11px] font-medium text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300';
+
+const extractVars = (text: string) =>
+  (text.match(/\{\{\s*[\w.]+\s*\}\}/g) ?? []).map((v) => v.replace(/^\{\{\s*|\s*\}\}$/g, ''));
+
+const base = props.variants[0];
+const compare = props.variants[1];
+const baseVars = base ? extractVars(base.text) : [];
+const cmpVars = compare ? extractVars(compare.text) : [];
+const addedVars = cmpVars.filter((v) => !baseVars.includes(v));
+const removedVars = baseVars.filter((v) => !cmpVars.includes(v));
+const changedText = base && compare ? base.text !== compare.text : false;
+
+// Split text into plain / {{var}} segments for chip rendering.
+const segments = (text: string) =>
+  text.split(/(\{\{\s*[\w.]+\s*\}\})/g).map((part) => ({
+    isVar: /^\{\{/.test(part),
+    value: part.replace(/^\{\{\s*|\s*\}\}$/g, ''),
+    raw: part,
+  }));
+</script>
+
+<template>
+  <div
+    v-if="base && compare"
+    data-prompt-variant-diff
+    class="w-full overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900"
+  >
+    <div class="flex items-center gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+      <span class="text-xs font-semibold text-zinc-700 dark:text-zinc-200">{{ props.title }}</span>
+      <span class="flex items-center gap-2 text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">
+        <span data-diff-added class="text-emerald-600 dark:text-emerald-400">+{{ addedVars.length }}</span>
+        <span data-diff-removed class="text-red-500 dark:text-red-400">−{{ removedVars.length }}</span>
+        <span v-if="changedText" data-diff-text class="text-amber-600 dark:text-amber-400">~text</span>
+      </span>
+    </div>
+
+    <div class="grid gap-0 divide-x divide-zinc-100 sm:grid-cols-2 dark:divide-zinc-800">
+      <div
+        v-for="(variant, index) in props.variants"
+        :key="variant.id"
+        :data-variant-panel="variant.id"
+        class="flex flex-col p-4"
+      >
+        <div class="flex items-center gap-2 pb-2">
+          <span
+            class="h-2 w-2 rounded-full"
+            :class="index === 0 ? 'bg-zinc-400' : 'bg-violet-500'"
+            aria-hidden="true"
+          ></span>
+          <span data-variant-label class="text-xs font-semibold text-zinc-800 dark:text-zinc-100">{{ variant.label }}</span>
+          <span
+            v-if="index === 0"
+            class="rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400"
+          >Base</span>
+        </div>
+        <p
+          data-variant-text
+          class="min-h-16 flex-1 whitespace-pre-wrap rounded-lg bg-zinc-50 px-3 py-2 text-xs leading-relaxed text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200"
+        ><template v-for="(seg, i) in segments(variant.text)" :key="i"><span
+            v-if="seg.isVar"
+            :class="varChipClass"
+          >{{ seg.value }}</span><template v-else>{{ seg.raw }}</template></template></p>
+        <button
+          type="button"
+          data-variant-apply
+          class="mt-3 w-full rounded-md border border-zinc-300 px-2 py-1.5 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800"
+          @click="emit('apply', variant)"
+        >Use this version</button>
+      </div>
+    </div>
+
+    <div
+      v-if="addedVars.length > 0 || removedVars.length > 0"
+      data-variant-varlist
+      class="flex flex-wrap items-center gap-1.5 border-t border-zinc-100 px-4 py-2.5 dark:border-zinc-800"
+    >
+      <span
+        v-for="v in addedVars"
+        :key="`add-${v}`"
+        data-var-added
+        class="inline rounded bg-emerald-50 px-1.5 py-0.5 font-mono text-[11px] text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300"
+      >+ {{ v }}</span>
+      <span
+        v-for="v in removedVars"
+        :key="`rm-${v}`"
+        data-var-removed
+        class="inline rounded bg-red-50 px-1.5 py-0.5 font-mono text-[11px] text-red-700 dark:bg-red-950/60 dark:text-red-300"
+      >− {{ v }}</span>
+    </div>
+  </div>
+</template>
 
 ====/File: vue/QuoteMasonry.vue/====
 
@@ -38687,6 +39458,142 @@ if (typeof customElements !== 'undefined' && !customElements.get('connector-grid
 
 export default ConnectorGridElement;
 
+====/File: vanilla/ContentReviewTable.js/====
+
+/**
+ * ContentReviewTable - Vanilla Web Component
+ * Usage: <content-review-table title="Review content" rows='[...]'></content-review-table>
+ * Attributes: title, rows (JSON: [{id,text,tags?,extraTags?,time?,status:'valid'|'error'}]),
+ *             drafts-label, schedule-label
+ * Events: row-select (detail {row}), save-drafts, schedule
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const parseJsonAttr = (raw, fallback) => {
+  try {
+    const parsed = raw ? JSON.parse(raw) : null;
+    return parsed ?? fallback;
+  } catch (e) {
+    return fallback;
+  }
+};
+
+export class ContentReviewTableElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'rows', 'drafts-label', 'schedule-label'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._rows = [];
+  }
+
+  connectedCallback() {
+    if (!this._rows.length) this._rows = parseJsonAttr(this.getAttribute('rows'), []);
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        const draftsBtn = event.target.closest('[data-review-drafts]');
+        const scheduleBtn = event.target.closest('[data-review-schedule]');
+        if (draftsBtn) {
+          this.dispatchEvent(new CustomEvent('save-drafts'));
+          return;
+        }
+        if (scheduleBtn) {
+          this.dispatchEvent(new CustomEvent('schedule'));
+          return;
+        }
+        const rowEl = event.target.closest('[data-review-row]');
+        if (!rowEl) return;
+        const row = this._rows.find((r) => r.id === rowEl.getAttribute('data-review-row'));
+        if (row) this.dispatchEvent(new CustomEvent('row-select', { detail: { row } }));
+      });
+    }
+  }
+
+  attributeChangedCallback(name) {
+    if (name === 'rows' && !this._rows.length) {
+      this._rows = parseJsonAttr(this.getAttribute('rows'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this.render();
+  }
+
+  get rows() { return this._rows; }
+  set rows(v) {
+    this._rows = Array.isArray(v) ? v.map((r) => ({ ...r })) : [];
+    this.render();
+  }
+
+  render() {
+    const rows = this._rows;
+    const title = escapeAttribute(this.getAttribute('title') || 'Review content');
+    const draftsLabel = escapeAttribute(this.getAttribute('drafts-label') || 'Save as Drafts');
+    const scheduleLabel = escapeAttribute(this.getAttribute('schedule-label') || 'Schedule Posts');
+    const errors = rows.filter((r) => r.status === 'error').length;
+    const valid = rows.length - errors;
+
+    const body = rows.map((row, index) => {
+      const tags = (row.tags ?? []).slice(0, 1).map((tag) =>
+        `<span data-review-tag class="inline rounded bg-sky-100 px-1.5 py-0.5 text-[10px] font-medium text-sky-700 dark:bg-sky-950/60 dark:text-sky-300">${escapeAttribute(tag)}</span>`
+      ).join('');
+      const extra = typeof row.extraTags === 'number' && row.extraTags > 0
+        ? `<span data-review-extra-tags class="text-[10px] text-zinc-400 dark:text-zinc-500">+${row.extraTags}</span>`
+        : '';
+      return `<tr data-review-row="${escapeAttribute(row.id)}" class="cursor-pointer border-b border-zinc-50 text-xs transition-colors hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/60">
+        <td class="py-2.5 pl-4 tabular-nums text-zinc-400 dark:text-zinc-500">${index + 1}</td>
+        <td data-review-text class="max-w-48 truncate py-2.5 pr-3 text-zinc-800 dark:text-zinc-100">${escapeAttribute(row.text)}</td>
+        <td class="py-2.5 pr-3"><span class="flex items-center gap-1">${tags}${extra}</span></td>
+        <td class="py-2.5 pr-3 text-zinc-500 dark:text-zinc-400">${escapeAttribute(row.time ?? 'Add to Queue')}</td>
+        <td class="py-2.5 pr-4"><span aria-label="${escapeAttribute(row.status)}">${row.status === 'valid'
+          ? '<span data-review-status class="text-emerald-500">✓</span>'
+          : '<span data-review-status class="text-red-500">⚠</span>'}</span></td>
+      </tr>`;
+    }).join('');
+
+    this.innerHTML = `<div data-content-review class="w-full overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+  <div class="flex flex-col items-center gap-1 border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+    <span class="text-sm font-semibold text-zinc-800 dark:text-zinc-100">${title}</span>
+    <span class="flex items-center gap-3 text-[11px] text-zinc-500 dark:text-zinc-400">
+      <span data-review-valid-count class="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">✓ ${valid} valid</span>
+      <span data-review-error-count class="flex items-center gap-1 text-red-500 dark:text-red-400">⚠ ${errors} ${errors === 1 ? 'error' : 'errors'}</span>
+    </span>
+  </div>
+  <table data-review-table class="w-full text-left">
+    <thead>
+      <tr class="border-b border-zinc-100 text-[10px] uppercase tracking-wider text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+        <th class="w-10 py-2 pl-4 font-medium">#</th>
+        <th class="py-2 pr-3 font-medium">Text</th>
+        <th class="py-2 pr-3 font-medium">Tags</th>
+        <th class="py-2 pr-3 font-medium">Posting time</th>
+        <th class="py-2 pr-4 font-medium">Status</th>
+      </tr>
+    </thead>
+    <tbody>${body}</tbody>
+  </table>
+  <div class="flex items-center justify-end gap-2 border-t border-zinc-100 px-4 py-3 dark:border-zinc-800">
+    <button type="button" data-review-drafts class="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800">${draftsLabel}</button>
+    <button type="button" data-review-schedule class="rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-emerald-500">${scheduleLabel}</button>
+  </div>
+</div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('content-review-table')) {
+  customElements.define('content-review-table', ContentReviewTableElement);
+}
+
+export default ContentReviewTableElement;
+
 ====/File: vanilla/ContextUsageBadge.js/====
 
 import uiIcon from './UiIcon.js';
@@ -42403,6 +43310,135 @@ if (typeof customElements !== 'undefined' && !customElements.get('grouped-bar-co
   customElements.define('grouped-bar-compare', GroupedBarCompareElement);
 }
 export default GroupedBarCompareElement;
+
+====/File: vanilla/GuardrailReviewQueue.js/====
+
+/**
+ * GuardrailReviewQueue - Vanilla Web Component
+ * Usage: <guardrail-review-queue title="Moderation queue" items='[...]'></guardrail-review-queue>
+ * Attributes: title, items (JSON: [{id,author,content,reasons:string[],rule?,confidence?,verdict?}])
+ * Events: approve (detail {item}), reject (detail {item})
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const parseJsonAttr = (raw, fallback) => {
+  try {
+    const parsed = raw ? JSON.parse(raw) : null;
+    return parsed ?? fallback;
+  } catch (e) {
+    return fallback;
+  }
+};
+
+export class GuardrailReviewQueueElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'items'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._items = [];
+  }
+
+  connectedCallback() {
+    if (!this._items.length) this._items = parseJsonAttr(this.getAttribute('items'), []);
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        const approveBtn = event.target.closest('[data-guardrail-approve]');
+        const rejectBtn = event.target.closest('[data-guardrail-reject]');
+        if (!approveBtn && !rejectBtn) return;
+        const card = (approveBtn || rejectBtn).closest('[data-guardrail-card]');
+        const item = this._items.find((i) => i.id === card?.getAttribute('data-guardrail-card'));
+        if (!item) return;
+        this.dispatchEvent(new CustomEvent(approveBtn ? 'approve' : 'reject', { detail: { item } }));
+      });
+    }
+  }
+
+  attributeChangedCallback(name) {
+    if (name === 'items' && !this._items.length) {
+      this._items = parseJsonAttr(this.getAttribute('items'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this.render();
+  }
+
+  get items() { return this._items; }
+  set items(v) {
+    this._items = Array.isArray(v) ? v.map((i) => ({ ...i })) : [];
+    this.render();
+  }
+
+  render() {
+    const items = this._items;
+    const title = escapeAttribute(this.getAttribute('title') || 'Moderation queue');
+    const pending = items.filter((i) => (i.verdict ?? 'pending') === 'pending');
+
+    const cards = items.map((item) => {
+      const verdict = item.verdict ?? 'pending';
+      if (verdict !== 'pending') {
+        return `<div data-guardrail-resolved="${escapeAttribute(item.id)}" class="flex items-center gap-2 px-4 py-2.5 text-[11px] text-zinc-400 dark:text-zinc-500">
+          <span class="inline rounded px-1.5 py-0.5 font-medium ${verdict === 'approved'
+            ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300'
+            : 'bg-red-50 text-red-700 dark:bg-red-950/60 dark:text-red-300'}">${verdict === 'approved' ? '✓ Approved' : '✕ Rejected'}</span>
+          <span data-guardrail-resolved-author>${escapeAttribute(item.author)}</span>
+          <span class="min-w-0 flex-1 truncate">${escapeAttribute(item.content)}</span>
+        </div>`;
+      }
+      const reasons = item.reasons.length > 0
+        ? `<div data-guardrail-reasons class="mt-2 flex flex-wrap gap-1.5">
+            ${item.reasons.map((reason) => `<span data-guardrail-reason class="inline rounded bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-950/60 dark:text-amber-300">${escapeAttribute(reason)}</span>`).join('')}
+          </div>`
+        : '';
+      return `<div data-guardrail-card="${escapeAttribute(item.id)}" class="p-4">
+        <div class="flex items-center gap-2">
+          <span data-guardrail-author class="text-xs font-semibold text-zinc-800 dark:text-zinc-100">${escapeAttribute(item.author)}</span>
+          ${typeof item.confidence === 'number'
+            ? `<span data-guardrail-confidence class="rounded-full px-1.5 py-0.5 text-[10px] font-semibold tabular-nums ${item.confidence >= 0.9
+                ? 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300'
+                : 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300'}">${Math.round(item.confidence * 100)}% confidence</span>`
+            : ''}
+          ${item.rule
+            ? `<span data-guardrail-rule class="rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">${escapeAttribute(item.rule)}</span>`
+            : ''}
+        </div>
+        <p data-guardrail-content class="mt-2 rounded-lg bg-zinc-50 px-3 py-2 text-xs leading-relaxed text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200">${escapeAttribute(item.content)}</p>
+        ${reasons}
+        <div class="mt-3 flex gap-2">
+          <button type="button" data-guardrail-approve class="flex-1 rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-emerald-500">Approve</button>
+          <button type="button" data-guardrail-reject class="flex-1 rounded-md bg-red-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-red-500">Reject</button>
+        </div>
+      </div>`;
+    }).join('');
+
+    this.innerHTML = `<div data-guardrail-queue class="w-full rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+  <div class="flex items-center gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+    <span class="text-xs font-semibold text-zinc-700 dark:text-zinc-200">${title}</span>
+    <span data-guardrail-count class="ml-auto rounded-full bg-red-100 px-2 py-0.5 text-[11px] font-semibold tabular-nums text-red-700 dark:bg-red-950/60 dark:text-red-300">${pending.length} flagged</span>
+  </div>
+  <div data-guardrail-list class="divide-y divide-zinc-100 dark:divide-zinc-800">
+    ${cards}
+    ${items.length === 0 ? '<p data-guardrail-empty class="px-4 py-8 text-center text-xs text-zinc-500 dark:text-zinc-400">No flagged content in the queue.</p>' : ''}
+  </div>
+</div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('guardrail-review-queue')) {
+  customElements.define('guardrail-review-queue', GuardrailReviewQueueElement);
+}
+
+export default GuardrailReviewQueueElement;
 
 ====/File: vanilla/HealthDonutStats.js/====
 
@@ -47788,6 +48824,140 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-templat
   customElements.define('prompt-template-grid', PromptTemplateGridElement);
 }
 export default PromptTemplateGridElement;
+
+====/File: vanilla/PromptVariantDiff.js/====
+
+/**
+ * PromptVariantDiff - Vanilla Web Component
+ * Usage: <prompt-variant-diff title="Prompt variants" variants='[...]'></prompt-variant-diff>
+ * Attributes: title, variants (JSON: [{id,label,text}], requires exactly 2: base + compare)
+ * Events: apply (detail {variant})
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const parseJsonAttr = (raw, fallback) => {
+  try {
+    const parsed = raw ? JSON.parse(raw) : null;
+    return parsed ?? fallback;
+  } catch (e) {
+    return fallback;
+  }
+};
+
+const extractVars = (text) =>
+  (text.match(/\{\{\s*[\w.]+\s*\}\}/g) ?? []).map((v) => v.replace(/^\{\{\s*|\s*\}\}$/g, ''));
+
+/** Render prompt text with {{var}} tokens as chips. */
+const renderText = (text) =>
+  text
+    .split(/(\{\{\s*[\w.]+\s*\}\})/g)
+    .map((part) =>
+      /^\{\{/.test(part)
+        ? `<span class="inline rounded bg-indigo-50 px-1 py-0.5 font-mono text-[11px] font-medium text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300">${escapeAttribute(part.replace(/^\{\{\s*|\s*\}\}$/g, ''))}</span>`
+        : escapeAttribute(part)
+    )
+    .join('');
+
+export class PromptVariantDiffElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'variants'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._variants = [];
+  }
+
+  connectedCallback() {
+    if (!this._variants.length) this._variants = parseJsonAttr(this.getAttribute('variants'), []);
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        const btn = event.target.closest('[data-variant-apply]');
+        if (!btn) return;
+        const panel = btn.closest('[data-variant-panel]');
+        const variant = this._variants.find((v) => v.id === panel?.getAttribute('data-variant-panel'));
+        if (variant) this.dispatchEvent(new CustomEvent('apply', { detail: { variant } }));
+      });
+    }
+  }
+
+  attributeChangedCallback(name) {
+    if (name === 'variants' && !this._variants.length) {
+      this._variants = parseJsonAttr(this.getAttribute('variants'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this.render();
+  }
+
+  get variants() { return this._variants; }
+  set variants(v) {
+    this._variants = Array.isArray(v) ? v.map((x) => ({ ...x })) : [];
+    this.render();
+  }
+
+  render() {
+    const variants = this._variants;
+    const [base, compare] = variants;
+    if (!base || !compare) {
+      this.innerHTML = '';
+      return;
+    }
+    const title = escapeAttribute(this.getAttribute('title') || 'Prompt variants');
+
+    const baseVars = extractVars(base.text);
+    const cmpVars = extractVars(compare.text);
+    const addedVars = cmpVars.filter((v) => !baseVars.includes(v));
+    const removedVars = baseVars.filter((v) => !cmpVars.includes(v));
+    const changedText = base.text !== compare.text;
+
+    const panels = variants.map((variant, index) => `
+      <div data-variant-panel="${escapeAttribute(variant.id)}" class="flex flex-col p-4">
+        <div class="flex items-center gap-2 pb-2">
+          <span class="h-2 w-2 rounded-full ${index === 0 ? 'bg-zinc-400' : 'bg-violet-500'}" aria-hidden="true"></span>
+          <span data-variant-label class="text-xs font-semibold text-zinc-800 dark:text-zinc-100">${escapeAttribute(variant.label)}</span>
+          ${index === 0 ? '<span class="rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">Base</span>' : ''}
+        </div>
+        <p data-variant-text class="min-h-16 flex-1 whitespace-pre-wrap rounded-lg bg-zinc-50 px-3 py-2 text-xs leading-relaxed text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200">${renderText(variant.text)}</p>
+        <button type="button" data-variant-apply class="mt-3 w-full rounded-md border border-zinc-300 px-2 py-1.5 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800">Use this version</button>
+      </div>`).join('');
+
+    const varlist = addedVars.length > 0 || removedVars.length > 0
+      ? `<div data-variant-varlist class="flex flex-wrap items-center gap-1.5 border-t border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+          ${addedVars.map((v) => `<span data-var-added class="inline rounded bg-emerald-50 px-1.5 py-0.5 font-mono text-[11px] text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">+ ${escapeAttribute(v)}</span>`).join('')}
+          ${removedVars.map((v) => `<span data-var-removed class="inline rounded bg-red-50 px-1.5 py-0.5 font-mono text-[11px] text-red-700 dark:bg-red-950/60 dark:text-red-300">− ${escapeAttribute(v)}</span>`).join('')}
+        </div>`
+      : '';
+
+    this.innerHTML = `<div data-prompt-variant-diff class="w-full overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+  <div class="flex items-center gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+    <span class="text-xs font-semibold text-zinc-700 dark:text-zinc-200">${title}</span>
+    <span class="flex items-center gap-2 text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">
+      <span data-diff-added class="text-emerald-600 dark:text-emerald-400">+${addedVars.length}</span>
+      <span data-diff-removed class="text-red-500 dark:text-red-400">−${removedVars.length}</span>
+      ${changedText ? '<span data-diff-text class="text-amber-600 dark:text-amber-400">~text</span>' : ''}
+    </span>
+  </div>
+  <div class="grid gap-0 divide-x divide-zinc-100 sm:grid-cols-2 dark:divide-zinc-800">${panels}</div>
+  ${varlist}
+</div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('prompt-variant-diff')) {
+  customElements.define('prompt-variant-diff', PromptVariantDiffElement);
+}
+
+export default PromptVariantDiffElement;
 
 ====/File: vanilla/QuoteMasonry.js/====
 

@@ -176,6 +176,9 @@
 | **`TraceSpanWaterfall`** | 调用瀑布图 | 水平 span 时间条（LLM/tool/retrieval 分色）、层级缩进、时长 + 成本标注、图例、span 点击回调 |
 | **`EvalScoreTable`** | 评测得分表 | 运行得分行（pass/warn/fail 分色 chip + 进度条）、测试标准卡、Add criteria 虚线 CTA |
 | **`TokenCostBreakdown`** | Token 成本拆解 | 堆叠消费条 + 分段图例（金额/占比）、Token 用量行（输入/输出/推理）、总额进度 |
+| **`PromptVariantDiff`** | Prompt 版本对比 | 双栏 A/B 面板、{{变量}} indigo chips、+N/−N/~text 变更统计、Use this version 按钮、变量增删 chips |
+| **`GuardrailReviewQueue`** | 审核队列 | 待审卡（作者 + 置信度 + 规则 chip + 内容面板 + 原因 tags）、Approve/Reject、已决项折叠一行 |
+| **`ContentReviewTable`** | 内容审核表 | 编号行 + ✓/⚠ 状态、tag chip + +N、发布时间、头部 valid/errors 计数、Save as Drafts / Schedule Posts CTA |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -336,6 +339,9 @@ awesome-ui/
 │    └── BrandPromptTable.tsx
 │    ├── PromptSaveDialog.tsx
 │    ├── AiTemplatePicker.tsx
+│   ├── PromptVariantDiff.tsx
+│   ├── GuardrailReviewQueue.tsx
+│   ├── ContentReviewTable.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -490,6 +496,9 @@ awesome-ui/
 │    └── BrandPromptTable.vue
 │    ├── PromptSaveDialog.vue
 │    ├── AiTemplatePicker.vue
+│   ├── PromptVariantDiff.vue
+│   ├── GuardrailReviewQueue.vue
+│   ├── ContentReviewTable.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -644,6 +653,9 @@ awesome-ui/
      └── BrandPromptTable.js
      ├── PromptSaveDialog.js
      ├── AiTemplatePicker.js
+│   ├── PromptVariantDiff.js
+│   ├── GuardrailReviewQueue.js
+│   └── ContentReviewTable.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

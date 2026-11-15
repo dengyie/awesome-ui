@@ -717,4 +717,16 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/TokenCostBreakdown.tsx
    - Vue 3: vue/TokenCostBreakdown.vue
    - Vanilla: vanilla/TokenCostBreakdown.js (custom element `<token-cost-breakdown>`, attributes `title`/`segments` JSON/`usage-rows` JSON/`spend-used`/`spend-total`; properties `segments`/`usageRows`; event `segment-select {segment}`)
+157. PromptVariantDiff: side-by-side prompt version A/B comparison — {{var}} chip highlighting, +N/−N/~text change stats, per-version apply buttons.
+   - React: react/PromptVariantDiff.tsx
+   - Vue 3: vue/PromptVariantDiff.vue
+   - Vanilla: vanilla/PromptVariantDiff.js (custom element `<prompt-variant-diff>`, attributes `title`/`variants` JSON (exactly 2: base + compare); property `variants`; event `apply {variant}`)
+158. GuardrailReviewQueue: moderation review queue for AI-flagged content — cards with author, confidence + rule chips, reason tags, approve/reject actions, resolved items collapse to one line.
+   - React: react/GuardrailReviewQueue.tsx
+   - Vue 3: vue/GuardrailReviewQueue.vue
+   - Vanilla: vanilla/GuardrailReviewQueue.js (custom element `<guardrail-review-queue>`, attributes `title`/`items` JSON; property `items`; events `approve {item}`, `reject {item}`)
+159. ContentReviewTable: pre-publish content review table — numbered rows with validity icons, tag chips + extra count, posting times, valid/error header counts, Save as Drafts / Schedule Posts CTAs.
+   - React: react/ContentReviewTable.tsx
+   - Vue 3: vue/ContentReviewTable.vue
+   - Vanilla: vanilla/ContentReviewTable.js (custom element `<content-review-table>`, attributes `title`/`rows` JSON/`drafts-label`/`schedule-label`; property `rows`; events `row-select {row}`, `save-drafts`, `schedule`)
 
