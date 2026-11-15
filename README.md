@@ -182,6 +182,9 @@
 | **`QaTestTable`** | QA 测试表 | 行复选框、✓/— 回答状态、Good/Acceptable/Poor 评级 chips、"N questions / M answered" 头部计数 |
 | **`AppealRestrictionDialog`** | 限制申诉弹窗 | 原因卡（标题 + 详情）、180 天申诉提示、Content Policy 链接、rose Appeal CTA、← 返回 / ✕ 关闭 |
 | **`ModelPricingCard`** | 模型定价卡 | 等宽模型名、可复制 Model ID（⧉ 按钮 + copy-id 事件）、每百万 token 输入/输出定价行 |
+| **`AiResearchPanel`** | AI 研究面板 | Apollo "Research with AI" 侧滑面板：研究模板卡片栈、每卡 Try it CTA、Run custom AI prompt 底部操作、空态提示 |
+| **`ApiKeyTable`** | API 密钥表 | OpenAI Platform 风格密钥管理：掩码 key 预览、创建日期、Active / Revoked 状态徽章、行级 Copy / Revoke 操作、Create CTA 与活跃计数 |
+| **`VoiceSessionHistory`** | 语音会话历史 | ElevenLabs Voice 历史侧栏：标题 / 日期 / 时长行、Completed / Running / Failed 状态徽章、行级重播按钮、计数头部与空态 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -348,6 +351,9 @@ awesome-ui/
 │   ├── QaTestTable.tsx
 │   ├── AppealRestrictionDialog.tsx
 │   ├── ModelPricingCard.tsx
+│   ├── AiResearchPanel.tsx
+│   ├── ApiKeyTable.tsx
+│   ├── VoiceSessionHistory.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -508,6 +514,9 @@ awesome-ui/
 │   ├── QaTestTable.vue
 │   ├── AppealRestrictionDialog.vue
 │   ├── ModelPricingCard.vue
+│   ├── AiResearchPanel.vue
+│   ├── ApiKeyTable.vue
+│   ├── VoiceSessionHistory.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -667,7 +676,10 @@ awesome-ui/
 │   ├── ContentReviewTable.js
 │   ├── QaTestTable.js
 │   ├── AppealRestrictionDialog.js
-│   └── ModelPricingCard.js
+│   ├── ModelPricingCard.js
+│   ├── AiResearchPanel.js
+│   ├── ApiKeyTable.js
+│   └── VoiceSessionHistory.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

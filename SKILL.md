@@ -960,6 +960,21 @@ awesome-ui/
 - **Vanilla 用法**: `<model-pricing-card model-name="Glm 4.7 Flash" model-id="..." input-per-million="0.06" output-per-million="0.40">`；事件 `copy-id {modelId}`
 - **特性**: 等宽粗体模型名、Model ID 行（truncate + ⧉ 复制按钮，无 id 不渲染）、Input / Output pricing 行（`$ 0.06 / million tokens` 或 —）。
 
+### 163. `AiResearchPanel` (AI 研究面板)
+- **Props**: `open?=true`, `title?='Research with AI'`, `templates?: [{id,title,description}]`, `runLabel?='Run custom AI prompt'`, `className?`, `onRun?(template)`, `onRunCustom?()`, `onClose?()`
+- **Vanilla 用法**: `<ai-research-panel title="Research with AI">` + `templates` property；事件 `run {template}` / `run-custom` / `close`
+- **特性**: 头部标题 + ✕ 关闭按钮、模板卡片栈（标题 + 两行描述 + Try it CTA）、底部 Run custom AI prompt 主 CTA、无模板空态、`open=false` 不渲染。
+
+### 164. `ApiKeyTable` (API 密钥表)
+- **Props**: `title?='API keys'`, `keys?: [{id,name,preview,created?,status?: 'active'|'revoked'}]`, `createLabel?='Create new secret key'`, `className?`, `onCreate?()`, `onCopy?(row)`, `onRevoke?(row)`
+- **Vanilla 用法**: `<api-key-table title="API keys">` + `keys` property；事件 `copy {row}` / `revoke {row}` / `create`
+- **特性**: "N active" 计数头部（排除 revoked）、emerald Create CTA、行内掩码 key 预览（`created` 前缀日期）、Active/Revoked 状态徽章、revoked 行隐藏 Copy / Revoke 操作、空态。
+
+### 165. `VoiceSessionHistory` (语音会话历史)
+- **Props**: `title?='History'`, `sessions?: [{id,title,date?,duration?,status?: 'completed'|'failed'|'in-progress'}]`, `emptyLabel?='No sessions yet.'`, `className?`, `onSelect?(session)`, `onPlay?(session)`
+- **Vanilla 用法**: `<voice-session-history title="History">` + `sessions` property；事件 `select {session}` / `play {session}`
+- **特性**: 计数徽章（排除 failed）、标题 + `date · duration` 元信息行、Completed/Running/Failed 状态徽章（emerald/amber/red）、▶ 重播按钮（stopPropagation + aria-label）、空态。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

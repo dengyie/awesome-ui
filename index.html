@@ -189,12 +189,15 @@
   <script type="module" src="./vanilla/QaTestTable.js"></script>
   <script type="module" src="./vanilla/AppealRestrictionDialog.js"></script>
   <script type="module" src="./vanilla/ModelPricingCard.js"></script>
+  <script type="module" src="./vanilla/AiResearchPanel.js"></script>
+  <script type="module" src="./vanilla/ApiKeyTable.js"></script>
+  <script type="module" src="./vanilla/VoiceSessionHistory.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.38.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.39.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -2463,6 +2466,75 @@
       </div>
     </section>
 
+
+    <section id="section-153" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">153 · AiResearchPanel</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.39.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">AI prospecting — "Research with AI" slide-over with stacked research template cards, per-card Try it CTAs and a Run custom AI prompt footer action (Apollo pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/AiResearchPanel.tsx">
+          <div id="demo-ai-research-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/AiResearchPanel.vue">
+          <div id="demo-ai-research-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/AiResearchPanel.js">
+          <ai-research-panel id="demo-ai-research"></ai-research-panel>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-ai-research-status" class="text-[11px] text-zinc-500">Try it / custom prompt / close — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-154" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">154 · ApiKeyTable</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.39.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Developer platform — API keys management list with masked key previews, created dates, Active / Revoked badges and per-row Copy / Revoke actions (OpenAI Platform pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/ApiKeyTable.tsx">
+          <div id="demo-api-key-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/ApiKeyTable.vue">
+          <div id="demo-api-key-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/ApiKeyTable.js">
+          <api-key-table id="demo-api-key"></api-key-table>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-api-key-status" class="text-[11px] text-zinc-500">Copy / Revoke / Create — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-155" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">155 · VoiceSessionHistory</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.39.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Voice AI — session history sidebar with title / date / duration rows, Completed / Running / Failed status badges and per-row replay buttons (ElevenLabs Voice pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/VoiceSessionHistory.tsx">
+          <div id="demo-voice-history-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/VoiceSessionHistory.vue">
+          <div id="demo-voice-history-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/VoiceSessionHistory.js">
+          <voice-session-history id="demo-voice-history"></voice-session-history>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-voice-history-status" class="text-[11px] text-zinc-500">Select / play — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
   <auto-scroll-anchor></auto-scroll-anchor>
 
   <script>
@@ -5213,6 +5285,45 @@ FAIL tests/ui.test.mjs
       const mpricingStatus38 = document.getElementById('demo-mpricing-status');
       if (mpricing38) {
         mpricing38.addEventListener('copy-id', (event) => { mpricingStatus38.textContent = 'Copied → ' + event.detail.modelId; });
+      }
+
+      const aiResearch39 = document.getElementById('demo-ai-research');
+      const aiResearchStatus39 = document.getElementById('demo-ai-research-status');
+      if (aiResearch39) {
+        aiResearch39.templates = [
+          { id: 'r1', title: 'Research and evaluate a company for fit', description: 'Research a company to determine if their needs align with your offering.' },
+          { id: 'r2', title: 'Confirm decision-maker', description: 'Determine if a contact is a valid decision-maker for your pitch.' },
+          { id: 'r3', title: 'Draft a tailored outreach email', description: 'Write a first-touch email referencing the prospect\'s current stack.' }
+        ];
+        aiResearch39.addEventListener('run', (event) => { aiResearchStatus39.textContent = 'Run template → ' + event.detail.template.title; });
+        aiResearch39.addEventListener('run-custom', () => { aiResearchStatus39.textContent = 'Custom prompt requested.'; });
+        aiResearch39.addEventListener('close', () => { aiResearchStatus39.textContent = 'Research panel closed.'; });
+      }
+
+      const apiKey39 = document.getElementById('demo-api-key');
+      const apiKeyStatus39 = document.getElementById('demo-api-key-status');
+      if (apiKey39) {
+        apiKey39.keys = [
+          { id: 'k1', name: 'Production key', preview: 'sk-proj-••••••••••••4x8f', created: 'Nov 12, 2026', status: 'active' },
+          { id: 'k2', name: 'CI pipeline key', preview: 'sk-proj-••••••••••••7t2c', created: 'Oct 30, 2026', status: 'active' },
+          { id: 'k3', name: 'Legacy key', preview: 'sk-proj-••••••••••••9q2m', created: 'Aug 4, 2026', status: 'revoked' }
+        ];
+        apiKey39.addEventListener('copy', (event) => { apiKeyStatus39.textContent = 'Copied → ' + event.detail.row.name; });
+        apiKey39.addEventListener('revoke', (event) => { apiKeyStatus39.textContent = 'Revoked → ' + event.detail.row.name; apiKey39.keys = apiKey39.keys.map((k) => k.id === event.detail.row.id ? { ...k, status: 'revoked' } : k); });
+        apiKey39.addEventListener('create', () => { apiKeyStatus39.textContent = 'Create new secret key clicked.'; });
+      }
+
+      const voiceHistory39 = document.getElementById('demo-voice-history');
+      const voiceHistoryStatus39 = document.getElementById('demo-voice-history-status');
+      if (voiceHistory39) {
+        voiceHistory39.sessions = [
+          { id: 's1', title: 'Homepage walkthrough', date: 'Today', duration: '04:12', status: 'completed' },
+          { id: 's2', title: 'Weekly sync notes', date: 'Yesterday', duration: '11:38', status: 'in-progress' },
+          { id: 's3', title: 'Onboarding feedback', date: 'Nov 10', duration: '02:45', status: 'completed' },
+          { id: 's4', title: 'Broken recording', duration: '00:00', status: 'failed' }
+        ];
+        voiceHistory39.addEventListener('select', (event) => { voiceHistoryStatus39.textContent = 'Selected → ' + event.detail.session.title; });
+        voiceHistory39.addEventListener('play', (event) => { voiceHistoryStatus39.textContent = 'Playing → ' + event.detail.session.title; });
       }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');

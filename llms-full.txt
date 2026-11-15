@@ -1085,6 +1085,106 @@ export default function AgentTaskProgress({
   );
 }
 
+====/File: react/AiResearchPanel.tsx/====
+
+import React from "react";
+
+export interface ResearchTemplate {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface AiResearchPanelProps {
+  open?: boolean;
+  title?: string;
+  templates?: ResearchTemplate[];
+  runLabel?: string;
+  className?: string;
+  onRun?: (template: ResearchTemplate) => void;
+  onRunCustom?: () => void;
+  onClose?: () => void;
+}
+
+/**
+ * AiResearchPanel - Apollo "Research with AI" slide-over: a stacked list of
+ * research template cards with Try it CTAs and a "Run custom AI prompt"
+ * footer action.
+ */
+export default function AiResearchPanel({
+  open = true,
+  title = "Research with AI",
+  templates = [],
+  runLabel = "Run custom AI prompt",
+  className = "",
+  onRun,
+  onRunCustom,
+  onClose,
+}: AiResearchPanelProps) {
+  if (!open) return null;
+  return (
+    <aside
+      data-ai-research-panel
+      className={`flex w-full max-w-sm flex-col rounded-xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <header className="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+        <h4 data-ai-research-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+          {title}
+        </h4>
+        <button
+          type="button"
+          data-ai-research-close
+          aria-label="Close research panel"
+          onClick={() => onClose?.()}
+          className="rounded p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+        >
+          ✕
+        </button>
+      </header>
+      <div data-ai-research-list className="flex-1 space-y-2.5 overflow-y-auto px-4 py-3">
+        {templates.length === 0 ? (
+          <p data-ai-research-empty className="py-6 text-center text-xs text-zinc-400 dark:text-zinc-500">
+            No research templates yet.
+          </p>
+        ) : (
+          templates.map((t) => (
+            <div
+              key={t.id}
+              data-research-card={t.id}
+              className="rounded-lg border border-zinc-200 p-3 transition-colors hover:border-zinc-300 dark:border-zinc-700 dark:hover:border-zinc-600"
+            >
+              <p data-research-title className="text-xs font-semibold text-zinc-900 dark:text-zinc-50">
+                {t.title}
+              </p>
+              <p data-research-desc className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">
+                {t.description}
+              </p>
+              <button
+                type="button"
+                data-research-run
+                onClick={() => onRun?.(t)}
+                className="mt-2.5 w-full rounded-md border border-zinc-200 px-2 py-1.5 text-[11px] font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
+              >
+                Try it
+              </button>
+            </div>
+          ))
+        )}
+      </div>
+      <footer className="border-t border-zinc-100 px-4 py-3 dark:border-zinc-800">
+        <button
+          type="button"
+          data-ai-research-custom
+          onClick={() => onRunCustom?.()}
+          className="w-full rounded-md bg-zinc-900 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+        >
+          {runLabel}
+        </button>
+      </footer>
+    </aside>
+  );
+}
+
 ====/File: react/AiTemplatePicker.tsx/====
 
 import React from "react";
@@ -1345,6 +1445,124 @@ export const AlertBanner: React.FC<AlertBannerProps> = ({
 };
 
 export default AlertBanner;
+
+====/File: react/ApiKeyTable.tsx/====
+
+import React from "react";
+
+export interface ApiKeyRow {
+  id: string;
+  name: string;
+  preview: string;
+  created?: string;
+  status?: "active" | "revoked";
+}
+
+export interface ApiKeyTableProps {
+  title?: string;
+  keys?: ApiKeyRow[];
+  createLabel?: string;
+  className?: string;
+  onCreate?: () => void;
+  onCopy?: (row: ApiKeyRow) => void;
+  onRevoke?: (row: ApiKeyRow) => void;
+}
+
+/**
+ * ApiKeyTable - OpenAI Platform "API keys" management table: rows with name,
+ * masked key preview, created date and status badge, plus per-row Copy /
+ * Revoke actions and a Create key CTA.
+ */
+export default function ApiKeyTable({
+  title = "API keys",
+  keys = [],
+  createLabel = "Create new secret key",
+  className = "",
+  onCreate,
+  onCopy,
+  onRevoke,
+}: ApiKeyTableProps) {
+  const active = keys.filter((k) => k.status !== "revoked").length;
+  return (
+    <div
+      data-api-key-table
+      className={`w-full rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div className="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+        <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+          {title}{" "}
+          <span data-api-key-count className="ml-1 rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+            {active} active
+          </span>
+        </h4>
+        <button
+          type="button"
+          data-api-key-create
+          onClick={() => onCreate?.()}
+          className="rounded-md bg-emerald-600 px-2.5 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-emerald-500"
+        >
+          + {createLabel}
+        </button>
+      </div>
+      <div data-api-key-list className="divide-y divide-zinc-100 dark:divide-zinc-800">
+        {keys.length === 0 ? (
+          <p data-api-key-empty className="px-4 py-6 text-center text-xs text-zinc-400 dark:text-zinc-500">
+            No API keys yet.
+          </p>
+        ) : (
+          keys.map((k) => {
+            const revoked = k.status === "revoked";
+            return (
+              <div key={k.id} data-api-key-row={k.id} className="flex items-center gap-3 px-4 py-2.5">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <p data-api-key-name className="truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">
+                      {k.name}
+                    </p>
+                    <span
+                      data-api-key-status
+                      className={`rounded-full px-1.5 py-0.5 text-[10px] font-medium ${
+                        revoked
+                          ? "bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400"
+                          : "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400"
+                      }`}
+                    >
+                      {revoked ? "Revoked" : "Active"}
+                    </span>
+                  </div>
+                  <p data-api-key-preview className="mt-0.5 truncate font-mono text-[11px] text-zinc-400 dark:text-zinc-500">
+                    {k.preview}
+                    {k.created ? ` · created ${k.created}` : ""}
+                  </p>
+                </div>
+                {!revoked && (
+                  <div className="flex shrink-0 items-center gap-1.5">
+                    <button
+                      type="button"
+                      data-api-key-copy
+                      onClick={() => onCopy?.(k)}
+                      className="rounded border border-zinc-200 px-2 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                    >
+                      Copy
+                    </button>
+                    <button
+                      type="button"
+                      data-api-key-revoke
+                      onClick={() => onRevoke?.(k)}
+                      className="rounded border border-red-200 px-2 py-1 text-[11px] font-medium text-red-500 transition-colors hover:bg-red-50 dark:border-red-900/60 dark:hover:bg-red-950/40"
+                    >
+                      Revoke
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
+}
 
 ====/File: react/AppealRestrictionDialog.tsx/====
 
@@ -18611,6 +18829,102 @@ export default function VoiceOrb({
   );
 }
 
+====/File: react/VoiceSessionHistory.tsx/====
+
+import React from "react";
+
+export interface VoiceSession {
+  id: string;
+  title: string;
+  date?: string;
+  duration?: string;
+  status?: "completed" | "failed" | "in-progress";
+}
+
+export interface VoiceSessionHistoryProps {
+  title?: string;
+  sessions?: VoiceSession[];
+  emptyLabel?: string;
+  className?: string;
+  onSelect?: (session: VoiceSession) => void;
+  onPlay?: (session: VoiceSession) => void;
+}
+
+/**
+ * VoiceSessionHistory - ElevenLabs Voice "History" sidebar: session rows with
+ * title, date/duration metadata, status badge and a replay button.
+ */
+export default function VoiceSessionHistory({
+  title = "History",
+  sessions = [],
+  emptyLabel = "No sessions yet.",
+  className = "",
+  onSelect,
+  onPlay,
+}: VoiceSessionHistoryProps) {
+  const active = sessions.filter((s) => s.status !== "failed").length;
+  return (
+    <div
+      data-voice-history
+      className={`w-full rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div className="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+        <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+          {title}{" "}
+          <span data-voice-history-count className="ml-1 rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+            {active}
+          </span>
+        </h4>
+      </div>
+      <div data-voice-history-list className="divide-y divide-zinc-100 dark:divide-zinc-800">
+        {sessions.length === 0 ? (
+          <p data-voice-history-empty className="px-4 py-6 text-center text-xs text-zinc-400 dark:text-zinc-500">
+            {emptyLabel}
+          </p>
+        ) : (
+          sessions.map((s) => {
+            const failed = s.status === "failed";
+            const running = s.status === "in-progress";
+            return (
+              <div key={s.id} data-voice-session={s.id} className="flex items-center gap-3 px-4 py-2.5">
+                <div className="min-w-0 flex-1">
+                  <p data-voice-session-title className="truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">
+                    {s.title}
+                  </p>
+                  <p data-voice-session-meta className="mt-0.5 truncate text-[11px] text-zinc-400 dark:text-zinc-500">
+                    {[s.date, s.duration].filter(Boolean).join(" · ")}
+                  </p>
+                </div>
+                <span
+                  data-voice-session-status
+                  className={`shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-medium ${
+                    failed
+                      ? "bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400"
+                      : running
+                        ? "bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400"
+                        : "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400"
+                  }`}
+                >
+                  {failed ? "Failed" : running ? "Running" : "Completed"}
+                </span>
+                <button
+                  type="button"
+                  data-voice-session-play
+                  aria-label={`Play ${s.title}`}
+                  onClick={() => onPlay?.(s)}
+                  className="shrink-0 rounded p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+                >
+                  ▶
+                </button>
+              </div>
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
+}
+
 ====/File: react/WizardSteps.tsx/====
 
 import React from "react";
@@ -19855,6 +20169,101 @@ const emit = defineEmits<{
 }>();
 </script>
 
+====/File: vue/AiResearchPanel.vue/====
+
+<script setup lang="ts">
+import { computed } from 'vue';
+
+export interface ResearchTemplate {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface AiResearchPanelProps {
+  open?: boolean;
+  title?: string;
+  templates?: ResearchTemplate[];
+  runLabel?: string;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<AiResearchPanelProps>(), {
+  open: true,
+  title: 'Research with AI',
+  templates: () => [],
+  runLabel: 'Run custom AI prompt',
+});
+
+const emit = defineEmits<{
+  (e: 'run', template: ResearchTemplate): void;
+  (e: 'run-custom'): void;
+  (e: 'close'): void;
+}>();
+
+const visible = computed(() => props.templates);
+</script>
+
+<template>
+  <aside
+    v-if="props.open"
+    data-ai-research-panel
+    class="flex w-full max-w-sm flex-col rounded-xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+    :class="props.class"
+  >
+    <header class="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+      <h4 data-ai-research-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</h4>
+      <button
+        type="button"
+        data-ai-research-close
+        aria-label="Close research panel"
+        class="rounded p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+        @click="emit('close')"
+      >
+        ✕
+      </button>
+    </header>
+    <div data-ai-research-list class="flex-1 space-y-2.5 overflow-y-auto px-4 py-3">
+      <p
+        v-if="visible.length === 0"
+        data-ai-research-empty
+        class="py-6 text-center text-xs text-zinc-400 dark:text-zinc-500"
+      >
+        No research templates yet.
+      </p>
+      <div
+        v-for="t in visible"
+        :key="t.id"
+        :data-research-card="t.id"
+        class="rounded-lg border border-zinc-200 p-3 transition-colors hover:border-zinc-300 dark:border-zinc-700 dark:hover:border-zinc-600"
+      >
+        <p data-research-title class="text-xs font-semibold text-zinc-900 dark:text-zinc-50">{{ t.title }}</p>
+        <p data-research-desc class="mt-1 line-clamp-2 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">
+          {{ t.description }}
+        </p>
+        <button
+          type="button"
+          data-research-run
+          class="mt-2.5 w-full rounded-md border border-zinc-200 px-2 py-1.5 text-[11px] font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
+          @click="emit('run', t)"
+        >
+          Try it
+        </button>
+      </div>
+    </div>
+    <footer class="border-t border-zinc-100 px-4 py-3 dark:border-zinc-800">
+      <button
+        type="button"
+        data-ai-research-custom
+        class="w-full rounded-md bg-zinc-900 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+        @click="emit('run-custom')"
+      >
+        {{ props.runLabel }}
+      </button>
+    </footer>
+  </aside>
+</template>
+
 ====/File: vue/AiTemplatePicker.vue/====
 
 <script setup lang="ts">
@@ -20074,6 +20483,123 @@ const TONE: Record<AlertBannerTone, ToneStyle> = {
 
 const styles = computed(() => TONE[props.tone]);
 </script>
+
+====/File: vue/ApiKeyTable.vue/====
+
+<script setup lang="ts">
+import { computed } from 'vue';
+
+export interface ApiKeyRow {
+  id: string;
+  name: string;
+  preview: string;
+  created?: string;
+  status?: 'active' | 'revoked';
+}
+
+export interface ApiKeyTableProps {
+  title?: string;
+  keys?: ApiKeyRow[];
+  createLabel?: string;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<ApiKeyTableProps>(), {
+  title: 'API keys',
+  keys: () => [],
+  createLabel: 'Create new secret key',
+});
+
+const emit = defineEmits<{
+  (e: 'create'): void;
+  (e: 'copy', row: ApiKeyRow): void;
+  (e: 'revoke', row: ApiKeyRow): void;
+}>();
+
+const activeCount = computed(() => props.keys.filter((k) => k.status !== 'revoked').length);
+const meta = (row: ApiKeyRow) => (row.created ? `${row.preview} · created ${row.created}` : row.preview);
+</script>
+
+<template>
+  <div
+    data-api-key-table
+    class="w-full rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900"
+    :class="props.class"
+  >
+    <div class="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+      <h4 class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+        {{ props.title }}
+        <span
+          data-api-key-count
+          class="ml-1 rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400"
+        >
+          {{ activeCount }} active
+        </span>
+      </h4>
+      <button
+        type="button"
+        data-api-key-create
+        class="rounded-md bg-emerald-600 px-2.5 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-emerald-500"
+        @click="emit('create')"
+      >
+        + {{ props.createLabel }}
+      </button>
+    </div>
+    <div data-api-key-list class="divide-y divide-zinc-100 dark:divide-zinc-800">
+      <p
+        v-if="props.keys.length === 0"
+        data-api-key-empty
+        class="px-4 py-6 text-center text-xs text-zinc-400 dark:text-zinc-500"
+      >
+        No API keys yet.
+      </p>
+      <div
+        v-for="k in props.keys"
+        :key="k.id"
+        :data-api-key-row="k.id"
+        class="flex items-center gap-3 px-4 py-2.5"
+      >
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-2">
+            <p data-api-key-name class="truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">{{ k.name }}</p>
+            <span
+              data-api-key-status
+              class="rounded-full px-1.5 py-0.5 text-[10px] font-medium"
+              :class="
+                k.status === 'revoked'
+                  ? 'bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400'
+                  : 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400'
+              "
+            >
+              {{ k.status === 'revoked' ? 'Revoked' : 'Active' }}
+            </span>
+          </div>
+          <p data-api-key-preview class="mt-0.5 truncate font-mono text-[11px] text-zinc-400 dark:text-zinc-500">
+            {{ meta(k) }}
+          </p>
+        </div>
+        <div v-if="k.status !== 'revoked'" class="flex shrink-0 items-center gap-1.5">
+          <button
+            type="button"
+            data-api-key-copy
+            class="rounded border border-zinc-200 px-2 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+            @click="emit('copy', k)"
+          >
+            Copy
+          </button>
+          <button
+            type="button"
+            data-api-key-revoke
+            class="rounded border border-red-200 px-2 py-1 text-[11px] font-medium text-red-500 transition-colors hover:bg-red-50 dark:border-red-900/60 dark:hover:bg-red-950/40"
+            @click="emit('revoke', k)"
+          >
+            Revoke
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 ====/File: vue/AppealRestrictionDialog.vue/====
 
@@ -34438,6 +34964,106 @@ const displayLabel = () => props.label ?? STATE_LABEL[props.state];
   </div>
 </template>
 
+====/File: vue/VoiceSessionHistory.vue/====
+
+<script setup lang="ts">
+import { computed } from 'vue';
+
+export interface VoiceSession {
+  id: string;
+  title: string;
+  date?: string;
+  duration?: string;
+  status?: 'completed' | 'failed' | 'in-progress';
+}
+
+export interface VoiceSessionHistoryProps {
+  title?: string;
+  sessions?: VoiceSession[];
+  emptyLabel?: string;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<VoiceSessionHistoryProps>(), {
+  title: 'History',
+  sessions: () => [],
+  emptyLabel: 'No sessions yet.',
+});
+
+const emit = defineEmits<{
+  (e: 'select', session: VoiceSession): void;
+  (e: 'play', session: VoiceSession): void;
+}>();
+
+const activeCount = computed(() => props.sessions.filter((s) => s.status !== 'failed').length);
+const meta = (s: VoiceSession) => [s.date, s.duration].filter(Boolean).join(' · ');
+const statusLabel = (s: VoiceSession) =>
+  s.status === 'failed' ? 'Failed' : s.status === 'in-progress' ? 'Running' : 'Completed';
+</script>
+
+<template>
+  <div
+    data-voice-history
+    class="w-full rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900"
+    :class="props.class"
+  >
+    <div class="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+      <h4 class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+        {{ props.title }}
+        <span
+          data-voice-history-count
+          class="ml-1 rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400"
+        >
+          {{ activeCount }}
+        </span>
+      </h4>
+    </div>
+    <div data-voice-history-list class="divide-y divide-zinc-100 dark:divide-zinc-800">
+      <p
+        v-if="props.sessions.length === 0"
+        data-voice-history-empty
+        class="px-4 py-6 text-center text-xs text-zinc-400 dark:text-zinc-500"
+      >
+        {{ props.emptyLabel }}
+      </p>
+      <div
+        v-for="s in props.sessions"
+        :key="s.id"
+        :data-voice-session="s.id"
+        class="flex items-center gap-3 px-4 py-2.5"
+        @click="emit('select', s)"
+      >
+        <div class="min-w-0 flex-1">
+          <p data-voice-session-title class="truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">{{ s.title }}</p>
+          <p data-voice-session-meta class="mt-0.5 truncate text-[11px] text-zinc-400 dark:text-zinc-500">{{ meta(s) }}</p>
+        </div>
+        <span
+          data-voice-session-status
+          class="shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-medium"
+          :class="
+            s.status === 'failed'
+              ? 'bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400'
+              : s.status === 'in-progress'
+                ? 'bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400'
+                : 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400'
+          "
+        >
+          {{ statusLabel(s) }}
+        </span>
+        <button
+          type="button"
+          data-voice-session-play
+          :aria-label="`Play ${s.title}`"
+          class="shrink-0 rounded p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+          @click.stop="emit('play', s)"
+        >
+          ▶
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
 ====/File: vue/WizardSteps.vue/====
 
 <template>
@@ -36013,6 +36639,140 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-task-pro
 }
 export default AgentTaskProgressElement;
 
+====/File: vanilla/AiResearchPanel.js/====
+
+/**
+ * AiResearchPanel - Apollo "Research with AI" slide-over: stacked research
+ * template cards with Try it CTAs and a Run custom AI prompt footer action.
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+class AiResearchPanelElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'templates', 'run-label'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._templates = [];
+  }
+
+  connectedCallback() {
+    if (!this._templates.length) {
+      this._templates = parseJsonAttr(this.getAttribute('templates'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'templates' && !this._templates.length) {
+      this._templates = parseJsonAttr(this.getAttribute('templates'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get title() {
+    return this.getAttribute('title') ?? 'Research with AI';
+  }
+  set title(value) {
+    this.setAttribute('title', value);
+  }
+
+  get runLabel() {
+    return this.getAttribute('run-label') ?? 'Run custom AI prompt';
+  }
+  set runLabel(value) {
+    this.setAttribute('run-label', value);
+  }
+
+  get templates() {
+    return this._templates;
+  }
+  set templates(value) {
+    this._templates = Array.isArray(value) ? value : [];
+    this._render();
+  }
+
+  _onClick(event) {
+    const run = event.target.closest('[data-research-run]');
+    if (run) {
+      const card = run.closest('[data-research-card]');
+      const template = this._templates.find((t) => String(t.id) === card?.getAttribute('data-research-card'));
+      if (template) {
+        this.dispatchEvent(new CustomEvent('run', { detail: { template }, bubbles: true }));
+      }
+      return;
+    }
+    if (event.target.closest('[data-ai-research-custom]')) {
+      this.dispatchEvent(new CustomEvent('run-custom', { bubbles: true }));
+      return;
+    }
+    if (event.target.closest('[data-ai-research-close]')) {
+      this.dispatchEvent(new CustomEvent('close', { bubbles: true }));
+    }
+  }
+
+  _render() {
+    const templates = this._templates;
+    const cards = templates.length
+      ? templates
+          .map(
+            (t) => `
+        <div data-research-card="${escapeAttribute(t.id)}" class="rounded-lg border border-zinc-200 p-3 transition-colors hover:border-zinc-300 dark:border-zinc-700 dark:hover:border-zinc-600">
+          <p data-research-title class="text-xs font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(t.title)}</p>
+          <p data-research-desc class="mt-1 line-clamp-2 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">${escapeAttribute(t.description)}</p>
+          <button type="button" data-research-run class="mt-2.5 w-full rounded-md border border-zinc-200 px-2 py-1.5 text-[11px] font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800">Try it</button>
+        </div>`
+          )
+          .join('')
+      : `<p data-ai-research-empty class="py-6 text-center text-xs text-zinc-400 dark:text-zinc-500">No research templates yet.</p>`;
+
+    this.innerHTML = `
+      <aside data-ai-research-panel class="flex w-full max-w-sm flex-col rounded-xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
+        <header class="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+          <h4 data-ai-research-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this.title)}</h4>
+          <button type="button" data-ai-research-close aria-label="Close research panel" class="rounded p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300">✕</button>
+        </header>
+        <div data-ai-research-list class="flex-1 space-y-2.5 overflow-y-auto px-4 py-3">${cards}</div>
+        <footer class="border-t border-zinc-100 px-4 py-3 dark:border-zinc-800">
+          <button type="button" data-ai-research-custom class="w-full rounded-md bg-zinc-900 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300">${escapeAttribute(this.runLabel)}</button>
+        </footer>
+      </aside>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('ai-research-panel')) {
+  customElements.define('ai-research-panel', AiResearchPanelElement);
+}
+
+export default AiResearchPanelElement;
+
 ====/File: vanilla/AiTemplatePicker.js/====
 
 /**
@@ -36323,6 +37083,149 @@ if (typeof customElements !== 'undefined' && !customElements.get('alert-banner')
   customElements.define('alert-banner', AlertBannerElement);
 }
 export default AlertBannerElement;
+
+====/File: vanilla/ApiKeyTable.js/====
+
+/**
+ * ApiKeyTable - OpenAI Platform "API keys" management table: rows with name,
+ * masked key preview, created date and status badge, plus per-row Copy /
+ * Revoke actions and a Create key CTA.
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+class ApiKeyTableElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'keys', 'create-label'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._keys = [];
+  }
+
+  connectedCallback() {
+    if (!this._keys.length) {
+      this._keys = parseJsonAttr(this.getAttribute('keys'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'keys' && !this._keys.length) {
+      this._keys = parseJsonAttr(this.getAttribute('keys'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get title() {
+    return this.getAttribute('title') ?? 'API keys';
+  }
+  set title(value) {
+    this.setAttribute('title', value);
+  }
+
+  get createLabel() {
+    return this.getAttribute('create-label') ?? 'Create new secret key';
+  }
+  set createLabel(value) {
+    this.setAttribute('create-label', value);
+  }
+
+  get keys() {
+    return this._keys;
+  }
+  set keys(value) {
+    this._keys = Array.isArray(value) ? value : [];
+    this._render();
+  }
+
+  _onClick(event) {
+    const rowEl = event.target.closest('[data-api-key-row]');
+    if (!rowEl) return;
+    const row = this._keys.find((k) => String(k.id) === rowEl.getAttribute('data-api-key-row'));
+    if (!row) return;
+    if (event.target.closest('[data-api-key-copy]')) {
+      this.dispatchEvent(new CustomEvent('copy', { detail: { row }, bubbles: true }));
+    } else if (event.target.closest('[data-api-key-revoke]')) {
+      this.dispatchEvent(new CustomEvent('revoke', { detail: { row }, bubbles: true }));
+    }
+  }
+
+  _render() {
+    const keys = this._keys;
+    const active = keys.filter((k) => k.status !== 'revoked').length;
+    const rows = keys.length
+      ? keys
+          .map((k) => {
+            const revoked = k.status === 'revoked';
+            const statusClass = revoked
+              ? 'bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400'
+              : 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400';
+            const meta = k.created ? `${k.preview} · created ${k.created}` : k.preview;
+            const actions = revoked
+              ? ''
+              : `
+            <div class="flex shrink-0 items-center gap-1.5">
+              <button type="button" data-api-key-copy class="rounded border border-zinc-200 px-2 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">Copy</button>
+              <button type="button" data-api-key-revoke class="rounded border border-red-200 px-2 py-1 text-[11px] font-medium text-red-500 transition-colors hover:bg-red-50 dark:border-red-900/60 dark:hover:bg-red-950/40">Revoke</button>
+            </div>`;
+            return `
+          <div data-api-key-row="${escapeAttribute(k.id)}" class="flex items-center gap-3 px-4 py-2.5">
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                <p data-api-key-name class="truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">${escapeAttribute(k.name)}</p>
+                <span data-api-key-status class="rounded-full px-1.5 py-0.5 text-[10px] font-medium ${statusClass}">${revoked ? 'Revoked' : 'Active'}</span>
+              </div>
+              <p data-api-key-preview class="mt-0.5 truncate font-mono text-[11px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(meta)}</p>
+            </div>
+            ${actions}
+          </div>`;
+          })
+          .join('')
+      : `<p data-api-key-empty class="px-4 py-6 text-center text-xs text-zinc-400 dark:text-zinc-500">No API keys yet.</p>`;
+
+    this.innerHTML = `
+      <div data-api-key-table class="w-full rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <div class="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+          <h4 class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this.title)} <span data-api-key-count class="ml-1 rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">${active} active</span></h4>
+          <button type="button" data-api-key-create class="rounded-md bg-emerald-600 px-2.5 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-emerald-500">+ ${escapeAttribute(this.createLabel)}</button>
+        </div>
+        <div data-api-key-list class="divide-y divide-zinc-100 dark:divide-zinc-800">${rows}</div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('api-key-table')) {
+  customElements.define('api-key-table', ApiKeyTableElement);
+}
+
+export default ApiKeyTableElement;
 
 ====/File: vanilla/AppealRestrictionDialog.js/====
 
@@ -56452,6 +57355,140 @@ if (typeof customElements !== 'undefined' && !customElements.get('voice-orb')) {
 }
 
 export default VoiceOrbElement;
+
+====/File: vanilla/VoiceSessionHistory.js/====
+
+/**
+ * VoiceSessionHistory - ElevenLabs Voice "History" sidebar: session rows with
+ * title, date/duration metadata, status badge and a replay button.
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+class VoiceSessionHistoryElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'sessions', 'empty-label'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._sessions = [];
+  }
+
+  connectedCallback() {
+    if (!this._sessions.length) {
+      this._sessions = parseJsonAttr(this.getAttribute('sessions'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'sessions' && !this._sessions.length) {
+      this._sessions = parseJsonAttr(this.getAttribute('sessions'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get title() {
+    return this.getAttribute('title') ?? 'History';
+  }
+  set title(value) {
+    this.setAttribute('title', value);
+  }
+
+  get emptyLabel() {
+    return this.getAttribute('empty-label') ?? 'No sessions yet.';
+  }
+  set emptyLabel(value) {
+    this.setAttribute('empty-label', value);
+  }
+
+  get sessions() {
+    return this._sessions;
+  }
+  set sessions(value) {
+    this._sessions = Array.isArray(value) ? value : [];
+    this._render();
+  }
+
+  _onClick(event) {
+    const sessionEl = event.target.closest('[data-voice-session]');
+    if (!sessionEl) return;
+    const session = this._sessions.find((s) => String(s.id) === sessionEl.getAttribute('data-voice-session'));
+    if (!session) return;
+    if (event.target.closest('[data-voice-session-play]')) {
+      this.dispatchEvent(new CustomEvent('play', { detail: { session }, bubbles: true }));
+      return;
+    }
+    this.dispatchEvent(new CustomEvent('select', { detail: { session }, bubbles: true }));
+  }
+
+  _render() {
+    const sessions = this._sessions;
+    const active = sessions.filter((s) => s.status !== 'failed').length;
+    const statusMeta = (s) => {
+      if (s.status === 'failed') return ['bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400', 'Failed'];
+      if (s.status === 'in-progress') return ['bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400', 'Running'];
+      return ['bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400', 'Completed'];
+    };
+    const rows = sessions.length
+      ? sessions
+          .map((s) => {
+            const [statusClass, statusLabel] = statusMeta(s);
+            const meta = [s.date, s.duration].filter(Boolean).join(' · ');
+            return `
+          <div data-voice-session="${escapeAttribute(s.id)}" class="flex items-center gap-3 px-4 py-2.5">
+            <div class="min-w-0 flex-1">
+              <p data-voice-session-title class="truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">${escapeAttribute(s.title)}</p>
+              <p data-voice-session-meta class="mt-0.5 truncate text-[11px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(meta)}</p>
+            </div>
+            <span data-voice-session-status class="shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-medium ${statusClass}">${statusLabel}</span>
+            <button type="button" data-voice-session-play aria-label="Play ${escapeAttribute(s.title)}" class="shrink-0 rounded p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300">▶</button>
+          </div>`;
+          })
+          .join('')
+      : `<p data-voice-history-empty class="px-4 py-6 text-center text-xs text-zinc-400 dark:text-zinc-500">${escapeAttribute(this.emptyLabel)}</p>`;
+
+    this.innerHTML = `
+      <div data-voice-history class="w-full rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <div class="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+          <h4 class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this.title)} <span data-voice-history-count class="ml-1 rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">${active}</span></h4>
+        </div>
+        <div data-voice-history-list class="divide-y divide-zinc-100 dark:divide-zinc-800">${rows}</div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('voice-session-history')) {
+  customElements.define('voice-session-history', VoiceSessionHistoryElement);
+}
+
+export default VoiceSessionHistoryElement;
 
 ====/File: vanilla/WizardSteps.js/====
 
