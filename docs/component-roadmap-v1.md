@@ -179,6 +179,7 @@
 | v1.32.0 | ImageGenGallery / SharedChatViewer / MemoryPanel / ConnectorGrid / ModelComparePane | ✅ 三端 15 文件 + 5 组 vanilla 用例 + 5 组 React SSR + 全量 Vue SFC 编译校验，491 项测试通过；P5 首批：ai-native 模式（Mobbin 月度 AI 配额拦截素材抓取，按报告 ai-native 查询意图 + 公开成熟模式无素材设计） |
 | v1.33.0 | SystemPromptEditor / ToolSchemaEditor / FineTuneJobList / PersonaPresetGrid / AgentBuilderCard | ✅ 三端 15 文件 + 5 组 vanilla 用例 + 5 组 React SSR + 全量 Vue SFC 编译校验，501 项测试通过；P5 第二批：agent/prompt 工作台模式，无素材知识驱动设计 |
 | v1.34.0 | VoiceOrb / ShareChatDialog / BrandPromptTable | ✅ 三端 9 文件 + 5 组 vanilla 用例 + 3 组 React SSR + 全量 Vue SFC 编译校验，509 项测试通过；P5 第三批：Mobbin ai-native 素材恢复（token 刷新 + MCP 解析修复，36 张截图落盘 references/ai-native/），首次以真实素材对照选型 |
+| v1.35.0 | PromptSaveDialog / AiTemplatePicker / CreationComposer | ✅ 三端 9 文件 + 4 组 vanilla 用例 + 3 组 React SSR + 全量 Vue SFC 编译校验，516 项测试通过；P5 第四批：继续消费 ai-native 素材（prompt library 组：Langdock / Apollo / Bloom） |
 
 ### P5 阶段说明（ai-native / agent 工作台）
 

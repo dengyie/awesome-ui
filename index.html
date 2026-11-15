@@ -177,12 +177,15 @@
   <script type="module" src="./vanilla/VoiceOrb.js"></script>
   <script type="module" src="./vanilla/ShareChatDialog.js"></script>
   <script type="module" src="./vanilla/BrandPromptTable.js"></script>
+  <script type="module" src="./vanilla/PromptSaveDialog.js"></script>
+  <script type="module" src="./vanilla/AiTemplatePicker.js"></script>
+  <script type="module" src="./vanilla/CreationComposer.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.34.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.35.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -2183,6 +2186,63 @@
         <brand-prompt-table id="demo-brand" title="Prompts" quota-used="49" quota-total="50"></brand-prompt-table>
         <div class="mt-3 flex items-center gap-2">
           <span id="demo-brand-status" class="text-[11px] text-zinc-500">Add / row click — events report here.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 141. PromptSaveDialog -->
+    <section id="section-141" class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">141. PromptSaveDialog</h2>
+        <div class="flex gap-2 text-xs">
+          <button class="demo-tag" data-skip="react" data-file="react/PromptSaveDialog.tsx">react</button>
+          <button class="demo-tag" data-skip="vue" data-file="vue/PromptSaveDialog.vue">vue</button>
+          <button class="demo-tag" data-skip="vanilla" data-file="vanilla/PromptSaveDialog.js">vanilla</button>
+        </div>
+      </div>
+      <p class="text-xs text-zinc-400">Save prompt dialog — folder picker, title + prompt body, {{variable}} chips, visibility note and Cancel / Save actions. (Mobbin: Langdock)</p>
+      <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+        <prompt-save-dialog id="demo-prompt-save" title="Onboarding Ratings" folder="Research" variables='["company","audience"]'></prompt-save-dialog>
+        <div class="mt-3 flex items-center gap-2">
+          <span id="demo-prompt-save-status" class="text-[11px] text-zinc-500">Save / cancel — events report here.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 142. AiTemplatePicker -->
+    <section id="section-142" class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">142. AiTemplatePicker</h2>
+        <div class="flex gap-2 text-xs">
+          <button class="demo-tag" data-skip="react" data-file="react/AiTemplatePicker.tsx">react</button>
+          <button class="demo-tag" data-skip="vue" data-file="vue/AiTemplatePicker.vue">vue</button>
+          <button class="demo-tag" data-skip="vanilla" data-file="vanilla/AiTemplatePicker.js">vanilla</button>
+        </div>
+      </div>
+      <p class="text-xs text-zinc-400">AI template picker — category rail with counts, Try-it template card grid, Run custom AI prompt footer. (Mobbin: Apollo)</p>
+      <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+        <ai-template-picker id="demo-ai-templates"></ai-template-picker>
+        <div class="mt-3 flex items-center gap-2">
+          <span id="demo-ai-templates-status" class="text-[11px] text-zinc-500">Switch / try — events report here.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 143. CreationComposer -->
+    <section id="section-143" class="space-y-3 pb-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-semibold text-zinc-200">143. CreationComposer</h2>
+        <div class="flex gap-2 text-xs">
+          <button class="demo-tag" data-skip="react" data-file="react/CreationComposer.tsx">react</button>
+          <button class="demo-tag" data-skip="vue" data-file="vue/CreationComposer.vue">vue</button>
+          <button class="demo-tag" data-skip="vanilla" data-file="vanilla/CreationComposer.js">vanilla</button>
+        </div>
+      </div>
+      <p class="text-xs text-zinc-400">Floating creation composer — Image Assist switch, prompt textarea, resolution / count selects and Create CTA. (Mobbin: Bloom)</p>
+      <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+        <creation-composer id="demo-composer"></creation-composer>
+        <div class="mt-3 flex items-center gap-2">
+          <span id="demo-composer-status" class="text-[11px] text-zinc-500">Toggle / create — events report here.</span>
         </div>
       </div>
     </section>
@@ -4825,6 +4885,45 @@ FAIL tests/ui.test.mjs
         ];
         brandTable34.addEventListener('add-prompt', () => { brandStatus34.textContent = 'Add Prompt — editor opened (49/50 quota)'; });
         brandTable34.addEventListener('row-click', (event) => { brandStatus34.textContent = 'Prompt → ' + event.detail.row.prompt + ' (visibility ' + event.detail.row.visibility + '%)'; });
+      }
+
+
+      // 141. PromptSaveDialog — save/cancel reporting.
+      const promptSave35 = document.getElementById('demo-prompt-save');
+      const promptSaveStatus35 = document.getElementById('demo-prompt-save-status');
+      if (promptSave35) {
+        promptSave35.addEventListener('save', (event) => { promptSaveStatus35.textContent = 'Saved "' + event.detail.title + '" — variables: ' + event.detail.variables.join(', '); });
+        promptSave35.addEventListener('cancel', () => { promptSaveStatus35.textContent = 'Cancelled — nothing saved'; });
+        promptSave35.addEventListener('close', () => { promptSaveStatus35.textContent = 'Dialog closed'; });
+      }
+
+      // 142. AiTemplatePicker — data + category/try/custom reporting.
+      const templates35 = document.getElementById('demo-ai-templates');
+      const templatesStatus35 = document.getElementById('demo-ai-templates-status');
+      if (templates35) {
+        templates35.categories = [
+          { id: 'all', label: 'All templates', count: 26 },
+          { id: 'targeting', label: 'Improve targeting', count: 13 },
+          { id: 'message', label: 'Generate a message', count: 8 },
+        ];
+        templates35.templates = [
+          { id: 't1', name: 'Research a company for fit', description: 'Research a company to determine if their needs align with your offering.', category: 'all' },
+          { id: 't2', name: 'Summarize company news', description: 'Gather and summarize the most recent news about a company.', category: 'targeting' },
+          { id: 't3', name: 'Create personalized email', description: 'Generate an email tailored to a specific contact.', category: 'message' },
+        ];
+        templates35.addEventListener('category-change', (event) => { templatesStatus35.textContent = 'Category → ' + event.detail.id; });
+        templates35.addEventListener('try', (event) => { templatesStatus35.textContent = 'Try it → ' + event.detail.template.name; });
+        templates35.addEventListener('run-custom', () => { templatesStatus35.textContent = 'Run custom AI prompt — editor opened'; });
+      }
+
+      // 143. CreationComposer — assist/submit reporting.
+      const composer35 = document.getElementById('demo-composer');
+      const composerStatus35 = document.getElementById('demo-composer-status');
+      if (composer35) {
+        composer35.addEventListener('image-assist-change', (event) => { composerStatus35.textContent = event.detail.enabled ? 'Image Assist on — AI refines your prompt' : 'Image Assist off'; });
+        composer35.addEventListener('resolution-change', (event) => { composerStatus35.textContent = 'Resolution → ' + event.detail.resolution; });
+        composer35.addEventListener('count-change', (event) => { composerStatus35.textContent = 'Variations → ' + event.detail.count; });
+        composer35.addEventListener('submit', (event) => { composerStatus35.textContent = 'Create → "' + (event.detail.prompt || '(empty)') + '" @ ' + event.detail.resolution + ' ×' + event.detail.count; });
       }
 
       if (ctxBadge) {

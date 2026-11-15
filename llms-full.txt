@@ -1085,6 +1085,145 @@ export default function AgentTaskProgress({
   );
 }
 
+====/File: react/AiTemplatePicker.tsx/====
+
+import React from "react";
+
+export interface AiTemplate {
+  id: string;
+  name: string;
+  description: string;
+  category?: string;
+}
+
+export interface AiTemplatePickerProps {
+  open?: boolean;
+  title?: string;
+  categories?: { id: string; label: string; count: number }[];
+  templates: AiTemplate[];
+  activeCategory?: string;
+  onCategoryChange?: (categoryId: string) => void;
+  onTry?: (template: AiTemplate) => void;
+  onRunCustom?: () => void;
+  onClose?: () => void;
+  className?: string;
+}
+
+/**
+ * AiTemplatePicker - Apollo style AI research templates modal: category rail
+ * with counts, template cards each with a Try it CTA, and a Run custom AI
+ * prompt footer action.
+ */
+export default function AiTemplatePicker({
+  open = true,
+  title = "AI Research templates",
+  categories,
+  templates,
+  activeCategory,
+  onCategoryChange,
+  onTry,
+  onRunCustom,
+  onClose,
+  className = "",
+}: AiTemplatePickerProps) {
+  if (!open) return null;
+  const active = activeCategory ?? categories?.[0]?.id;
+  const visible = active
+    ? templates.filter((t) => !t.category || t.category === active)
+    : templates;
+  return (
+    <div
+      data-ai-template-picker
+      role="dialog"
+      aria-modal="true"
+      className={`w-full max-w-3xl overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
+        <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</h3>
+        <button
+          type="button"
+          data-ai-templates-close
+          aria-label="Close"
+          onClick={onClose}
+          className="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+        >
+          ✕
+        </button>
+      </div>
+      <div className="flex max-h-[26rem]">
+        {categories && categories.length > 0 && (
+          <div data-ai-templates-rail className="w-52 shrink-0 overflow-y-auto border-r border-zinc-200 p-2 dark:border-zinc-800">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                data-ai-templates-category={cat.id}
+                onClick={() => onCategoryChange?.(cat.id)}
+                className={`flex w-full items-center justify-between rounded-md px-2.5 py-2 text-left text-xs font-medium transition-colors ${
+                  cat.id === active
+                    ? "bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300"
+                    : "text-zinc-600 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-800/60"
+                }`}
+              >
+                <span className="min-w-0 truncate">{cat.label}</span>
+                <span
+                  className={`ml-2 shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
+                    cat.id === active
+                      ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300"
+                      : "bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400"
+                  }`}
+                >
+                  {cat.count}
+                </span>
+              </button>
+            ))}
+          </div>
+        )}
+        <div className="min-w-0 flex-1 overflow-y-auto p-3">
+          {visible.length === 0 ? (
+            <p data-ai-templates-empty className="px-2 py-8 text-center text-xs text-zinc-500 dark:text-zinc-400">
+              No templates in this category yet.
+            </p>
+          ) : (
+            <div data-ai-templates-grid className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {visible.map((tpl) => (
+                <div
+                  key={tpl.id}
+                  data-ai-template-card={tpl.id}
+                  className="flex flex-col rounded-lg border border-zinc-200 p-3 dark:border-zinc-700"
+                >
+                  <p className="text-xs font-semibold leading-snug text-zinc-800 dark:text-zinc-100">{tpl.name}</p>
+                  <p className="mt-1.5 flex-1 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">
+                    {tpl.description}
+                  </p>
+                  <button
+                    type="button"
+                    data-ai-template-try
+                    onClick={() => onTry?.(tpl)}
+                    className="mt-3 w-full rounded-md border border-zinc-300 px-2 py-1.5 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                  >
+                    Try it
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="flex items-center justify-end border-t border-zinc-200 px-4 py-3 dark:border-zinc-800">
+        <button
+          type="button"
+          data-ai-templates-custom
+          onClick={onRunCustom}
+          className="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800"
+        >
+          Run custom AI prompt
+        </button>
+      </div>
+    </div>
+  );
+}
+
 ====/File: react/AlertBanner.tsx/====
 
 import React from "react";
@@ -4644,6 +4783,143 @@ export default function CookieConsent({
           className="rounded-lg border border-zinc-300 px-3 py-1.5 text-xs font-semibold text-zinc-600 transition-colors hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800"
         >
           {saveLabel}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+====/File: react/CreationComposer.tsx/====
+
+import React from "react";
+
+export interface CreationComposerProps {
+  open?: boolean;
+  placeholder?: string;
+  imageAssist?: boolean;
+  resolution?: string;
+  count?: number;
+  resolutions?: string[];
+  counts?: number[];
+  onImageAssistChange?: (enabled: boolean) => void;
+  onResolutionChange?: (resolution: string) => void;
+  onCountChange?: (count: number) => void;
+  onSubmit?: (value: { prompt: string; imageAssist: boolean; resolution: string; count: number }) => void;
+  className?: string;
+}
+
+/**
+ * CreationComposer - Bloom style floating creation bar: Image Assist toggle,
+ * prompt textarea, resolution / count selects and a Create CTA.
+ */
+export default function CreationComposer({
+  open = true,
+  placeholder = "Ad creative, product shot, social post…",
+  imageAssist = false,
+  resolution = "2K",
+  count = 1,
+  resolutions = ["1K", "2K", "4K"],
+  counts = [1, 2, 4],
+  onImageAssistChange,
+  onResolutionChange,
+  onCountChange,
+  onSubmit,
+  className = "",
+}: CreationComposerProps) {
+  if (!open) return null;
+  return (
+    <div
+      data-creation-composer
+      className={`w-full max-w-xl rounded-2xl border border-zinc-200 bg-white p-3 shadow-xl dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            data-creation-image
+            aria-label="Attach image"
+            className="rounded-md border border-zinc-200 p-1.5 text-zinc-500 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+          >
+            🖼
+          </button>
+          <button
+            type="button"
+            data-creation-assist-toggle
+            role="switch"
+            aria-checked={imageAssist}
+            onClick={() => onImageAssistChange?.(!imageAssist)}
+            className={`flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
+              imageAssist
+                ? "bg-indigo-600 text-white"
+                : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+            }`}
+          >
+            Image Assist
+            <span
+              aria-hidden="true"
+              className={`inline-block h-3.5 w-6 rounded-full transition-colors ${
+                imageAssist ? "bg-white/80" : "bg-zinc-300 dark:bg-zinc-600"
+              }`}
+            >
+              <span
+                className={`block h-3.5 w-3.5 rounded-full bg-white shadow transition-transform dark:bg-zinc-200 ${
+                  imageAssist ? "translate-x-2.5 bg-indigo-600" : "translate-x-0"
+                }`}
+              />
+            </span>
+          </button>
+        </div>
+        <button
+          type="button"
+          data-creation-idea
+          aria-label="Prompt ideas"
+          className="rounded-md border border-zinc-200 p-1.5 text-zinc-500 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        >
+          💡
+        </button>
+      </div>
+      <textarea
+        data-creation-input
+        rows={3}
+        placeholder={placeholder}
+        aria-label="Creation prompt"
+        className="mt-2 w-full resize-none rounded-lg border border-zinc-200 px-3 py-2 text-xs leading-relaxed text-zinc-700 outline-none transition-colors placeholder:text-zinc-400 focus:border-indigo-400 dark:border-zinc-700 dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-indigo-500"
+      />
+      <div className="mt-2 flex items-center justify-end gap-2">
+        <label className="sr-only" htmlFor="creation-resolution">Resolution</label>
+        <select
+          id="creation-resolution"
+          data-creation-resolution
+          value={resolution}
+          onChange={(e) => onResolutionChange?.(e.target.value)}
+          className="rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs font-medium text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+        >
+          {resolutions.map((r) => (
+            <option key={r} value={r}>{r}</option>
+          ))}
+        </select>
+        <label className="sr-only" htmlFor="creation-count">Count</label>
+        <select
+          id="creation-count"
+          data-creation-count
+          value={count}
+          onChange={(e) => onCountChange?.(Number(e.target.value))}
+          className="rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs font-medium text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+        >
+          {counts.map((c) => (
+            <option key={c} value={c}>{c}×</option>
+          ))}
+        </select>
+        <button
+          type="button"
+          data-creation-submit
+          onClick={() => {
+            const input = (document.querySelector('[data-creation-input]') as HTMLTextAreaElement | null)?.value ?? "";
+            onSubmit?.({ prompt: input, imageAssist, resolution, count });
+          }}
+          className="rounded-md bg-violet-600 px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-violet-500"
+        >
+          Create
         </button>
       </div>
     </div>
@@ -11587,6 +11863,136 @@ export const PromptLibrary: React.FC<PromptLibraryProps> = ({
 
 export default PromptLibrary;
 
+====/File: react/PromptSaveDialog.tsx/====
+
+import React from "react";
+
+export interface PromptSaveDialogProps {
+  open?: boolean;
+  title?: string;
+  folder?: string;
+  description?: string;
+  prompt?: string;
+  variables?: string[];
+  onSave?: (value: { title: string; prompt: string; variables: string[] }) => void;
+  onCancel?: () => void;
+  onClose?: () => void;
+  className?: string;
+}
+
+/**
+ * PromptSaveDialog - Langdock style "save prompt" modal: folder picker row,
+ * title + prompt body, inline variable chips, and Cancel / Save actions.
+ */
+export default function PromptSaveDialog({
+  open = true,
+  title = "ASMobbin Onboarding Ratings",
+  folder = "ASMobbin",
+  description = "Other users with access to the folder will be able to see and use this prompt.",
+  prompt = "Create a Google Sheet report that rates the onboarding experience of {{company}}.\nOverview:",
+  variables = ["company"],
+  onSave,
+  onCancel,
+  onClose,
+  className = "",
+}: PromptSaveDialogProps) {
+  if (!open) return null;
+  return (
+    <div
+      data-prompt-save
+      role="dialog"
+      aria-modal="true"
+      className={`w-full max-w-lg rounded-xl border border-zinc-200 bg-white p-4 shadow-xl dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div className="flex items-start justify-between">
+        <button
+          type="button"
+          data-prompt-save-folder
+          className="flex items-center gap-1.5 rounded-md border border-zinc-200 px-2.5 py-1.5 text-xs font-medium text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
+        >
+          <span aria-hidden="true">📁</span>
+          {folder}
+          <span className="text-zinc-400" aria-hidden="true">▾</span>
+        </button>
+        <button
+          type="button"
+          data-prompt-save-close
+          aria-label="Close"
+          onClick={onClose}
+          className="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+        >
+          ✕
+        </button>
+      </div>
+      <input
+        data-prompt-save-title
+        type="text"
+        defaultValue={title}
+        aria-label="Prompt title"
+        className="mt-3 w-full rounded-md border border-transparent bg-transparent px-1 py-1 text-base font-semibold text-zinc-900 outline-none transition-colors focus:border-zinc-300 focus:bg-white dark:text-zinc-50 dark:focus:border-zinc-600 dark:focus:bg-zinc-900"
+      />
+      <textarea
+        data-prompt-save-body
+        rows={6}
+        defaultValue={prompt}
+        aria-label="Prompt body"
+        className="mt-2 w-full resize-y rounded-md border border-zinc-200 px-3 py-2 text-xs leading-relaxed text-zinc-700 outline-none transition-colors focus:border-indigo-400 dark:border-zinc-700 dark:text-zinc-200 dark:focus:border-indigo-500"
+      />
+      <div className="mt-2 flex items-center justify-between">
+        <button
+          type="button"
+          data-prompt-save-add-var
+          className="rounded-md border border-dashed border-zinc-300 px-2.5 py-1.5 text-xs font-medium text-zinc-600 hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        >
+          + Add variable
+        </button>
+        <button
+          type="button"
+          data-prompt-save-expand
+          aria-label="Expand editor"
+          className="rounded-md border border-zinc-200 p-1.5 text-zinc-500 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        >
+          ⤢
+        </button>
+      </div>
+      {variables.length > 0 && (
+        <div data-prompt-save-vars className="mt-2 flex flex-wrap gap-1.5">
+          {variables.map((v) => (
+            <span
+              key={v}
+              data-prompt-save-var
+              className="rounded-md bg-indigo-50 px-2 py-0.5 font-mono text-[11px] font-medium text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300"
+            >
+              {`{{${v}}}`}
+            </span>
+          ))}
+        </div>
+      )}
+      <div className="mt-3 flex items-center justify-between gap-3 border-t border-zinc-200 pt-3 dark:border-zinc-800">
+        <p className="min-w-0 flex-1 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">{description}</p>
+        <div className="flex shrink-0 gap-2">
+          <button
+            type="button"
+            data-prompt-save-cancel
+            onClick={onCancel}
+            className="rounded-md px-3 py-1.5 text-xs font-semibold text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            data-prompt-save-submit
+            onClick={() => onSave?.({ title, prompt, variables })}
+            className="rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-indigo-500"
+          >
+            Save prompt
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 ====/File: react/PromptTemplateGrid.tsx/====
 
 import React from "react";
@@ -18319,6 +18725,128 @@ const emit = defineEmits<{
 }>();
 </script>
 
+====/File: vue/AiTemplatePicker.vue/====
+
+<script setup lang="ts">
+export interface AiTemplate {
+  id: string;
+  name: string;
+  description: string;
+  category?: string;
+}
+
+export interface AiTemplatePickerProps {
+  open?: boolean;
+  title?: string;
+  categories?: { id: string; label: string; count: number }[];
+  templates: AiTemplate[];
+  activeCategory?: string;
+}
+
+const props = withDefaults(defineProps<AiTemplatePickerProps>(), {
+  open: true,
+  title: 'AI Research templates',
+  categories: () => [],
+  activeCategory: '',
+});
+
+const emit = defineEmits<{
+  (e: 'category-change', categoryId: string): void;
+  (e: 'try', template: AiTemplate): void;
+  (e: 'run-custom'): void;
+  (e: 'close'): void;
+}>();
+
+const visibleTemplates = () => {
+  const active = props.activeCategory || props.categories[0]?.id || '';
+  return active
+    ? props.templates.filter((t) => !t.category || t.category === active)
+    : props.templates;
+};
+
+const isActive = (id: string) => id === (props.activeCategory || props.categories[0]?.id);
+</script>
+
+<template>
+  <div
+    v-if="props.open"
+    data-ai-template-picker
+    role="dialog"
+    aria-modal="true"
+    class="w-full max-w-3xl overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+  >
+    <div class="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
+      <h3 class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</h3>
+      <button
+        type="button"
+        data-ai-templates-close
+        aria-label="Close"
+        class="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+        @click="emit('close')"
+      >✕</button>
+    </div>
+    <div class="flex max-h-[26rem]">
+      <div
+        v-if="props.categories.length > 0"
+        data-ai-templates-rail
+        class="w-52 shrink-0 overflow-y-auto border-r border-zinc-200 p-2 dark:border-zinc-800"
+      >
+        <button
+          v-for="cat in props.categories"
+          :key="cat.id"
+          type="button"
+          :data-ai-templates-category="cat.id"
+          class="flex w-full items-center justify-between rounded-md px-2.5 py-2 text-left text-xs font-medium transition-colors"
+          :class="isActive(cat.id)
+            ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300'
+            : 'text-zinc-600 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-800/60'"
+          @click="emit('category-change', cat.id)"
+        >
+          <span class="min-w-0 truncate">{{ cat.label }}</span>
+          <span
+            class="ml-2 shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-semibold"
+            :class="isActive(cat.id)
+              ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300'
+              : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400'"
+          >{{ cat.count }}</span>
+        </button>
+      </div>
+      <div class="min-w-0 flex-1 overflow-y-auto p-3">
+        <p
+          v-if="visibleTemplates().length === 0"
+          data-ai-templates-empty
+          class="px-2 py-8 text-center text-xs text-zinc-500 dark:text-zinc-400"
+        >No templates in this category yet.</p>
+        <div v-else data-ai-templates-grid class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div
+            v-for="tpl in visibleTemplates()"
+            :key="tpl.id"
+            :data-ai-template-card="tpl.id"
+            class="flex flex-col rounded-lg border border-zinc-200 p-3 dark:border-zinc-700"
+          >
+            <p class="text-xs font-semibold leading-snug text-zinc-800 dark:text-zinc-100">{{ tpl.name }}</p>
+            <p class="mt-1.5 flex-1 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">{{ tpl.description }}</p>
+            <button
+              type="button"
+              data-ai-template-try
+              class="mt-3 w-full rounded-md border border-zinc-300 px-2 py-1.5 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800"
+              @click="emit('try', tpl)"
+            >Try it</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center justify-end border-t border-zinc-200 px-4 py-3 dark:border-zinc-800">
+      <button
+        type="button"
+        data-ai-templates-custom
+        class="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800"
+        @click="emit('run-custom')"
+      >Run custom AI prompt</button>
+    </div>
+  </div>
+</template>
+
 ====/File: vue/AlertBanner.vue/====
 
 <template>
@@ -21394,6 +21922,124 @@ const alwaysIds = computed(() => props.categories.filter((c) => c.alwaysActive).
 
 const confirm = (accepted: string[]) => emit('confirm', accepted);
 </script>
+
+====/File: vue/CreationComposer.vue/====
+
+<script setup lang="ts">
+export interface CreationComposerProps {
+  open?: boolean;
+  placeholder?: string;
+  imageAssist?: boolean;
+  resolution?: string;
+  count?: number;
+  resolutions?: string[];
+  counts?: number[];
+}
+
+const props = withDefaults(defineProps<CreationComposerProps>(), {
+  open: true,
+  placeholder: 'Ad creative, product shot, social post…',
+  imageAssist: false,
+  resolution: '2K',
+  count: 1,
+  resolutions: () => ['1K', '2K', '4K'],
+  counts: () => [1, 2, 4],
+});
+
+const emit = defineEmits<{
+  (e: 'image-assist-change', enabled: boolean): void;
+  (e: 'resolution-change', resolution: string): void;
+  (e: 'count-change', count: number): void;
+  (e: 'submit', value: { prompt: string; imageAssist: boolean; resolution: string; count: number }): void;
+}>();
+
+const submit = (event: Event) => {
+  const root = (event.currentTarget as HTMLElement).closest('[data-creation-composer]');
+  const input = root?.querySelector('[data-creation-input]') as HTMLTextAreaElement | null;
+  emit('submit', { prompt: input?.value ?? '', imageAssist: props.imageAssist, resolution: props.resolution, count: props.count });
+};
+</script>
+
+<template>
+  <div
+    v-if="props.open"
+    data-creation-composer
+    class="w-full max-w-xl rounded-2xl border border-zinc-200 bg-white p-3 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+  >
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          data-creation-image
+          aria-label="Attach image"
+          class="rounded-md border border-zinc-200 p-1.5 text-zinc-500 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        >🖼</button>
+        <button
+          type="button"
+          data-creation-assist-toggle
+          role="switch"
+          :aria-checked="props.imageAssist"
+          class="flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-medium transition-colors"
+          :class="props.imageAssist
+            ? 'bg-indigo-600 text-white'
+            : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'"
+          @click="emit('image-assist-change', !props.imageAssist)"
+        >
+          Image Assist
+          <span
+            aria-hidden="true"
+            class="inline-block h-3.5 w-6 rounded-full transition-colors"
+            :class="props.imageAssist ? 'bg-white/80' : 'bg-zinc-300 dark:bg-zinc-600'"
+          >
+            <span
+              class="block h-3.5 w-3.5 rounded-full bg-white shadow transition-transform dark:bg-zinc-200"
+              :class="props.imageAssist ? 'translate-x-2.5 !bg-indigo-600' : 'translate-x-0'"
+            ></span>
+          </span>
+        </button>
+      </div>
+      <button
+        type="button"
+        data-creation-idea
+        aria-label="Prompt ideas"
+        class="rounded-md border border-zinc-200 p-1.5 text-zinc-500 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+      >💡</button>
+    </div>
+    <textarea
+      data-creation-input
+      rows="3"
+      :placeholder="props.placeholder"
+      aria-label="Creation prompt"
+      class="mt-2 w-full resize-none rounded-lg border border-zinc-200 px-3 py-2 text-xs leading-relaxed text-zinc-700 outline-none transition-colors placeholder:text-zinc-400 focus:border-indigo-400 dark:border-zinc-700 dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-indigo-500"
+    ></textarea>
+    <div class="mt-2 flex items-center justify-end gap-2">
+      <select
+        data-creation-resolution
+        aria-label="Resolution"
+        :value="props.resolution"
+        class="rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs font-medium text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+        @change="emit('resolution-change', ($event.target as HTMLSelectElement).value)"
+      >
+        <option v-for="r in props.resolutions" :key="r" :value="r">{{ r }}</option>
+      </select>
+      <select
+        data-creation-count
+        aria-label="Count"
+        :value="props.count"
+        class="rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs font-medium text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+        @change="emit('count-change', Number(($event.target as HTMLSelectElement).value))"
+      >
+        <option v-for="c in props.counts" :key="c" :value="c">{{ c }}×</option>
+      </select>
+      <button
+        type="button"
+        data-creation-submit
+        class="rounded-md bg-violet-600 px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-violet-500"
+        @click="submit"
+      >Create</button>
+    </div>
+  </div>
+</template>
 
 ====/File: vue/DataTable.vue/====
 
@@ -27077,6 +27723,117 @@ const visible = computed(() => {
   });
 });
 </script>
+
+====/File: vue/PromptSaveDialog.vue/====
+
+<script setup lang="ts">
+export interface PromptSaveDialogProps {
+  open?: boolean;
+  title?: string;
+  folder?: string;
+  description?: string;
+  prompt?: string;
+  variables?: string[];
+}
+
+const props = withDefaults(defineProps<PromptSaveDialogProps>(), {
+  open: true,
+  title: 'ASMobbin Onboarding Ratings',
+  folder: 'ASMobbin',
+  description: 'Other users with access to the folder will be able to see and use this prompt.',
+  prompt: 'Create a Google Sheet report that rates the onboarding experience of {{company}}.\nOverview:',
+  variables: () => ['company'],
+});
+
+const emit = defineEmits<{
+  (e: 'save', value: { title: string; prompt: string; variables: string[] }): void;
+  (e: 'cancel'): void;
+  (e: 'close'): void;
+}>();
+
+const varChip = (v: string) => `{{${v}}}`;
+</script>
+
+<template>
+  <div
+    v-if="props.open"
+    data-prompt-save
+    role="dialog"
+    aria-modal="true"
+    class="w-full max-w-lg rounded-xl border border-zinc-200 bg-white p-4 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+  >
+    <div class="flex items-start justify-between">
+      <button
+        type="button"
+        data-prompt-save-folder
+        class="flex items-center gap-1.5 rounded-md border border-zinc-200 px-2.5 py-1.5 text-xs font-medium text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
+      >
+        <span aria-hidden="true">📁</span>
+        {{ props.folder }}
+        <span class="text-zinc-400" aria-hidden="true">▾</span>
+      </button>
+      <button
+        type="button"
+        data-prompt-save-close
+        aria-label="Close"
+        class="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+        @click="emit('close')"
+      >✕</button>
+    </div>
+    <input
+      data-prompt-save-title
+      type="text"
+      :value="props.title"
+      aria-label="Prompt title"
+      class="mt-3 w-full rounded-md border border-transparent bg-transparent px-1 py-1 text-base font-semibold text-zinc-900 outline-none transition-colors focus:border-zinc-300 focus:bg-white dark:text-zinc-50 dark:focus:border-zinc-600 dark:focus:bg-zinc-900"
+    />
+    <textarea
+      data-prompt-save-body
+      rows="6"
+      :value="props.prompt"
+      aria-label="Prompt body"
+      class="mt-2 w-full resize-y rounded-md border border-zinc-200 px-3 py-2 text-xs leading-relaxed text-zinc-700 outline-none transition-colors focus:border-indigo-400 dark:border-zinc-700 dark:text-zinc-200 dark:focus:border-indigo-500"
+    ></textarea>
+    <div class="mt-2 flex items-center justify-between">
+      <button
+        type="button"
+        data-prompt-save-add-var
+        class="rounded-md border border-dashed border-zinc-300 px-2.5 py-1.5 text-xs font-medium text-zinc-600 hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800"
+      >+ Add variable</button>
+      <button
+        type="button"
+        data-prompt-save-expand
+        aria-label="Expand editor"
+        class="rounded-md border border-zinc-200 p-1.5 text-zinc-500 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+      >⤢</button>
+    </div>
+    <div v-if="props.variables.length > 0" data-prompt-save-vars class="mt-2 flex flex-wrap gap-1.5">
+      <span
+        v-for="v in props.variables"
+        :key="v"
+        data-prompt-save-var
+        class="rounded-md bg-indigo-50 px-2 py-0.5 font-mono text-[11px] font-medium text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300"
+      >{{ varChip(v) }}</span>
+    </div>
+    <div class="mt-3 flex items-center justify-between gap-3 border-t border-zinc-200 pt-3 dark:border-zinc-800">
+      <p class="min-w-0 flex-1 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">{{ props.description }}</p>
+      <div class="flex shrink-0 gap-2">
+        <button
+          type="button"
+          data-prompt-save-cancel
+          class="rounded-md px-3 py-1.5 text-xs font-semibold text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
+          @click="emit('cancel')"
+        >Cancel</button>
+        <button
+          type="button"
+          data-prompt-save-submit
+          class="rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-indigo-500"
+          @click="emit('save', { title: props.title, prompt: props.prompt, variables: props.variables })"
+        >Save prompt</button>
+      </div>
+    </div>
+  </div>
+</template>
 
 ====/File: vue/PromptTemplateGrid.vue/====
 
@@ -33125,6 +33882,148 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-task-pro
 }
 export default AgentTaskProgressElement;
 
+====/File: vanilla/AiTemplatePicker.js/====
+
+/**
+ * AiTemplatePicker - Vanilla Web Component
+ * Usage: <ai-template-picker title="AI Research templates"></ai-template-picker>
+ * Attributes: open, title, active-category, categories (JSON), templates (JSON)
+ * Events: category-change (detail {id}), try (detail {template}), run-custom, close
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const parseJsonAttr = (raw, fallback) => {
+  try {
+    const parsed = raw ? JSON.parse(raw) : null;
+    return parsed ?? fallback;
+  } catch (e) {
+    return fallback;
+  }
+};
+
+export class AiTemplatePickerElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['open', 'title', 'active-category', 'categories', 'templates'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._templates = [];
+    this._categories = [];
+  }
+
+  connectedCallback() {
+    if (!this._templates.length) this._templates = parseJsonAttr(this.getAttribute('templates'), []);
+    if (!this._categories.length) this._categories = parseJsonAttr(this.getAttribute('categories'), []);
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        if (event.target.closest('[data-ai-templates-close]')) {
+          this.setAttribute('open', 'false');
+          this.dispatchEvent(new CustomEvent('close'));
+          return;
+        }
+        const catEl = event.target.closest('[data-ai-templates-category]');
+        if (catEl) {
+          const id = catEl.getAttribute('data-ai-templates-category');
+          this.setAttribute('active-category', id);
+          this.dispatchEvent(new CustomEvent('category-change', { detail: { id } }));
+          return;
+        }
+        const tryEl = event.target.closest('[data-ai-template-try]');
+        if (tryEl) {
+          const card = tryEl.closest('[data-ai-template-card]');
+          const tpl = this._templates.find((t) => t.id === card?.getAttribute('data-ai-template-card'));
+          if (tpl) this.dispatchEvent(new CustomEvent('try', { detail: { template: tpl } }));
+          return;
+        }
+        if (event.target.closest('[data-ai-templates-custom]')) {
+          this.dispatchEvent(new CustomEvent('run-custom'));
+        }
+      });
+    }
+  }
+
+  attributeChangedCallback(name) {
+    if (name === 'templates' && !this._templates.length) {
+      this._templates = parseJsonAttr(this.getAttribute('templates'), []);
+    }
+    if (name === 'categories' && !this._categories.length) {
+      this._categories = parseJsonAttr(this.getAttribute('categories'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this.render();
+  }
+
+  get templates() { return this._templates; }
+  set templates(v) {
+    this._templates = Array.isArray(v) ? v.map((t) => ({ ...t })) : [];
+    this.render();
+  }
+
+  get categories() { return this._categories; }
+  set categories(v) {
+    this._categories = Array.isArray(v) ? v.map((c) => ({ ...c })) : [];
+    this.render();
+  }
+
+  render() {
+    if ((this.getAttribute('open') || 'true') === 'false') {
+      this.innerHTML = '';
+      return;
+    }
+    const title = escapeAttribute(this.getAttribute('title') || 'AI Research templates');
+    const active = this.getAttribute('active-category') || this._categories[0]?.id || '';
+    const visible = active ? this._templates.filter((t) => !t.category || t.category === active) : this._templates;
+
+    const rail = this._categories.length > 0 ? `
+      <div data-ai-templates-rail class="w-52 shrink-0 overflow-y-auto border-r border-zinc-200 p-2 dark:border-zinc-800">
+        ${this._categories.map((cat) => `
+        <button type="button" data-ai-templates-category="${escapeAttribute(cat.id)}" class="flex w-full items-center justify-between rounded-md px-2.5 py-2 text-left text-xs font-medium transition-colors ${cat.id === active ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300' : 'text-zinc-600 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-800/60'}">
+          <span class="min-w-0 truncate">${escapeAttribute(cat.label)}</span>
+          <span class="ml-2 shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${cat.id === active ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300' : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400'}">${cat.count}</span>
+        </button>`).join('')}
+      </div>` : '';
+
+    const grid = visible.length === 0
+      ? '<p data-ai-templates-empty class="px-2 py-8 text-center text-xs text-zinc-500 dark:text-zinc-400">No templates in this category yet.</p>'
+      : `<div data-ai-templates-grid class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        ${visible.map((tpl) => `
+        <div data-ai-template-card="${escapeAttribute(tpl.id)}" class="flex flex-col rounded-lg border border-zinc-200 p-3 dark:border-zinc-700">
+          <p class="text-xs font-semibold leading-snug text-zinc-800 dark:text-zinc-100">${escapeAttribute(tpl.name)}</p>
+          <p class="mt-1.5 flex-1 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">${escapeAttribute(tpl.description)}</p>
+          <button type="button" data-ai-template-try class="mt-3 w-full rounded-md border border-zinc-300 px-2 py-1.5 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800">Try it</button>
+        </div>`).join('')}
+      </div>`;
+
+    this.innerHTML = `<div data-ai-template-picker role="dialog" aria-modal="true" class="w-full max-w-3xl overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
+  <div class="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
+    <h3 class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${title}</h3>
+    <button type="button" data-ai-templates-close aria-label="Close" class="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300">✕</button>
+  </div>
+  <div class="flex max-h-[26rem]">${rail}<div class="min-w-0 flex-1 overflow-y-auto p-3">${grid}</div></div>
+  <div class="flex items-center justify-end border-t border-zinc-200 px-4 py-3 dark:border-zinc-800">
+    <button type="button" data-ai-templates-custom class="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800">Run custom AI prompt</button>
+  </div>
+</div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('ai-template-picker')) {
+  customElements.define('ai-template-picker', AiTemplatePickerElement);
+}
+
+export default AiTemplatePickerElement;
+
 ====/File: vanilla/AlertBanner.js/====
 
 import uiIcon from './UiIcon.js';
@@ -37274,6 +38173,152 @@ if (typeof customElements !== 'undefined' && !customElements.get('cookie-consent
   customElements.define('cookie-consent', CookieConsentElement);
 }
 export default CookieConsentElement;
+
+====/File: vanilla/CreationComposer.js/====
+
+/**
+ * CreationComposer - Vanilla Web Component
+ * Usage: <creation-composer placeholder="..."></creation-composer>
+ * Attributes: open, placeholder, image-assist, resolution, count,
+ *             resolutions (JSON), counts (JSON)
+ * Events: image-assist-change (detail {enabled}), resolution-change (detail {resolution}),
+ *         count-change (detail {count}), submit (detail {prompt, imageAssist, resolution, count})
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const parseJsonAttr = (raw, fallback) => {
+  try {
+    const parsed = raw ? JSON.parse(raw) : null;
+    return parsed ?? fallback;
+  } catch (e) {
+    return fallback;
+  }
+};
+
+export class CreationComposerElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['open', 'placeholder', 'image-assist', 'resolution', 'count', 'resolutions', 'counts'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._resolutions = null;
+    this._counts = null;
+  }
+
+  connectedCallback() {
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        if (event.target.closest('[data-creation-assist-toggle]')) {
+          const enabled = this.getAttribute('image-assist') !== 'true';
+          this.setAttribute('image-assist', String(enabled));
+          this.dispatchEvent(new CustomEvent('image-assist-change', { detail: { enabled } }));
+          return;
+        }
+        if (event.target.closest('[data-creation-submit]')) {
+          const input = this.querySelector('[data-creation-input]');
+          this.dispatchEvent(new CustomEvent('submit', {
+            detail: {
+              prompt: input?.value ?? '',
+              imageAssist: this.getAttribute('image-assist') === 'true',
+              resolution: this.getAttribute('resolution') || '2K',
+              count: Number(this.getAttribute('count') || '1'),
+            },
+          }));
+        }
+      });
+      this.addEventListener('change', (event) => {
+        const resEl = event.target.closest('[data-creation-resolution]');
+        if (resEl) {
+          this.setAttribute('resolution', resEl.value);
+          this.dispatchEvent(new CustomEvent('resolution-change', { detail: { resolution: resEl.value } }));
+          return;
+        }
+        const countEl = event.target.closest('[data-creation-count]');
+        if (countEl) {
+          this.setAttribute('count', countEl.value);
+          this.dispatchEvent(new CustomEvent('count-change', { detail: { count: Number(countEl.value) } }));
+        }
+      });
+    }
+  }
+
+  attributeChangedCallback(name) {
+    if (name === 'resolutions') this._resolutions = null;
+    if (name === 'counts') this._counts = null;
+    if (this._bound === false && this.innerHTML === '') return;
+    this.render();
+  }
+
+  get resolutions() {
+    if (!this._resolutions) this._resolutions = parseJsonAttr(this.getAttribute('resolutions'), ['1K', '2K', '4K']);
+    return this._resolutions;
+  }
+  set resolutions(v) {
+    this._resolutions = Array.isArray(v) ? v.map(String) : [];
+    this.render();
+  }
+
+  get counts() {
+    if (!this._counts) this._counts = parseJsonAttr(this.getAttribute('counts'), [1, 2, 4]);
+    return this._counts;
+  }
+  set counts(v) {
+    this._counts = Array.isArray(v) ? v.map(Number) : [];
+    this.render();
+  }
+
+  render() {
+    if ((this.getAttribute('open') || 'true') === 'false') {
+      this.innerHTML = '';
+      return;
+    }
+    const placeholder = escapeAttribute(this.getAttribute('placeholder') || 'Ad creative, product shot, social post…');
+    const imageAssist = this.getAttribute('image-assist') === 'true';
+    const resolution = this.getAttribute('resolution') || '2K';
+    const count = this.getAttribute('count') || '1';
+
+    const resOptions = this.resolutions.map((r) => `<option value="${escapeAttribute(r)}" ${r === resolution ? 'selected' : ''}>${escapeAttribute(r)}</option>`).join('');
+    const countOptions = this.counts.map((c) => `<option value="${c}" ${String(c) === count ? 'selected' : ''}>${c}×</option>`).join('');
+
+    this.innerHTML = `<div data-creation-composer class="w-full max-w-xl rounded-2xl border border-zinc-200 bg-white p-3 shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <button type="button" data-creation-image aria-label="Attach image" class="rounded-md border border-zinc-200 p-1.5 text-zinc-500 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">🖼</button>
+      <button type="button" data-creation-assist-toggle role="switch" aria-checked="${imageAssist}" class="flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${imageAssist ? 'bg-indigo-600 text-white' : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'}">
+        Image Assist
+        <span aria-hidden="true" class="inline-block h-3.5 w-6 rounded-full transition-colors ${imageAssist ? 'bg-white/80' : 'bg-zinc-300 dark:bg-zinc-600'}">
+          <span class="block h-3.5 w-3.5 rounded-full shadow transition-transform ${imageAssist ? 'translate-x-2.5 bg-indigo-600' : 'translate-x-0 bg-white dark:bg-zinc-200'}"></span>
+        </span>
+      </button>
+    </div>
+    <button type="button" data-creation-idea aria-label="Prompt ideas" class="rounded-md border border-zinc-200 p-1.5 text-zinc-500 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">💡</button>
+  </div>
+  <textarea data-creation-input rows="3" placeholder="${placeholder}" aria-label="Creation prompt" class="mt-2 w-full resize-none rounded-lg border border-zinc-200 px-3 py-2 text-xs leading-relaxed text-zinc-700 outline-none transition-colors placeholder:text-zinc-400 focus:border-indigo-400 dark:border-zinc-700 dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-indigo-500"></textarea>
+  <div class="mt-2 flex items-center justify-end gap-2">
+    <select data-creation-resolution aria-label="Resolution" class="rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs font-medium text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">${resOptions}</select>
+    <select data-creation-count aria-label="Count" class="rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs font-medium text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">${countOptions}</select>
+    <button type="button" data-creation-submit class="rounded-md bg-violet-600 px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-violet-500">Create</button>
+  </div>
+</div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('creation-composer')) {
+  customElements.define('creation-composer', CreationComposerElement);
+}
+
+export default CreationComposerElement;
 
 ====/File: vanilla/DataTable.js/====
 
@@ -45612,6 +46657,124 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-library
   customElements.define('prompt-library', PromptLibraryElement);
 }
 export default PromptLibraryElement;
+
+====/File: vanilla/PromptSaveDialog.js/====
+
+/**
+ * PromptSaveDialog - Vanilla Web Component
+ * Usage: <prompt-save-dialog title="..." folder="..."></prompt-save-dialog>
+ * Attributes: open, title, folder, description, prompt, variables (JSON array)
+ * Events: save (detail {title, prompt, variables}), cancel, close
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class PromptSaveDialogElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['open', 'title', 'folder', 'description', 'prompt', 'variables'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+  }
+
+  connectedCallback() {
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        if (event.target.closest('[data-prompt-save-close]')) {
+          this.setAttribute('open', 'false');
+          this.dispatchEvent(new CustomEvent('close'));
+          return;
+        }
+        if (event.target.closest('[data-prompt-save-cancel]')) {
+          this.dispatchEvent(new CustomEvent('cancel'));
+          return;
+        }
+        if (event.target.closest('[data-prompt-save-submit]')) {
+          const title = this.querySelector('[data-prompt-save-title]')?.value ?? this.getAttribute('title') ?? '';
+          const prompt = this.querySelector('[data-prompt-save-body]')?.value ?? this.getAttribute('prompt') ?? '';
+          this.dispatchEvent(new CustomEvent('save', { detail: { title, prompt, variables: this._vars } }));
+        }
+      });
+    }
+  }
+
+  attributeChangedCallback() {
+    if (this._bound === false && this.innerHTML === '') return;
+    this.render();
+  }
+
+  get variables() {
+    return this._vars;
+  }
+  set variables(v) {
+    this._vars = Array.isArray(v) ? v.map(String) : [];
+    this.render();
+  }
+
+  _parseVars() {
+    try {
+      const raw = this.getAttribute('variables');
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed.map(String) : ['company'];
+    } catch (e) {
+      return ['company'];
+    }
+  }
+
+  render() {
+    if ((this.getAttribute('open') || 'true') === 'false') {
+      this.innerHTML = '';
+      return;
+    }
+    this._vars = this._vars || this._parseVars();
+    const title = escapeAttribute(this.getAttribute('title') || 'ASMobbin Onboarding Ratings');
+    const folder = escapeAttribute(this.getAttribute('folder') || 'ASMobbin');
+    const description = escapeAttribute(this.getAttribute('description') || 'Other users with access to the folder will be able to see and use this prompt.');
+    const prompt = escapeAttribute(this.getAttribute('prompt') || 'Create a Google Sheet report that rates the onboarding experience of {{company}}.\nOverview:');
+
+    const varChips = (this._vars || []).map((v) => `
+      <span data-prompt-save-var class="rounded-md bg-indigo-50 px-2 py-0.5 font-mono text-[11px] font-medium text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300">{{${escapeAttribute(v)}}}</span>`).join('');
+
+    this.innerHTML = `<div data-prompt-save role="dialog" aria-modal="true" class="w-full max-w-lg rounded-xl border border-zinc-200 bg-white p-4 shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
+  <div class="flex items-start justify-between">
+    <button type="button" data-prompt-save-folder class="flex items-center gap-1.5 rounded-md border border-zinc-200 px-2.5 py-1.5 text-xs font-medium text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800">
+      <span aria-hidden="true">📁</span>${folder}<span class="text-zinc-400" aria-hidden="true">▾</span>
+    </button>
+    <button type="button" data-prompt-save-close aria-label="Close" class="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300">✕</button>
+  </div>
+  <input data-prompt-save-title type="text" value="${title}" aria-label="Prompt title" class="mt-3 w-full rounded-md border border-transparent bg-transparent px-1 py-1 text-base font-semibold text-zinc-900 outline-none transition-colors focus:border-zinc-300 focus:bg-white dark:text-zinc-50 dark:focus:border-zinc-600 dark:focus:bg-zinc-900">
+  <textarea data-prompt-save-body rows="6" aria-label="Prompt body" class="mt-2 w-full resize-y rounded-md border border-zinc-200 px-3 py-2 text-xs leading-relaxed text-zinc-700 outline-none transition-colors focus:border-indigo-400 dark:border-zinc-700 dark:text-zinc-200 dark:focus:border-indigo-500">${prompt}</textarea>
+  <div class="mt-2 flex items-center justify-between">
+    <button type="button" data-prompt-save-add-var class="rounded-md border border-dashed border-zinc-300 px-2.5 py-1.5 text-xs font-medium text-zinc-600 hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800">+ Add variable</button>
+    <button type="button" data-prompt-save-expand aria-label="Expand editor" class="rounded-md border border-zinc-200 p-1.5 text-zinc-500 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">⤢</button>
+  </div>
+  ${this._vars.length > 0 ? `<div data-prompt-save-vars class="mt-2 flex flex-wrap gap-1.5">${varChips}</div>` : ''}
+  <div class="mt-3 flex items-center justify-between gap-3 border-t border-zinc-200 pt-3 dark:border-zinc-800">
+    <p class="min-w-0 flex-1 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">${description}</p>
+    <div class="flex shrink-0 gap-2">
+      <button type="button" data-prompt-save-cancel class="rounded-md px-3 py-1.5 text-xs font-semibold text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800">Cancel</button>
+      <button type="button" data-prompt-save-submit class="rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-indigo-500">Save prompt</button>
+    </div>
+  </div>
+</div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('prompt-save-dialog')) {
+  customElements.define('prompt-save-dialog', PromptSaveDialogElement);
+}
+
+export default PromptSaveDialogElement;
 
 ====/File: vanilla/PromptTemplateGrid.js/====
 

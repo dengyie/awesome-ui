@@ -170,6 +170,9 @@
 | **`VoiceOrb`** | 语音对话球 | 状态渐变圆盘（listening/speaking/thinking/idle 各自渐变 + 脉冲）、波形条读出、Mute / End call 控件、sm/md/lg 尺寸 |
 | **`ShareChatDialog`** | 分享对话弹窗 | 私有 / 公开链接二选一卡、链接 code 行 + Copy link、未生成链接时 Create link CTA、open=false 不渲染 |
 | **`BrandPromptTable`** | 品牌 Prompt 表格 | 可见性 % / 情感分色（emerald/amber/red）/ 排名 #N、quota 徽章、+ Add Prompt CTA、空状态提示 |
+| **`PromptSaveDialog`** | 保存 Prompt 弹窗 | 文件夹选择、标题 + prompt 正文、{{变量}} chips、可见性说明、Cancel / Save prompt |
+| **`AiTemplatePicker`** | AI 模板选择器 | 分类侧栏（计数徽章）、模板卡 Try it 网格、分类过滤、Run custom AI prompt |
+| **`CreationComposer`** | 创作输入条 | Image Assist 开关、prompt 多行输入、分辨率/数量选择、Create CTA（violet） |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -328,6 +331,9 @@ awesome-ui/
 │    ├── VoiceOrb.tsx
 │    ├── ShareChatDialog.tsx
 │    └── BrandPromptTable.tsx
+│    ├── PromptSaveDialog.tsx
+│    ├── AiTemplatePicker.tsx
+│    └── CreationComposer.tsx
 ├── vue/                       # Vue 3 (SFC) 单文件组件
 │   ├── UiIcon.vue           # 统一零依赖 SVG 图标
 │   ├── ChatPromptInput.vue
@@ -476,6 +482,9 @@ awesome-ui/
 │    ├── VoiceOrb.vue
 │    ├── ShareChatDialog.vue
 │    └── BrandPromptTable.vue
+│    ├── PromptSaveDialog.vue
+│    ├── AiTemplatePicker.vue
+│    └── CreationComposer.vue
 └── vanilla/                   # 原生 JS / Web Components 单文件
     ├── UiIcon.js            # uiIcon() SVG 工厂函数
     ├── ChatPromptInput.js
@@ -624,6 +633,9 @@ awesome-ui/
      ├── VoiceOrb.js
      ├── ShareChatDialog.js
      └── BrandPromptTable.js
+     ├── PromptSaveDialog.js
+     ├── AiTemplatePicker.js
+     └── CreationComposer.js
 ├── docs/                      # 设计与实现规范
 │   ├── design-guidelines.md   # 视觉/交互/动效/无障碍规范 + 验收清单
 │   ├── component-roadmap-v1.md# 新组件任务书（Props 设计 + 素材索引）

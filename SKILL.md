@@ -900,6 +900,21 @@ awesome-ui/
 - **Vanilla 用法**: `<brand-prompt-table quota-used="49" quota-total="50">` + `rows` property；事件 `add-prompt` / `row-click {row}`
 - **特性**: 标题 + N / M prompts quota 徽章、+ Add Prompt indigo CTA、四列表格（Prompt 截断 / 可见性 % / 情感分 >=70 emerald、>=50 amber、否则红 / 排名 #N）、行点击事件、无 rows 时空状态提示。
 
+### 151. `PromptSaveDialog` (保存 Prompt 弹窗)
+- **Props**: `open?`, `title?`, `folder?`, `description?`, `prompt?`, `variables?: string[]`, `onSave?(value)`, `onCancel?()`, `onClose?()`
+- **Vanilla 用法**: `<prompt-save-dialog title="…" folder="…" variables='["company"]'>`；事件 `save {title,prompt,variables}`（vanilla 读取输入框实时值）/ `cancel` / `close`（vanilla 置 open=false 并清空）
+- **特性**: 📁 文件夹下拉、无边框标题输入 + prompt 正文 textarea、+ Add variable 虚线 CTA、{{变量}} indigo chips、底部可见性说明 + Cancel / Save prompt（indigo）。
+
+### 152. `AiTemplatePicker` (AI 模板选择器)
+- **Props**: `open?`, `title?`, `categories?: [{id,label,count}]`, `templates?: [{id,name,description,category?}]`, `activeCategory?`, `onCategoryChange?(id)`, `onTry?(template)`, `onRunCustom?()`, `onClose?()`
+- **Vanilla 用法**: `<ai-template-picker active-category="targeting">` + `categories`/`templates` property；事件 `category-change {id}`（vanilla 内部切换 active-category）/ `try {template}` / `run-custom` / `close`
+- **特性**: 左侧分类栏（选中 indigo 底 + 计数徽章）、右侧 2–3 列模板卡（名称 + 描述 + Try it 描边按钮）、按 category 过滤（无 category 的模板全分类可见）、空状态提示、底部 Run custom AI prompt。
+
+### 153. `CreationComposer` (创作输入条)
+- **Props**: `open?`, `placeholder?`, `imageAssist?`, `resolution?`, `count?`, `resolutions?: string[]`, `counts?: number[]`, `onImageAssistChange?(enabled)`, `onResolutionChange?(resolution)`, `onCountChange?(count)`, `onSubmit?(value)`
+- **Vanilla 用法**: `<creation-composer image-assist="true" resolution="4K">`；事件 `image-assist-change {enabled}`（vanilla 内部切换属性）/ `resolution-change {resolution}` / `count-change {count}` / `submit {prompt,imageAssist,resolution,count}`
+- **特性**: 🖼 附件按钮 + Image Assist 胶囊开关（开时 indigo 底 + 滑块右移 + aria-checked）、💡 灵感按钮、3 行 prompt textarea、分辨率 / N× 数量原生 select、violet Create CTA。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

@@ -693,4 +693,16 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/BrandPromptTable.tsx
    - Vue 3: vue/BrandPromptTable.vue
    - Vanilla: vanilla/BrandPromptTable.js (custom element `<brand-prompt-table>`, attributes `title`/`quota-used`/`quota-total`, property `rows`; events `add-prompt`, `row-click {row}`)
+150. PromptSaveDialog: save prompt dialog — folder picker, title input + prompt body, {{variable}} chips, visibility note, Cancel / Save prompt actions.
+   - React: react/PromptSaveDialog.tsx
+   - Vue 3: vue/PromptSaveDialog.vue
+   - Vanilla: vanilla/PromptSaveDialog.js (custom element `<prompt-save-dialog>`, attributes `open`/`title`/`folder`/`description`/`prompt`/`variables` (JSON); events `save {title,prompt,variables}`, `cancel`, `close`)
+151. AiTemplatePicker: AI template picker — category rail with count badges, Try-it template card grid filtered by category, Run custom AI prompt footer.
+   - React: react/AiTemplatePicker.tsx
+   - Vue 3: vue/AiTemplatePicker.vue
+   - Vanilla: vanilla/AiTemplatePicker.js (custom element `<ai-template-picker>`, attributes `open`/`title`/`active-category`, properties `categories`/`templates` (JSON); events `category-change {id}`, `try {template}`, `run-custom`, `close`)
+152. CreationComposer: floating creation composer — Image Assist switch, prompt textarea, resolution/count selects, violet Create CTA.
+   - React: react/CreationComposer.tsx
+   - Vue 3: vue/CreationComposer.vue
+   - Vanilla: vanilla/CreationComposer.js (custom element `<creation-composer>`, attributes `open`/`placeholder`/`image-assist`/`resolution`/`count`; events `image-assist-change {enabled}`, `resolution-change {resolution}`, `count-change {count}`, `submit {prompt,imageAssist,resolution,count}`)
 
