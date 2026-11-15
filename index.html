@@ -186,12 +186,15 @@
   <script type="module" src="./vanilla/PromptVariantDiff.js"></script>
   <script type="module" src="./vanilla/GuardrailReviewQueue.js"></script>
   <script type="module" src="./vanilla/ContentReviewTable.js"></script>
+  <script type="module" src="./vanilla/QaTestTable.js"></script>
+  <script type="module" src="./vanilla/AppealRestrictionDialog.js"></script>
+  <script type="module" src="./vanilla/ModelPricingCard.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.37.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.38.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -2256,7 +2259,7 @@
     <section id="section-144" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">144 · TraceSpanWaterfall</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.37.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.38.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">AI observability — horizontal span timeline waterfall for an agent/LLM trace (LLM / tool / retrieval color-coded, duration + cost labels).</p>
@@ -2279,7 +2282,7 @@
     <section id="section-145" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">145 · EvalScoreTable</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.37.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.38.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Evaluation report — runs table with score chips + bars (pass/warn/fail tones), test-criteria cards and an "Add criteria" CTA.</p>
@@ -2302,7 +2305,7 @@
     <section id="section-146" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">146 · TokenCostBreakdown</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.37.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.38.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Spend breakdown — stacked cost bar with per-segment legend plus token usage rows (input / output / reasoning).</p>
@@ -2325,7 +2328,7 @@
     <section id="section-147" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">147 · PromptVariantDiff</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.37.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.38.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Prompt engineering — side-by-side prompt version A/B comparison with {{variable}} chip highlighting, change stats and per-version apply buttons.</p>
@@ -2348,7 +2351,7 @@
     <section id="section-148" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">148 · GuardrailReviewQueue</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.37.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.38.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">AI safety — moderation review queue for flagged content: confidence + rule-hit chips, reason tags and approve/reject actions that collapse the card.</p>
@@ -2371,7 +2374,7 @@
     <section id="section-149" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">149 · ContentReviewTable</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.37.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.38.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Pre-publish review — bulk content table with validity icons, tag chips, posting times and "Save as Drafts" / "Schedule Posts" footer actions.</p>
@@ -2386,6 +2389,75 @@
           <content-review-table id="demo-review" title="Review content"></content-review-table>
           <div class="mt-3 flex items-center gap-2">
             <span id="demo-review-status" class="text-[11px] text-zinc-500">Row select / footer CTAs — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-150" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">150 · QaTestTable</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.38.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">AI agent QA — answer test table with row checkboxes, answer-status icons and Good / Acceptable / Poor rating chips (Intercom Fin "Test" pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/QaTestTable.tsx">
+          <div id="demo-qa-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/QaTestTable.vue">
+          <div id="demo-qa-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/QaTestTable.js">
+          <qa-test-table id="demo-qa" title="Fin QA tests"></qa-test-table>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-qa-status" class="text-[11px] text-zinc-500">Row select / checkbox — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-151" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">151 · AppealRestrictionDialog</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.38.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Content moderation — restriction appeal dialog with reason card, 180-day appeal note, policy link and rose Appeal CTA (TikTok "Request another review" pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/AppealRestrictionDialog.tsx">
+          <div id="demo-appeal-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/AppealRestrictionDialog.vue">
+          <div id="demo-appeal-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/AppealRestrictionDialog.js">
+          <appeal-restriction-dialog id="demo-appeal" reason-title="Unsafe Conduct" reason-detail="This content contains depictions, instructions for, or explanations of dangerous stunts by non-professionals."></appeal-restriction-dialog>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-appeal-status" class="text-[11px] text-zinc-500">Appeal / close / back — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-152" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">152 · ModelPricingCard</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.38.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">AI gateway — model pricing card with copyable Model ID and per-million-token input / output pricing rows (Cloudflare AI Playground pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/ModelPricingCard.tsx">
+          <div id="demo-mpricing-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/ModelPricingCard.vue">
+          <div id="demo-mpricing-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/ModelPricingCard.js">
+          <model-pricing-card id="demo-mpricing" model-name="Glm 4.7 Flash" model-id="workers-ai/@cf/zai-org/glm-4.7-flash" input-per-million="0.06" output-per-million="0.40"></model-pricing-card>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-mpricing-status" class="text-[11px] text-zinc-500">Copy ID — events report here.</span>
           </div>
         </div>
       </div>
@@ -5114,6 +5186,34 @@ FAIL tests/ui.test.mjs
         token36.addEventListener('segment-select', (event) => { tokenStatus36.textContent = 'Segment → ' + event.detail.segment.label + ' ($' + event.detail.segment.amountUsd.toFixed(2) + ')'; });
       }
 
+
+      const qa38 = document.getElementById('demo-qa');
+      const qaStatus38 = document.getElementById('demo-qa-status');
+      if (qa38) {
+        qa38.rows = [
+          { id: 'q1', question: 'Does SLMobbin have a community?', rating: 'good' },
+          { id: 'q2', question: 'What if I run into an issue?', rating: 'acceptable' },
+          { id: 'q3', question: 'Is SLMobbin free?', rating: 'poor' },
+          { id: 'q4', question: 'What makes SLMobbin different from other design tools?', rating: 'good' },
+          { id: 'q5', question: 'Hi, I just signed up — where do I start?', answered: false }
+        ];
+        qa38.addEventListener('row-check', (event) => { qaStatus38.textContent = (event.detail.checked ? 'Checked' : 'Unchecked') + ' → ' + event.detail.row.question.slice(0, 40) + '…'; });
+        qa38.addEventListener('row-select', (event) => { qaStatus38.textContent = 'Selected → ' + event.detail.row.question.slice(0, 40) + '…'; });
+      }
+
+      const appeal38 = document.getElementById('demo-appeal');
+      const appealStatus38 = document.getElementById('demo-appeal-status');
+      if (appeal38) {
+        appeal38.addEventListener('appeal', () => { appealStatus38.textContent = 'Appeal submitted — review requested.'; });
+        appeal38.addEventListener('close', () => { appealStatus38.textContent = 'Dialog closed.'; appeal38.setAttribute('open', 'false'); });
+        appeal38.addEventListener('back', () => { appealStatus38.textContent = 'Back to restriction overview.'; });
+      }
+
+      const mpricing38 = document.getElementById('demo-mpricing');
+      const mpricingStatus38 = document.getElementById('demo-mpricing-status');
+      if (mpricing38) {
+        mpricing38.addEventListener('copy-id', (event) => { mpricingStatus38.textContent = 'Copied → ' + event.detail.modelId; });
+      }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');
       const pvdiffStatus37 = document.getElementById('demo-pvdiff-status');

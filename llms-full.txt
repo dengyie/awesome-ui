@@ -1346,6 +1346,108 @@ export const AlertBanner: React.FC<AlertBannerProps> = ({
 
 export default AlertBanner;
 
+====/File: react/AppealRestrictionDialog.tsx/====
+
+import React from "react";
+
+export interface AppealRestrictionDialogProps {
+  open?: boolean;
+  reasonTitle?: string;
+  reasonDetail?: string;
+  policyLabel?: string;
+  appealLabel?: string;
+  backLabel?: string;
+  className?: string;
+  onAppeal?: () => void;
+  onClose?: () => void;
+  onBack?: () => void;
+}
+
+/**
+ * AppealRestrictionDialog - content restriction appeal dialog (TikTok
+ * "Request another review" pattern): reason card, policy link, appeal CTA.
+ */
+export default function AppealRestrictionDialog({
+  open = true,
+  reasonTitle = "Unsafe Conduct",
+  reasonDetail = "This content contains depictions, instructions for, or explanations of dangerous stunts by non-professionals.",
+  policyLabel = "Content Policy",
+  appealLabel = "Appeal",
+  backLabel = "Request another review",
+  className = "",
+  onAppeal,
+  onClose,
+  onBack,
+}: AppealRestrictionDialogProps) {
+  if (!open) return null;
+
+  return (
+    <div
+      data-appeal-dialog
+      className={`w-full max-w-md overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-lg dark:border-zinc-700 dark:bg-zinc-900 ${className}`}
+      role="dialog"
+      aria-label="Request another review"
+    >
+      <div className="flex items-center justify-between px-5 pt-4">
+        <button
+          type="button"
+          data-appeal-back
+          aria-label="Go back"
+          onClick={() => onBack?.()}
+          className="rounded p-1 text-zinc-500 transition-colors hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
+        >
+          ←
+        </button>
+        <button
+          type="button"
+          data-appeal-close
+          aria-label="Close"
+          onClick={() => onClose?.()}
+          className="rounded p-1 text-zinc-500 transition-colors hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div className="px-5 pb-5 pt-2">
+        <h3 data-appeal-title className="text-lg font-bold text-zinc-900 dark:text-zinc-50">
+          {backLabel}
+        </h3>
+        <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+          If you disagree with the content restriction, you have 180 days to appeal.
+        </p>
+
+        <div data-appeal-reason className="mt-4 rounded-lg bg-zinc-50 px-4 py-3 dark:bg-zinc-800/60">
+          <span className="text-xs font-bold text-zinc-900 dark:text-zinc-50">Reason</span>
+          <p data-appeal-reason-title className="mt-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-200">
+            {reasonTitle}
+          </p>
+          <p data-appeal-reason-detail className="mt-1 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">
+            {reasonDetail}
+          </p>
+        </div>
+
+        <div className="mt-4 flex items-center justify-between">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            Read our{" "}
+            <a href="#" className="font-semibold text-zinc-800 underline dark:text-zinc-200">
+              {policyLabel}
+            </a>
+          </p>
+          <button
+            type="button"
+            data-appeal-submit
+            onClick={() => onAppeal?.()}
+            className="rounded-md bg-rose-500 px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-rose-400"
+          >
+            {appealLabel}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 ====/File: react/ApprovalCard.tsx/====
 
 import React from "react";
@@ -9974,6 +10076,86 @@ export default function ModelComparePane({
   );
 }
 
+====/File: react/ModelPricingCard.tsx/====
+
+import React from "react";
+
+export interface ModelPricing {
+  inputPerMillion?: number;
+  outputPerMillion?: number;
+}
+
+export interface ModelPricingCardProps {
+  modelName: string;
+  modelId?: string;
+  pricing?: ModelPricing;
+  currency?: string;
+  className?: string;
+  onCopyId?: (modelId: string) => void;
+}
+
+const fmtPrice = (value: number | undefined, currency: string) =>
+  typeof value === "number" ? `$ ${value.toFixed(2)} / million tokens` : "—";
+
+/**
+ * ModelPricingCard - empty-state model pricing card (Cloudflare AI
+ * Playground pattern): model name, copyable Model ID and per-million-token
+ * input/output pricing rows.
+ */
+export default function ModelPricingCard({
+  modelName,
+  modelId,
+  pricing,
+  currency = "USD",
+  className = "",
+  onCopyId,
+}: ModelPricingCardProps) {
+  return (
+    <div
+      data-model-pricing-card
+      className={`w-full rounded-lg border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <h4
+        data-model-pricing-name
+        className="font-mono text-sm font-bold text-zinc-900 dark:text-zinc-50"
+      >
+        {modelName}
+      </h4>
+      <dl className="mt-3 space-y-2.5 text-xs">
+        <div className="flex items-center justify-between gap-3 border-b border-zinc-100 pb-2.5 dark:border-zinc-800">
+          <dt className="shrink-0 text-zinc-500 dark:text-zinc-400">Model ID</dt>
+          <dd data-model-pricing-id className="flex min-w-0 items-center gap-1.5 font-mono text-zinc-800 dark:text-zinc-200">
+            <span className="truncate">{modelId ?? "—"}</span>
+            {modelId && (
+              <button
+                type="button"
+                data-model-pricing-copy
+                aria-label="Copy model ID"
+                onClick={() => onCopyId?.(modelId)}
+                className="shrink-0 rounded p-0.5 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+              >
+                ⧉
+              </button>
+            )}
+          </dd>
+        </div>
+        <div data-model-pricing-input className="flex items-center justify-between gap-3 border-b border-zinc-100 pb-2.5 dark:border-zinc-800">
+          <dt className="text-zinc-500 dark:text-zinc-400">Input pricing</dt>
+          <dd className="font-mono tabular-nums text-zinc-800 dark:text-zinc-200">
+            {fmtPrice(pricing?.inputPerMillion, currency)}
+          </dd>
+        </div>
+        <div data-model-pricing-output className="flex items-center justify-between gap-3">
+          <dt className="text-zinc-500 dark:text-zinc-400">Output pricing</dt>
+          <dd className="font-mono tabular-nums text-zinc-800 dark:text-zinc-200">
+            {fmtPrice(pricing?.outputPerMillion, currency)}
+          </dd>
+        </div>
+      </dl>
+    </div>
+  );
+}
+
 ====/File: react/ModelSelector.tsx/====
 
 import React, { useState, useRef, useEffect, useMemo } from "react";
@@ -12601,6 +12783,132 @@ export default function PromptVariantDiff({
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+====/File: react/QaTestTable.tsx/====
+
+import React from "react";
+
+export type QaRating = "good" | "acceptable" | "poor";
+
+export interface QaTestRow {
+  id: string;
+  question: string;
+  answered?: boolean;
+  rating?: QaRating;
+}
+
+export interface QaTestTableProps {
+  rows: QaTestRow[];
+  title?: string;
+  className?: string;
+  onRowCheck?: (row: QaTestRow, checked: boolean) => void;
+  onRowSelect?: (row: QaTestRow) => void;
+}
+
+const RATING_CHIP: Record<QaRating, string> = {
+  good: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300",
+  acceptable: "bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300",
+  poor: "bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300",
+};
+
+const RATING_LABEL: Record<QaRating, string> = {
+  good: "Good",
+  acceptable: "Acceptable",
+  poor: "Poor",
+};
+
+/**
+ * QaTestTable - AI answer QA test table (Intercom Fin "Test" pattern):
+ * checkbox + question + answer status icon + tone-colored rating chip.
+ */
+export default function QaTestTable({
+  rows,
+  title = "QA tests",
+  className = "",
+  onRowCheck,
+  onRowSelect,
+}: QaTestTableProps) {
+  const [checked, setChecked] = React.useState<Record<string, boolean>>({});
+
+  const toggle = (row: QaTestRow) => {
+    const next = !checked[row.id];
+    setChecked((c) => ({ ...c, [row.id]: next }));
+    onRowCheck?.(row, next);
+  };
+
+  const answeredCount = rows.filter((r) => r.answered !== false).length;
+
+  return (
+    <div
+      data-qa-test-table
+      className={`w-full overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div className="flex items-center gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+        <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-200">{title}</span>
+        <span className="ml-auto text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">
+          {rows.length} questions
+        </span>
+        <span className="text-[11px] tabular-nums text-emerald-600 dark:text-emerald-400">
+          {answeredCount} answered
+        </span>
+      </div>
+      <table data-qa-rows className="w-full text-left">
+        <thead>
+          <tr className="border-b border-zinc-100 text-[10px] uppercase tracking-wider text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+            <th className="w-10 py-2 pl-4 font-medium"></th>
+            <th className="py-2 pr-3 font-medium">Question</th>
+            <th className="py-2 pr-3 text-center font-medium">Answer status</th>
+            <th className="py-2 pr-4 font-medium">Answer rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr
+              key={row.id}
+              data-qa-row={row.id}
+              onClick={() => onRowSelect?.(row)}
+              className={`border-b border-zinc-50 text-xs transition-colors dark:border-zinc-800/60 ${
+                onRowSelect ? "cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800/60" : ""
+              }`}
+            >
+              <td className="py-2.5 pl-4">
+                <input
+                  type="checkbox"
+                  data-qa-check
+                  aria-label={`Select ${row.question}`}
+                  checked={!!checked[row.id]}
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={() => toggle(row)}
+                  className="h-3.5 w-3.5 cursor-pointer accent-emerald-600"
+                />
+              </td>
+              <td data-qa-question className="max-w-72 truncate py-2.5 pr-3 text-zinc-800 dark:text-zinc-100">
+                {row.question}
+              </td>
+              <td className="py-2.5 pr-3 text-center">
+                {row.answered !== false ? (
+                  <span data-qa-status className="text-emerald-500">✓</span>
+                ) : (
+                  <span data-qa-status className="text-zinc-300 dark:text-zinc-600">—</span>
+                )}
+              </td>
+              <td className="py-2.5 pr-4">
+                {row.rating && (
+                  <span
+                    data-qa-rating={row.rating}
+                    className={`inline rounded-full px-2 py-0.5 text-[10px] font-semibold ${RATING_CHIP[row.rating]}`}
+                  >
+                    {RATING_LABEL[row.rating]}
+                  </span>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -19766,6 +20074,100 @@ const TONE: Record<AlertBannerTone, ToneStyle> = {
 
 const styles = computed(() => TONE[props.tone]);
 </script>
+
+====/File: vue/AppealRestrictionDialog.vue/====
+
+<script setup lang="ts">
+interface Props {
+  open?: boolean;
+  reasonTitle?: string;
+  reasonDetail?: string;
+  policyLabel?: string;
+  appealLabel?: string;
+  backLabel?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  open: true,
+  reasonTitle: 'Unsafe Conduct',
+  reasonDetail:
+    'This content contains depictions, instructions for, or explanations of dangerous stunts by non-professionals.',
+  policyLabel: 'Content Policy',
+  appealLabel: 'Appeal',
+  backLabel: 'Request another review',
+});
+
+const emit = defineEmits<{
+  (e: 'appeal'): void;
+  (e: 'close'): void;
+  (e: 'back'): void;
+}>();
+</script>
+
+<template>
+  <div
+    v-if="props.open"
+    data-appeal-dialog
+    role="dialog"
+    aria-label="Request another review"
+    class="w-full max-w-md overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-lg dark:border-zinc-700 dark:bg-zinc-900"
+  >
+    <div class="flex items-center justify-between px-5 pt-4">
+      <button
+        type="button"
+        data-appeal-back
+        aria-label="Go back"
+        class="rounded p-1 text-zinc-500 transition-colors hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
+        @click="emit('back')"
+      >
+        ←
+      </button>
+      <button
+        type="button"
+        data-appeal-close
+        aria-label="Close"
+        class="rounded p-1 text-zinc-500 transition-colors hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
+        @click="emit('close')"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div class="px-5 pb-5 pt-2">
+      <h3 data-appeal-title class="text-lg font-bold text-zinc-900 dark:text-zinc-50">
+        {{ props.backLabel }}
+      </h3>
+      <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+        If you disagree with the content restriction, you have 180 days to appeal.
+      </p>
+
+      <div data-appeal-reason class="mt-4 rounded-lg bg-zinc-50 px-4 py-3 dark:bg-zinc-800/60">
+        <span class="text-xs font-bold text-zinc-900 dark:text-zinc-50">Reason</span>
+        <p data-appeal-reason-title class="mt-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-200">
+          {{ props.reasonTitle }}
+        </p>
+        <p data-appeal-reason-detail class="mt-1 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">
+          {{ props.reasonDetail }}
+        </p>
+      </div>
+
+      <div class="mt-4 flex items-center justify-between">
+        <p class="text-xs text-zinc-500 dark:text-zinc-400">
+          Read our
+          <a href="#" class="font-semibold text-zinc-800 underline dark:text-zinc-200">{{ props.policyLabel }}</a>
+        </p>
+        <button
+          type="button"
+          data-appeal-submit
+          class="rounded-md bg-rose-500 px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-rose-400"
+          @click="emit('appeal')"
+        >
+          {{ props.appealLabel }}
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
 
 ====/File: vue/ApprovalCard.vue/====
 
@@ -27110,6 +27512,76 @@ const ERROR_TEXT = "Generation failed — try again.";
   </div>
 </template>
 
+====/File: vue/ModelPricingCard.vue/====
+
+<script setup lang="ts">
+export interface ModelPricing {
+  inputPerMillion?: number;
+  outputPerMillion?: number;
+}
+
+interface Props {
+  modelName: string;
+  modelId?: string;
+  pricing?: ModelPricing;
+  currency?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  modelId: '',
+  pricing: () => ({}),
+  currency: 'USD',
+});
+
+const emit = defineEmits<{
+  (e: 'copy-id', modelId: string): void;
+}>();
+
+const fmtPrice = (value: number | undefined) =>
+  typeof value === 'number' ? `$ ${value.toFixed(2)} / million tokens` : '—';
+</script>
+
+<template>
+  <div
+    data-model-pricing-card
+    class="w-full rounded-lg border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900"
+  >
+    <h4 data-model-pricing-name class="font-mono text-sm font-bold text-zinc-900 dark:text-zinc-50">
+      {{ props.modelName }}
+    </h4>
+    <dl class="mt-3 space-y-2.5 text-xs">
+      <div class="flex items-center justify-between gap-3 border-b border-zinc-100 pb-2.5 dark:border-zinc-800">
+        <dt class="shrink-0 text-zinc-500 dark:text-zinc-400">Model ID</dt>
+        <dd data-model-pricing-id class="flex min-w-0 items-center gap-1.5 font-mono text-zinc-800 dark:text-zinc-200">
+          <span class="truncate">{{ props.modelId || '—' }}</span>
+          <button
+            v-if="props.modelId"
+            type="button"
+            data-model-pricing-copy
+            aria-label="Copy model ID"
+            class="shrink-0 rounded p-0.5 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+            @click="emit('copy-id', props.modelId)"
+          >
+            ⧉
+          </button>
+        </dd>
+      </div>
+      <div data-model-pricing-input class="flex items-center justify-between gap-3 border-b border-zinc-100 pb-2.5 dark:border-zinc-800">
+        <dt class="text-zinc-500 dark:text-zinc-400">Input pricing</dt>
+        <dd class="font-mono tabular-nums text-zinc-800 dark:text-zinc-200">
+          {{ fmtPrice(props.pricing?.inputPerMillion) }}
+        </dd>
+      </div>
+      <div data-model-pricing-output class="flex items-center justify-between gap-3">
+        <dt class="text-zinc-500 dark:text-zinc-400">Output pricing</dt>
+        <dd class="font-mono tabular-nums text-zinc-800 dark:text-zinc-200">
+          {{ fmtPrice(props.pricing?.outputPerMillion) }}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</template>
+
 ====/File: vue/ModelSelector.vue/====
 
 <template>
@@ -29203,6 +29675,123 @@ const segments = (text: string) =>
         class="inline rounded bg-red-50 px-1.5 py-0.5 font-mono text-[11px] text-red-700 dark:bg-red-950/60 dark:text-red-300"
       >− {{ v }}</span>
     </div>
+  </div>
+</template>
+
+====/File: vue/QaTestTable.vue/====
+
+<script setup lang="ts">
+export type QaRating = 'good' | 'acceptable' | 'poor';
+
+export interface QaTestRow {
+  id: string;
+  question: string;
+  answered?: boolean;
+  rating?: QaRating;
+}
+
+interface Props {
+  rows?: QaTestRow[];
+  title?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  rows: () => [],
+  title: 'QA tests',
+});
+
+const emit = defineEmits<{
+  (e: 'row-check', row: QaTestRow, checked: boolean): void;
+  (e: 'row-select', row: QaTestRow): void;
+}>();
+
+import { ref } from 'vue';
+
+const checked = ref<Record<string, boolean>>({});
+
+const toggle = (row: QaTestRow) => {
+  const next = !checked.value[row.id];
+  checked.value = { ...checked.value, [row.id]: next };
+  emit('row-check', row, next);
+};
+
+const answeredCount = props.rows.filter((r) => r.answered !== false).length;
+
+const ratingChip: Record<string, string> = {
+  good: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300',
+  acceptable: 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300',
+  poor: 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300',
+};
+
+const ratingLabel: Record<string, string> = {
+  good: 'Good',
+  acceptable: 'Acceptable',
+  poor: 'Poor',
+};
+</script>
+
+<template>
+  <div
+    data-qa-test-table
+    class="w-full overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900"
+  >
+    <div class="flex items-center gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+      <span class="text-xs font-semibold text-zinc-700 dark:text-zinc-200">{{ props.title }}</span>
+      <span class="ml-auto text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">
+        {{ props.rows.length }} questions
+      </span>
+      <span class="text-[11px] tabular-nums text-emerald-600 dark:text-emerald-400">
+        {{ answeredCount }} answered
+      </span>
+    </div>
+    <table data-qa-rows class="w-full text-left">
+      <thead>
+        <tr class="border-b border-zinc-100 text-[10px] uppercase tracking-wider text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+          <th class="w-10 py-2 pl-4 font-medium"></th>
+          <th class="py-2 pr-3 font-medium">Question</th>
+          <th class="py-2 pr-3 text-center font-medium">Answer status</th>
+          <th class="py-2 pr-4 font-medium">Answer rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="row in props.rows"
+          :key="row.id"
+          :data-qa-row="row.id"
+          class="cursor-pointer border-b border-zinc-50 text-xs transition-colors hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/60"
+          @click="emit('row-select', row)"
+        >
+          <td class="py-2.5 pl-4">
+            <input
+              type="checkbox"
+              data-qa-check
+              :aria-label="'Select ' + row.question"
+              :checked="!!checked[row.id]"
+              @click.stop
+              @change="toggle(row)"
+              class="h-3.5 w-3.5 cursor-pointer accent-emerald-600"
+            />
+          </td>
+          <td data-qa-question class="max-w-72 truncate py-2.5 pr-3 text-zinc-800 dark:text-zinc-100">
+            {{ row.question }}
+          </td>
+          <td class="py-2.5 pr-3 text-center">
+            <span v-if="row.answered !== false" data-qa-status class="text-emerald-500">✓</span>
+            <span v-else data-qa-status class="text-zinc-300 dark:text-zinc-600">—</span>
+          </td>
+          <td class="py-2.5 pr-4">
+            <span
+              v-if="row.rating"
+              :data-qa-rating="row.rating"
+              class="inline rounded-full px-2 py-0.5 text-[10px] font-semibold"
+              :class="ratingChip[row.rating]"
+            >
+              {{ ratingLabel[row.rating] }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -35734,6 +36323,96 @@ if (typeof customElements !== 'undefined' && !customElements.get('alert-banner')
   customElements.define('alert-banner', AlertBannerElement);
 }
 export default AlertBannerElement;
+
+====/File: vanilla/AppealRestrictionDialog.js/====
+
+/**
+ * AppealRestrictionDialog - Vanilla Web Component
+ * Usage: <appeal-restriction-dialog reason-title="..." reason-detail="..."></appeal-restriction-dialog>
+ * Attributes: open, reason-title, reason-detail, policy-label, appeal-label, back-label
+ * Events: appeal, close, back
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class AppealRestrictionDialogElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['open', 'reason-title', 'reason-detail', 'policy-label', 'appeal-label', 'back-label'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+  }
+
+  connectedCallback() {
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        if (event.target.closest('[data-appeal-submit]')) {
+          this.dispatchEvent(new CustomEvent('appeal'));
+        } else if (event.target.closest('[data-appeal-close]')) {
+          this.dispatchEvent(new CustomEvent('close'));
+        } else if (event.target.closest('[data-appeal-back]')) {
+          this.dispatchEvent(new CustomEvent('back'));
+        }
+      });
+    }
+  }
+
+  attributeChangedCallback() {
+    if (this._bound === false && this.innerHTML === '') return;
+    this.render();
+  }
+
+  render() {
+    if (this.getAttribute('open') === 'false') {
+      this.innerHTML = '';
+      return;
+    }
+    const reasonTitle = escapeAttribute(this.getAttribute('reason-title') || 'Unsafe Conduct');
+    const reasonDetail = escapeAttribute(
+      this.getAttribute('reason-detail') ||
+        'This content contains depictions, instructions for, or explanations of dangerous stunts by non-professionals.'
+    );
+    const policyLabel = escapeAttribute(this.getAttribute('policy-label') || 'Content Policy');
+    const appealLabel = escapeAttribute(this.getAttribute('appeal-label') || 'Appeal');
+    const backLabel = escapeAttribute(this.getAttribute('back-label') || 'Request another review');
+
+    this.innerHTML = `<div data-appeal-dialog role="dialog" aria-label="Request another review" class="w-full max-w-md overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
+  <div class="flex items-center justify-between px-5 pt-4">
+    <button type="button" data-appeal-back aria-label="Go back" class="rounded p-1 text-zinc-500 transition-colors hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800">←</button>
+    <button type="button" data-appeal-close aria-label="Close" class="rounded p-1 text-zinc-500 transition-colors hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800">✕</button>
+  </div>
+  <div class="px-5 pb-5 pt-2">
+    <h3 data-appeal-title class="text-lg font-bold text-zinc-900 dark:text-zinc-50">${backLabel}</h3>
+    <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">If you disagree with the content restriction, you have 180 days to appeal.</p>
+    <div data-appeal-reason class="mt-4 rounded-lg bg-zinc-50 px-4 py-3 dark:bg-zinc-800/60">
+      <span class="text-xs font-bold text-zinc-900 dark:text-zinc-50">Reason</span>
+      <p data-appeal-reason-title class="mt-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-200">${reasonTitle}</p>
+      <p data-appeal-reason-detail class="mt-1 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">${reasonDetail}</p>
+    </div>
+    <div class="mt-4 flex items-center justify-between">
+      <p class="text-xs text-zinc-500 dark:text-zinc-400">Read our <a href="#" class="font-semibold text-zinc-800 underline dark:text-zinc-200">${policyLabel}</a></p>
+      <button type="button" data-appeal-submit class="rounded-md bg-rose-500 px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-rose-400">${appealLabel}</button>
+    </div>
+  </div>
+</div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('appeal-restriction-dialog')) {
+  customElements.define('appeal-restriction-dialog', AppealRestrictionDialogElement);
+}
+
+export default AppealRestrictionDialogElement;
 
 ====/File: vanilla/ApprovalCard.js/====
 
@@ -45711,6 +46390,91 @@ if (typeof customElements !== 'undefined' && !customElements.get('model-compare-
 
 export default ModelComparePaneElement;
 
+====/File: vanilla/ModelPricingCard.js/====
+
+/**
+ * ModelPricingCard - Vanilla Web Component
+ * Usage: <model-pricing-card model-name="Glm 4.7 Flash" model-id="workers-ai/@cf/..." input-per-million="0.06" output-per-million="0.40"></model-pricing-card>
+ * Attributes: model-name, model-id, input-per-million, output-per-million
+ * Events: copy-id (detail {modelId})
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const fmtPrice = (raw) => {
+  const n = Number(raw);
+  return raw !== null && Number.isFinite(n) ? `$ ${n.toFixed(2)} / million tokens` : '—';
+};
+
+export class ModelPricingCardElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['model-name', 'model-id', 'input-per-million', 'output-per-million'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+  }
+
+  connectedCallback() {
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        const copyBtn = event.target.closest('[data-model-pricing-copy]');
+        if (!copyBtn) return;
+        const modelId = this.getAttribute('model-id') || '';
+        if (modelId) this.dispatchEvent(new CustomEvent('copy-id', { detail: { modelId } }));
+      });
+    }
+  }
+
+  attributeChangedCallback() {
+    if (this._bound === false && this.innerHTML === '') return;
+    this.render();
+  }
+
+  render() {
+    const modelName = escapeAttribute(this.getAttribute('model-name') || '');
+    const modelId = this.getAttribute('model-id') || '';
+    const inputPrice = fmtPrice(this.getAttribute('input-per-million'));
+    const outputPrice = fmtPrice(this.getAttribute('output-per-million'));
+
+    this.innerHTML = `<div data-model-pricing-card class="w-full rounded-lg border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
+  <h4 data-model-pricing-name class="font-mono text-sm font-bold text-zinc-900 dark:text-zinc-50">${modelName}</h4>
+  <dl class="mt-3 space-y-2.5 text-xs">
+    <div class="flex items-center justify-between gap-3 border-b border-zinc-100 pb-2.5 dark:border-zinc-800">
+      <dt class="shrink-0 text-zinc-500 dark:text-zinc-400">Model ID</dt>
+      <dd data-model-pricing-id class="flex min-w-0 items-center gap-1.5 font-mono text-zinc-800 dark:text-zinc-200">
+        <span class="truncate">${escapeAttribute(modelId || '—')}</span>
+        ${modelId ? '<button type="button" data-model-pricing-copy aria-label="Copy model ID" class="shrink-0 rounded p-0.5 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300">⧉</button>' : ''}
+      </dd>
+    </div>
+    <div data-model-pricing-input class="flex items-center justify-between gap-3 border-b border-zinc-100 pb-2.5 dark:border-zinc-800">
+      <dt class="text-zinc-500 dark:text-zinc-400">Input pricing</dt>
+      <dd class="font-mono tabular-nums text-zinc-800 dark:text-zinc-200">${inputPrice}</dd>
+    </div>
+    <div data-model-pricing-output class="flex items-center justify-between gap-3">
+      <dt class="text-zinc-500 dark:text-zinc-400">Output pricing</dt>
+      <dd class="font-mono tabular-nums text-zinc-800 dark:text-zinc-200">${outputPrice}</dd>
+    </div>
+  </dl>
+</div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('model-pricing-card')) {
+  customElements.define('model-pricing-card', ModelPricingCardElement);
+}
+
+export default ModelPricingCardElement;
+
 ====/File: vanilla/ModelSelector.js/====
 
 import uiIcon from './UiIcon.js';
@@ -48958,6 +49722,140 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-variant
 }
 
 export default PromptVariantDiffElement;
+
+====/File: vanilla/QaTestTable.js/====
+
+/**
+ * QaTestTable - Vanilla Web Component
+ * Usage: <qa-test-table title="QA tests" rows='[...]'></qa-test-table>
+ * Attributes: title, rows (JSON: [{id,question,answered?,rating?}])
+ *             rating: 'good' | 'acceptable' | 'poor'
+ * Events: row-check (detail {row,checked}), row-select (detail {row})
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const parseJsonAttr = (raw, fallback) => {
+  try {
+    const parsed = raw ? JSON.parse(raw) : null;
+    return parsed ?? fallback;
+  } catch (e) {
+    return fallback;
+  }
+};
+
+const RATING_CHIP = {
+  good: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300',
+  acceptable: 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300',
+  poor: 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300',
+};
+
+const RATING_LABEL = { good: 'Good', acceptable: 'Acceptable', poor: 'Poor' };
+
+export class QaTestTableElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'rows'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._rows = [];
+    this._checked = {};
+  }
+
+  connectedCallback() {
+    if (!this._rows.length) this._rows = parseJsonAttr(this.getAttribute('rows'), []);
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        const checkEl = event.target.closest('[data-qa-check]');
+        if (checkEl) {
+          const rowEl = checkEl.closest('[data-qa-row]');
+          const row = this._rows.find((r) => r.id === rowEl?.getAttribute('data-qa-row'));
+          if (row) {
+            const next = !this._checked[row.id];
+            this._checked = { ...this._checked, [row.id]: next };
+            this.render();
+            this.dispatchEvent(new CustomEvent('row-check', { detail: { row, checked: next } }));
+          }
+          return;
+        }
+        const rowEl = event.target.closest('[data-qa-row]');
+        if (!rowEl) return;
+        const row = this._rows.find((r) => r.id === rowEl.getAttribute('data-qa-row'));
+        if (row) this.dispatchEvent(new CustomEvent('row-select', { detail: { row } }));
+      });
+    }
+  }
+
+  attributeChangedCallback(name) {
+    if (name === 'rows' && !this._rows.length) {
+      this._rows = parseJsonAttr(this.getAttribute('rows'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this.render();
+  }
+
+  get rows() { return this._rows; }
+  set rows(v) {
+    this._rows = Array.isArray(v) ? v.map((r) => ({ ...r })) : [];
+    this.render();
+  }
+
+  render() {
+    const rows = this._rows;
+    const title = escapeAttribute(this.getAttribute('title') || 'QA tests');
+    const answeredCount = rows.filter((r) => r.answered !== false).length;
+
+    const body = rows.map((row) => {
+      const rating = row.rating && RATING_LABEL[row.rating]
+        ? `<span data-qa-rating="${escapeAttribute(row.rating)}" class="inline rounded-full px-2 py-0.5 text-[10px] font-semibold ${RATING_CHIP[row.rating]}">${RATING_LABEL[row.rating]}</span>`
+        : '';
+      const status = row.answered !== false
+        ? '<span data-qa-status class="text-emerald-500">✓</span>'
+        : '<span data-qa-status class="text-zinc-300 dark:text-zinc-600">—</span>';
+      return `<tr data-qa-row="${escapeAttribute(row.id)}" class="cursor-pointer border-b border-zinc-50 text-xs transition-colors hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/60">
+        <td class="py-2.5 pl-4"><input type="checkbox" data-qa-check aria-label="Select ${escapeAttribute(row.question)}" ${this._checked[row.id] ? 'checked' : ''} class="h-3.5 w-3.5 cursor-pointer accent-emerald-600"></td>
+        <td data-qa-question class="max-w-72 truncate py-2.5 pr-3 text-zinc-800 dark:text-zinc-100">${escapeAttribute(row.question)}</td>
+        <td class="py-2.5 pr-3 text-center">${status}</td>
+        <td class="py-2.5 pr-4">${rating}</td>
+      </tr>`;
+    }).join('');
+
+    this.innerHTML = `<div data-qa-test-table class="w-full overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+  <div class="flex items-center gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+    <span class="text-xs font-semibold text-zinc-700 dark:text-zinc-200">${title}</span>
+    <span class="ml-auto text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">${rows.length} questions</span>
+    <span class="text-[11px] tabular-nums text-emerald-600 dark:text-emerald-400">${answeredCount} answered</span>
+  </div>
+  <table data-qa-rows class="w-full text-left">
+    <thead>
+      <tr class="border-b border-zinc-100 text-[10px] uppercase tracking-wider text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+        <th class="w-10 py-2 pl-4 font-medium"></th>
+        <th class="py-2 pr-3 font-medium">Question</th>
+        <th class="py-2 pr-3 text-center font-medium">Answer status</th>
+        <th class="py-2 pr-4 font-medium">Answer rating</th>
+      </tr>
+    </thead>
+    <tbody>${body}</tbody>
+  </table>
+</div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('qa-test-table')) {
+  customElements.define('qa-test-table', QaTestTableElement);
+}
+
+export default QaTestTableElement;
 
 ====/File: vanilla/QuoteMasonry.js/====
 

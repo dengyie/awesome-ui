@@ -945,6 +945,21 @@ awesome-ui/
 - **Vanilla 用法**: `<content-review-table title="Review content">` + `rows` property；事件 `row-select {row}` / `save-drafts` / `schedule`
 - **特性**: 头部 ✓ {n} valid / ⚠ {n} errors 计数、# / Text / Tags / Posting time / Status 表格（首 tag sky chip + +{n}、时间默认 Add to Queue）、行点击回调、底部 Save as Drafts（描边）+ Schedule Posts（emerald）CTA。
 
+### 160. `QaTestTable` (QA 测试表)
+- **Props**: `rows?: [{id,question,answered?,rating?: 'good'|'acceptable'|'poor'}]`, `title?`, `onRowCheck?(row,checked)`, `onRowSelect?(row)`
+- **Vanilla 用法**: `<qa-test-table title="Fin QA tests">` + `rows` property；事件 `row-check {row,checked}` / `row-select {row}`
+- **特性**: "N questions / M answered" 头部、行复选框（点击 stopPropagation）、✓ emerald / — zinc 回答状态、Good/Acceptable/Poor 评级 chips（emerald/amber/red）、行点击回调。
+
+### 161. `AppealRestrictionDialog` (限制申诉弹窗)
+- **Props**: `open?=true`, `reasonTitle?`, `reasonDetail?`, `policyLabel?`, `appealLabel?`, `backLabel?`, `onAppeal?()`, `onClose?()`, `onBack?()`
+- **Vanilla 用法**: `<appeal-restriction-dialog reason-title="Unsafe Conduct">`；事件 `appeal` / `close` / `back`；`open="false"` 清空内容
+- **特性**: ← 返回 / ✕ 关闭按钮、"180 days to appeal" 提示、原因卡（标题 + 详情）、Read our Content Policy 链接、rose Appeal CTA（Request another review）。
+
+### 162. `ModelPricingCard` (模型定价卡)
+- **Props**: `modelName: string`, `modelId?`, `pricing?: {inputPerMillion?, outputPerMillion?}`, `currency?`, `onCopyId?(modelId)`
+- **Vanilla 用法**: `<model-pricing-card model-name="Glm 4.7 Flash" model-id="..." input-per-million="0.06" output-per-million="0.40">`；事件 `copy-id {modelId}`
+- **特性**: 等宽粗体模型名、Model ID 行（truncate + ⧉ 复制按钮，无 id 不渲染）、Input / Output pricing 行（`$ 0.06 / million tokens` 或 —）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

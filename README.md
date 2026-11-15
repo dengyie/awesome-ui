@@ -179,6 +179,9 @@
 | **`PromptVariantDiff`** | Prompt 版本对比 | 双栏 A/B 面板、{{变量}} indigo chips、+N/−N/~text 变更统计、Use this version 按钮、变量增删 chips |
 | **`GuardrailReviewQueue`** | 审核队列 | 待审卡（作者 + 置信度 + 规则 chip + 内容面板 + 原因 tags）、Approve/Reject、已决项折叠一行 |
 | **`ContentReviewTable`** | 内容审核表 | 编号行 + ✓/⚠ 状态、tag chip + +N、发布时间、头部 valid/errors 计数、Save as Drafts / Schedule Posts CTA |
+| **`QaTestTable`** | QA 测试表 | 行复选框、✓/— 回答状态、Good/Acceptable/Poor 评级 chips、"N questions / M answered" 头部计数 |
+| **`AppealRestrictionDialog`** | 限制申诉弹窗 | 原因卡（标题 + 详情）、180 天申诉提示、Content Policy 链接、rose Appeal CTA、← 返回 / ✕ 关闭 |
+| **`ModelPricingCard`** | 模型定价卡 | 等宽模型名、可复制 Model ID（⧉ 按钮 + copy-id 事件）、每百万 token 输入/输出定价行 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -342,6 +345,9 @@ awesome-ui/
 │   ├── PromptVariantDiff.tsx
 │   ├── GuardrailReviewQueue.tsx
 │   ├── ContentReviewTable.tsx
+│   ├── QaTestTable.tsx
+│   ├── AppealRestrictionDialog.tsx
+│   ├── ModelPricingCard.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -499,6 +505,9 @@ awesome-ui/
 │   ├── PromptVariantDiff.vue
 │   ├── GuardrailReviewQueue.vue
 │   ├── ContentReviewTable.vue
+│   ├── QaTestTable.vue
+│   ├── AppealRestrictionDialog.vue
+│   ├── ModelPricingCard.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -655,7 +664,10 @@ awesome-ui/
      ├── AiTemplatePicker.js
 │   ├── PromptVariantDiff.js
 │   ├── GuardrailReviewQueue.js
-│   └── ContentReviewTable.js
+│   ├── ContentReviewTable.js
+│   ├── QaTestTable.js
+│   ├── AppealRestrictionDialog.js
+│   └── ModelPricingCard.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

@@ -725,6 +725,18 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/GuardrailReviewQueue.tsx
    - Vue 3: vue/GuardrailReviewQueue.vue
    - Vanilla: vanilla/GuardrailReviewQueue.js (custom element `<guardrail-review-queue>`, attributes `title`/`items` JSON; property `items`; events `approve {item}`, `reject {item}`)
+160. QaTestTable: AI agent QA answer-test table — row checkboxes, answer-status icons, Good / Acceptable / Poor rating chips, answered-count header (Intercom Fin "Test" pattern).
+   - React: react/QaTestTable.tsx
+   - Vue 3: vue/QaTestTable.vue
+   - Vanilla: vanilla/QaTestTable.js (custom element `<qa-test-table>`, attributes `title`/`rows` JSON; property `rows`; events `row-check {row,checked}`, `row-select {row}`)
+161. AppealRestrictionDialog: content moderation restriction appeal dialog — reason card, 180-day appeal note, policy link, rose Appeal CTA (TikTok pattern).
+   - React: react/AppealRestrictionDialog.tsx
+   - Vue 3: vue/AppealRestrictionDialog.vue
+   - Vanilla: vanilla/AppealRestrictionDialog.js (custom element `<appeal-restriction-dialog>`, attributes `open`/`reason-title`/`reason-detail`/`policy-label`/`appeal-label`/`back-label`; events `appeal`, `close`, `back`)
+162. ModelPricingCard: AI gateway model pricing card — copyable Model ID, per-million-token input / output pricing rows (Cloudflare AI Playground pattern).
+   - React: react/ModelPricingCard.tsx
+   - Vue 3: vue/ModelPricingCard.vue
+   - Vanilla: vanilla/ModelPricingCard.js (custom element `<model-pricing-card>`, attributes `model-name`/`model-id`/`input-per-million`/`output-per-million`; event `copy-id {modelId}`)
 159. ContentReviewTable: pre-publish content review table — numbered rows with validity icons, tag chips + extra count, posting times, valid/error header counts, Save as Drafts / Schedule Posts CTAs.
    - React: react/ContentReviewTable.tsx
    - Vue 3: vue/ContentReviewTable.vue
