@@ -185,6 +185,9 @@
 | **`AiResearchPanel`** | AI 研究面板 | Apollo "Research with AI" 侧滑面板：研究模板卡片栈、每卡 Try it CTA、Run custom AI prompt 底部操作、空态提示 |
 | **`ApiKeyTable`** | API 密钥表 | OpenAI Platform 风格密钥管理：掩码 key 预览、创建日期、Active / Revoked 状态徽章、行级 Copy / Revoke 操作、Create CTA 与活跃计数 |
 | **`VoiceSessionHistory`** | 语音会话历史 | ElevenLabs Voice 历史侧栏：标题 / 日期 / 时长行、Completed / Running / Failed 状态徽章、行级重播按钮、计数头部与空态 |
+| **`AiRewriteMenu`** | AI 改写菜单 | Intercom 创作器 AI 菜单：Expand / Rephrase / 语气变体 / Fix grammar / Translate 动作、功能徽章、触发按钮开合与 select / toggle 事件 |
+| **`PromptPerformanceTable`** | 提示词表现表 | Peec AI 提示词追踪表：Visibility %、Sentiment 分（含 ▲▼— 趋势）、Position #、Mentions 列、行点击与 Export CTA |
+| **`ShareAccessDialog`** | 分享访问弹窗 | Superhuman 分享对话弹窗：邀请输入框、有权成员行（头像 / 姓名 / 邮箱 / 权限角色 + 移除）、Copy link 页脚与开合控制 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -354,6 +357,9 @@ awesome-ui/
 │   ├── AiResearchPanel.tsx
 │   ├── ApiKeyTable.tsx
 │   ├── VoiceSessionHistory.tsx
+│   ├── AiRewriteMenu.tsx
+│   ├── PromptPerformanceTable.tsx
+│   ├── ShareAccessDialog.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -517,6 +523,9 @@ awesome-ui/
 │   ├── AiResearchPanel.vue
 │   ├── ApiKeyTable.vue
 │   ├── VoiceSessionHistory.vue
+│   ├── AiRewriteMenu.vue
+│   ├── PromptPerformanceTable.vue
+│   ├── ShareAccessDialog.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -680,6 +689,9 @@ awesome-ui/
 │   ├── AiResearchPanel.js
 │   ├── ApiKeyTable.js
 │   └── VoiceSessionHistory.js
+│   ├── AiRewriteMenu.js
+│   ├── PromptPerformanceTable.js
+│   └── ShareAccessDialog.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

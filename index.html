@@ -192,12 +192,15 @@
   <script type="module" src="./vanilla/AiResearchPanel.js"></script>
   <script type="module" src="./vanilla/ApiKeyTable.js"></script>
   <script type="module" src="./vanilla/VoiceSessionHistory.js"></script>
+  <script type="module" src="./vanilla/AiRewriteMenu.js"></script>
+  <script type="module" src="./vanilla/PromptPerformanceTable.js"></script>
+  <script type="module" src="./vanilla/ShareAccessDialog.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.39.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.40.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -2532,6 +2535,77 @@
           <div class="mt-3 flex items-center gap-2">
             <span id="demo-voice-history-status" class="text-[11px] text-zinc-500">Select / play — events report here.</span>
           </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-156" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">156 · AiRewriteMenu</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.40.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">AI writing assistant — composer rewrite menu with Expand / Rephrase / tone variants / Fix grammar / Translate actions, feature badge support and trigger toggle (Intercom pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/AiRewriteMenu.tsx">
+          <div id="demo-rewrite-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/AiRewriteMenu.vue">
+          <div id="demo-rewrite-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/AiRewriteMenu.js">
+          <ai-rewrite-menu id="demo-rewrite"></ai-rewrite-menu>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-rewrite-status" class="text-[11px] text-zinc-500">Toggle trigger / pick an action — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-157" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">157 · PromptPerformanceTable</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.40.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">AI visibility tracking — prompt performance table with Visibility %, Sentiment score (+ trend mark), Position # and Mentions columns, row click and Export CTA (Peec AI pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/PromptPerformanceTable.tsx">
+          <div id="demo-pperf-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/PromptPerformanceTable.vue">
+          <div id="demo-pperf-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/PromptPerformanceTable.js">
+          <prompt-performance-table id="demo-pperf"></prompt-performance-table>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-pperf-status" class="text-[11px] text-zinc-500">Click a row / Export — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-158" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">158 · ShareAccessDialog</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.40.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Sharing — conversation share dialog with invite-by-email input, people-with-access rows (avatar / name / email / permission role + remove) and Copy link footer (Superhuman pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/ShareAccessDialog.tsx">
+          <div id="demo-share-access-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/ShareAccessDialog.vue">
+          <div id="demo-share-access-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/ShareAccessDialog.js">
+          <div class="relative h-64 overflow-hidden rounded-lg">
+            <share-access-dialog id="demo-share-access"></share-access-dialog>
+          </div>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-share-access-status" class="text-[11px] text-zinc-500">Copy link / remove a person / close — events report here.</span>
+          </div>
+          <button type="button" id="demo-share-access-reopen" class="mt-2 rounded border border-zinc-700 px-2.5 py-1 text-[11px] font-medium text-zinc-300 hover:bg-zinc-800">Reopen dialog</button>
         </div>
       </div>
     </section>
@@ -5324,6 +5398,60 @@ FAIL tests/ui.test.mjs
         ];
         voiceHistory39.addEventListener('select', (event) => { voiceHistoryStatus39.textContent = 'Selected → ' + event.detail.session.title; });
         voiceHistory39.addEventListener('play', (event) => { voiceHistoryStatus39.textContent = 'Playing → ' + event.detail.session.title; });
+      }
+
+      const rewrite40 = document.getElementById('demo-rewrite');
+      const rewriteStatus40 = document.getElementById('demo-rewrite-status');
+      if (rewrite40) {
+        rewrite40.actions = [
+          { id: 'm1', label: 'Expand' },
+          { id: 'm2', label: 'Rephrase' },
+          { id: 'm3', label: 'My tone of voice', badge: 'Get feature' },
+          { id: 'm4', label: 'More friendly' },
+          { id: 'm5', label: 'More formal' },
+          { id: 'm6', label: 'Fix grammar & spelling' },
+          { id: 'm7', label: 'Translate to...' }
+        ];
+        rewrite40.addEventListener('toggle', (event) => { rewriteStatus40.textContent = event.detail.open ? 'Menu opened.' : 'Menu closed.'; });
+        rewrite40.addEventListener('select', (event) => { rewriteStatus40.textContent = 'Selected → ' + event.detail.action.label; });
+      }
+
+      const pperf40 = document.getElementById('demo-pperf');
+      const pperfStatus40 = document.getElementById('demo-pperf-status');
+      if (pperf40) {
+        pperf40.rows = [
+          { id: 'p1', prompt: 'best ai note taking app', visibility: '68%', sentiment: '8.2', position: '#1', mentions: '42', trend: 'up' },
+          { id: 'p2', prompt: 'how to summarize lectures', visibility: '31%', sentiment: '7.4', position: '#4', mentions: '17', trend: 'down' },
+          { id: 'p3', prompt: 'meeting notes template', visibility: '54%', sentiment: '7.9', position: '#2', mentions: '28', trend: 'flat' },
+          { id: 'p4', prompt: 'voice memo transcription tool', visibility: '12%', sentiment: '6.1', position: '#9', mentions: '5', trend: 'up' }
+        ];
+        pperf40.addEventListener('export', () => { pperfStatus40.textContent = 'Export clicked.'; });
+        pperf40.addEventListener('row-click', (event) => { pperfStatus40.textContent = 'Row → ' + event.detail.row.prompt; });
+      }
+
+      const shareAccess40 = document.getElementById('demo-share-access');
+      const shareAccessStatus40 = document.getElementById('demo-share-access-status');
+      const shareAccessReopen40 = document.getElementById('demo-share-access-reopen');
+      if (shareAccess40) {
+        shareAccess40.people = [
+          { id: 'u1', name: 'Alex Smith', email: 'alex@team.com', role: 'Publisher' },
+          { id: 'u2', name: 'Brook Taylor', email: 'brook@team.com' },
+          { id: 'u3', name: 'Casey Morgan', email: 'casey@team.com', role: 'Viewer' }
+        ];
+        shareAccess40.addEventListener('copy-link', (event) => { shareAccessStatus40.textContent = 'Copied → ' + event.detail.url; });
+        shareAccess40.addEventListener('remove-person', (event) => { shareAccessStatus40.textContent = 'Removed → ' + event.detail.person.name; });
+        shareAccess40.addEventListener('close', () => { shareAccessStatus40.textContent = 'Dialog closed.'; });
+      }
+      if (shareAccessReopen40 && shareAccess40) {
+        shareAccessReopen40.addEventListener('click', () => {
+          shareAccess40.people = [
+            { id: 'u1', name: 'Alex Smith', email: 'alex@team.com', role: 'Publisher' },
+            { id: 'u2', name: 'Brook Taylor', email: 'brook@team.com' },
+            { id: 'u3', name: 'Casey Morgan', email: 'casey@team.com', role: 'Viewer' }
+          ];
+          shareAccess40.open = true;
+          shareAccessStatus40.textContent = 'Dialog reopened.';
+        });
       }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');

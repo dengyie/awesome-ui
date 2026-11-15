@@ -1185,6 +1185,82 @@ export default function AiResearchPanel({
   );
 }
 
+====/File: react/AiRewriteMenu.tsx/====
+
+import React from "react";
+
+export interface RewriteAction {
+  id: string;
+  label: string;
+  badge?: string;
+}
+
+export interface AiRewriteMenuProps {
+  open?: boolean;
+  triggerLabel?: string;
+  actions?: RewriteAction[];
+  className?: string;
+  onSelect?: (action: RewriteAction) => void;
+  onToggle?: () => void;
+}
+
+/**
+ * AiRewriteMenu - Intercom composer AI rewrite menu: a trigger button that
+ * opens a popover of writing-assistant actions (Expand, Rephrase, tone
+ * variants, Fix grammar, Translate) with optional feature badges.
+ */
+export default function AiRewriteMenu({
+  open = false,
+  triggerLabel = "Rewrite",
+  actions = [],
+  className = "",
+  onSelect,
+  onToggle,
+}: AiRewriteMenuProps) {
+  return (
+    <div data-rewrite-menu-root className={`relative inline-block ${className}`}>
+      <button
+        type="button"
+        data-rewrite-trigger
+        aria-expanded={open}
+        onClick={() => onToggle?.()}
+        className="flex items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+      >
+        <span aria-hidden="true" className="text-indigo-500">✦</span>
+        {triggerLabel}
+        <span aria-hidden="true" className="text-zinc-400">▾</span>
+      </button>
+      {open && actions.length > 0 && (
+        <div
+          data-rewrite-menu
+          className="absolute bottom-full left-0 z-10 mb-2 w-60 overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-lg dark:border-zinc-700 dark:bg-zinc-900"
+        >
+          {actions.map((action) => (
+            <button
+              key={action.id}
+              type="button"
+              data-rewrite-item={action.id}
+              onClick={() => onSelect?.(action)}
+              className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-xs text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            >
+              <span data-rewrite-item-label>{action.label}</span>
+              {action.badge && (
+                <span
+                  data-rewrite-item-badge
+                  className="inline-flex shrink-0 items-center gap-1 rounded-full bg-indigo-50 px-1.5 py-0.5 text-[10px] font-semibold text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-300"
+                >
+                  <span aria-hidden="true">↑</span>
+                  {action.badge}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 ====/File: react/AiTemplatePicker.tsx/====
 
 import React from "react";
@@ -12702,6 +12778,113 @@ export const PromptLibrary: React.FC<PromptLibraryProps> = ({
 
 export default PromptLibrary;
 
+====/File: react/PromptPerformanceTable.tsx/====
+
+import React from "react";
+
+export interface PromptPerformanceRow {
+  id: string;
+  prompt: string;
+  visibility: string;
+  sentiment: string;
+  position: string;
+  mentions: string;
+  trend?: "up" | "down" | "flat";
+}
+
+export interface PromptPerformanceTableProps {
+  title?: string;
+  exportLabel?: string;
+  rows?: PromptPerformanceRow[];
+  className?: string;
+  onExport?: () => void;
+  onRowClick?: (row: PromptPerformanceRow) => void;
+}
+
+const trendIcon = (trend?: "up" | "down" | "flat") => {
+  if (trend === "up") return <span aria-hidden="true" className="text-emerald-500">▲</span>;
+  if (trend === "down") return <span aria-hidden="true" className="text-red-500">▼</span>;
+  return <span aria-hidden="true" className="text-zinc-400">—</span>;
+};
+
+/**
+ * PromptPerformanceTable - Peec AI prompt tracking table: rows of tracked
+ * prompts with Visibility %, Sentiment score, Position # and Mentions
+ * columns, plus an Export CTA in the header.
+ */
+export default function PromptPerformanceTable({
+  title = "Prompt performance",
+  exportLabel = "Export",
+  rows = [],
+  className = "",
+  onExport,
+  onRowClick,
+}: PromptPerformanceTableProps) {
+  return (
+    <div
+      data-prompt-performance-table
+      className={`w-full overflow-hidden rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div className="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+        <h4 data-prompt-performance-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+          {title}
+        </h4>
+        <button
+          type="button"
+          data-prompt-performance-export
+          onClick={() => onExport?.()}
+          className="rounded border border-zinc-200 px-2 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        >
+          {exportLabel}
+        </button>
+      </div>
+      {rows.length === 0 ? (
+        <p data-prompt-performance-empty className="px-4 py-6 text-center text-xs text-zinc-400 dark:text-zinc-500">
+          No tracked prompts yet.
+        </p>
+      ) : (
+        <table data-prompt-performance-list className="w-full text-left text-xs">
+          <thead>
+            <tr className="border-b border-zinc-100 text-[10px] uppercase tracking-wide text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+              <th className="px-4 py-2 font-medium">Prompt</th>
+              <th className="px-3 py-2 font-medium">Visibility</th>
+              <th className="px-3 py-2 font-medium">Sentiment</th>
+              <th className="px-3 py-2 font-medium">Position</th>
+              <th className="px-4 py-2 text-right font-medium">Mentions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
+            {rows.map((row) => (
+              <tr
+                key={row.id}
+                data-prompt-row={row.id}
+                onClick={() => onRowClick?.(row)}
+                className="cursor-pointer transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
+              >
+                <td data-prompt-row-prompt className="max-w-[220px] truncate px-4 py-2.5 font-medium text-zinc-900 dark:text-zinc-50">
+                  {row.prompt}
+                </td>
+                <td data-prompt-row-visibility className="px-3 py-2.5 text-zinc-600 dark:text-zinc-300">
+                  {row.visibility}
+                </td>
+                <td data-prompt-row-sentiment className="px-3 py-2.5 text-zinc-600 dark:text-zinc-300">
+                  {row.sentiment} {trendIcon(row.trend)}
+                </td>
+                <td data-prompt-row-position className="px-3 py-2.5 text-zinc-600 dark:text-zinc-300">
+                  {row.position}
+                </td>
+                <td data-prompt-row-mentions className="px-4 py-2.5 text-right text-zinc-600 dark:text-zinc-300">
+                  {row.mentions}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}
+
 ====/File: react/PromptSaveDialog.tsx/====
 
 import React from "react";
@@ -14491,6 +14674,155 @@ export default function SettingsSideDrawer({
           </div>
         ) : null}
       </aside>
+    </div>
+  );
+}
+
+====/File: react/ShareAccessDialog.tsx/====
+
+import React from "react";
+
+export interface AccessPerson {
+  id: string;
+  name: string;
+  email: string;
+  role?: string;
+}
+
+export interface ShareAccessDialogProps {
+  open?: boolean;
+  title?: string;
+  description?: string;
+  url?: string;
+  copyLabel?: string;
+  people?: AccessPerson[];
+  className?: string;
+  onCopyLink?: () => void;
+  onClose?: () => void;
+  onRemovePerson?: (person: AccessPerson) => void;
+}
+
+/**
+ * ShareAccessDialog - Superhuman "Share Conversation" dialog: invite-by-email
+ * input, a people-with-access list showing avatar / name / email / permission
+ * role with per-row remove, plus a Copy link footer action.
+ */
+export default function ShareAccessDialog({
+  open = true,
+  title = "Share Conversation",
+  description = "Invite teammates to view this conversation. Everyone with access will see future replies.",
+  url = "https://example.com/share/abc123",
+  copyLabel = "COPY LINK",
+  people = [],
+  className = "",
+  onCopyLink,
+  onClose,
+  onRemovePerson,
+}: ShareAccessDialogProps) {
+  if (!open) return null;
+  const initials = (name: string) =>
+    name
+      .split(" ")
+      .map((part) => part[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase();
+  return (
+    <div
+      data-share-access-backdrop
+      className={`fixed inset-0 z-20 flex items-center justify-center bg-zinc-950/40 p-4 ${className}`}
+    >
+      <div
+        data-share-access-dialog
+        className="w-full max-w-md rounded-xl border border-zinc-200 bg-white p-5 shadow-2xl dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h4 data-share-access-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+              {title}
+            </h4>
+            <p data-share-access-description className="mt-1 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+              {description}
+            </p>
+          </div>
+          <button
+            type="button"
+            data-share-access-close
+            aria-label="Close share dialog"
+            onClick={() => onClose?.()}
+            className="rounded p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div data-share-access-invite className="mt-4">
+          <input
+            type="email"
+            data-share-access-input
+            placeholder="Add people by name or email"
+            className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder-zinc-400 focus:border-zinc-400 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder-zinc-500 dark:focus:border-zinc-500"
+          />
+        </div>
+
+        <div data-share-access-people className="mt-3 divide-y divide-zinc-100 rounded-md border border-zinc-200 dark:divide-zinc-800 dark:border-zinc-700">
+          {people.length === 0 ? (
+            <p data-share-access-empty className="px-3 py-4 text-center text-xs text-zinc-400 dark:text-zinc-500">
+              No people have access yet.
+            </p>
+          ) : (
+            people.map((person) => (
+              <div key={person.id} data-access-person={person.id} className="flex items-center gap-3 px-3 py-2.5">
+                <span
+                  aria-hidden="true"
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-[10px] font-semibold text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300"
+                >
+                  {initials(person.name)}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p data-access-person-name className="truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">
+                    {person.name}
+                  </p>
+                  <p data-access-person-email className="truncate text-[11px] text-zinc-400 dark:text-zinc-500">
+                    {person.email}
+                  </p>
+                </div>
+                {person.role && (
+                  <span
+                    data-access-person-role
+                    className="shrink-0 rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400"
+                  >
+                    {person.role}
+                  </span>
+                )}
+                <button
+                  type="button"
+                  data-access-person-remove
+                  aria-label={`Remove ${person.name}`}
+                  onClick={() => onRemovePerson?.(person)}
+                  className="shrink-0 rounded p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-red-500 dark:hover:bg-zinc-800"
+                >
+                  ✕
+                </button>
+              </div>
+            ))
+          )}
+        </div>
+
+        <div data-share-access-url className="mt-4 flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-800/60">
+          <span data-share-access-url-text className="min-w-0 flex-1 truncate font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
+            {url}
+          </span>
+          <button
+            type="button"
+            data-share-access-copy
+            onClick={() => onCopyLink?.()}
+            className="shrink-0 rounded bg-zinc-900 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+          >
+            {copyLabel}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -20262,6 +20594,74 @@ const visible = computed(() => props.templates);
       </button>
     </footer>
   </aside>
+</template>
+
+====/File: vue/AiRewriteMenu.vue/====
+
+<script setup lang="ts">
+export interface RewriteAction {
+  id: string;
+  label: string;
+  badge?: string;
+}
+
+export interface AiRewriteMenuProps {
+  open?: boolean;
+  triggerLabel?: string;
+  actions?: RewriteAction[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<AiRewriteMenuProps>(), {
+  open: false,
+  triggerLabel: 'Rewrite',
+  actions: () => [],
+});
+
+const emit = defineEmits<{
+  (e: 'select', action: RewriteAction): void;
+  (e: 'toggle'): void;
+}>();
+</script>
+
+<template>
+  <div data-rewrite-menu-root class="relative inline-block" :class="props.class">
+    <button
+      type="button"
+      data-rewrite-trigger
+      :aria-expanded="props.open"
+      class="flex items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+      @click="emit('toggle')"
+    >
+      <span aria-hidden="true" class="text-indigo-500">✦</span>
+      {{ props.triggerLabel }}
+      <span aria-hidden="true" class="text-zinc-400">▾</span>
+    </button>
+    <div
+      v-if="props.open && props.actions.length > 0"
+      data-rewrite-menu
+      class="absolute bottom-full left-0 z-10 mb-2 w-60 overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-lg dark:border-zinc-700 dark:bg-zinc-900"
+    >
+      <button
+        v-for="action in props.actions"
+        :key="action.id"
+        type="button"
+        :data-rewrite-item="action.id"
+        class="flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-xs text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800"
+        @click="emit('select', action)"
+      >
+        <span data-rewrite-item-label>{{ action.label }}</span>
+        <span
+          v-if="action.badge"
+          data-rewrite-item-badge
+          class="inline-flex shrink-0 items-center gap-1 rounded-full bg-indigo-50 px-1.5 py-0.5 text-[10px] font-semibold text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-300"
+        >
+          <span aria-hidden="true">↑</span>
+          {{ action.badge }}
+        </span>
+      </button>
+    </div>
+  </div>
 </template>
 
 ====/File: vue/AiTemplatePicker.vue/====
@@ -29921,6 +30321,98 @@ const visible = computed(() => {
 });
 </script>
 
+====/File: vue/PromptPerformanceTable.vue/====
+
+<script setup lang="ts">
+export interface PromptPerformanceRow {
+  id: string;
+  prompt: string;
+  visibility: string;
+  sentiment: string;
+  position: string;
+  mentions: string;
+  trend?: 'up' | 'down' | 'flat';
+}
+
+export interface PromptPerformanceTableProps {
+  title?: string;
+  exportLabel?: string;
+  rows?: PromptPerformanceRow[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<PromptPerformanceTableProps>(), {
+  title: 'Prompt performance',
+  exportLabel: 'Export',
+  rows: () => [],
+});
+
+const emit = defineEmits<{
+  (e: 'export'): void;
+  (e: 'row-click', row: PromptPerformanceRow): void;
+}>();
+</script>
+
+<template>
+  <div
+    data-prompt-performance-table
+    class="w-full overflow-hidden rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900"
+    :class="props.class"
+  >
+    <div class="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+      <h4 data-prompt-performance-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</h4>
+      <button
+        type="button"
+        data-prompt-performance-export
+        class="rounded border border-zinc-200 px-2 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        @click="emit('export')"
+      >
+        {{ props.exportLabel }}
+      </button>
+    </div>
+    <p
+      v-if="props.rows.length === 0"
+      data-prompt-performance-empty
+      class="px-4 py-6 text-center text-xs text-zinc-400 dark:text-zinc-500"
+    >
+      No tracked prompts yet.
+    </p>
+    <table v-else data-prompt-performance-list class="w-full text-left text-xs">
+      <thead>
+        <tr class="border-b border-zinc-100 text-[10px] uppercase tracking-wide text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+          <th class="px-4 py-2 font-medium">Prompt</th>
+          <th class="px-3 py-2 font-medium">Visibility</th>
+          <th class="px-3 py-2 font-medium">Sentiment</th>
+          <th class="px-3 py-2 font-medium">Position</th>
+          <th class="px-4 py-2 text-right font-medium">Mentions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
+        <tr
+          v-for="row in props.rows"
+          :key="row.id"
+          :data-prompt-row="row.id"
+          class="cursor-pointer transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
+          @click="emit('row-click', row)"
+        >
+          <td data-prompt-row-prompt class="max-w-[220px] truncate px-4 py-2.5 font-medium text-zinc-900 dark:text-zinc-50">
+            {{ row.prompt }}
+          </td>
+          <td data-prompt-row-visibility class="px-3 py-2.5 text-zinc-600 dark:text-zinc-300">{{ row.visibility }}</td>
+          <td data-prompt-row-sentiment class="px-3 py-2.5 text-zinc-600 dark:text-zinc-300">
+            {{ row.sentiment }}
+            <span v-if="row.trend === 'up'" aria-hidden="true" class="text-emerald-500">▲</span>
+            <span v-else-if="row.trend === 'down'" aria-hidden="true" class="text-red-500">▼</span>
+            <span v-else aria-hidden="true" class="text-zinc-400">—</span>
+          </td>
+          <td data-prompt-row-position class="px-3 py-2.5 text-zinc-600 dark:text-zinc-300">{{ row.position }}</td>
+          <td data-prompt-row-mentions class="px-4 py-2.5 text-right text-zinc-600 dark:text-zinc-300">{{ row.mentions }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
 ====/File: vue/PromptSaveDialog.vue/====
 
 <script setup lang="ts">
@@ -31416,6 +31908,157 @@ const BUTTON_TONE: Record<string, string> = {
   outline: 'border border-zinc-300 text-zinc-600 hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800',
 };
 </script>
+
+====/File: vue/ShareAccessDialog.vue/====
+
+<script setup lang="ts">
+export interface AccessPerson {
+  id: string;
+  name: string;
+  email: string;
+  role?: string;
+}
+
+export interface ShareAccessDialogProps {
+  open?: boolean;
+  title?: string;
+  description?: string;
+  url?: string;
+  copyLabel?: string;
+  people?: AccessPerson[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<ShareAccessDialogProps>(), {
+  open: true,
+  title: 'Share Conversation',
+  description:
+    'Invite teammates to view this conversation. Everyone with access will see future replies.',
+  url: 'https://example.com/share/abc123',
+  copyLabel: 'COPY LINK',
+  people: () => [],
+});
+
+const emit = defineEmits<{
+  (e: 'copy-link'): void;
+  (e: 'close'): void;
+  (e: 'remove-person', person: AccessPerson): void;
+}>();
+
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+</script>
+
+<template>
+  <div
+    v-if="props.open"
+    data-share-access-backdrop
+    class="fixed inset-0 z-20 flex items-center justify-center bg-zinc-950/40 p-4"
+    :class="props.class"
+  >
+    <div
+      data-share-access-dialog
+      class="w-full max-w-md rounded-xl border border-zinc-200 bg-white p-5 shadow-2xl dark:border-zinc-800 dark:bg-zinc-900"
+    >
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h4 data-share-access-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</h4>
+          <p data-share-access-description class="mt-1 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+            {{ props.description }}
+          </p>
+        </div>
+        <button
+          type="button"
+          data-share-access-close
+          aria-label="Close share dialog"
+          class="rounded p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+          @click="emit('close')"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div data-share-access-invite class="mt-4">
+        <input
+          type="email"
+          data-share-access-input
+          placeholder="Add people by name or email"
+          class="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder-zinc-400 focus:border-zinc-400 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder-zinc-500 dark:focus:border-zinc-500"
+        />
+      </div>
+
+      <div
+        data-share-access-people
+        class="mt-3 divide-y divide-zinc-100 rounded-md border border-zinc-200 dark:divide-zinc-800 dark:border-zinc-700"
+      >
+        <p
+          v-if="props.people.length === 0"
+          data-share-access-empty
+          class="px-3 py-4 text-center text-xs text-zinc-400 dark:text-zinc-500"
+        >
+          No people have access yet.
+        </p>
+        <template v-else>
+          <div
+            v-for="person in props.people"
+            :key="person.id"
+            :data-access-person="person.id"
+            class="flex items-center gap-3 px-3 py-2.5"
+          >
+          <span
+            aria-hidden="true"
+            class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-[10px] font-semibold text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300"
+          >
+            {{ initials(person.name) }}
+          </span>
+          <div class="min-w-0 flex-1">
+            <p data-access-person-name class="truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">{{ person.name }}</p>
+            <p data-access-person-email class="truncate text-[11px] text-zinc-400 dark:text-zinc-500">{{ person.email }}</p>
+          </div>
+          <span
+            v-if="person.role"
+            data-access-person-role
+            class="shrink-0 rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400"
+          >
+            {{ person.role }}
+          </span>
+          <button
+            type="button"
+            data-access-person-remove
+            :aria-label="`Remove ${person.name}`"
+            class="shrink-0 rounded p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-red-500 dark:hover:bg-zinc-800"
+            @click="emit('remove-person', person)"
+          >
+            ✕
+          </button>
+          </div>
+        </template>
+      </div>
+
+      <div
+        data-share-access-url
+        class="mt-4 flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-800/60"
+      >
+        <span data-share-access-url-text class="min-w-0 flex-1 truncate font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
+          {{ props.url }}
+        </span>
+        <button
+          type="button"
+          data-share-access-copy
+          class="shrink-0 rounded bg-zinc-900 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+          @click="emit('copy-link')"
+        >
+          {{ props.copyLabel }}
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
 
 ====/File: vue/ShareChatDialog.vue/====
 
@@ -36772,6 +37415,145 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-research-pa
 }
 
 export default AiResearchPanelElement;
+
+====/File: vanilla/AiRewriteMenu.js/====
+
+/**
+ * AiRewriteMenu - Intercom composer AI rewrite menu: a trigger button that
+ * opens a popover of writing-assistant actions (Expand, Rephrase, tone
+ * variants, Fix grammar, Translate) with optional feature badges.
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+class AiRewriteMenuElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['trigger-label', 'actions', 'open'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._actions = [];
+    this._open = false;
+  }
+
+  connectedCallback() {
+    if (!this._actions.length) {
+      this._actions = parseJsonAttr(this.getAttribute('actions'), []);
+    }
+    if (this._open === false && this.getAttribute('open') === 'true') {
+      this._open = true;
+    }
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'actions' && !this._actions.length) {
+      this._actions = parseJsonAttr(this.getAttribute('actions'), []);
+    }
+    if (name === 'open') {
+      this._open = newValue === 'true';
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get triggerLabel() {
+    return this.getAttribute('trigger-label') ?? 'Rewrite';
+  }
+  set triggerLabel(value) {
+    this.setAttribute('trigger-label', value);
+  }
+
+  get open() {
+    return this._open;
+  }
+  set open(value) {
+    this._open = Boolean(value);
+    this._render();
+  }
+
+  get actions() {
+    return this._actions;
+  }
+  set actions(value) {
+    this._actions = Array.isArray(value) ? value : [];
+    this._render();
+  }
+
+  _onClick(event) {
+    if (event.target.closest('[data-rewrite-trigger]')) {
+      this._open = !this._open;
+      this._render();
+      this.dispatchEvent(new CustomEvent('toggle', { detail: { open: this._open }, bubbles: true }));
+      return;
+    }
+    const itemEl = event.target.closest('[data-rewrite-item]');
+    if (!itemEl) return;
+    const action = this._actions.find((a) => String(a.id) === itemEl.getAttribute('data-rewrite-item'));
+    if (!action) return;
+    this._open = false;
+    this._render();
+    this.dispatchEvent(new CustomEvent('select', { detail: { action }, bubbles: true }));
+  }
+
+  _render() {
+    const menu = this._open && this._actions.length
+      ? `<div data-rewrite-menu class="absolute bottom-full left-0 z-10 mb-2 w-60 overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-lg dark:border-zinc-700 dark:bg-zinc-900">${this._actions
+          .map((a) => {
+            const badge = a.badge
+              ? `<span data-rewrite-item-badge class="inline-flex shrink-0 items-center gap-1 rounded-full bg-indigo-50 px-1.5 py-0.5 text-[10px] font-semibold text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-300"><span aria-hidden="true">↑</span>${escapeAttribute(a.badge)}</span>`
+              : '';
+            return `
+            <button type="button" data-rewrite-item="${escapeAttribute(a.id)}" class="flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-xs text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800">
+              <span data-rewrite-item-label>${escapeAttribute(a.label)}</span>
+              ${badge}
+            </button>`;
+          })
+          .join('')}</div>`
+      : '';
+
+    this.innerHTML = `
+      <div data-rewrite-menu-root class="relative inline-block">
+        <button type="button" data-rewrite-trigger aria-expanded="${this._open}" class="flex items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800">
+          <span aria-hidden="true" class="text-indigo-500">✦</span>
+          ${escapeAttribute(this.triggerLabel)}
+          <span aria-hidden="true" class="text-zinc-400">▾</span>
+        </button>
+        ${menu}
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('ai-rewrite-menu')) {
+  customElements.define('ai-rewrite-menu', AiRewriteMenuElement);
+}
+
+export default AiRewriteMenuElement;
 
 ====/File: vanilla/AiTemplatePicker.js/====
 
@@ -50286,6 +51068,150 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-library
 }
 export default PromptLibraryElement;
 
+====/File: vanilla/PromptPerformanceTable.js/====
+
+/**
+ * PromptPerformanceTable - Peec AI prompt tracking table: rows of tracked
+ * prompts with Visibility %, Sentiment score, Position # and Mentions
+ * columns, plus an Export CTA in the header.
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+class PromptPerformanceTableElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'export-label', 'rows'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._rows = [];
+  }
+
+  connectedCallback() {
+    if (!this._rows.length) {
+      this._rows = parseJsonAttr(this.getAttribute('rows'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'rows' && !this._rows.length) {
+      this._rows = parseJsonAttr(this.getAttribute('rows'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get title() {
+    return this.getAttribute('title') ?? 'Prompt performance';
+  }
+  set title(value) {
+    this.setAttribute('title', value);
+  }
+
+  get exportLabel() {
+    return this.getAttribute('export-label') ?? 'Export';
+  }
+  set exportLabel(value) {
+    this.setAttribute('export-label', value);
+  }
+
+  get rows() {
+    return this._rows;
+  }
+  set rows(value) {
+    this._rows = Array.isArray(value) ? value : [];
+    this._render();
+  }
+
+  _onClick(event) {
+    if (event.target.closest('[data-prompt-performance-export]')) {
+      this.dispatchEvent(new CustomEvent('export', { bubbles: true }));
+      return;
+    }
+    const rowEl = event.target.closest('[data-prompt-row]');
+    if (!rowEl) return;
+    const row = this._rows.find((r) => String(r.id) === rowEl.getAttribute('data-prompt-row'));
+    if (row) {
+      this.dispatchEvent(new CustomEvent('row-click', { detail: { row }, bubbles: true }));
+    }
+  }
+
+  _render() {
+    const rows = this._rows;
+    const trendMark = (r) => {
+      if (r.trend === 'up') return '<span aria-hidden="true" class="text-emerald-500">▲</span>';
+      if (r.trend === 'down') return '<span aria-hidden="true" class="text-red-500">▼</span>';
+      return '<span aria-hidden="true" class="text-zinc-400">—</span>';
+    };
+    const body = rows.length
+      ? `<table data-prompt-performance-list class="w-full text-left text-xs">
+          <thead>
+            <tr class="border-b border-zinc-100 text-[10px] uppercase tracking-wide text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+              <th class="px-4 py-2 font-medium">Prompt</th>
+              <th class="px-3 py-2 font-medium">Visibility</th>
+              <th class="px-3 py-2 font-medium">Sentiment</th>
+              <th class="px-3 py-2 font-medium">Position</th>
+              <th class="px-4 py-2 text-right font-medium">Mentions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">${rows
+            .map(
+              (r) => `
+            <tr data-prompt-row="${escapeAttribute(r.id)}" class="cursor-pointer transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60">
+              <td data-prompt-row-prompt class="max-w-[220px] truncate px-4 py-2.5 font-medium text-zinc-900 dark:text-zinc-50">${escapeAttribute(r.prompt)}</td>
+              <td data-prompt-row-visibility class="px-3 py-2.5 text-zinc-600 dark:text-zinc-300">${escapeAttribute(r.visibility)}</td>
+              <td data-prompt-row-sentiment class="px-3 py-2.5 text-zinc-600 dark:text-zinc-300">${escapeAttribute(r.sentiment)} ${trendMark(r)}</td>
+              <td data-prompt-row-position class="px-3 py-2.5 text-zinc-600 dark:text-zinc-300">${escapeAttribute(r.position)}</td>
+              <td data-prompt-row-mentions class="px-4 py-2.5 text-right text-zinc-600 dark:text-zinc-300">${escapeAttribute(r.mentions)}</td>
+            </tr>`
+            )
+            .join('')}</tbody>
+        </table>`
+      : `<p data-prompt-performance-empty class="px-4 py-6 text-center text-xs text-zinc-400 dark:text-zinc-500">No tracked prompts yet.</p>`;
+
+    this.innerHTML = `
+      <div data-prompt-performance-table class="w-full overflow-hidden rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <div class="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+          <h4 data-prompt-performance-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this.title)}</h4>
+          <button type="button" data-prompt-performance-export class="rounded border border-zinc-200 px-2 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">${escapeAttribute(this.exportLabel)}</button>
+        </div>
+        ${body}
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('prompt-performance-table')) {
+  customElements.define('prompt-performance-table', PromptPerformanceTableElement);
+}
+
+export default PromptPerformanceTableElement;
+
 ====/File: vanilla/PromptSaveDialog.js/====
 
 /**
@@ -52388,6 +53314,202 @@ if (typeof customElements !== 'undefined' && !customElements.get('settings-side-
   customElements.define('settings-side-drawer', SettingsSideDrawerElement);
 }
 export default SettingsSideDrawerElement;
+
+====/File: vanilla/ShareAccessDialog.js/====
+
+/**
+ * ShareAccessDialog - Superhuman "Share Conversation" dialog: invite-by-email
+ * input, a people-with-access list showing avatar / name / email / permission
+ * role with per-row remove, plus a Copy link footer action.
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+class ShareAccessDialogElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'description', 'url', 'copy-label', 'people', 'open'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._people = [];
+    this._open = true;
+  }
+
+  connectedCallback() {
+    if (!this._people.length) {
+      this._people = parseJsonAttr(this.getAttribute('people'), []);
+    }
+    const openAttr = this.getAttribute('open');
+    if (openAttr !== null) {
+      this._open = openAttr === 'true';
+    }
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'people' && !this._people.length) {
+      this._people = parseJsonAttr(this.getAttribute('people'), []);
+    }
+    if (name === 'open') {
+      this._open = newValue === 'true';
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get title() {
+    return this.getAttribute('title') ?? 'Share Conversation';
+  }
+  set title(value) {
+    this.setAttribute('title', value);
+  }
+
+  get description() {
+    return this.getAttribute('description') ?? 'Invite teammates to view this conversation. Everyone with access will see future replies.';
+  }
+  set description(value) {
+    this.setAttribute('description', value);
+  }
+
+  get url() {
+    return this.getAttribute('url') ?? 'https://example.com/share/abc123';
+  }
+  set url(value) {
+    this.setAttribute('url', value);
+  }
+
+  get copyLabel() {
+    return this.getAttribute('copy-label') ?? 'COPY LINK';
+  }
+  set copyLabel(value) {
+    this.setAttribute('copy-label', value);
+  }
+
+  get open() {
+    return this._open;
+  }
+  set open(value) {
+    this._open = Boolean(value);
+    this.setAttribute('open', this._open ? 'true' : 'false');
+    this._render();
+  }
+
+  get people() {
+    return this._people;
+  }
+  set people(value) {
+    this._people = Array.isArray(value) ? value : [];
+    this._render();
+  }
+
+  _onClick(event) {
+    if (!this._open) return;
+    if (event.target.closest('[data-share-access-copy]')) {
+      this.dispatchEvent(new CustomEvent('copy-link', { detail: { url: this.url }, bubbles: true }));
+      return;
+    }
+    if (event.target.closest('[data-share-access-close]')) {
+      this.open = false;
+      this.dispatchEvent(new CustomEvent('close', { bubbles: true }));
+      return;
+    }
+    const personEl = event.target.closest('[data-access-person]');
+    if (personEl && event.target.closest('[data-access-person-remove]')) {
+      const person = this._people.find((p) => String(p.id) === personEl.getAttribute('data-access-person'));
+      if (person) {
+        this._people = this._people.filter((p) => p.id !== person.id);
+        this._render();
+        this.dispatchEvent(new CustomEvent('remove-person', { detail: { person }, bubbles: true }));
+      }
+    }
+  }
+
+  _render() {
+    if (!this._open) {
+      this.innerHTML = '';
+      return;
+    }
+    const initials = (name) =>
+      String(name ?? '')
+        .split(' ')
+        .map((part) => part[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase();
+
+    const rows = this._people.length
+      ? this._people
+          .map((p) => {
+            const role = p.role
+              ? `<span data-access-person-role class="shrink-0 rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">${escapeAttribute(p.role)}</span>`
+              : '';
+            return `
+          <div data-access-person="${escapeAttribute(p.id)}" class="flex items-center gap-3 px-3 py-2.5">
+            <span aria-hidden="true" class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-[10px] font-semibold text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">${initials(p.name)}</span>
+            <div class="min-w-0 flex-1">
+              <p data-access-person-name class="truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">${escapeAttribute(p.name)}</p>
+              <p data-access-person-email class="truncate text-[11px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(p.email)}</p>
+            </div>
+            ${role}
+            <button type="button" data-access-person-remove aria-label="Remove ${escapeAttribute(p.name)}" class="shrink-0 rounded p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-red-500 dark:hover:bg-zinc-800">✕</button>
+          </div>`;
+          })
+          .join('')
+      : `<p data-share-access-empty class="px-3 py-4 text-center text-xs text-zinc-400 dark:text-zinc-500">No people have access yet.</p>`;
+
+    this.innerHTML = `
+      <div data-share-access-backdrop class="fixed inset-0 z-20 flex items-center justify-center bg-zinc-950/40 p-4">
+        <div data-share-access-dialog class="w-full max-w-md rounded-xl border border-zinc-200 bg-white p-5 shadow-2xl dark:border-zinc-800 dark:bg-zinc-900">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 data-share-access-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this.title)}</h4>
+              <p data-share-access-description class="mt-1 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">${escapeAttribute(this.description)}</p>
+            </div>
+            <button type="button" data-share-access-close aria-label="Close share dialog" class="rounded p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300">✕</button>
+          </div>
+          <div data-share-access-invite class="mt-4">
+            <input type="email" data-share-access-input placeholder="Add people by name or email" class="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder-zinc-400 focus:border-zinc-400 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder-zinc-500 dark:focus:border-zinc-500" />
+          </div>
+          <div data-share-access-people class="mt-3 divide-y divide-zinc-100 rounded-md border border-zinc-200 dark:divide-zinc-800 dark:border-zinc-700">${rows}</div>
+          <div data-share-access-url class="mt-4 flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-800/60">
+            <span data-share-access-url-text class="min-w-0 flex-1 truncate font-mono text-[11px] text-zinc-500 dark:text-zinc-400">${escapeAttribute(this.url)}</span>
+            <button type="button" data-share-access-copy class="shrink-0 rounded bg-zinc-900 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300">${escapeAttribute(this.copyLabel)}</button>
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('share-access-dialog')) {
+  customElements.define('share-access-dialog', ShareAccessDialogElement);
+}
+
+export default ShareAccessDialogElement;
 
 ====/File: vanilla/ShareChatDialog.js/====
 

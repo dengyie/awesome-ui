@@ -746,6 +746,9 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - Vue 3: vue/ApiKeyTable.vue
    - Vanilla: vanilla/ApiKeyTable.js (custom element `<api-key-table>`, attributes `title`/`keys` JSON/`create-label`; property `keys`; events `copy {row}`, `revoke {row}`, `create`)
 165. VoiceSessionHistory: voice AI session history sidebar — title / date / duration rows, Completed / Running / Failed status badges, per-row replay buttons, session count header and empty state (ElevenLabs Voice pattern).
+166. AiRewriteMenu: Intercom composer AI rewrite menu — trigger button toggles popover of writing actions (Expand, Rephrase, tone variants, Fix grammar, Translate) with feature badge, select/toggle events.
+167. PromptPerformanceTable: Peec AI prompt tracking table — Visibility %, Sentiment score with trend mark, Position #, Mentions columns, row click + Export CTA, empty state.
+168. ShareAccessDialog: Superhuman share dialog — invite input, people-with-access rows (avatar/name/email/role + remove), Copy link footer, open/close control.
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)

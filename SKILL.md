@@ -975,6 +975,21 @@ awesome-ui/
 - **Vanilla 用法**: `<voice-session-history title="History">` + `sessions` property；事件 `select {session}` / `play {session}`
 - **特性**: 计数徽章（排除 failed）、标题 + `date · duration` 元信息行、Completed/Running/Failed 状态徽章（emerald/amber/red）、▶ 重播按钮（stopPropagation + aria-label）、空态。
 
+### 166. `AiRewriteMenu` (AI 改写菜单)
+- **Props**: `open?=false`, `triggerLabel?='Rewrite'`, `actions?: [{id,label,badge?}]`, `className?`, `onSelect?(action)`, `onToggle?()`
+- **Vanilla 用法**: `<ai-rewrite-menu trigger-label="Rewrite">` + `actions`/`open` property；事件 `select {action}` / `toggle {open}`
+- **特性**: ✦ 触发按钮（aria-expanded 同步）、底部弹出 popover、行级功能徽章（Get feature）、选中后自动收起、空 actions 不渲染菜单。
+
+### 167. `PromptPerformanceTable` (提示词表现表)
+- **Props**: `title?='Prompt performance'`, `exportLabel?='Export'`, `rows?: [{id,prompt,visibility,sentiment,position,mentions,trend?: 'up'|'down'|'flat'}]`, `className?`, `onExport?()`, `onRowClick?(row)`
+- **Vanilla 用法**: `<prompt-performance-table>` + `rows` property；事件 `export` / `row-click {row}`
+- **特性**: Prompt / Visibility / Sentiment / Position / Mentions 五列、▲▼— 趋势标记、行 hover + 点击、Export CTA、空态。
+
+### 168. `ShareAccessDialog` (分享访问弹窗)
+- **Props**: `open?=true`, `title?='Share Conversation'`, `description?`, `url?`, `copyLabel?='COPY LINK'`, `people?: [{id,name,email,role?}]`, `className?`, `onCopyLink?()`, `onClose?()`, `onRemovePerson?(person)`
+- **Vanilla 用法**: `<share-access-dialog>` + `people`/`open` property；事件 `copy-link {url}` / `remove-person {person}` / `close`
+- **特性**: 邀请邮箱输入框、成员行（姓名首字母头像 / 邮箱 / 权限角色徽章 + ✕ 移除，移除即时更新列表）、等宽 URL 行 + COPY LINK 按钮、遮罩居中卡片、关闭后清空内容。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）
