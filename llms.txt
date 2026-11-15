@@ -749,6 +749,9 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 166. AiRewriteMenu: Intercom composer AI rewrite menu — trigger button toggles popover of writing actions (Expand, Rephrase, tone variants, Fix grammar, Translate) with feature badge, select/toggle events.
 167. PromptPerformanceTable: Peec AI prompt tracking table — Visibility %, Sentiment score with trend mark, Position #, Mentions columns, row click + Export CTA, empty state.
 168. ShareAccessDialog: Superhuman share dialog — invite input, people-with-access rows (avatar/name/email/role + remove), Copy link footer, open/close control.
+169. AiNoteAnswer: Voicenotes Ask AI answer card — waveform question row with play button, answer paragraph, "Other sources" link list and Copy pill.
+170. AudioNotePlayer: Voicenotes audio note player — play/pause toggle button, waveform strip (played half highlights while playing) and title/duration metadata row.
+171. ImageActionMenu: Krea generated-image context menu — Fullscreen/Vary/Edit/Upscale & enhance/Make video/Download actions with per-action icons, divider before Download, open/close control.
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)

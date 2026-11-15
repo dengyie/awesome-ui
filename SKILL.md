@@ -990,6 +990,21 @@ awesome-ui/
 - **Vanilla 用法**: `<share-access-dialog>` + `people`/`open` property；事件 `copy-link {url}` / `remove-person {person}` / `close`
 - **特性**: 邀请邮箱输入框、成员行（姓名首字母头像 / 邮箱 / 权限角色徽章 + ✕ 移除，移除即时更新列表）、等宽 URL 行 + COPY LINK 按钮、遮罩居中卡片、关闭后清空内容。
 
+### 169. `AiNoteAnswer` (AI 笔记回答卡)
+- **Props**: `question?='What improvements should I prioritize for Homepage?'`, `answer?`, `sources?: string[]`, `waveform?: number[]`（默认 48 根正弦条带）, `className?`, `onPlay?()`, `onCopy?()`, `onSourceClick?(source)`
+- **Vanilla 用法**: `<ai-note-answer>` + `question`/`answer` 属性、`sources`/`waveform` property；事件 `play` / `copy {answer}` / `source-click {source}`
+- **特性**: 波形提问行（▶ 播放按钮 + 48 根波形条）、回答段落、"Other sources" 分隔引用列表（↗ 链接行）、Copy 圆角按钮、sources 为空时隐藏引用区。
+
+### 170. `AudioNotePlayer` (音频笔记播放器)
+- **Props**: `title?='Homepage walkthrough notes'`, `duration?='00:47'`, `playing?=false`, `waveform?: number[]`（默认 64 根条带）, `className?`, `onTogglePlay?()`
+- **Vanilla 用法**: `<audio-note-player>` + `title`/`duration` 属性、`playing`/`waveform` property；点击切换并派发 `toggle-play {playing}`
+- **特性**: ▶ / ❚❚ 圆形播放切换按钮（aria-label Play note / Pause note）、播放时前半段波形高亮 emerald、等宽时长角标、标题行截断、空波形回退默认条带。
+
+### 171. `ImageActionMenu` (图片操作菜单)
+- **Props**: `open?=true`, `actions?: [{id,label,icon?,danger?}]`, `className?`, `onAction?(action)`, `onClose?()`
+- **Vanilla 用法**: `<image-action-menu>` + `actions` JSON 属性或 `actions`/`open` property；事件 `action {action}`
+- **特性**: w-56 白底圆角菜单、每项图标（Fullscreen ⛶ / Vary ↻ / Edit ✎ / Make video ▶ / Download ↓ 默认映射 + 自定义 icon）、danger 红色态、Download 前分隔线、空态提示、`open=false` 清空内容。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

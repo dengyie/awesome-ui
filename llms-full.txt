@@ -1085,6 +1085,107 @@ export default function AgentTaskProgress({
   );
 }
 
+====/File: react/AiNoteAnswer.tsx/====
+
+import React from "react";
+
+export interface AiNoteAnswerProps {
+  question?: string;
+  answer?: string;
+  sources?: string[];
+  waveform?: number[];
+  className?: string;
+  onPlay?: () => void;
+  onCopy?: () => void;
+  onSourceClick?: (source: string) => void;
+}
+
+/**
+ * AiNoteAnswer - Voicenotes "Ask AI" answer card: a waveform question row,
+ * the answer paragraph, an "Other sources" link list and a Copy pill.
+ */
+export default function AiNoteAnswer({
+  question = "What improvements should I prioritize for Homepage?",
+  answer = "",
+  sources = [],
+  waveform = [],
+  className = "",
+  onPlay,
+  onCopy,
+  onSourceClick,
+}: AiNoteAnswerProps) {
+  const bars = waveform.length
+    ? waveform
+    : Array.from({ length: 48 }, (_, i) => 30 + Math.round(Math.abs(Math.sin(i * 1.7)) * 70));
+  return (
+    <div
+      data-note-answer-card
+      className={`w-full rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div
+        data-note-answer-question
+        className="flex items-center gap-3 rounded-lg bg-zinc-50 px-3 py-2.5 dark:bg-zinc-800/60"
+      >
+        <button
+          type="button"
+          data-note-answer-play
+          aria-label="Play question audio"
+          onClick={() => onPlay?.()}
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-[10px] text-white dark:bg-zinc-100 dark:text-zinc-900"
+        >
+          ▶
+        </button>
+        <div data-note-answer-waveform className="flex h-6 min-w-0 flex-1 items-center gap-[2px]" aria-hidden="true">
+          {bars.map((h, i) => (
+            <span
+              key={i}
+              className="w-[3px] shrink-0 rounded-full bg-zinc-300 dark:bg-zinc-600"
+              style={{ height: `${Math.max(15, Math.min(100, h))}%` }}
+            />
+          ))}
+        </div>
+      </div>
+      <p data-note-answer-question-text className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+        {question}
+      </p>
+      <p data-note-answer-text className="mt-3 text-[13px] leading-relaxed text-zinc-800 dark:text-zinc-200">
+        {answer}
+      </p>
+      {sources.length > 0 && (
+        <div data-note-answer-sources className="mt-4">
+          <div className="flex items-center gap-3">
+            <span className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500">Other sources</span>
+            <span className="h-px flex-1 bg-zinc-100 dark:bg-zinc-800" />
+          </div>
+          {sources.map((source) => (
+            <button
+              key={source}
+              type="button"
+              data-note-answer-source
+              onClick={() => onSourceClick?.(source)}
+              className="mt-2 flex w-full items-center gap-1.5 truncate text-left text-xs text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200"
+            >
+              <span aria-hidden="true" className="shrink-0">↗</span>
+              <span className="truncate">{source}</span>
+            </button>
+          ))}
+        </div>
+      )}
+      <div className="mt-4">
+        <button
+          type="button"
+          data-note-answer-copy
+          onClick={() => onCopy?.()}
+          className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        >
+          <span aria-hidden="true">⧉</span>
+          Copy
+        </button>
+      </div>
+    </div>
+  );
+}
+
 ====/File: react/AiResearchPanel.tsx/====
 
 import React from "react";
@@ -2056,6 +2157,69 @@ export default function AttachmentChip({ name, kind = "doc", size, meta, onRemov
         </svg>
       </button>
     </span>
+  );
+}
+
+====/File: react/AudioNotePlayer.tsx/====
+
+import React from "react";
+
+export interface AudioNotePlayerProps {
+  title?: string;
+  duration?: string;
+  playing?: boolean;
+  waveform?: number[];
+  className?: string;
+  onTogglePlay?: () => void;
+}
+
+/**
+ * AudioNotePlayer - Voicenotes audio note player card: a play/pause button,
+ * a waveform bar strip and the note title / duration metadata row.
+ */
+export default function AudioNotePlayer({
+  title = "Homepage walkthrough notes",
+  duration = "00:47",
+  playing = false,
+  waveform = [],
+  className = "",
+  onTogglePlay,
+}: AudioNotePlayerProps) {
+  const bars = waveform.length
+    ? waveform
+    : Array.from({ length: 64 }, (_, i) => 25 + Math.round(Math.abs(Math.sin(i * 1.3)) * 75));
+  return (
+    <div
+      data-audio-note-player
+      className={`w-full rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          data-audio-note-toggle
+          aria-label={playing ? "Pause note" : "Play note"}
+          onClick={() => onTogglePlay?.()}
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-xs text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+        >
+          {playing ? "❚❚" : "▶"}
+        </button>
+        <div data-audio-note-waveform className="flex h-8 min-w-0 flex-1 items-center gap-[2px]" aria-hidden="true">
+          {bars.map((h, i) => (
+            <span
+              key={i}
+              className={`w-[3px] shrink-0 rounded-full ${playing && i < bars.length / 2 ? "bg-emerald-500" : "bg-zinc-300 dark:bg-zinc-600"}`}
+              style={{ height: `${Math.max(15, Math.min(100, h))}%` }}
+            />
+          ))}
+        </div>
+        <span data-audio-note-duration className="shrink-0 font-mono text-[11px] text-zinc-400 dark:text-zinc-500">
+          {duration}
+        </span>
+      </div>
+      <p data-audio-note-title className="mt-3 truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">
+        {title}
+      </p>
+    </div>
   );
 }
 
@@ -8920,6 +9084,77 @@ export const HomepageDashboard: React.FC<HomepageDashboardProps> = ({
 };
 
 export default HomepageDashboard;
+
+====/File: react/ImageActionMenu.tsx/====
+
+import React from "react";
+
+export interface ImageMenuAction {
+  id: string;
+  label: string;
+  icon?: string;
+  danger?: boolean;
+}
+
+export interface ImageActionMenuProps {
+  open?: boolean;
+  actions?: ImageMenuAction[];
+  className?: string;
+  onAction?: (action: ImageMenuAction) => void;
+  onClose?: () => void;
+}
+
+/**
+ * ImageActionMenu - Krea generated-image context menu: Fullscreen / Vary /
+ * Edit / Upscale & enhance / Make video / Download actions anchored to an
+ * image card, with optional danger styling and per-action icons.
+ */
+export default function ImageActionMenu({
+  open = true,
+  actions = [],
+  className = "",
+  onAction,
+  onClose,
+}: ImageActionMenuProps) {
+  if (!open) return null;
+  const iconFor = (action: ImageMenuAction) =>
+    action.icon ?? { Fullscreen: "⛶", Vary: "↻", Edit: "✎", "Make video": "▶", Download: "↓" }[action.label] ?? "•";
+  return (
+    <div
+      data-image-action-menu
+      className={`w-56 overflow-hidden rounded-lg border border-zinc-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-900 ${className}`}
+    >
+      {actions.length === 0 ? (
+        <p data-image-action-empty className="px-3 py-3 text-center text-xs text-zinc-400 dark:text-zinc-500">
+          No actions available.
+        </p>
+      ) : (
+        actions.map((action, i) => (
+          <React.Fragment key={action.id}>
+            {i > 0 && action.id === "download" && (
+              <div className="my-1 h-px bg-zinc-100 dark:bg-zinc-800" />
+            )}
+            <button
+              type="button"
+              data-image-action={action.id}
+              onClick={() => onAction?.(action)}
+              className={`flex w-full items-center gap-2.5 px-3 py-2 text-left text-xs transition-colors ${
+                action.danger
+                  ? "text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40"
+                  : "text-zinc-700 hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800"
+              }`}
+            >
+              <span aria-hidden="true" className="w-4 shrink-0 text-center text-zinc-400 dark:text-zinc-500">
+                {iconFor(action)}
+              </span>
+              <span data-image-action-label>{action.label}</span>
+            </button>
+          </React.Fragment>
+        ))
+      )}
+    </div>
+  );
+}
 
 ====/File: react/ImageGenGallery.tsx/====
 
@@ -20501,6 +20736,96 @@ const emit = defineEmits<{
 }>();
 </script>
 
+====/File: vue/AiNoteAnswer.vue/====
+
+<script setup lang="ts">
+export interface AiNoteAnswerProps {
+  question?: string;
+  answer?: string;
+  sources?: string[];
+  waveform?: number[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<AiNoteAnswerProps>(), {
+  question: 'What improvements should I prioritize for Homepage?',
+  answer: '',
+  sources: () => [],
+  waveform: () => [],
+});
+
+const emit = defineEmits<{
+  (e: 'play'): void;
+  (e: 'copy'): void;
+  (e: 'source-click', source: string): void;
+}>();
+
+const bars = props.waveform.length
+  ? props.waveform
+  : Array.from({ length: 48 }, (_, i) => 30 + Math.round(Math.abs(Math.sin(i * 1.7)) * 70));
+</script>
+
+<template>
+  <div
+    data-note-answer-card
+    class="w-full rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+    :class="props.class"
+  >
+    <div
+      data-note-answer-question
+      class="flex items-center gap-3 rounded-lg bg-zinc-50 px-3 py-2.5 dark:bg-zinc-800/60"
+    >
+      <button
+        type="button"
+        data-note-answer-play
+        aria-label="Play question audio"
+        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-[10px] text-white dark:bg-zinc-100 dark:text-zinc-900"
+        @click="emit('play')"
+      >
+        ▶
+      </button>
+      <div data-note-answer-waveform class="flex h-6 min-w-0 flex-1 items-center gap-[2px]" aria-hidden="true">
+        <span
+          v-for="(h, i) in bars"
+          :key="i"
+          class="w-[3px] shrink-0 rounded-full bg-zinc-300 dark:bg-zinc-600"
+          :style="{ height: Math.max(15, Math.min(100, h)) + '%' }"
+        />
+      </div>
+    </div>
+    <p data-note-answer-question-text class="mt-2 text-xs text-zinc-500 dark:text-zinc-400">{{ props.question }}</p>
+    <p data-note-answer-text class="mt-3 text-[13px] leading-relaxed text-zinc-800 dark:text-zinc-200">{{ props.answer }}</p>
+    <div v-if="props.sources.length > 0" data-note-answer-sources class="mt-4">
+      <div class="flex items-center gap-3">
+        <span class="text-[11px] font-medium text-zinc-400 dark:text-zinc-500">Other sources</span>
+        <span class="h-px flex-1 bg-zinc-100 dark:bg-zinc-800" />
+      </div>
+      <button
+        v-for="source in props.sources"
+        :key="source"
+        type="button"
+        data-note-answer-source
+        class="mt-2 flex w-full items-center gap-1.5 truncate text-left text-xs text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200"
+        @click="emit('source-click', source)"
+      >
+        <span aria-hidden="true" class="shrink-0">↗</span>
+        <span class="truncate">{{ source }}</span>
+      </button>
+    </div>
+    <div class="mt-4">
+      <button
+        type="button"
+        data-note-answer-copy
+        class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        @click="emit('copy')"
+      >
+        <span aria-hidden="true">⧉</span>
+        Copy
+      </button>
+    </div>
+  </div>
+</template>
+
 ====/File: vue/AiResearchPanel.vue/====
 
 <script setup lang="ts">
@@ -21408,6 +21733,66 @@ const emit = defineEmits<{ (e: 'remove'): void }>();
 
 const tone = computed(() => KIND_TONE[props.kind] || KIND_TONE.doc);
 </script>
+
+====/File: vue/AudioNotePlayer.vue/====
+
+<script setup lang="ts">
+export interface AudioNotePlayerProps {
+  title?: string;
+  duration?: string;
+  playing?: boolean;
+  waveform?: number[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<AudioNotePlayerProps>(), {
+  title: 'Homepage walkthrough notes',
+  duration: '00:47',
+  playing: false,
+  waveform: () => [],
+});
+
+const emit = defineEmits<{
+  (e: 'toggle-play'): void;
+}>();
+
+const bars = props.waveform.length
+  ? props.waveform
+  : Array.from({ length: 64 }, (_, i) => 25 + Math.round(Math.abs(Math.sin(i * 1.3)) * 75));
+</script>
+
+<template>
+  <div
+    data-audio-note-player
+    class="w-full rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+    :class="props.class"
+  >
+    <div class="flex items-center gap-3">
+      <button
+        type="button"
+        data-audio-note-toggle
+        :aria-label="props.playing ? 'Pause note' : 'Play note'"
+        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-xs text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+        @click="emit('toggle-play')"
+      >
+        {{ props.playing ? '❚❚' : '▶' }}
+      </button>
+      <div data-audio-note-waveform class="flex h-8 min-w-0 flex-1 items-center gap-[2px]" aria-hidden="true">
+        <span
+          v-for="(h, i) in bars"
+          :key="i"
+          class="w-[3px] shrink-0 rounded-full"
+          :class="props.playing && i < bars.length / 2 ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-600'"
+          :style="{ height: Math.max(15, Math.min(100, h)) + '%' }"
+        />
+      </div>
+      <span data-audio-note-duration class="shrink-0 font-mono text-[11px] text-zinc-400 dark:text-zinc-500">
+        {{ props.duration }}
+      </span>
+    </div>
+    <p data-audio-note-title class="mt-3 truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">{{ props.title }}</p>
+  </div>
+</template>
 
 ====/File: vue/AudioWaveVisualizer.vue/====
 
@@ -27229,6 +27614,77 @@ const monogram = (name?: string) => (name || '?').trim().charAt(0).toUpperCase()
 
 const statusLabel = (service: HomepageService) => service.pingText || statusConfig(service.status).label;
 </script>
+
+====/File: vue/ImageActionMenu.vue/====
+
+<script setup lang="ts">
+export interface ImageMenuAction {
+  id: string;
+  label: string;
+  icon?: string;
+  danger?: boolean;
+}
+
+export interface ImageActionMenuProps {
+  open?: boolean;
+  actions?: ImageMenuAction[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<ImageActionMenuProps>(), {
+  open: true,
+  actions: () => [],
+});
+
+const emit = defineEmits<{
+  (e: 'action', action: ImageMenuAction): void;
+  (e: 'close'): void;
+}>();
+
+const iconFor = (action: ImageMenuAction) =>
+  action.icon ??
+  (({ Fullscreen: '⛶', Vary: '↻', Edit: '✎', 'Make video': '▶', Download: '↓' } as Record<string, string>)[
+    action.label
+  ] ?? '•');
+</script>
+
+<template>
+  <div
+    v-if="props.open"
+    data-image-action-menu
+    class="w-56 overflow-hidden rounded-lg border border-zinc-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-900"
+    :class="props.class"
+  >
+    <p
+      v-if="props.actions.length === 0"
+      data-image-action-empty
+      class="px-3 py-3 text-center text-xs text-zinc-400 dark:text-zinc-500"
+    >
+      No actions available.
+    </p>
+    <template v-else>
+      <template v-for="(action, i) in props.actions" :key="action.id">
+        <div v-if="i > 0 && action.id === 'download'" class="my-1 h-px bg-zinc-100 dark:bg-zinc-800" />
+        <button
+          type="button"
+          :data-image-action="action.id"
+          class="flex w-full items-center gap-2.5 px-3 py-2 text-left text-xs transition-colors"
+          :class="
+            action.danger
+              ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40'
+              : 'text-zinc-700 hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800'
+          "
+          @click="emit('action', action)"
+        >
+          <span aria-hidden="true" class="w-4 shrink-0 text-center text-zinc-400 dark:text-zinc-500">
+            {{ iconFor(action) }}
+          </span>
+          <span data-image-action-label>{{ action.label }}</span>
+        </button>
+      </template>
+    </template>
+  </div>
+</template>
 
 ====/File: vue/ImageGenGallery.vue/====
 
@@ -37282,6 +37738,167 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-task-pro
 }
 export default AgentTaskProgressElement;
 
+====/File: vanilla/AiNoteAnswer.js/====
+
+/**
+ * AiNoteAnswer - Voicenotes "Ask AI" answer card: a waveform question row,
+ * the answer paragraph, an "Other sources" link list and a Copy pill.
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+class AiNoteAnswerElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['question', 'answer', 'sources', 'waveform'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._sources = [];
+    this._waveform = [];
+  }
+
+  connectedCallback() {
+    if (!this._sources.length) {
+      this._sources = parseJsonAttr(this.getAttribute('sources'), []);
+    }
+    if (!this._waveform.length) {
+      this._waveform = parseJsonAttr(this.getAttribute('waveform'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'sources' && !this._sources.length) {
+      this._sources = parseJsonAttr(this.getAttribute('sources'), []);
+    }
+    if (name === 'waveform' && !this._waveform.length) {
+      this._waveform = parseJsonAttr(this.getAttribute('waveform'), []);
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get question() {
+    return this.getAttribute('question') ?? 'What improvements should I prioritize for Homepage?';
+  }
+  set question(value) {
+    this.setAttribute('question', value);
+  }
+
+  get answer() {
+    return this.getAttribute('answer') ?? '';
+  }
+  set answer(value) {
+    this.setAttribute('answer', value);
+  }
+
+  get sources() {
+    return this._sources;
+  }
+  set sources(value) {
+    this._sources = Array.isArray(value) ? value : [];
+    this._render();
+  }
+
+  get waveform() {
+    return this._waveform;
+  }
+  set waveform(value) {
+    this._waveform = Array.isArray(value) ? value : [];
+    this._render();
+  }
+
+  _onClick(event) {
+    if (event.target.closest('[data-note-answer-play]')) {
+      this.dispatchEvent(new CustomEvent('play', { bubbles: true }));
+      return;
+    }
+    if (event.target.closest('[data-note-answer-copy]')) {
+      this.dispatchEvent(new CustomEvent('copy', { detail: { answer: this.answer }, bubbles: true }));
+      return;
+    }
+    const sourceEl = event.target.closest('[data-note-answer-source]');
+    if (sourceEl) {
+      const source = this._sources.find((s) => String(s) === sourceEl.getAttribute('data-note-answer-source-text'));
+      this.dispatchEvent(new CustomEvent('source-click', { detail: { source: source ?? sourceEl.textContent }, bubbles: true }));
+    }
+  }
+
+  _render() {
+    const bars = this._waveform.length
+      ? this._waveform
+      : Array.from({ length: 48 }, (_, i) => 30 + Math.round(Math.abs(Math.sin(i * 1.7)) * 70));
+    const wave = bars
+      .map((h) => `<span class="w-[3px] shrink-0 rounded-full bg-zinc-300 dark:bg-zinc-600" style="height:${Math.max(15, Math.min(100, h))}%"></span>`)
+      .join('');
+    const sources = this._sources.length
+      ? `<div data-note-answer-sources class="mt-4">
+          <div class="flex items-center gap-3">
+            <span class="text-[11px] font-medium text-zinc-400 dark:text-zinc-500">Other sources</span>
+            <span class="h-px flex-1 bg-zinc-100 dark:bg-zinc-800"></span>
+          </div>
+          ${this._sources
+            .map(
+              (s) => `
+            <button type="button" data-note-answer-source data-note-answer-source-text="${escapeAttribute(s)}" class="mt-2 flex w-full items-center gap-1.5 truncate text-left text-xs text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200">
+              <span aria-hidden="true" class="shrink-0">↗</span>
+              <span class="truncate">${escapeAttribute(s)}</span>
+            </button>`
+            )
+            .join('')}
+        </div>`
+      : '';
+
+    this.innerHTML = `
+      <div data-note-answer-card class="w-full rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div data-note-answer-question class="flex items-center gap-3 rounded-lg bg-zinc-50 px-3 py-2.5 dark:bg-zinc-800/60">
+          <button type="button" data-note-answer-play aria-label="Play question audio" class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-[10px] text-white dark:bg-zinc-100 dark:text-zinc-900">▶</button>
+          <div data-note-answer-waveform class="flex h-6 min-w-0 flex-1 items-center gap-[2px]" aria-hidden="true">${wave}</div>
+        </div>
+        <p data-note-answer-question-text class="mt-2 text-xs text-zinc-500 dark:text-zinc-400">${escapeAttribute(this.question)}</p>
+        <p data-note-answer-text class="mt-3 text-[13px] leading-relaxed text-zinc-800 dark:text-zinc-200">${escapeAttribute(this.answer)}</p>
+        ${sources}
+        <div class="mt-4">
+          <button type="button" data-note-answer-copy class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">
+            <span aria-hidden="true">⧉</span>
+            Copy
+          </button>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('ai-note-answer')) {
+  customElements.define('ai-note-answer', AiNoteAnswerElement);
+}
+
+export default AiNoteAnswerElement;
+
 ====/File: vanilla/AiResearchPanel.js/====
 
 /**
@@ -38465,6 +39082,138 @@ if (typeof customElements !== 'undefined' && !customElements.get('attachment-chi
   customElements.define('attachment-chip', AttachmentChipElement);
 }
 export default AttachmentChipElement;
+
+====/File: vanilla/AudioNotePlayer.js/====
+
+/**
+ * AudioNotePlayer - Voicenotes audio note player card: a play/pause button,
+ * a waveform bar strip and the note title / duration metadata row.
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+class AudioNotePlayerElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'duration', 'playing', 'waveform'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._waveform = [];
+    this._playing = false;
+  }
+
+  connectedCallback() {
+    if (!this._waveform.length) {
+      this._waveform = parseJsonAttr(this.getAttribute('waveform'), []);
+    }
+    if (this.getAttribute('playing') === 'true') {
+      this._playing = true;
+    }
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'waveform' && !this._waveform.length) {
+      this._waveform = parseJsonAttr(this.getAttribute('waveform'), []);
+    }
+    if (name === 'playing') {
+      this._playing = newValue === 'true';
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get title() {
+    return this.getAttribute('title') ?? 'Homepage walkthrough notes';
+  }
+  set title(value) {
+    this.setAttribute('title', value);
+  }
+
+  get duration() {
+    return this.getAttribute('duration') ?? '00:47';
+  }
+  set duration(value) {
+    this.setAttribute('duration', value);
+  }
+
+  get playing() {
+    return this._playing;
+  }
+  set playing(value) {
+    this._playing = Boolean(value);
+    this._render();
+  }
+
+  get waveform() {
+    return this._waveform;
+  }
+  set waveform(value) {
+    this._waveform = Array.isArray(value) ? value : [];
+    this._render();
+  }
+
+  _onClick(event) {
+    if (event.target.closest('[data-audio-note-toggle]')) {
+      this._playing = !this._playing;
+      this._render();
+      this.dispatchEvent(new CustomEvent('toggle-play', { detail: { playing: this._playing }, bubbles: true }));
+    }
+  }
+
+  _render() {
+    const bars = this._waveform.length
+      ? this._waveform
+      : Array.from({ length: 64 }, (_, i) => 25 + Math.round(Math.abs(Math.sin(i * 1.3)) * 75));
+    const wave = bars
+      .map((h, i) => {
+        const played = this._playing && i < bars.length / 2;
+        return `<span class="w-[3px] shrink-0 rounded-full ${played ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-600'}" style="height:${Math.max(15, Math.min(100, h))}%"></span>`;
+      })
+      .join('');
+
+    this.innerHTML = `
+      <div data-audio-note-player class="w-full rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div class="flex items-center gap-3">
+          <button type="button" data-audio-note-toggle aria-label="${this._playing ? 'Pause note' : 'Play note'}" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-xs text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300">${this._playing ? '❚❚' : '▶'}</button>
+          <div data-audio-note-waveform class="flex h-8 min-w-0 flex-1 items-center gap-[2px]" aria-hidden="true">${wave}</div>
+          <span data-audio-note-duration class="shrink-0 font-mono text-[11px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(this.duration)}</span>
+        </div>
+        <p data-audio-note-title class="mt-3 truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">${escapeAttribute(this.title)}</p>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('audio-note-player')) {
+  customElements.define('audio-note-player', AudioNotePlayerElement);
+}
+
+export default AudioNotePlayerElement;
 
 ====/File: vanilla/AudioWaveVisualizer.js/====
 
@@ -46455,6 +47204,134 @@ if (typeof customElements !== "undefined" && !customElements.get("homepage-dashb
   customElements.define("homepage-dashboard", HomepageDashboardElement);
 }
 export default HomepageDashboardElement;
+
+====/File: vanilla/ImageActionMenu.js/====
+
+/**
+ * ImageActionMenu - Krea generated-image context menu: Fullscreen / Vary /
+ * Edit / Upscale & enhance / Make video / Download actions anchored to an
+ * image card, with optional danger styling and per-action icons.
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+class ImageActionMenuElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['actions', 'open'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._actions = [];
+    this._open = true;
+  }
+
+  connectedCallback() {
+    if (!this._actions.length) {
+      this._actions = parseJsonAttr(this.getAttribute('actions'), []);
+    }
+    const openAttr = this.getAttribute('open');
+    if (openAttr !== null) {
+      this._open = openAttr === 'true';
+    }
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'actions' && !this._actions.length) {
+      this._actions = parseJsonAttr(this.getAttribute('actions'), []);
+    }
+    if (name === 'open') {
+      this._open = newValue === 'true';
+    }
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  get open() {
+    return this._open;
+  }
+  set open(value) {
+    this._open = Boolean(value);
+    this.setAttribute('open', this._open ? 'true' : 'false');
+    this._render();
+  }
+
+  get actions() {
+    return this._actions;
+  }
+  set actions(value) {
+    this._actions = Array.isArray(value) ? value : [];
+    this._render();
+  }
+
+  _onClick(event) {
+    if (!this._open) return;
+    const actionEl = event.target.closest('[data-image-action]');
+    if (!actionEl) return;
+    const action = this._actions.find((a) => String(a.id) === actionEl.getAttribute('data-image-action'));
+    if (action) {
+      this.dispatchEvent(new CustomEvent('action', { detail: { action }, bubbles: true }));
+    }
+  }
+
+  _render() {
+    if (!this._open) {
+      this.innerHTML = '';
+      return;
+    }
+    const iconFor = (a) =>
+      a.icon ?? { Fullscreen: '⛶', Vary: '↻', Edit: '✎', 'Make video': '▶', Download: '↓' }[a.label] ?? '•';
+    const items = this._actions.length
+      ? this._actions
+          .map((a, i) => {
+            const divider = i > 0 && a.id === 'download' ? '<div class="my-1 h-px bg-zinc-100 dark:bg-zinc-800"></div>' : '';
+            const tone = a.danger
+              ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40'
+              : 'text-zinc-700 hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800';
+            return `${divider}
+            <button type="button" data-image-action="${escapeAttribute(a.id)}" class="flex w-full items-center gap-2.5 px-3 py-2 text-left text-xs transition-colors ${tone}">
+              <span aria-hidden="true" class="w-4 shrink-0 text-center text-zinc-400 dark:text-zinc-500">${escapeAttribute(iconFor(a))}</span>
+              <span data-image-action-label>${escapeAttribute(a.label)}</span>
+            </button>`;
+          })
+          .join('')
+      : '<p data-image-action-empty class="px-3 py-3 text-center text-xs text-zinc-400 dark:text-zinc-500">No actions available.</p>';
+
+    this.innerHTML = `
+      <div data-image-action-menu class="w-56 overflow-hidden rounded-lg border border-zinc-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-900">${items}</div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('image-action-menu')) {
+  customElements.define('image-action-menu', ImageActionMenuElement);
+}
+
+export default ImageActionMenuElement;
 
 ====/File: vanilla/ImageGenGallery.js/====
 

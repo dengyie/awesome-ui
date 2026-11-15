@@ -188,6 +188,9 @@
 | **`AiRewriteMenu`** | AI 改写菜单 | Intercom 创作器 AI 菜单：Expand / Rephrase / 语气变体 / Fix grammar / Translate 动作、功能徽章、触发按钮开合与 select / toggle 事件 |
 | **`PromptPerformanceTable`** | 提示词表现表 | Peec AI 提示词追踪表：Visibility %、Sentiment 分（含 ▲▼— 趋势）、Position #、Mentions 列、行点击与 Export CTA |
 | **`ShareAccessDialog`** | 分享访问弹窗 | Superhuman 分享对话弹窗：邀请输入框、有权成员行（头像 / 姓名 / 邮箱 / 权限角色 + 移除）、Copy link 页脚与开合控制 |
+| **`AiNoteAnswer`** | AI 笔记回答卡 | Voicenotes Ask AI 回答卡：波形提问行、回答段落、"Other sources" 引用列表与 Copy 按钮 |
+| **`AudioNotePlayer`** | 音频笔记播放器 | Voicenotes 底部音频条：播放/暂停按钮、波形条带（播放时前半段高亮）与标题 / 时长元信息行 |
+| **`ImageActionMenu`** | 图片操作菜单 | Krea 生成图右键菜单：Fullscreen / Vary / Edit / Upscale & enhance / Make video / Download 动作、每项图标与 Download 前分隔线 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -360,6 +363,9 @@ awesome-ui/
 │   ├── AiRewriteMenu.tsx
 │   ├── PromptPerformanceTable.tsx
 │   ├── ShareAccessDialog.tsx
+│   ├── AiNoteAnswer.tsx
+│   ├── AudioNotePlayer.tsx
+│   ├── ImageActionMenu.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -526,6 +532,9 @@ awesome-ui/
 │   ├── AiRewriteMenu.vue
 │   ├── PromptPerformanceTable.vue
 │   ├── ShareAccessDialog.vue
+│   ├── AiNoteAnswer.vue
+│   ├── AudioNotePlayer.vue
+│   ├── ImageActionMenu.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -692,6 +701,9 @@ awesome-ui/
 │   ├── AiRewriteMenu.js
 │   ├── PromptPerformanceTable.js
 │   └── ShareAccessDialog.js
+│   ├── AiNoteAnswer.js
+│   ├── AudioNotePlayer.js
+│   └── ImageActionMenu.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js
