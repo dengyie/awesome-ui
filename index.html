@@ -201,12 +201,15 @@
   <script type="module" src="./vanilla/FalRunCard.js"></script>
   <script type="module" src="./vanilla/ImageGenMetaBar.js"></script>
   <script type="module" src="./vanilla/GammaImageDetail.js"></script>
+  <script type="module" src="./vanilla/WriterStyleGuide.js"></script>
+  <script type="module" src="./vanilla/CampsiteHandoff.js"></script>
+  <script type="module" src="./vanilla/ZendeskFieldSuggest.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.42.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.43.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -2754,6 +2757,75 @@
           <div class="mt-3 flex items-center gap-2">
             <span id="demo-gamma-detail-status" class="text-[11px] text-zinc-500">Toolbar actions — events report here.</span>
           </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-165" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">165 · WriterStyleGuide</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.43.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Writer term/style guide — Company / Team / My tabs, numbered guide entries with title, description and reading time, plus an "Add guideline" dashed CTA (Writer pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/WriterStyleGuide.tsx">
+          <div id="demo-writer-guide-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/WriterStyleGuide.vue">
+          <div id="demo-writer-guide-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/WriterStyleGuide.js">
+          <writer-style-guide id="demo-writer-guide"></writer-style-guide>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-writer-guide-status" class="text-[11px] text-zinc-500">Switch tabs / open an entry — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-166" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">166 · CampsiteHandoff</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.43.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Campsite design handoff — checklist with done state, assignee initials avatar and due date, x/y done counter and an AI summary block recapping the handoff (Campsite pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/CampsiteHandoff.tsx">
+          <div id="demo-handoff-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/CampsiteHandoff.vue">
+          <div id="demo-handoff-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/CampsiteHandoff.js">
+          <campsite-handoff id="demo-handoff"></campsite-handoff>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-handoff-status" class="text-[11px] text-zinc-500">Toggle a checklist item — state reports here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-167" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">167 · ZendeskFieldSuggest</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.43.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Zendesk AI ticket fields — amber suggestion bar with field chips (label: value + confidence %) that apply on click, plus an Ignore dismiss (Zendesk pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/ZendeskFieldSuggest.tsx">
+          <div id="demo-field-suggest-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/ZendeskFieldSuggest.vue">
+          <div id="demo-field-suggest-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/ZendeskFieldSuggest.js">
+          <zendesk-field-suggest id="demo-field-suggest"></zendesk-field-suggest>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-field-suggest-status" class="text-[11px] text-zinc-500">Apply a chip / Ignore — events report here.</span>
+          </div>
+          <button type="button" id="demo-field-suggest-reopen" class="mt-2 rounded border border-zinc-700 px-2.5 py-1 text-[11px] font-medium text-zinc-300 hover:bg-zinc-800">Restore suggestions</button>
         </div>
       </div>
     </section>
@@ -5685,6 +5757,52 @@ FAIL tests/ui.test.mjs
         gammaDetail42.addEventListener('like', () => { gammaDetail42.liked = !gammaDetail42.liked; gammaDetailStatus42.textContent = gammaDetail42.liked ? 'Marked as good result.' : 'Like removed.'; });
         gammaDetail42.addEventListener('dislike', () => { gammaDetailStatus42.textContent = 'Marked as bad result.'; });
         gammaDetail42.addEventListener('close', () => { gammaDetailStatus42.textContent = 'Detail pane closed.'; });
+      }
+
+      const writerGuide43 = document.getElementById('demo-writer-guide');
+      const writerGuideStatus43 = document.getElementById('demo-writer-guide-status');
+      if (writerGuide43) {
+        writerGuide43.entries = [
+          { id: 'g1', title: "Don't use passive voice", description: 'It dilutes meaning and bloats sentences.', minutes: 3 },
+          { id: 'g2', title: 'Use contracted forms', description: 'Write "can\u2019t" instead of "cannot" for a friendly tone.', minutes: 2 },
+          { id: 'g3', title: 'Upper Kebab case for products', description: 'Product names use Upper Kebab case.', minutes: 4 }
+        ];
+        writerGuide43.addEventListener('tab-change', (event) => { writerGuideStatus43.textContent = 'Tab → ' + event.detail.tab; });
+        writerGuide43.addEventListener('entry-click', (event) => { writerGuideStatus43.textContent = 'Entry → ' + event.detail.entry.title; });
+      }
+
+      const handoff43 = document.getElementById('demo-handoff');
+      const handoffStatus43 = document.getElementById('demo-handoff-status');
+      if (handoff43) {
+        handoff43.items = [
+          { id: 'h1', label: 'Redlines attached for spacing scale', done: true, assignee: 'Alex Smith', due: 'Nov 12' },
+          { id: 'h2', label: 'Empty states exported to Lottie', done: true, assignee: 'Brook Taylor', due: 'Nov 13' },
+          { id: 'h3', label: 'Motion spec review with eng', done: false, assignee: 'Casey Morgan', due: 'Nov 15' }
+        ];
+        handoff43.addEventListener('toggle', (event) => { handoffStatus43.textContent = (event.detail.item.done ? 'Done → ' : 'Reopened → ') + event.detail.item.label; });
+      }
+
+      const fieldSuggest43 = document.getElementById('demo-field-suggest');
+      const fieldSuggestStatus43 = document.getElementById('demo-field-suggest-status');
+      const fieldSuggestReopen43 = document.getElementById('demo-field-suggest-reopen');
+      if (fieldSuggest43) {
+        fieldSuggest43.fields = [
+          { id: 'f1', label: 'Priority', value: 'Urgent', confidence: 0.94 },
+          { id: 'f2', label: 'Type', value: 'Incident', confidence: 0.87 },
+          { id: 'f3', label: 'Group', value: 'Payments', confidence: 0.72 }
+        ];
+        fieldSuggest43.addEventListener('apply', (event) => { fieldSuggestStatus43.textContent = 'Applied → ' + event.detail.field.label + ': ' + event.detail.field.value; });
+        fieldSuggest43.addEventListener('dismiss', () => { fieldSuggestStatus43.textContent = 'Suggestions dismissed.'; });
+      }
+      if (fieldSuggestReopen43 && fieldSuggest43) {
+        fieldSuggestReopen43.addEventListener('click', () => {
+          fieldSuggest43.fields = [
+            { id: 'f1', label: 'Priority', value: 'Urgent', confidence: 0.94 },
+            { id: 'f2', label: 'Type', value: 'Incident', confidence: 0.87 },
+            { id: 'f3', label: 'Group', value: 'Payments', confidence: 0.72 }
+          ];
+          fieldSuggestStatus43.textContent = 'Suggestions restored.';
+        });
       }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');

@@ -755,6 +755,9 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 172. FalRunCard: fal generate-run info card — task type badge, model count + relative time header, prompt paragraph, Aspect Ratio / Total Cost metadata rows and duplicate/rerun/delete/share actions.
 173. ImageGenMetaBar: fal generation result footer — model badge pill overlay plus mono metadata row with job id, duration and per-image cost.
 174. GammaImageDetail: Gamma AI-images detail pane — large preview, download/zoom/delete + like/dislike toolbar and the full generation prompt in a bordered block.
+175. WriterStyleGuide: Writer term/style guide card — Company/Team/My tabs, numbered guide entries with title, description and reading time, dashed Add guideline CTA.
+176. CampsiteHandoff: Campsite design handoff panel — checklist with done state, assignee initials avatar and due date, x/y done counter and an AI summary block.
+177. ZendeskFieldSuggest: Zendesk AI ticket-field suggestion bar — amber bar with field chips (label: value + confidence %) that apply on click, plus an Ignore dismiss.
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)

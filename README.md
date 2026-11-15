@@ -194,6 +194,9 @@
 | **`FalRunCard`** | 运行信息卡 | fal 生成任务卡：任务类型徽标、模型数 + 相对时间、Prompt 段落、AspectRatio / TotalCost 元信息行与复制 / 重跑 / 删除 / 分享动作行 |
 | **`ImageGenMetaBar`** | 生成结果元信息条 | fal 结果页脚：左下模型徽标浮层 + 等宽 job id / 时长 / 单图费用元信息行 |
 | **`GammaImageDetail`** | 图片详情面板 | Gamma AI 图片详情：大图预览、下载 / 缩放 / 删除与点赞 / 点踩工具行、完整 Prompt 阅读块 |
+| **`WriterStyleGuide`** | 写作风格指南卡 | Writer 术语/风格指南：Company / Team / My 标签页、编号指南条目（标题 / 描述 / 阅读时长）与虚线新增 CTA |
+| **`CampsiteHandoff`** | 设计交付面板 | Campsite 设计 handoff：完成态检查清单（负责人首字母头像 + 截止日期）、x/y done 计数与 AI 摘要块 |
+| **`ZendeskFieldSuggest`** | 工单字段建议条 | Zendesk AI 字段建议：琥珀色建议条、字段 chips（标签: 值 + 置信度 %）点击即应用、Ignore 忽略按钮 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -372,6 +375,9 @@ awesome-ui/
 │   ├── FalRunCard.tsx
 │   ├── ImageGenMetaBar.tsx
 │   ├── GammaImageDetail.tsx
+│   ├── WriterStyleGuide.tsx
+│   ├── CampsiteHandoff.tsx
+│   ├── ZendeskFieldSuggest.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -544,6 +550,9 @@ awesome-ui/
 │   ├── FalRunCard.vue
 │   ├── ImageGenMetaBar.vue
 │   ├── GammaImageDetail.vue
+│   ├── WriterStyleGuide.vue
+│   ├── CampsiteHandoff.vue
+│   ├── ZendeskFieldSuggest.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -716,6 +725,9 @@ awesome-ui/
 │   ├── FalRunCard.js
 │   ├── ImageGenMetaBar.js
 │   └── GammaImageDetail.js
+│   ├── WriterStyleGuide.js
+│   ├── CampsiteHandoff.js
+│   └── ZendeskFieldSuggest.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

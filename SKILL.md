@@ -1020,6 +1020,21 @@ awesome-ui/
 - **Vanilla 用法**: `<gamma-image-detail>` + `title`/`preview`/`prompt` 属性、`liked` property；事件 `download` / `zoom` / `delete` / `like` / `dislike` / `close`
 - **特性**: 大图预览区（无 preview 时 🖼 占位）、↓ / 🔍 / 🗑 工具行（删除悬停红色）+ 👎 / 👍 反馈对（liked 时玫红高亮 + aria-pressed）、标题行 ✕ 关闭、完整 Prompt 边框阅读块。
 
+### 175. `WriterStyleGuide` (写作风格指南卡)
+- **Props**: `entries?: [{id,title,description,minutes}]`, `activeTab?='company'`, `className?`, `onTabChange?(tab)`, `onEntryClick?(entry)`
+- **Vanilla 用法**: `<writer-style-guide>` + `entries` JSON 属性或 `entries`/`activeTab` property；事件 `tab-change {tab}` / `entry-click {entry}`
+- **特性**: Company / Team / My 三标签页（激活项 indigo 下划线）、编号圆形序号 + 标题 / 描述 / 阅读时长三行条目、行 hover、底部虚线 "+ Add guideline" CTA、空 entries 时仅渲染标签页。
+
+### 176. `CampsiteHandoff` (设计交付面板)
+- **Props**: `items?: [{id,label,done?,assignee?,due?}]`, `summary?`, `className?`, `onToggle?(item)`
+- **Vanilla 用法**: `<campsite-handoff>` + `items` JSON 属性或 `items` property、`summary` 属性；点击条目翻转 done 并派发 `toggle {item}`
+- **特性**: 标题行 + x/y done 圆角计数徽章、复选框行（完成项删除线灰化）、负责人首字母头像 + 截止日期、✦ AI summary 靛蓝摘要块、summary 为空时隐藏摘要区。
+
+### 177. `ZendeskFieldSuggest` (工单字段建议条)
+- **Props**: `fields?: [{id,label,value,confidence}]`, `className?`, `onApply?(field)`, `onDismiss?()`
+- **Vanilla 用法**: `<zendesk-field-suggest>` + `fields` JSON 属性或 `fields` property；事件 `apply {field}`（点击即从条中移除）/ `dismiss`
+- **特性**: 琥珀色建议条（✦ Suggested fields 标签）、字段 chips（标签: 值 + mono 置信度 %）点击即应用、右下 Ignore 按钮、dismiss / 应用完清空 chips。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）
