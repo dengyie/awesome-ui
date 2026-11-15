@@ -180,6 +180,7 @@
 | v1.33.0 | SystemPromptEditor / ToolSchemaEditor / FineTuneJobList / PersonaPresetGrid / AgentBuilderCard | ✅ 三端 15 文件 + 5 组 vanilla 用例 + 5 组 React SSR + 全量 Vue SFC 编译校验，501 项测试通过；P5 第二批：agent/prompt 工作台模式，无素材知识驱动设计 |
 | v1.34.0 | VoiceOrb / ShareChatDialog / BrandPromptTable | ✅ 三端 9 文件 + 5 组 vanilla 用例 + 3 组 React SSR + 全量 Vue SFC 编译校验，509 项测试通过；P5 第三批：Mobbin ai-native 素材恢复（token 刷新 + MCP 解析修复，36 张截图落盘 references/ai-native/），首次以真实素材对照选型 |
 | v1.35.0 | PromptSaveDialog / AiTemplatePicker / CreationComposer | ✅ 三端 9 文件 + 4 组 vanilla 用例 + 3 组 React SSR + 全量 Vue SFC 编译校验，516 项测试通过；P5 第四批：继续消费 ai-native 素材（prompt library 组：Langdock / Apollo / Bloom） |
+| v1.36.0 | TraceSpanWaterfall / EvalScoreTable / TokenCostBreakdown | ✅ 三端 9 文件 + 3 组 vanilla 用例 + 3 组 React SSR + 全量 Vue SFC SSR 校验，525 项测试通过；P5 第五批：新增 Mobbin ai-monitor 分类（36 张截图落盘 references/ai-monitor/，trace/eval/playground/cost/diff/guardrail 六组），AI 可观测性三件套（Braintrust/OpenAI Evals/Cofounder spend 模式） |
 
 ### P5 阶段说明（ai-native / agent 工作台）
 

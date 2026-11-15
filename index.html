@@ -180,12 +180,15 @@
   <script type="module" src="./vanilla/PromptSaveDialog.js"></script>
   <script type="module" src="./vanilla/AiTemplatePicker.js"></script>
   <script type="module" src="./vanilla/CreationComposer.js"></script>
+  <script type="module" src="./vanilla/TraceSpanWaterfall.js"></script>
+  <script type="module" src="./vanilla/EvalScoreTable.js"></script>
+  <script type="module" src="./vanilla/TokenCostBreakdown.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.35.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.36.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -2243,6 +2246,75 @@
         <creation-composer id="demo-composer"></creation-composer>
         <div class="mt-3 flex items-center gap-2">
           <span id="demo-composer-status" class="text-[11px] text-zinc-500">Toggle / create — events report here.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-144" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">144 · TraceSpanWaterfall</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.36.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">AI observability — horizontal span timeline waterfall for an agent/LLM trace (LLM / tool / retrieval color-coded, duration + cost labels).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/TraceSpanWaterfall.tsx">
+          <div id="demo-trace-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/TraceSpanWaterfall.vue">
+          <div id="demo-trace-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/TraceSpanWaterfall.js">
+          <trace-span-waterfall id="demo-trace" title="Agent run · planner-7b"></trace-span-waterfall>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-trace-status" class="text-[11px] text-zinc-500">Click a span — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-145" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">145 · EvalScoreTable</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.36.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Evaluation report — runs table with score chips + bars (pass/warn/fail tones), test-criteria cards and an "Add criteria" CTA.</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/EvalScoreTable.tsx">
+          <div id="demo-eval-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/EvalScoreTable.vue">
+          <div id="demo-eval-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/EvalScoreTable.js">
+          <eval-score-table id="demo-eval" title="External Data Eval" add-criteria="true"></eval-score-table>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-eval-status" class="text-[11px] text-zinc-500">Run select / add criteria — events report here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-146" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">146 · TokenCostBreakdown</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.36.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Spend breakdown — stacked cost bar with per-segment legend plus token usage rows (input / output / reasoning).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/TokenCostBreakdown.tsx">
+          <div id="demo-token-react-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/TokenCostBreakdown.vue">
+          <div id="demo-token-vue-mount"></div>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/TokenCostBreakdown.js">
+          <token-cost-breakdown id="demo-token" title="Spend breakdown" spend-used="34.49" spend-total="55"></token-cost-breakdown>
+          <div class="mt-3 flex items-center gap-2">
+            <span id="demo-token-status" class="text-[11px] text-zinc-500">Click a segment — events report here.</span>
+          </div>
         </div>
       </div>
     </section>
@@ -4924,6 +4996,50 @@ FAIL tests/ui.test.mjs
         composer35.addEventListener('resolution-change', (event) => { composerStatus35.textContent = 'Resolution → ' + event.detail.resolution; });
         composer35.addEventListener('count-change', (event) => { composerStatus35.textContent = 'Variations → ' + event.detail.count; });
         composer35.addEventListener('submit', (event) => { composerStatus35.textContent = 'Create → "' + (event.detail.prompt || '(empty)') + '" @ ' + event.detail.resolution + ' ×' + event.detail.count; });
+      }
+
+      const trace36 = document.getElementById('demo-trace');
+      const traceStatus36 = document.getElementById('demo-trace-status');
+      if (trace36) {
+        trace36.spans = [
+          { id: 's1', name: 'plan_task', startMs: 0, durationMs: 1200, depth: 0, kind: 'llm', costUsd: 0.002 },
+          { id: 's2', name: 'web_search', startMs: 1200, durationMs: 400, depth: 1, kind: 'tool' },
+          { id: 's3', name: 'retrieve_docs', startMs: 1600, durationMs: 350, depth: 1, kind: 'retrieval' },
+          { id: 's4', name: 'synthesize', startMs: 1950, durationMs: 900, depth: 0, kind: 'llm', costUsd: 0.004 }
+        ];
+        trace36.addEventListener('span-select', (event) => { traceStatus36.textContent = 'Selected → ' + event.detail.span.name + ' (' + event.detail.span.durationMs + 'ms' + (event.detail.span.costUsd ? ', $' + event.detail.span.costUsd.toFixed(3) : '') + ')'; });
+      }
+
+      const eval36 = document.getElementById('demo-eval');
+      const evalStatus36 = document.getElementById('demo-eval-status');
+      if (eval36) {
+        eval36.runs = [
+          { id: 'r1', name: 'Trip Planning.csv', score: 100, grader: 'String check grader' },
+          { id: 'r2', name: 'Summary set', score: 82, grader: 'LLM grader' },
+          { id: 'r3', name: 'Refusal set', score: 41, grader: 'Exact match', tone: 'warn' }
+        ];
+        eval36.criteria = [
+          { id: 'c1', title: 'String check grader', description: 'Check for exact or partial matches against a reference value.' },
+          { id: 'c2', title: 'LLM rubric grader', description: 'Model-graded scoring against a written rubric.' }
+        ];
+        eval36.addEventListener('run-select', (event) => { evalStatus36.textContent = 'Run → ' + event.detail.run.name + ' scored ' + event.detail.run.score + '%'; });
+        eval36.addEventListener('add-criteria', () => { evalStatus36.textContent = 'Add criteria clicked — open the grader picker.'; });
+      }
+
+      const token36 = document.getElementById('demo-token');
+      const tokenStatus36 = document.getElementById('demo-token-status');
+      if (token36) {
+        token36.segments = [
+          { id: 'agent', label: 'Custom Agent', amountUsd: 32.05 },
+          { id: 'opt', label: 'SuperOptimizer', amountUsd: 1.94 },
+          { id: 'other', label: 'Other', amountUsd: 0.51 }
+        ];
+        token36.usageRows = [
+          { id: 'in', label: 'Input Tokens', tokens: 37654, percent: 13, barColor: 'bg-emerald-500' },
+          { id: 'out', label: 'Output Tokens', tokens: 224849, percent: 77, barColor: 'bg-amber-500' },
+          { id: 'reason', label: 'Reasoning Tokens', tokens: 27712, percent: 10, barColor: 'bg-rose-500' }
+        ];
+        token36.addEventListener('segment-select', (event) => { tokenStatus36.textContent = 'Segment → ' + event.detail.segment.label + ' ($' + event.detail.segment.amountUsd.toFixed(2) + ')'; });
       }
 
       if (ctxBadge) {

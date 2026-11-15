@@ -128,6 +128,15 @@ CATEGORIES = {
         ("screens", "share chat conversation public page", "web"),
         ("screens", "keyboard shortcuts help overlay cheatsheet", "web"),
     ],
+    # AI observability & evaluation
+    "ai-monitor": [
+        ("screens", "AI agent trace span timeline waterfall view", "web"),
+        ("screens", "LLM evaluation scoring rubric results table", "web"),
+        ("screens", "AI model playground compare side by side outputs", "web"),
+        ("screens", "token usage cost breakdown dashboard AI", "web"),
+        ("screens", "prompt versioning diff A B test variants", "web"),
+        ("screens", "AI guardrail moderation flagged content review", "web"),
+    ],
 }
 
 

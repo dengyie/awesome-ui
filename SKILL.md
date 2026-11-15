@@ -915,6 +915,21 @@ awesome-ui/
 - **Vanilla 用法**: `<creation-composer image-assist="true" resolution="4K">`；事件 `image-assist-change {enabled}`（vanilla 内部切换属性）/ `resolution-change {resolution}` / `count-change {count}` / `submit {prompt,imageAssist,resolution,count}`
 - **特性**: 🖼 附件按钮 + Image Assist 胶囊开关（开时 indigo 底 + 滑块右移 + aria-checked）、💡 灵感按钮、3 行 prompt textarea、分辨率 / N× 数量原生 select、violet Create CTA。
 
+
+### 154. `TraceSpanWaterfall` (调用瀑布图)
+- **Props**: `spans?: [{id,name,startMs,durationMs,depth?,kind?,costUsd?,tokens?}]`, `title?`, `onSpanSelect?(span)`
+- **Vanilla 用法**: `<trace-span-waterfall title="Agent run">` + `spans` property；事件 `span-select {span}`
+- **特性**: 头部 span 计数 + 总时长、LLM/tool/retrieval 图例（indigo/emerald/amber）、按深度缩进的行 + 圆点色标、水平时间条按 startMs/durationMs 定位、右侧时长 + 成本标注。
+
+### 155. `EvalScoreTable` (评测得分表)
+- **Props**: `runs?: [{id,name,score,grader?,tone?}]`, `criteria?: [{id,title,description}]`, `title?`, `onRunSelect?(run)`, `onAddCriteria?()`
+- **Vanilla 用法**: `<eval-score-table add-criteria="true">` + `runs`/`criteria` property；事件 `run-select {run}` / `add-criteria`
+- **特性**: Run/Score/Grader 三列表格、得分 chip（emerald/amber/red 按tone）、20 宽进度条、标准卡两列网格、+ 圆点 Add criteria 虚线 CTA。
+
+### 156. `TokenCostBreakdown` (Token 成本拆解)
+- **Props**: `segments?: [{id,label,amountUsd,color?}]`, `usageRows?: [{id,label,tokens,percent,barColor?}]`, `title?`, `spendUsed?`, `spendTotal?`, `onSegmentSelect?(segment)`
+- **Vanilla 用法**: `<token-cost-breakdown spend-used="34.49" spend-total="55">` + `segments`/`usageRows` property；事件 `segment-select {segment}`
+- **特性**: 头部 "$used of $total"、堆叠消费条（默认 6 色 cycle）、图例行金额 + 百分比、Token usage 分区（大写小标题 + 输入/输出/推理行进度条）。
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

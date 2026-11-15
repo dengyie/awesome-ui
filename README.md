@@ -173,6 +173,9 @@
 | **`PromptSaveDialog`** | 保存 Prompt 弹窗 | 文件夹选择、标题 + prompt 正文、{{变量}} chips、可见性说明、Cancel / Save prompt |
 | **`AiTemplatePicker`** | AI 模板选择器 | 分类侧栏（计数徽章）、模板卡 Try it 网格、分类过滤、Run custom AI prompt |
 | **`CreationComposer`** | 创作输入条 | Image Assist 开关、prompt 多行输入、分辨率/数量选择、Create CTA（violet） |
+| **`TraceSpanWaterfall`** | 调用瀑布图 | 水平 span 时间条（LLM/tool/retrieval 分色）、层级缩进、时长 + 成本标注、图例、span 点击回调 |
+| **`EvalScoreTable`** | 评测得分表 | 运行得分行（pass/warn/fail 分色 chip + 进度条）、测试标准卡、Add criteria 虚线 CTA |
+| **`TokenCostBreakdown`** | Token 成本拆解 | 堆叠消费条 + 分段图例（金额/占比）、Token 用量行（输入/输出/推理）、总额进度 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
@@ -334,6 +337,9 @@ awesome-ui/
 │    ├── PromptSaveDialog.tsx
 │    ├── AiTemplatePicker.tsx
 │    └── CreationComposer.tsx
+│    ├── TraceSpanWaterfall.tsx
+│    ├── EvalScoreTable.tsx
+│    └── TokenCostBreakdown.tsx
 ├── vue/                       # Vue 3 (SFC) 单文件组件
 │   ├── UiIcon.vue           # 统一零依赖 SVG 图标
 │   ├── ChatPromptInput.vue
@@ -485,6 +491,9 @@ awesome-ui/
 │    ├── PromptSaveDialog.vue
 │    ├── AiTemplatePicker.vue
 │    └── CreationComposer.vue
+│    ├── TraceSpanWaterfall.vue
+│    ├── EvalScoreTable.vue
+│    └── TokenCostBreakdown.vue
 └── vanilla/                   # 原生 JS / Web Components 单文件
     ├── UiIcon.js            # uiIcon() SVG 工厂函数
     ├── ChatPromptInput.js
@@ -636,6 +645,9 @@ awesome-ui/
      ├── PromptSaveDialog.js
      ├── AiTemplatePicker.js
      └── CreationComposer.js
+     ├── TraceSpanWaterfall.js
+     ├── EvalScoreTable.js
+     └── TokenCostBreakdown.js
 ├── docs/                      # 设计与实现规范
 │   ├── design-guidelines.md   # 视觉/交互/动效/无障碍规范 + 验收清单
 │   ├── component-roadmap-v1.md# 新组件任务书（Props 设计 + 素材索引）

@@ -705,4 +705,16 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/CreationComposer.tsx
    - Vue 3: vue/CreationComposer.vue
    - Vanilla: vanilla/CreationComposer.js (custom element `<creation-composer>`, attributes `open`/`placeholder`/`image-assist`/`resolution`/`count`; events `image-assist-change {enabled}`, `resolution-change {resolution}`, `count-change {count}`, `submit {prompt,imageAssist,resolution,count}`)
+153. TraceSpanWaterfall: horizontal span timeline waterfall for agent/LLM traces — depth-indented rows, LLM/tool/retrieval color coding, duration + cost labels.
+   - React: react/TraceSpanWaterfall.tsx
+   - Vue 3: vue/TraceSpanWaterfall.vue
+   - Vanilla: vanilla/TraceSpanWaterfall.js (custom element `<trace-span-waterfall>`, attributes `title`/`spans` JSON; property `spans`; event `span-select {span}`)
+154. EvalScoreTable: evaluation report — runs table with tone-colored score chips + bars, test-criteria cards, Add criteria dashed CTA.
+   - React: react/EvalScoreTable.tsx
+   - Vue 3: vue/EvalScoreTable.vue
+   - Vanilla: vanilla/EvalScoreTable.js (custom element `<eval-score-table>`, attributes `title`/`runs` JSON/`criteria` JSON/`add-criteria`; properties `runs`/`criteria`; events `run-select {run}`, `add-criteria`)
+155. TokenCostBreakdown: spend breakdown — stacked cost bar with per-segment legend (amount/percent) and token usage rows.
+   - React: react/TokenCostBreakdown.tsx
+   - Vue 3: vue/TokenCostBreakdown.vue
+   - Vanilla: vanilla/TokenCostBreakdown.js (custom element `<token-cost-breakdown>`, attributes `title`/`segments` JSON/`usage-rows` JSON/`spend-used`/`spend-total`; properties `segments`/`usageRows`; event `segment-select {segment}`)
 
