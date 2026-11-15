@@ -207,12 +207,15 @@
   <script type="module" src="./vanilla/AiSuggestionCard.js"></script>
   <script type="module" src="./vanilla/JumpBackIn.js"></script>
   <script type="module" src="./vanilla/HelpResourcesPanel.js"></script>
+  <script type="module" src="./vanilla/VisionAnalysisCard.js"></script>
+  <script type="module" src="./vanilla/PrReviewQueue.js"></script>
+  <script type="module" src="./vanilla/IterationActionBar.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.44.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.45.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -2901,6 +2904,66 @@
         </div>
       </div>
     </section>
+    <section id="section-171" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">171 · VisionAnalysisCard</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.45.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Image-analysis structured reply — clickable section headings over key/value attribute row grids (Claude pattern).</p>
+    <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-file="vanilla/VisionAnalysisCard.js">
+      <div class="space-y-3">
+        <vision-analysis-card id="demo-vision"></vision-analysis-card>
+        <div id="demo-vision-status" class="text-xs font-mono text-zinc-500">Click a section heading…</div>
+      </div>
+    </div>
+    <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/VisionAnalysisCard.tsx">
+      <div id="react-vision"></div>
+    </div>
+    <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/VisionAnalysisCard.vue">
+      <div id="vue-vision"></div>
+    </div>
+  </section>
+    <section id="section-172" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">172 · PrReviewQueue</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.45.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Grouped PR review queue — collapsible groups with count badges, author-initial rows and review meta (Graphite pattern).</p>
+    <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-file="vanilla/PrReviewQueue.js">
+      <div class="space-y-3">
+        <pr-review-queue id="demo-prqueue"></pr-review-queue>
+        <div id="demo-prqueue-status" class="text-xs font-mono text-zinc-500">Click a PR row…</div>
+      </div>
+    </div>
+    <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/PrReviewQueue.tsx">
+      <div id="react-prqueue"></div>
+    </div>
+    <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/PrReviewQueue.vue">
+      <div id="vue-prqueue"></div>
+    </div>
+  </section>
+    <section id="section-173" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">173 · IterationActionBar</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.45.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Generation iteration bar — Show More / Brainstorm / Reply pills with a prev/next page pager (Luma pattern).</p>
+    <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-file="vanilla/IterationActionBar.js">
+      <div class="space-y-3">
+        <iteration-action-bar id="demo-iterbar" page="2" total-pages="4"></iteration-action-bar>
+        <div id="demo-iterbar-status" class="text-xs font-mono text-zinc-500">Click an action…</div>
+      </div>
+    </div>
+    <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="react" data-file="react/IterationActionBar.tsx">
+      <div id="react-iterbar"></div>
+    </div>
+    <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vue" data-file="vue/IterationActionBar.vue">
+      <div id="vue-iterbar"></div>
+    </div>
+  </section>
   <auto-scroll-anchor></auto-scroll-anchor>
 
   <script>
@@ -5921,6 +5984,60 @@ FAIL tests/ui.test.mjs
         ];
         helpRes44.addEventListener('resource-click', (event) => { helpResStatus44.textContent = 'Resource → ' + event.detail.resource.title; });
         helpRes44.addEventListener('link-click', (event) => { helpResStatus44.textContent = 'Link → ' + event.detail.link; });
+      }
+
+      const vision45 = document.getElementById('demo-vision');
+      const visionStatus45 = document.getElementById('demo-vision-status');
+      if (vision45) {
+        vision45.sections = [
+          {
+            heading: 'Image Details',
+            rows: [
+              { key: 'Lighting', value: 'Strong overhead sunlight creating sharp shadows on sand; excellent clarity suggests midday conditions' },
+              { key: 'Beach Activity', value: 'Scattered groups of swimmers and sunbathers distributed across the sand and shallow water' },
+              { key: 'Wave Patterns', value: 'Multiple rolling waves with consistent whitecaps indicate moderate, consistent swell' }
+            ]
+          },
+          {
+            heading: 'Design Strengths',
+            rows: [
+              { key: 'Color Palette', value: 'Warm sunset tones with high saturation and balanced complementary blues' },
+              { key: 'Composition', value: 'Horizon placed on the upper third leaving generous negative space in the sky' }
+            ]
+          }
+        ];
+        vision45.addEventListener('section-click', (event) => { visionStatus45.textContent = 'Section → ' + event.detail.section.heading; });
+      }
+
+      const prqueue45 = document.getElementById('demo-prqueue');
+      const prqueueStatus45 = document.getElementById('demo-prqueue-status');
+      if (prqueue45) {
+        prqueue45.groups = [
+          {
+            id: 'waiting',
+            label: 'Waiting for reviewers',
+            prs: [
+              { id: 'p1', title: 'Add activity feed API', repo: 'mini-landing-page', number: 4, author: 'Sam Lee' },
+              { id: 'p2', title: 'Fix hero image cropping', repo: 'mini-landing-page', number: 8, author: 'Ivy Chen' }
+            ]
+          },
+          {
+            id: 'drafts',
+            label: 'Drafts',
+            prs: [
+              { id: 'p3', title: 'Add user search', repo: 'mini-landing-page', number: 7, author: 'Sam Lee' },
+              { id: 'p4', title: 'Add frontend for search', repo: 'mini-landing-page', number: 6, author: 'Sam Lee' }
+            ]
+          }
+        ];
+        prqueue45.addEventListener('pr-click', (event) => { prqueueStatus45.textContent = 'PR → ' + event.detail.pr.title; });
+      }
+
+      const iterbar45 = document.getElementById('demo-iterbar');
+      const iterbarStatus45 = document.getElementById('demo-iterbar-status');
+      if (iterbar45) {
+        iterbar45.addEventListener('action', (event) => { iterbarStatus45.textContent = 'Action → ' + event.detail.action; });
+        iterbar45.addEventListener('page-change', (event) => { iterbarStatus45.textContent = 'Page → ' + event.detail.page; });
       }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');

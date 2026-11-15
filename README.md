@@ -198,6 +198,9 @@
 | **`AiSuggestionCard`** | AI 建议卡 | Mindtrip 主动建议：✦ 头像、建议消息段落、跟进操作 chips 与 ✕ 关闭按钮 |
 | **`JumpBackIn`** | 续聊卡片行 | Mindtrip "Jump back in"：缩略图（或渐变占位）、Trip/Chat 类型徽章、标题与副标题卡片行 |
 | **`HelpResourcesPanel`** | 帮助资源面板 | Graphite Help 侧栏：Reference/Tutorial 徽章资源卡（可选阅读时长）与底部链接行 |
+| **`VisionAnalysisCard`** | 视觉分析卡 | Claude 图片分析结构化回复：可点击分区标题 + key/value 属性行网格 |
+| **`PrReviewQueue`** | PR 评审队列 | Graphite 分组 PR 队列：可折叠分组（计数徽章 + 标签）、作者首字母头像行、`作者 · 仓库 #编号` 元信息 |
+| **`IterationActionBar`** | 迭代操作条 | Luma 生成迭代条：Show More / Brainstorm / Reply 圆角 pills、··· 溢出位与 ‹ › 翻页器（页码标签） |
 | **`CampsiteHandoff`** | 设计交付面板 | Campsite 设计 handoff：完成态检查清单（负责人首字母头像 + 截止日期）、x/y done 计数与 AI 摘要块 |
 | **`ZendeskFieldSuggest`** | 工单字段建议条 | Zendesk AI 字段建议：琥珀色建议条、字段 chips（标签: 值 + 置信度 %）点击即应用、Ignore 忽略按钮 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
@@ -384,6 +387,9 @@ awesome-ui/
 │   ├── AiSuggestionCard.tsx
 │   ├── JumpBackIn.tsx
 │   ├── HelpResourcesPanel.tsx
+│   ├── VisionAnalysisCard.tsx
+│   ├── PrReviewQueue.tsx
+│   ├── IterationActionBar.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -562,6 +568,9 @@ awesome-ui/
 │   ├── AiSuggestionCard.vue
 │   ├── JumpBackIn.vue
 │   ├── HelpResourcesPanel.vue
+│   ├── VisionAnalysisCard.vue
+│   ├── PrReviewQueue.vue
+│   ├── IterationActionBar.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -740,6 +749,9 @@ awesome-ui/
 │   ├── AiSuggestionCard.js
 │   ├── JumpBackIn.js
 │   └── HelpResourcesPanel.js
+│   ├── VisionAnalysisCard.js
+│   ├── PrReviewQueue.js
+│   └── IterationActionBar.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

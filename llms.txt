@@ -761,6 +761,9 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 178. AiSuggestionCard: Mindtrip proactive suggestion card — sparkle avatar, message paragraph, follow-up action chips and a dismiss close button.
 179. JumpBackIn: Mindtrip "Jump back in" resume cards — thumbnail (or gradient placeholder), kind badge, title and subtitle per card.
 180. HelpResourcesPanel: Graphite help resources panel — Reference/Tutorial badge cards with optional reading time and footer link rows.
+181. VisionAnalysisCard: Claude image-analysis structured reply — clickable section headings over key/value attribute row grids.
+182. PrReviewQueue: Graphite grouped PR review queue — collapsible groups with count badges, author-initial rows and `author · repo #n` meta.
+183. IterationActionBar: Luma iteration bar — Show More / Brainstorm / Reply pills, overflow slot and prev/next pager with page label.
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)

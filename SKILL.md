@@ -1050,6 +1050,21 @@ awesome-ui/
 - **Vanilla 用法**: `<help-resources-panel>` + `resources`/`links` JSON 属性或 property；事件 `resource-click {resource}` / `link-click {link}`
 - **特性**: Help 标题行、Tutorials & resources 分组标签、资源卡（indigo Reference / emerald Tutorial 徽章 + 可选 "N minutes" 时长 + 标题 / 描述）、底部链接行（links 为空隐藏）。
 
+### 181. `VisionAnalysisCard` (视觉分析卡)
+- **Props**: `sections?: [{heading, rows: [{key, value}]}]`, `className?`, `onSectionClick?(section)`
+- **Vanilla 用法**: `<vision-analysis-card>` + `sections` JSON 属性或 property；事件 `section-click {section}`
+- **特性**: 可点击分区标题（hover 变色）+ `dl` 属性行网格（`grid-cols-[minmax(0,9rem)_1fr]`，key dt / value dd），多分区纵向堆叠。
+
+### 182. `PrReviewQueue` (PR 评审队列)
+- **Props**: `groups?: [{id,label,prs: [{id,title,repo,number,author}]}]`, `className?`, `onPrClick?(pr)`
+- **Vanilla 用法**: `<pr-review-queue>` + `groups` JSON 属性或 property；事件 `pr-click {pr}`；分组折叠由内部状态管理（点击分组行切换）
+- **特性**: 可折叠分组（▼/▶ caret + 计数徽章 + 标签）、PR 行（indigo 首字母头像 + 标题 + `{author} · {repo} #{number}` 元信息）、hover 高亮。
+
+### 183. `IterationActionBar` (迭代操作条)
+- **Props**: `page?: number`, `totalPages?: number`, `className?`, `onAction?(action)`, `onPageChange?(page)`
+- **Vanilla 用法**: `<iteration-action-bar>` + `page`/`total-pages` 属性；事件 `action {action}` / `page-change {page}`（翻页按钮内部更新页码）
+- **特性**: Show More / Brainstorm / Reply 圆角 pills + ··· 溢出位（aria-label "More actions"）、‹ › 翻页器（边界禁用）与 `{page}/{totalPages}` 页码标签。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）
