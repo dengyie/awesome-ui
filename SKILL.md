@@ -1095,6 +1095,21 @@ awesome-ui/
 - **Vanilla 用法**: `<prompt-tuner-result>` + `optimized-prompt`/`completions`/`active-completion` 属性；事件 `copy-prompt` / `completion-change {completion}`（选择器 change 内部切换完成文本）
 - **特性**: OPTIMIZED PROMPT 暗色代码面板（mono 小标签 + Copy 按钮 + max-h 滚动 pre）、COMPLETIONS 卡片（mono 小标签 + 完成选择器）、完成文本 pre-wrap 查看器。
 
+### 190. `AuditLogTable` (审计日志表)
+- **Props**: `title?`, `filters?: [{label,value}]`, `trend?: [{label,value}]`, `views?: string[]`, `activeView?`, `events?: [{id,time,actor,event,status,target}]`, `className?`, `onEventClick?(event)`, `onViewChange?(view)`
+- **Vanilla 用法**: `<audit-log-table>` + `title`/`filters`/`trend`/`views`/`active-view`/`events` 属性；事件 `event-click {event}` / `view-change {view}`（视图切换内部更新激活态）
+- **特性**: 筛选 pills（◷ 标签: 值 ▾）、迷你柱状趋势（按值归一化高度）、N events 计数 + 分段视图切换、四列表格（Time/Actor/Event info/Targets），行内 SUCCESS/FAILURE/PENDING 徽章（绿/红/琥珀）。
+
+### 191. `ChangelogTimeline` (产品更新日志)
+- **Props**: `title?`, `subtitle?`, `searchPlaceholder?`, `filterLabel?`, `entries?: [{id,date,tag,tone?,title,body,likes?,views?}]`, `className?`, `onEntryClick?(entry)`
+- **Vanilla 用法**: `<changelog-timeline>` + `title`/`subtitle`/`search-placeholder`/`filter-label`/`entries` 属性；`entries` property；事件 `entry-click {entry}`
+- **特性**: 大标题 + 副标题头部、搜索框 + Filters 下拉控件行、左侧日期栏 + 分类 tag（sky/emerald/amber/violet 四色）、正文段落、♡ 点赞 / 👁 浏览 / 🔗 分享 meta 行。
+
+### 192. `SessionDeviceTable` (登录会话/设备列表)
+- **Props**: `title?`, `description?`, `learnMoreLabel?`, `logoutAllLabel?`, `pageLabel?`, `page?`, `rowsPerPageLabel?`, `rowsPerPage?`, `sessions?: [{id,os,application,location,ip,lastActive,status}]`, `className?`, `onSessionClick?(session)`, `onLogoutAll?()`
+- **Vanilla 用法**: `<session-device-table>` + `title`/`description`/`learn-more-label`/`logout-all-label`/`page-label`/`page`/`rows-per-page-label`/`rows-per-page`/`sessions` 属性；`sessions` property；事件 `session-click {session}` / `logout-all` / `rows-per-page-change {rowsPerPage}`
+- **特性**: 头部（标题 + 帮助文案 + Learn more 链接 + Log out 全部按钮）、六列表格（OS/应用/位置/IP/最近活跃/状态，OS 图标按名称子串匹配）、Current(紫)/Active(绿)/Logged out(灰) 徽章、底部分页器 + 每页行数选择器（10/25/50）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

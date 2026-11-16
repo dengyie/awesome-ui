@@ -770,6 +770,21 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 187. EvalRunResults: Adaline evals run — pass-rate header with counters, status filter chip and per-evaluator result tables (status pill, reason, response, variable chips).
 188. EventTagGrid: Sentry event tags — scope pills over a two-column key/value grid with mono keys and link-styled searchable values.
 189. PromptTunerResult: Cohere prompt tuner — optimized-prompt dark code panel with copy action, completion selector and completion text viewer.
+   - React: react/PromptTunerResult.tsx
+   - Vue 3: vue/PromptTunerResult.vue
+   - Vanilla: vanilla/PromptTunerResult.js (custom element `<prompt-tuner-result>`, attributes `optimized-prompt`/`completions` JSON/`active-completion`; events `copy-prompt`, `completion-change {completion}`)
+190. AuditLogTable: audit/system log — date & keyword filter bar, mini bar-chart trend, event count with a view segmented switch and a four-column time/actor/event/target table with status badges (Okta System Log pattern).
+   - React: react/AuditLogTable.tsx
+   - Vue 3: vue/AuditLogTable.vue
+   - Vanilla: vanilla/AuditLogTable.js (custom element `<audit-log-table>`, attributes `title`/`filters` JSON/`trend` JSON/`views`/`active-view`/`events` JSON; events `event-click {event}`, `view-change {view}`)
+191. ChangelogTimeline: product changelog — left date rail with category tags (sky/emerald/amber/violet), rich entry body with like/view/share meta, search box and filters control (Canny Changelog pattern).
+   - React: react/ChangelogTimeline.tsx
+   - Vue 3: vue/ChangelogTimeline.vue
+   - Vanilla: vanilla/ChangelogTimeline.js (custom element `<changelog-timeline>`, attributes `title`/`subtitle`/`search-placeholder`/`filter-label`/`entries` JSON; events `entry-click {entry}`)
+192. SessionDeviceTable: login sessions / devices list — header with helper text and "log out all" action, six-column OS/application/location/IP/last-active/status table with Current and Logged-out badges, pager and rows-per-page control (Airwallex Login Sessions pattern).
+   - React: react/SessionDeviceTable.tsx
+   - Vue 3: vue/SessionDeviceTable.vue
+   - Vanilla: vanilla/SessionDeviceTable.js (custom element `<session-device-table>`, attributes `title`/`description`/`learn-more-label`/`logout-all-label`/`page-label`/`page`/`rows-per-page-label`/`rows-per-page`/`sessions` JSON; properties `sessions`; events `session-click {session}`, `logout-all`, `rows-per-page-change {rowsPerPage}`)
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)

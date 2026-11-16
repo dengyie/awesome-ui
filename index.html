@@ -216,12 +216,15 @@
   <script type="module" src="./vanilla/EvalRunResults.js"></script>
   <script type="module" src="./vanilla/EventTagGrid.js"></script>
   <script type="module" src="./vanilla/PromptTunerResult.js"></script>
+  <script type="module" src="./vanilla/SessionDeviceTable.js"></script>
+  <script type="module" src="./vanilla/AuditLogTable.js"></script>
+  <script type="module" src="./vanilla/ChangelogTimeline.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.47.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.1.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -3073,6 +3076,60 @@
             <prompt-tuner-result id="demo-tuner"></prompt-tuner-result>
             <div class="mt-3 flex items-center gap-2">
               <span id="demo-tuner-status" class="text-[11px] text-zinc-500">Copy / switch a completion — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-180" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">180 · SessionDeviceTable</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.1.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Login sessions / devices list — header with helper text and "log out all" action, six-column OS/application/location/IP/last-active/status table with Current & Logged-out badges, pager and rows-per-page control (Airwallex Login Sessions pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/SessionDeviceTable.js">
+          <div class="space-y-3">
+            <session-device-table id="demo-session48"></session-device-table>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-session48-status" class="text-[11px] text-zinc-500">Click a session row / log-out button — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-181" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">181 · AuditLogTable</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.1.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Audit log — date/keyword filter bar, mini bar-chart trend, event count with a view segmented switch and a four-column time/actor/event/target table with status badges (Okta System Log pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/AuditLogTable.js">
+          <div class="space-y-3">
+            <audit-log-table id="demo-audit48"></audit-log-table>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-audit48-status" class="text-[11px] text-zinc-500">Click a row / switch a view — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-182" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">182 · ChangelogTimeline</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.1.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Product changelog — left date rail with category tags, rich entry body with reaction/view meta, search box and filters control (Canny Changelog pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/ChangelogTimeline.js">
+          <div class="space-y-3">
+            <changelog-timeline id="demo-changelog48"></changelog-timeline>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-changelog48-status" class="text-[11px] text-zinc-500">Click an entry — events report here.</span>
             </div>
           </div>
         </div>
@@ -6199,6 +6256,27 @@ FAIL tests/ui.test.mjs
       if (tuner47) {
         tuner47.addEventListener('copy-prompt', () => { tunerStatus47.textContent = 'Copied → optimized prompt'; });
         tuner47.addEventListener('completion-change', (event) => { tunerStatus47.textContent = 'Completion → ' + event.detail.completion.label; });
+      }
+
+      const otp48 = document.getElementById('demo-session48');
+      const otpStatus48 = document.getElementById('demo-session48-status');
+      if (otp48) {
+        otp48.addEventListener('session-click', (event) => { otpStatus48.textContent = 'Session → ' + event.detail.session.os + ' · ' + event.detail.session.application; });
+        otp48.addEventListener('logout-all', () => { otpStatus48.textContent = 'Logged out of all other sessions'; });
+        otp48.addEventListener('rows-per-page-change', (event) => { otpStatus48.textContent = 'Rows per page → ' + event.detail.rowsPerPage; });
+      }
+
+      const audit48 = document.getElementById('demo-audit48');
+      const auditStatus48 = document.getElementById('demo-audit48-status');
+      if (audit48) {
+        audit48.addEventListener('event-click', (event) => { auditStatus48.textContent = 'Event → ' + event.detail.event.event + ' · ' + event.detail.event.status; });
+        audit48.addEventListener('view-change', (event) => { auditStatus48.textContent = 'View → ' + event.detail.view; });
+      }
+
+      const changelog48 = document.getElementById('demo-changelog48');
+      const changelogStatus48 = document.getElementById('demo-changelog48-status');
+      if (changelog48) {
+        changelog48.addEventListener('entry-click', (event) => { changelogStatus48.textContent = 'Entry → ' + event.detail.entry.title; });
       }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');

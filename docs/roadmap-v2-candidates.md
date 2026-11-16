@@ -1,5 +1,12 @@
 # Roadmap v2 组件选型候选报告（素材库扩充后 · 2026-11-16）
 
+> **执行进度（2026-11-16）**：批次 v2.1.0 已完成 —— SessionDeviceTable（← Airwallex）、
+> AuditLogTable（← Okta）、ChangelogTimeline（← Canny）三端落地（组件编号 190–192），
+> Gallery sections 180–182，633 项回归测试全绿。原候选 OtpCodeEntry 实施时发现与
+> 既有组件 #97 `OtpInput` 功能重叠，按"零重叠"规则撤销，改用 security/10_Airwallex
+> 登录会话表补位。全库组件总数 193（含 UiIcon）× 3 端。
+> v2.2（TaskDetailPanel / DeliveryTrackingPanel / MapPropertyCard）为下一批次。
+
 > 背景：roadmap v1 已收官（v1.47.0，190 组件 × 3 端，624 测试）。为延续迭代，
 > 已通过 `tools/mobbin_fetch.py` 新增 5 个分类并抓取 114 张 Mobbin 截图，
 > 素材库总量 326 → 512 张（21 分类）。本报告为新一批次的选型候选。
@@ -18,10 +25,12 @@
 
 ### 批次 v2.1（流程与安全）
 
-1. **OtpCodeEntry** ← security/05_HoneyBook
-   一次性验证码输入：6 位数字槽位 + 说明文案 + Continue 主按钮 + Resend/电话呼叫备用链接。
-   Props: `length` / `value` / `status` (idle|error|success) / `resendLabel` / `onComplete`。
-   data-hook 前缀：`data-otp-*`。
+1. **SessionDeviceTable** ← security/10_Airwallex（Login Sessions）
+   登录会话/设备列表：头部（标题 + 帮助文案 + Learn more + Log out all）、
+   OS/应用/位置/IP/最近活跃/状态六列表格、Current/Logged out 徽章、分页器 + 每页行数。
+   （原候选 OtpCodeEntry 因与 #97 OtpInput 重叠撤销）
+   Props: `title` / `description` / `sessions[{id,os,application,location,ip,lastActive,status}]` / `page` / `onSessionClick` / `onLogoutAll`。
+   data-hook 前缀：`data-session-*`。
 
 2. **AuditLogTable** ← security/18_Okta (System Log)
    审计事件表：时间范围/关键词筛选区、事件趋势迷你柱状图、Events 计数 + 视图切换、

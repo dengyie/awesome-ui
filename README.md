@@ -207,6 +207,9 @@
 | **`EvalRunResults`** | 评估运行结果 | Adaline Evals：通过率大字 + 通过/未知/失败/总数计数、Status 过滤 chip、按 evaluator 分节的结果表（状态 pill / 原因 / 响应 / 变量 chips） |
 | **`EventTagGrid`** | 事件标签网格 | Sentry Tags：scope pills、双列 key/value 网格（mono 键 + 可检索值链接样式） |
 | **`PromptTunerResult`** | 提示词调优结果 | Cohere Prompt Tuner：OPTIMIZED PROMPT 暗色代码面板 + Copy、COMPLETIONS 选择器与完成文本查看器 |
+| **`SessionDeviceTable`** | 登录会话/设备列表 | Airwallex Login Sessions：六列 OS/应用/位置/IP/最近活跃/状态表，Current/Logged out 徽章，分页器与每页行数选择 |
+| **`AuditLogTable`** | 审计日志表 | Okta System Log：日期/关键词筛选 pills、迷你柱状趋势、事件计数 + 视图切换、四列事件表（SUCCESS/FAILURE/PENDING 徽章） |
+| **`ChangelogTimeline`** | 产品更新日志 | Canny Changelog：大标题头部、搜索 + Filters 控件、左日期栏 + 四色分类 tag、点赞/浏览/分享 meta 行 |
 | **`CampsiteHandoff`** | 设计交付面板 | Campsite 设计 handoff：完成态检查清单（负责人首字母头像 + 截止日期）、x/y done 计数与 AI 摘要块 |
 | **`ZendeskFieldSuggest`** | 工单字段建议条 | Zendesk AI 字段建议：琥珀色建议条、字段 chips（标签: 值 + 置信度 %）点击即应用、Ignore 忽略按钮 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
@@ -402,6 +405,9 @@ awesome-ui/
 │   ├── EvalRunResults.tsx
 │   ├── EventTagGrid.tsx
 │   └── PromptTunerResult.tsx
+│   ├── SessionDeviceTable.tsx
+│   ├── AuditLogTable.tsx
+│   └── ChangelogTimeline.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -589,6 +595,9 @@ awesome-ui/
 │   ├── EvalRunResults.vue
 │   ├── EventTagGrid.vue
 │   └── PromptTunerResult.vue
+│   ├── SessionDeviceTable.vue
+│   ├── AuditLogTable.vue
+│   └── ChangelogTimeline.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -776,6 +785,9 @@ awesome-ui/
 │   ├── EvalRunResults.js
 │   ├── EventTagGrid.js
 │   └── PromptTunerResult.js
+│   ├── SessionDeviceTable.js
+│   ├── AuditLogTable.js
+│   └── ChangelogTimeline.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js
