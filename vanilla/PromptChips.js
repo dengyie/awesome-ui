@@ -2,6 +2,13 @@
  * PromptChips - Vanilla Web Component
  * Usage: <prompt-chips suggestions='["Summarize this article", "Find bugs in code"]'></prompt-chips>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 class PromptChips extends HTMLElement {
   static get observedAttributes() {
     return ["suggestions"];
@@ -33,7 +40,7 @@ class PromptChips extends HTMLElement {
         ${suggestions.map((item, idx) => `
           <button type="button" data-idx="${idx}" class="chip-item group flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 shadow-xs hover:border-zinc-300 dark:hover:border-zinc-700 transition-all text-left">
             <span class="text-amber-500/70 group-hover:text-amber-500 transition-colors">✨</span>
-            <span class="truncate max-w-[280px]">${item}</span>
+            <span class="truncate max-w-[280px]">${escapeAttribute(item)}</span>
           </button>
         `).join("")}
       </div>

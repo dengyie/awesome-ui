@@ -11,6 +11,15 @@ const escapeAttribute = (value) =>
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
+// Only allow safe URL protocols into <a href> (blocks javascript:/data:/vbscript:)
+const isSafeHref = (href) => {
+  if (typeof href !== 'string') return false;
+  const t = href.trim();
+  if (t.length === 0) return false;
+  if (t.startsWith('//') || t.startsWith('/') || t.startsWith('./') || t.startsWith('../')) return true;
+  return /^(https?:\/\/|mailto:)/i.test(t);
+};
+
 const parseJsonAttr = (raw, fallback) => {
   if (typeof raw !== 'string' || raw.trim() === '') return fallback;
   try {
@@ -159,10 +168,13 @@ class DocsPageLayoutElement extends HTMLElement {
     if (block.type === 'cards') {
       return `<div data-docspage-cards class="grid gap-3 sm:grid-cols-2">${(block.cards ?? [])
         .map(
-          (card) => `<a data-docspage-card="${escapeAttribute(card.title)}" href="${escapeAttribute(card.href ?? '#')}" class="rounded-xl border border-zinc-200 p-4 transition-colors hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:border-zinc-700 dark:hover:bg-zinc-800/50">
+          (card) => {
+            const href = isSafeHref(card.href) ? escapeAttribute(card.href) : '';
+            return `<a data-docspage-card="${escapeAttribute(card.title)}" ${href ? `href="${href}"` : 'role="link" aria-disabled="true"'} class="rounded-xl border border-zinc-200 p-4 transition-colors hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:border-zinc-700 dark:hover:bg-zinc-800/50">
               <p class="flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-50">${card.icon ? `<span aria-hidden="true">${escapeAttribute(card.icon)}</span>` : ''}${escapeAttribute(card.title)}</p>
               <p class="mt-1 text-xs leading-5 text-zinc-500 dark:text-zinc-400">${escapeAttribute(card.description)}</p>
-            </a>`
+            </a>`;
+          }
         )
         .join('')}</div>`;
     }

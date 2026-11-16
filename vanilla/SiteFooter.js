@@ -15,6 +15,15 @@ const escapeAttribute = (value) =>
     '"': '&quot;',
   }[char]));
 
+// Only allow safe URL protocols into <a href> (blocks javascript:/data:/vbscript:)
+const isSafeHref = (href) => {
+  if (typeof href !== 'string') return false;
+  const t = href.trim();
+  if (t.length === 0) return false;
+  if (t.startsWith('//') || t.startsWith('/') || t.startsWith('./') || t.startsWith('../')) return true;
+  return /^(https?:\/\/|mailto:)/i.test(t);
+};
+
 const STATUS_TONE = {
   emerald: 'text-emerald-400',
   amber: 'text-amber-400',
@@ -77,7 +86,7 @@ export class SiteFooterElement extends HTMLElement {
         const links = column.links
           .map(
             (link, linkIndex) =>
-              `<li><a href="${escapeAttribute(link.href ?? '#')}" class="text-xs text-zinc-400 transition-colors hover:text-zinc-100">${escapeAttribute(link.label)}</a></li>`,
+              `<li><a href="${escapeAttribute(isSafeHref(link.href) ? link.href : '#')}" class="text-xs text-zinc-400 transition-colors hover:text-zinc-100">${escapeAttribute(link.label)}</a></li>`,
           )
           .join('');
         return `<nav data-footer-column="${index}" aria-label="${escapeAttribute(column.heading)}">

@@ -2,6 +2,13 @@
  * AudioWaveVisualizer - Vanilla Web Component
  * Usage: <audio-wave-visualizer is-active bar-count="16"></audio-wave-visualizer>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 class AudioWaveVisualizer extends HTMLElement {
   static get observedAttributes() {
     return ["is-active", "bar-count", "color"];
@@ -18,7 +25,9 @@ class AudioWaveVisualizer extends HTMLElement {
   render() {
     const isActive = this.hasAttribute("is-active");
     const barCount = parseInt(this.getAttribute("bar-count") || "16", 10);
-    const color = this.getAttribute("color") || "bg-amber-500";
+    const rawColor = this.getAttribute("color") || "bg-amber-500";
+    // color 进 class 属性：只允许 Tailwind 色类词法（字母数字连字符），防引号逃逸注入
+    const color = /^[a-zA-Z0-9-_\/:\[\]()%.,\s]+$/.test(rawColor) ? rawColor.replace(/"/g, '') : "bg-amber-500";
 
     const bars = [];
     for (let idx = 0; idx < barCount; idx++) {

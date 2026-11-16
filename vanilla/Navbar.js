@@ -9,6 +9,15 @@ const escapeAttribute = (value) =>
     '"': '&quot;',
   }[char]));
 
+// Only allow safe URL protocols into <a href> (blocks javascript:/data:/vbscript:)
+const isSafeHref = (href) => {
+  if (typeof href !== 'string') return false;
+  const t = href.trim();
+  if (t.length === 0) return false;
+  if (t.startsWith('//') || t.startsWith('/') || t.startsWith('./') || t.startsWith('../')) return true;
+  return /^(https?:\/\/|mailto:)/i.test(t);
+};
+
 /**
  * Navbar - Vanilla Web Component
  * Usage: <nav-bar brand="awesome-ui" cta-text="Get started"></nav-bar>
@@ -108,7 +117,7 @@ export class NavbarElement extends HTMLElement {
           ${column.heading ? `<p class="px-2 pb-1 text-[10px] font-semibold uppercase tracking-wide text-zinc-400">${escapeAttribute(column.heading)}</p>` : ''}
           ${column.links
             .map(
-              (link) => `<a href="${escapeAttribute(link.href ?? '#')}" class="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">
+              (link) => `<a href="${escapeAttribute(isSafeHref(link.href) ? link.href : '#')}" class="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">
                 ${link.icon ? `<span class="shrink-0 text-zinc-400">${uiIcon(link.icon, { size: 13 })}</span>` : ''}
                 <span class="flex-1">${escapeAttribute(link.label)}</span>
                 ${
@@ -132,7 +141,7 @@ export class NavbarElement extends HTMLElement {
       .join('');
     const links = this._links
       .map(
-        (link) => `<a href="${escapeAttribute(link.href ?? '#')}" class="rounded-md px-2.5 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">${escapeAttribute(link.label)}</a>`
+        (link) => `<a href="${escapeAttribute(isSafeHref(link.href) ? link.href : '#')}" class="rounded-md px-2.5 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">${escapeAttribute(link.label)}</a>`
       )
       .join('');
     const cta = this.ctaText

@@ -2,6 +2,39 @@
  * StreamMarkdown - Vanilla Web Component (Powered by marked & Prism CDN)
  * Usage: <stream-markdown is-streaming content="# Hello World"></stream-markdown>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+// Lightweight sanitizer for marked output — keeps gfm/code-fence rendering intact
+// while stripping the dangerous surface: script containers, sandbox-escape tags,
+// on* event handlers (tag-scoped, so prose text like "online=1" survives) and
+// javascript:/vbscript:/non-image data: URLs. No external dependencies.
+const unsafeUrl = (value) =>
+  /^\s*(javascript|vbscript):/i.test(value) || /^\s*data:(?!image\/)/i.test(value);
+
+const sanitizeTag = (tag) =>
+  tag
+    .replace(/\son\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+    .replace(
+      /(\s(?:href|src|srcset|action|formaction)\s*=\s*)("[^"]*"|'[^']*'|[^\s>]+)/gi,
+      (m, pre, lit) => {
+        const value = lit[0] === '"' || lit[0] === "'" ? lit.slice(1, -1) : lit;
+        return unsafeUrl(value) ? `${pre}""` : m;
+      }
+    );
+
+const sanitizeMarkdownHtml = (html) =>
+  String(html)
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, '')
+    .replace(/<script\b[^>]*\/?>/gi, '')
+    .replace(/<(iframe|object|embed|base|form)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, '')
+    .replace(/<(iframe|object|embed|base|form)\b[^>]*\/?>/gi, '')
+    .replace(/<[a-z][^>]*>/gi, (tag) => sanitizeTag(tag));
+
 class StreamMarkdown extends HTMLElement {
   static get observedAttributes() {
     return ["content", "is-streaming"];
@@ -44,7 +77,7 @@ class StreamMarkdown extends HTMLElement {
         return `
           <div class="relative group my-4 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-950">
             <div class="flex items-center justify-between px-4 py-1.5 bg-zinc-900/80 border-b border-zinc-800 text-xs text-zinc-400 font-mono">
-              <span>${lang || "code"}</span>
+              <span>${escapeAttribute(lang || "code")}</span>
               <button 
                 type="button" 
                 data-code="${encodeURIComponent(text)}" 
@@ -59,6 +92,8 @@ class StreamMarkdown extends HTMLElement {
       };
       parsedHtml = window.marked.parse(content, { renderer, breaks: true, gfm: true });
     }
+
+    parsedHtml = sanitizeMarkdownHtml(parsedHtml);
 
     this.innerHTML = `
       <div class="prose prose-zinc dark:prose-invert max-w-none text-sm leading-relaxed">

@@ -3,6 +3,19 @@ import uiIcon from './UiIcon.js';
 /**
  * Vanilla Web Component: <roadmap-timeline>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+// stageColor 类只进 style 属性值，白名单校验（同 KnowledgeDrawer.safeCssColor）
+const safeCssColor = (value, fallback = '') => {
+  const v = String(value ?? '').trim();
+  return /^#[0-9a-fA-F]{3,8}$|^[a-zA-Z]+$|^(rgb|rgba|hsl|hsla)[(]([0-9,\s.%/]+[)])$/.test(v) ? v : fallback;
+};
+
 export class RoadmapTimelineElement extends HTMLElement {
   constructor() {
     super();
@@ -31,7 +44,7 @@ export class RoadmapTimelineElement extends HTMLElement {
             .map((node) => {
               const isActive = this._activeId === node.id || node.status === "active";
               const isDone = node.status === "completed";
-              const color = node.stageColor || "#c2410c";
+              const color = safeCssColor(node.stageColor, "#c2410c");
 
               return `
               <div
@@ -53,7 +66,7 @@ export class RoadmapTimelineElement extends HTMLElement {
                   }"
                 >
                   <div class="-rotate-45 font-mono text-xs font-bold flex items-center justify-center">
-                    ${isDone ? uiIcon("check", { size: 16 }) : node.status === "locked" ? uiIcon("lock", { size: 16 }) : `<span style="color: ${isActive ? color : ""}">${node.index}</span>`}
+                    ${isDone ? uiIcon("check", { size: 16 }) : node.status === "locked" ? uiIcon("lock", { size: 16 }) : `<span style="color: ${isActive ? color : ""}">${escapeAttribute(node.index)}</span>`}
                   </div>
                 </div>
 
@@ -64,7 +77,7 @@ export class RoadmapTimelineElement extends HTMLElement {
                     </span>
                     ${
                       node.tags && node.tags.length > 0
-                        ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded-xs border border-[#d6d2c2] dark:border-[#2b3038] text-[#545b64] dark:text-[#a9a89c]">${node.tags[0]}</span>`
+                        ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded-xs border border-[#d6d2c2] dark:border-[#2b3038] text-[#545b64] dark:text-[#a9a89c]">${escapeAttribute(node.tags[0])}</span>`
                         : ""
                     }
                   </div>
@@ -74,12 +87,12 @@ export class RoadmapTimelineElement extends HTMLElement {
                       ? "text-[#22262d] dark:text-[#e9e6db]"
                       : "text-[#22262d]/80 dark:text-[#e9e6db]/80 group-hover:text-[#22262d] dark:group-hover:text-[#e9e6db]"
                   }">
-                    ${node.title}
+                    ${escapeAttribute(node.title)}
                   </h4>
 
                   ${
                     node.subtitle
-                      ? `<p class="mt-0.5 text-xs text-[#545b64] dark:text-[#a9a89c] truncate">${node.subtitle}</p>`
+                      ? `<p class="mt-0.5 text-xs text-[#545b64] dark:text-[#a9a89c] truncate">${escapeAttribute(node.subtitle)}</p>`
                       : ""
                   }
                 </div>

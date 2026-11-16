@@ -4,6 +4,13 @@ import uiIcon from './UiIcon.js';
  * ArtifactCanvas - Vanilla Web Component
  * Usage: <artifact-canvas title="Preview" language="html" code="<h1>Hello</h1>"></artifact-canvas>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 class ArtifactCanvas extends HTMLElement {
   static get observedAttributes() {
     return ["title", "language", "code", "is-open"];
@@ -33,7 +40,7 @@ class ArtifactCanvas extends HTMLElement {
       <div class="fixed inset-y-0 right-0 w-full sm:w-[500px] md:w-[680px] z-40 bg-white dark:bg-zinc-950 border-l border-zinc-200 dark:border-zinc-800 shadow-2xl flex flex-col transition-transform duration-300">
         <div class="flex items-center justify-between px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/80 dark:bg-zinc-900/80">
           <div class="flex items-center gap-3">
-            <span class="font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate max-w-[240px]">${title}</span>
+            <span class="font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate max-w-[240px]">${escapeAttribute(title)}</span>
             <div class="flex items-center bg-zinc-200/70 dark:bg-zinc-800 p-0.5 rounded-lg text-xs font-medium text-zinc-600 dark:text-zinc-400">
               <button type="button" id="tab-preview" class="px-2.5 py-1 rounded-md transition-colors ${this.tab === 'preview' ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100' : ''}">Preview</button>
               <button type="button" id="tab-code" class="px-2.5 py-1 rounded-md transition-colors ${this.tab === 'code' ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100' : ''}">Code</button>
@@ -71,6 +78,12 @@ class ArtifactCanvas extends HTMLElement {
       `;
     }
 
+    // P1 修复：sandboxedDoc 此前从未赋给 iframe，Preview 恒空白。走 DOM property
+    // 赋值 srcdoc（非 HTML 属性拼接，无需转义）；sandbox 无 allow-same-origin，
+    // 文档脚本运行在独立 origin，无法触达宿主页。
+    const frame = this.querySelector("#preview-frame");
+    if (frame) frame.srcdoc = sandboxedDoc;
+
     this.querySelector("#tab-preview").addEventListener("click", () => {
       this.tab = "preview";
       this.render();
@@ -85,13 +98,21 @@ class ArtifactCanvas extends HTMLElement {
       await navigator.clipboard.writeText(code);
       const btn = this.querySelector("#copy-btn");
       btn.innerHTML = `${uiIcon('check', { size: 14 })} Copied`;
-      setTimeout(() => (btn.innerHTML = "Copy"), 2000);
+      if (this._copyTimer) clearTimeout(this._copyTimer);
+      this._copyTimer = setTimeout(() => (btn.innerHTML = "Copy"), 2000);
     });
 
     this.querySelector("#close-btn").addEventListener("click", () => {
       this.removeAttribute("is-open");
       this.dispatchEvent(new CustomEvent("close"));
     });
+  }
+
+  disconnectedCallback() {
+    if (this._copyTimer) {
+      clearTimeout(this._copyTimer);
+      this._copyTimer = null;
+    }
   }
 
   escapeHtml(str) {

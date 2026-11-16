@@ -14,6 +14,15 @@ const escapeAttribute = (value) =>
     '"': '&quot;',
   }[char]));
 
+// Only allow safe URL protocols into <a href> (blocks javascript:/data:/vbscript:)
+const isSafeHref = (href) => {
+  if (typeof href !== 'string') return false;
+  const t = href.trim();
+  if (t.length === 0) return false;
+  if (t.startsWith('//') || t.startsWith('/') || t.startsWith('./') || t.startsWith('../')) return true;
+  return /^(https?:\/\/|mailto:)/i.test(t);
+};
+
 export class AuthSplitPanelElement extends HTMLElement {
   static get observedAttributes() {
     return ['media-side', 'media-title', 'media-subtitle', 'media-background', 'footer-links'];
@@ -88,7 +97,11 @@ export class AuthSplitPanelElement extends HTMLElement {
     this._applyHostClass(hostClass);
 
     const links = this._footerLinks
-      .map((link) => `<a href="${escapeAttribute(link.href)}" class="hover:underline">${escapeAttribute(link.label)}</a>`)
+      .map((link) =>
+        isSafeHref(link.href)
+          ? `<a href="${escapeAttribute(link.href)}" class="hover:underline">${escapeAttribute(link.label)}</a>`
+          : `<span class="hover:underline">${escapeAttribute(link.label)}</span>`
+      )
       .join('');
 
     const mediaLeft = side === 'left' ? this._mediaPanel('left') : '';

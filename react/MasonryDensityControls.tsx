@@ -22,6 +22,7 @@ export interface MasonryDensityControlsProps {
   padding?: number;
   className?: string;
   onItemClick?: (item: MasonryItem) => void;
+  onClose?: () => void;
 }
 
 export default function MasonryDensityControls({
@@ -40,6 +41,7 @@ export default function MasonryDensityControls({
   padding = 12,
   className = "",
   onItemClick,
+  onClose,
 }: MasonryDensityControlsProps) {
   const [size, setSize] = React.useState(columns);
   const [gap, setGap] = React.useState(padding);
@@ -80,7 +82,10 @@ export default function MasonryDensityControls({
         <button
           type="button"
           data-masn-close
-          onClick={() => setClose(true)}
+          onClick={() => {
+            setClose(true);
+            onClose?.();
+          }}
           aria-label="Close gallery"
           className="text-lg text-zinc-300 transition-colors hover:text-white"
         >

@@ -15,7 +15,9 @@ const uiIconSource = readFileSync(join(root, 'vanilla/UiIcon.js'), 'utf8')
 const stripComponent = (file, className) =>
   readFileSync(join(root, 'vanilla', file), 'utf8')
     .replace(/^import uiIcon from ['"].\/UiIcon.js['"];\s*$/m, '')
-    .replace(/^const escapeAttribute = [\s\S]*?;\n/m, '')
+    // \r?\n: files are CRLF on Windows checkouts; the non-greedy body spans the
+    // multi-line escapeAttribute declaration up to its terminating semicolon.
+    .replace(/^const escapeAttribute = [\s\S]*?;\r?\n/m, '')
     .replace(new RegExp(`^export default ${className};\\s*$`, 'm'), '')
     .replace(new RegExp(`^export class ${className}`, 'm'), `class ${className}`);
 

@@ -9,6 +9,13 @@ const ACTIONS = [
   { id: 'more', label: '···', ariaLabel: 'More actions', iconOnly: true },
 ];
 
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 class IterationActionBarElement extends HTMLElement {
   static get observedAttributes() {
     return ['page', 'total-pages'];
@@ -93,8 +100,8 @@ class IterationActionBarElement extends HTMLElement {
 
     const actionsHtml = ACTIONS.map((action) => {
       const cls = action.iconOnly ? pillIcon : pillOutlined;
-      const aria = action.ariaLabel ? ` aria-label="${action.ariaLabel}"` : '';
-      return `<button type="button" data-iteration-action="${action.id}"${aria} class="${cls}">${action.label}</button>`;
+      const aria = action.ariaLabel ? ` aria-label="${escapeAttribute(action.ariaLabel)}"` : '';
+      return `<button type="button" data-iteration-action="${action.id}"${aria} class="${cls}">${escapeAttribute(action.label)}</button>`;
     }).join('');
 
     this.innerHTML = `

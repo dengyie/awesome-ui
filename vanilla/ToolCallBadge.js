@@ -4,6 +4,13 @@
  */
 import uiIcon from './UiIcon.js';
 
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 class ToolCallBadge extends HTMLElement {
   static get observedAttributes() {
     return ["name", "status", "args", "output", "error"];
@@ -19,11 +26,11 @@ class ToolCallBadge extends HTMLElement {
   }
 
   render() {
-    const name = this.getAttribute("name") || "tool";
+    const name = escapeAttribute(this.getAttribute("name") || "tool");
     const status = this.getAttribute("status") || "running";
-    const args = this.getAttribute("args");
-    const output = this.getAttribute("output");
-    const error = this.getAttribute("error");
+    const args = escapeAttribute(this.getAttribute("args"));
+    const output = escapeAttribute(this.getAttribute("output"));
+    const error = escapeAttribute(this.getAttribute("error"));
 
     let statusHtml = `<span class="text-amber-600 dark:text-amber-400 font-medium inline-flex items-center gap-1">${uiIcon('loader', { size: 14, className: 'animate-spin' })} Running...</span>`;
     if (status === "success") {

@@ -12,6 +12,13 @@
    - Vanilla: vanilla/UiIcon.js
    - Use this before writing SVG, emoji, or Unicode UI symbols.
 
+
+## Shared Theme Assets
+
+paper-theme: Paper Atelier & Trail theme system (aitubook.cn style) — pure-CSS design tokens: paper/ink palette, 8-stage milestone colors, dark-mode overrides, topography texture background. Inject the exported `PaperTrailThemeCSS` string into a <style> tag or Tailwind layer.
+   - React: react/paper-theme.ts
+   - Vue 3: vue/paper-theme.ts
+   - Vanilla: vanilla/paper-theme.js
 1. ChatPromptInput: Multi-modal auto-resizing prompt input with file/image attachments, submit/stop state, and an optional bottom chips row (`chips: [{ id, label, icon?, active? }]`, event `chip`).
    - React: react/ChatPromptInput.tsx
    - Vue 3: vue/ChatPromptInput.vue
@@ -717,6 +724,10 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/TokenCostBreakdown.tsx
    - Vue 3: vue/TokenCostBreakdown.vue
    - Vanilla: vanilla/TokenCostBreakdown.js (custom element `<token-cost-breakdown>`, attributes `title`/`segments` JSON/`usage-rows` JSON/`spend-used`/`spend-total`; properties `segments`/`usageRows`; event `segment-select {segment}`)
+156. AudioWaveVisualizer: audio playback visualizer — animated bar-wave canvas that reacts to isPlaying, per-call color theming and static idle state (voice assistant pattern).
+   - React: react/AudioWaveVisualizer.tsx
+   - Vue 3: vue/AudioWaveVisualizer.vue
+   - Vanilla: vanilla/AudioWaveVisualizer.js (custom element `<audio-wave-visualizer>`, attributes `is-playing`/`color`/`bars`; property `playing`; no events)
 157. PromptVariantDiff: side-by-side prompt version A/B comparison — {{var}} chip highlighting, +N/−N/~text change stats, per-version apply buttons.
    - React: react/PromptVariantDiff.tsx
    - Vue 3: vue/PromptVariantDiff.vue
@@ -725,6 +736,10 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/GuardrailReviewQueue.tsx
    - Vue 3: vue/GuardrailReviewQueue.vue
    - Vanilla: vanilla/GuardrailReviewQueue.js (custom element `<guardrail-review-queue>`, attributes `title`/`items` JSON; property `items`; events `approve {item}`, `reject {item}`)
+159. ContentReviewTable: pre-publish content review table — numbered rows with validity icons, tag chips + extra count, posting times, valid/error header counts, Save as Drafts / Schedule Posts CTAs.
+   - React: react/ContentReviewTable.tsx
+   - Vue 3: vue/ContentReviewTable.vue
+   - Vanilla: vanilla/ContentReviewTable.js (custom element `<content-review-table>`, attributes `title`/`rows` JSON/`drafts-label`/`schedule-label`; property `rows`; events `row-select {row}`, `save-drafts`, `schedule`)
 160. QaTestTable: AI agent QA answer-test table — row checkboxes, answer-status icons, Good / Acceptable / Poor rating chips, answered-count header (Intercom Fin "Test" pattern).
    - React: react/QaTestTable.tsx
    - Vue 3: vue/QaTestTable.vue
@@ -746,29 +761,101 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - Vue 3: vue/ApiKeyTable.vue
    - Vanilla: vanilla/ApiKeyTable.js (custom element `<api-key-table>`, attributes `title`/`keys` JSON/`create-label`; property `keys`; events `copy {row}`, `revoke {row}`, `create`)
 165. VoiceSessionHistory: voice AI session history sidebar — title / date / duration rows, Completed / Running / Failed status badges, per-row replay buttons, session count header and empty state (ElevenLabs Voice pattern).
+   - React: react/VoiceSessionHistory.tsx
+   - Vue 3: vue/VoiceSessionHistory.vue
+   - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions`/`empty-label`; events `play`, `select`)
 166. AiRewriteMenu: Intercom composer AI rewrite menu — trigger button toggles popover of writing actions (Expand, Rephrase, tone variants, Fix grammar, Translate) with feature badge, select/toggle events.
+   - React: react/AiRewriteMenu.tsx
+   - Vue 3: vue/AiRewriteMenu.vue
+   - Vanilla: vanilla/AiRewriteMenu.js (custom element `<ai-rewrite-menu>`, attributes `trigger-label`/`actions`/`open`; events `select`, `toggle`)
 167. PromptPerformanceTable: Peec AI prompt tracking table — Visibility %, Sentiment score with trend mark, Position #, Mentions columns, row click + Export CTA, empty state.
+   - React: react/PromptPerformanceTable.tsx
+   - Vue 3: vue/PromptPerformanceTable.vue
+   - Vanilla: vanilla/PromptPerformanceTable.js (custom element `<prompt-performance-table>`, attributes `title`/`export-label`/`rows`; events `export`, `row-click`)
 168. ShareAccessDialog: Superhuman share dialog — invite input, people-with-access rows (avatar/name/email/role + remove), Copy link footer, open/close control.
+   - React: react/ShareAccessDialog.tsx
+   - Vue 3: vue/ShareAccessDialog.vue
+   - Vanilla: vanilla/ShareAccessDialog.js (custom element `<share-access-dialog>`, attributes `title`/`description`/`url`/`copy-label`/`people`/`open`; events `close`, `copy-link`, `remove-person`)
 169. AiNoteAnswer: Voicenotes Ask AI answer card — waveform question row with play button, answer paragraph, "Other sources" link list and Copy pill.
+   - React: react/AiNoteAnswer.tsx
+   - Vue 3: vue/AiNoteAnswer.vue
+   - Vanilla: vanilla/AiNoteAnswer.js (custom element `<ai-note-answer>`, attributes `question`/`answer`/`sources`/`waveform`; events `copy`, `play`, `source-click`)
 170. AudioNotePlayer: Voicenotes audio note player — play/pause toggle button, waveform strip (played half highlights while playing) and title/duration metadata row.
+   - React: react/AudioNotePlayer.tsx
+   - Vue 3: vue/AudioNotePlayer.vue
+   - Vanilla: vanilla/AudioNotePlayer.js (custom element `<audio-note-player>`, attributes `title`/`duration`/`playing`/`waveform`; events `toggle-play`)
 171. ImageActionMenu: Krea generated-image context menu — Fullscreen/Vary/Edit/Upscale & enhance/Make video/Download actions with per-action icons, divider before Download, open/close control.
+   - React: react/ImageActionMenu.tsx
+   - Vue 3: vue/ImageActionMenu.vue
+   - Vanilla: vanilla/ImageActionMenu.js (custom element `<image-action-menu>`, attributes `actions`/`open`; events `action`)
 172. FalRunCard: fal generate-run info card — task type badge, model count + relative time header, prompt paragraph, Aspect Ratio / Total Cost metadata rows and duplicate/rerun/delete/share actions.
+   - React: react/FalRunCard.tsx
+   - Vue 3: vue/FalRunCard.vue
+   - Vanilla: vanilla/FalRunCard.js (custom element `<fal-run-card>`, attributes `type`/`models`/`time`/`prompt`/`aspect`/`cost`/`cost-tone`; events `delete`, `duplicate`, `rerun`)
 173. ImageGenMetaBar: fal generation result footer — model badge pill overlay plus mono metadata row with job id, duration and per-image cost.
+   - React: react/ImageGenMetaBar.tsx
+   - Vue 3: vue/ImageGenMetaBar.vue
+   - Vanilla: vanilla/ImageGenMetaBar.js (custom element `<image-gen-meta-bar>`, attributes `model`/`job-id`/`duration`/`cost`; events no events)
 174. GammaImageDetail: Gamma AI-images detail pane — large preview, download/zoom/delete + like/dislike toolbar and the full generation prompt in a bordered block.
+   - React: react/GammaImageDetail.tsx
+   - Vue 3: vue/GammaImageDetail.vue
+   - Vanilla: vanilla/GammaImageDetail.js (custom element `<gamma-image-detail>`, attributes `title`/`preview`/`prompt`/`liked`; events no events)
 175. WriterStyleGuide: Writer term/style guide card — Company/Team/My tabs, numbered guide entries with title, description and reading time, dashed Add guideline CTA.
+   - React: react/WriterStyleGuide.tsx
+   - Vue 3: vue/WriterStyleGuide.vue
+   - Vanilla: vanilla/WriterStyleGuide.js (custom element `<writer-style-guide>`, attributes `entries`/`active-tab`; events `entry-click`, `tab-change`)
 176. CampsiteHandoff: Campsite design handoff panel — checklist with done state, assignee initials avatar and due date, x/y done counter and an AI summary block.
+   - React: react/CampsiteHandoff.tsx
+   - Vue 3: vue/CampsiteHandoff.vue
+   - Vanilla: vanilla/CampsiteHandoff.js (custom element `<campsite-handoff>`, attributes `items`/`summary`; events `toggle`)
 177. ZendeskFieldSuggest: Zendesk AI ticket-field suggestion bar — amber bar with field chips (label: value + confidence %) that apply on click, plus an Ignore dismiss.
+   - React: react/ZendeskFieldSuggest.tsx
+   - Vue 3: vue/ZendeskFieldSuggest.vue
+   - Vanilla: vanilla/ZendeskFieldSuggest.js (custom element `<zendesk-field-suggest>`, attributes `fields`; events `apply`, `dismiss`)
 178. AiSuggestionCard: Mindtrip proactive suggestion card — sparkle avatar, message paragraph, follow-up action chips and a dismiss close button.
+   - React: react/AiSuggestionCard.tsx
+   - Vue 3: vue/AiSuggestionCard.vue
+   - Vanilla: vanilla/AiSuggestionCard.js (custom element `<ai-suggestion-card>`, attributes `message`/`chips`; events `chip-click`, `close`)
 179. JumpBackIn: Mindtrip "Jump back in" resume cards — thumbnail (or gradient placeholder), kind badge, title and subtitle per card.
+   - React: react/JumpBackIn.tsx
+   - Vue 3: vue/JumpBackIn.vue
+   - Vanilla: vanilla/JumpBackIn.js (custom element `<jump-back-in>`, attributes `cards`; events `card-click`)
 180. HelpResourcesPanel: Graphite help resources panel — Reference/Tutorial badge cards with optional reading time and footer link rows.
+   - React: react/HelpResourcesPanel.tsx
+   - Vue 3: vue/HelpResourcesPanel.vue
+   - Vanilla: vanilla/HelpResourcesPanel.js (custom element `<help-resources-panel>`, attributes `resources`/`links`; events `link-click`, `resource-click`)
 181. VisionAnalysisCard: Claude image-analysis structured reply — clickable section headings over key/value attribute row grids.
+   - React: react/VisionAnalysisCard.tsx
+   - Vue 3: vue/VisionAnalysisCard.vue
+   - Vanilla: vanilla/VisionAnalysisCard.js (custom element `<vision-analysis-card>`, attributes `sections`; events `section-click`)
 182. PrReviewQueue: Graphite grouped PR review queue — collapsible groups with count badges, author-initial rows and `author · repo #n` meta.
+   - React: react/PrReviewQueue.tsx
+   - Vue 3: vue/PrReviewQueue.vue
+   - Vanilla: vanilla/PrReviewQueue.js (custom element `<pr-review-queue>`, attributes `groups`; events `pr-click`)
 183. IterationActionBar: Luma iteration bar — Show More / Brainstorm / Reply pills, overflow slot and prev/next pager with page label.
+   - React: react/IterationActionBar.tsx
+   - Vue 3: vue/IterationActionBar.vue
+   - Vanilla: vanilla/IterationActionBar.js (custom element `<iteration-action-bar>`, attributes `page`/`total-pages`; events `action`, `page-change`)
 184. MonitorRunList: Adaline monitor run history — filter + time-range pills over a request histogram, run rows with status icon and latency.
+   - React: react/MonitorRunList.tsx
+   - Vue 3: vue/MonitorRunList.vue
+   - Vanilla: vanilla/MonitorRunList.js (custom element `<monitor-run-list>`, attributes `runs`/`histogram`/`ranges`/`active-range`; events `range-change`, `run-click`)
 185. EvalTurnBuilder: Vapi evals turn builder — role-tagged system/user/assistant/tool turns with mock tags, turn numbers and an add-turn footer.
+   - React: react/EvalTurnBuilder.tsx
+   - Vue 3: vue/EvalTurnBuilder.vue
+   - Vanilla: vanilla/EvalTurnBuilder.js (custom element `<eval-turn-builder>`, attributes `turns`; events `add-turn`, `turn-remove`)
 186. AgentSessionTimeline: Browserbase agent session — summary chips + segmented activity strip, Reason/Tool step list and request panel.
+   - React: react/AgentSessionTimeline.tsx
+   - Vue 3: vue/AgentSessionTimeline.vue
+   - Vanilla: vanilla/AgentSessionTimeline.js (custom element `<agent-session-timeline>`, attributes `steps`/`requests`/`title`/`status`/`duration`/`steps-count`; events `step-click`)
 187. EvalRunResults: Adaline evals run — pass-rate header with counters, status filter chip and per-evaluator result tables (status pill, reason, response, variable chips).
+   - React: react/EvalRunResults.tsx
+   - Vue 3: vue/EvalRunResults.vue
+   - Vanilla: vanilla/EvalRunResults.js (custom element `<eval-run-results>`, attributes `sections`/`pass-rate`/`pass-label`/`counters`/`filter-label`/`filter-value`; events `result-click`)
 188. EventTagGrid: Sentry event tags — scope pills over a two-column key/value grid with mono keys and link-styled searchable values.
+   - React: react/EventTagGrid.tsx
+   - Vue 3: vue/EventTagGrid.vue
+   - Vanilla: vanilla/EventTagGrid.js (custom element `<event-tag-grid>`, attributes `groups`/`scopes`/`active-scope`/`title`; events `scope-change`, `tag-click`)
 189. PromptTunerResult: Cohere prompt tuner — optimized-prompt dark code panel with copy action, completion selector and completion text viewer.
    - React: react/PromptTunerResult.tsx
    - Vue 3: vue/PromptTunerResult.vue
@@ -877,11 +964,4 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/MasonryDensityControls.tsx
    - Vue 3: vue/MasonryDensityControls.vue
    - Vanilla: vanilla/MasonryDensityControls.js (custom element `<masonry-density-controls>`, attributes `title`/`items` JSON/`columns`/`padding`; events `item-click {item}`, `density-change {columns, padding}`, `close`)
-   - React: react/VoiceSessionHistory.tsx
-   - Vue 3: vue/VoiceSessionHistory.vue
-   - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)
-159. ContentReviewTable: pre-publish content review table — numbered rows with validity icons, tag chips + extra count, posting times, valid/error header counts, Save as Drafts / Schedule Posts CTAs.
-   - React: react/ContentReviewTable.tsx
-   - Vue 3: vue/ContentReviewTable.vue
-   - Vanilla: vanilla/ContentReviewTable.js (custom element `<content-review-table>`, attributes `title`/`rows` JSON/`drafts-label`/`schedule-label`; property `rows`; events `row-select {row}`, `save-drafts`, `schedule`)
 

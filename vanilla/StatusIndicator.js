@@ -2,6 +2,13 @@
  * StatusIndicator - Vanilla Web Component
  * Usage: <status-indicator status="online" label="VPS Connected" ping-ms="24"></status-indicator>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 class StatusIndicator extends HTMLElement {
   static get observedAttributes() {
     return ["status", "label", "ping-ms", "show-dot"];
@@ -17,8 +24,8 @@ class StatusIndicator extends HTMLElement {
 
   render() {
     const status = this.getAttribute("status") || "online";
-    const label = this.getAttribute("label");
-    const pingMs = this.getAttribute("ping-ms");
+    const label = escapeAttribute(this.getAttribute("label"));
+    const pingMs = escapeAttribute(this.getAttribute("ping-ms"));
     const showDot = this.getAttribute("show-dot") !== "false";
 
     let dotBg = "bg-emerald-500", pingBg = "bg-emerald-400", text = "text-emerald-700 dark:text-emerald-400", badgeBg = "bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/80 dark:border-emerald-800/60", defaultLabel = "Online";

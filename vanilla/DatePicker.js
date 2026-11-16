@@ -25,6 +25,13 @@ const todayIso = () => {
  * Usage: <date-picker value="2026-11-14" min="2026-01-01" max="2026-12-31"></date-picker>
  * Events: change (detail: 'YYYY-MM-DD')
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 export class DatePickerElement extends HTMLElement {
   static get observedAttributes() {
     return ['value', 'min', 'max', 'week-starts-on', 'show-today', 'disabled'];
@@ -111,7 +118,7 @@ export class DatePickerElement extends HTMLElement {
 
         <div class="mt-2 grid grid-cols-7 gap-0.5">
           ${weekdays
-            .map((label) => `<span class="py-1 text-center text-[10px] font-medium uppercase text-zinc-400">${label}</span>`)
+            .map((label) => `<span class="py-1 text-center text-[10px] font-medium uppercase text-zinc-400">${escapeAttribute(label)}</span>`)
             .join('')}
           ${cells
             .map((day) => {

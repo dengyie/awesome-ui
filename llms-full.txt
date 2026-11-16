@@ -14244,6 +14244,7 @@ export interface MasonryDensityControlsProps {
   padding?: number;
   className?: string;
   onItemClick?: (item: MasonryItem) => void;
+  onClose?: () => void;
 }
 
 export default function MasonryDensityControls({
@@ -14262,6 +14263,7 @@ export default function MasonryDensityControls({
   padding = 12,
   className = "",
   onItemClick,
+  onClose,
 }: MasonryDensityControlsProps) {
   const [size, setSize] = React.useState(columns);
   const [gap, setGap] = React.useState(padding);
@@ -14302,7 +14304,10 @@ export default function MasonryDensityControls({
         <button
           type="button"
           data-masn-close
-          onClick={() => setClose(true)}
+          onClick={() => {
+            setClose(true);
+            onClose?.();
+          }}
           aria-label="Close gallery"
           className="text-lg text-zinc-300 transition-colors hover:text-white"
         >
@@ -22183,6 +22188,39 @@ import Prism from "prismjs";
 import "prismjs/themes/prism-tomorrow.css";
 import { Check, Copy } from "./UiIcon";
 
+const escapeAttribute = (value: string): string =>
+  String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+// Lightweight sanitizer for marked output — keeps gfm/code-fence rendering intact
+// while stripping the dangerous surface: script containers, sandbox-escape tags,
+// on* event handlers (tag-scoped, so prose text like "online=1" survives) and
+// javascript:/vbscript:/non-image data: URLs. No external dependencies.
+const unsafeUrl = (value: string): boolean =>
+  /^\s*(javascript|vbscript):/i.test(value) || /^\s*data:(?!image\/)/i.test(value);
+
+const sanitizeTag = (tag: string): string =>
+  tag
+    .replace(/\son\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+    .replace(
+      /(\s(?:href|src|srcset|action|formaction)\s*=\s*)("[^"]*"|'[^']*'|[^\s>]+)/gi,
+      (m: string, pre: string, lit: string) => {
+        const value = lit[0] === '"' || lit[0] === "'" ? lit.slice(1, -1) : lit;
+        return unsafeUrl(value) ? `${pre}""` : m;
+      }
+    );
+
+const sanitizeMarkdownHtml = (html: string): string =>
+  String(html)
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, "")
+    .replace(/<script\b[^>]*\/?>/gi, "")
+    .replace(/<(iframe|object|embed|base|form)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, "")
+    .replace(/<(iframe|object|embed|base|form)\b[^>]*\/?>/gi, "")
+    .replace(/<[a-z][^>]*>/gi, (tag: string) => sanitizeTag(tag));
+
 export interface StreamMarkdownProps {
   content: string;
   isStreaming?: boolean;
@@ -22214,7 +22252,7 @@ export const StreamMarkdown: React.FC<StreamMarkdownProps> = ({
       return `
         <div class="relative group my-4 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-950">
           <div class="flex items-center justify-between px-4 py-1.5 bg-zinc-900/80 border-b border-zinc-800 text-xs text-zinc-400 font-mono">
-            <span>${lang || "code"}</span>
+            <span>${escapeAttribute(lang || "code")}</span>
             <button 
               type="button" 
               data-code="${encodeURIComponent(text)}" 
@@ -22228,7 +22266,9 @@ export const StreamMarkdown: React.FC<StreamMarkdownProps> = ({
       `;
     };
 
-    return marked.parse(content || "", { renderer, breaks: true, gfm: true });
+    return sanitizeMarkdownHtml(
+      marked.parse(content || "", { renderer, breaks: true, gfm: true }) as string
+    );
   }, [content]);
 
   // Delegated safe copy handler (CSP safe, avoids inline onclick)
@@ -52748,6 +52788,13 @@ import uiIcon from './UiIcon.js';
  * ArtifactCanvas - Vanilla Web Component
  * Usage: <artifact-canvas title="Preview" language="html" code="<h1>Hello</h1>"></artifact-canvas>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 class ArtifactCanvas extends HTMLElement {
   static get observedAttributes() {
     return ["title", "language", "code", "is-open"];
@@ -52777,7 +52824,7 @@ class ArtifactCanvas extends HTMLElement {
       <div class="fixed inset-y-0 right-0 w-full sm:w-[500px] md:w-[680px] z-40 bg-white dark:bg-zinc-950 border-l border-zinc-200 dark:border-zinc-800 shadow-2xl flex flex-col transition-transform duration-300">
         <div class="flex items-center justify-between px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/80 dark:bg-zinc-900/80">
           <div class="flex items-center gap-3">
-            <span class="font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate max-w-[240px]">${title}</span>
+            <span class="font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate max-w-[240px]">${escapeAttribute(title)}</span>
             <div class="flex items-center bg-zinc-200/70 dark:bg-zinc-800 p-0.5 rounded-lg text-xs font-medium text-zinc-600 dark:text-zinc-400">
               <button type="button" id="tab-preview" class="px-2.5 py-1 rounded-md transition-colors ${this.tab === 'preview' ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100' : ''}">Preview</button>
               <button type="button" id="tab-code" class="px-2.5 py-1 rounded-md transition-colors ${this.tab === 'code' ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100' : ''}">Code</button>
@@ -52815,6 +52862,12 @@ class ArtifactCanvas extends HTMLElement {
       `;
     }
 
+    // P1 修复：sandboxedDoc 此前从未赋给 iframe，Preview 恒空白。走 DOM property
+    // 赋值 srcdoc（非 HTML 属性拼接，无需转义）；sandbox 无 allow-same-origin，
+    // 文档脚本运行在独立 origin，无法触达宿主页。
+    const frame = this.querySelector("#preview-frame");
+    if (frame) frame.srcdoc = sandboxedDoc;
+
     this.querySelector("#tab-preview").addEventListener("click", () => {
       this.tab = "preview";
       this.render();
@@ -52829,13 +52882,21 @@ class ArtifactCanvas extends HTMLElement {
       await navigator.clipboard.writeText(code);
       const btn = this.querySelector("#copy-btn");
       btn.innerHTML = `${uiIcon('check', { size: 14 })} Copied`;
-      setTimeout(() => (btn.innerHTML = "Copy"), 2000);
+      if (this._copyTimer) clearTimeout(this._copyTimer);
+      this._copyTimer = setTimeout(() => (btn.innerHTML = "Copy"), 2000);
     });
 
     this.querySelector("#close-btn").addEventListener("click", () => {
       this.removeAttribute("is-open");
       this.dispatchEvent(new CustomEvent("close"));
     });
+  }
+
+  disconnectedCallback() {
+    if (this._copyTimer) {
+      clearTimeout(this._copyTimer);
+      this._copyTimer = null;
+    }
   }
 
   escapeHtml(str) {
@@ -53301,6 +53362,13 @@ File: vanilla/AudioWaveVisualizer.js
  * AudioWaveVisualizer - Vanilla Web Component
  * Usage: <audio-wave-visualizer is-active bar-count="16"></audio-wave-visualizer>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 class AudioWaveVisualizer extends HTMLElement {
   static get observedAttributes() {
     return ["is-active", "bar-count", "color"];
@@ -53317,7 +53385,9 @@ class AudioWaveVisualizer extends HTMLElement {
   render() {
     const isActive = this.hasAttribute("is-active");
     const barCount = parseInt(this.getAttribute("bar-count") || "16", 10);
-    const color = this.getAttribute("color") || "bg-amber-500";
+    const rawColor = this.getAttribute("color") || "bg-amber-500";
+    // color 进 class 属性：只允许 Tailwind 色类词法（字母数字连字符），防引号逃逸注入
+    const color = /^[a-zA-Z0-9-_\/:\[\]()%.,\s]+$/.test(rawColor) ? rawColor.replace(/"/g, '') : "bg-amber-500";
 
     const bars = [];
     for (let idx = 0; idx < barCount; idx++) {
@@ -53846,6 +53916,15 @@ const escapeAttribute = (value) =>
     '"': '&quot;',
   }[char]));
 
+// Only allow safe URL protocols into <a href> (blocks javascript:/data:/vbscript:)
+const isSafeHref = (href) => {
+  if (typeof href !== 'string') return false;
+  const t = href.trim();
+  if (t.length === 0) return false;
+  if (t.startsWith('//') || t.startsWith('/') || t.startsWith('./') || t.startsWith('../')) return true;
+  return /^(https?:\/\/|mailto:)/i.test(t);
+};
+
 export class AuthSplitPanelElement extends HTMLElement {
   static get observedAttributes() {
     return ['media-side', 'media-title', 'media-subtitle', 'media-background', 'footer-links'];
@@ -53920,7 +53999,11 @@ export class AuthSplitPanelElement extends HTMLElement {
     this._applyHostClass(hostClass);
 
     const links = this._footerLinks
-      .map((link) => `<a href="${escapeAttribute(link.href)}" class="hover:underline">${escapeAttribute(link.label)}</a>`)
+      .map((link) =>
+        isSafeHref(link.href)
+          ? `<a href="${escapeAttribute(link.href)}" class="hover:underline">${escapeAttribute(link.label)}</a>`
+          : `<span class="hover:underline">${escapeAttribute(link.label)}</span>`
+      )
       .join('');
 
     const mediaLeft = side === 'left' ? this._mediaPanel('left') : '';
@@ -54583,6 +54666,15 @@ const escapeAttribute = (value) =>
     '"': '&quot;',
   }[char]));
 
+// Only allow safe URL protocols into <a href> (blocks javascript:/data:/vbscript:)
+const isSafeHref = (href) => {
+  if (typeof href !== 'string') return false;
+  const t = href.trim();
+  if (t.length === 0) return false;
+  if (t.startsWith('//') || t.startsWith('/') || t.startsWith('./') || t.startsWith('../')) return true;
+  return /^(https?:\/\/|mailto:)/i.test(t);
+};
+
 const BASE = 'inline-flex items-center gap-1 rounded px-1 py-0.5 transition-colors';
 const LINK_CLASS =
   'text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100';
@@ -54674,7 +54766,7 @@ export class BreadcrumbElement extends HTMLElement {
           body = '<span aria-hidden="true" class="px-1 text-zinc-400">…</span>';
         } else if (last) {
           body = `<span aria-current="page" class="${BASE} font-medium text-zinc-800 dark:text-zinc-100">${this._content(item)}</span>`;
-        } else if (item.href) {
+        } else if (item.href && isSafeHref(item.href)) {
           body = `<a href="${escapeAttribute(item.href)}" data-breadcrumb-index="${index}" class="${BASE} ${LINK_CLASS}">${this._content(item)}</a>`;
         } else {
           body = `<button type="button" data-breadcrumb-index="${index}" class="${BASE} ${LINK_CLASS}">${this._content(item)}</button>`;
@@ -55936,12 +56028,21 @@ export class CodeBlockElement extends HTMLElement {
       await navigator.clipboard.writeText(this._code);
       this._copied = true;
       this.render();
-      setTimeout(() => {
+      if (this._copyTimer) clearTimeout(this._copyTimer);
+      this._copyTimer = setTimeout(() => {
+        this._copyTimer = null;
         this._copied = false;
         this.render();
       }, 2000);
     } catch {
       this._copied = false;
+    }
+  }
+
+  disconnectedCallback() {
+    if (this._copyTimer) {
+      clearTimeout(this._copyTimer);
+      this._copyTimer = null;
     }
   }
 
@@ -58209,6 +58310,13 @@ const todayIso = () => {
  * Usage: <date-picker value="2026-11-14" min="2026-01-01" max="2026-12-31"></date-picker>
  * Events: change (detail: 'YYYY-MM-DD')
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 export class DatePickerElement extends HTMLElement {
   static get observedAttributes() {
     return ['value', 'min', 'max', 'week-starts-on', 'show-today', 'disabled'];
@@ -58295,7 +58403,7 @@ export class DatePickerElement extends HTMLElement {
 
         <div class="mt-2 grid grid-cols-7 gap-0.5">
           ${weekdays
-            .map((label) => `<span class="py-1 text-center text-[10px] font-medium uppercase text-zinc-400">${label}</span>`)
+            .map((label) => `<span class="py-1 text-center text-[10px] font-medium uppercase text-zinc-400">${escapeAttribute(label)}</span>`)
             .join('')}
           ${cells
             .map((day) => {
@@ -58973,6 +59081,15 @@ const escapeAttribute = (value) =>
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
+// Only allow safe URL protocols into <a href> (blocks javascript:/data:/vbscript:)
+const isSafeHref = (href) => {
+  if (typeof href !== 'string') return false;
+  const t = href.trim();
+  if (t.length === 0) return false;
+  if (t.startsWith('//') || t.startsWith('/') || t.startsWith('./') || t.startsWith('../')) return true;
+  return /^(https?:\/\/|mailto:)/i.test(t);
+};
+
 const parseJsonAttr = (raw, fallback) => {
   if (typeof raw !== 'string' || raw.trim() === '') return fallback;
   try {
@@ -59121,10 +59238,13 @@ class DocsPageLayoutElement extends HTMLElement {
     if (block.type === 'cards') {
       return `<div data-docspage-cards class="grid gap-3 sm:grid-cols-2">${(block.cards ?? [])
         .map(
-          (card) => `<a data-docspage-card="${escapeAttribute(card.title)}" href="${escapeAttribute(card.href ?? '#')}" class="rounded-xl border border-zinc-200 p-4 transition-colors hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:border-zinc-700 dark:hover:bg-zinc-800/50">
+          (card) => {
+            const href = isSafeHref(card.href) ? escapeAttribute(card.href) : '';
+            return `<a data-docspage-card="${escapeAttribute(card.title)}" ${href ? `href="${href}"` : 'role="link" aria-disabled="true"'} class="rounded-xl border border-zinc-200 p-4 transition-colors hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:border-zinc-700 dark:hover:bg-zinc-800/50">
               <p class="flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-50">${card.icon ? `<span aria-hidden="true">${escapeAttribute(card.icon)}</span>` : ''}${escapeAttribute(card.title)}</p>
               <p class="mt-1 text-xs leading-5 text-zinc-500 dark:text-zinc-400">${escapeAttribute(card.description)}</p>
-            </a>`
+            </a>`;
+          }
         )
         .join('')}</div>`;
     }
@@ -63912,6 +64032,14 @@ class HelpCenterHomeElement extends HTMLElement {
       })
       .join('');
 
+    // Re-render strategy: the shell (title/form/topics container) is rendered
+    // once; topic expansion only swaps the topics container's innerHTML so the
+    // search input keeps its value and focus across re-renders.
+    if (this.querySelector('[data-helpct-form]')) {
+      this.querySelector('[data-helpct-topics]').innerHTML = topicRows;
+      return;
+    }
+
     this.innerHTML = `
       <div data-helpct class="w-full rounded-2xl border border-zinc-200 bg-white px-5 py-8 dark:border-zinc-800 dark:bg-zinc-900 sm:px-8">
         <div class="mx-auto max-w-2xl text-center">
@@ -65082,6 +65210,13 @@ const ACTIONS = [
   { id: 'more', label: '···', ariaLabel: 'More actions', iconOnly: true },
 ];
 
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 class IterationActionBarElement extends HTMLElement {
   static get observedAttributes() {
     return ['page', 'total-pages'];
@@ -65166,8 +65301,8 @@ class IterationActionBarElement extends HTMLElement {
 
     const actionsHtml = ACTIONS.map((action) => {
       const cls = action.iconOnly ? pillIcon : pillOutlined;
-      const aria = action.ariaLabel ? ` aria-label="${action.ariaLabel}"` : '';
-      return `<button type="button" data-iteration-action="${action.id}"${aria} class="${cls}">${action.label}</button>`;
+      const aria = action.ariaLabel ? ` aria-label="${escapeAttribute(action.ariaLabel)}"` : '';
+      return `<button type="button" data-iteration-action="${action.id}"${aria} class="${cls}">${escapeAttribute(action.label)}</button>`;
     }).join('');
 
     this.innerHTML = `
@@ -65550,6 +65685,19 @@ import uiIcon from './UiIcon.js';
 /**
  * Vanilla Web Component: <knowledge-drawer>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+// themeColor 只进 style 属性，必须是纯 CSS 颜色值——拦掉引号/分号/尖括号注入
+const safeCssColor = (value, fallback = '#c2410c') => {
+  const v = String(value ?? '').trim();
+  return /^#[0-9a-fA-F]{3,8}$|^[a-zA-Z]+$|^(rgb|rgba|hsl|hsla)\([0-9,\s.%/]+\)$/.test(v) ? v : fallback;
+};
+
 export class KnowledgeDrawerElement extends HTMLElement {
   constructor() {
     super();
@@ -65580,7 +65728,12 @@ export class KnowledgeDrawerElement extends HTMLElement {
       return;
     }
 
-    const { index, title, subtitle, themeColor, conceptText, dependencies, actionLabel } = this._data;
+    const { index, dependencies } = this._data;
+    const title = escapeAttribute(this._data.title);
+    const subtitle = escapeAttribute(this._data.subtitle);
+    const themeColor = safeCssColor(this._data.themeColor);
+    const conceptText = escapeAttribute(this._data.conceptText);
+    const actionLabel = escapeAttribute(this._data.actionLabel);
 
     this.innerHTML = `
       <div class="fixed inset-0 z-50 overflow-hidden flex justify-end font-sans">
@@ -65634,8 +65787,8 @@ export class KnowledgeDrawerElement extends HTMLElement {
                     <div class="flex items-center gap-2.5 text-xs p-2 rounded border border-[#d6d2c2] dark:border-[#2b3038] bg-white/50 dark:bg-black/20">
                       <span class="font-mono text-[10px] uppercase px-1.5 py-0.5 rounded border tracking-wider" style="border-color: ${
                         dep.type === "dependency" ? "#8d9298" : dep.type === "branch" ? "#1d4ed8" : themeColor
-                      }; color: ${dep.type === "dependency" ? "#545b64" : dep.type === "branch" ? "#1d4ed8" : themeColor};">${dep.type}</span>
-                      <span class="text-[#545b64] dark:text-[#a9a89c] font-medium">${dep.label}</span>
+                      }; color: ${dep.type === "dependency" ? "#545b64" : dep.type === "branch" ? "#1d4ed8" : themeColor};">${escapeAttribute(dep.type)}</span>
+                      <span class="text-[#545b64] dark:text-[#a9a89c] font-medium">${escapeAttribute(dep.label)}</span>
                     </div>
                   `
                     )
@@ -67756,6 +67909,15 @@ const escapeAttribute = (value) =>
     '"': '&quot;',
   }[char]));
 
+// Only allow safe URL protocols into <a href> (blocks javascript:/data:/vbscript:)
+const isSafeHref = (href) => {
+  if (typeof href !== 'string') return false;
+  const t = href.trim();
+  if (t.length === 0) return false;
+  if (t.startsWith('//') || t.startsWith('/') || t.startsWith('./') || t.startsWith('../')) return true;
+  return /^(https?:\/\/|mailto:)/i.test(t);
+};
+
 /**
  * Navbar - Vanilla Web Component
  * Usage: <nav-bar brand="awesome-ui" cta-text="Get started"></nav-bar>
@@ -67855,7 +68017,7 @@ export class NavbarElement extends HTMLElement {
           ${column.heading ? `<p class="px-2 pb-1 text-[10px] font-semibold uppercase tracking-wide text-zinc-400">${escapeAttribute(column.heading)}</p>` : ''}
           ${column.links
             .map(
-              (link) => `<a href="${escapeAttribute(link.href ?? '#')}" class="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">
+              (link) => `<a href="${escapeAttribute(isSafeHref(link.href) ? link.href : '#')}" class="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">
                 ${link.icon ? `<span class="shrink-0 text-zinc-400">${uiIcon(link.icon, { size: 13 })}</span>` : ''}
                 <span class="flex-1">${escapeAttribute(link.label)}</span>
                 ${
@@ -67879,7 +68041,7 @@ export class NavbarElement extends HTMLElement {
       .join('');
     const links = this._links
       .map(
-        (link) => `<a href="${escapeAttribute(link.href ?? '#')}" class="rounded-md px-2.5 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">${escapeAttribute(link.label)}</a>`
+        (link) => `<a href="${escapeAttribute(isSafeHref(link.href) ? link.href : '#')}" class="rounded-md px-2.5 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">${escapeAttribute(link.label)}</a>`
       )
       .join('');
     const cta = this.ctaText
@@ -70704,6 +70866,13 @@ File: vanilla/PromptChips.js
  * PromptChips - Vanilla Web Component
  * Usage: <prompt-chips suggestions='["Summarize this article", "Find bugs in code"]'></prompt-chips>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 class PromptChips extends HTMLElement {
   static get observedAttributes() {
     return ["suggestions"];
@@ -70735,7 +70904,7 @@ class PromptChips extends HTMLElement {
         ${suggestions.map((item, idx) => `
           <button type="button" data-idx="${idx}" class="chip-item group flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 shadow-xs hover:border-zinc-300 dark:hover:border-zinc-700 transition-all text-left">
             <span class="text-amber-500/70 group-hover:text-amber-500 transition-colors">✨</span>
-            <span class="truncate max-w-[280px]">${item}</span>
+            <span class="truncate max-w-[280px]">${escapeAttribute(item)}</span>
           </button>
         `).join("")}
       </div>
@@ -72211,6 +72380,19 @@ import uiIcon from './UiIcon.js';
 /**
  * Vanilla Web Component: <roadmap-timeline>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+// stageColor 类只进 style 属性值，白名单校验（同 KnowledgeDrawer.safeCssColor）
+const safeCssColor = (value, fallback = '') => {
+  const v = String(value ?? '').trim();
+  return /^#[0-9a-fA-F]{3,8}$|^[a-zA-Z]+$|^(rgb|rgba|hsl|hsla)[(]([0-9,\s.%/]+[)])$/.test(v) ? v : fallback;
+};
+
 export class RoadmapTimelineElement extends HTMLElement {
   constructor() {
     super();
@@ -72239,7 +72421,7 @@ export class RoadmapTimelineElement extends HTMLElement {
             .map((node) => {
               const isActive = this._activeId === node.id || node.status === "active";
               const isDone = node.status === "completed";
-              const color = node.stageColor || "#c2410c";
+              const color = safeCssColor(node.stageColor, "#c2410c");
 
               return `
               <div
@@ -72261,7 +72443,7 @@ export class RoadmapTimelineElement extends HTMLElement {
                   }"
                 >
                   <div class="-rotate-45 font-mono text-xs font-bold flex items-center justify-center">
-                    ${isDone ? uiIcon("check", { size: 16 }) : node.status === "locked" ? uiIcon("lock", { size: 16 }) : `<span style="color: ${isActive ? color : ""}">${node.index}</span>`}
+                    ${isDone ? uiIcon("check", { size: 16 }) : node.status === "locked" ? uiIcon("lock", { size: 16 }) : `<span style="color: ${isActive ? color : ""}">${escapeAttribute(node.index)}</span>`}
                   </div>
                 </div>
 
@@ -72272,7 +72454,7 @@ export class RoadmapTimelineElement extends HTMLElement {
                     </span>
                     ${
                       node.tags && node.tags.length > 0
-                        ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded-xs border border-[#d6d2c2] dark:border-[#2b3038] text-[#545b64] dark:text-[#a9a89c]">${node.tags[0]}</span>`
+                        ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded-xs border border-[#d6d2c2] dark:border-[#2b3038] text-[#545b64] dark:text-[#a9a89c]">${escapeAttribute(node.tags[0])}</span>`
                         : ""
                     }
                   </div>
@@ -72282,12 +72464,12 @@ export class RoadmapTimelineElement extends HTMLElement {
                       ? "text-[#22262d] dark:text-[#e9e6db]"
                       : "text-[#22262d]/80 dark:text-[#e9e6db]/80 group-hover:text-[#22262d] dark:group-hover:text-[#e9e6db]"
                   }">
-                    ${node.title}
+                    ${escapeAttribute(node.title)}
                   </h4>
 
                   ${
                     node.subtitle
-                      ? `<p class="mt-0.5 text-xs text-[#545b64] dark:text-[#a9a89c] truncate">${node.subtitle}</p>`
+                      ? `<p class="mt-0.5 text-xs text-[#545b64] dark:text-[#a9a89c] truncate">${escapeAttribute(node.subtitle)}</p>`
                       : ""
                   }
                 </div>
@@ -75103,6 +75285,15 @@ const escapeAttribute = (value) =>
     '"': '&quot;',
   }[char]));
 
+// Only allow safe URL protocols into <a href> (blocks javascript:/data:/vbscript:)
+const isSafeHref = (href) => {
+  if (typeof href !== 'string') return false;
+  const t = href.trim();
+  if (t.length === 0) return false;
+  if (t.startsWith('//') || t.startsWith('/') || t.startsWith('./') || t.startsWith('../')) return true;
+  return /^(https?:\/\/|mailto:)/i.test(t);
+};
+
 const STATUS_TONE = {
   emerald: 'text-emerald-400',
   amber: 'text-amber-400',
@@ -75165,7 +75356,7 @@ export class SiteFooterElement extends HTMLElement {
         const links = column.links
           .map(
             (link, linkIndex) =>
-              `<li><a href="${escapeAttribute(link.href ?? '#')}" class="text-xs text-zinc-400 transition-colors hover:text-zinc-100">${escapeAttribute(link.label)}</a></li>`,
+              `<li><a href="${escapeAttribute(isSafeHref(link.href) ? link.href : '#')}" class="text-xs text-zinc-400 transition-colors hover:text-zinc-100">${escapeAttribute(link.label)}</a></li>`,
           )
           .join('');
         return `<nav data-footer-column="${index}" aria-label="${escapeAttribute(column.heading)}">
@@ -75218,6 +75409,23 @@ File: vanilla/SourcesCitation.js
  * SourcesCitation - Vanilla Web Component
  * Usage: <sources-citation sources='[{"title": "OpenAI Docs", "url": "https://openai.com"}]'></sources-citation>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+// 与 HomepageDashboard.isSafeHref 同口径：拦 javascript:/data:/vbscript:/file: 等，
+// 放行 http(s)/mailto:/协议相对/绝对路径/相对路径
+const isSafeHref = (href) => {
+  if (typeof href !== 'string') return false;
+  const t = href.trim();
+  if (t.length === 0) return false;
+  if (t.startsWith('//') || t.startsWith('/') || t.startsWith('./') || t.startsWith('../')) return true;
+  return /^(https?:\/\/|mailto:)/i.test(t);
+};
+
 class SourcesCitation extends HTMLElement {
   static get observedAttributes() {
     return ["sources"];
@@ -75258,16 +75466,17 @@ class SourcesCitation extends HTMLElement {
             } catch {
               domain = item.siteName || "web";
             }
+            const href = isSafeHref(item.url) ? escapeAttribute(item.url) : '';
             return `
-              <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="group relative flex flex-col justify-between p-2.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/60 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 hover:border-zinc-300 dark:hover:border-zinc-700 shadow-xs transition-all no-underline">
+              <a ${href ? `href="${href}"` : 'role="link" aria-disabled="true"'} target="_blank" rel="noopener noreferrer" class="group relative flex flex-col justify-between p-2.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/60 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 hover:border-zinc-300 dark:hover:border-zinc-700 shadow-xs transition-all no-underline">
                 <div class="space-y-1">
                   <div class="flex items-center gap-1.5 text-[11px] text-zinc-400 dark:text-zinc-500 font-mono">
                     <span class="flex items-center justify-center w-4 h-4 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 font-bold text-[10px]">${idx + 1}</span>
-                    <span class="truncate max-w-[120px]">${domain}</span>
+                    <span class="truncate max-w-[120px]">${escapeAttribute(domain)}</span>
                   </div>
-                  <div class="text-xs font-medium text-zinc-800 dark:text-zinc-200 line-clamp-2 leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">${item.title}</div>
+                  <div class="text-xs font-medium text-zinc-800 dark:text-zinc-200 line-clamp-2 leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">${escapeAttribute(item.title)}</div>
                 </div>
-                ${item.snippet ? `<div class="mt-1.5 text-[11px] text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-tight">${item.snippet}</div>` : ''}
+                ${item.snippet ? `<div class="mt-1.5 text-[11px] text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-tight">${escapeAttribute(item.snippet)}</div>` : ''}
                 <div class="mt-2 flex items-center justify-end text-[10px] text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300">
                   <span class="opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
                 </div>
@@ -75513,6 +75722,13 @@ File: vanilla/StatusIndicator.js
  * StatusIndicator - Vanilla Web Component
  * Usage: <status-indicator status="online" label="VPS Connected" ping-ms="24"></status-indicator>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 class StatusIndicator extends HTMLElement {
   static get observedAttributes() {
     return ["status", "label", "ping-ms", "show-dot"];
@@ -75528,8 +75744,8 @@ class StatusIndicator extends HTMLElement {
 
   render() {
     const status = this.getAttribute("status") || "online";
-    const label = this.getAttribute("label");
-    const pingMs = this.getAttribute("ping-ms");
+    const label = escapeAttribute(this.getAttribute("label"));
+    const pingMs = escapeAttribute(this.getAttribute("ping-ms"));
     const showDot = this.getAttribute("show-dot") !== "false";
 
     let dotBg = "bg-emerald-500", pingBg = "bg-emerald-400", text = "text-emerald-700 dark:text-emerald-400", badgeBg = "bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/80 dark:border-emerald-800/60", defaultLabel = "Online";
@@ -76006,6 +76222,39 @@ File: vanilla/StreamMarkdown.js
  * StreamMarkdown - Vanilla Web Component (Powered by marked & Prism CDN)
  * Usage: <stream-markdown is-streaming content="# Hello World"></stream-markdown>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+// Lightweight sanitizer for marked output — keeps gfm/code-fence rendering intact
+// while stripping the dangerous surface: script containers, sandbox-escape tags,
+// on* event handlers (tag-scoped, so prose text like "online=1" survives) and
+// javascript:/vbscript:/non-image data: URLs. No external dependencies.
+const unsafeUrl = (value) =>
+  /^\s*(javascript|vbscript):/i.test(value) || /^\s*data:(?!image\/)/i.test(value);
+
+const sanitizeTag = (tag) =>
+  tag
+    .replace(/\son\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+    .replace(
+      /(\s(?:href|src|srcset|action|formaction)\s*=\s*)("[^"]*"|'[^']*'|[^\s>]+)/gi,
+      (m, pre, lit) => {
+        const value = lit[0] === '"' || lit[0] === "'" ? lit.slice(1, -1) : lit;
+        return unsafeUrl(value) ? `${pre}""` : m;
+      }
+    );
+
+const sanitizeMarkdownHtml = (html) =>
+  String(html)
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, '')
+    .replace(/<script\b[^>]*\/?>/gi, '')
+    .replace(/<(iframe|object|embed|base|form)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, '')
+    .replace(/<(iframe|object|embed|base|form)\b[^>]*\/?>/gi, '')
+    .replace(/<[a-z][^>]*>/gi, (tag) => sanitizeTag(tag));
+
 class StreamMarkdown extends HTMLElement {
   static get observedAttributes() {
     return ["content", "is-streaming"];
@@ -76048,7 +76297,7 @@ class StreamMarkdown extends HTMLElement {
         return `
           <div class="relative group my-4 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-950">
             <div class="flex items-center justify-between px-4 py-1.5 bg-zinc-900/80 border-b border-zinc-800 text-xs text-zinc-400 font-mono">
-              <span>${lang || "code"}</span>
+              <span>${escapeAttribute(lang || "code")}</span>
               <button 
                 type="button" 
                 data-code="${encodeURIComponent(text)}" 
@@ -76063,6 +76312,8 @@ class StreamMarkdown extends HTMLElement {
       };
       parsedHtml = window.marked.parse(content, { renderer, breaks: true, gfm: true });
     }
+
+    parsedHtml = sanitizeMarkdownHtml(parsedHtml);
 
     this.innerHTML = `
       <div class="prose prose-zinc dark:prose-invert max-w-none text-sm leading-relaxed">
@@ -78620,6 +78871,13 @@ File: vanilla/ToolCallBadge.js
  */
 import uiIcon from './UiIcon.js';
 
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
 class ToolCallBadge extends HTMLElement {
   static get observedAttributes() {
     return ["name", "status", "args", "output", "error"];
@@ -78635,11 +78893,11 @@ class ToolCallBadge extends HTMLElement {
   }
 
   render() {
-    const name = this.getAttribute("name") || "tool";
+    const name = escapeAttribute(this.getAttribute("name") || "tool");
     const status = this.getAttribute("status") || "running";
-    const args = this.getAttribute("args");
-    const output = this.getAttribute("output");
-    const error = this.getAttribute("error");
+    const args = escapeAttribute(this.getAttribute("args"));
+    const output = escapeAttribute(this.getAttribute("output"));
+    const error = escapeAttribute(this.getAttribute("error"));
 
     let statusHtml = `<span class="text-amber-600 dark:text-amber-400 font-medium inline-flex items-center gap-1">${uiIcon('loader', { size: 14, className: 'animate-spin' })} Running...</span>`;
     if (status === "success") {

@@ -4,6 +4,39 @@ import Prism from "prismjs";
 import "prismjs/themes/prism-tomorrow.css";
 import { Check, Copy } from "./UiIcon";
 
+const escapeAttribute = (value: string): string =>
+  String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+// Lightweight sanitizer for marked output — keeps gfm/code-fence rendering intact
+// while stripping the dangerous surface: script containers, sandbox-escape tags,
+// on* event handlers (tag-scoped, so prose text like "online=1" survives) and
+// javascript:/vbscript:/non-image data: URLs. No external dependencies.
+const unsafeUrl = (value: string): boolean =>
+  /^\s*(javascript|vbscript):/i.test(value) || /^\s*data:(?!image\/)/i.test(value);
+
+const sanitizeTag = (tag: string): string =>
+  tag
+    .replace(/\son\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+    .replace(
+      /(\s(?:href|src|srcset|action|formaction)\s*=\s*)("[^"]*"|'[^']*'|[^\s>]+)/gi,
+      (m: string, pre: string, lit: string) => {
+        const value = lit[0] === '"' || lit[0] === "'" ? lit.slice(1, -1) : lit;
+        return unsafeUrl(value) ? `${pre}""` : m;
+      }
+    );
+
+const sanitizeMarkdownHtml = (html: string): string =>
+  String(html)
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, "")
+    .replace(/<script\b[^>]*\/?>/gi, "")
+    .replace(/<(iframe|object|embed|base|form)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, "")
+    .replace(/<(iframe|object|embed|base|form)\b[^>]*\/?>/gi, "")
+    .replace(/<[a-z][^>]*>/gi, (tag: string) => sanitizeTag(tag));
+
 export interface StreamMarkdownProps {
   content: string;
   isStreaming?: boolean;
@@ -35,7 +68,7 @@ export const StreamMarkdown: React.FC<StreamMarkdownProps> = ({
       return `
         <div class="relative group my-4 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-950">
           <div class="flex items-center justify-between px-4 py-1.5 bg-zinc-900/80 border-b border-zinc-800 text-xs text-zinc-400 font-mono">
-            <span>${lang || "code"}</span>
+            <span>${escapeAttribute(lang || "code")}</span>
             <button 
               type="button" 
               data-code="${encodeURIComponent(text)}" 
@@ -49,7 +82,9 @@ export const StreamMarkdown: React.FC<StreamMarkdownProps> = ({
       `;
     };
 
-    return marked.parse(content || "", { renderer, breaks: true, gfm: true });
+    return sanitizeMarkdownHtml(
+      marked.parse(content || "", { renderer, breaks: true, gfm: true }) as string
+    );
   }, [content]);
 
   // Delegated safe copy handler (CSP safe, avoids inline onclick)

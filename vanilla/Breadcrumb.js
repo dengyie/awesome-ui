@@ -9,6 +9,15 @@ const escapeAttribute = (value) =>
     '"': '&quot;',
   }[char]));
 
+// Only allow safe URL protocols into <a href> (blocks javascript:/data:/vbscript:)
+const isSafeHref = (href) => {
+  if (typeof href !== 'string') return false;
+  const t = href.trim();
+  if (t.length === 0) return false;
+  if (t.startsWith('//') || t.startsWith('/') || t.startsWith('./') || t.startsWith('../')) return true;
+  return /^(https?:\/\/|mailto:)/i.test(t);
+};
+
 const BASE = 'inline-flex items-center gap-1 rounded px-1 py-0.5 transition-colors';
 const LINK_CLASS =
   'text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100';
@@ -100,7 +109,7 @@ export class BreadcrumbElement extends HTMLElement {
           body = '<span aria-hidden="true" class="px-1 text-zinc-400">…</span>';
         } else if (last) {
           body = `<span aria-current="page" class="${BASE} font-medium text-zinc-800 dark:text-zinc-100">${this._content(item)}</span>`;
-        } else if (item.href) {
+        } else if (item.href && isSafeHref(item.href)) {
           body = `<a href="${escapeAttribute(item.href)}" data-breadcrumb-index="${index}" class="${BASE} ${LINK_CLASS}">${this._content(item)}</a>`;
         } else {
           body = `<button type="button" data-breadcrumb-index="${index}" class="${BASE} ${LINK_CLASS}">${this._content(item)}</button>`;

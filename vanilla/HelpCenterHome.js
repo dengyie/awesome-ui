@@ -118,6 +118,14 @@ class HelpCenterHomeElement extends HTMLElement {
       })
       .join('');
 
+    // Re-render strategy: the shell (title/form/topics container) is rendered
+    // once; topic expansion only swaps the topics container's innerHTML so the
+    // search input keeps its value and focus across re-renders.
+    if (this.querySelector('[data-helpct-form]')) {
+      this.querySelector('[data-helpct-topics]').innerHTML = topicRows;
+      return;
+    }
+
     this.innerHTML = `
       <div data-helpct class="w-full rounded-2xl border border-zinc-200 bg-white px-5 py-8 dark:border-zinc-800 dark:bg-zinc-900 sm:px-8">
         <div class="mx-auto max-w-2xl text-center">

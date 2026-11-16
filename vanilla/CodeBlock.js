@@ -47,12 +47,21 @@ export class CodeBlockElement extends HTMLElement {
       await navigator.clipboard.writeText(this._code);
       this._copied = true;
       this.render();
-      setTimeout(() => {
+      if (this._copyTimer) clearTimeout(this._copyTimer);
+      this._copyTimer = setTimeout(() => {
+        this._copyTimer = null;
         this._copied = false;
         this.render();
       }, 2000);
     } catch {
       this._copied = false;
+    }
+  }
+
+  disconnectedCallback() {
+    if (this._copyTimer) {
+      clearTimeout(this._copyTimer);
+      this._copyTimer = null;
     }
   }
 

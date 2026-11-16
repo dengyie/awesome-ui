@@ -3,6 +3,19 @@ import uiIcon from './UiIcon.js';
 /**
  * Vanilla Web Component: <knowledge-drawer>
  */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+// themeColor 只进 style 属性，必须是纯 CSS 颜色值——拦掉引号/分号/尖括号注入
+const safeCssColor = (value, fallback = '#c2410c') => {
+  const v = String(value ?? '').trim();
+  return /^#[0-9a-fA-F]{3,8}$|^[a-zA-Z]+$|^(rgb|rgba|hsl|hsla)\([0-9,\s.%/]+\)$/.test(v) ? v : fallback;
+};
+
 export class KnowledgeDrawerElement extends HTMLElement {
   constructor() {
     super();
@@ -33,7 +46,12 @@ export class KnowledgeDrawerElement extends HTMLElement {
       return;
     }
 
-    const { index, title, subtitle, themeColor, conceptText, dependencies, actionLabel } = this._data;
+    const { index, dependencies } = this._data;
+    const title = escapeAttribute(this._data.title);
+    const subtitle = escapeAttribute(this._data.subtitle);
+    const themeColor = safeCssColor(this._data.themeColor);
+    const conceptText = escapeAttribute(this._data.conceptText);
+    const actionLabel = escapeAttribute(this._data.actionLabel);
 
     this.innerHTML = `
       <div class="fixed inset-0 z-50 overflow-hidden flex justify-end font-sans">
@@ -87,8 +105,8 @@ export class KnowledgeDrawerElement extends HTMLElement {
                     <div class="flex items-center gap-2.5 text-xs p-2 rounded border border-[#d6d2c2] dark:border-[#2b3038] bg-white/50 dark:bg-black/20">
                       <span class="font-mono text-[10px] uppercase px-1.5 py-0.5 rounded border tracking-wider" style="border-color: ${
                         dep.type === "dependency" ? "#8d9298" : dep.type === "branch" ? "#1d4ed8" : themeColor
-                      }; color: ${dep.type === "dependency" ? "#545b64" : dep.type === "branch" ? "#1d4ed8" : themeColor};">${dep.type}</span>
-                      <span class="text-[#545b64] dark:text-[#a9a89c] font-medium">${dep.label}</span>
+                      }; color: ${dep.type === "dependency" ? "#545b64" : dep.type === "branch" ? "#1d4ed8" : themeColor};">${escapeAttribute(dep.type)}</span>
+                      <span class="text-[#545b64] dark:text-[#a9a89c] font-medium">${escapeAttribute(dep.label)}</span>
                     </div>
                   `
                     )
