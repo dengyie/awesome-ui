@@ -204,6 +204,9 @@
 | **`MonitorRunList`** | 监控运行列表 | Adaline Monitor 运行历史：Filter + 时段 pills、请求量迷你直方图、状态图标 + 时间戳 + 延迟行 |
 | **`EvalTurnBuilder`** | 评估回合编排器 | Vapi Evals 角色回合块：SYSTEM/USER/ASSISTANT/TOOL 徽章、Mock 标签、Turn 序号与 + Add 回合页脚 |
 | **`AgentSessionTimeline`** | 会话时间线 | Browserbase 会话：状态/时长/步骤 chips、分段活动条、Reason/Tool 步骤列表与请求面板 |
+| **`EvalRunResults`** | 评估运行结果 | Adaline Evals：通过率大字 + 通过/未知/失败/总数计数、Status 过滤 chip、按 evaluator 分节的结果表（状态 pill / 原因 / 响应 / 变量 chips） |
+| **`EventTagGrid`** | 事件标签网格 | Sentry Tags：scope pills、双列 key/value 网格（mono 键 + 可检索值链接样式） |
+| **`PromptTunerResult`** | 提示词调优结果 | Cohere Prompt Tuner：OPTIMIZED PROMPT 暗色代码面板 + Copy、COMPLETIONS 选择器与完成文本查看器 |
 | **`CampsiteHandoff`** | 设计交付面板 | Campsite 设计 handoff：完成态检查清单（负责人首字母头像 + 截止日期）、x/y done 计数与 AI 摘要块 |
 | **`ZendeskFieldSuggest`** | 工单字段建议条 | Zendesk AI 字段建议：琥珀色建议条、字段 chips（标签: 值 + 置信度 %）点击即应用、Ignore 忽略按钮 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
@@ -396,6 +399,9 @@ awesome-ui/
 │   ├── MonitorRunList.tsx
 │   ├── EvalTurnBuilder.tsx
 │   └── AgentSessionTimeline.tsx
+│   ├── EvalRunResults.tsx
+│   ├── EventTagGrid.tsx
+│   └── PromptTunerResult.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -580,6 +586,9 @@ awesome-ui/
 │   ├── MonitorRunList.vue
 │   ├── EvalTurnBuilder.vue
 │   └── AgentSessionTimeline.vue
+│   ├── EvalRunResults.vue
+│   ├── EventTagGrid.vue
+│   └── PromptTunerResult.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -764,6 +773,9 @@ awesome-ui/
 │   ├── MonitorRunList.js
 │   ├── EvalTurnBuilder.js
 │   └── AgentSessionTimeline.js
+│   ├── EvalRunResults.js
+│   ├── EventTagGrid.js
+│   └── PromptTunerResult.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

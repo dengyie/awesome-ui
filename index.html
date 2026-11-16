@@ -213,12 +213,15 @@
   <script type="module" src="./vanilla/MonitorRunList.js"></script>
   <script type="module" src="./vanilla/EvalTurnBuilder.js"></script>
   <script type="module" src="./vanilla/AgentSessionTimeline.js"></script>
+  <script type="module" src="./vanilla/EvalRunResults.js"></script>
+  <script type="module" src="./vanilla/EventTagGrid.js"></script>
+  <script type="module" src="./vanilla/PromptTunerResult.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.46.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.47.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -3016,6 +3019,60 @@
             <agent-session-timeline id="demo-agentsess"></agent-session-timeline>
             <div class="mt-3 flex items-center gap-2">
               <span id="demo-agentsess-status" class="text-[11px] text-zinc-500">Click a step — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-177" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">177 · EvalRunResults</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.47.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Evaluation run results — pass-rate header with counters, a status filter chip and per-evaluator result sections with status pills, reason/response excerpts and variable chips (Adaline Evals pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/EvalRunResults.js">
+          <div class="space-y-3">
+            <eval-run-results id="demo-evalrun"></eval-run-results>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-evalrun-status" class="text-[11px] text-zinc-500">Click a result row — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-178" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">178 · EventTagGrid</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.47.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Event tag inspector — scope pills over a two-column key/value grid with mono keys and link-styled searchable values (Sentry Tags pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/EventTagGrid.js">
+          <div class="space-y-3">
+            <event-tag-grid id="demo-taggrid"></event-tag-grid>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-taggrid-status" class="text-[11px] text-zinc-500">Click a tag / scope — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-179" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">179 · PromptTunerResult</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v1.47.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Prompt tuner output — an "optimized prompt" dark code panel with copy action, then a completion selector and the completion text viewer (Cohere Prompt Tuner pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/PromptTunerResult.js">
+          <div class="space-y-3">
+            <prompt-tuner-result id="demo-tuner"></prompt-tuner-result>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-tuner-status" class="text-[11px] text-zinc-500">Copy / switch a completion — events report here.</span>
             </div>
           </div>
         </div>
@@ -6122,6 +6179,26 @@ FAIL tests/ui.test.mjs
       const agentsessStatus46 = document.getElementById('demo-agentsess-status');
       if (agentsess46) {
         agentsess46.addEventListener('step-click', (event) => { agentsessStatus46.textContent = 'Step → ' + event.detail.step.kind + ' · ' + event.detail.step.label; });
+      }
+
+      const evalrun47 = document.getElementById('demo-evalrun');
+      const evalrunStatus47 = document.getElementById('demo-evalrun-status');
+      if (evalrun47) {
+        evalrun47.addEventListener('result-click', (event) => { evalrunStatus47.textContent = 'Result → ' + event.detail.result.status + ' · ' + event.detail.section.name; });
+      }
+
+      const taggrid47 = document.getElementById('demo-taggrid');
+      const taggridStatus47 = document.getElementById('demo-taggrid-status');
+      if (taggrid47) {
+        taggrid47.addEventListener('tag-click', (event) => { taggridStatus47.textContent = 'Tag → ' + event.detail.tag.key + ' = ' + event.detail.tag.value; });
+        taggrid47.addEventListener('scope-change', (event) => { taggridStatus47.textContent = 'Scope → ' + event.detail.scope; });
+      }
+
+      const tuner47 = document.getElementById('demo-tuner');
+      const tunerStatus47 = document.getElementById('demo-tuner-status');
+      if (tuner47) {
+        tuner47.addEventListener('copy-prompt', () => { tunerStatus47.textContent = 'Copied → optimized prompt'; });
+        tuner47.addEventListener('completion-change', (event) => { tunerStatus47.textContent = 'Completion → ' + event.detail.completion.label; });
       }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');

@@ -7061,6 +7061,197 @@ export default function EntityMultiSelectPicker({
   );
 }
 
+====/File: react/EvalRunResults.tsx/====
+
+/**
+ * EvalRunResults - Evaluation run results: a pass-rate header with counters,
+ * a status filter chip and per-evaluator result sections with status pills,
+ * reason/response excerpts and variable chips (Adaline Evals pattern).
+ */
+import React from "react";
+
+export type EvalResultStatus = "passed" | "failed" | "unknown";
+
+export interface EvalVariable {
+  name: string;
+  value: string;
+}
+
+export interface EvalResult {
+  id: string;
+  status: EvalResultStatus;
+  reason: string;
+  response: string;
+  variables?: EvalVariable[];
+}
+
+export interface EvalSection {
+  id: string;
+  name: string;
+  subtitle: string;
+  icon?: string;
+  results: EvalResult[];
+}
+
+export interface EvalRunResultsProps {
+  passRate?: string;
+  passLabel?: string;
+  counters?: { passed: number; unknown: number; failed: number; total: number };
+  filterLabel?: string;
+  filterValue?: string;
+  sections?: EvalSection[];
+  className?: string;
+  onResultClick?: (result: EvalResult, section: EvalSection) => void;
+}
+
+const STATUS_STYLES: Record<EvalResultStatus, { icon: string; label: string; cell: string }> = {
+  passed: { icon: "✓", label: "Passed", cell: "text-emerald-600 dark:text-emerald-400" },
+  failed: { icon: "✕", label: "Failed", cell: "text-red-600 dark:text-red-400" },
+  unknown: { icon: "⊘", label: "Unknown", cell: "text-amber-600 dark:text-amber-400" },
+};
+
+const DEFAULT_SECTIONS: EvalSection[] = [
+  {
+    id: "judge",
+    name: "summary_quality_judge",
+    subtitle: "AI-Powered / LLM as a Judge",
+    icon: "⚖️",
+    results: [
+      {
+        id: "j1",
+        status: "passed",
+        reason: "The output provides a summary that captures the key points of the document and presents them in a clear structure.",
+        response: "Key Points: Product launched a pilot feature that enables users to customize dashboards. Insights: This initiative aims to enhance user engagement and satisfaction through personalization.",
+        variables: [
+          { name: "EXPECTED_SUMMARY", value: "Product laun…" },
+          { name: "CONTENT", value: "Product laun…" },
+          { name: "CATEGORY", value: "Product" },
+        ],
+      },
+      {
+        id: "j2",
+        status: "passed",
+        reason: "The output summarizes the content well, preserving the key fact that employee satisfaction increased after the policy change.",
+        response: "Key Points: HR reported higher satisfaction among remote employees after implementing flexible working hours. Insights: Flexibility drives retention.",
+        variables: [
+          { name: "EXPECTED_SUMMARY", value: "HR report…" },
+          { name: "CONTENT", value: "HR report…" },
+          { name: "CATEGORY", value: "HR" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "cost",
+    name: "cost_efficiency_guard",
+    subtitle: "Performance / Cost",
+    icon: "💰",
+    results: [
+      {
+        id: "c1",
+        status: "passed",
+        reason: "Response cost is $0.0003 which is less than the required value of $0.0100.",
+        response: "Key Points: A pilot feature has been launched that allows users to customize their dashboards in the product. Insights: Customization may improve engagement.",
+        variables: [
+          { name: "COST", value: "$0.0003" },
+          { name: "BUDGET", value: "$0.0100" },
+        ],
+      },
+    ],
+  },
+];
+
+export default function EvalRunResults({
+  passRate = "64.00%",
+  passLabel = "Passed",
+  counters = { passed: 64, unknown: 0, failed: 36, total: 100 },
+  filterLabel = "has any of",
+  filterValue = "Passed",
+  sections = DEFAULT_SECTIONS,
+  className = "",
+  onResultClick,
+}: EvalRunResultsProps) {
+  return (
+    <div data-eval-run-results className={`w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <div data-eval-header className="flex flex-wrap items-end justify-between gap-3 px-4 pb-3 pt-4">
+        <p data-eval-score className="text-3xl font-semibold tracking-tight text-emerald-700 dark:text-emerald-400">
+          {passRate} <span className="text-zinc-900 dark:text-zinc-50">{passLabel}</span>
+        </p>
+        <div data-eval-counters className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium">
+          <span data-eval-counter="passed" className="text-emerald-600 dark:text-emerald-400">✓ Passed {counters.passed}</span>
+          <span data-eval-counter="unknown" className="text-amber-600 dark:text-amber-400">⊘ Unknown {counters.unknown}</span>
+          <span data-eval-counter="failed" className="text-red-600 dark:text-red-400">✕ Failed {counters.failed}</span>
+          <span data-eval-counter="total" className="text-zinc-400 dark:text-zinc-500">≡ Total {counters.total}</span>
+        </div>
+      </div>
+      <div className="border-b border-zinc-100 px-4 pb-3 dark:border-zinc-800">
+        <span data-eval-filter className="inline-flex items-center gap-2 rounded-full border border-zinc-200 px-3 py-1.5 text-xs text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">
+          <span className="text-zinc-400" aria-hidden="true">⊙</span>
+          <span className="font-medium">Status</span>
+          <span className="text-zinc-400">{filterLabel}</span>
+          <span className="inline-flex items-center gap-1 rounded-md bg-zinc-100 px-1.5 py-0.5 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
+            <span className="text-emerald-600 dark:text-emerald-400" aria-hidden="true">✓</span> {filterValue}
+            <span className="text-zinc-400" aria-hidden="true">✕</span>
+          </span>
+        </span>
+      </div>
+      {sections.map((section) => (
+        <div key={section.id} data-eval-section={section.id} className="border-b border-zinc-100 last:border-b-0 dark:border-zinc-800">
+          <div data-eval-section-header className="flex items-center gap-2.5 px-4 py-3">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-100 text-sm dark:bg-zinc-800" aria-hidden="true">{section.icon ?? "⚖️"}</span>
+            <span>
+              <span data-eval-section-name className="block text-sm font-semibold text-zinc-800 dark:text-zinc-100">{section.name}</span>
+              <span data-eval-section-subtitle className="block text-[11px] text-zinc-400 dark:text-zinc-500">{section.subtitle}</span>
+            </span>
+          </div>
+          <table data-eval-section-results className="w-full">
+            <thead>
+              <tr className="border-b border-zinc-100 text-left text-[11px] font-medium text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+                <th className="px-4 py-2 font-medium">Status</th>
+                <th className="px-2 py-2 font-medium">Reason</th>
+                <th className="px-2 py-2 font-medium">Response</th>
+                <th className="px-4 py-2 font-medium">Variables</th>
+              </tr>
+            </thead>
+            <tbody>
+              {section.results.map((result) => {
+                const style = STATUS_STYLES[result.status] ?? STATUS_STYLES.unknown;
+                return (
+                  <tr
+                    key={result.id}
+                    data-eval-row={result.id}
+                    tabIndex={0}
+                    onClick={() => onResultClick?.(result, section)}
+                    className="cursor-pointer border-b border-zinc-50 align-top text-xs transition-colors last:border-b-0 hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/60"
+                  >
+                    <td data-eval-row-status={result.status} className={`whitespace-nowrap px-4 py-2.5 font-medium ${style.cell}`}>
+                      <span className="mr-1 inline-flex" aria-hidden="true">{style.icon}</span>
+                      {style.label}
+                    </td>
+                    <td data-eval-row-reason className="max-w-[16rem] px-2 py-2.5 text-zinc-600 dark:text-zinc-300">{result.reason}</td>
+                    <td data-eval-row-response className="max-w-[16rem] px-2 py-2.5 text-zinc-500 dark:text-zinc-400">
+                      <span className="line-clamp-2">{result.response}</span>
+                    </td>
+                    <td data-eval-row-variables className="px-4 py-2.5">
+                      <span className="flex max-w-[14rem] flex-wrap gap-1">
+                        {(result.variables ?? []).map((v) => (
+                          <span key={v.name} data-eval-var={v.name} className="max-w-[13rem] truncate rounded bg-violet-50 px-1.5 py-0.5 font-mono text-[9px] text-violet-700 dark:bg-violet-950/60 dark:text-violet-300" title={`${v.name}: ${v.value}`}>
+                            {v.name}: {v.value}
+                          </span>
+                        ))}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 ====/File: react/EvalScoreTable.tsx/====
 
 import React from "react";
@@ -7315,6 +7506,129 @@ export default function EvalTurnBuilder({
           >
             + Add {role === "tool" ? "Tool Response" : role.charAt(0).toUpperCase() + role.slice(1)}
           </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+====/File: react/EventTagGrid.tsx/====
+
+/**
+ * EventTagGrid - Grouped key/value tag grid for a single event: tags are
+ * grouped under collapsible-looking group headers (browser, device, os…) and
+ * rendered as label/value rows in a two-column layout (Sentry Tags pattern).
+ */
+import React from "react";
+
+export interface EventTag {
+  key: string;
+  value: string;
+  link?: boolean;
+}
+
+export interface EventTagGroup {
+  id: string;
+  title: string;
+  tags: EventTag[];
+}
+
+export interface EventTagGridProps {
+  title?: string;
+  scopes?: string[];
+  activeScope?: string;
+  groups?: EventTagGroup[];
+  className?: string;
+  onTagClick?: (tag: EventTag, group: EventTagGroup) => void;
+}
+
+const DEFAULT_GROUPS: EventTagGroup[] = [
+  {
+    id: "left",
+    title: "left",
+    tags: [
+      { key: "browser", value: "Chrome 141.0.0", link: true },
+      { key: "browser.name", value: "Chrome" },
+      { key: "device", value: "Mac", link: true },
+      { key: "device.family", value: "Mac" },
+      { key: "environment", value: "development", link: true },
+      { key: "handled", value: "no" },
+      { key: "level", value: "error" },
+    ],
+  },
+  {
+    id: "right",
+    title: "right",
+    tags: [
+      { key: "mechanism", value: "auto.browser.global_handlers.onunhandledrejection" },
+      { key: "os", value: "Mac OS X >=10.15.7", link: true },
+      { key: "os.name", value: "Mac OS X" },
+      { key: "release", value: "b95a49d8d5b3", link: true },
+      { key: "transaction", value: "/sentry-example-page", link: true },
+      { key: "turbopack", value: "True" },
+      { key: "url", value: "http://localhost:3000/sentry-example-page", link: true },
+    ],
+  },
+];
+
+export default function EventTagGrid({
+  title = "Tags",
+  scopes = ["All", "Custom", "Application", "Client", "Other"],
+  activeScope = "All",
+  groups = DEFAULT_GROUPS,
+  className = "",
+  onTagClick,
+}: EventTagGridProps) {
+  return (
+    <div data-tag-grid className={`w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <div data-tag-grid-header className="flex items-center justify-between gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+        <p data-tag-grid-title className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">{title}</p>
+        <div data-tag-grid-scopes className="inline-flex items-center gap-0.5 rounded-md bg-zinc-100 p-0.5 dark:bg-zinc-800">
+          {scopes.map((scope) => {
+            const active = scope === activeScope;
+            return (
+              <button
+                key={scope}
+                type="button"
+                data-tag-scope={scope}
+                aria-pressed={active}
+                onClick={() => onTagClick?.({ key: scope, value: scope }, { id: "scope", title: scope, tags: [] })}
+                className={`rounded px-2 py-0.5 text-[11px] font-medium transition-colors ${
+                  active
+                    ? "bg-white text-zinc-800 shadow-sm dark:bg-zinc-700 dark:text-zinc-100"
+                    : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+                }`}
+              >
+                {scope}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <div data-tag-grid-body className="grid grid-cols-1 gap-x-6 px-4 py-3 md:grid-cols-2">
+        {groups.map((group) => (
+          <dl key={group.id} data-tag-group={group.id} className="flex flex-col gap-1.5">
+            {group.tags.map((tag) => (
+              <div key={tag.key} data-tag-row className="grid grid-cols-[9rem_1fr] items-baseline gap-2 text-xs">
+                <dt data-tag-key className="truncate font-mono text-zinc-500 dark:text-zinc-400" title={tag.key}>{tag.key}</dt>
+                <dd className="min-w-0">
+                  <button
+                    type="button"
+                    data-tag-value={tag.value}
+                    onClick={() => onTagClick?.(tag, group)}
+                    className={`block max-w-full truncate rounded px-1 py-0.5 text-left transition-colors ${
+                      tag.link
+                        ? "bg-zinc-50 text-sky-600 hover:bg-zinc-100 dark:bg-zinc-800/60 dark:text-sky-400 dark:hover:bg-zinc-800"
+                        : "text-zinc-800 hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800/60"
+                    }`}
+                    title={tag.value}
+                  >
+                    {tag.value}
+                  </button>
+                </dd>
+              </div>
+            ))}
+          </dl>
         ))}
       </div>
     </div>
@@ -14401,6 +14715,91 @@ export const PromptTemplateGrid: React.FC<PromptTemplateGridProps> = ({ template
   );
 };
 export default PromptTemplateGrid;
+
+====/File: react/PromptTunerResult.tsx/====
+
+/**
+ * PromptTunerResult - Prompt tuner output: an "optimized prompt" dark code
+ * panel with a copy action, a completion selector and the completion text
+ * viewer (Cohere Prompt Tuner pattern).
+ */
+import React from "react";
+
+export interface PromptCompletion {
+  id: string;
+  label: string;
+  text: string;
+}
+
+export interface PromptTunerResultProps {
+  optimizedPrompt?: string;
+  completions?: PromptCompletion[];
+  activeCompletionId?: string;
+  className?: string;
+  onCopyPrompt?: () => void;
+  onCompletionChange?: (completion: PromptCompletion) => void;
+}
+
+const DEFAULT_COMPLETIONS: PromptCompletion[] = [
+  {
+    id: "c1",
+    label: "Completion #1",
+    text: "I have reviewed the comments left by John's colleagues and can report that his performance has been very well received by his team. Overall, John is regarded as a great team player, who is both knowledgeable and a strong communicator, particularly when it comes to offering advice and guidance to more junior members of the team.",
+  },
+  {
+    id: "c2",
+    label: "Completion #2",
+    text: "John's colleagues describe him as a knowledgeable, communicative engineer who consistently supports newer team members. The main improvement area flagged across reviews is proactive outreach — teammates note that projects move faster when John initiates status updates himself.",
+  },
+];
+
+export default function PromptTunerResult({
+  optimizedPrompt = "Your optimized prompt will appear here.",
+  completions = DEFAULT_COMPLETIONS,
+  activeCompletionId = "c1",
+  className = "",
+  onCopyPrompt,
+  onCompletionChange,
+}: PromptTunerResultProps) {
+  const active = completions.find((c) => c.id === activeCompletionId) ?? completions[0];
+  return (
+    <div data-prompt-tuner className={`w-full space-y-3 ${className}`}>
+      <div data-tuner-prompt-panel className="overflow-hidden rounded-xl bg-zinc-900 shadow-sm dark:bg-zinc-950 dark:ring-1 dark:ring-zinc-800">
+        <div className="flex items-center justify-between gap-2 px-4 pb-2 pt-3">
+          <p data-tuner-prompt-label className="font-mono text-[11px] font-semibold tracking-wider text-zinc-400">OPTIMIZED PROMPT</p>
+          <button
+            type="button"
+            data-tuner-copy
+            onClick={() => onCopyPrompt?.()}
+            className="inline-flex items-center gap-1 rounded-md border border-zinc-700 px-2 py-1 text-[11px] font-medium text-zinc-300 transition-colors hover:bg-zinc-800"
+          >
+            <span aria-hidden="true">⧉</span> Copy
+          </button>
+        </div>
+        <pre data-tuner-prompt-text className="max-h-48 overflow-y-auto px-4 pb-4 font-mono text-xs leading-relaxed text-zinc-100">{optimizedPrompt}</pre>
+      </div>
+      <div data-tuner-completions className="rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div data-tuner-completions-header className="flex items-center justify-between gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+          <p data-tuner-completions-label className="font-mono text-[11px] font-semibold tracking-wider text-zinc-500 dark:text-zinc-400">COMPLETIONS</p>
+          <select
+            data-tuner-completion-select
+            value={active?.id}
+            onChange={(event) => {
+              const picked = completions.find((c) => c.id === event.target.value);
+              if (picked) onCompletionChange?.(picked);
+            }}
+            className="rounded-md border border-zinc-200 bg-white px-2 py-1 text-xs font-medium text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+          >
+            {completions.map((completion) => (
+              <option key={completion.id} value={completion.id}>{completion.label}</option>
+            ))}
+          </select>
+        </div>
+        <p data-tuner-completion-text className="whitespace-pre-wrap px-4 py-3 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">{active?.text}</p>
+      </div>
+    </div>
+  );
+}
 
 ====/File: react/PromptVariantDiff.tsx/====
 
@@ -27206,6 +27605,182 @@ const toggle = (id: string) => {
 };
 </script>
 
+====/File: vue/EvalRunResults.vue/====
+
+<script setup lang="ts">
+export type EvalResultStatus = "passed" | "failed" | "unknown";
+export interface EvalVariable {
+  name: string;
+  value: string;
+}
+export interface EvalResult {
+  id: string;
+  status: EvalResultStatus;
+  reason: string;
+  response: string;
+  variables?: EvalVariable[];
+}
+export interface EvalSection {
+  id: string;
+  name: string;
+  subtitle: string;
+  icon?: string;
+  results: EvalResult[];
+}
+export interface EvalRunResultsProps {
+  passRate?: string;
+  passLabel?: string;
+  counters?: { passed: number; unknown: number; failed: number; total: number };
+  filterLabel?: string;
+  filterValue?: string;
+  sections?: EvalSection[];
+  class?: string;
+}
+const props = withDefaults(defineProps<EvalRunResultsProps>(), {
+  passRate: "64.00%",
+  passLabel: "Passed",
+  counters: () => ({ passed: 64, unknown: 0, failed: 36, total: 100 }),
+  filterLabel: "has any of",
+  filterValue: "Passed",
+  sections: () => [
+    {
+      id: "judge",
+      name: "summary_quality_judge",
+      subtitle: "AI-Powered / LLM as a Judge",
+      icon: "⚖️",
+      results: [
+        {
+          id: "j1",
+          status: "passed",
+          reason: "The output provides a summary that captures the key points of the document and presents them in a clear structure.",
+          response: "Key Points: Product launched a pilot feature that enables users to customize dashboards. Insights: This initiative aims to enhance user engagement and satisfaction through personalization.",
+          variables: [
+            { name: "EXPECTED_SUMMARY", value: "Product laun…" },
+            { name: "CONTENT", value: "Product laun…" },
+            { name: "CATEGORY", value: "Product" },
+          ],
+        },
+        {
+          id: "j2",
+          status: "passed",
+          reason: "The output summarizes the content well, preserving the key fact that employee satisfaction increased after the policy change.",
+          response: "Key Points: HR reported higher satisfaction among remote employees after implementing flexible working hours. Insights: Flexibility drives retention.",
+          variables: [
+            { name: "EXPECTED_SUMMARY", value: "HR report…" },
+            { name: "CONTENT", value: "HR report…" },
+            { name: "CATEGORY", value: "HR" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "cost",
+      name: "cost_efficiency_guard",
+      subtitle: "Performance / Cost",
+      icon: "💰",
+      results: [
+        {
+          id: "c1",
+          status: "passed",
+          reason: "Response cost is $0.0003 which is less than the required value of $0.0100.",
+          response: "Key Points: A pilot feature has been launched that allows users to customize their dashboards in the product. Insights: Customization may improve engagement.",
+          variables: [
+            { name: "COST", value: "$0.0003" },
+            { name: "BUDGET", value: "$0.0100" },
+          ],
+        },
+      ],
+    },
+  ],
+  class: "",
+});
+const emit = defineEmits(["result-click"]);
+const STATUS_STYLES: Record<string, { icon: string; label: string; cell: string }> = {
+  passed: { icon: "✓", label: "Passed", cell: "text-emerald-600 dark:text-emerald-400" },
+  failed: { icon: "✕", label: "Failed", cell: "text-red-600 dark:text-red-400" },
+  unknown: { icon: "⊘", label: "Unknown", cell: "text-amber-600 dark:text-amber-400" },
+};
+const styleFor = (status: string) => STATUS_STYLES[status] ?? STATUS_STYLES.unknown;
+</script>
+
+<template>
+  <div data-eval-run-results class="w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900" :class="props.class">
+    <div data-eval-header class="flex flex-wrap items-end justify-between gap-3 px-4 pb-3 pt-4">
+      <p data-eval-score class="text-3xl font-semibold tracking-tight text-emerald-700 dark:text-emerald-400">
+        {{ props.passRate }} <span class="text-zinc-900 dark:text-zinc-50">{{ props.passLabel }}</span>
+      </p>
+      <div data-eval-counters class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium">
+        <span data-eval-counter="passed" class="text-emerald-600 dark:text-emerald-400">✓ Passed {{ props.counters.passed }}</span>
+        <span data-eval-counter="unknown" class="text-amber-600 dark:text-amber-400">⊘ Unknown {{ props.counters.unknown }}</span>
+        <span data-eval-counter="failed" class="text-red-600 dark:text-red-400">✕ Failed {{ props.counters.failed }}</span>
+        <span data-eval-counter="total" class="text-zinc-400 dark:text-zinc-500">≡ Total {{ props.counters.total }}</span>
+      </div>
+    </div>
+    <div class="border-b border-zinc-100 px-4 pb-3 dark:border-zinc-800">
+      <span data-eval-filter class="inline-flex items-center gap-2 rounded-full border border-zinc-200 px-3 py-1.5 text-xs text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">
+        <span class="text-zinc-400" aria-hidden="true">⊙</span>
+        <span class="font-medium">Status</span>
+        <span class="text-zinc-400">{{ props.filterLabel }}</span>
+        <span class="inline-flex items-center gap-1 rounded-md bg-zinc-100 px-1.5 py-0.5 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
+          <span class="text-emerald-600 dark:text-emerald-400" aria-hidden="true">✓</span> {{ props.filterValue }}
+          <span class="text-zinc-400" aria-hidden="true">✕</span>
+        </span>
+      </span>
+    </div>
+    <div v-for="section in props.sections" :key="section.id" :data-eval-section="section.id" class="border-b border-zinc-100 last:border-b-0 dark:border-zinc-800">
+      <div data-eval-section-header class="flex items-center gap-2.5 px-4 py-3">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-100 text-sm dark:bg-zinc-800" aria-hidden="true">{{ section.icon ?? '⚖️' }}</span>
+        <span>
+          <span data-eval-section-name class="block text-sm font-semibold text-zinc-800 dark:text-zinc-100">{{ section.name }}</span>
+          <span data-eval-section-subtitle class="block text-[11px] text-zinc-400 dark:text-zinc-500">{{ section.subtitle }}</span>
+        </span>
+      </div>
+      <table data-eval-section-results class="w-full">
+        <thead>
+          <tr class="border-b border-zinc-100 text-left text-[11px] font-medium text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+            <th class="px-4 py-2 font-medium">Status</th>
+            <th class="px-2 py-2 font-medium">Reason</th>
+            <th class="px-2 py-2 font-medium">Response</th>
+            <th class="px-4 py-2 font-medium">Variables</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="result in section.results"
+            :key="result.id"
+            :data-eval-row="result.id"
+            tabindex="0"
+            class="cursor-pointer border-b border-zinc-50 align-top text-xs transition-colors last:border-b-0 hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/60"
+            @click="emit('result-click', result, section)"
+          >
+            <td :data-eval-row-status="result.status" class="whitespace-nowrap px-4 py-2.5 font-medium" :class="styleFor(result.status).cell">
+              <span class="mr-1 inline-flex" aria-hidden="true">{{ styleFor(result.status).icon }}</span>
+              {{ styleFor(result.status).label }}
+            </td>
+            <td data-eval-row-reason class="max-w-[16rem] px-2 py-2.5 text-zinc-600 dark:text-zinc-300">{{ result.reason }}</td>
+            <td data-eval-row-response class="max-w-[16rem] px-2 py-2.5 text-zinc-500 dark:text-zinc-400">
+              <span class="line-clamp-2">{{ result.response }}</span>
+            </td>
+            <td data-eval-row-variables class="px-4 py-2.5">
+              <span class="flex max-w-[14rem] flex-wrap gap-1">
+                <span
+                  v-for="v in result.variables ?? []"
+                  :key="v.name"
+                  :data-eval-var="v.name"
+                  class="max-w-[13rem] truncate rounded bg-violet-50 px-1.5 py-0.5 font-mono text-[9px] text-violet-700 dark:bg-violet-950/60 dark:text-violet-300"
+                  :title="v.name + ': ' + v.value"
+                >
+                  {{ v.name }}: {{ v.value }}
+                </span>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
+
 ====/File: vue/EvalScoreTable.vue/====
 
 <script setup lang="ts">
@@ -27424,6 +27999,106 @@ const addLabel = (role: EvalTurnRole) =>
       >
         + Add {{ addLabel(role) }}
       </button>
+    </div>
+  </div>
+</template>
+
+====/File: vue/EventTagGrid.vue/====
+
+<script setup lang="ts">
+export interface EventTag {
+  key: string;
+  value: string;
+  link?: boolean;
+}
+export interface EventTagGroup {
+  id: string;
+  title: string;
+  tags: EventTag[];
+}
+export interface EventTagGridProps {
+  title?: string;
+  scopes?: string[];
+  activeScope?: string;
+  groups?: EventTagGroup[];
+  class?: string;
+}
+const props = withDefaults(defineProps<EventTagGridProps>(), {
+  title: "Tags",
+  scopes: () => ["All", "Custom", "Application", "Client", "Other"],
+  activeScope: "All",
+  groups: () => [
+    {
+      id: "left",
+      title: "left",
+      tags: [
+        { key: "browser", value: "Chrome 141.0.0", link: true },
+        { key: "browser.name", value: "Chrome" },
+        { key: "device", value: "Mac", link: true },
+        { key: "device.family", value: "Mac" },
+        { key: "environment", value: "development", link: true },
+        { key: "handled", value: "no" },
+        { key: "level", value: "error" },
+      ],
+    },
+    {
+      id: "right",
+      title: "right",
+      tags: [
+        { key: "mechanism", value: "auto.browser.global_handlers.onunhandledrejection" },
+        { key: "os", value: "Mac OS X >=10.15.7", link: true },
+        { key: "os.name", value: "Mac OS X" },
+        { key: "release", value: "b95a49d8d5b3", link: true },
+        { key: "transaction", value: "/sentry-example-page", link: true },
+        { key: "turbopack", value: "True" },
+        { key: "url", value: "http://localhost:3000/sentry-example-page", link: true },
+      ],
+    },
+  ],
+  class: "",
+});
+const emit = defineEmits(["tag-click"]);
+</script>
+
+<template>
+  <div data-tag-grid class="w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900" :class="props.class">
+    <div data-tag-grid-header class="flex items-center justify-between gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+      <p data-tag-grid-title class="text-sm font-semibold text-zinc-800 dark:text-zinc-100">{{ props.title }}</p>
+      <div data-tag-grid-scopes class="inline-flex items-center gap-0.5 rounded-md bg-zinc-100 p-0.5 dark:bg-zinc-800">
+        <button
+          v-for="scope in props.scopes"
+          :key="scope"
+          type="button"
+          :data-tag-scope="scope"
+          :aria-pressed="scope === props.activeScope"
+          :class="scope === props.activeScope
+            ? 'rounded bg-white px-2 py-0.5 text-[11px] font-medium text-zinc-800 shadow-sm dark:bg-zinc-700 dark:text-zinc-100'
+            : 'rounded px-2 py-0.5 text-[11px] font-medium text-zinc-500 transition-colors hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'"
+          @click="emit('tag-click', { key: scope, value: scope }, { id: 'scope', title: scope, tags: [] })"
+        >
+          {{ scope }}
+        </button>
+      </div>
+    </div>
+    <div data-tag-grid-body class="grid grid-cols-1 gap-x-6 px-4 py-3 md:grid-cols-2">
+      <dl v-for="group in props.groups" :key="group.id" :data-tag-group="group.id" class="flex flex-col gap-1.5">
+        <div v-for="tag in group.tags" :key="tag.key" data-tag-row class="grid grid-cols-[9rem_1fr] items-baseline gap-2 text-xs">
+          <dt data-tag-key class="truncate font-mono text-zinc-500 dark:text-zinc-400" :title="tag.key">{{ tag.key }}</dt>
+          <dd class="min-w-0">
+            <button
+              type="button"
+              :data-tag-value="tag.value"
+              :class="tag.link
+                ? 'block max-w-full truncate rounded bg-zinc-50 px-1 py-0.5 text-left text-zinc-800 transition-colors hover:bg-zinc-100 dark:bg-zinc-800/60 dark:text-zinc-200 dark:hover:bg-zinc-800'
+                : 'block max-w-full truncate rounded px-1 py-0.5 text-left text-zinc-800 transition-colors hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800/60'"
+              :title="tag.value"
+              @click="emit('tag-click', tag, group)"
+            >
+              {{ tag.value }}
+            </button>
+          </dd>
+        </div>
+      </dl>
     </div>
   </div>
 </template>
@@ -33202,6 +33877,81 @@ const emit = defineEmits<{
   (e: "use", template: PromptTemplate): void;
 }>();
 </script>
+
+====/File: vue/PromptTunerResult.vue/====
+
+<script setup lang="ts">
+export interface PromptCompletion {
+  id: string;
+  label: string;
+  text: string;
+}
+export interface PromptTunerResultProps {
+  optimizedPrompt?: string;
+  completions?: PromptCompletion[];
+  activeCompletionId?: string;
+  class?: string;
+}
+import { computed } from "vue";
+const props = withDefaults(defineProps<PromptTunerResultProps>(), {
+  optimizedPrompt: "Your optimized prompt will appear here.",
+  completions: () => [
+    {
+      id: "c1",
+      label: "Completion #1",
+      text: "I have reviewed the comments left by John's colleagues and can report that his performance has been very well received by his team. Overall, John is regarded as a great team player, who is both knowledgeable and a strong communicator, particularly when it comes to offering advice and guidance to more junior members of the team.",
+    },
+    {
+      id: "c2",
+      label: "Completion #2",
+      text: "John's colleagues describe him as a knowledgeable, communicative engineer who consistently supports newer team members. The main improvement area flagged across reviews is proactive outreach — teammates note that projects move faster when John initiates status updates himself.",
+    },
+  ],
+  activeCompletionId: "c1",
+  class: "",
+});
+const emit = defineEmits(["copy-prompt", "completion-change"]);
+const active = computed(
+  () => props.completions.find((c) => c.id === props.activeCompletionId) ?? props.completions[0]
+);
+const onPick = (event: Event) => {
+  const picked = props.completions.find((c) => c.id === (event.target as HTMLSelectElement).value);
+  if (picked) emit("completion-change", picked);
+};
+</script>
+
+<template>
+  <div data-prompt-tuner class="w-full space-y-3" :class="props.class">
+    <div data-tuner-prompt-panel class="overflow-hidden rounded-xl bg-zinc-900 shadow-sm dark:bg-zinc-950 dark:ring-1 dark:ring-zinc-800">
+      <div class="flex items-center justify-between gap-2 px-4 pb-2 pt-3">
+        <p data-tuner-prompt-label class="font-mono text-[11px] font-semibold tracking-wider text-zinc-400">OPTIMIZED PROMPT</p>
+        <button
+          type="button"
+          data-tuner-copy
+          class="inline-flex items-center gap-1 rounded-md border border-zinc-700 px-2 py-1 text-[11px] font-medium text-zinc-300 transition-colors hover:bg-zinc-800"
+          @click="emit('copy-prompt')"
+        >
+          <span aria-hidden="true">⧉</span> Copy
+        </button>
+      </div>
+      <pre data-tuner-prompt-text class="max-h-48 overflow-y-auto px-4 pb-4 font-mono text-xs leading-relaxed text-zinc-100">{{ props.optimizedPrompt }}</pre>
+    </div>
+    <div data-tuner-completions class="rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+      <div data-tuner-completions-header class="flex items-center justify-between gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+        <p data-tuner-completions-label class="font-mono text-[11px] font-semibold tracking-wider text-zinc-500 dark:text-zinc-400">COMPLETIONS</p>
+        <select
+          data-tuner-completion-select
+          :value="active?.id"
+          class="rounded-md border border-zinc-200 bg-white px-2 py-1 text-xs font-medium text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+          @change="onPick"
+        >
+          <option v-for="completion in props.completions" :key="completion.id" :value="completion.id">{{ completion.label }}</option>
+        </select>
+      </div>
+      <p data-tuner-completion-text class="whitespace-pre-wrap px-4 py-3 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">{{ active?.text }}</p>
+    </div>
+  </div>
+</template>
 
 ====/File: vue/PromptVariantDiff.vue/====
 
@@ -47268,6 +48018,230 @@ if (typeof customElements !== 'undefined' && !customElements.get('entity-picker'
 
 export default EntityMultiSelectPickerElement;
 
+====/File: vanilla/EvalRunResults.js/====
+
+/**
+ * EvalRunResults - Evaluation run results: pass-rate header with counters,
+ * status filter chip and per-evaluator result sections with status pills,
+ * reason/response excerpts and variable chips (Adaline Evals pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_SECTIONS = () => [
+  {
+    id: 'judge',
+    name: 'summary_quality_judge',
+    subtitle: 'AI-Powered / LLM as a Judge',
+    icon: '⚖️',
+    results: [
+      {
+        id: 'j1',
+        status: 'passed',
+        reason: 'The output provides a summary that captures the key points of the document and presents them in a clear structure.',
+        response: 'Key Points: Product launched a pilot feature that enables users to customize dashboards. Insights: This initiative aims to enhance user engagement and satisfaction through personalization.',
+        variables: [
+          { name: 'EXPECTED_SUMMARY', value: 'Product laun…' },
+          { name: 'CONTENT', value: 'Product laun…' },
+          { name: 'CATEGORY', value: 'Product' },
+        ],
+      },
+      {
+        id: 'j2',
+        status: 'passed',
+        reason: 'The output summarizes the content well, preserving the key fact that employee satisfaction increased after the policy change.',
+        response: 'Key Points: HR reported higher satisfaction among remote employees after implementing flexible working hours. Insights: Flexibility drives retention.',
+        variables: [
+          { name: 'EXPECTED_SUMMARY', value: 'HR report…' },
+          { name: 'CONTENT', value: 'HR report…' },
+          { name: 'CATEGORY', value: 'HR' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'cost',
+    name: 'cost_efficiency_guard',
+    subtitle: 'Performance / Cost',
+    icon: '💰',
+    results: [
+      {
+        id: 'c1',
+        status: 'passed',
+        reason: 'Response cost is $0.0003 which is less than the required value of $0.0100.',
+        response: 'Key Points: A pilot feature has been launched that allows users to customize their dashboards in the product. Insights: Customization may improve engagement.',
+        variables: [
+          { name: 'COST', value: '$0.0003' },
+          { name: 'BUDGET', value: '$0.0100' },
+        ],
+      },
+    ],
+  },
+];
+
+const STATUS_STYLES = {
+  passed: { icon: '✓', label: 'Passed', cell: 'text-emerald-600 dark:text-emerald-400' },
+  failed: { icon: '✕', label: 'Failed', cell: 'text-red-600 dark:text-red-400' },
+  unknown: { icon: '⊘', label: 'Unknown', cell: 'text-amber-600 dark:text-amber-400' },
+};
+
+class EvalRunResultsElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['sections', 'pass-rate', 'pass-label', 'counters', 'filter-label', 'filter-value'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._sections = [];
+    this._passRate = '64.00%';
+    this._passLabel = 'Passed';
+    this._counters = { passed: 64, unknown: 0, failed: 36, total: 100 };
+    this._filterLabel = 'has any of';
+    this._filterValue = 'Passed';
+  }
+
+  connectedCallback() {
+    if (!this._sections.length) this._sections = parseJsonAttr(this.getAttribute('sections'), DEFAULT_SECTIONS());
+    const pr = this.getAttribute('pass-rate');
+    if (pr) this._passRate = pr;
+    const pl = this.getAttribute('pass-label');
+    if (pl) this._passLabel = pl;
+    const counters = parseJsonAttr(this.getAttribute('counters'), null);
+    if (counters) this._counters = counters;
+    const fl = this.getAttribute('filter-label');
+    if (fl) this._filterLabel = fl;
+    const fv = this.getAttribute('filter-value');
+    if (fv) this._filterValue = fv;
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    if (name === 'sections' && !this._sections.length) this._sections = parseJsonAttr(newValue, []);
+    if (name === 'pass-rate') this._passRate = newValue || '64.00%';
+    if (name === 'pass-label') this._passLabel = newValue || 'Passed';
+    if (name === 'counters') this._counters = parseJsonAttr(newValue, { passed: 64, unknown: 0, failed: 36, total: 100 });
+    if (name === 'filter-label') this._filterLabel = newValue || 'has any of';
+    if (name === 'filter-value') this._filterValue = newValue || 'Passed';
+    this._render();
+  }
+
+  get sections() { return this._sections; }
+  set sections(value) { this._sections = Array.isArray(value) ? value : []; this._render(); }
+
+  _onClick(event) {
+    const rowEl = event.target.closest('[data-eval-row]');
+    if (!rowEl) return;
+    const sectionEl = rowEl.closest('[data-eval-section]');
+    const section = this._sections.find((s) => s.id === sectionEl?.getAttribute('data-eval-section'));
+    const result = section?.results.find((r) => r.id === rowEl.getAttribute('data-eval-row'));
+    if (section && result) {
+      this.dispatchEvent(new CustomEvent('result-click', { detail: { result, section }, bubbles: true }));
+    }
+  }
+
+  _render() {
+    const c = this._counters;
+    const sectionsHtml = this._sections
+      .map((section) => {
+        const rowsHtml = section.results
+          .map((result) => {
+            const style = STATUS_STYLES[result.status] ?? STATUS_STYLES.unknown;
+            const varsHtml = (result.variables ?? [])
+              .map(
+                (v) => `<span data-eval-var="${escapeAttribute(v.name)}" class="max-w-[13rem] truncate rounded bg-violet-50 px-1.5 py-0.5 font-mono text-[9px] text-violet-700 dark:bg-violet-950/60 dark:text-violet-300" title="${escapeAttribute(v.name)}: ${escapeAttribute(v.value)}">${escapeAttribute(v.name)}: ${escapeAttribute(v.value)}</span>`
+              )
+              .join('');
+            return `
+            <tr data-eval-row="${escapeAttribute(result.id)}" tabindex="0" class="cursor-pointer border-b border-zinc-50 align-top text-xs transition-colors last:border-b-0 hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/60">
+              <td data-eval-row-status="${escapeAttribute(result.status)}" class="whitespace-nowrap px-4 py-2.5 font-medium ${style.cell}"><span class="mr-1 inline-flex" aria-hidden="true">${style.icon}</span>${style.label}</td>
+              <td data-eval-row-reason class="max-w-[16rem] px-2 py-2.5 text-zinc-600 dark:text-zinc-300">${escapeAttribute(result.reason)}</td>
+              <td data-eval-row-response class="max-w-[16rem] px-2 py-2.5 text-zinc-500 dark:text-zinc-400"><span class="line-clamp-2">${escapeAttribute(result.response)}</span></td>
+              <td data-eval-row-variables class="px-4 py-2.5"><span class="flex max-w-[14rem] flex-wrap gap-1">${varsHtml}</span></td>
+            </tr>`;
+          })
+          .join('');
+        return `
+        <div data-eval-section="${escapeAttribute(section.id)}" class="border-b border-zinc-100 last:border-b-0 dark:border-zinc-800">
+          <div data-eval-section-header class="flex items-center gap-2.5 px-4 py-3">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-100 text-sm dark:bg-zinc-800" aria-hidden="true">${escapeAttribute(section.icon ?? '⚖️')}</span>
+            <span>
+              <span data-eval-section-name class="block text-sm font-semibold text-zinc-800 dark:text-zinc-100">${escapeAttribute(section.name)}</span>
+              <span data-eval-section-subtitle class="block text-[11px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(section.subtitle)}</span>
+            </span>
+          </div>
+          <table data-eval-section-results class="w-full">
+            <thead>
+              <tr class="border-b border-zinc-100 text-left text-[11px] font-medium text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+                <th class="px-4 py-2 font-medium">Status</th>
+                <th class="px-2 py-2 font-medium">Reason</th>
+                <th class="px-2 py-2 font-medium">Response</th>
+                <th class="px-4 py-2 font-medium">Variables</th>
+              </tr>
+            </thead>
+            <tbody>${rowsHtml}</tbody>
+          </table>
+        </div>`;
+      })
+      .join('');
+
+    this.innerHTML = `
+      <div data-eval-run-results class="w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div data-eval-header class="flex flex-wrap items-end justify-between gap-3 px-4 pb-3 pt-4">
+          <p data-eval-score class="text-3xl font-semibold tracking-tight text-emerald-700 dark:text-emerald-400">${escapeAttribute(this._passRate)} <span class="text-zinc-900 dark:text-zinc-50">${escapeAttribute(this._passLabel)}</span></p>
+          <div data-eval-counters class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium">
+            <span data-eval-counter="passed" class="text-emerald-600 dark:text-emerald-400">✓ Passed ${c.passed}</span>
+            <span data-eval-counter="unknown" class="text-amber-600 dark:text-amber-400">⊘ Unknown ${c.unknown}</span>
+            <span data-eval-counter="failed" class="text-red-600 dark:text-red-400">✕ Failed ${c.failed}</span>
+            <span data-eval-counter="total" class="text-zinc-400 dark:text-zinc-500">≡ Total ${c.total}</span>
+          </div>
+        </div>
+        <div class="border-b border-zinc-100 px-4 pb-3 dark:border-zinc-800">
+          <span data-eval-filter class="inline-flex items-center gap-2 rounded-full border border-zinc-200 px-3 py-1.5 text-xs text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">
+            <span class="text-zinc-400" aria-hidden="true">⊙</span>
+            <span class="font-medium">Status</span>
+            <span class="text-zinc-400">${escapeAttribute(this._filterLabel)}</span>
+            <span class="inline-flex items-center gap-1 rounded-md bg-zinc-100 px-1.5 py-0.5 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
+              <span class="text-emerald-600 dark:text-emerald-400" aria-hidden="true">✓</span> ${escapeAttribute(this._filterValue)}
+              <span class="text-zinc-400" aria-hidden="true">✕</span>
+            </span>
+          </span>
+        </div>
+        ${sectionsHtml}
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('eval-run-results')) {
+  customElements.define('eval-run-results', EvalRunResultsElement);
+}
+
+export default EvalRunResultsElement;
+
 ====/File: vanilla/EvalScoreTable.js/====
 
 /**
@@ -47568,6 +48542,170 @@ if (typeof customElements !== 'undefined' && !customElements.get('eval-turn-buil
 }
 
 export default EvalTurnBuilderElement;
+
+====/File: vanilla/EventTagGrid.js/====
+
+/**
+ * EventTagGrid - Grouped key/value tag grid for a single event: tags are
+ * grouped into columns and rendered as mono label/value rows with link
+ * styling for searchable values (Sentry Tags pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_GROUPS = () => [
+  {
+    id: 'left',
+    title: 'left',
+    tags: [
+      { key: 'browser', value: 'Chrome 141.0.0', link: true },
+      { key: 'browser.name', value: 'Chrome' },
+      { key: 'device', value: 'Mac', link: true },
+      { key: 'device.family', value: 'Mac' },
+      { key: 'environment', value: 'development', link: true },
+      { key: 'handled', value: 'no' },
+      { key: 'level', value: 'error' },
+    ],
+  },
+  {
+    id: 'right',
+    title: 'right',
+    tags: [
+      { key: 'mechanism', value: 'auto.browser.global_handlers.onunhandledrejection' },
+      { key: 'os', value: 'Mac OS X >=10.15.7', link: true },
+      { key: 'os.name', value: 'Mac OS X' },
+      { key: 'release', value: 'b95a49d8d5b3', link: true },
+      { key: 'transaction', value: '/sentry-example-page', link: true },
+      { key: 'turbopack', value: 'True' },
+      { key: 'url', value: 'http://localhost:3000/sentry-example-page', link: true },
+    ],
+  },
+];
+
+class EventTagGridElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['groups', 'scopes', 'active-scope', 'title'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._groups = [];
+    this._scopes = ['All', 'Custom', 'Application', 'Client', 'Other'];
+    this._activeScope = 'All';
+    this._title = 'Tags';
+  }
+
+  connectedCallback() {
+    if (!this._groups.length) this._groups = parseJsonAttr(this.getAttribute('groups'), DEFAULT_GROUPS());
+    const scopes = parseJsonAttr(this.getAttribute('scopes'), null);
+    if (Array.isArray(scopes) && scopes.length) this._scopes = scopes;
+    const as = this.getAttribute('active-scope');
+    if (as) this._activeScope = as;
+    const t = this.getAttribute('title');
+    if (t) this._title = t;
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    if (name === 'groups' && !this._groups.length) this._groups = parseJsonAttr(newValue, []);
+    if (name === 'scopes') {
+      const scopes = parseJsonAttr(newValue, null);
+      if (Array.isArray(scopes) && scopes.length) this._scopes = scopes;
+    }
+    if (name === 'active-scope') this._activeScope = newValue || 'All';
+    if (name === 'title') this._title = newValue || 'Tags';
+    this._render();
+  }
+
+  get groups() { return this._groups; }
+  set groups(value) { this._groups = Array.isArray(value) ? value : []; this._render(); }
+
+  _onClick(event) {
+    const scopeEl = event.target.closest('[data-tag-scope]');
+    if (scopeEl) {
+      this._activeScope = scopeEl.getAttribute('data-tag-scope');
+      this._render();
+      this.dispatchEvent(new CustomEvent('scope-change', { detail: { scope: this._activeScope }, bubbles: true }));
+      return;
+    }
+    const valueEl = event.target.closest('[data-tag-value]');
+    if (valueEl) {
+      const groupEl = valueEl.closest('[data-tag-group]');
+      const group = this._groups.find((g) => g.id === groupEl?.getAttribute('data-tag-group'));
+      const tag = group?.tags.find((t) => t.value === valueEl.getAttribute('data-tag-value'));
+      if (group && tag) {
+        this.dispatchEvent(new CustomEvent('tag-click', { detail: { tag, group }, bubbles: true }));
+      }
+    }
+  }
+
+  _render() {
+    const scopesHtml = this._scopes
+      .map((scope) => {
+        const active = scope === this._activeScope;
+        return `<button type="button" data-tag-scope="${escapeAttribute(scope)}" aria-pressed="${active}" class="${active ? 'rounded bg-white px-2 py-0.5 text-[11px] font-medium text-zinc-800 shadow-sm dark:bg-zinc-700 dark:text-zinc-100' : 'rounded px-2 py-0.5 text-[11px] font-medium text-zinc-500 transition-colors hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'}">${escapeAttribute(scope)}</button>`;
+      })
+      .join('');
+
+    const groupsHtml = this._groups
+      .map((group) => {
+        const rowsHtml = group.tags
+          .map((tag) => {
+            const valueClass = tag.link
+              ? 'block max-w-full truncate rounded bg-zinc-50 px-1 py-0.5 text-left text-zinc-800 transition-colors hover:bg-zinc-100 dark:bg-zinc-800/60 dark:text-zinc-200 dark:hover:bg-zinc-800'
+              : 'block max-w-full truncate rounded px-1 py-0.5 text-left text-zinc-800 transition-colors hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800/60';
+            return `
+            <div data-tag-row class="grid grid-cols-[9rem_1fr] items-baseline gap-2 text-xs">
+              <dt data-tag-key class="truncate font-mono text-zinc-500 dark:text-zinc-400" title="${escapeAttribute(tag.key)}">${escapeAttribute(tag.key)}</dt>
+              <dd class="min-w-0"><button type="button" data-tag-value="${escapeAttribute(tag.value)}" class="${valueClass}" title="${escapeAttribute(tag.value)}">${escapeAttribute(tag.value)}</button></dd>
+            </div>`;
+          })
+          .join('');
+        return `<dl data-tag-group="${escapeAttribute(group.id)}" class="flex flex-col gap-1.5">${rowsHtml}</dl>`;
+      })
+      .join('');
+
+    this.innerHTML = `
+      <div data-tag-grid class="w-full rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div data-tag-grid-header class="flex items-center justify-between gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+          <p data-tag-grid-title class="text-sm font-semibold text-zinc-800 dark:text-zinc-100">${escapeAttribute(this._title)}</p>
+          <div data-tag-grid-scopes class="inline-flex items-center gap-0.5 rounded-md bg-zinc-100 p-0.5 dark:bg-zinc-800">${scopesHtml}</div>
+        </div>
+        <div data-tag-grid-body class="grid grid-cols-1 gap-x-6 px-4 py-3 md:grid-cols-2">${groupsHtml}</div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('event-tag-grid')) {
+  customElements.define('event-tag-grid', EventTagGridElement);
+}
+
+export default EventTagGridElement;
 
 ====/File: vanilla/FalRunCard.js/====
 
@@ -56313,6 +57451,141 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-templat
   customElements.define('prompt-template-grid', PromptTemplateGridElement);
 }
 export default PromptTemplateGridElement;
+
+====/File: vanilla/PromptTunerResult.js/====
+
+/**
+ * PromptTunerResult - Prompt tuner output: an "optimized prompt" dark code
+ * panel with copy action, a completion selector and the completion text
+ * viewer (Cohere Prompt Tuner pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_COMPLETIONS = () => [
+  {
+    id: 'c1',
+    label: 'Completion #1',
+    text: "I have reviewed the comments left by John's colleagues and can report that his performance has been very well received by his team. Overall, John is regarded as a great team player, who is both knowledgeable and a strong communicator, particularly when it comes to offering advice and guidance to more junior members of the team.",
+  },
+  {
+    id: 'c2',
+    label: 'Completion #2',
+    text: "John's colleagues describe him as a knowledgeable, communicative engineer who consistently supports newer team members. The main improvement area flagged across reviews is proactive outreach — teammates note that projects move faster when John initiates status updates himself.",
+  },
+];
+
+class PromptTunerResultElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['completions', 'active-completion', 'optimized-prompt'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._completions = [];
+    this._activeId = 'c1';
+    this._prompt = 'Your optimized prompt will appear here.';
+  }
+
+  connectedCallback() {
+    if (!this._completions.length) this._completions = parseJsonAttr(this.getAttribute('completions'), DEFAULT_COMPLETIONS());
+    const ac = this.getAttribute('active-completion');
+    if (ac) this._activeId = ac;
+    const op = this.getAttribute('optimized-prompt');
+    if (op) this._prompt = op;
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+    this.addEventListener('change', this._onChange);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+    this.removeEventListener('change', this._onChange);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    if (name === 'completions' && !this._completions.length) this._completions = parseJsonAttr(newValue, []);
+    if (name === 'active-completion') this._activeId = newValue || 'c1';
+    if (name === 'optimized-prompt') this._prompt = newValue ?? '';
+    this._render();
+  }
+
+  get completions() { return this._completions; }
+  set completions(value) { this._completions = Array.isArray(value) ? value : []; this._render(); }
+
+  get activeCompletion() { return this._activeId; }
+  set activeCompletion(value) { this._activeId = String(value); this._render(); }
+
+  _onClick(event) {
+    if (event.target.closest('[data-tuner-copy]')) {
+      this.dispatchEvent(new CustomEvent('copy-prompt', { bubbles: true }));
+    }
+  }
+
+  _onChange(event) {
+    const select = event.target.closest('[data-tuner-completion-select]');
+    if (!select) return;
+    this._activeId = select.value;
+    this._render();
+    const completion = this._completions.find((c) => c.id === this._activeId);
+    if (completion) {
+      this.dispatchEvent(new CustomEvent('completion-change', { detail: { completion }, bubbles: true }));
+    }
+  }
+
+  _render() {
+    const optionsHtml = this._completions
+      .map(
+        (completion) => `<option value="${escapeAttribute(completion.id)}" ${completion.id === this._activeId ? 'selected' : ''}>${escapeAttribute(completion.label)}</option>`
+      )
+      .join('');
+    const active = this._completions.find((c) => c.id === this._activeId) ?? this._completions[0];
+
+    this.innerHTML = `
+      <div data-prompt-tuner class="w-full space-y-3">
+        <div data-tuner-prompt-panel class="overflow-hidden rounded-xl bg-zinc-900 shadow-sm dark:bg-zinc-950 dark:ring-1 dark:ring-zinc-800">
+          <div class="flex items-center justify-between gap-2 px-4 pb-2 pt-3">
+            <p data-tuner-prompt-label class="font-mono text-[11px] font-semibold tracking-wider text-zinc-400">OPTIMIZED PROMPT</p>
+            <button type="button" data-tuner-copy class="inline-flex items-center gap-1 rounded-md border border-zinc-700 px-2 py-1 text-[11px] font-medium text-zinc-300 transition-colors hover:bg-zinc-800"><span aria-hidden="true">⧉</span> Copy</button>
+          </div>
+          <pre data-tuner-prompt-text class="max-h-48 overflow-y-auto px-4 pb-4 font-mono text-xs leading-relaxed text-zinc-100">${escapeAttribute(this._prompt)}</pre>
+        </div>
+        <div data-tuner-completions class="rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+          <div data-tuner-completions-header class="flex items-center justify-between gap-2 border-b border-zinc-100 px-4 py-2.5 dark:border-zinc-800">
+            <p data-tuner-completions-label class="font-mono text-[11px] font-semibold tracking-wider text-zinc-500 dark:text-zinc-400">COMPLETIONS</p>
+            <select data-tuner-completion-select class="rounded-md border border-zinc-200 bg-white px-2 py-1 text-xs font-medium text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">${optionsHtml}</select>
+          </div>
+          <p data-tuner-completion-text class="whitespace-pre-wrap px-4 py-3 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">${escapeAttribute(active?.text ?? '')}</p>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('prompt-tuner-result')) {
+  customElements.define('prompt-tuner-result', PromptTunerResultElement);
+}
+
+export default PromptTunerResultElement;
 
 ====/File: vanilla/PromptVariantDiff.js/====
 

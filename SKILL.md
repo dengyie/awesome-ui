@@ -1080,6 +1080,21 @@ awesome-ui/
 - **Vanilla 用法**: `<agent-session-timeline>` + `steps`/`requests` JSON 属性；事件 `step-click {step}`
 - **特性**: 标题 + Complete 徽章 / ⏱ 时长 / ≡ 步骤数 chips、prompt/reason/tool 三色分段活动条、步骤列表（kind 徽章 + 标签 + 时间戳）、请求面板（失败状态红色显示）。
 
+### 187. `EvalRunResults` (评估运行结果)
+- **Props**: `passRate?`, `passLabel?`, `counters?: {passed,unknown,failed,total}`, `filterLabel?`, `filterValue?`, `sections?: [{id,name,subtitle,icon?,results:[{id,status,reason,response,variables?}]}]`, `className?`, `onResultClick?(result, section)`
+- **Vanilla 用法**: `<eval-run-results>` + `sections`/`pass-rate`/`pass-label`/`counters`/`filter-label`/`filter-value` 属性；事件 `result-click {result, section}`
+- **特性**: 通过率大字（emerald）+ 四计数行（✓/⊘/✕/≡）、Status "has any of" 过滤 chip、按 evaluator 分节（图标 + 名称 + 副标题）的结果表：状态 pill（passed 绿 / failed 红 / unknown 琥珀）、Reason、Response（line-clamp-2）、变量 chips（violet mono）。
+
+### 188. `EventTagGrid` (事件标签网格)
+- **Props**: `title?`, `scopes?: string[]`, `activeScope?`, `groups?: [{id,title,tags:[{key,value,link?}]}]`, `className?`, `onTagClick?(tag, group)`
+- **Vanilla 用法**: `<event-tag-grid>` + `groups`/`scopes`/`active-scope`/`title` 属性；事件 `tag-click {tag, group}` / `scope-change {scope}`（scope 点击内部更新激活态）
+- **特性**: 标题 + 分段式 scope pills（激活白底阴影）、双列 key/value 网格（mono 灰键 + 截断值按钮）、`link` 值以 zinc/sky 可点击样式高亮（可检索标签）。
+
+### 189. `PromptTunerResult` (提示词调优结果)
+- **Props**: `optimizedPrompt?`, `completions?: [{id,label,text}]`, `activeCompletionId?`, `className?`, `onCopyPrompt?()`, `onCompletionChange?(completion)`
+- **Vanilla 用法**: `<prompt-tuner-result>` + `optimized-prompt`/`completions`/`active-completion` 属性；事件 `copy-prompt` / `completion-change {completion}`（选择器 change 内部切换完成文本）
+- **特性**: OPTIMIZED PROMPT 暗色代码面板（mono 小标签 + Copy 按钮 + max-h 滚动 pre）、COMPLETIONS 卡片（mono 小标签 + 完成选择器）、完成文本 pre-wrap 查看器。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

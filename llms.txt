@@ -767,6 +767,9 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 184. MonitorRunList: Adaline monitor run history — filter + time-range pills over a request histogram, run rows with status icon and latency.
 185. EvalTurnBuilder: Vapi evals turn builder — role-tagged system/user/assistant/tool turns with mock tags, turn numbers and an add-turn footer.
 186. AgentSessionTimeline: Browserbase agent session — summary chips + segmented activity strip, Reason/Tool step list and request panel.
+187. EvalRunResults: Adaline evals run — pass-rate header with counters, status filter chip and per-evaluator result tables (status pill, reason, response, variable chips).
+188. EventTagGrid: Sentry event tags — scope pills over a two-column key/value grid with mono keys and link-styled searchable values.
+189. PromptTunerResult: Cohere prompt tuner — optimized-prompt dark code panel with copy action, completion selector and completion text viewer.
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)
