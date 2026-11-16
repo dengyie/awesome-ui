@@ -57,6 +57,8 @@ CATEGORIES = {
         ("screens", "subscription upgrade paywall plan selection", "web"),
         ("screens", "free trial conversion banner upgrade prompt", "web"),
         ("screens", "annual monthly billing toggle discount", "web"),
+        ("screens", "feature gated upsell modal locked", "web"),
+        ("screens", "enterprise contact sales plan card", "web"),
     ],
     # Dashboard & settings
     "dashboard": [
@@ -207,6 +209,7 @@ CATEGORIES = {
         ("screens", "delivery tracking map route status", "web"),
         ("screens", "location address picker autocomplete", "web"),
         ("screens", "geofencing zones draw area map", "web"),
+        ("screens", "route planning directions steps", "web"),
     ],
     # Security & trust
     "security": [
@@ -234,6 +237,8 @@ CATEGORIES = {
         ("screens", "loading skeleton shimmer placeholder", "web"),
         ("screens", "server maintenance status page incidents", "web"),
         ("screens", "offline mode no connection banner", "web"),
+        ("screens", "permission denied access restricted screen", "web"),
+        ("screens", "search no results suggestions empty", "web"),
     ],
     # Billing & account management
     "billing": [
@@ -242,6 +247,44 @@ CATEGORIES = {
         ("screens", "subscription plan usage limit upgrade", "web"),
         ("screens", "team seats billing members invite", "web"),
         ("screens", "checkout payment form fields card", "web"),
+        ("screens", "plan downgrade cancel retention flow", "web"),
+        ("screens", "credits top up prepaid balance", "web"),
+    ],
+    # Notification & email design
+    "notifications": [
+        ("screens", "notification center dropdown list unread", "web"),
+        ("screens", "email digest newsletter design layout", "web"),
+        ("screens", "transactional email verification welcome", "web"),
+        ("screens", "in-app notification preferences toggles matrix", "web"),
+        ("screens", "mentions activity notifications panel", "web"),
+        ("screens", "email notification settings digest frequency", "web"),
+    ],
+    # Mobile form factor (web responsive / app mirrors)
+    "mobile": [
+        ("screens", "mobile web navigation bottom tab bar", "web"),
+        ("screens", "mobile responsive hero landing page", "web"),
+        ("screens", "mobile chat conversation bubbles input", "web"),
+        ("screens", "mobile settings list rows toggles", "web"),
+        ("screens", "mobile onboarding carousel progress dots", "web"),
+        ("screens", "mobile bottom sheet actions menu", "web"),
+    ],
+    # Advanced tables & dense data UI
+    "tables": [
+        ("screens", "spreadsheet style table inline editing cells", "web"),
+        ("screens", "data table column resize sort multi select", "web"),
+        ("screens", "table grouping rows expandable details", "web"),
+        ("screens", "airtable style grid base views", "web"),
+        ("screens", "financial transactions table reconciled status", "web"),
+        ("screens", "leaderboard ranking table with avatars", "web"),
+    ],
+    # Settings center & preferences
+    "settings": [
+        ("screens", "account settings center anchors sections", "web"),
+        ("screens", "workspace preferences general configuration", "web"),
+        ("screens", "integration settings connect service cards", "web"),
+        ("screens", "API keys tokens management regenerate", "web"),
+        ("screens", "webhooks endpoint configuration events", "web"),
+        ("screens", "appearance theme display preferences", "web"),
     ],
 }
 
