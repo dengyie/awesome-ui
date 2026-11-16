@@ -28,29 +28,44 @@ CATEGORIES = {
         ("screens", "chat prompt input box with attachments and model selector", "web"),
         ("screens", "reasoning thinking chain collapsible panel", "web"),
         ("screens", "AI answer message action toolbar copy regenerate", "web"),
+        ("screens", "AI chat sidebar conversation list new chat", "web"),
+        ("screens", "deep research sources cited report generation", "web"),
+        ("screens", "chat artifact canvas code preview side panel", "web"),
+        ("screens", "voice input waveform listening chat", "web"),
     ],
     # Agent / tools
     "agent": [
         ("screens", "agent tool call execution status card", "web"),
         ("screens", "agent task list steps timeline progress", "web"),
         ("screens", "code diff review changes view", "web"),
+        ("screens", "terminal command output console panel", "web"),
+        ("screens", "browser preview screenshot agent computer use", "web"),
+        ("screens", "agent plan approval confirm steps", "web"),
     ],
     # Onboarding & auth
     "onboarding": [
         ("flows", "welcome onboarding carousel walkthrough", "web"),
         ("screens", "sign up login form with social auth buttons", "web"),
         ("screens", "empty state placeholder illustration CTA", "web"),
+        ("screens", "progressive profile setup personalize questions", "web"),
+        ("screens", "workspace creation setup wizard steps", "web"),
+        ("screens", "email verification confirm code screen", "web"),
     ],
     # Monetization
     "paywall": [
         ("sections", "SaaS pricing section with feature comparison table", "web"),
         ("screens", "subscription upgrade paywall plan selection", "web"),
+        ("screens", "free trial conversion banner upgrade prompt", "web"),
+        ("screens", "annual monthly billing toggle discount", "web"),
     ],
     # Dashboard & settings
     "dashboard": [
         ("screens", "analytics dashboard with charts and stat cards", "web"),
         ("screens", "settings page with sidebar navigation", "web"),
         ("screens", "workspace sidebar navigation with search", "web"),
+        ("screens", "KPI metric cards row with trends sparkline", "web"),
+        ("screens", "admin user management table roles", "web"),
+        ("screens", "activity log recent events dashboard widget", "web"),
     ],
     # Base interactions
     "basics": [
@@ -58,6 +73,8 @@ CATEGORIES = {
         ("screens", "toast notification stack alerts", "web"),
         ("screens", "data table with filters and pagination", "web"),
         ("screens", "dropdown select menu with search", "web"),
+        ("screens", "context menu right click actions list", "web"),
+        ("screens", "slider range input value adjustment", "web"),
     ],
     # --- Extended coverage ---
     # Forms & inputs
@@ -67,6 +84,8 @@ CATEGORIES = {
         ("screens", "date picker calendar selector", "web"),
         ("screens", "file upload dropzone drag and drop", "web"),
         ("screens", "form validation error states inline", "web"),
+        ("screens", "rich input tags chips multi select", "web"),
+        ("screens", "survey questionnaire rating scale nps", "web"),
     ],
     # Navigation & layout
     "navigation": [
@@ -76,14 +95,18 @@ CATEGORIES = {
         ("screens", "responsive navbar with mega menu dropdown", "web"),
         ("screens", "tabs and segmented control switching", "web"),
         ("screens", "breadcrumb hierarchy navigation", "web"),
+        ("screens", "split view master detail two pane layout", "web"),
+        ("screens", "collapsible sidebar section groups tree menu", "web"),
     ],
-    # Modals & overlays
+    # Overlays
     "overlays": [
         ("screens", "confirmation dialog destructive action warning", "web"),
         ("screens", "side drawer panel slide out settings", "web"),
         ("screens", "modal wizard with steps overlay", "web"),
         ("screens", "tooltip popover contextual info", "web"),
         ("screens", "cookie consent banner preferences", "web"),
+        ("screens", "bottom sheet mobile style overlay web", "web"),
+        ("screens", "full screen takeover modal marketing promo", "web"),
     ],
     # Lists & feeds
     "lists": [
@@ -92,12 +115,16 @@ CATEGORIES = {
         ("screens", "inbox email list with unread badges", "web"),
         ("screens", "search results grid cards pagination", "web"),
         ("screens", "comment thread with replies avatars", "web"),
+        ("screens", "list virtualization infinite scroll feed", "web"),
     ],
     # Charts & data viz
     "charts": [
         ("screens", "line chart analytics trends visualization", "web"),
         ("screens", "bar chart comparison dashboard widget", "web"),
         ("screens", "usage meter quota progress ring", "web"),
+        ("screens", "area chart with time range selector granularity", "web"),
+        ("screens", "funnel conversion steps visualization", "web"),
+        ("screens", "heatmap calendar activity contributions", "web"),
     ],
     # User & profile
     "profile": [
@@ -105,12 +132,16 @@ CATEGORIES = {
         ("screens", "team member list roles permissions", "web"),
         ("screens", "account switcher workspace selector dropdown", "web"),
         ("screens", "notification center list mark read", "web"),
+        ("screens", "user preferences settings toggles checkboxes", "web"),
+        ("screens", "organization settings workspace configuration", "web"),
     ],
     # Scheduling & commerce
     "commerce": [
         ("screens", "calendar booking scheduler time slots", "web"),
         ("screens", "shopping cart checkout order summary", "web"),
         ("screens", "order history list status tracking", "web"),
+        ("screens", "product detail page gallery buy box", "web"),
+        ("screens", "order confirmation success receipt", "web"),
     ],
     # Editor & canvas
     "editor": [
@@ -118,6 +149,8 @@ CATEGORIES = {
         ("screens", "whiteboard canvas nodes connections", "web"),
         ("screens", "color picker palette selection", "web"),
         ("screens", "image gallery lightbox viewer", "web"),
+        ("screens", "code editor syntax highlighting tabs split view", "web"),
+        ("screens", "node based workflow builder drag canvas", "web"),
     ],
     # AI-native extras
     "ai-native": [
@@ -127,6 +160,8 @@ CATEGORIES = {
         ("screens", "chat conversation history list sidebar", "web"),
         ("screens", "share chat conversation public page", "web"),
         ("screens", "keyboard shortcuts help overlay cheatsheet", "web"),
+        ("screens", "AI writing editor rewrite improve text suggestions", "web"),
+        ("screens", "chat model settings temperature system prompt config", "web"),
     ],
     # AI observability & evaluation
     "ai-monitor": [
@@ -136,6 +171,8 @@ CATEGORIES = {
         ("screens", "token usage cost breakdown dashboard AI", "web"),
         ("screens", "prompt versioning diff A B test variants", "web"),
         ("screens", "AI guardrail moderation flagged content review", "web"),
+        ("screens", "model provider configuration API keys routing", "web"),
+        ("screens", "AI dataset annotation labeling review queue", "web"),
     ],
     # Docs & help center
     "docs-help": [
@@ -143,6 +180,8 @@ CATEGORIES = {
         ("screens", "help center search results articles", "web"),
         ("screens", "changelog release notes timeline", "web"),
         ("screens", "API reference endpoint documentation code sample", "web"),
+        ("screens", "interactive tutorial guided steps tooltip", "web"),
+        ("screens", "knowledge base article feedback helpful vote", "web"),
     ],
     # Media & creative tools
     "media": [
@@ -150,6 +189,8 @@ CATEGORIES = {
         ("screens", "audio podcast player waveform episodes", "web"),
         ("screens", "photo gallery masonry grid lightbox", "web"),
         ("screens", "music playlist track list player", "web"),
+        ("screens", "video editing timeline clips preview", "web"),
+        ("screens", "streaming catalog browse hero carousel", "web"),
     ],
     # Workflow & project management
     "workflow": [
@@ -157,12 +198,15 @@ CATEGORIES = {
         ("screens", "task detail panel checklist assignee", "web"),
         ("screens", "calendar week schedule events grid", "web"),
         ("screens", "approval review workflow status steps", "web"),
+        ("screens", "automation rules builder triggers conditions", "web"),
+        ("screens", "version history compare restore changes", "web"),
     ],
     # Maps & location
     "maps": [
         ("screens", "map view with location pins sidebar list", "web"),
         ("screens", "delivery tracking map route status", "web"),
         ("screens", "location address picker autocomplete", "web"),
+        ("screens", "geofencing zones draw area map", "web"),
     ],
     # Security & trust
     "security": [
@@ -170,6 +214,34 @@ CATEGORIES = {
         ("screens", "security settings sessions devices list", "web"),
         ("screens", "audit log activity history events table", "web"),
         ("screens", "permissions roles matrix access control", "web"),
+        ("screens", "privacy consent gdpr data export delete account", "web"),
+    ],
+    # Marketing landing pages
+    "landing": [
+        ("sections", "hero section with product screenshot and headline", "web"),
+        ("sections", "feature grid cards with icons benefits", "web"),
+        ("sections", "logo cloud trusted by companies social proof", "web"),
+        ("sections", "call to action banner gradient background", "web"),
+        ("sections", "pricing plan cards three tier", "web"),
+        ("sections", "FAQ accordion expandable questions", "web"),
+        ("sections", "integrations partner logos grid", "web"),
+    ],
+    # Empty / error / status states
+    "empty-error": [
+        ("screens", "404 page not found illustration", "web"),
+        ("screens", "empty state no data illustration CTA", "web"),
+        ("screens", "error page something went wrong retry", "web"),
+        ("screens", "loading skeleton shimmer placeholder", "web"),
+        ("screens", "server maintenance status page incidents", "web"),
+        ("screens", "offline mode no connection banner", "web"),
+    ],
+    # Billing & account management
+    "billing": [
+        ("screens", "billing history invoices table download", "web"),
+        ("screens", "payment method credit card management", "web"),
+        ("screens", "subscription plan usage limit upgrade", "web"),
+        ("screens", "team seats billing members invite", "web"),
+        ("screens", "checkout payment form fields card", "web"),
     ],
 }
 
@@ -202,7 +274,7 @@ def mcp_call(token, payload, retries=3):
     raise RuntimeError("MCP call failed after retries")
 
 
-def search(token, kind, query, platform, limit=6):
+def search(token, kind, query, platform, limit=8):
     tool = {"screens": "search_screens", "flows": "search_flows", "sections": "search_sections"}[kind]
     args = {"query": query, "limit": limit}
     if platform:

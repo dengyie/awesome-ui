@@ -18,6 +18,11 @@ import urllib.request
 import webbrowser
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
+# Windows consoles default to a legacy codepage (e.g. GBK) that can't encode
+# emoji in our prints; force UTF-8 so refresh/auth don't crash after succeeding.
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    sys.stdout.reconfigure(encoding="utf-8")
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 TOKEN_FILE = os.path.join(HERE, "mobbin_token.json")
 STATE_FILE = os.path.join(HERE, "mobbin_oauth_state.json")
