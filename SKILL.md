@@ -1145,6 +1145,26 @@ awesome-ui/
 - **Vanilla 用法**: `<event-stream-panel>` + `filter-placeholder`/`event-column-label`/`date-column-label`/`events`/`metadata-title`/`details-title`/`details-lines`/`active-event-id` 属性；事件 `filter-change {value}` / `event-select {event}` / `view-event {event}`
 - **特性**: 左 3/5 事件列表卡（过滤输入实时收窄 + Event/Date 双列头 + 空态）、右 2/5 详情列（Metadata 键值对 + View event 全宽按钮、Event Details JSON 块带行号 + Previous/Next 分页器）。
 
+### 200. `ProjectGanttTimeline` (项目甘特时间线)
+- **Props**: `months?: [{label,weeks}]`, `projects?: [{id,emoji,name,status,points,start,end,tone?}]`, `todayMonth?`, `todayFraction?`, `className?`, `onProjectClick?(project)`
+- **Vanilla 用法**: `<project-gantt-timeline>` + `months`/`projects`/`today-month`/`today-fraction` 属性；事件 `project-click {project}`
+- **特性**: 月刻度表头带周子刻度与红色 Today 徽标、项目行（emoji/名称/状态徽标/pts）+ 横向时长条（sky/violet/emerald/amber 四色调）、红色当前日期竖线贯穿行区（Linear Projects 时间线模式）。
+
+### 201. `GroupedTaskList` (分组任务列表)
+- **Props**: `sections?: [{id,label,tasks:[{id,title,due,done,subtasks?,likes?,comments?,assignee}]}]`, `detail?: {completedLabel?,title,assignee,due,project,projectStatus?,fields[{label,value,tone?}],tags?,description?}`, `addTaskLabel?`, `commentPlaceholder?`, `className?`, `onTaskClick?(task)`, `onSectionToggle?(sectionId, open)`, `onCommentSubmit?(text)`
+- **Vanilla 用法**: `<grouped-task-list>` + `sections`/`detail`/`add-task-label`/`comment-placeholder` 属性；事件 `task-click {task}` / `section-toggle {sectionId, open}` / `comment-submit {text}`
+- **特性**: 左 3/5 列表（＋ Add task 工具栏、Name 列头、可折叠 To Do / In Progress / Done 分组、任务行完成圈/👍💬⑂ 计数/到期/琥珀头像、Add task… 内联行）、右 2/5 详情（✓ Completed 徽标、Assignee/Due date/Projects 元信息、字段网格含 Priority rose 色块、Tags 翡翠芯片、描述、回车提交评论输入）（Asana 列表视图模式）。
+
+### 202. `EventLogTable` (事件日志表)
+- **Props**: `title?`, `description?`, `filters?: string[]`, `dateRangeLabel?`, `exportLabel?`, `columnLabels?: string[]`, `entries?: [{id,type,date,time,source,role,action,targets,details,muted?}]`, `className?`, `onFilterSelect?(filter)`, `onExport?`, `onEntryClick?(entry)`
+- **Vanilla 用法**: `<event-log-table>` + `title`/`description`/`filters`/`column-labels`/`entries`/`date-range-label`/`export-label` 属性；事件 `filter-select {filter}` / `entry-click {entry}` / `export`
+- **特性**: 标题 + 描述头部、Type/Source/Action/Target 下拉过滤行 + 🗓 日期范围 + ↓ Export CSV、六列日志表（TYPE/DATE/SOURCE 角色/ACTION/TARGETS/DETAILS），旧条目 muted 灰化（Vanta 事件日志模式）。
+
+### 203. `DocsPageLayout` (文档页面布局)
+- **Props**: `topLinks?: [{id,label,icon?}]`, `navGroups?: [{label,items:[{id,label,icon?,badge?}]}]`, `title?`, `copyLabel?`, `blocks?: DocsBlock[]`, `toc?: [{id,label}]`, `activeTocId?`, `className?`, `onNavClick?(item)`, `onTocClick?(item)`, `onCopyPage?`
+- **Vanilla 用法**: `<docs-page-layout>` + `top-links`/`nav-groups`/`title`/`copy-label`/`blocks`/`toc`/`active-toc-id` 属性；事件 `nav-click {item}` / `toc-click {item}` / `copy-page`
+- **特性**: 三栏文档壳（220px 左导航：顶部链接 + 分组导航含 Start here 徽标；中栏文章：标题 + ⧉ Copy page 按钮点击后变 ✓ Copied、callout info/success/warning、cards 网格、终端代码块；右栏 On this page TOC 左边框活动高亮）（Mintlify 文档模式）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

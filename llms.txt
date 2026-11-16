@@ -813,6 +813,22 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/EventStreamPanel.tsx
    - Vue 3: vue/EventStreamPanel.vue
    - Vanilla: vanilla/EventStreamPanel.js (custom element `<event-stream-panel>`, attributes `filter-placeholder`/`event-column-label`/`date-column-label`/`events` JSON/`metadata-title`/`details-title`/`details-lines`/`active-event-id`; events `filter-change {value}`, `event-select {event}`, `view-event {event}`)
+200. ProjectGanttTimeline: project gantt timeline — month tick header with week sub-ticks and red Today pill, project rows with emoji/status/pts badges and horizontal duration bars spanning start..end months, current-date marker line (Linear projects timeline pattern).
+   - React: react/ProjectGanttTimeline.tsx
+   - Vue 3: vue/ProjectGanttTimeline.vue
+   - Vanilla: vanilla/ProjectGanttTimeline.js (custom element `<project-gantt-timeline>`, attributes `months` JSON/`projects` JSON/`today-month`/`today-fraction`; events `project-click {project}`)
+201. GroupedTaskList: grouped task list with split detail pane — collapsible sections (To Do / In Progress / Done), task rows with completion circle, counts and assignee avatar, right detail with fields grid, tags and comment composer (Asana list view pattern).
+   - React: react/GroupedTaskList.tsx
+   - Vue 3: vue/GroupedTaskList.vue
+   - Vanilla: vanilla/GroupedTaskList.js (custom element `<grouped-task-list>`, attributes `sections` JSON/`detail` JSON/`add-task-label`/`comment-placeholder`; events `task-click {task}`, `section-toggle {sectionId, open}`, `comment-submit {text}`)
+202. EventLogTable: administrative event log — dropdown filter row (Type / Source / Action / Target) with date-range and Export CSV actions, six-column log table with muted rows for older entries (Vanta event log pattern).
+   - React: react/EventLogTable.tsx
+   - Vue 3: vue/EventLogTable.vue
+   - Vanilla: vanilla/EventLogTable.js (custom element `<event-log-table>`, attributes `title`/`description`/`filters` JSON/`column-labels` JSON/`entries` JSON/`date-range-label`/`export-label`; events `filter-select {filter}`, `entry-click {entry}`, `export`)
+203. DocsPageLayout: documentation page shell — left nav with top links and grouped sections, center article with Copy page button, callout, cards grid and code examples, right "On this page" TOC with active highlight (Mintlify docs pattern).
+   - React: react/DocsPageLayout.tsx
+   - Vue 3: vue/DocsPageLayout.vue
+   - Vanilla: vanilla/DocsPageLayout.js (custom element `<docs-page-layout>`, attributes `top-links` JSON/`nav-groups` JSON/`title`/`copy-label`/`blocks` JSON/`toc` JSON/`active-toc-id`; events `nav-click {item}`, `toc-click {item}`, `copy-page`)
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)

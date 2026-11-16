@@ -226,12 +226,16 @@
   <script type="module" src="./vanilla/WeekCalendarGrid.js"></script>
   <script type="module" src="./vanilla/VideoProjectSettings.js"></script>
   <script type="module" src="./vanilla/EventStreamPanel.js"></script>
+  <script type="module" src="./vanilla/ProjectGanttTimeline.js"></script>
+  <script type="module" src="./vanilla/GroupedTaskList.js"></script>
+  <script type="module" src="./vanilla/EventLogTable.js"></script>
+  <script type="module" src="./vanilla/DocsPageLayout.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.3.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -3199,7 +3203,7 @@
     <section id="section-186" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">186 · ApiReferenceViewer</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.3.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">API reference section — method-badge endpoint header, query parameter definitions with type/meta rows, collapsible responses list and a right code panel with language select, sample request and JSON response (GitBook API Reference pattern).</p>
@@ -3217,7 +3221,7 @@
     <section id="section-187" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">187 · WeekCalendarGrid</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.3.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Week-view calendar grid — hour gutter, day columns with solid/dashed event blocks, red current-time line, Day/Week segmented toggle, "Find time" button and schedule composer (Clockwise week calendar pattern).</p>
@@ -3235,7 +3239,7 @@
     <section id="section-188" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">188 · VideoProjectSettings</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.3.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Video project settings — Chapters side panel with empty state and "Add a chapter" action, main form with Title input, Description textarea, Thumbnail selector and storage usage badge (Vimeo video settings pattern).</p>
@@ -3253,7 +3257,7 @@
     <section id="section-189" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">189 · EventStreamPanel</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.3.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Audit event stream — filter input, two-column event list (event name / date), right metadata panel with "View event" button, event details JSON block with line numbers and Previous/Next pager (WorkOS Events pattern).</p>
@@ -3263,6 +3267,78 @@
             <event-stream-panel id="demo-stream50"></event-stream-panel>
             <div class="mt-3 flex items-center gap-2">
               <span id="demo-stream50-status" class="text-[11px] text-zinc-500">Select an event / view it — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-190" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">190 · ProjectGanttTimeline</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Project gantt timeline — month tick header with week sub-ticks and red Today pill, project rows with emoji/status/pts badges and horizontal duration bars, current-date marker line (Linear projects timeline pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/ProjectGanttTimeline.js">
+          <div class="space-y-3">
+            <project-gantt-timeline id="demo-gantt51"></project-gantt-timeline>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-gantt51-status" class="text-[11px] text-zinc-500">Click a project row — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-191" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">191 · GroupedTaskList</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Grouped task list with detail pane — collapsible To Do / In Progress / Done sections, task rows with completion circle, counts and assignee avatar, right detail with fields grid, tags and comment composer (Asana list view pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/GroupedTaskList.js">
+          <div class="space-y-3">
+            <grouped-task-list id="demo-grouptask51"></grouped-task-list>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-grouptask51-status" class="text-[11px] text-zinc-500">Click a task / toggle a section — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-192" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">192 · EventLogTable</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Administrative event log — dropdown filter row (Type / Source / Action / Target) with date-range and Export CSV actions, six-column log table with muted rows for older entries (Vanta event log pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/EventLogTable.js">
+          <div class="space-y-3">
+            <event-log-table id="demo-eventlog51"></event-log-table>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-eventlog51-status" class="text-[11px] text-zinc-500">Click a filter / row / export — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-193" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">193 · DocsPageLayout</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Documentation page shell — left nav with grouped sections, center article with Copy page button, callout, cards grid and code examples, right "On this page" TOC with active highlight (Mintlify docs pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/DocsPageLayout.js">
+          <div class="space-y-3">
+            <docs-page-layout id="demo-docspage51"></docs-page-layout>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-docspage51-status" class="text-[11px] text-zinc-500">Click a nav item / TOC entry — events report here.</span>
             </div>
           </div>
         </div>
@@ -6464,6 +6540,36 @@ FAIL tests/ui.test.mjs
         stream50.addEventListener('event-select', (event) => { streamStatus50.textContent = 'Event → ' + event.detail.event.name; });
         stream50.addEventListener('view-event', (event) => { streamStatus50.textContent = 'Viewing → ' + event.detail.event.name; });
         stream50.addEventListener('filter-change', (event) => { if (!event.detail.value) streamStatus50.textContent = 'Filter cleared'; });
+      }
+
+      const gantt51 = document.getElementById('demo-gantt51');
+      const ganttStatus51 = document.getElementById('demo-gantt51-status');
+      if (gantt51) {
+        gantt51.addEventListener('project-click', (event) => { ganttStatus51.textContent = 'Project → ' + event.detail.project.name; });
+      }
+
+      const grouptask51 = document.getElementById('demo-grouptask51');
+      const grouptaskStatus51 = document.getElementById('demo-grouptask51-status');
+      if (grouptask51) {
+        grouptask51.addEventListener('task-click', (event) => { grouptaskStatus51.textContent = 'Task → ' + event.detail.task.title; });
+        grouptask51.addEventListener('section-toggle', (event) => { grouptaskStatus51.textContent = 'Section → ' + event.detail.sectionId + ' (' + (event.detail.open ? 'open' : 'closed') + ')'; });
+        grouptask51.addEventListener('comment-submit', (event) => { grouptaskStatus51.textContent = 'Comment → ' + event.detail.text; });
+      }
+
+      const eventlog51 = document.getElementById('demo-eventlog51');
+      const eventlogStatus51 = document.getElementById('demo-eventlog51-status');
+      if (eventlog51) {
+        eventlog51.addEventListener('filter-select', (event) => { eventlogStatus51.textContent = 'Filter → ' + event.detail.filter; });
+        eventlog51.addEventListener('entry-click', (event) => { eventlogStatus51.textContent = 'Entry → ' + event.detail.entry.action; });
+        eventlog51.addEventListener('export', () => { eventlogStatus51.textContent = 'Exported log as CSV.'; });
+      }
+
+      const docspage51 = document.getElementById('demo-docspage51');
+      const docspageStatus51 = document.getElementById('demo-docspage51-status');
+      if (docspage51) {
+        docspage51.addEventListener('nav-click', (event) => { docspageStatus51.textContent = 'Nav → ' + event.detail.item.label; });
+        docspage51.addEventListener('toc-click', (event) => { docspageStatus51.textContent = 'TOC → ' + event.detail.item.label; });
+        docspage51.addEventListener('copy-page', () => { docspageStatus51.textContent = 'Page copied to clipboard.'; });
       }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');

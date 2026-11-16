@@ -215,6 +215,10 @@
 | **`WeekCalendarGrid`** | 周视图日历网格 | Clockwise 周历：小时槽 + 日列事件块（实心/虚线）、红色当前时刻线、Day/Week 切换 + Find time + 作曲输入框 |
 | **`VideoProjectSettings`** | 视频项目设置 | Vimeo 视频设置：Chapters 侧面板（空态 + 添加章节）、Title/Description 表单、缩略图选择器 + 存储徽章 |
 | **`EventStreamPanel`** | 审计事件流 | WorkOS Events：过滤输入 + 双列事件列表、Metadata 面板 + View event、带行号 JSON 详情 + Previous/Next 分页 |
+| **`ProjectGanttTimeline`** | 项目甘特时间线 | Linear Projects：月刻度表头 + 周子刻度 + Today 徽标、项目行（emoji/状态/pts）+ 四色时长条、红色当前日期竖线 |
+| **`GroupedTaskList`** | 分组任务列表 | Asana 列表视图：可折叠 To Do/In Progress/Done 分组、任务行（完成圈/计数/到期/头像）、右侧详情（字段网格/Tags/评论输入） |
+| **`EventLogTable`** | 事件日志表 | Vanta Event log：Type/Source/Action/Target 过滤行 + 日期范围 + Export CSV、六列日志表、旧条目 muted 灰化 |
+| **`DocsPageLayout`** | 文档页面布局 | Mintlify 文档：左分组导航、中栏文章（Copy page/callout/cards/代码块）、右 On this page TOC 活动高亮 |
 | **`AuditLogTable`** | 审计日志表 | Okta System Log：日期/关键词筛选 pills、迷你柱状趋势、事件计数 + 视图切换、四列事件表（SUCCESS/FAILURE/PENDING 徽章） |
 | **`ChangelogTimeline`** | 产品更新日志 | Canny Changelog：大标题头部、搜索 + Filters 控件、左日期栏 + 四色分类 tag、点赞/浏览/分享 meta 行 |
 | **`CampsiteHandoff`** | 设计交付面板 | Campsite 设计 handoff：完成态检查清单（负责人首字母头像 + 截止日期）、x/y done 计数与 AI 摘要块 |
@@ -421,7 +425,11 @@ awesome-ui/
 │   ├── ApiReferenceViewer.tsx
 │   ├── WeekCalendarGrid.tsx
 │   ├── VideoProjectSettings.tsx
-│   └── EventStreamPanel.tsx
+│   ├── EventStreamPanel.tsx
+│   ├── ProjectGanttTimeline.tsx
+│   ├── GroupedTaskList.tsx
+│   ├── EventLogTable.tsx
+│   └── DocsPageLayout.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -618,7 +626,11 @@ awesome-ui/
 │   ├── ApiReferenceViewer.vue
 │   ├── WeekCalendarGrid.vue
 │   ├── VideoProjectSettings.vue
-│   └── EventStreamPanel.vue
+│   ├── EventStreamPanel.vue
+│   ├── ProjectGanttTimeline.vue
+│   ├── GroupedTaskList.vue
+│   ├── EventLogTable.vue
+│   └── DocsPageLayout.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -815,7 +827,11 @@ awesome-ui/
 │   ├── ApiReferenceViewer.js
 │   ├── WeekCalendarGrid.js
 │   ├── VideoProjectSettings.js
-│   └── EventStreamPanel.js
+│   ├── EventStreamPanel.js
+│   ├── ProjectGanttTimeline.js
+│   ├── GroupedTaskList.js
+│   ├── EventLogTable.js
+│   └── DocsPageLayout.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

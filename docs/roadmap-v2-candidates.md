@@ -11,6 +11,12 @@
 > （← Clockwise）、VideoProjectSettings（← Vimeo）、EventStreamPanel（← WorkOS）
 > 三端落地（组件编号 196–199），Gallery sections 186–189，654 项回归测试全绿
 > （"后续储备"四项全部消费完毕）。全库组件总数 200（含 UiIcon）× 3 端。
+> 批次 v2.4.0 已完成 —— ProjectGanttTimeline（← workflow/01_Linear）、
+> GroupedTaskList（← workflow/08_Asana）、EventLogTable（← security/13_Vanta）、
+> DocsPageLayout（← docs-help/02_Mintlify）三端落地（组件编号 200–203），
+> Gallery sections 190–193，666 项回归测试全绿。原候选 Amie 周历与 #197
+> WeekCalendarGrid 重叠、Airtable 时间线与甘特图重叠，按"零重叠"规则跳过。
+> 全库组件总数 204（含 UiIcon）× 3 端。
 
 > 背景：roadmap v1 已收官（v1.47.0，190 组件 × 3 端，624 测试）。为延续迭代，
 > 已通过 `tools/mobbin_fetch.py` 新增 5 个分类并抓取 114 张 Mobbin 截图，
