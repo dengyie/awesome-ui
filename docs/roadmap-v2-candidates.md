@@ -27,6 +27,18 @@
 > （播放器空间）、Subframe（文档页）、Slite（搜索浮层与 #116 重叠）、Adaline
 > （代码面板与 #196 重叠）、Employment Hero（步骤条 + 状态表）、SuperHi（课程章节页）。
 > 全库组件总数 208（含 UiIcon）× 3 端。
+> 批次 v2.6.0 已完成 —— PermissionMatrix（← security/22_Vanta）、
+> StockPhotoPicker（← media/18_Substack）、MapActivityList（← maps/01_GetYourGuide）、
+> SearchResultsPage（← docs-help/08_Confluence）三端落地（组件编号 208–211），
+> Gallery sections 198–201，690 项回归测试全绿。重叠跳过记录：WorkOS Events
+> （与 #198 EventStreamPanel 同源重叠）、Spotify（与 #206 AudioPlaylistPage 同属
+> 音频播放空间）、Slack Lists 看板（与 #45 KanbanBoard 重叠）、Exa AI 问答页
+> （与 chat 全家桶 + #207 重叠）、Uber Eats 追踪（与 #194 DeliveryTrackingPanel
+> 重叠）、komoot 地图搜索（与 #98 SearchTypeahead 重叠）、Amazon 地图追踪
+> （配送追踪空间）、Nextdoor 地址补全（与 #98 重叠）、Profound 工作流进度
+> （与 #103 AgentTaskProgress / #34 AgentRunLog 重叠）、Base44 API 文档
+> （与 #196 ApiReferenceViewer 重叠）、Cosmos 瀑布流（与 #137 ImageGenGallery 重叠）。
+> 全库组件总数 212（含 UiIcon）× 3 端。
 
 > 背景：roadmap v1 已收官（v1.47.0，190 组件 × 3 端，624 测试）。为延续迭代，
 > 已通过 `tools/mobbin_fetch.py` 新增 5 个分类并抓取 114 张 Mobbin 截图，

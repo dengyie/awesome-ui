@@ -1185,6 +1185,26 @@ awesome-ui/
 - **Vanilla 用法**: `<blog-post-article>` + `site-name`/`title`/`subtitle`/`meta`/`blocks`/`toc`/`active-heading-id`/`code-label`/`copied-label` 属性；事件 `heading-click {heading}` / `copy-code`（Copy 按钮 1.5s 后还原）
 - **特性**: 顶栏（站点名 + ⌕ Search ⌘K 胶囊 + ☾ 主题按钮）、左栏 On this page TOC（sky 活动高亮 + level 3 缩进 + Collapse ⌘\ 提示）、文章体（大标题 + 副题 + meta、段落、h2/h3 标题、圆点列表、深色代码块带 language 眉题 + ⧉ Copy 按钮点击变 Copied!）（Hashnode 文章模式）。
 
+### 208. `PermissionMatrix` (角色权限矩阵)
+- **Props**: `title?`, `description?`, `roles?: string[]`, `groups?: [{id,title,rows:[{id,label,cells:("edit"|"view"|"none"|"na")[]}]}]`, `className?`, `onCellClick?({row,role,state,roleIndex})`
+- **Vanilla 用法**: `<permission-matrix>` + `title`/`description`/`roles`/`groups` 属性（JSON）；事件 `cell-click {row, role, state, roleIndex}`
+- **特性**: 标题 + 描述、Overview / Permission details 双 tab（indigo 下划线活动态）、分组权限行（组头跨整行 zinc-50 底）、角色列居中单元格（✔ Edit 绿 / 👁 View only / ✖ No access 红 / N/A 灰）（Vanta Roles 模式）。
+
+### 209. `StockPhotoPicker` (媒体选图模态)
+- **Props**: `title?`, `poweredBy?`, `placeholder?`, `photos?: [{id,url,alt?,author?,span?}]`, `open?`, `className?`, `onSearch?(query)`, `onAdd?(photo)`, `onClose?`
+- **Vanilla 用法**: `<stock-photo-picker>` + `title`/`powered-by`/`placeholder`/`photos`/`open` 属性；事件 `search {query}` / `add {photo}` / `close`（Esc 或 ✕）
+- **特性**: 标题栏 + ✕ 关闭、搜索输入（orange focus ring + 清除按钮）、⭳ Powered by 标注、masonry 图片网格（span 2 高瓦片、hover 显作者名 + 绿色 Add 按钮、空态提示）（Substack Stock photos 模式）。
+
+### 210. `MapActivityList` (地图活动列表)
+- **Props**: `title?`, `activities?: [{id,title,image?,emoji?,city,duration,rating,reviews,price,oldPrice?,x,y}]`, `filters?: string[]`, `className?`, `onActivityClick?(activity)`, `onFilterClick?(filter)`, `onCloseMap?`
+- **Vanilla 用法**: `<map-activity-list>` + `title`/`activities`/`filters` 属性（JSON）；事件 `activity-click {activity}` / `filter-click {filter}` / `close-map`
+- **特性**: 左栏筛选 chips + 可滚动活动卡（emoji/图片、城市、标题、时长、★评分 (评论数)、划线原价 + 现价）、右栏 SVG 地图占位 + 评分 pin 气泡（点击联动高亮 indigo）、Close map 按钮（GetYourGuide 模式）。
+
+### 211. `SearchResultsPage` (搜索结果页)
+- **Props**: `query?`, `filterSelects?: [{id,label,options?}]`, `relatedSearches?: string[]`, `results?: [{id,title,space,type,author,updated,snippet}]`, `className?`, `onSearchSubmit?(query)`, `onFilterChange?(id,value)`, `onRelatedClick?(term)`, `onResultClick?(entry)`
+- **Vanilla 用法**: `<search-results-page>` + `query`/`filter-selects`/`related-searches`/`results` 属性（JSON）；事件 `search-submit {query}`（按钮或 Enter）/ `filter-change {id, value}` / `related-click {term}` / `result-click {result}`
+- **特性**: 顶部搜索栏（⌕ 输入 + blue Search 按钮）、筛选 select 行 + N results 计数、Related searches 双列胶囊 chips、结果条目（blue 标题 hover 下划线、space • type • author • updated 面包屑、摘要段）（Confluence 搜索模式）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

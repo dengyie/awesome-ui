@@ -845,6 +845,22 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/BlogPostArticle.tsx
    - Vue 3: vue/BlogPostArticle.vue
    - Vanilla: vanilla/BlogPostArticle.js (custom element `<blog-post-article>`, attributes `site-name`/`title`/`subtitle`/`meta`/`blocks` JSON/`toc` JSON/`active-heading-id`/`code-label`/`copied-label`; events `heading-click {heading}`, `copy-code`)
+208. PermissionMatrix: roles × permissions matrix — title + description, Overview / Permission details tabs, grouped permission rows (group header spans the table) and per-role cells with Edit / View only / No access / N/A states (Vanta roles pattern).
+   - React: react/PermissionMatrix.tsx
+   - Vue 3: vue/PermissionMatrix.vue
+   - Vanilla: vanilla/PermissionMatrix.js (custom element `<permission-matrix>`, attributes `title`/`description`/`roles` JSON/`groups` JSON; events `cell-click {row, role, state, roleIndex}`)
+209. StockPhotoPicker: media picker modal — title bar with close button, search input with clear, "Powered by" caption and masonry photo grid with hover author name + Add button, Esc closes (Substack stock photos pattern).
+   - React: react/StockPhotoPicker.tsx
+   - Vue 3: vue/StockPhotoPicker.vue
+   - Vanilla: vanilla/StockPhotoPicker.js (custom element `<stock-photo-picker>`, attributes `title`/`powered-by`/`placeholder`/`photos` JSON/`open`; events `search {query}`, `add {photo}`, `close`)
+210. MapActivityList: map + activity list split view — left column with filter chips and scrollable activity cards (image/emoji, title, duration, rating, strikethrough old price), right map placeholder with rating pin bubbles and Close map button (GetYourGuide pattern).
+   - React: react/MapActivityList.tsx
+   - Vue 3: vue/MapActivityList.vue
+   - Vanilla: vanilla/MapActivityList.js (custom element `<map-activity-list>`, attributes `title`/`activities` JSON/`filters` JSON; events `activity-click {activity}`, `filter-click {filter}`, `close-map`)
+211. SearchResultsPage: knowledge-base search results page — top search bar with submit button, filter select row, "Related searches" chip grid and result entries with icon title, breadcrumb meta (space • type • author • updated) and summary snippet (Confluence search pattern).
+   - React: react/SearchResultsPage.tsx
+   - Vue 3: vue/SearchResultsPage.vue
+   - Vanilla: vanilla/SearchResultsPage.js (custom element `<search-results-page>`, attributes `query`/`filter-selects` JSON/`related-searches` JSON/`results` JSON; events `search-submit {query}`, `filter-change {id, value}`, `related-click {term}`, `result-click {result}`)
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)

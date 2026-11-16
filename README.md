@@ -223,6 +223,10 @@
 | **`FormTrackingDashboard`** | 表单追踪仪表盘 | Fresha 表单追踪：返回头 + Active 胶囊 + Options 排序、四统计卡（色调点 + % 进度条）、明细网格、客户请求表（状态胶囊） |
 | **`AudioPlaylistPage`** | 音频播放列表页 | Suno 音频工作台：渐变封面 + Play/Share、曲目行（version 胶囊/Remix/点赞）、底部播放条、右 Queue 队列面板 |
 | **`BlogPostArticle`** | 博客文章页 | Hashnode 文章：顶栏 ⌘K 搜索、左 On this page TOC 活动高亮、标题/副题/meta、段落/列表、深色代码块 + Copy |
+| **`PermissionMatrix`** | 角色权限矩阵 | Vanta Roles：标题/描述、Overview / Permission details 双 tab、分组权限行、✔ Edit / 👁 View only / ✖ No access / N/A 单元格 |
+| **`StockPhotoPicker`** | 媒体选图模态 | Substack Stock photos：标题栏 + ✕、搜索输入 + 清除、Powered by 标注、masonry 图片网格 hover 作者 + Add |
+| **`MapActivityList`** | 地图活动列表 | GetYourGuide：左栏筛选 chips + 活动卡（图片/评分/划线价）、右栏 SVG 地图 + 评分 pin 气泡联动、Close map |
+| **`SearchResultsPage`** | 搜索结果页 | Confluence 搜索：顶部搜索栏 + 筛选 select 行、Related searches 胶囊 chips、结果条目（面包屑 meta + 摘要） |
 | **`AuditLogTable`** | 审计日志表 | Okta System Log：日期/关键词筛选 pills、迷你柱状趋势、事件计数 + 视图切换、四列事件表（SUCCESS/FAILURE/PENDING 徽章） |
 | **`ChangelogTimeline`** | 产品更新日志 | Canny Changelog：大标题头部、搜索 + Filters 控件、左日期栏 + 四色分类 tag、点赞/浏览/分享 meta 行 |
 | **`CampsiteHandoff`** | 设计交付面板 | Campsite 设计 handoff：完成态检查清单（负责人首字母头像 + 截止日期）、x/y done 计数与 AI 摘要块 |
@@ -437,7 +441,11 @@ awesome-ui/
 │   ├── TaskCardModal.tsx
 │   ├── FormTrackingDashboard.tsx
 │   ├── AudioPlaylistPage.tsx
-│   └── BlogPostArticle.tsx
+│   ├── BlogPostArticle.tsx
+│   ├── PermissionMatrix.tsx
+│   ├── StockPhotoPicker.tsx
+│   ├── MapActivityList.tsx
+│   └── SearchResultsPage.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -642,7 +650,11 @@ awesome-ui/
 │   ├── TaskCardModal.vue
 │   ├── FormTrackingDashboard.vue
 │   ├── AudioPlaylistPage.vue
-│   └── BlogPostArticle.vue
+│   ├── BlogPostArticle.vue
+│   ├── PermissionMatrix.vue
+│   ├── StockPhotoPicker.vue
+│   ├── MapActivityList.vue
+│   └── SearchResultsPage.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -847,7 +859,11 @@ awesome-ui/
 │   ├── TaskCardModal.js
 │   ├── FormTrackingDashboard.js
 │   ├── AudioPlaylistPage.js
-│   └── BlogPostArticle.js
+│   ├── BlogPostArticle.js
+│   ├── PermissionMatrix.js
+│   ├── StockPhotoPicker.js
+│   ├── MapActivityList.js
+│   └── SearchResultsPage.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

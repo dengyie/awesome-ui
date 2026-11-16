@@ -13578,6 +13578,152 @@ export default function LiveTailLogConsole({
 
 
 ====
+File: react/MapActivityList.tsx
+====
+
+/**
+ * MapActivityList - Map + activity list split view: left column with
+ * filter chips, scrollable activity cards (image, title, duration,
+ * rating, price) and right map placeholder with pin bubbles and a close
+ * button (GetYourGuide map-search pattern).
+ */
+import React from "react";
+
+export interface MapActivity {
+  id: string;
+  title: string;
+  image?: string;
+  emoji?: string;
+  city: string;
+  duration: string;
+  rating: number;
+  reviews: number;
+  price: string;
+  oldPrice?: string;
+  x: number; // % position on map
+  y: number; // % position on map
+}
+
+export interface MapActivityListProps {
+  title?: string;
+  activities?: MapActivity[];
+  filters?: string[];
+  className?: string;
+  onActivityClick?: (activity: MapActivity) => void;
+  onFilterClick?: (filter: string) => void;
+  onCloseMap?: () => void;
+}
+
+const MAP_SVG = `<svg viewBox="0 0 400 300" class="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="300" fill="#e8f0e4"/><path d="M0 210 C90 190 150 240 260 220 S360 250 400 230 L400 300 L0 300 Z" fill="#a5d0e8"/><path d="M-10 40 C60 70 120 30 200 60 S330 40 410 80" stroke="#f6d5a7" stroke-width="10" fill="none"/><path d="M-10 120 C70 100 160 150 250 110 S350 130 410 110" stroke="#f6d5a7" stroke-width="8" fill="none"/><rect x="40" y="30" width="50" height="34" fill="#d5e6c8"/><rect x="290" y="40" width="60" height="40" fill="#d5e6c8"/><rect x="180" y="150" width="44" height="30" fill="#d5e6c8"/></svg>`;
+
+export default function MapActivityList({
+  title = "Paris",
+  activities = [
+    { id: "a1", title: "Seine River Sightseeing Evening Cruise with Champagne", emoji: "🥂", city: "Paris", duration: "1 hour", rating: 4.5, reviews: 341, price: "$43", x: 62, y: 24 },
+    { id: "a2", title: "Seine River Sightseeing Guided Cruise Vedettes du Pont Neuf", emoji: "🗼", city: "Paris", duration: "1 hour", rating: 4.2, reviews: 55, price: "$19", x: 44, y: 44 },
+    { id: "a3", title: "Sainte-Chapelle Small Group Guided Tour", emoji: "⛪", city: "Paris", duration: "1.5 hours · Small group", rating: 4.7, reviews: 174, price: "$102", x: 30, y: 60 },
+    { id: "a4", title: "Louvre Museum Tour Mona Lisa & Iconic Masterpieces", emoji: "🖼️", city: "Paris", duration: "2 - 3 hours · Skip the line", rating: 4.7, reviews: 5873, price: "$95", oldPrice: "$112", x: 70, y: 66 },
+    { id: "a5", title: "Louvre Museum Entry & Seine River Cruise with Photos", emoji: "📸", city: "Paris", duration: "2 hours", rating: 3.9, reviews: 37, price: "$72", oldPrice: "$89", x: 52, y: 82 },
+  ],
+  filters = ["Filters", "Water activities", "Entry tickets"],
+  className = "",
+  onActivityClick,
+  onFilterClick,
+  onCloseMap,
+}: MapActivityListProps) {
+  const [activeId, setActiveId] = React.useState<string | null>(null);
+
+  return (
+    <div data-mapact className={`w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <div className="grid lg:grid-cols-[300px_1fr]">
+        {/* left column: filters + activity cards */}
+        <div data-mapact-list className="border-b border-zinc-200 p-4 lg:border-b-0 lg:border-r dark:border-zinc-800">
+          <div data-mapact-filters className="flex flex-wrap gap-2">
+            {filters.map((f) => (
+              <button
+                key={f}
+                data-mapact-filter={f}
+                type="button"
+                onClick={() => onFilterClick?.(f)}
+                className="inline-flex items-center gap-1 rounded-full border border-zinc-300 px-3 py-1 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800"
+              >
+                {f === "Filters" && <span aria-hidden="true">⚙</span>}
+                {f}
+              </button>
+            ))}
+          </div>
+          <div data-mapact-cards className="mt-4 max-h-96 space-y-3 overflow-y-auto lg:max-h-[520px]">
+            {activities.map((a) => (
+              <button
+                key={a.id}
+                data-mapact-item={a.id}
+                type="button"
+                onClick={() => {
+                  setActiveId(a.id);
+                  onActivityClick?.(a);
+                }}
+                className={`flex w-full gap-3 rounded-xl p-2 text-left transition-colors ${
+                  activeId === a.id ? "bg-indigo-50 dark:bg-indigo-950/40" : "hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
+                }`}
+              >
+                <span className="flex h-16 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-sky-200 to-indigo-200 text-2xl dark:from-sky-900 dark:to-indigo-900">
+                  {a.image ? <img src={a.image} alt={a.title} className="h-full w-full object-cover" /> : a.emoji ?? "📍"}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[11px] font-medium text-zinc-400 dark:text-zinc-500">{a.city}</span>
+                  <span data-mapact-item-title={a.id} className="block truncate text-sm font-semibold text-zinc-800 dark:text-zinc-100">{a.title}</span>
+                  <span className="block truncate text-[11px] text-zinc-400 dark:text-zinc-500">{a.duration}</span>
+                  <span className="mt-1 flex items-center justify-between gap-2">
+                    <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                      <span className="font-bold text-zinc-800 dark:text-zinc-100">{a.rating} ★</span> ({a.reviews})
+                    </span>
+                    <span className="whitespace-nowrap text-xs font-bold text-rose-600 dark:text-rose-400">
+                      {a.oldPrice && <s className="mr-1 font-normal text-zinc-400 dark:text-zinc-500">From {a.oldPrice}</s>}From {a.price}
+                    </span>
+                  </span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* right column: map placeholder with pins */}
+        <div data-mapact-map className="relative min-h-64">
+          <div data-mapact-mapcanvas className="h-full w-full" dangerouslySetInnerHTML={{ __html: MAP_SVG }} />
+          <button
+            data-mapact-close
+            type="button"
+            onClick={() => onCloseMap?.()}
+            className="absolute right-3 top-3 z-10 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 shadow-md transition-colors hover:bg-zinc-50 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
+          >
+            Close map ✕
+          </button>
+          {activities.map((a) => (
+            <button
+              key={a.id}
+              data-mapact-pin={a.id}
+              type="button"
+              title={a.title}
+              onClick={() => {
+                setActiveId(a.id);
+                onActivityClick?.(a);
+              }}
+              style={{ left: `${a.x}%`, top: `${a.y}%` }}
+              className={`absolute z-[5] -translate-x-1/2 -translate-y-1/2 rounded-full px-2 py-0.5 text-[11px] font-bold shadow transition-transform hover:scale-110 ${
+                activeId === a.id ? "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900" : "bg-white text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200"
+              }`}
+            >
+              {a.rating}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+====
 File: react/MapPropertyCard.tsx
 ====
 
@@ -16270,6 +16416,172 @@ export default function PaymentMethodCard({
 
 
 ====
+File: react/PermissionMatrix.tsx
+====
+
+/**
+ * PermissionMatrix - Roles × permissions matrix: heading with description,
+ * Overview / Permission details tabs, grouped permission rows (group header
+ * spans the table) and per-role cells with Edit / View only / No access /
+ * N/A states (Vanta roles permission-details pattern).
+ */
+import React from "react";
+
+export type PermissionCellState = "edit" | "view" | "none" | "na";
+
+export interface PermissionCell {
+  state: PermissionCellState;
+}
+
+export interface PermissionRow {
+  id: string;
+  label: string;
+  cells: PermissionCellState[]; // aligned with roles order
+}
+
+export interface PermissionGroup {
+  id: string;
+  title: string;
+  rows: PermissionRow[];
+}
+
+export interface PermissionMatrixProps {
+  title?: string;
+  description?: string;
+  roles?: string[];
+  groups?: PermissionGroup[];
+  className?: string;
+  onCellClick?: (detail: { row: PermissionRow; role: string; state: PermissionCellState; rowIndex: number; roleIndex: number }) => void;
+}
+
+const STATE_META: Record<PermissionCellState, { label: string; icon: string; cls: string }> = {
+  edit: { label: "Edit", icon: "✔", cls: "text-emerald-600 dark:text-emerald-400" },
+  view: { label: "View only", icon: "👁", cls: "text-zinc-600 dark:text-zinc-300" },
+  none: { label: "No access", icon: "✖", cls: "text-rose-600 dark:text-rose-400" },
+  na: { label: "N / A", icon: "", cls: "text-zinc-400 dark:text-zinc-500" },
+};
+
+export default function PermissionMatrix({
+  title = "Roles",
+  description = "Roles are bundles of permissions related to managing your security and compliance program. They ensure that team members have access to only what they need to complete their work.",
+  roles = ["Editor", "Auditor", "View only admin", "Sales admin"],
+  groups = [
+    {
+      id: "employee",
+      title: "Employee Experience",
+      rows: [
+        { id: "onboarding", label: "Can complete new hire onboarding tasks", cells: ["edit", "na", "edit", "edit"] },
+        { id: "personal", label: "Can update personal settings", cells: ["edit", "edit", "edit", "edit"] },
+      ],
+    },
+    {
+      id: "apps",
+      title: "Connected apps",
+      rows: [
+        { id: "integrations", label: "Integrations", cells: ["edit", "none", "view", "none"] },
+        { id: "tokens", label: "API Tokens", cells: ["none", "none", "view", "none"] },
+      ],
+    },
+    {
+      id: "compliance",
+      title: "Compliance pages",
+      rows: [
+        { id: "tests", label: "Tests & Documents", cells: ["edit", "view", "view", "none"] },
+        { id: "frameworks", label: "Frameworks & Controls", cells: ["edit", "view", "view", "none"] },
+        { id: "policies", label: "Policies", cells: ["edit", "view", "view", "none"] },
+      ],
+    },
+  ],
+  className = "",
+  onCellClick,
+}: PermissionMatrixProps) {
+  const [tab, setTab] = React.useState<"overview" | "details">("details");
+
+  return (
+    <div data-permmtx className={`w-full rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 sm:p-6 ${className}`}>
+      <h2 data-permmtx-title className="text-xl font-bold text-zinc-900 dark:text-zinc-50">{title}</h2>
+      <p data-permmtx-description className="mt-1.5 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">{description}</p>
+
+      {/* tabs */}
+      <div data-permmtx-tabs className="mt-4 flex gap-6 border-b border-zinc-200 dark:border-zinc-800">
+        {(["overview", "details"] as const).map((t) => (
+          <button
+            key={t}
+            data-permmtx-tab={t}
+            type="button"
+            onClick={() => setTab(t)}
+            className={`-mb-px border-b-2 pb-2 text-sm font-medium transition-colors ${
+              tab === t
+                ? "border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-300"
+                : "border-transparent text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+            }`}
+          >
+            {t === "overview" ? "Overview" : "Permission details"}
+          </button>
+        ))}
+      </div>
+
+      {tab === "details" ? (
+        <div data-permmtx-table className="mt-4 overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="border-b border-zinc-200 text-xs uppercase tracking-wide text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+                <th className="px-4 py-3 font-semibold">Actions</th>
+                {roles.map((r) => (
+                  <th key={r} data-permmtx-role={r} className="whitespace-nowrap px-4 py-3 text-center font-semibold">
+                    {r}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {groups.map((g) => (
+                <React.Fragment key={g.id}>
+                  <tr data-permmtx-group={g.id} className="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-800/50">
+                    <td colSpan={roles.length + 1} className="px-4 py-2.5 text-sm font-bold text-zinc-800 dark:text-zinc-100">
+                      {g.title}
+                    </td>
+                  </tr>
+                  {g.rows.map((row) => (
+                    <tr key={row.id} data-permmtx-row={row.id} className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60">
+                      <td className="px-4 py-3 font-medium text-zinc-700 dark:text-zinc-200">{row.label}</td>
+                      {row.cells.map((state, i) => {
+                        const meta = STATE_META[state] ?? STATE_META.na;
+                        return (
+                          <td key={roles[i] ?? i} className="px-4 py-3 text-center">
+                            <button
+                              type="button"
+                              data-permmtx-cell={`${row.id}:${roles[i]}`}
+                              data-permmtx-state={state}
+                              onClick={() => onCellClick?.({ row, role: roles[i] ?? "", state, rowIndex: 0, roleIndex: i })}
+                              className={`inline-flex items-center gap-1.5 text-xs font-medium transition-opacity hover:opacity-70 ${meta.cls}`}
+                            >
+                              {meta.icon && <span aria-hidden="true">{meta.icon}</span>}
+                              <span>{meta.label}</span>
+                            </button>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div data-permmtx-overview className="mt-4 rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+          <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+            {roles.length} roles · {groups.reduce((n, g) => n + g.rows.length, 0)} permission rules configured.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+====
 File: react/PersonaPresetGrid.tsx
 ====
 
@@ -18701,6 +19013,201 @@ export default SearchInput;
 
 
 ====
+File: react/SearchResultsPage.tsx
+====
+
+/**
+ * SearchResultsPage - Knowledge-base search results page: filter bar with
+ * dropdown selects, "Related searches" chip grid, result entries with icon,
+ * title, breadcrumb meta and summary snippet, sticky top search header
+ * (Confluence search pattern).
+ */
+import React from "react";
+
+export interface SearchResultEntry {
+  id: string;
+  title: string;
+  space: string;
+  type: string;
+  author: string;
+  updated: string;
+  snippet: string;
+}
+
+export interface SearchResultsPageProps {
+  query?: string;
+  filterSelects?: { id: string; label: string; options?: string[] }[];
+  relatedSearches?: string[];
+  results?: SearchResultEntry[];
+  className?: string;
+  onSearchSubmit?: (query: string) => void;
+  onFilterChange?: (id: string, value: string) => void;
+  onRelatedClick?: (term: string) => void;
+  onResultClick?: (entry: SearchResultEntry) => void;
+}
+
+export default function SearchResultsPage({
+  query = "brainstorming",
+  filterSelects = [
+    { id: "updated", label: "Last updated", options: ["Last updated", "Created", "Relevance"] },
+    { id: "type", label: "Type", options: ["Type", "Page", "Blog", "File"] },
+    { id: "contributor", label: "Contributor", options: ["Contributor", "Anyone", "Me"] },
+  ],
+  relatedSearches = ["brainstorming techniques", "brainstorming ideas", "brainstorming strategies", "brainstorming sessions", "brainstorming methods", "brainstorming activities"],
+  results = [
+    {
+      id: "s1",
+      title: "Design",
+      space: "Confluence",
+      type: "Page",
+      author: "Design",
+      updated: "Updated 8 days ago",
+      snippet: "…Welcome to your design team space! You're in the space overview. It's what visitors first see, like a landing page for your space · Click ✏️ Edit to customize your overview · A space contains pages. Create…",
+    },
+    {
+      id: "s2",
+      title: "Sam Design Guideline Document",
+      space: "Confluence",
+      type: "Page",
+      author: "Sam Lee",
+      updated: "Updated 21 hours ago",
+      snippet: "…Purpose · This document ensures visual consistency, usability, and brand alignment across all NimbusTech products and platforms. · Typography · Primary Font: Inter · Headings: Bold, sentence case · Body Text:…",
+    },
+    {
+      id: "s3",
+      title: "Template - How-to guide",
+      space: "Confluence",
+      type: "Page",
+      author: "Sam Lee",
+      updated: "Updated 23 hours ago",
+      snippet: "…Instructions · Highlight important information in a panel like this one. To edit this panel's color or style, select one of the options in the menu. · Related articles…",
+    },
+    {
+      id: "s4",
+      title: "Template - Design Systems",
+      space: "Confluence",
+      type: "Page",
+      author: "Design",
+      updated: "Updated 8 days ago",
+      snippet: "…This template is brought to you by InVision, a digital product design platform. · Design · Getting started · Design principles · Principle one · Principle two · Principle three · Visual language · Color…",
+    },
+    {
+      id: "s5",
+      title: "Overview",
+      space: "Confluence",
+      type: "Page",
+      author: "John Smith",
+      updated: "Updated 8 days ago",
+      snippet: "…Use this overview to onboard new teammates: mission, current projects, rituals and links to the most-used templates and guidelines…",
+    },
+  ],
+  className = "",
+  onSearchSubmit,
+  onFilterChange,
+  onRelatedClick,
+  onResultClick,
+}: SearchResultsPageProps) {
+  const [term, setTerm] = React.useState(query);
+  const [picked, setPicked] = React.useState<Record<string, string>>(() => Object.fromEntries(filterSelects.map((f) => [f.id, f.label])));
+
+  return (
+    <div data-srchres className={`w-full rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      {/* top search bar */}
+      <div data-srchres-topbar className="flex items-center gap-3 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+        <div className="flex flex-1 items-center gap-2 rounded-lg border border-zinc-300 px-3 py-1.5 focus-within:ring-2 focus-within:ring-blue-500/40 dark:border-zinc-600">
+          <span aria-hidden="true" className="text-zinc-400">⌕</span>
+          <input
+            data-srchres-input
+            type="text"
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") onSearchSubmit?.(term);
+            }}
+            className="w-full bg-transparent text-sm text-zinc-800 outline-none dark:text-zinc-100"
+            aria-label="Search"
+          />
+        </div>
+        <button
+          data-srchres-submit
+          type="button"
+          onClick={() => onSearchSubmit?.(term)}
+          className="rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-700"
+        >
+          Search
+        </button>
+      </div>
+
+      {/* filter selects */}
+      <div data-srchres-filters className="flex flex-wrap items-center gap-2 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+        {filterSelects.map((f) => (
+          <select
+            key={f.id}
+            data-srchres-filter={f.id}
+            value={picked[f.id] ?? f.label}
+            onChange={(e) => {
+              setPicked((p) => ({ ...p, [f.id]: e.target.value }));
+              onFilterChange?.(f.id, e.target.value);
+            }}
+            className="rounded-lg border border-zinc-300 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-600 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
+          >
+            {(f.options ?? [f.label]).map((o) => (
+              <option key={o} value={o}>
+                {o}
+              </option>
+            ))}
+          </select>
+        ))}
+        <span className="ml-auto text-xs text-zinc-400 dark:text-zinc-500">{results.length} results</span>
+      </div>
+
+      <div className="px-5 py-4">
+        {/* related searches chips */}
+        <p data-srchres-related-heading className="text-sm font-bold text-zinc-900 dark:text-zinc-50">Related searches</p>
+        <div data-srchres-related className="mt-3 grid gap-2 sm:grid-cols-2">
+          {relatedSearches.map((rs) => (
+            <button
+              key={rs}
+              data-srchres-related-chip={rs}
+              type="button"
+              onClick={() => onRelatedClick?.(rs)}
+              className="flex items-center gap-2 rounded-full bg-zinc-100 px-4 py-2 text-left text-sm text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
+            >
+              <span aria-hidden="true" className="text-zinc-400">⌕</span>
+              <span className="truncate">{rs}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* results */}
+        <div data-srchres-results className="mt-6 space-y-6">
+          {results.map((r) => (
+            <article key={r.id} data-srchres-result={r.id} className="group">
+              <button type="button" onClick={() => onResultClick?.(r)} className="block w-full text-left">
+                <h3 data-srchres-result-title={r.id} className="text-base font-semibold text-blue-600 group-hover:underline dark:text-blue-400">
+                  {r.title}
+                </h3>
+              </button>
+              <p className="mt-1 flex flex-wrap items-center gap-x-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                <span data-srchres-result-space={r.id} className="font-medium">{r.space}</span>
+                <span aria-hidden="true">•</span>
+                <span>{r.type}</span>
+                <span aria-hidden="true">•</span>
+                <span>{r.author}</span>
+                <span aria-hidden="true">•</span>
+                <span>{r.updated}</span>
+              </p>
+              <p className="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">{r.snippet}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+====
 File: react/SearchTypeahead.tsx
 ====
 
@@ -20984,6 +21491,144 @@ export const Stepper: React.FC<StepperProps> = ({ steps, current = 1, onStepClic
 };
 
 export default Stepper;
+
+
+====
+File: react/StockPhotoPicker.tsx
+====
+
+/**
+ * StockPhotoPicker - Media picker modal: title bar with close button,
+ * search input with clear, "Powered by" caption, masonry photo grid with
+ * hover author name + Add button, and optional confirm row (Substack
+ * stock-photos pattern).
+ */
+import React from "react";
+
+export interface StockPhoto {
+  id: string;
+  url: string;
+  alt?: string;
+  author?: string;
+  span?: 1 | 2; // 2 = taller tile
+}
+
+export interface StockPhotoPickerProps {
+  title?: string;
+  poweredBy?: string;
+  placeholder?: string;
+  photos?: StockPhoto[];
+  open?: boolean;
+  className?: string;
+  onSearch?: (query: string) => void;
+  onAdd?: (photo: StockPhoto) => void;
+  onClose?: () => void;
+}
+
+export default function StockPhotoPicker({
+  title = "Stock photos",
+  poweredBy = "Powered by Unsplash",
+  placeholder = "Search photos…",
+  photos = [
+    { id: "p1", url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=60", alt: "Sunlit forest path", author: "Casey Horner", span: 2 },
+    { id: "p2", url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=60", alt: "Mountain ridge", author: "Sam Tesla" },
+    { id: "p3", url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=60", alt: "Foggy hills", author: "Andreas Gücklhorn", span: 2 },
+    { id: "p4", url: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=600&q=60", alt: "Green meadow", author: "Lukasz Szmigiel" },
+    { id: "p5", url: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=600&q=60", alt: "Park trail", author: "Jerome Printr" },
+    { id: "p6", url: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=600&q=60", alt: "Autumn bench", author: "Josephine Baran" },
+  ],
+  open = true,
+  className = "",
+  onSearch,
+  onAdd,
+  onClose,
+}: StockPhotoPickerProps) {
+  const [query, setQuery] = React.useState("");
+
+  React.useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose?.();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  const filtered = query.trim() === "" ? photos : photos.filter((p) => (p.alt ?? "").toLowerCase().includes(query.trim().toLowerCase()));
+
+  return (
+    <div data-stkpic className={`relative w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-700 dark:bg-zinc-900 ${className}`}>
+      {/* title bar */}
+      <div data-stkpic-header className="flex items-center justify-between gap-4 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+        <h2 data-stkpic-title className="text-base font-bold text-zinc-900 dark:text-zinc-50">{title}</h2>
+        <button
+          data-stkpic-close
+          type="button"
+          aria-label="Close"
+          onClick={() => onClose?.()}
+          className="rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* search row */}
+      <div data-stkpic-searchrow className="px-5 pt-4">
+        <div className="flex items-center gap-2 rounded-xl border border-zinc-300 px-3 py-2 focus-within:ring-2 focus-within:ring-orange-500/40 dark:border-zinc-600">
+          <span aria-hidden="true" className="text-zinc-400">⌕</span>
+          <input
+            data-stkpic-input
+            type="text"
+            value={query}
+            placeholder={placeholder}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              onSearch?.(e.target.value);
+            }}
+            className="w-full bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 dark:text-zinc-100"
+          />
+          {query !== "" && (
+            <button data-stkpic-clear type="button" aria-label="Clear search" onClick={() => { setQuery(""); onSearch?.(""); }} className="text-zinc-400 transition-colors hover:text-zinc-700 dark:hover:text-zinc-200">
+              ✕
+            </button>
+          )}
+        </div>
+        <p data-stkpic-powered className="mt-2 text-xs text-zinc-400 dark:text-zinc-500">⭳ {poweredBy}</p>
+      </div>
+
+      {/* photo grid (CSS columns masonry) */}
+      <div data-stkpic-grid className="mt-3 max-h-96 overflow-y-auto px-5 pb-5">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {filtered.map((p) => (
+            <figure
+              key={p.id}
+              data-stkpic-item={p.id}
+              className="group relative overflow-hidden rounded-lg border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800"
+            >
+              <img src={p.url} alt={p.alt ?? ""} className={`w-full object-cover ${p.span === 2 ? "h-44" : "h-28"}`} />
+              <figcaption data-stkpic-meta={p.id} className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/70 to-transparent px-2 py-1.5 opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="truncate text-[11px] text-white">{p.author ?? ""}</span>
+                <button
+                  data-stkpic-add={p.id}
+                  type="button"
+                  onClick={() => onAdd?.(p)}
+                  className="rounded bg-emerald-600 px-2 py-0.5 text-[11px] font-semibold text-white transition-colors hover:bg-emerald-700"
+                >
+                  Add
+                </button>
+              </figcaption>
+            </figure>
+          ))}
+          {filtered.length === 0 && (
+            <p data-stkpic-empty className="col-span-full py-8 text-center text-sm text-zinc-400 dark:text-zinc-500">No photos match your search.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 
 ====
@@ -37274,6 +37919,136 @@ const toggleFollow = () => {
 
 
 ====
+File: vue/MapActivityList.vue
+====
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface MapActivity {
+  id: string;
+  title: string;
+  image?: string;
+  emoji?: string;
+  city: string;
+  duration: string;
+  rating: number;
+  reviews: number;
+  price: string;
+  oldPrice?: string;
+  x: number;
+  y: number;
+}
+
+export interface MapActivityListProps {
+  title?: string;
+  activities?: MapActivity[];
+  filters?: string[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<MapActivityListProps>(), {
+  title: "Paris",
+  activities: () => [
+    { id: "a1", title: "Seine River Sightseeing Evening Cruise with Champagne", emoji: "🥂", city: "Paris", duration: "1 hour", rating: 4.5, reviews: 341, price: "$43", x: 62, y: 24 },
+    { id: "a2", title: "Seine River Sightseeing Guided Cruise Vedettes du Pont Neuf", emoji: "🗼", city: "Paris", duration: "1 hour", rating: 4.2, reviews: 55, price: "$19", x: 44, y: 44 },
+    { id: "a3", title: "Sainte-Chapelle Small Group Guided Tour", emoji: "⛪", city: "Paris", duration: "1.5 hours · Small group", rating: 4.7, reviews: 174, price: "$102", x: 30, y: 60 },
+    { id: "a4", title: "Louvre Museum Tour Mona Lisa & Iconic Masterpieces", emoji: "🖼️", city: "Paris", duration: "2 - 3 hours · Skip the line", rating: 4.7, reviews: 5873, price: "$95", oldPrice: "$112", x: 70, y: 66 },
+    { id: "a5", title: "Louvre Museum Entry & Seine River Cruise with Photos", emoji: "📸", city: "Paris", duration: "2 hours", rating: 3.9, reviews: 37, price: "$72", oldPrice: "$89", x: 52, y: 82 },
+  ],
+  filters: () => ["Filters", "Water activities", "Entry tickets"],
+  class: "",
+});
+
+const emit = defineEmits(["activity-click", "filter-click", "close-map"]);
+
+const activeId = ref<string | null>(null);
+
+const pick = (a: MapActivity) => {
+  activeId.value = a.id;
+  emit("activity-click", a);
+};
+</script>
+
+<template>
+  <div data-mapact class="w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900" :class="props.class">
+    <div class="grid lg:grid-cols-[300px_1fr]">
+      <div data-mapact-list class="border-b border-zinc-200 p-4 lg:border-b-0 lg:border-r dark:border-zinc-800">
+        <div data-mapact-filters class="flex flex-wrap gap-2">
+          <button
+            v-for="f in props.filters"
+            :key="f"
+            :data-mapact-filter="f"
+            type="button"
+            class="inline-flex items-center gap-1 rounded-full border border-zinc-300 px-3 py-1 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800"
+            @click="emit('filter-click', f)"
+          >
+            <span v-if="f === 'Filters'" aria-hidden="true">⚙</span>
+            {{ f }}
+          </button>
+        </div>
+        <div data-mapact-cards class="mt-4 max-h-96 space-y-3 overflow-y-auto lg:max-h-[520px]">
+          <button
+            v-for="a in props.activities"
+            :key="a.id"
+            :data-mapact-item="a.id"
+            type="button"
+            class="flex w-full gap-3 rounded-xl p-2 text-left transition-colors"
+            :class="activeId === a.id ? 'bg-indigo-50 dark:bg-indigo-950/40' : 'hover:bg-zinc-50 dark:hover:bg-zinc-800/60'"
+            @click="pick(a)"
+          >
+            <span class="flex h-16 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-sky-200 to-indigo-200 text-2xl dark:from-sky-900 dark:to-indigo-900">
+              <img v-if="a.image" :src="a.image" :alt="a.title" class="h-full w-full object-cover" />
+              <template v-else>{{ a.emoji ?? '📍' }}</template>
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[11px] font-medium text-zinc-400 dark:text-zinc-500">{{ a.city }}</span>
+              <span :data-mapact-item-title="a.id" class="block truncate text-sm font-semibold text-zinc-800 dark:text-zinc-100">{{ a.title }}</span>
+              <span class="block truncate text-[11px] text-zinc-400 dark:text-zinc-500">{{ a.duration }}</span>
+              <span class="mt-1 flex items-center justify-between gap-2">
+                <span class="text-[11px] text-zinc-500 dark:text-zinc-400"><span class="font-bold text-zinc-800 dark:text-zinc-100">{{ a.rating }} ★</span> ({{ a.reviews }})</span>
+                <span class="whitespace-nowrap text-xs font-bold text-rose-600 dark:text-rose-400">
+                  <s v-if="a.oldPrice" class="mr-1 font-normal text-zinc-400 dark:text-zinc-500">From {{ a.oldPrice }}</s>From {{ a.price }}
+                </span>
+              </span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div data-mapact-map class="relative min-h-64 bg-sky-50 dark:bg-sky-950">
+        <div data-mapact-mapcanvas class="absolute inset-0" aria-hidden="true">
+          <svg viewBox="0 0 400 300" class="h-full w-full" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="300" fill="#e8f0e4" />
+            <path d="M0 210 C90 190 150 240 260 220 S360 250 400 230 L400 300 L0 300 Z" fill="#a5d0e8" />
+            <path d="M-10 40 C60 70 120 30 200 60 S330 40 410 80" stroke="#f6d5a7" stroke-width="10" fill="none" />
+            <path d="M-10 120 C70 100 160 150 250 110 S350 130 410 110" stroke="#f6d5a7" stroke-width="8" fill="none" />
+            <rect x="40" y="30" width="50" height="34" fill="#d5e6c8" />
+            <rect x="290" y="40" width="60" height="40" fill="#d5e6c8" />
+            <rect x="180" y="150" width="44" height="30" fill="#d5e6c8" />
+          </svg>
+        </div>
+        <button data-mapact-close type="button" class="absolute right-3 top-3 z-10 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 shadow-md transition-colors hover:bg-zinc-50 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700" @click="emit('close-map')">Close map ✕</button>
+        <button
+          v-for="a in props.activities"
+          :key="a.id"
+          :data-mapact-pin="a.id"
+          type="button"
+          :title="a.title"
+          :style="{ left: a.x + '%', top: a.y + '%' }"
+          class="absolute z-[5] -translate-x-1/2 -translate-y-1/2 rounded-full px-2 py-0.5 text-[11px] font-bold shadow transition-transform hover:scale-110"
+          :class="activeId === a.id ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' : 'bg-white text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200'"
+          @click="pick(a)"
+        >
+          {{ a.rating }}
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+====
 File: vue/MapPropertyCard.vue
 ====
 
@@ -39504,6 +40279,147 @@ const brandTone = computed(() => BRAND_TONE[key.value] || 'bg-zinc-700 text-whit
 
 
 ====
+File: vue/PermissionMatrix.vue
+====
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+export type PermissionCellState = "edit" | "view" | "none" | "na";
+
+export interface PermissionRow {
+  id: string;
+  label: string;
+  cells: PermissionCellState[];
+}
+
+export interface PermissionGroup {
+  id: string;
+  title: string;
+  rows: PermissionRow[];
+}
+
+export interface PermissionMatrixProps {
+  title?: string;
+  description?: string;
+  roles?: string[];
+  groups?: PermissionGroup[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<PermissionMatrixProps>(), {
+  title: "Roles",
+  description: "Roles are bundles of permissions related to managing your security and compliance program. They ensure that team members have access to only what they need to complete their work.",
+  roles: () => ["Editor", "Auditor", "View only admin", "Sales admin"],
+  groups: () => [
+    {
+      id: "employee",
+      title: "Employee Experience",
+      rows: [
+        { id: "onboarding", label: "Can complete new hire onboarding tasks", cells: ["edit", "na", "edit", "edit"] },
+        { id: "personal", label: "Can update personal settings", cells: ["edit", "edit", "edit", "edit"] },
+      ],
+    },
+    {
+      id: "apps",
+      title: "Connected apps",
+      rows: [
+        { id: "integrations", label: "Integrations", cells: ["edit", "none", "view", "none"] },
+        { id: "tokens", label: "API Tokens", cells: ["none", "none", "view", "none"] },
+      ],
+    },
+    {
+      id: "compliance",
+      title: "Compliance pages",
+      rows: [
+        { id: "tests", label: "Tests & Documents", cells: ["edit", "view", "view", "none"] },
+        { id: "frameworks", label: "Frameworks & Controls", cells: ["edit", "view", "view", "none"] },
+        { id: "policies", label: "Policies", cells: ["edit", "view", "view", "none"] },
+      ],
+    },
+  ],
+  class: "",
+});
+
+const emit = defineEmits(["cell-click"]);
+
+const tab = ref<"overview" | "details">("details");
+
+const STATE_META: Record<string, { label: string; icon: string; cls: string }> = {
+  edit: { label: "Edit", icon: "✔", cls: "text-emerald-600 dark:text-emerald-400" },
+  view: { label: "View only", icon: "👁", cls: "text-zinc-600 dark:text-zinc-300" },
+  none: { label: "No access", icon: "✖", cls: "text-rose-600 dark:text-rose-400" },
+  na: { label: "N / A", icon: "", cls: "text-zinc-400 dark:text-zinc-500" },
+};
+
+const pickCell = (row: PermissionRow, role: string, state: PermissionCellState, roleIndex: number) => {
+  emit("cell-click", { row, role, state, roleIndex });
+};
+</script>
+
+<template>
+  <div data-permmtx class="w-full rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 sm:p-6" :class="props.class">
+    <h2 data-permmtx-title class="text-xl font-bold text-zinc-900 dark:text-zinc-50">{{ props.title }}</h2>
+    <p data-permmtx-description class="mt-1.5 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">{{ props.description }}</p>
+
+    <div data-permmtx-tabs class="mt-4 flex gap-6 border-b border-zinc-200 dark:border-zinc-800">
+      <button
+        v-for="t in ['overview', 'details']"
+        :key="t"
+        :data-permmtx-tab="t"
+        type="button"
+        class="-mb-px border-b-2 pb-2 text-sm font-medium transition-colors"
+        :class="tab === t ? 'border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-300' : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200'"
+        @click="tab = t"
+      >
+        {{ t === 'overview' ? 'Overview' : 'Permission details' }}
+      </button>
+    </div>
+
+    <div v-if="tab === 'details'" data-permmtx-table class="mt-4 overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800">
+      <table class="w-full text-left text-sm">
+        <thead>
+          <tr class="border-b border-zinc-200 text-xs uppercase tracking-wide text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+            <th class="px-4 py-3 font-semibold">Actions</th>
+            <th v-for="r in props.roles" :key="r" :data-permmtx-role="r" class="whitespace-nowrap px-4 py-3 text-center font-semibold">{{ r }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="g in props.groups" :key="g.id">
+            <tr :data-permmtx-group="g.id" class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-800/50">
+              <td :colspan="props.roles.length + 1" class="px-4 py-2.5 text-sm font-bold text-zinc-800 dark:text-zinc-100">{{ g.title }}</td>
+            </tr>
+            <tr v-for="row in g.rows" :key="row.id" :data-permmtx-row="row.id" class="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60">
+              <td class="px-4 py-3 font-medium text-zinc-700 dark:text-zinc-200">{{ row.label }}</td>
+              <td v-for="(state, i) in row.cells" :key="props.roles[i] ?? i" class="px-4 py-3 text-center">
+                <button
+                  type="button"
+                  :data-permmtx-cell="row.id + ':' + props.roles[i]"
+                  :data-permmtx-state="state"
+                  class="inline-flex items-center gap-1.5 text-xs font-medium transition-opacity hover:opacity-70"
+                  :class="STATE_META[state]?.cls"
+                  @click="pickCell(row, props.roles[i] ?? '', state, i)"
+                >
+                  <span v-if="STATE_META[state]?.icon" aria-hidden="true">{{ STATE_META[state]?.icon }}</span>
+                  <span>{{ STATE_META[state]?.label }}</span>
+                </button>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+
+    <div v-else data-permmtx-overview class="mt-4 rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+      <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+        {{ props.roles.length }} roles · {{ props.groups.reduce((n, g) => n + g.rows.length, 0) }} permission rules configured.
+      </p>
+    </div>
+  </div>
+</template>
+
+
+====
 File: vue/PersonaPresetGrid.vue
 ====
 
@@ -41501,6 +42417,159 @@ onMounted(() => {
 
 
 ====
+File: vue/SearchResultsPage.vue
+====
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface SearchResultEntry {
+  id: string;
+  title: string;
+  space: string;
+  type: string;
+  author: string;
+  updated: string;
+  snippet: string;
+}
+
+export interface SearchResultsPageProps {
+  query?: string;
+  filterSelects?: { id: string; label: string; options?: string[] }[];
+  relatedSearches?: string[];
+  results?: SearchResultEntry[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<SearchResultsPageProps>(), {
+  query: "brainstorming",
+  filterSelects: () => [
+    { id: "updated", label: "Last updated", options: ["Last updated", "Created", "Relevance"] },
+    { id: "type", label: "Type", options: ["Type", "Page", "Blog", "File"] },
+    { id: "contributor", label: "Contributor", options: ["Contributor", "Anyone", "Me"] },
+  ],
+  relatedSearches: () => ["brainstorming techniques", "brainstorming ideas", "brainstorming strategies", "brainstorming sessions", "brainstorming methods", "brainstorming activities"],
+  results: () => [
+    {
+      id: "s1",
+      title: "Design",
+      space: "Confluence",
+      type: "Page",
+      author: "Design",
+      updated: "Updated 8 days ago",
+      snippet: "…Welcome to your design team space! You're in the space overview. It's what visitors first see, like a landing page for your space · Click ✏️ Edit to customize your overview · A space contains pages. Create…",
+    },
+    {
+      id: "s2",
+      title: "Sam Design Guideline Document",
+      space: "Confluence",
+      type: "Page",
+      author: "Sam Lee",
+      updated: "Updated 21 hours ago",
+      snippet: "…Purpose · This document ensures visual consistency, usability, and brand alignment across all NimbusTech products and platforms. · Typography · Primary Font: Inter · Headings: Bold, sentence case · Body Text:…",
+    },
+    {
+      id: "s3",
+      title: "Template - How-to guide",
+      space: "Confluence",
+      type: "Page",
+      author: "Sam Lee",
+      updated: "Updated 23 hours ago",
+      snippet: "…Instructions · Highlight important information in a panel like this one. To edit this panel's color or style, select one of the options in the menu. · Related articles…",
+    },
+    {
+      id: "s4",
+      title: "Template - Design Systems",
+      space: "Confluence",
+      type: "Page",
+      author: "Design",
+      updated: "Updated 8 days ago",
+      snippet: "…This template is brought to you by InVision, a digital product design platform. · Design · Getting started · Design principles · Principle one · Principle two · Principle three · Visual language · Color…",
+    },
+    {
+      id: "s5",
+      title: "Overview",
+      space: "Confluence",
+      type: "Page",
+      author: "John Smith",
+      updated: "Updated 8 days ago",
+      snippet: "…Use this overview to onboard new teammates: mission, current projects, rituals and links to the most-used templates and guidelines…",
+    },
+  ],
+  class: "",
+});
+
+const emit = defineEmits(["search-submit", "filter-change", "related-click", "result-click"]);
+
+const term = ref(props.query);
+const picked = ref<Record<string, string>>(Object.fromEntries(props.filterSelects.map((f) => [f.id, f.label])));
+
+const submit = () => emit("search-submit", term.value);
+</script>
+
+<template>
+  <div data-srchres class="w-full rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900" :class="props.class">
+    <div data-srchres-topbar class="flex items-center gap-3 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+      <div class="flex flex-1 items-center gap-2 rounded-lg border border-zinc-300 px-3 py-1.5 focus-within:ring-2 focus-within:ring-blue-500/40 dark:border-zinc-600">
+        <span aria-hidden="true" class="text-zinc-400">⌕</span>
+        <input data-srchres-input v-model="term" type="text" class="w-full bg-transparent text-sm text-zinc-800 outline-none dark:text-zinc-100" aria-label="Search" @keydown.enter="submit" />
+      </div>
+      <button data-srchres-submit type="button" class="rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-700" @click="submit">Search</button>
+    </div>
+
+    <div data-srchres-filters class="flex flex-wrap items-center gap-2 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+      <select
+        v-for="f in props.filterSelects"
+        :key="f.id"
+        :data-srchres-filter="f.id"
+        v-model="picked[f.id]"
+        class="rounded-lg border border-zinc-300 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-600 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
+        @change="emit('filter-change', f.id, picked[f.id])"
+      >
+        <option v-for="o in f.options ?? [f.label]" :key="o" :value="o">{{ o }}</option>
+      </select>
+      <span class="ml-auto text-xs text-zinc-400 dark:text-zinc-500">{{ props.results.length }} results</span>
+    </div>
+
+    <div class="px-5 py-4">
+      <p data-srchres-related-heading class="text-sm font-bold text-zinc-900 dark:text-zinc-50">Related searches</p>
+      <div data-srchres-related class="mt-3 grid gap-2 sm:grid-cols-2">
+        <button
+          v-for="rs in props.relatedSearches"
+          :key="rs"
+          :data-srchres-related-chip="rs"
+          type="button"
+          class="flex items-center gap-2 rounded-full bg-zinc-100 px-4 py-2 text-left text-sm text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
+          @click="emit('related-click', rs)"
+        >
+          <span aria-hidden="true" class="text-zinc-400">⌕</span>
+          <span class="truncate">{{ rs }}</span>
+        </button>
+      </div>
+
+      <div data-srchres-results class="mt-6 space-y-6">
+        <article v-for="r in props.results" :key="r.id" :data-srchres-result="r.id" class="group">
+          <button type="button" class="block w-full text-left" @click="emit('result-click', r)">
+            <h3 :data-srchres-result-title="r.id" class="text-base font-semibold text-blue-600 group-hover:underline dark:text-blue-400">{{ r.title }}</h3>
+          </button>
+          <p class="mt-1 flex flex-wrap items-center gap-x-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+            <span :data-srchres-result-space="r.id" class="font-medium">{{ r.space }}</span>
+            <span aria-hidden="true">•</span>
+            <span>{{ r.type }}</span>
+            <span aria-hidden="true">•</span>
+            <span>{{ r.author }}</span>
+            <span aria-hidden="true">•</span>
+            <span>{{ r.updated }}</span>
+          </p>
+          <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">{{ r.snippet }}</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+====
 File: vue/SearchTypeahead.vue
 ====
 
@@ -43392,6 +44461,113 @@ const statusFor = (step: StepperStep, index: number): StepperStatus =>
 
 const clickable = (step: StepperStep, index: number) => statusFor(step, index) !== 'upcoming';
 </script>
+
+
+====
+File: vue/StockPhotoPicker.vue
+====
+
+<script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+
+export interface StockPhoto {
+  id: string;
+  url: string;
+  alt?: string;
+  author?: string;
+  span?: 1 | 2;
+}
+
+export interface StockPhotoPickerProps {
+  title?: string;
+  poweredBy?: string;
+  placeholder?: string;
+  photos?: StockPhoto[];
+  open?: boolean;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<StockPhotoPickerProps>(), {
+  title: "Stock photos",
+  poweredBy: "Powered by Unsplash",
+  placeholder: "Search photos…",
+  photos: () => [
+    { id: "p1", url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=60", alt: "Sunlit forest path", author: "Casey Horner", span: 2 },
+    { id: "p2", url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=60", alt: "Mountain ridge", author: "Sam Tesla" },
+    { id: "p3", url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=60", alt: "Foggy hills", author: "Andreas Gücklhorn", span: 2 },
+    { id: "p4", url: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=600&q=60", alt: "Green meadow", author: "Lukasz Szmigiel" },
+    { id: "p5", url: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=600&q=60", alt: "Park trail", author: "Jerome Printr" },
+    { id: "p6", url: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=600&q=60", alt: "Autumn bench", author: "Josephine Baran" },
+  ],
+  open: true,
+  class: "",
+});
+
+const emit = defineEmits(["search", "add", "close"]);
+
+const query = ref("");
+
+const filtered = computed(() => {
+  const q = query.value.trim().toLowerCase();
+  if (q === "") return props.photos;
+  return props.photos.filter((p) => (p.alt ?? "").toLowerCase().includes(q));
+});
+
+const onKey = (e: KeyboardEvent) => {
+  if (e.key === "Escape") emit("close");
+};
+
+onMounted(() => window.addEventListener("keydown", onKey));
+onBeforeUnmount(() => window.removeEventListener("keydown", onKey));
+
+const clearSearch = () => {
+  query.value = "";
+  emit("search", "");
+};
+</script>
+
+<template>
+  <div v-if="props.open" data-stkpic class="relative w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-700 dark:bg-zinc-900" :class="props.class">
+    <div data-stkpic-header class="flex items-center justify-between gap-4 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+      <h2 data-stkpic-title class="text-base font-bold text-zinc-900 dark:text-zinc-50">{{ props.title }}</h2>
+      <button data-stkpic-close type="button" aria-label="Close" class="rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-100" @click="emit('close')">✕</button>
+    </div>
+
+    <div data-stkpic-searchrow class="px-5 pt-4">
+      <div class="flex items-center gap-2 rounded-xl border border-zinc-300 px-3 py-2 focus-within:ring-2 focus-within:ring-orange-500/40 dark:border-zinc-600">
+        <span aria-hidden="true" class="text-zinc-400">⌕</span>
+        <input
+          data-stkpic-input
+          type="text"
+          v-model="query"
+          :placeholder="props.placeholder"
+          class="w-full bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 dark:text-zinc-100"
+          @input="emit('search', query)"
+        />
+        <button v-if="query !== ''" data-stkpic-clear type="button" aria-label="Clear search" class="text-zinc-400 transition-colors hover:text-zinc-700 dark:hover:text-zinc-200" @click="clearSearch">✕</button>
+      </div>
+      <p data-stkpic-powered class="mt-2 text-xs text-zinc-400 dark:text-zinc-500">⭳ {{ props.poweredBy }}</p>
+    </div>
+
+    <div data-stkpic-grid class="mt-3 max-h-96 overflow-y-auto px-5 pb-5">
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <figure
+          v-for="p in filtered"
+          :key="p.id"
+          :data-stkpic-item="p.id"
+          class="group relative overflow-hidden rounded-lg border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800"
+        >
+          <img :src="p.url" :alt="p.alt ?? ''" class="w-full object-cover" :class="p.span === 2 ? 'h-44' : 'h-28'" />
+          <figcaption :data-stkpic-meta="p.id" class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/70 to-transparent px-2 py-1.5 opacity-0 transition-opacity group-hover:opacity-100">
+            <span class="truncate text-[11px] text-white">{{ p.author ?? '' }}</span>
+            <button :data-stkpic-add="p.id" type="button" class="rounded bg-emerald-600 px-2 py-0.5 text-[11px] font-semibold text-white transition-colors hover:bg-emerald-700" @click="emit('add', p)">Add</button>
+          </figcaption>
+        </figure>
+        <p v-if="filtered.length === 0" data-stkpic-empty class="col-span-full py-8 text-center text-sm text-zinc-400 dark:text-zinc-500">No photos match your search.</p>
+      </div>
+    </div>
+  </div>
+</template>
 
 
 ====
@@ -63377,6 +64553,170 @@ export default LiveTailLogConsoleElement;
 
 
 ====
+File: vanilla/MapActivityList.js
+====
+
+/**
+ * MapActivityList - Map + activity list split view: left column with filter
+ * chips and scrollable activity cards (image, title, duration, rating,
+ * price), right map placeholder with rating pin bubbles and close button
+ * (GetYourGuide map-search pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_ACTIVITIES = () => [
+  { id: 'a1', title: 'Seine River Sightseeing Evening Cruise with Champagne', emoji: '🥂', city: 'Paris', duration: '1 hour', rating: 4.5, reviews: 341, price: '$43', x: 62, y: 24 },
+  { id: 'a2', title: 'Seine River Sightseeing Guided Cruise Vedettes du Pont Neuf', emoji: '🗼', city: 'Paris', duration: '1 hour', rating: 4.2, reviews: 55, price: '$19', x: 44, y: 44 },
+  { id: 'a3', title: 'Sainte-Chapelle Small Group Guided Tour', emoji: '⛪', city: 'Paris', duration: '1.5 hours · Small group', rating: 4.7, reviews: 174, price: '$102', x: 30, y: 60 },
+  { id: 'a4', title: 'Louvre Museum Tour Mona Lisa & Iconic Masterpieces', emoji: '🖼️', city: 'Paris', duration: '2 - 3 hours · Skip the line', rating: 4.7, reviews: 5873, price: '$95', oldPrice: '$112', x: 70, y: 66 },
+  { id: 'a5', title: 'Louvre Museum Entry & Seine River Cruise with Photos', emoji: '📸', city: 'Paris', duration: '2 hours', rating: 3.9, reviews: 37, price: '$72', oldPrice: '$89', x: 52, y: 82 },
+];
+
+const DEFAULT_FILTERS = () => ['Filters', 'Water activities', 'Entry tickets'];
+
+const MAP_SVG = `<svg viewBox="0 0 400 300" class="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="300" fill="#e8f0e4"/><path d="M0 210 C90 190 150 240 260 220 S360 250 400 230 L400 300 L0 300 Z" fill="#a5d0e8"/><path d="M-10 40 C60 70 120 30 200 60 S330 40 410 80" stroke="#f6d5a7" stroke-width="10" fill="none"/><path d="M-10 120 C70 100 160 150 250 110 S350 130 410 110" stroke="#f6d5a7" stroke-width="8" fill="none"/><rect x="40" y="30" width="50" height="34" fill="#d5e6c8"/><rect x="290" y="40" width="60" height="40" fill="#d5e6c8"/><rect x="180" y="150" width="44" height="30" fill="#d5e6c8"/></svg>`;
+
+class MapActivityListElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'activities', 'filters'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._activeId = null;
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  _emitActivity(id) {
+    const activities = parseJsonAttr(this.getAttribute('activities'), DEFAULT_ACTIVITIES());
+    const found = activities.find((a) => a.id === id);
+    this._activeId = id;
+    if (found) this.dispatchEvent(new CustomEvent('activity-click', { detail: { activity: found }, bubbles: true }));
+    this._render();
+  }
+
+  _onClick(event) {
+    const filter = event.target.closest('[data-mapact-filter]');
+    if (filter) {
+      this.dispatchEvent(new CustomEvent('filter-click', { detail: { filter: filter.getAttribute('data-mapact-filter') }, bubbles: true }));
+      return;
+    }
+    if (event.target.closest('[data-mapact-close]')) {
+      this.dispatchEvent(new CustomEvent('close-map', { bubbles: true }));
+      return;
+    }
+    const pin = event.target.closest('[data-mapact-pin]');
+    if (pin) {
+      this._emitActivity(pin.getAttribute('data-mapact-pin'));
+      return;
+    }
+    const item = event.target.closest('[data-mapact-item]');
+    if (item) {
+      this._emitActivity(item.getAttribute('data-mapact-item'));
+    }
+  }
+
+  _render() {
+    const activities = parseJsonAttr(this.getAttribute('activities'), DEFAULT_ACTIVITIES());
+    const filters = parseJsonAttr(this.getAttribute('filters'), DEFAULT_FILTERS());
+
+    const filtersHtml = filters
+      .map(
+        (f) => `<button data-mapact-filter="${escapeAttribute(f)}" type="button" class="inline-flex items-center gap-1 rounded-full border border-zinc-300 px-3 py-1 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800">
+            ${f === 'Filters' ? '<span aria-hidden="true">⚙</span>' : ''}${escapeAttribute(f)}
+          </button>`
+      )
+      .join('');
+
+    const cardsHtml = activities
+      .map((a) => {
+        const activeCls = this._activeId === a.id ? 'bg-indigo-50 dark:bg-indigo-950/40' : 'hover:bg-zinc-50 dark:hover:bg-zinc-800/60';
+        return `<button data-mapact-item="${escapeAttribute(a.id)}" type="button" class="flex w-full gap-3 rounded-xl p-2 text-left transition-colors ${activeCls}">
+            <span class="flex h-16 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-sky-200 to-indigo-200 text-2xl dark:from-sky-900 dark:to-indigo-900">
+              ${a.image ? `<img src="${escapeAttribute(a.image)}" alt="${escapeAttribute(a.title)}" class="h-full w-full object-cover" />` : escapeAttribute(a.emoji ?? '📍')}
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[11px] font-medium text-zinc-400 dark:text-zinc-500">${escapeAttribute(a.city)}</span>
+              <span data-mapact-item-title="${escapeAttribute(a.id)}" class="block truncate text-sm font-semibold text-zinc-800 dark:text-zinc-100">${escapeAttribute(a.title)}</span>
+              <span class="block truncate text-[11px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(a.duration)}</span>
+              <span class="mt-1 flex items-center justify-between gap-2">
+                <span class="text-[11px] text-zinc-500 dark:text-zinc-400"><span class="font-bold text-zinc-800 dark:text-zinc-100">${escapeAttribute(a.rating)} ★</span> (${escapeAttribute(a.reviews)})</span>
+                <span class="whitespace-nowrap text-xs font-bold text-rose-600 dark:text-rose-400">${a.oldPrice ? `<s class="mr-1 font-normal text-zinc-400 dark:text-zinc-500">From ${escapeAttribute(a.oldPrice)}</s>` : ''}From ${escapeAttribute(a.price)}</span>
+              </span>
+            </span>
+          </button>`;
+      })
+      .join('');
+
+    const pinsHtml = activities
+      .map((a) => {
+        const activeCls = this._activeId === a.id ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' : 'bg-white text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200';
+        return `<button data-mapact-pin="${escapeAttribute(a.id)}" type="button" title="${escapeAttribute(a.title)}"
+            style="left:${escapeAttribute(a.x)}%;top:${escapeAttribute(a.y)}%"
+            class="absolute z-[5] -translate-x-1/2 -translate-y-1/2 rounded-full px-2 py-0.5 text-[11px] font-bold shadow transition-transform hover:scale-110 ${activeCls}">
+            ${escapeAttribute(a.rating)}
+          </button>`;
+      })
+      .join('');
+
+    this.innerHTML = `
+      <div data-mapact class="w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <div class="grid lg:grid-cols-[300px_1fr]">
+          <div data-mapact-list class="border-b border-zinc-200 p-4 lg:border-b-0 lg:border-r dark:border-zinc-800">
+            <div data-mapact-filters class="flex flex-wrap gap-2">${filtersHtml}</div>
+            <div data-mapact-cards class="mt-4 max-h-96 space-y-3 overflow-y-auto lg:max-h-[520px]">${cardsHtml}</div>
+          </div>
+          <div data-mapact-map class="relative min-h-64 bg-sky-50 dark:bg-sky-950">
+            <div data-mapact-mapcanvas class="absolute inset-0" aria-hidden="true">${MAP_SVG}</div>
+            <button data-mapact-close type="button" class="absolute right-3 top-3 z-10 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 shadow-md transition-colors hover:bg-zinc-50 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700">Close map ✕</button>
+            ${pinsHtml}
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('map-activity-list')) {
+  customElements.define('map-activity-list', MapActivityListElement);
+}
+
+export default MapActivityListElement;
+
+
+====
 File: vanilla/MapPropertyCard.js
 ====
 
@@ -66645,6 +67985,210 @@ export default PaymentMethodCardElement;
 
 
 ====
+File: vanilla/PermissionMatrix.js
+====
+
+/**
+ * PermissionMatrix - Roles × permissions matrix: heading with description,
+ * Overview / Permission details tabs, grouped permission rows and per-role
+ * cells with Edit / View only / No access / N/A states (Vanta pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_ROLES = () => ['Editor', 'Auditor', 'View only admin', 'Sales admin'];
+
+const DEFAULT_GROUPS = () => [
+  {
+    id: 'employee',
+    title: 'Employee Experience',
+    rows: [
+      { id: 'onboarding', label: 'Can complete new hire onboarding tasks', cells: ['edit', 'na', 'edit', 'edit'] },
+      { id: 'personal', label: 'Can update personal settings', cells: ['edit', 'edit', 'edit', 'edit'] },
+    ],
+  },
+  {
+    id: 'apps',
+    title: 'Connected apps',
+    rows: [
+      { id: 'integrations', label: 'Integrations', cells: ['edit', 'none', 'view', 'none'] },
+      { id: 'tokens', label: 'API Tokens', cells: ['none', 'none', 'view', 'none'] },
+    ],
+  },
+  {
+    id: 'compliance',
+    title: 'Compliance pages',
+    rows: [
+      { id: 'tests', label: 'Tests & Documents', cells: ['edit', 'view', 'view', 'none'] },
+      { id: 'frameworks', label: 'Frameworks & Controls', cells: ['edit', 'view', 'view', 'none'] },
+      { id: 'policies', label: 'Policies', cells: ['edit', 'view', 'view', 'none'] },
+    ],
+  },
+];
+
+const STATE_META = {
+  edit: { label: 'Edit', icon: '✔', cls: 'text-emerald-600 dark:text-emerald-400' },
+  view: { label: 'View only', icon: '👁', cls: 'text-zinc-600 dark:text-zinc-300' },
+  none: { label: 'No access', icon: '✖', cls: 'text-rose-600 dark:text-rose-400' },
+  na: { label: 'N / A', icon: '', cls: 'text-zinc-400 dark:text-zinc-500' },
+};
+
+class PermissionMatrixElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'description', 'roles', 'groups'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._tab = 'details';
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  _onClick(event) {
+    const tabBtn = event.target.closest('[data-permmtx-tab]');
+    if (tabBtn) {
+      this._tab = tabBtn.getAttribute('data-permmtx-tab');
+      this._render();
+      return;
+    }
+    const cell = event.target.closest('[data-permmtx-cell]');
+    if (cell) {
+      const roles = parseJsonAttr(this.getAttribute('roles'), DEFAULT_ROLES());
+      const groups = parseJsonAttr(this.getAttribute('groups'), DEFAULT_GROUPS());
+      const cellKey = cell.getAttribute('data-permmtx-cell') || '';
+      const [rowId, role] = cellKey.split(':');
+      const state = cell.getAttribute('data-permmtx-state') || 'na';
+      let foundRow = null;
+      for (const g of groups) {
+        const r = g.rows.find((row) => row.id === rowId);
+        if (r) {
+          foundRow = r;
+          break;
+        }
+      }
+      if (foundRow) {
+        this.dispatchEvent(
+          new CustomEvent('cell-click', { detail: { row: foundRow, role, state, roleIndex: roles.indexOf(role) }, bubbles: true })
+        );
+      }
+    }
+  }
+
+  _render() {
+    const title = this.getAttribute('title') || 'Roles';
+    const description =
+      this.getAttribute('description') ||
+      'Roles are bundles of permissions related to managing your security and compliance program. They ensure that team members have access to only what they need to complete their work.';
+    const roles = parseJsonAttr(this.getAttribute('roles'), DEFAULT_ROLES());
+    const groups = parseJsonAttr(this.getAttribute('groups'), DEFAULT_GROUPS());
+
+    const roleHeads = roles
+      .map((r) => `<th data-permmtx-role="${escapeAttribute(r)}" class="whitespace-nowrap px-4 py-3 text-center font-semibold">${escapeAttribute(r)}</th>`)
+      .join('');
+
+    const bodyRows = groups
+      .map((g) => {
+        const groupRow = `<tr data-permmtx-group="${escapeAttribute(g.id)}" class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-800/50">
+            <td colspan="${roles.length + 1}" class="px-4 py-2.5 text-sm font-bold text-zinc-800 dark:text-zinc-100">${escapeAttribute(g.title)}</td>
+          </tr>`;
+        const rows = g.rows
+          .map((row) => {
+            const cells = row.cells
+              .map((state, i) => {
+                const meta = STATE_META[state] ?? STATE_META.na;
+                return `<td class="px-4 py-3 text-center">
+                    <button type="button" data-permmtx-cell="${escapeAttribute(row.id)}:${escapeAttribute(roles[i] ?? '')}" data-permmtx-state="${escapeAttribute(state)}"
+                      class="inline-flex items-center gap-1.5 text-xs font-medium transition-opacity hover:opacity-70 ${meta.cls}">
+                      ${meta.icon ? `<span aria-hidden="true">${meta.icon}</span>` : ''}<span>${meta.label}</span>
+                    </button>
+                  </td>`;
+              })
+              .join('');
+            return `<tr data-permmtx-row="${escapeAttribute(row.id)}" class="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60">
+                <td class="px-4 py-3 font-medium text-zinc-700 dark:text-zinc-200">${escapeAttribute(row.label)}</td>
+                ${cells}
+              </tr>`;
+          })
+          .join('');
+        return groupRow + rows;
+      })
+      .join('');
+
+    const tableHtml =
+      this._tab === 'details'
+        ? `<div data-permmtx-table class="mt-4 overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800">
+            <table class="w-full text-left text-sm">
+              <thead>
+                <tr class="border-b border-zinc-200 text-xs uppercase tracking-wide text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+                  <th class="px-4 py-3 font-semibold">Actions</th>
+                  ${roleHeads}
+                </tr>
+              </thead>
+              <tbody>${bodyRows}</tbody>
+            </table>
+          </div>`
+        : `<div data-permmtx-overview class="mt-4 rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+            <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">${roles.length} roles · ${groups.reduce((n, g) => n + g.rows.length, 0)} permission rules configured.</p>
+          </div>`;
+
+    const tabBtn = (t, label) =>
+      `<button data-permmtx-tab="${t}" type="button" class="-mb-px border-b-2 pb-2 text-sm font-medium transition-colors ${
+        this._tab === t ? 'border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-300' : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200'
+      }">${label}</button>`;
+
+    this.innerHTML = `
+      <div data-permmtx class="w-full rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 sm:p-6">
+        <h2 data-permmtx-title class="text-xl font-bold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</h2>
+        <p data-permmtx-description class="mt-1.5 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">${escapeAttribute(description)}</p>
+        <div data-permmtx-tabs class="mt-4 flex gap-6 border-b border-zinc-200 dark:border-zinc-800">
+          ${tabBtn('overview', 'Overview')}
+          ${tabBtn('details', 'Permission details')}
+        </div>
+        ${tableHtml}
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('permission-matrix')) {
+  customElements.define('permission-matrix', PermissionMatrixElement);
+}
+
+export default PermissionMatrixElement;
+
+
+====
 File: vanilla/PersonaPresetGrid.js
 ====
 
@@ -69588,6 +71132,241 @@ export default SearchInputElement;
 
 
 ====
+File: vanilla/SearchResultsPage.js
+====
+
+/**
+ * SearchResultsPage - Knowledge-base search results page: top search bar
+ * with submit, filter selects, "Related searches" chip grid and result
+ * entries with title, breadcrumb meta and summary snippet (Confluence
+ * search pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const escapeHtml = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_FILTERS = () => [
+  { id: 'updated', label: 'Last updated', options: ['Last updated', 'Created', 'Relevance'] },
+  { id: 'type', label: 'Type', options: ['Type', 'Page', 'Blog', 'File'] },
+  { id: 'contributor', label: 'Contributor', options: ['Contributor', 'Anyone', 'Me'] },
+];
+
+const DEFAULT_RELATED = () => ['brainstorming techniques', 'brainstorming ideas', 'brainstorming strategies', 'brainstorming sessions', 'brainstorming methods', 'brainstorming activities'];
+
+const DEFAULT_RESULTS = () => [
+  {
+    id: 's1',
+    title: 'Design',
+    space: 'Confluence',
+    type: 'Page',
+    author: 'Design',
+    updated: 'Updated 8 days ago',
+    snippet: "…Welcome to your design team space! You're in the space overview. It's what visitors first see, like a landing page for your space · Click ✏️ Edit to customize your overview · A space contains pages. Create…",
+  },
+  {
+    id: 's2',
+    title: 'Sam Design Guideline Document',
+    space: 'Confluence',
+    type: 'Page',
+    author: 'Sam Lee',
+    updated: 'Updated 21 hours ago',
+    snippet: '…Purpose · This document ensures visual consistency, usability, and brand alignment across all NimbusTech products and platforms. · Typography · Primary Font: Inter · Headings: Bold, sentence case · Body Text:…',
+  },
+  {
+    id: 's3',
+    title: 'Template - How-to guide',
+    space: 'Confluence',
+    type: 'Page',
+    author: 'Sam Lee',
+    updated: 'Updated 23 hours ago',
+    snippet: "…Instructions · Highlight important information in a panel like this one. To edit this panel's color or style, select one of the options in the menu. · Related articles…",
+  },
+  {
+    id: 's4',
+    title: 'Template - Design Systems',
+    space: 'Confluence',
+    type: 'Page',
+    author: 'Design',
+    updated: 'Updated 8 days ago',
+    snippet: '…This template is brought to you by InVision, a digital product design platform. · Design · Getting started · Design principles · Principle one · Principle two · Principle three · Visual language · Color…',
+  },
+  {
+    id: 's5',
+    title: 'Overview',
+    space: 'Confluence',
+    type: 'Page',
+    author: 'John Smith',
+    updated: 'Updated 8 days ago',
+    snippet: '…Use this overview to onboard new teammates: mission, current projects, rituals and links to the most-used templates and guidelines…',
+  },
+];
+
+class SearchResultsPageElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['query', 'filter-selects', 'related-searches', 'results'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+    this.addEventListener('input', this._onInput);
+    this.addEventListener('keydown', this._onKeydown);
+    this.addEventListener('change', this._onChange);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+    this.removeEventListener('input', this._onInput);
+    this.removeEventListener('keydown', this._onKeydown);
+    this.removeEventListener('change', this._onChange);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  _onInput(event) {
+    if (!event.target.closest('[data-srchres-input]')) return;
+    // no re-render on typing (would lose focus); value read at submit
+  }
+
+  _onKeydown(event) {
+    if (event.key !== 'Enter') return;
+    const input = event.target.closest('[data-srchres-input]');
+    if (!input) return;
+    this.dispatchEvent(new CustomEvent('search-submit', { detail: { query: input.value }, bubbles: true }));
+  }
+
+  _onChange(event) {
+    const select = event.target.closest('[data-srchres-filter]');
+    if (!select) return;
+    this.dispatchEvent(
+      new CustomEvent('filter-change', { detail: { id: select.getAttribute('data-srchres-filter'), value: select.value }, bubbles: true })
+    );
+  }
+
+  _onClick(event) {
+    if (event.target.closest('[data-srchres-submit]')) {
+      const input = this.querySelector('[data-srchres-input]');
+      this.dispatchEvent(new CustomEvent('search-submit', { detail: { query: input ? input.value : '' }, bubbles: true }));
+      return;
+    }
+    const chip = event.target.closest('[data-srchres-related-chip]');
+    if (chip) {
+      this.dispatchEvent(new CustomEvent('related-click', { detail: { term: chip.getAttribute('data-srchres-related-chip') }, bubbles: true }));
+      return;
+    }
+    const resultBtn = event.target.closest('[data-srchres-result] button');
+    if (resultBtn) {
+      const article = resultBtn.closest('[data-srchres-result]');
+      const results = parseJsonAttr(this.getAttribute('results'), DEFAULT_RESULTS());
+      const found = results.find((r) => r.id === article.getAttribute('data-srchres-result'));
+      if (found) this.dispatchEvent(new CustomEvent('result-click', { detail: { result: found }, bubbles: true }));
+    }
+  }
+
+  _render() {
+    const query = this.getAttribute('query') || 'brainstorming';
+    const filterSelects = parseJsonAttr(this.getAttribute('filter-selects'), DEFAULT_FILTERS());
+    const related = parseJsonAttr(this.getAttribute('related-searches'), DEFAULT_RELATED());
+    const results = parseJsonAttr(this.getAttribute('results'), DEFAULT_RESULTS());
+
+    const filtersHtml = filterSelects
+      .map(
+        (f) => `<select data-srchres-filter="${escapeAttribute(f.id)}" class="rounded-lg border border-zinc-300 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-600 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+            ${(f.options ?? [f.label]).map((o) => `<option value="${escapeAttribute(o)}">${escapeHtml(o)}</option>`).join('')}
+          </select>`
+      )
+      .join('');
+
+    const relatedHtml = related
+      .map(
+        (rs) => `<button data-srchres-related-chip="${escapeAttribute(rs)}" type="button" class="flex items-center gap-2 rounded-full bg-zinc-100 px-4 py-2 text-left text-sm text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700">
+            <span aria-hidden="true" class="text-zinc-400">⌕</span>
+            <span class="truncate">${escapeHtml(rs)}</span>
+          </button>`
+      )
+      .join('');
+
+    const resultsHtml = results
+      .map(
+        (r) => `<article data-srchres-result="${escapeAttribute(r.id)}" class="group">
+            <button type="button" class="block w-full text-left">
+              <h3 data-srchres-result-title="${escapeAttribute(r.id)}" class="text-base font-semibold text-blue-600 group-hover:underline dark:text-blue-400">${escapeHtml(r.title)}</h3>
+            </button>
+            <p class="mt-1 flex flex-wrap items-center gap-x-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+              <span data-srchres-result-space="${escapeAttribute(r.id)}" class="font-medium">${escapeHtml(r.space)}</span>
+              <span aria-hidden="true">•</span>
+              <span>${escapeHtml(r.type)}</span>
+              <span aria-hidden="true">•</span>
+              <span>${escapeHtml(r.author)}</span>
+              <span aria-hidden="true">•</span>
+              <span>${escapeHtml(r.updated)}</span>
+            </p>
+            <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">${escapeHtml(r.snippet)}</p>
+          </article>`
+      )
+      .join('');
+
+    this.innerHTML = `
+      <div data-srchres class="w-full rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <div data-srchres-topbar class="flex items-center gap-3 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+          <div class="flex flex-1 items-center gap-2 rounded-lg border border-zinc-300 px-3 py-1.5 focus-within:ring-2 focus-within:ring-blue-500/40 dark:border-zinc-600">
+            <span aria-hidden="true" class="text-zinc-400">⌕</span>
+            <input data-srchres-input type="text" value="${escapeAttribute(query)}" class="w-full bg-transparent text-sm text-zinc-800 outline-none dark:text-zinc-100" aria-label="Search" />
+          </div>
+          <button data-srchres-submit type="button" class="rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-700">Search</button>
+        </div>
+        <div data-srchres-filters class="flex flex-wrap items-center gap-2 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+          ${filtersHtml}
+          <span class="ml-auto text-xs text-zinc-400 dark:text-zinc-500">${results.length} results</span>
+        </div>
+        <div class="px-5 py-4">
+          <p data-srchres-related-heading class="text-sm font-bold text-zinc-900 dark:text-zinc-50">Related searches</p>
+          <div data-srchres-related class="mt-3 grid gap-2 sm:grid-cols-2">${relatedHtml}</div>
+          <div data-srchres-results class="mt-6 space-y-6">${resultsHtml}</div>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('search-results-page')) {
+  customElements.define('search-results-page', SearchResultsPageElement);
+}
+
+export default SearchResultsPageElement;
+
+
+====
 File: vanilla/SearchTypeahead.js
 ====
 
@@ -72369,6 +74148,185 @@ if (typeof customElements !== 'undefined' && !customElements.get('step-flow')) {
   customElements.define('step-flow', StepperElement);
 }
 export default StepperElement;
+
+
+====
+File: vanilla/StockPhotoPicker.js
+====
+
+/**
+ * StockPhotoPicker - Media picker modal: title bar with close button,
+ * search input with clear, "Powered by" caption and masonry photo grid
+ * with hover author name + Add button (Substack stock-photos pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_PHOTOS = () => [
+  { id: 'p1', url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=60', alt: 'Sunlit forest path', author: 'Casey Horner', span: 2 },
+  { id: 'p2', url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=60', alt: 'Mountain ridge', author: 'Sam Tesla' },
+  { id: 'p3', url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=60', alt: 'Foggy hills', author: 'Andreas Gücklhorn', span: 2 },
+  { id: 'p4', url: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=600&q=60', alt: 'Green meadow', author: 'Lukasz Szmigiel' },
+  { id: 'p5', url: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=600&q=60', alt: 'Park trail', author: 'Jerome Printr' },
+  { id: 'p6', url: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=600&q=60', alt: 'Autumn bench', author: 'Josephine Baran' },
+];
+
+class StockPhotoPickerElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'powered-by', 'placeholder', 'photos', 'open'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._query = '';
+    this._onKey = (event) => {
+      if (event.key === 'Escape') {
+        this.dispatchEvent(new CustomEvent('close', { bubbles: true }));
+      }
+    };
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+    this.addEventListener('input', this._onInput);
+    window.addEventListener('keydown', this._onKey);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+    this.removeEventListener('input', this._onInput);
+    window.removeEventListener('keydown', this._onKey);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    if (name === 'open') {
+      this._query = '';
+    }
+    this._render();
+  }
+
+  _onClick(event) {
+    if (event.target.closest('[data-stkpic-close]')) {
+      this.dispatchEvent(new CustomEvent('close', { bubbles: true }));
+      return;
+    }
+    if (event.target.closest('[data-stkpic-clear]')) {
+      this._query = '';
+      this.dispatchEvent(new CustomEvent('search', { detail: { query: '' }, bubbles: true }));
+      this._render();
+      return;
+    }
+    const addBtn = event.target.closest('[data-stkpic-add]');
+    if (addBtn) {
+      const photos = parseJsonAttr(this.getAttribute('photos'), DEFAULT_PHOTOS());
+      const found = photos.find((p) => p.id === addBtn.getAttribute('data-stkpic-add'));
+      if (found) this.dispatchEvent(new CustomEvent('add', { detail: { photo: found }, bubbles: true }));
+    }
+  }
+
+  _onInput(event) {
+    const input = event.target.closest('[data-stkpic-input]');
+    if (!input) return;
+    this._query = input.value;
+    this.dispatchEvent(new CustomEvent('search', { detail: { query: this._query }, bubbles: true }));
+    this._render();
+    const fresh = this.querySelector('[data-stkpic-input]');
+    if (fresh) fresh.focus();
+  }
+
+  _filtered(photos) {
+    const q = this._query.trim().toLowerCase();
+    if (q === '') return photos;
+    return photos.filter((p) => String(p.alt ?? '').toLowerCase().includes(q));
+  }
+
+  _renderGrid() {
+    const grid = this.querySelector('[data-stkpic-gridinner]');
+    if (!grid) return;
+    const photos = this._filtered(parseJsonAttr(this.getAttribute('photos'), DEFAULT_PHOTOS()));
+    grid.innerHTML = this._gridHtml(photos);
+  }
+
+  _gridHtml(photos) {
+    const cards = photos
+      .map((p) => {
+        const h = p.span === 2 ? 'h-44' : 'h-28';
+        return `<figure data-stkpic-item="${escapeAttribute(p.id)}" class="group relative overflow-hidden rounded-lg border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
+            <img src="${escapeAttribute(p.url)}" alt="${escapeAttribute(p.alt ?? '')}" class="w-full object-cover ${h}" />
+            <figcaption data-stkpic-meta="${escapeAttribute(p.id)}" class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/70 to-transparent px-2 py-1.5 opacity-0 transition-opacity group-hover:opacity-100">
+              <span class="truncate text-[11px] text-white">${escapeAttribute(p.author ?? '')}</span>
+              <button data-stkpic-add="${escapeAttribute(p.id)}" type="button" class="rounded bg-emerald-600 px-2 py-0.5 text-[11px] font-semibold text-white transition-colors hover:bg-emerald-700">Add</button>
+            </figcaption>
+          </figure>`;
+      })
+      .join('');
+    const empty =
+      photos.length === 0
+        ? '<p data-stkpic-empty class="col-span-full py-8 text-center text-sm text-zinc-400 dark:text-zinc-500">No photos match your search.</p>'
+        : '';
+    return cards + empty;
+  }
+
+  _render() {
+    const title = this.getAttribute('title') || 'Stock photos';
+    const poweredBy = this.getAttribute('powered-by') || 'Powered by Unsplash';
+    const placeholder = this.getAttribute('placeholder') || 'Search photos…';
+    const open = this.getAttribute('open') !== 'false';
+    const photos = this._filtered(parseJsonAttr(this.getAttribute('photos'), DEFAULT_PHOTOS()));
+
+    if (!open) {
+      this.innerHTML = '';
+      return;
+    }
+
+    this.innerHTML = `
+      <div data-stkpic class="relative w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-700 dark:bg-zinc-900">
+        <div data-stkpic-header class="flex items-center justify-between gap-4 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+          <h2 data-stkpic-title class="text-base font-bold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</h2>
+          <button data-stkpic-close type="button" aria-label="Close" class="rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">✕</button>
+        </div>
+        <div data-stkpic-searchrow class="px-5 pt-4">
+          <div class="flex items-center gap-2 rounded-xl border border-zinc-300 px-3 py-2 focus-within:ring-2 focus-within:ring-orange-500/40 dark:border-zinc-600">
+            <span aria-hidden="true" class="text-zinc-400">⌕</span>
+            <input data-stkpic-input type="text" value="${escapeAttribute(this._query)}" placeholder="${escapeAttribute(placeholder)}"
+              class="w-full bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 dark:text-zinc-100" />
+            ${this._query !== '' ? '<button data-stkpic-clear type="button" aria-label="Clear search" class="text-zinc-400 transition-colors hover:text-zinc-700 dark:hover:text-zinc-200">✕</button>' : ''}
+          </div>
+          <p data-stkpic-powered class="mt-2 text-xs text-zinc-400 dark:text-zinc-500">⭳ ${escapeAttribute(poweredBy)}</p>
+        </div>
+        <div data-stkpic-grid class="mt-3 max-h-96 overflow-y-auto px-5 pb-5">
+          <div data-stkpic-gridinner class="grid grid-cols-2 gap-3 sm:grid-cols-3">${this._gridHtml(photos)}</div>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('stock-photo-picker')) {
+  customElements.define('stock-photo-picker', StockPhotoPickerElement);
+}
+
+export default StockPhotoPickerElement;
 
 
 ====
