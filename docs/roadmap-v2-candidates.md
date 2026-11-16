@@ -6,8 +6,11 @@
 > 既有组件 #97 `OtpInput` 功能重叠，按"零重叠"规则撤销，改用 security/10_Airwallex
 > 登录会话表补位。批次 v2.2.0 已完成 —— TaskDetailPanel（← ClickUp）、
 > DeliveryTrackingPanel（← DoorDash）、MapPropertyCard（← Airbnb）三端落地
->（组件编号 193–195），Gallery sections 183–185，642 项回归测试全绿。
-> 全库组件总数 196（含 UiIcon）× 3 端。
+> （组件编号 193–195），Gallery sections 183–185，642 项回归测试全绿。
+> 批次 v2.3.0 已完成 —— ApiReferenceViewer（← GitBook）、WeekCalendarGrid
+> （← Clockwise）、VideoProjectSettings（← Vimeo）、EventStreamPanel（← WorkOS）
+> 三端落地（组件编号 196–199），Gallery sections 186–189，654 项回归测试全绿
+> （"后续储备"四项全部消费完毕）。全库组件总数 200（含 UiIcon）× 3 端。
 
 > 背景：roadmap v1 已收官（v1.47.0，190 组件 × 3 端，624 测试）。为延续迭代，
 > 已通过 `tools/mobbin_fetch.py` 新增 5 个分类并抓取 114 张 Mobbin 截图，

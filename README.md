@@ -211,6 +211,10 @@
 | **`TaskDetailPanel`** | 任务详情面板 | ClickUp 任务详情：类型胶囊 + AI 建议条、状态胶囊 + 双列字段网格、动作列表与 Activity 侧栏评论框 |
 | **`DeliveryTrackingPanel`** | 配送追踪面板 | DoorDash 配送追踪：地图占位 + ETA + 四段 stepper、骑手卡片（📞/💬）、订单折叠与分享链接双按钮 |
 | **`MapPropertyCard`** | 地图房源卡片 | Airbnb 地图房源：价格 pin + 悬浮预览卡（轮播点、收藏/关闭、标题评分、价格日期） |
+| **`ApiReferenceViewer`** | API 参考文档 | GitBook API 参考：方法徽章端点头部、参数定义行、可折叠响应列表 + 右侧代码面板（语言切换/样例/JSON） |
+| **`WeekCalendarGrid`** | 周视图日历网格 | Clockwise 周历：小时槽 + 日列事件块（实心/虚线）、红色当前时刻线、Day/Week 切换 + Find time + 作曲输入框 |
+| **`VideoProjectSettings`** | 视频项目设置 | Vimeo 视频设置：Chapters 侧面板（空态 + 添加章节）、Title/Description 表单、缩略图选择器 + 存储徽章 |
+| **`EventStreamPanel`** | 审计事件流 | WorkOS Events：过滤输入 + 双列事件列表、Metadata 面板 + View event、带行号 JSON 详情 + Previous/Next 分页 |
 | **`AuditLogTable`** | 审计日志表 | Okta System Log：日期/关键词筛选 pills、迷你柱状趋势、事件计数 + 视图切换、四列事件表（SUCCESS/FAILURE/PENDING 徽章） |
 | **`ChangelogTimeline`** | 产品更新日志 | Canny Changelog：大标题头部、搜索 + Filters 控件、左日期栏 + 四色分类 tag、点赞/浏览/分享 meta 行 |
 | **`CampsiteHandoff`** | 设计交付面板 | Campsite 设计 handoff：完成态检查清单（负责人首字母头像 + 截止日期）、x/y done 计数与 AI 摘要块 |
@@ -413,7 +417,11 @@ awesome-ui/
 │   ├── ChangelogTimeline.tsx
 │   ├── TaskDetailPanel.tsx
 │   ├── DeliveryTrackingPanel.tsx
-│   └── MapPropertyCard.tsx
+│   ├── MapPropertyCard.tsx
+│   ├── ApiReferenceViewer.tsx
+│   ├── WeekCalendarGrid.tsx
+│   ├── VideoProjectSettings.tsx
+│   └── EventStreamPanel.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -606,7 +614,11 @@ awesome-ui/
 │   ├── ChangelogTimeline.vue
 │   ├── TaskDetailPanel.vue
 │   ├── DeliveryTrackingPanel.vue
-│   └── MapPropertyCard.vue
+│   ├── MapPropertyCard.vue
+│   ├── ApiReferenceViewer.vue
+│   ├── WeekCalendarGrid.vue
+│   ├── VideoProjectSettings.vue
+│   └── EventStreamPanel.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -799,7 +811,11 @@ awesome-ui/
 │   ├── ChangelogTimeline.js
 │   ├── TaskDetailPanel.js
 │   ├── DeliveryTrackingPanel.js
-│   └── MapPropertyCard.js
+│   ├── MapPropertyCard.js
+│   ├── ApiReferenceViewer.js
+│   ├── WeekCalendarGrid.js
+│   ├── VideoProjectSettings.js
+│   └── EventStreamPanel.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

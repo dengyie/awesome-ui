@@ -1125,6 +1125,26 @@ awesome-ui/
 - **Vanilla 用法**: `<map-property-card>` + `pins`/`active-pin-id`/`card`（`"null"` 隐藏预览卡）/`like-label`/`close-label` 属性；事件 `pin-click {pin}`（点击内部激活 pin）/ `card-close`（内部移除预览卡）/ `card-like`
 - **特性**: 地图占位（渐变 + 缩放控件）、价格 pin（激活黑底白字）、悬浮预览卡（渐变图区 + 收藏/关闭按钮 + 轮播点 + 下一张箭头、标题 + ★ 评分(评论数)、副标题、价格 · 日期）。
 
+### 196. `ApiReferenceViewer` (API 参考文档)
+- **Props**: `title?`, `method?`, `endpoint?`, `paramsTitle?`, `params?: [{name,type,meta?,required?,description}]`, `responsesTitle?`, `responses?: [{status,tone?,label,schema,body}]`, `languages?: [{id,label,sample}]`, `activeLanguageId?`, `responseTitle?`, `className?`, `onParamClick?(param)`, `onLanguageChange?(language)`
+- **Vanilla 用法**: `<api-reference-viewer>` + `title`/`method`/`endpoint`/`params-title`/`params`/`responses-title`/`responses`/`languages`/`active-language-id`/`open-statuses`/`response-title` 属性；事件 `param-click {param}` / `language-change {language}`
+- **特性**: 双栏布局（左定义卡右代码面板）、方法徽章五色（GET/POST/PUT/PATCH/DELETE 含暗色变体）、参数行（名称 + 类型 · 约束 + optional 红标 + 描述）、响应折叠列表（状态徽章三色调 + schema 行 + Show properties ＋）、代码面板（语言下拉 + 请求样例 + Test it ▸ + JSON 响应天蓝高亮）。
+
+### 197. `WeekCalendarGrid` (周视图日历网格)
+- **Props**: `days?: [{id,label,date}]`, `startHour?`, `endHour?`, `timeZone?`, `events?: [{id,dayId,title,subtitle?,start,end,tone?('solid'|'dashed'),color?('blue'|'green'|'amber')}]`, `view?`(`'week'|'day'`), `activeDayId?`, `nowHour?`, `composerPlaceholder?`, `className?`, `onEventClick?(event)`, `onViewChange?(view)`, `onFindTime?()`
+- **Vanilla 用法**: `<week-calendar-grid>` + `days`/`events`/`start-hour`/`end-hour`/`time-zone`/`view`/`active-day-id`/`now-hour`/`composer-placeholder` 属性；事件 `event-click {event}` / `view-change {view}` / `find-time` / `compose-submit {text}`（composer 内 Enter）
+- **特性**: 小时刻度槽（左栏）、日列网格（绝对定位事件块：实心蓝绿琥珀三色 / 虚线 Focus 块）、红色当前时刻线 + 圆点、Day/Week 分段切换（激活黑底白字）、Find time 按钮、"Schedule or reschedule…" 作曲输入框。
+
+### 198. `VideoProjectSettings` (视频项目设置)
+- **Props**: `panelTitle?`, `panelEmptyText?`, `chapters?: [{id,label,timestamp}]`, `addChapterLabel?`, `titleLabel?`, `titleValue?`, `descriptionLabel?`, `descriptionValue?`, `thumbnailLabel?`, `thumbnails?: [{id,src?,gradient?}]`, `selectedThumbnailId?`, `storageUsed?`, `storageTotal?`, `className?`, `onAddChapter?()`, `onTitleChange?(value)`, `onDescriptionChange?(value)`, `onThumbnailSelect?(thumbnail)`
+- **Vanilla 用法**: `<video-project-settings>` + `panel-title`/`panel-empty-text`/`chapters`/`add-chapter-label`/`title-label`/`title-value`/`description-label`/`description-value`/`thumbnail-label`/`thumbnails`/`selected-thumbnail-id`/`storage-used`/`storage-total` 属性；事件 `add-chapter` / `thumbnail-select {thumbnail}` / `title-change {value}` / `description-change {value}`
+- **特性**: 左侧 Chapters 面板（返回/关闭、🔖 图标块、空态文案 + 虚线 "＋ Add a chapter"）、右侧表单（Title 输入、Description 多行文本、缩略图选择器：上传块 + 渐变块选中 ring-2、💾 存储用量徽章）。
+
+### 199. `EventStreamPanel` (审计事件流)
+- **Props**: `filterPlaceholder?`, `eventColumnLabel?`, `dateColumnLabel?`, `events?: [{id,name,date,metadata:[{label,value}],details}]`, `metadataTitle?`, `detailsTitle?`, `detailsLines?`, `className?`, `onFilterChange?(value)`, `onEventSelect?(event)`, `onViewEvent?(event)`
+- **Vanilla 用法**: `<event-stream-panel>` + `filter-placeholder`/`event-column-label`/`date-column-label`/`events`/`metadata-title`/`details-title`/`details-lines`/`active-event-id` 属性；事件 `filter-change {value}` / `event-select {event}` / `view-event {event}`
+- **特性**: 左 3/5 事件列表卡（过滤输入实时收窄 + Event/Date 双列头 + 空态）、右 2/5 详情列（Metadata 键值对 + View event 全宽按钮、Event Details JSON 块带行号 + Previous/Next 分页器）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

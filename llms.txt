@@ -797,6 +797,22 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/MapPropertyCard.tsx
    - Vue 3: vue/MapPropertyCard.vue
    - Vanilla: vanilla/MapPropertyCard.js (custom element `<map-property-card>`, attributes `pins` JSON/`active-pin-id`/`card` JSON (`"null"` hides preview)/`like-label`/`close-label`; events `pin-click {pin}`, `card-close`, `card-like`)
+196. ApiReferenceViewer: API reference section — method-badge endpoint header, query parameter definitions with type/meta rows, collapsible responses list and a right code panel with language select, sample request and JSON response (GitBook API Reference pattern).
+   - React: react/ApiReferenceViewer.tsx
+   - Vue 3: vue/ApiReferenceViewer.vue
+   - Vanilla: vanilla/ApiReferenceViewer.js (custom element `<api-reference-viewer>`, attributes `title`/`method`/`endpoint`/`params-title`/`params` JSON/`responses-title`/`responses` JSON/`languages` JSON/`active-language-id`/`open-statuses` JSON/`response-title`; events `param-click {param}`, `language-change {language}`)
+197. WeekCalendarGrid: week-view calendar grid — hour gutter, day columns with solid/dashed event blocks, red current-time line, Day/Week segmented toggle, "Find time" button and schedule composer (Clockwise week calendar pattern).
+   - React: react/WeekCalendarGrid.tsx
+   - Vue 3: vue/WeekCalendarGrid.vue
+   - Vanilla: vanilla/WeekCalendarGrid.js (custom element `<week-calendar-grid>`, attributes `days` JSON/`events` JSON/`start-hour`/`end-hour`/`time-zone`/`view`/`active-day-id`/`now-hour`/`composer-placeholder`; events `event-click {event}`, `view-change {view}`, `find-time`, `compose-submit {text}`)
+198. VideoProjectSettings: video project settings side panel — Chapters side panel with empty state and "Add a chapter" action, main form with Title input, Description textarea, Thumbnail selector and storage usage badge (Vimeo video settings pattern).
+   - React: react/VideoProjectSettings.tsx
+   - Vue 3: vue/VideoProjectSettings.vue
+   - Vanilla: vanilla/VideoProjectSettings.js (custom element `<video-project-settings>`, attributes `panel-title`/`panel-empty-text`/`chapters` JSON/`add-chapter-label`/`title-label`/`title-value`/`description-label`/`description-value`/`thumbnail-label`/`thumbnails` JSON/`selected-thumbnail-id`/`storage-used`/`storage-total`; events `add-chapter`, `thumbnail-select {thumbnail}`, `title-change {value}`, `description-change {value}`)
+199. EventStreamPanel: audit event stream — filter input, two-column event list (event name / date), right metadata panel with "View event" button, event details JSON block with line numbers and Previous/Next pager (WorkOS Events pattern).
+   - React: react/EventStreamPanel.tsx
+   - Vue 3: vue/EventStreamPanel.vue
+   - Vanilla: vanilla/EventStreamPanel.js (custom element `<event-stream-panel>`, attributes `filter-placeholder`/`event-column-label`/`date-column-label`/`events` JSON/`metadata-title`/`details-title`/`details-lines`/`active-event-id`; events `filter-change {value}`, `event-select {event}`, `view-event {event}`)
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)

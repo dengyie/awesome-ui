@@ -222,12 +222,16 @@
   <script type="module" src="./vanilla/TaskDetailPanel.js"></script>
   <script type="module" src="./vanilla/DeliveryTrackingPanel.js"></script>
   <script type="module" src="./vanilla/MapPropertyCard.js"></script>
+  <script type="module" src="./vanilla/ApiReferenceViewer.js"></script>
+  <script type="module" src="./vanilla/WeekCalendarGrid.js"></script>
+  <script type="module" src="./vanilla/VideoProjectSettings.js"></script>
+  <script type="module" src="./vanilla/EventStreamPanel.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.2.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.3.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -3187,6 +3191,78 @@
             <map-property-card id="demo-mappin49"></map-property-card>
             <div class="mt-3 flex items-center gap-2">
               <span id="demo-mappin49-status" class="text-[11px] text-zinc-500">Click a price pin — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-186" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">186 · ApiReferenceViewer</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.3.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">API reference section — method-badge endpoint header, query parameter definitions with type/meta rows, collapsible responses list and a right code panel with language select, sample request and JSON response (GitBook API Reference pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/ApiReferenceViewer.js">
+          <div class="space-y-3">
+            <api-reference-viewer id="demo-api50"></api-reference-viewer>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-api50-status" class="text-[11px] text-zinc-500">Toggle a response / click a param — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-187" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">187 · WeekCalendarGrid</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.3.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Week-view calendar grid — hour gutter, day columns with solid/dashed event blocks, red current-time line, Day/Week segmented toggle, "Find time" button and schedule composer (Clockwise week calendar pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/WeekCalendarGrid.js">
+          <div class="space-y-3">
+            <week-calendar-grid id="demo-week50"></week-calendar-grid>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-week50-status" class="text-[11px] text-zinc-500">Click an event / switch view — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-188" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">188 · VideoProjectSettings</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.3.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Video project settings — Chapters side panel with empty state and "Add a chapter" action, main form with Title input, Description textarea, Thumbnail selector and storage usage badge (Vimeo video settings pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/VideoProjectSettings.js">
+          <div class="space-y-3">
+            <video-project-settings id="demo-video50"></video-project-settings>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-video50-status" class="text-[11px] text-zinc-500">Pick a thumbnail / add a chapter — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-189" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">189 · EventStreamPanel</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.3.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Audit event stream — filter input, two-column event list (event name / date), right metadata panel with "View event" button, event details JSON block with line numbers and Previous/Next pager (WorkOS Events pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/EventStreamPanel.js">
+          <div class="space-y-3">
+            <event-stream-panel id="demo-stream50"></event-stream-panel>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-stream50-status" class="text-[11px] text-zinc-500">Select an event / view it — events report here.</span>
             </div>
           </div>
         </div>
@@ -6358,6 +6434,36 @@ FAIL tests/ui.test.mjs
         mappin49.addEventListener('pin-click', (event) => { mappinStatus49.textContent = 'Pin → ' + event.detail.pin.price; });
         mappin49.addEventListener('card-close', () => { mappinStatus49.textContent = 'Preview closed'; });
         mappin49.addEventListener('card-like', () => { mappinStatus49.textContent = 'Saved to wishlist'; });
+      }
+
+      const api50 = document.getElementById('demo-api50');
+      const apiStatus50 = document.getElementById('demo-api50-status');
+      if (api50) {
+        api50.addEventListener('param-click', (event) => { apiStatus50.textContent = 'Param → ' + event.detail.param.name; });
+        api50.addEventListener('language-change', (event) => { apiStatus50.textContent = 'Language → ' + event.detail.language.label; });
+      }
+
+      const week50 = document.getElementById('demo-week50');
+      const weekStatus50 = document.getElementById('demo-week50-status');
+      if (week50) {
+        week50.addEventListener('event-click', (event) => { weekStatus50.textContent = 'Event → ' + event.detail.event.title; });
+        week50.addEventListener('view-change', (event) => { weekStatus50.textContent = 'View → ' + event.detail.view; });
+        week50.addEventListener('find-time', () => { weekStatus50.textContent = 'Finding the next open slot…'; });
+      }
+
+      const video50 = document.getElementById('demo-video50');
+      const videoStatus50 = document.getElementById('demo-video50-status');
+      if (video50) {
+        video50.addEventListener('thumbnail-select', (event) => { videoStatus50.textContent = 'Thumbnail → ' + event.detail.thumbnail.id; });
+        video50.addEventListener('add-chapter', () => { videoStatus50.textContent = 'New chapter added at 0:00'; });
+      }
+
+      const stream50 = document.getElementById('demo-stream50');
+      const streamStatus50 = document.getElementById('demo-stream50-status');
+      if (stream50) {
+        stream50.addEventListener('event-select', (event) => { streamStatus50.textContent = 'Event → ' + event.detail.event.name; });
+        stream50.addEventListener('view-event', (event) => { streamStatus50.textContent = 'Viewing → ' + event.detail.event.name; });
+        stream50.addEventListener('filter-change', (event) => { if (!event.detail.value) streamStatus50.textContent = 'Filter cleared'; });
       }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');
