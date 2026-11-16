@@ -227,6 +227,10 @@
 | **`StockPhotoPicker`** | 媒体选图模态 | Substack Stock photos：标题栏 + ✕、搜索输入 + 清除、Powered by 标注、masonry 图片网格 hover 作者 + Add |
 | **`MapActivityList`** | 地图活动列表 | GetYourGuide：左栏筛选 chips + 活动卡（图片/评分/划线价）、右栏 SVG 地图 + 评分 pin 气泡联动、Close map |
 | **`SearchResultsPage`** | 搜索结果页 | Confluence 搜索：顶部搜索栏 + 筛选 select 行、Related searches 胶囊 chips、结果条目（面包屑 meta + 摘要） |
+| **`SessionDiagnosticsPanel`** | 通话诊断面板 | Whereby Insights：设备信息卡（Browser/OS）、四轨质量时间条（好/差/坏窗口）、可搜索事件日志表 |
+| **`HelpCenterHome`** | 帮助中心首页 | GetYourGuide Help：居中欢迎标题、搜索框 + 🔍 提交、Browse by topic 分组行可展开文章链接 |
+| **`AccountSecurityPanel`** | 账号安全面板 | Podia 账号设置：设置 tab 行、Password 行 mono 密码点 + Edit、Manage verified sessions 卡片逐设备移除 |
+| **`MasonryDensityControls`** | 密度控制瀑布流 | Savee 发现墙：悬浮 Size/Padding 双滑杆实时调整列数与间距、meta 读数、✕ 关闭、CSS columns 瀑布流 |
 | **`AuditLogTable`** | 审计日志表 | Okta System Log：日期/关键词筛选 pills、迷你柱状趋势、事件计数 + 视图切换、四列事件表（SUCCESS/FAILURE/PENDING 徽章） |
 | **`ChangelogTimeline`** | 产品更新日志 | Canny Changelog：大标题头部、搜索 + Filters 控件、左日期栏 + 四色分类 tag、点赞/浏览/分享 meta 行 |
 | **`CampsiteHandoff`** | 设计交付面板 | Campsite 设计 handoff：完成态检查清单（负责人首字母头像 + 截止日期）、x/y done 计数与 AI 摘要块 |
@@ -445,7 +449,11 @@ awesome-ui/
 │   ├── PermissionMatrix.tsx
 │   ├── StockPhotoPicker.tsx
 │   ├── MapActivityList.tsx
-│   └── SearchResultsPage.tsx
+│   ├── SearchResultsPage.tsx
+│   ├── SessionDiagnosticsPanel.tsx
+│   ├── HelpCenterHome.tsx
+│   ├── AccountSecurityPanel.tsx
+│   └── MasonryDensityControls.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -654,7 +662,11 @@ awesome-ui/
 │   ├── PermissionMatrix.vue
 │   ├── StockPhotoPicker.vue
 │   ├── MapActivityList.vue
-│   └── SearchResultsPage.vue
+│   ├── SearchResultsPage.vue
+│   ├── SessionDiagnosticsPanel.vue
+│   ├── HelpCenterHome.vue
+│   ├── AccountSecurityPanel.vue
+│   └── MasonryDensityControls.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -863,7 +875,11 @@ awesome-ui/
 │   ├── PermissionMatrix.js
 │   ├── StockPhotoPicker.js
 │   ├── MapActivityList.js
-│   └── SearchResultsPage.js
+│   ├── SearchResultsPage.js
+│   ├── SessionDiagnosticsPanel.js
+│   ├── HelpCenterHome.js
+│   ├── AccountSecurityPanel.js
+│   └── MasonryDensityControls.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

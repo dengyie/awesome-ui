@@ -39,6 +39,19 @@
 > （与 #103 AgentTaskProgress / #34 AgentRunLog 重叠）、Base44 API 文档
 > （与 #196 ApiReferenceViewer 重叠）、Cosmos 瀑布流（与 #137 ImageGenGallery 重叠）。
 > 全库组件总数 212（含 UiIcon）× 3 端。
+> 批次 v2.7.0 已完成 —— SessionDiagnosticsPanel（← security/Whereby）、
+> HelpCenterHome（← GetYourGuide Help）、AccountSecurityPanel（← security/Podia）、
+> MasonryDensityControls（← media/Savee）三端落地（组件编号 212–215），
+> Gallery sections 202–205，702 项回归测试全绿。重叠跳过记录：Coinbase/
+> ClassDojo/Zoho（OTP → #97）、Revolut（地址搜索 → #98）、Twenty（任务详情 → #193）、
+> Optimal Workshop/PayPal（配送追踪 → #194）、Ditto（风格指南 → #175）、Workable
+> （看板 → #45）、SoundCloud/YouTube_Music/Hulu（音频/播放器空间 → #206）、
+> Langdock/Cohere（API 面板 → #196）、GetYourGuide maps 与 Circle（搜索 → #211/#98）、
+> StackAI/Confluence perms（权限矩阵 → #208）、Gumloop（changelog 页前记录）、
+> Devin DeepWiki（文档页 → #203）、Airtable Interfaces（项目表 → #200/#201）、
+> Clay（地图 → #210）。Savee 瀑布流与 #137 ImageGenGallery 形态重叠，但 Size/Padding
+> 密度滑杆为独特交互，以 MasonryDensityControls 入选。
+> 全库组件总数 216（含 UiIcon）× 3 端。
 
 > 背景：roadmap v1 已收官（v1.47.0，190 组件 × 3 端，624 测试）。为延续迭代，
 > 已通过 `tools/mobbin_fetch.py` 新增 5 个分类并抓取 114 张 Mobbin 截图，

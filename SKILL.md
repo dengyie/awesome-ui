@@ -1205,6 +1205,26 @@ awesome-ui/
 - **Vanilla 用法**: `<search-results-page>` + `query`/`filter-selects`/`related-searches`/`results` 属性（JSON）；事件 `search-submit {query}`（按钮或 Enter）/ `filter-change {id, value}` / `related-click {term}` / `result-click {result}`
 - **特性**: 顶部搜索栏（⌕ 输入 + blue Search 按钮）、筛选 select 行 + N results 计数、Related searches 双列胶囊 chips、结果条目（blue 标题 hover 下划线、space • type • author • updated 面包屑、摘要段）（Confluence 搜索模式）。
 
+### 212. `SessionDiagnosticsPanel` (通话诊断面板)
+- **Props**: `title?='Events Timeline'`, `devices?: [{label,value,emoji}]`, `tracks?: [{id,label,emoji,windows:[{start,width,level:'good'|'poor'|'bad'}]}]`, `events?: [{id,no,message,time}]`, `className?`, `onEventClick?(event)`, `onSearch?(query)`
+- **Vanilla 用法**: `<session-diagnostics-panel>` + `title`/`devices`/`tracks`/`events` 属性（JSON）；事件 `event-click {event}` / `search {query}`（输入内联过滤事件列表，保焦点）
+- **特性**: 设备信息双卡网格（Browser/OS + emoji）、每轨质量时间条（emerald/amber/rose 绝对定位窗口）、事件日志表（60px 编号列 + mono 消息 + 时间）+ 圆角搜索框内联过滤与空态（Whereby Insights 模式）。
+
+### 213. `HelpCenterHome` (帮助中心首页)
+- **Props**: `title?='Welcome to the Help Center'`, `searchPlaceholder?='Cancellation, meeting point, etc.'`, `topics?: [{id,label,articles?:string[]}]`, `className?`, `onSearchSubmit?(query)`, `onTopicClick?(topic)`, `onArticleClick?(topic, article)`
+- **Vanilla 用法**: `<help-center-home>` + `title`/`search-placeholder`/`topics` 属性（JSON）；事件 `search-submit {query}`（capture 拦截 submit）/ `topic-click {topic}`（展开折叠）/ `article-click {topic, article}`
+- **特性**: 居中欢迎标题、Search for a topic 标签 + 搜索框（🔍 indigo 提交钮）、Or browse by topic 分组行（有 articles 可展开，chevron ›/▾，文章 indigo hover 下划线）（GetYourGuide Help 模式）。
+
+### 214. `AccountSecurityPanel` (账号安全面板)
+- **Props**: `tabs?: string[]`, `passwordValue?='••••••••'`, `sessionsTitle?='Manage verified sessions'`, `sessionsDescription?`, `sessions?: [{id,device,detail}]`, `className?`, `onTabClick?(tab)`, `onEditPassword?()`, `onRemoveSession?(session)`
+- **Vanilla 用法**: `<account-security-panel>` + `tabs`/`password-value`/`sessions-title`/`sessions-description`/`sessions` 属性（JSON）；事件 `tab-click {tab}` / `edit-password` / `remove-session {session}`
+- **特性**: Account 标题 + 下边线 tab 行（Security 激活）、Password 行（mono 密码点 + Edit 边框钮）、Manage verified sessions 卡片（说明段、zinc-50 设备行 + ✕ 移除、Done 右对齐）；非 Security tab 显示 dashed 占位（Podia 账号模式）。
+
+### 215. `MasonryDensityControls` (密度控制瀑布流)
+- **Props**: `title?='Discovery wall'`, `items?: [{id,url,alt,span?}]`, `columns?=4`, `padding?=12`, `className?`, `onItemClick?(item)`
+- **Vanilla 用法**: `<masonry-density-controls>` + `title`/`items`/`columns`/`padding` 属性（JSON）；事件 `item-click {item}` / `density-change {columns, padding}` / `close`
+- **特性**: 黑底 zinc-950 沉浸容器、悬浮 bg-black/80 backdrop-blur 控制条（Size 2-6 滑杆 + Padding 4-32 滑杆 + ✕）、`N cols · Npx` meta 读数、CSS columns 瀑布流（break-inside-avoid、aspectRatio 按 span 3/4·4/5·1/1、hover scale-105）（Savee 发现墙模式）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

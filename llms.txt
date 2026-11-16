@@ -861,6 +861,22 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/SearchResultsPage.tsx
    - Vue 3: vue/SearchResultsPage.vue
    - Vanilla: vanilla/SearchResultsPage.js (custom element `<search-results-page>`, attributes `query`/`filter-selects` JSON/`related-searches` JSON/`results` JSON; events `search-submit {query}`, `filter-change {id, value}`, `related-click {term}`, `result-click {result}`)
+212. SessionDiagnosticsPanel: connection diagnostics panel — browser/OS device info cards, per-track media quality timeline bars with good/poor/bad windows, searchable event log rows (Whereby insights pattern).
+   - React: react/SessionDiagnosticsPanel.tsx
+   - Vue 3: vue/SessionDiagnosticsPanel.vue
+   - Vanilla: vanilla/SessionDiagnosticsPanel.js (custom element `<session-diagnostics-panel>`, attributes `title`/`devices` JSON/`tracks` JSON/`events` JSON; events `event-click {event}`, `search {query}`)
+213. HelpCenterHome: help center home — centered welcome title, search input with submit button, "Or browse by topic" rows that expand into article links (GetYourGuide help pattern).
+   - React: react/HelpCenterHome.tsx
+   - Vue 3: vue/HelpCenterHome.vue
+   - Vanilla: vanilla/HelpCenterHome.js (custom element `<help-center-home>`, attributes `title`/`search-placeholder`/`topics` JSON; events `search-submit {query}`, `topic-click {topic}`, `article-click {topic, article}`)
+214. AccountSecurityPanel: account settings security tab — settings tab row, Password row with masked value + Edit CTA, "Manage verified sessions" card with per-device rows and remove buttons (Podia account pattern).
+   - React: react/AccountSecurityPanel.tsx
+   - Vue 3: vue/AccountSecurityPanel.vue
+   - Vanilla: vanilla/AccountSecurityPanel.js (custom element `<account-security-panel>`, attributes `tabs` JSON/`password-value`/`sessions-title`/`sessions-description`/`sessions` JSON; events `tab-click {tab}`, `edit-password`, `remove-session {session}`)
+215. MasonryDensityControls: immersive masonry gallery — floating Size / Padding dual sliders that live-adjust column count and gutter, meta readout and close button, CSS columns masonry (Savee discovery wall pattern).
+   - React: react/MasonryDensityControls.tsx
+   - Vue 3: vue/MasonryDensityControls.vue
+   - Vanilla: vanilla/MasonryDensityControls.js (custom element `<masonry-density-controls>`, attributes `title`/`items` JSON/`columns`/`padding`; events `item-click {item}`, `density-change {columns, padding}`, `close`)
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)

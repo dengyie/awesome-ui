@@ -249,6 +249,143 @@ export default Accordion;
 
 
 ====
+File: react/AccountSecurityPanel.tsx
+====
+
+/**
+ * AccountSecurityPanel - Account settings security tab: settings tabs,
+ * Password row with edit CTA and a "Manage verified sessions" card with
+ * per-device rows and remove buttons (Podia account security pattern).
+ */
+import React from "react";
+
+export interface AccountSession {
+  id: string;
+  device: string;
+  detail: string;
+}
+
+export interface AccountSecurityPanelProps {
+  tabs?: string[];
+  passwordValue?: string;
+  sessionsTitle?: string;
+  sessionsDescription?: string;
+  sessions?: AccountSession[];
+  className?: string;
+  onTabClick?: (tab: string) => void;
+  onEditPassword?: () => void;
+  onRemoveSession?: (session: AccountSession) => void;
+}
+
+export default function AccountSecurityPanel({
+  tabs = ["Personal", "Notifications", "Security", "Billing"],
+  passwordValue = "••••••••",
+  sessionsTitle = "Manage verified sessions",
+  sessionsDescription = "Each time you login to your account, a verification code is emailed to you to proceed. You may have up to 5 login sessions verified at any given time, each of which expire after 30 days.",
+  sessions = [
+    { id: "s1", device: "Chrome on Mac 10.15.7", detail: "Nov 12 at 4:52 AM EST" },
+    { id: "s2", device: "Firefox on Windows 11", detail: "Nov 8 at 9:18 AM EST" },
+  ],
+  className = "",
+  onTabClick,
+  onEditPassword,
+  onRemoveSession,
+}: AccountSecurityPanelProps) {
+  const [tab, setTab] = React.useState("Security");
+
+  return (
+    <div data-acctsec className={`w-full rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 sm:p-8 ${className}`}>
+      <h2 data-acctsec-heading className="text-2xl font-extrabold text-zinc-900 dark:text-zinc-50">Account</h2>
+
+      {/* tabs */}
+      <div data-acctsec-tabs className="mt-4 flex gap-6 border-b border-zinc-200 dark:border-zinc-800">
+        {tabs.map((t) => (
+          <button
+            key={t}
+            type="button"
+            data-acctsec-tab={t}
+            onClick={() => {
+              setTab(t);
+              onTabClick?.(t);
+            }}
+            className={`-mb-px border-b-2 pb-2.5 text-sm font-medium transition-colors ${
+              tab === t
+                ? "border-zinc-800 text-zinc-900 dark:border-zinc-100 dark:text-zinc-50"
+                : "border-transparent text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+            }`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
+
+      {tab === "Security" ? (
+        <div data-acctsec-panel className="mt-5 rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
+          <p data-acctsec-panel-title className="text-lg font-bold text-zinc-900 dark:text-zinc-50">Security</p>
+
+          {/* password row */}
+          <div data-acctsec-password className="mt-5 flex items-center justify-between gap-4">
+            <span className="text-sm font-medium text-zinc-700 dark:text-zinc-200">Password</span>
+            <span data-acctsec-password-value className="font-mono text-sm tracking-widest text-zinc-700 dark:text-zinc-200">{passwordValue}</span>
+            <button
+              type="button"
+              data-acctsec-edit-password
+              onClick={() => onEditPassword?.()}
+              className="rounded-lg border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+            >
+              Edit
+            </button>
+          </div>
+
+          {/* sessions card */}
+          <div data-acctsec-sessions className="mt-6 rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
+            <p data-acctsec-sessions-title className="font-bold text-zinc-900 dark:text-zinc-50">{sessionsTitle}</p>
+            <p data-acctsec-sessions-desc className="mt-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">{sessionsDescription}</p>
+            <div data-acctsec-session-list className="mt-4 space-y-2">
+              {sessions.map((s) => (
+                <div
+                  key={s.id}
+                  data-acctsec-session={s.id}
+                  className="flex items-center justify-between gap-3 rounded-lg bg-zinc-50 px-4 py-3 dark:bg-zinc-800/60"
+                >
+                  <p className="text-sm text-zinc-700 dark:text-zinc-200">
+                    <span data-acctsec-session-device className="font-semibold">{s.device}</span>
+                    <span className="text-zinc-400 dark:text-zinc-500"> • {s.detail}</span>
+                  </p>
+                  <button
+                    type="button"
+                    data-acctsec-remove={s.id}
+                    onClick={() => onRemoveSession?.(s)}
+                    aria-label={`Remove ${s.device}`}
+                    className="text-zinc-400 transition-colors hover:text-rose-500 dark:hover:text-rose-400"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex justify-end">
+              <button
+                type="button"
+                data-acctsec-done
+                className="rounded-lg border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <p data-acctsec-placeholder className="mt-5 rounded-xl border border-dashed border-zinc-200 p-6 text-center text-sm text-zinc-400 dark:border-zinc-700 dark:text-zinc-500">
+          {tab} settings are not part of this demo.
+        </p>
+      )}
+    </div>
+  );
+}
+
+
+====
 File: react/AccountSwitcher.tsx
 ====
 
@@ -12014,6 +12151,126 @@ export default HealthDonutStats;
 
 
 ====
+File: react/HelpCenterHome.tsx
+====
+
+/**
+ * HelpCenterHome - Help center landing: hero title, big search bar with
+ * submit button, "browse by topic" rows with chevrons and optional expanded
+ * article links (GetYourGuide help center pattern).
+ */
+import React from "react";
+
+export interface HelpTopic {
+  id: string;
+  label: string;
+  articles?: string[];
+}
+
+export interface HelpCenterHomeProps {
+  title?: string;
+  searchPlaceholder?: string;
+  topics?: HelpTopic[];
+  className?: string;
+  onSearchSubmit?: (query: string) => void;
+  onTopicClick?: (topic: HelpTopic) => void;
+  onArticleClick?: (topic: HelpTopic, article: string) => void;
+}
+
+export default function HelpCenterHome({
+  title = "Welcome to the Help Center",
+  searchPlaceholder = "Cancellation, meeting point, etc.",
+  topics = [
+    { id: "plan", label: "Plan, search and book" },
+    { id: "activity", label: "Activity information" },
+    { id: "voucher", label: "Booking confirmation, voucher and tickets" },
+    { id: "pickup", label: "Meeting point and pickup" },
+    { id: "day", label: "On the day of the activity" },
+    { id: "management", label: "Booking management", articles: ["Change the date or time", "Cancel your booking", "Refund policy"] },
+    { id: "cancellation", label: "Cancellation" },
+    { id: "payment", label: "Payment and refunds" },
+  ],
+  className = "",
+  onSearchSubmit,
+  onTopicClick,
+  onArticleClick,
+}: HelpCenterHomeProps) {
+  const [query, setQuery] = React.useState("");
+  const [openId, setOpenId] = React.useState<string | null>("management");
+
+  return (
+    <div data-helpct className={`w-full rounded-2xl border border-zinc-200 bg-white px-5 py-8 dark:border-zinc-800 dark:bg-zinc-900 sm:px-8 ${className}`}>
+      <div className="mx-auto max-w-2xl text-center">
+        <h2 data-helpct-title className="text-3xl font-extrabold text-zinc-900 dark:text-zinc-50">{title}</h2>
+        <p data-helpct-label className="mt-6 text-left text-sm font-bold text-zinc-800 dark:text-zinc-100">Search for a topic</p>
+        <form
+          data-helpct-form
+          className="mt-2 flex overflow-hidden rounded-lg border border-zinc-300 focus-within:border-indigo-500 dark:border-zinc-700"
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSearchSubmit?.(query);
+          }}
+        >
+          <input
+            type="search"
+            data-helpct-input
+            value={query}
+            placeholder={searchPlaceholder}
+            onChange={(e) => setQuery(e.target.value)}
+            className="min-w-0 flex-1 px-4 py-2.5 text-sm text-zinc-700 outline-none placeholder:text-zinc-400 dark:bg-zinc-900 dark:text-zinc-200"
+          />
+          <button type="submit" data-helpct-submit className="bg-indigo-600 px-5 text-white transition-colors hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400" aria-label="Search">
+            🔍
+          </button>
+        </form>
+
+        <p data-helpct-browse className="mt-8 text-left text-sm font-bold text-zinc-800 dark:text-zinc-100">Or browse by topic</p>
+        <div data-helpct-topics className="mt-2 text-left">
+          {topics.map((topic) => {
+            const open = openId === topic.id;
+            const expandable = Array.isArray(topic.articles) && topic.articles.length > 0;
+            return (
+              <div key={topic.id} data-helpct-topic={topic.id} className="border-b border-zinc-200 last:border-0 dark:border-zinc-800">
+                <button
+                  type="button"
+                  data-helpct-topic-btn={topic.id}
+                  onClick={() => {
+                    if (expandable) {
+                      setOpenId(open ? null : topic.id);
+                    }
+                    onTopicClick?.(topic);
+                  }}
+                  className="flex w-full items-center justify-between py-4 text-left text-sm font-semibold text-zinc-700 transition-colors hover:text-indigo-600 dark:text-zinc-200 dark:hover:text-indigo-300"
+                >
+                  <span>{topic.label}</span>
+                  <span aria-hidden="true" className="text-xs text-zinc-400">{expandable ? (open ? "▾" : "›") : "›"}</span>
+                </button>
+                {expandable && open ? (
+                  <div data-helpct-articles={topic.id} className="pb-4">
+                    {topic.articles!.map((a) => (
+                      <button
+                        key={a}
+                        type="button"
+                        data-helpct-article={a}
+                        onClick={() => onArticleClick?.(topic, a)}
+                        className="block py-1.5 text-left text-sm text-indigo-600 transition-colors hover:underline dark:text-indigo-300"
+                      >
+                        {a}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+====
 File: react/HelpResourcesPanel.tsx
 ====
 
@@ -13957,6 +14214,135 @@ export const MarqueeWall: React.FC<MarqueeWallProps> = ({ rows, speedSeconds = 4
 };
 
 export default MarqueeWall;
+
+
+====
+File: react/MasonryDensityControls.tsx
+====
+
+/**
+ * MasonryDensityControls - Immersive masonry gallery with a floating
+ * Size / Padding dual-slider control bar that live-adjusts column count and
+ * gutter (Savee discovery wall pattern).
+ */
+import React from "react";
+
+export interface MasonryItem {
+  id: string;
+  url: string;
+  alt: string;
+  /** relative visual weight 1 (short) - 3 (tall) */
+  span?: number;
+}
+
+export interface MasonryDensityControlsProps {
+  title?: string;
+  items?: MasonryItem[];
+  /** initial column count 2-6 */
+  columns?: number;
+  /** initial gutter in px 4-32 */
+  padding?: number;
+  className?: string;
+  onItemClick?: (item: MasonryItem) => void;
+}
+
+export default function MasonryDensityControls({
+  title = "Discovery wall",
+  items = [
+    { id: "m1", url: "https://images.unsplash.com/photo-1493397212122-2b1dda949c8a?w=400&q=60", alt: "Architecture facade", span: 3 },
+    { id: "m2", url: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&q=60", alt: "Surf wave", span: 2 },
+    { id: "m3", url: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&q=60", alt: "Flowers", span: 2 },
+    { id: "m4", url: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&q=60", alt: "Microphone", span: 3 },
+    { id: "m5", url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=60", alt: "Mountains at night", span: 2 },
+    { id: "m6", url: "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=400&q=60", alt: "City dusk", span: 3 },
+    { id: "m7", url: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&q=60", alt: "Desk with notes", span: 1 },
+    { id: "m8", url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&q=60", alt: "Writing", span: 2 },
+  ],
+  columns = 4,
+  padding = 12,
+  className = "",
+  onItemClick,
+}: MasonryDensityControlsProps) {
+  const [size, setSize] = React.useState(columns);
+  const [gap, setGap] = React.useState(padding);
+  const [close, setClose] = React.useState(false);
+
+  if (close) return null;
+
+  return (
+    <div data-masn className={`relative w-full overflow-hidden rounded-2xl bg-zinc-950 dark:bg-black ${className}`}>
+      {/* floating control bar */}
+      <div data-masn-controls className="absolute inset-x-0 top-0 z-10 flex items-center justify-around gap-6 bg-black/80 px-6 py-4 backdrop-blur-sm">
+        <label data-masn-size-group className="flex flex-1 items-center gap-3 text-sm text-zinc-200">
+          <span>Size</span>
+          <input
+            type="range"
+            data-masn-size
+            min={2}
+            max={6}
+            step={1}
+            value={size}
+            onChange={(e) => setSize(Number(e.target.value))}
+            className="h-1 flex-1 cursor-pointer appearance-none rounded bg-zinc-600 accent-white"
+          />
+        </label>
+        <label data-masn-padding-group className="flex flex-1 items-center gap-3 text-sm text-zinc-200">
+          <span>Padding</span>
+          <input
+            type="range"
+            data-masn-padding
+            min={4}
+            max={32}
+            step={2}
+            value={gap}
+            onChange={(e) => setGap(Number(e.target.value))}
+            className="h-1 flex-1 cursor-pointer appearance-none rounded bg-zinc-600 accent-white"
+          />
+        </label>
+        <button
+          type="button"
+          data-masn-close
+          onClick={() => setClose(true)}
+          aria-label="Close gallery"
+          className="text-lg text-zinc-300 transition-colors hover:text-white"
+        >
+          ✕
+        </button>
+      </div>
+
+      <p data-masn-title className="absolute left-5 top-16 z-10 text-xs font-medium uppercase tracking-wider text-zinc-500">{title}</p>
+      <p data-masn-meta className="absolute right-5 top-16 z-10 text-xs font-medium text-zinc-500">
+        {size} cols · {gap}px
+      </p>
+
+      {/* masonry via CSS columns */}
+      <div
+        data-masn-grid
+        className="pt-28"
+        style={{ columnCount: size, columnGap: `${gap}px` }}
+      >
+        {items.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            data-masn-item={item.id}
+            onClick={() => onItemClick?.(item)}
+            className="mb-[var(--masn-gap)] block w-full break-inside-avoid overflow-hidden rounded-sm bg-zinc-900"
+            style={{ ["--masn-gap" as string]: `${gap}px` }}
+          >
+            <img
+              src={item.url}
+              alt={item.alt}
+              loading="lazy"
+              style={{ aspectRatio: item.span === 3 ? "3 / 4" : item.span === 2 ? "4 / 5" : "1 / 1" }}
+              className="w-full object-cover transition-transform duration-300 hover:scale-105"
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 
 ====
@@ -19704,6 +20090,162 @@ export default function SessionDeviceTable({
             ))}
           </select>
         </label>
+      </div>
+    </div>
+  );
+}
+
+
+====
+File: react/SessionDiagnosticsPanel.tsx
+====
+
+/**
+ * SessionDiagnosticsPanel - Connection diagnostics: Browser / OS info cards,
+ * media quality timeline bars (Camera / Microphone / Screenshare / Poor
+ * network) and a searchable event log table (Whereby insights pattern).
+ */
+import React from "react";
+
+export interface SessionDevice {
+  label: string;
+  value: string;
+  emoji: string;
+}
+
+export interface QualityTrack {
+  id: string;
+  label: string;
+  emoji: string;
+  /** 0-1 relative quality windows: { start, width, level } */
+  windows: { start: number; width: number; level: "good" | "poor" | "bad" }[];
+}
+
+export interface DiagEvent {
+  id: string;
+  no: number;
+  message: string;
+  time: string;
+}
+
+export interface SessionDiagnosticsPanelProps {
+  title?: string;
+  devices?: SessionDevice[];
+  tracks?: QualityTrack[];
+  events?: DiagEvent[];
+  className?: string;
+  onEventClick?: (event: DiagEvent) => void;
+  onSearch?: (query: string) => void;
+}
+
+const LEVEL_CLS: Record<string, string> = {
+  good: "bg-emerald-400 dark:bg-emerald-500",
+  poor: "bg-amber-400 dark:bg-amber-500",
+  bad: "bg-rose-400 dark:bg-rose-500",
+};
+
+export default function SessionDiagnosticsPanel({
+  title = "Events Timeline",
+  devices = [
+    { label: "Browser", value: "Chrome 126.0.0.0", emoji: "🌐" },
+    { label: "Operating system", value: "Mac OS", emoji: "💻" },
+  ],
+  tracks = [
+    { id: "camera", label: "Camera", emoji: "📷", windows: [{ start: 0, width: 100, level: "good" }] },
+    { id: "microphone", label: "Microphone", emoji: "🎙", windows: [{ start: 0, width: 100, level: "good" }] },
+    { id: "screenshare", label: "Screenshare", emoji: "🖥", windows: [{ start: 0, width: 100, level: "good" }] },
+    { id: "network", label: "Poor Network", emoji: "📶", windows: [{ start: 20, width: 12, level: "bad" }, { start: 55, width: 8, level: "poor" }] },
+  ],
+  events = [
+    { id: "e1", no: 1, message: 'organizationId: "244198"', time: "6/25/2024, 4:10:24 PM" },
+    { id: "e2", no: 2, message: 'clientId: "c43b3dfc-62e9-43f6-887f-d07c6ac9eddb"', time: "6/25/2024, 4:10:26 PM" },
+    { id: "e3", no: 3, message: 'roomSessionId: "bdc6cb01-24a4-4132-b23a-8ad28d049a76"', time: "6/25/2024, 4:16:23 PM" },
+    { id: "e4", no: 4, message: 'displayName: "Alex Smith"', time: "6/25/2024, 4:10:24 PM" },
+    { id: "e5", no: 5, message: 'userRole: "owner"', time: "6/25/2024, 4:10:26 PM" },
+  ],
+  className = "",
+  onEventClick,
+  onSearch,
+}: SessionDiagnosticsPanelProps) {
+  const [query, setQuery] = React.useState("");
+
+  const filtered = events.filter((e) => e.message.toLowerCase().includes(query.toLowerCase()));
+
+  return (
+    <div data-sdiag className={`w-full rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 sm:p-6 ${className}`}>
+      {/* device cards */}
+      <div data-sdiag-devices className="grid gap-4 sm:grid-cols-2">
+        {devices.map((d) => (
+          <div key={d.label} data-sdiag-device={d.label} className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+            <p className="text-lg font-bold text-zinc-900 dark:text-zinc-50">{d.label}</p>
+            <p className="mt-2 flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
+              <span aria-hidden="true">{d.emoji}</span>
+              {d.value}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <h3 data-sdiag-title className="mt-6 text-xl font-bold text-zinc-900 dark:text-zinc-50">{title}</h3>
+
+      {/* quality tracks */}
+      <div data-sdiag-tracks className="mt-4 space-y-2.5">
+        {tracks.map((t) => (
+          <div key={t.id} data-sdiag-track={t.id} className="flex items-center gap-3">
+            <span className="flex w-40 shrink-0 items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
+              <span aria-hidden="true">{t.emoji}</span>
+              {t.label}
+            </span>
+            <div className="relative h-6 flex-1 overflow-hidden rounded bg-zinc-100 dark:bg-zinc-800">
+              {t.windows.map((w, i) => (
+                <div
+                  key={i}
+                  data-sdiag-window={w.level}
+                  className={`absolute inset-y-0 rounded-sm ${LEVEL_CLS[w.level] ?? LEVEL_CLS.good}`}
+                  style={{ left: `${w.start}%`, width: `${w.width}%` }}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* event log */}
+      <div data-sdiag-log className="mt-6 flex items-center justify-between gap-4">
+        <div className="grid flex-1 gap-1 text-sm font-bold text-zinc-800 dark:text-zinc-100 sm:grid-cols-[60px_1fr]">
+          <span>Event no.</span>
+          <span>Event message</span>
+        </div>
+        <input
+          type="search"
+          data-sdiag-search
+          value={query}
+          placeholder="Search for an event"
+          onChange={(e) => {
+            setQuery(e.target.value);
+            onSearch?.(e.target.value);
+          }}
+          className="w-56 rounded-full border border-zinc-300 bg-white px-4 py-1.5 text-sm text-zinc-700 outline-none transition-colors placeholder:text-zinc-400 focus:border-indigo-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+        />
+      </div>
+      <div data-sdiag-events className="mt-2 divide-y divide-zinc-100 dark:divide-zinc-800/60">
+        {filtered.length === 0 ? (
+          <p data-sdiag-empty className="py-6 text-center text-sm text-zinc-400 dark:text-zinc-500">No events match your search.</p>
+        ) : (
+          filtered.map((e) => (
+            <button
+              key={e.id}
+              type="button"
+              data-sdiag-event={e.no}
+              onClick={() => onEventClick?.(e)}
+              className="grid w-full grid-cols-[60px_1fr_auto] items-center gap-2 py-3 text-left text-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/40 sm:text-[13px]"
+            >
+              <span className="text-zinc-400 dark:text-zinc-500">{e.no}</span>
+              <span className="truncate font-mono text-[13px] text-zinc-700 dark:text-zinc-200">{e.message}</span>
+              <span className="whitespace-nowrap text-xs text-zinc-400 dark:text-zinc-500">{e.time}</span>
+            </button>
+          ))
+        )}
       </div>
     </div>
   );
@@ -26658,6 +27200,124 @@ const toggle = (id: string) => {
   emit('toggle', id, !wasOpen);
 };
 </script>
+
+
+====
+File: vue/AccountSecurityPanel.vue
+====
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface AccountSession {
+  id: string;
+  device: string;
+  detail: string;
+}
+
+export interface AccountSecurityPanelProps {
+  tabs?: string[];
+  passwordValue?: string;
+  sessionsTitle?: string;
+  sessionsDescription?: string;
+  sessions?: AccountSession[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<AccountSecurityPanelProps>(), {
+  tabs: () => ["Personal", "Notifications", "Security", "Billing"],
+  passwordValue: "••••••••",
+  sessionsTitle: "Manage verified sessions",
+  sessionsDescription:
+    "Each time you login to your account, a verification code is emailed to you to proceed. You may have up to 5 login sessions verified at any given time, each of which expire after 30 days.",
+  sessions: () => [
+    { id: "s1", device: "Chrome on Mac 10.15.7", detail: "Nov 12 at 4:52 AM EST" },
+    { id: "s2", device: "Firefox on Windows 11", detail: "Nov 8 at 9:18 AM EST" },
+  ],
+  class: "",
+});
+
+const emit = defineEmits(["tab-click", "edit-password", "remove-session"]);
+
+const tab = ref("Security");
+
+const pickTab = (t: string) => {
+  tab.value = t;
+  emit("tab-click", t);
+};
+
+const removeSession = (s: AccountSession) => {
+  emit("remove-session", s);
+};
+</script>
+
+<template>
+  <div data-acctsec class="w-full rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 sm:p-8" :class="props.class">
+    <h2 data-acctsec-heading class="text-2xl font-extrabold text-zinc-900 dark:text-zinc-50">Account</h2>
+
+    <div data-acctsec-tabs class="mt-4 flex gap-6 border-b border-zinc-200 dark:border-zinc-800">
+      <button
+        v-for="t in props.tabs"
+        :key="t"
+        type="button"
+        :data-acctsec-tab="t"
+        class="-mb-px border-b-2 pb-2.5 text-sm font-medium transition-colors"
+        :class="tab === t ? 'border-zinc-800 text-zinc-900 dark:border-zinc-100 dark:text-zinc-50' : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200'"
+        @click="pickTab(t)"
+      >
+        {{ t }}
+      </button>
+    </div>
+
+    <div v-if="tab === 'Security'" data-acctsec-panel class="mt-5 rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
+      <p data-acctsec-panel-title class="text-lg font-bold text-zinc-900 dark:text-zinc-50">Security</p>
+
+      <div data-acctsec-password class="mt-5 flex items-center justify-between gap-4">
+        <span class="text-sm font-medium text-zinc-700 dark:text-zinc-200">Password</span>
+        <span data-acctsec-password-value class="font-mono text-sm tracking-widest text-zinc-700 dark:text-zinc-200">{{ props.passwordValue }}</span>
+        <button
+          type="button"
+          data-acctsec-edit-password
+          class="rounded-lg border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+          @click="emit('edit-password')"
+        >
+          Edit
+        </button>
+      </div>
+
+      <div data-acctsec-sessions class="mt-6 rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
+        <p data-acctsec-sessions-title class="font-bold text-zinc-900 dark:text-zinc-50">{{ props.sessionsTitle }}</p>
+        <p data-acctsec-sessions-desc class="mt-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">{{ props.sessionsDescription }}</p>
+        <div data-acctsec-session-list class="mt-4 space-y-2">
+          <div v-for="s in props.sessions" :key="s.id" :data-acctsec-session="s.id" class="flex items-center justify-between gap-3 rounded-lg bg-zinc-50 px-4 py-3 dark:bg-zinc-800/60">
+            <p class="text-sm text-zinc-700 dark:text-zinc-200">
+              <span data-acctsec-session-device class="font-semibold">{{ s.device }}</span>
+              <span class="text-zinc-400 dark:text-zinc-500"> • {{ s.detail }}</span>
+            </p>
+            <button
+              type="button"
+              :data-acctsec-remove="s.id"
+              :aria-label="'Remove ' + s.device"
+              class="text-zinc-400 transition-colors hover:text-rose-500 dark:hover:text-rose-400"
+              @click="removeSession(s)"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+        <div class="mt-4 flex justify-end">
+          <button type="button" data-acctsec-done class="rounded-lg border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <p v-else data-acctsec-placeholder class="mt-5 rounded-xl border border-dashed border-zinc-200 p-6 text-center text-sm text-zinc-400 dark:border-zinc-700 dark:text-zinc-500">
+      {{ tab }} settings are not part of this demo.
+    </p>
+  </div>
+</template>
 
 
 ====
@@ -36617,6 +37277,113 @@ const shareOf = (slice: HealthDonutSlice, slices: HealthDonutSlice[]) => {
 
 
 ====
+File: vue/HelpCenterHome.vue
+====
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface HelpTopic {
+  id: string;
+  label: string;
+  articles?: string[];
+}
+
+export interface HelpCenterHomeProps {
+  title?: string;
+  searchPlaceholder?: string;
+  topics?: HelpTopic[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<HelpCenterHomeProps>(), {
+  title: "Welcome to the Help Center",
+  searchPlaceholder: "Cancellation, meeting point, etc.",
+  topics: () => [
+    { id: "plan", label: "Plan, search and book" },
+    { id: "activity", label: "Activity information" },
+    { id: "voucher", label: "Booking confirmation, voucher and tickets" },
+    { id: "pickup", label: "Meeting point and pickup" },
+    { id: "day", label: "On the day of the activity" },
+    { id: "management", label: "Booking management", articles: ["Change the date or time", "Cancel your booking", "Refund policy"] },
+    { id: "cancellation", label: "Cancellation" },
+    { id: "payment", label: "Payment and refunds" },
+  ],
+  class: "",
+});
+
+const emit = defineEmits(["search-submit", "topic-click", "article-click"]);
+
+const query = ref("");
+const openId = ref<string | null>("management");
+
+const submit = () => {
+  emit("search-submit", query.value);
+};
+
+const toggleTopic = (topic: HelpTopic) => {
+  const expandable = Array.isArray(topic.articles) && topic.articles.length > 0;
+  if (expandable) {
+    openId.value = openId.value === topic.id ? null : topic.id;
+  }
+  emit("topic-click", topic);
+};
+</script>
+
+<template>
+  <div data-helpct class="w-full rounded-2xl border border-zinc-200 bg-white px-5 py-8 dark:border-zinc-800 dark:bg-zinc-900 sm:px-8" :class="props.class">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 data-helpct-title class="text-3xl font-extrabold text-zinc-900 dark:text-zinc-50">{{ props.title }}</h2>
+      <p data-helpct-label class="mt-6 text-left text-sm font-bold text-zinc-800 dark:text-zinc-100">Search for a topic</p>
+      <form
+        data-helpct-form
+        class="mt-2 flex overflow-hidden rounded-lg border border-zinc-300 focus-within:border-indigo-500 dark:border-zinc-700"
+        @submit.prevent="submit"
+      >
+        <input
+          type="search"
+          data-helpct-input
+          v-model="query"
+          :placeholder="props.searchPlaceholder"
+          class="min-w-0 flex-1 px-4 py-2.5 text-sm text-zinc-700 outline-none placeholder:text-zinc-400 dark:bg-zinc-900 dark:text-zinc-200"
+        />
+        <button type="submit" data-helpct-submit aria-label="Search" class="bg-indigo-600 px-5 text-white transition-colors hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400">
+          🔍
+        </button>
+      </form>
+
+      <p data-helpct-browse class="mt-8 text-left text-sm font-bold text-zinc-800 dark:text-zinc-100">Or browse by topic</p>
+      <div data-helpct-topics class="mt-2 text-left">
+        <div v-for="topic in props.topics" :key="topic.id" :data-helpct-topic="topic.id" class="border-b border-zinc-200 last:border-0 dark:border-zinc-800">
+          <button
+            type="button"
+            :data-helpct-topic-btn="topic.id"
+            class="flex w-full items-center justify-between py-4 text-left text-sm font-semibold text-zinc-700 transition-colors hover:text-indigo-600 dark:text-zinc-200 dark:hover:text-indigo-300"
+            @click="toggleTopic(topic)"
+          >
+            <span>{{ topic.label }}</span>
+            <span aria-hidden="true" class="text-xs text-zinc-400">{{ topic.articles && topic.articles.length ? (openId === topic.id ? '▾' : '›') : '›' }}</span>
+          </button>
+          <div v-if="topic.articles && topic.articles.length && openId === topic.id" :data-helpct-articles="topic.id" class="pb-4">
+            <button
+              v-for="a in topic.articles"
+              :key="a"
+              type="button"
+              :data-helpct-article="a"
+              class="block py-1.5 text-left text-sm text-indigo-600 transition-colors hover:underline dark:text-indigo-300"
+              @click="emit('article-click', topic, a)"
+            >
+              {{ a }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+====
 File: vue/HelpResourcesPanel.vue
 ====
 
@@ -38251,6 +39018,112 @@ onMounted(() => {
   document.head.appendChild(style);
 });
 </script>
+
+
+====
+File: vue/MasonryDensityControls.vue
+====
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface MasonryItem {
+  id: string;
+  url: string;
+  alt: string;
+  span?: number;
+}
+
+export interface MasonryDensityControlsProps {
+  title?: string;
+  items?: MasonryItem[];
+  columns?: number;
+  padding?: number;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<MasonryDensityControlsProps>(), {
+  title: "Discovery wall",
+  items: () => [
+    { id: "m1", url: "https://images.unsplash.com/photo-1493397212122-2b1dda949c8a?w=400&q=60", alt: "Architecture facade", span: 3 },
+    { id: "m2", url: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&q=60", alt: "Surf wave", span: 2 },
+    { id: "m3", url: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&q=60", alt: "Flowers", span: 2 },
+    { id: "m4", url: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&q=60", alt: "Microphone", span: 3 },
+    { id: "m5", url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=60", alt: "Mountains at night", span: 2 },
+    { id: "m6", url: "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=400&q=60", alt: "City dusk", span: 3 },
+    { id: "m7", url: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&q=60", alt: "Desk with notes", span: 1 },
+    { id: "m8", url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&q=60", alt: "Writing", span: 2 },
+  ],
+  columns: 4,
+  padding: 12,
+  class: "",
+});
+
+const emit = defineEmits(["item-click", "close"]);
+
+const size = ref(props.columns);
+const gap = ref(props.padding);
+const closed = ref(false);
+
+const ratioFor = (span?: number) => (span === 3 ? "3 / 4" : span === 2 ? "4 / 5" : "1 / 1");
+</script>
+
+<template>
+  <div v-if="!closed" data-masn class="relative w-full overflow-hidden rounded-2xl bg-zinc-950 dark:bg-black" :class="props.class">
+    <div data-masn-controls class="absolute inset-x-0 top-0 z-10 flex items-center justify-around gap-6 bg-black/80 px-6 py-4 backdrop-blur-sm">
+      <label data-masn-size-group class="flex flex-1 items-center gap-3 text-sm text-zinc-200">
+        <span>Size</span>
+        <input
+          type="range"
+          data-masn-size
+          min="2"
+          max="6"
+          step="1"
+          v-model.number="size"
+          class="h-1 flex-1 cursor-pointer appearance-none rounded bg-zinc-600 accent-white"
+        />
+      </label>
+      <label data-masn-padding-group class="flex flex-1 items-center gap-3 text-sm text-zinc-200">
+        <span>Padding</span>
+        <input
+          type="range"
+          data-masn-padding
+          min="4"
+          max="32"
+          step="2"
+          v-model.number="gap"
+          class="h-1 flex-1 cursor-pointer appearance-none rounded bg-zinc-600 accent-white"
+        />
+      </label>
+      <button type="button" data-masn-close aria-label="Close gallery" class="text-lg text-zinc-300 transition-colors hover:text-white" @click="closed = true; emit('close')">
+        ✕
+      </button>
+    </div>
+
+    <p data-masn-title class="absolute left-5 top-16 z-10 text-xs font-medium uppercase tracking-wider text-zinc-500">{{ props.title }}</p>
+    <p data-masn-meta class="absolute right-5 top-16 z-10 text-xs font-medium text-zinc-500">{{ size }} cols · {{ gap }}px</p>
+
+    <div data-masn-grid class="pt-28" :style="{ columnCount: size, columnGap: gap + 'px' }">
+      <button
+        v-for="item in props.items"
+        :key="item.id"
+        type="button"
+        :data-masn-item="item.id"
+        class="block w-full break-inside-avoid overflow-hidden rounded-sm bg-zinc-900"
+        :style="{ marginBottom: gap + 'px' }"
+        @click="emit('item-click', item)"
+      >
+        <img
+          :src="item.url"
+          :alt="item.alt"
+          loading="lazy"
+          :style="{ aspectRatio: ratioFor(item.span) }"
+          class="w-full object-cover transition-transform duration-300 hover:scale-105"
+        />
+      </button>
+    </div>
+  </div>
+</template>
 
 
 ====
@@ -42986,6 +43859,155 @@ const iconFor = (os: string) => {
           <option v-for="n in [10, 25, 50]" :key="n" :value="n">{{ n }}</option>
         </select>
       </label>
+    </div>
+  </div>
+</template>
+
+
+====
+File: vue/SessionDiagnosticsPanel.vue
+====
+
+<script setup lang="ts">
+import { ref, computed } from "vue";
+
+export interface SessionDevice {
+  label: string;
+  value: string;
+  emoji: string;
+}
+
+export interface QualityWindow {
+  start: number;
+  width: number;
+  level: "good" | "poor" | "bad";
+}
+
+export interface QualityTrack {
+  id: string;
+  label: string;
+  emoji: string;
+  windows: QualityWindow[];
+}
+
+export interface DiagEvent {
+  id: string;
+  no: number;
+  message: string;
+  time: string;
+}
+
+export interface SessionDiagnosticsPanelProps {
+  title?: string;
+  devices?: SessionDevice[];
+  tracks?: QualityTrack[];
+  events?: DiagEvent[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<SessionDiagnosticsPanelProps>(), {
+  title: "Events Timeline",
+  devices: () => [
+    { label: "Browser", value: "Chrome 126.0.0.0", emoji: "🌐" },
+    { label: "Operating system", value: "Mac OS", emoji: "💻" },
+  ],
+  tracks: () => [
+    { id: "camera", label: "Camera", emoji: "📷", windows: [{ start: 0, width: 100, level: "good" }] },
+    { id: "microphone", label: "Microphone", emoji: "🎙", windows: [{ start: 0, width: 100, level: "good" }] },
+    { id: "screenshare", label: "Screenshare", emoji: "🖥", windows: [{ start: 0, width: 100, level: "good" }] },
+    { id: "network", label: "Poor Network", emoji: "📶", windows: [{ start: 20, width: 12, level: "bad" }, { start: 55, width: 8, level: "poor" }] },
+  ],
+  events: () => [
+    { id: "e1", no: 1, message: 'organizationId: "244198"', time: "6/25/2024, 4:10:24 PM" },
+    { id: "e2", no: 2, message: 'clientId: "c43b3dfc-62e9-43f6-887f-d07c6ac9eddb"', time: "6/25/2024, 4:10:26 PM" },
+    { id: "e3", no: 3, message: 'roomSessionId: "bdc6cb01-24a4-4132-b23a-8ad28d049a76"', time: "6/25/2024, 4:16:23 PM" },
+    { id: "e4", no: 4, message: 'displayName: "Alex Smith"', time: "6/25/2024, 4:10:24 PM" },
+    { id: "e5", no: 5, message: 'userRole: "owner"', time: "6/25/2024, 4:10:26 PM" },
+  ],
+  class: "",
+});
+
+const emit = defineEmits(["event-click", "search"]);
+
+const query = ref("");
+
+const filtered = computed(() =>
+  props.events.filter((e) => e.message.toLowerCase().includes(query.value.toLowerCase()))
+);
+
+const LEVEL_CLS: Record<string, string> = {
+  good: "bg-emerald-400 dark:bg-emerald-500",
+  poor: "bg-amber-400 dark:bg-amber-500",
+  bad: "bg-rose-400 dark:bg-rose-500",
+};
+
+const onInput = (e: Event) => {
+  query.value = (e.target as HTMLInputElement).value;
+  emit("search", query.value);
+};
+</script>
+
+<template>
+  <div data-sdiag class="w-full rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 sm:p-6" :class="props.class">
+    <div data-sdiag-devices class="grid gap-4 sm:grid-cols-2">
+      <div v-for="d in props.devices" :key="d.label" :data-sdiag-device="d.label" class="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+        <p class="text-lg font-bold text-zinc-900 dark:text-zinc-50">{{ d.label }}</p>
+        <p class="mt-2 flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
+          <span aria-hidden="true">{{ d.emoji }}</span>
+          {{ d.value }}
+        </p>
+      </div>
+    </div>
+
+    <h3 data-sdiag-title class="mt-6 text-xl font-bold text-zinc-900 dark:text-zinc-50">{{ props.title }}</h3>
+
+    <div data-sdiag-tracks class="mt-4 space-y-2.5">
+      <div v-for="t in props.tracks" :key="t.id" :data-sdiag-track="t.id" class="flex items-center gap-3">
+        <span class="flex w-40 shrink-0 items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
+          <span aria-hidden="true">{{ t.emoji }}</span>
+          {{ t.label }}
+        </span>
+        <div class="relative h-6 flex-1 overflow-hidden rounded bg-zinc-100 dark:bg-zinc-800">
+          <div
+            v-for="(w, i) in t.windows"
+            :key="i"
+            :data-sdiag-window="w.level"
+            class="absolute inset-y-0 rounded-sm"
+            :class="LEVEL_CLS[w.level] ?? LEVEL_CLS.good"
+            :style="{ left: w.start + '%', width: w.width + '%' }"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div data-sdiag-log class="mt-6 flex items-center justify-between gap-4">
+      <div class="grid flex-1 gap-1 text-sm font-bold text-zinc-800 dark:text-zinc-100 sm:grid-cols-[60px_1fr]">
+        <span>Event no.</span>
+        <span>Event message</span>
+      </div>
+      <input
+        type="search"
+        data-sdiag-search
+        :value="query"
+        placeholder="Search for an event"
+        class="w-56 rounded-full border border-zinc-300 bg-white px-4 py-1.5 text-sm text-zinc-700 outline-none transition-colors placeholder:text-zinc-400 focus:border-indigo-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+        @input="onInput"
+      />
+    </div>
+    <div data-sdiag-events class="mt-2 divide-y divide-zinc-100 dark:divide-zinc-800/60">
+      <p v-if="filtered.length === 0" data-sdiag-empty class="py-6 text-center text-sm text-zinc-400 dark:text-zinc-500">No events match your search.</p>
+      <button
+        v-for="e in filtered"
+        :key="e.id"
+        type="button"
+        :data-sdiag-event="e.no"
+        class="grid w-full grid-cols-[60px_1fr_auto] items-center gap-2 py-3 text-left text-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/40 sm:text-[13px]"
+        @click="emit('event-click', e)"
+      >
+        <span class="text-zinc-400 dark:text-zinc-500">{{ e.no }}</span>
+        <span class="truncate font-mono text-[13px] text-zinc-700 dark:text-zinc-200">{{ e.message }}</span>
+        <span class="whitespace-nowrap text-xs text-zinc-400 dark:text-zinc-500">{{ e.time }}</span>
+      </button>
     </div>
   </div>
 </template>
@@ -48840,6 +49862,156 @@ if (typeof customElements !== 'undefined' && !customElements.get('accordion-list
   customElements.define('accordion-list', AccordionElement);
 }
 export default AccordionElement;
+
+
+====
+File: vanilla/AccountSecurityPanel.js
+====
+
+/**
+ * AccountSecurityPanel - Account settings security tab: settings tabs,
+ * Password row with edit CTA and a "Manage verified sessions" card with
+ * per-device rows and remove buttons (Podia account security pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_TABS = () => ['Personal', 'Notifications', 'Security', 'Billing'];
+
+const DEFAULT_SESSIONS = () => [
+  { id: 's1', device: 'Chrome on Mac 10.15.7', detail: 'Nov 12 at 4:52 AM EST' },
+  { id: 's2', device: 'Firefox on Windows 11', detail: 'Nov 8 at 9:18 AM EST' },
+];
+
+class AccountSecurityPanelElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['tabs', 'password-value', 'sessions-title', 'sessions-description', 'sessions'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._tab = 'Security';
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  _onClick(event) {
+    const tabBtn = event.target.closest('[data-acctsec-tab]');
+    if (tabBtn) {
+      this._tab = tabBtn.getAttribute('data-acctsec-tab');
+      this.dispatchEvent(new CustomEvent('tab-click', { detail: { tab: this._tab }, bubbles: true }));
+      this._render();
+      return;
+    }
+    if (event.target.closest('[data-acctsec-edit-password]')) {
+      this.dispatchEvent(new CustomEvent('edit-password', { bubbles: true }));
+      return;
+    }
+    const removeBtn = event.target.closest('[data-acctsec-remove]');
+    if (removeBtn) {
+      const id = removeBtn.getAttribute('data-acctsec-remove');
+      const sessions = parseJsonAttr(this.getAttribute('sessions'), DEFAULT_SESSIONS());
+      const session = sessions.find((s) => s.id === id);
+      if (session) {
+        this.dispatchEvent(new CustomEvent('remove-session', { detail: session, bubbles: true }));
+      }
+    }
+  }
+
+  _render() {
+    const tabs = parseJsonAttr(this.getAttribute('tabs'), DEFAULT_TABS());
+    const passwordValue = this.getAttribute('password-value') || '••••••••';
+    const sessionsTitle = this.getAttribute('sessions-title') || 'Manage verified sessions';
+    const sessionsDescription =
+      this.getAttribute('sessions-description') ||
+      'Each time you login to your account, a verification code is emailed to you to proceed. You may have up to 5 login sessions verified at any given time, each of which expire after 30 days.';
+    const sessions = parseJsonAttr(this.getAttribute('sessions'), DEFAULT_SESSIONS());
+
+    const tabBtns = tabs
+      .map(
+        (t) => `<button type="button" data-acctsec-tab="${escapeAttribute(t)}" class="-mb-px border-b-2 pb-2.5 text-sm font-medium transition-colors ${
+          this._tab === t ? 'border-zinc-800 text-zinc-900 dark:border-zinc-100 dark:text-zinc-50' : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200'
+        }">${escapeAttribute(t)}</button>`
+      )
+      .join('');
+
+    const sessionRows = sessions
+      .map(
+        (s) => `<div data-acctsec-session="${escapeAttribute(s.id)}" class="flex items-center justify-between gap-3 rounded-lg bg-zinc-50 px-4 py-3 dark:bg-zinc-800/60">
+            <p class="text-sm text-zinc-700 dark:text-zinc-200">
+              <span data-acctsec-session-device class="font-semibold">${escapeAttribute(s.device)}</span>
+              <span class="text-zinc-400 dark:text-zinc-500"> • ${escapeAttribute(s.detail)}</span>
+            </p>
+            <button type="button" data-acctsec-remove="${escapeAttribute(s.id)}" aria-label="Remove ${escapeAttribute(s.device)}" class="text-zinc-400 transition-colors hover:text-rose-500 dark:hover:text-rose-400">✕</button>
+          </div>`
+      )
+      .join('');
+
+    const body =
+      this._tab === 'Security'
+        ? `<div data-acctsec-panel class="mt-5 rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
+            <p data-acctsec-panel-title class="text-lg font-bold text-zinc-900 dark:text-zinc-50">Security</p>
+            <div data-acctsec-password class="mt-5 flex items-center justify-between gap-4">
+              <span class="text-sm font-medium text-zinc-700 dark:text-zinc-200">Password</span>
+              <span data-acctsec-password-value class="font-mono text-sm tracking-widest text-zinc-700 dark:text-zinc-200">${escapeAttribute(passwordValue)}</span>
+              <button type="button" data-acctsec-edit-password class="rounded-lg border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">Edit</button>
+            </div>
+            <div data-acctsec-sessions class="mt-6 rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
+              <p data-acctsec-sessions-title class="font-bold text-zinc-900 dark:text-zinc-50">${escapeAttribute(sessionsTitle)}</p>
+              <p data-acctsec-sessions-desc class="mt-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">${escapeAttribute(sessionsDescription)}</p>
+              <div data-acctsec-session-list class="mt-4 space-y-2">${sessionRows}</div>
+              <div class="mt-4 flex justify-end">
+                <button type="button" data-acctsec-done class="rounded-lg border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">Done</button>
+              </div>
+            </div>
+          </div>`
+        : `<p data-acctsec-placeholder class="mt-5 rounded-xl border border-dashed border-zinc-200 p-6 text-center text-sm text-zinc-400 dark:border-zinc-700 dark:text-zinc-500">${escapeAttribute(this._tab)} settings are not part of this demo.</p>`;
+
+    this.innerHTML = `
+      <div data-acctsec class="w-full rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 sm:p-8">
+        <h2 data-acctsec-heading class="text-2xl font-extrabold text-zinc-900 dark:text-zinc-50">Account</h2>
+        <div data-acctsec-tabs class="mt-4 flex gap-6 border-b border-zinc-200 dark:border-zinc-800">${tabBtns}</div>
+        ${body}
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('account-security-panel')) {
+  customElements.define('account-security-panel', AccountSecurityPanelElement);
+}
+
+export default AccountSecurityPanelElement;
 
 
 ====
@@ -62617,6 +63789,153 @@ export default HealthDonutStatsElement;
 
 
 ====
+File: vanilla/HelpCenterHome.js
+====
+
+/**
+ * HelpCenterHome - Help center landing: hero title, big search bar with
+ * submit button and "browse by topic" rows with expandable article links
+ * (GetYourGuide help center pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_TOPICS = () => [
+  { id: 'plan', label: 'Plan, search and book' },
+  { id: 'activity', label: 'Activity information' },
+  { id: 'voucher', label: 'Booking confirmation, voucher and tickets' },
+  { id: 'pickup', label: 'Meeting point and pickup' },
+  { id: 'day', label: 'On the day of the activity' },
+  { id: 'management', label: 'Booking management', articles: ['Change the date or time', 'Cancel your booking', 'Refund policy'] },
+  { id: 'cancellation', label: 'Cancellation' },
+  { id: 'payment', label: 'Payment and refunds' },
+];
+
+class HelpCenterHomeElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'search-placeholder', 'topics'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._openId = 'management';
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+    this.addEventListener('submit', this._onSubmit, true);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+    this.removeEventListener('submit', this._onSubmit, true);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  _onSubmit(event) {
+    event.preventDefault();
+    const input = this.querySelector('[data-helpct-input]');
+    const query = input ? input.value : '';
+    this.dispatchEvent(new CustomEvent('search-submit', { detail: { query }, bubbles: true }));
+  }
+
+  _onClick(event) {
+    const articleBtn = event.target.closest('[data-helpct-article]');
+    if (articleBtn) {
+      const topics = parseJsonAttr(this.getAttribute('topics'), DEFAULT_TOPICS());
+      const topic = topics.find((t) => t.id === this._openId) || null;
+      this.dispatchEvent(new CustomEvent('article-click', { detail: { topic, article: articleBtn.getAttribute('data-helpct-article') }, bubbles: true }));
+      return;
+    }
+    const topicBtn = event.target.closest('[data-helpct-topic-btn]');
+    if (topicBtn) {
+      const id = topicBtn.getAttribute('data-helpct-topic-btn');
+      const topics = parseJsonAttr(this.getAttribute('topics'), DEFAULT_TOPICS());
+      const topic = topics.find((t) => t.id === id) || null;
+      if (topic && Array.isArray(topic.articles) && topic.articles.length > 0) {
+        this._openId = this._openId === id ? null : id;
+        this._render();
+      }
+      this.dispatchEvent(new CustomEvent('topic-click', { detail: { topic }, bubbles: true }));
+    }
+  }
+
+  _render() {
+    const title = this.getAttribute('title') || 'Welcome to the Help Center';
+    const placeholder = this.getAttribute('search-placeholder') || 'Cancellation, meeting point, etc.';
+    const topics = parseJsonAttr(this.getAttribute('topics'), DEFAULT_TOPICS());
+
+    const topicRows = topics
+      .map((t) => {
+        const expandable = Array.isArray(t.articles) && t.articles.length > 0;
+        const open = this._openId === t.id;
+        const chevron = expandable && open ? '▾' : '›';
+        const articles =
+          expandable && open
+            ? `<div data-helpct-articles="${escapeAttribute(t.id)}" class="pb-4">${t.articles
+                .map(
+                  (a) => `<button type="button" data-helpct-article="${escapeAttribute(a)}" class="block py-1.5 text-left text-sm text-indigo-600 transition-colors hover:underline dark:text-indigo-300">${escapeAttribute(a)}</button>`
+                )
+                .join('')}</div>`
+            : '';
+        return `<div data-helpct-topic="${escapeAttribute(t.id)}" class="border-b border-zinc-200 last:border-0 dark:border-zinc-800">
+            <button type="button" data-helpct-topic-btn="${escapeAttribute(t.id)}" class="flex w-full items-center justify-between py-4 text-left text-sm font-semibold text-zinc-700 transition-colors hover:text-indigo-600 dark:text-zinc-200 dark:hover:text-indigo-300">
+              <span>${escapeAttribute(t.label)}</span>
+              <span aria-hidden="true" class="text-xs text-zinc-400">${chevron}</span>
+            </button>
+            ${articles}
+          </div>`;
+      })
+      .join('');
+
+    this.innerHTML = `
+      <div data-helpct class="w-full rounded-2xl border border-zinc-200 bg-white px-5 py-8 dark:border-zinc-800 dark:bg-zinc-900 sm:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 data-helpct-title class="text-3xl font-extrabold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</h2>
+          <p data-helpct-label class="mt-6 text-left text-sm font-bold text-zinc-800 dark:text-zinc-100">Search for a topic</p>
+          <form data-helpct-form class="mt-2 flex overflow-hidden rounded-lg border border-zinc-300 focus-within:border-indigo-500 dark:border-zinc-700">
+            <input type="search" data-helpct-input placeholder="${escapeAttribute(placeholder)}" class="min-w-0 flex-1 px-4 py-2.5 text-sm text-zinc-700 outline-none placeholder:text-zinc-400 dark:bg-zinc-900 dark:text-zinc-200" />
+            <button type="submit" data-helpct-submit aria-label="Search" class="bg-indigo-600 px-5 text-white transition-colors hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400">🔍</button>
+          </form>
+          <p data-helpct-browse class="mt-8 text-left text-sm font-bold text-zinc-800 dark:text-zinc-100">Or browse by topic</p>
+          <div data-helpct-topics class="mt-2 text-left">${topicRows}</div>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('help-center-home')) {
+  customElements.define('help-center-home', HelpCenterHomeElement);
+}
+
+export default HelpCenterHomeElement;
+
+
+====
 File: vanilla/HelpResourcesPanel.js
 ====
 
@@ -64999,6 +66318,171 @@ if (typeof customElements !== 'undefined' && !customElements.get('marquee-wall')
   customElements.define('marquee-wall', MarqueeWallElement);
 }
 export default MarqueeWallElement;
+
+
+====
+File: vanilla/MasonryDensityControls.js
+====
+
+/**
+ * MasonryDensityControls - Immersive masonry gallery with a floating
+ * Size / Padding dual-slider control bar that live-adjusts column count and
+ * gutter (Savee discovery wall pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_ITEMS = () => [
+  { id: 'm1', url: 'https://images.unsplash.com/photo-1493397212122-2b1dda949c8a?w=400&q=60', alt: 'Architecture facade', span: 3 },
+  { id: 'm2', url: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&q=60', alt: 'Surf wave', span: 2 },
+  { id: 'm3', url: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&q=60', alt: 'Flowers', span: 2 },
+  { id: 'm4', url: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&q=60', alt: 'Microphone', span: 3 },
+  { id: 'm5', url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=60', alt: 'Mountains at night', span: 2 },
+  { id: 'm6', url: 'https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=400&q=60', alt: 'City dusk', span: 3 },
+  { id: 'm7', url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&q=60', alt: 'Desk with notes', span: 1 },
+  { id: 'm8', url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&q=60', alt: 'Writing', span: 2 },
+];
+
+const ratioFor = (span) => (span === 3 ? '3 / 4' : span === 2 ? '4 / 5' : '1 / 1');
+
+class MasonryDensityControlsElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'items', 'columns', 'padding'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._size = 4;
+    this._gap = 12;
+    this._closed = false;
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._size = Number(this.getAttribute('columns')) || 4;
+    this._gap = Number(this.getAttribute('padding')) || 12;
+    this._closed = false;
+    this._render();
+    this.addEventListener('input', this._onInput);
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('input', this._onInput);
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    if (name === 'columns') this._size = Number(newValue) || 4;
+    if (name === 'padding') this._gap = Number(newValue) || 12;
+    this._render();
+  }
+
+  _onInput(event) {
+    const target = event.target;
+    if (!target || typeof target.hasAttribute !== 'function') return;
+    if (target.hasAttribute('data-masn-size')) {
+      this._size = Number(target.value) || 2;
+      this._syncGrid();
+    } else if (target.hasAttribute('data-masn-padding')) {
+      this._gap = Number(target.value) || 4;
+      this._syncGrid();
+    }
+  }
+
+  _syncGrid() {
+    const grid = this.querySelector('[data-masn-grid]');
+    if (grid) {
+      grid.style.columnCount = String(this._size);
+      grid.style.columnGap = this._gap + 'px';
+    }
+    // update per-item margin + meta line without re-render (keeps slider focus)
+    this.querySelectorAll('[data-masn-item]').forEach((el) => {
+      el.style.marginBottom = this._gap + 'px';
+    });
+    const meta = this.querySelector('[data-masn-meta]');
+    if (meta) meta.textContent = `${this._size} cols · ${this._gap}px`;
+    this.dispatchEvent(new CustomEvent('density-change', { detail: { columns: this._size, padding: this._gap }, bubbles: true }));
+  }
+
+  _onClick(event) {
+    if (event.target.closest('[data-masn-close]')) {
+      this._closed = true;
+      this.dispatchEvent(new CustomEvent('close', { bubbles: true }));
+      this._render();
+      return;
+    }
+    const itemBtn = event.target.closest('[data-masn-item]');
+    if (itemBtn) {
+      const items = parseJsonAttr(this.getAttribute('items'), DEFAULT_ITEMS());
+      const id = itemBtn.getAttribute('data-masn-item');
+      const item = items.find((it) => it.id === id);
+      if (item) {
+        this.dispatchEvent(new CustomEvent('item-click', { detail: item, bubbles: true }));
+      }
+    }
+  }
+
+  _render() {
+    if (this._closed) {
+      this.innerHTML = '';
+      return;
+    }
+    const title = this.getAttribute('title') || 'Discovery wall';
+    const items = parseJsonAttr(this.getAttribute('items'), DEFAULT_ITEMS());
+
+    const cards = items
+      .map(
+        (it) => `<button type="button" data-masn-item="${escapeAttribute(it.id)}" class="block w-full break-inside-avoid overflow-hidden rounded-sm bg-zinc-900" style="margin-bottom:${this._gap}px">
+            <img src="${escapeAttribute(it.url)}" alt="${escapeAttribute(it.alt)}" loading="lazy" style="aspect-ratio:${ratioFor(it.span)}" class="w-full object-cover transition-transform duration-300 hover:scale-105" />
+          </button>`
+      )
+      .join('');
+
+    this.innerHTML = `
+      <div data-masn class="relative w-full overflow-hidden rounded-2xl bg-zinc-950 dark:bg-black">
+        <div data-masn-controls class="absolute inset-x-0 top-0 z-10 flex items-center justify-around gap-6 bg-black/80 px-6 py-4 backdrop-blur-sm">
+          <label data-masn-size-group class="flex flex-1 items-center gap-3 text-sm text-zinc-200">
+            <span>Size</span>
+            <input type="range" data-masn-size min="2" max="6" step="1" value="${this._size}" class="h-1 flex-1 cursor-pointer appearance-none rounded bg-zinc-600 accent-white" />
+          </label>
+          <label data-masn-padding-group class="flex flex-1 items-center gap-3 text-sm text-zinc-200">
+            <span>Padding</span>
+            <input type="range" data-masn-padding min="4" max="32" step="2" value="${this._gap}" class="h-1 flex-1 cursor-pointer appearance-none rounded bg-zinc-600 accent-white" />
+          </label>
+          <button type="button" data-masn-close aria-label="Close gallery" class="text-lg text-zinc-300 transition-colors hover:text-white">✕</button>
+        </div>
+        <p data-masn-title class="absolute left-5 top-16 z-10 text-xs font-medium uppercase tracking-wider text-zinc-500">${escapeAttribute(title)}</p>
+        <p data-masn-meta class="absolute right-5 top-16 z-10 text-xs font-medium text-zinc-500">${this._size} cols · ${this._gap}px</p>
+        <div data-masn-grid class="pt-28" style="column-count:${this._size};column-gap:${this._gap}px">${cards}</div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('masonry-density-controls')) {
+  customElements.define('masonry-density-controls', MasonryDensityControlsElement);
+}
+
+export default MasonryDensityControlsElement;
 
 
 ====
@@ -72011,6 +73495,191 @@ if (typeof customElements !== 'undefined' && !customElements.get('session-device
 }
 
 export default SessionDeviceTableElement;
+
+
+====
+File: vanilla/SessionDiagnosticsPanel.js
+====
+
+/**
+ * SessionDiagnosticsPanel - Connection diagnostics: Browser / OS info cards,
+ * media quality timeline bars and a searchable event log table (Whereby
+ * insights pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_DEVICES = () => [
+  { label: 'Browser', value: 'Chrome 126.0.0.0', emoji: '🌐' },
+  { label: 'Operating system', value: 'Mac OS', emoji: '💻' },
+];
+
+const DEFAULT_TRACKS = () => [
+  { id: 'camera', label: 'Camera', emoji: '📷', windows: [{ start: 0, width: 100, level: 'good' }] },
+  { id: 'microphone', label: 'Microphone', emoji: '🎙', windows: [{ start: 0, width: 100, level: 'good' }] },
+  { id: 'screenshare', label: 'Screenshare', emoji: '🖥', windows: [{ start: 0, width: 100, level: 'good' }] },
+  { id: 'network', label: 'Poor Network', emoji: '📶', windows: [{ start: 20, width: 12, level: 'bad' }, { start: 55, width: 8, level: 'poor' }] },
+];
+
+const DEFAULT_EVENTS = () => [
+  { id: 'e1', no: 1, message: 'organizationId: "244198"', time: '6/25/2024, 4:10:24 PM' },
+  { id: 'e2', no: 2, message: 'clientId: "c43b3dfc-62e9-43f6-887f-d07c6ac9eddb"', time: '6/25/2024, 4:10:26 PM' },
+  { id: 'e3', no: 3, message: 'roomSessionId: "bdc6cb01-24a4-4132-b23a-8ad28d049a76"', time: '6/25/2024, 4:16:23 PM' },
+  { id: 'e4', no: 4, message: 'displayName: "Alex Smith"', time: '6/25/2024, 4:10:24 PM' },
+  { id: 'e5', no: 5, message: 'userRole: "owner"', time: '6/25/2024, 4:10:26 PM' },
+];
+
+const LEVEL_CLS = {
+  good: 'bg-emerald-400 dark:bg-emerald-500',
+  poor: 'bg-amber-400 dark:bg-amber-500',
+  bad: 'bg-rose-400 dark:bg-rose-500',
+};
+
+class SessionDiagnosticsPanelElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'devices', 'tracks', 'events'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._query = '';
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+    this.addEventListener('input', this._onInput);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+    this.removeEventListener('input', this._onInput);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  _onClick(event) {
+    const row = event.target.closest('[data-sdiag-event]');
+    if (row) {
+      const no = Number(row.getAttribute('data-sdiag-event'));
+      const events = parseJsonAttr(this.getAttribute('events'), DEFAULT_EVENTS());
+      const found = events.find((e) => e.no === no);
+      if (found) {
+        this.dispatchEvent(new CustomEvent('event-click', { detail: found, bubbles: true }));
+      }
+    }
+  }
+
+  _onInput(event) {
+    if (event.target && event.target.hasAttribute && event.target.hasAttribute('data-sdiag-search')) {
+      this._query = event.target.value;
+      // Re-render only the events list; keep the input's focus by not
+      // re-rendering the whole component.
+      const events = parseJsonAttr(this.getAttribute('events'), DEFAULT_EVENTS());
+      const q = this._query.toLowerCase();
+      const filtered = events.filter((e) => e.message.toLowerCase().includes(q));
+      const list = this.querySelector('[data-sdiag-events]');
+      if (list) {
+        list.innerHTML = filtered.length === 0
+          ? '<p data-sdiag-empty class="py-6 text-center text-sm text-zinc-400 dark:text-zinc-500">No events match your search.</p>'
+          : filtered
+              .map(
+                (e) => `<button type="button" data-sdiag-event="${e.no}" class="grid w-full grid-cols-[60px_1fr_auto] items-center gap-2 py-3 text-left text-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/40 sm:text-[13px]">
+                    <span class="text-zinc-400 dark:text-zinc-500">${e.no}</span>
+                    <span class="truncate font-mono text-[13px] text-zinc-700 dark:text-zinc-200">${escapeAttribute(e.message)}</span>
+                    <span class="whitespace-nowrap text-xs text-zinc-400 dark:text-zinc-500">${escapeAttribute(e.time)}</span>
+                  </button>`
+              )
+              .join('');
+        this.dispatchEvent(new CustomEvent('search', { detail: { query: this._query }, bubbles: true }));
+      }
+    }
+  }
+
+  _render() {
+    const title = this.getAttribute('title') || 'Events Timeline';
+    const devices = parseJsonAttr(this.getAttribute('devices'), DEFAULT_DEVICES());
+    const tracks = parseJsonAttr(this.getAttribute('tracks'), DEFAULT_TRACKS());
+    const events = parseJsonAttr(this.getAttribute('events'), DEFAULT_EVENTS());
+
+    const deviceCards = devices
+      .map(
+        (d) => `<div data-sdiag-device="${escapeAttribute(d.label)}" class="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+            <p class="text-lg font-bold text-zinc-900 dark:text-zinc-50">${escapeAttribute(d.label)}</p>
+            <p class="mt-2 flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300"><span aria-hidden="true">${d.emoji}</span>${escapeAttribute(d.value)}</p>
+          </div>`
+      )
+      .join('');
+
+    const trackRows = tracks
+      .map((t) => {
+        const windows = (t.windows || [])
+          .map((w) => {
+            const cls = LEVEL_CLS[w.level] ?? LEVEL_CLS.good;
+            return `<div data-sdiag-window="${escapeAttribute(w.level)}" class="absolute inset-y-0 rounded-sm ${cls}" style="left:${w.start}%;width:${w.width}%"></div>`;
+          })
+          .join('');
+        return `<div data-sdiag-track="${escapeAttribute(t.id)}" class="flex items-center gap-3">
+            <span class="flex w-40 shrink-0 items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300"><span aria-hidden="true">${t.emoji}</span>${escapeAttribute(t.label)}</span>
+            <div class="relative h-6 flex-1 overflow-hidden rounded bg-zinc-100 dark:bg-zinc-800">${windows}</div>
+          </div>`;
+      })
+      .join('');
+
+    const eventRows = events
+      .map(
+        (e) => `<button type="button" data-sdiag-event="${e.no}" class="grid w-full grid-cols-[60px_1fr_auto] items-center gap-2 py-3 text-left text-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/40 sm:text-[13px]">
+            <span class="text-zinc-400 dark:text-zinc-500">${e.no}</span>
+            <span class="truncate font-mono text-[13px] text-zinc-700 dark:text-zinc-200">${escapeAttribute(e.message)}</span>
+            <span class="whitespace-nowrap text-xs text-zinc-400 dark:text-zinc-500">${escapeAttribute(e.time)}</span>
+          </button>`
+      )
+      .join('');
+
+    this.innerHTML = `
+      <div data-sdiag class="w-full rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 sm:p-6">
+        <div data-sdiag-devices class="grid gap-4 sm:grid-cols-2">${deviceCards}</div>
+        <h3 data-sdiag-title class="mt-6 text-xl font-bold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</h3>
+        <div data-sdiag-tracks class="mt-4 space-y-2.5">${trackRows}</div>
+        <div data-sdiag-log class="mt-6 flex items-center justify-between gap-4">
+          <div class="grid flex-1 gap-1 text-sm font-bold text-zinc-800 dark:text-zinc-100 sm:grid-cols-[60px_1fr]">
+            <span>Event no.</span>
+            <span>Event message</span>
+          </div>
+          <input type="search" data-sdiag-search placeholder="Search for an event" class="w-56 rounded-full border border-zinc-300 bg-white px-4 py-1.5 text-sm text-zinc-700 outline-none transition-colors placeholder:text-zinc-400 focus:border-indigo-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200" />
+        </div>
+        <div data-sdiag-events class="mt-2 divide-y divide-zinc-100 dark:divide-zinc-800/60">${eventRows}</div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('session-diagnostics-panel')) {
+  customElements.define('session-diagnostics-panel', SessionDiagnosticsPanelElement);
+}
+
+export default SessionDiagnosticsPanelElement;
 
 
 ====
