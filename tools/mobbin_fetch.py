@@ -137,6 +137,40 @@ CATEGORIES = {
         ("screens", "prompt versioning diff A B test variants", "web"),
         ("screens", "AI guardrail moderation flagged content review", "web"),
     ],
+    # Docs & help center
+    "docs-help": [
+        ("screens", "documentation page sidebar table of contents", "web"),
+        ("screens", "help center search results articles", "web"),
+        ("screens", "changelog release notes timeline", "web"),
+        ("screens", "API reference endpoint documentation code sample", "web"),
+    ],
+    # Media & creative tools
+    "media": [
+        ("screens", "video player with controls and chapters", "web"),
+        ("screens", "audio podcast player waveform episodes", "web"),
+        ("screens", "photo gallery masonry grid lightbox", "web"),
+        ("screens", "music playlist track list player", "web"),
+    ],
+    # Workflow & project management
+    "workflow": [
+        ("screens", "project timeline gantt roadmap view", "web"),
+        ("screens", "task detail panel checklist assignee", "web"),
+        ("screens", "calendar week schedule events grid", "web"),
+        ("screens", "approval review workflow status steps", "web"),
+    ],
+    # Maps & location
+    "maps": [
+        ("screens", "map view with location pins sidebar list", "web"),
+        ("screens", "delivery tracking map route status", "web"),
+        ("screens", "location address picker autocomplete", "web"),
+    ],
+    # Security & trust
+    "security": [
+        ("screens", "two factor authentication otp verification code", "web"),
+        ("screens", "security settings sessions devices list", "web"),
+        ("screens", "audit log activity history events table", "web"),
+        ("screens", "permissions roles matrix access control", "web"),
+    ],
 }
 
 
