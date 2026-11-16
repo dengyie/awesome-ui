@@ -15,7 +15,7 @@ const uiIconSource = readFileSync(join(root, 'vanilla/UiIcon.js'), 'utf8')
 const stripComponent = (file, className) =>
   readFileSync(join(root, 'vanilla', file), 'utf8')
     .replace(/^import uiIcon from ['"].\/UiIcon.js['"];\s*$/m, '')
-    .replace(/^const escapeAttribute = [\s\S]*?;\n/m, '')
+    .replace(/^const escapeAttribute = [\s\S]*?;\r?\n/m, '')
     .replace(new RegExp(`^export default ${className};\\s*$`, 'm'), '')
     .replace(/^export const paginationSlots/m, 'const paginationSlots')
     .replace(new RegExp(`^export class ${className}`, 'm'), `class ${className}`);

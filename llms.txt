@@ -965,3 +965,23 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - Vue 3: vue/MasonryDensityControls.vue
    - Vanilla: vanilla/MasonryDensityControls.js (custom element `<masonry-density-controls>`, attributes `title`/`items` JSON/`columns`/`padding`; events `item-click {item}`, `density-change {columns, padding}`, `close`)
 
+216. LiquidGlass: Apple Liquid Glass material container — backdrop blur, specular rim reflection, optional pointer tilt/refraction caustics; capsule/rect variants (Apple material pattern).
+   - React: react/LiquidGlass.tsx
+   - Vue 3: vue/LiquidGlass.vue
+   - Vanilla: vanilla/LiquidGlass.js (custom element `<liquid-glass>`, attributes `variant`/`intensity`/`interactive`/`enable-tilt`/`max-tilt`/`glare-opacity`; no events)
+217. AnimatedCounter: animated number counter — counts up to target on view with duration/delay easing, prefix/suffix slots (stat card pattern).
+   - React: react/AnimatedCounter.tsx
+   - Vue 3: vue/AnimatedCounter.vue
+   - Vanilla: vanilla/AnimatedCounter.js (custom element `<animated-counter>`, attributes `target`/`start`/`duration`/`delay`/`suffix`/`prefix`; no events)
+218. SpotlightGlareCard: pointer-tracking spotlight glare card — cursor-follow radial highlight with optional 3D tilt (hero card pattern).
+   - React: react/SpotlightGlareCard.tsx
+   - Vue 3: vue/SpotlightGlareCard.vue
+   - Vanilla: vanilla/SpotlightGlareCard.js (custom element `<spotlight-glare-card>`, attributes `glare-opacity`/`glare-radius`/`enable-tilt`/`max-tilt`; no events)
+219. PointerRipples: WebGL Navier-Stokes pointer ripples backdrop — rainbow dye splats, vorticity swirls, 3D diffuse shading, idle auto-settle (hero background pattern).
+   - React: react/PointerRipples.tsx
+   - Vue 3: vue/PointerRipples.vue
+   - Vanilla: vanilla/PointerRipples.js (custom element `<pointer-ripples>`, numeric sim attributes `sim-resolution`/`dye-resolution`/`density-dissipation`/`velocity-dissipation`/`pressure`/`curl`/`splat-radius`/`splat-force`/`color-*` etc., plus `shading`/`class`; no events)
+220. FluidContourBackdrop: animated fluid ink contour backdrop — flowing marbled lines with speed/interactive controls and ink/paper colors (ambient background pattern).
+   - React: react/FluidContourBackdrop.tsx
+   - Vue 3: vue/FluidContourBackdrop.vue
+   - Vanilla: vanilla/FluidContourBackdrop.js (custom element `<fluid-contour-backdrop>`, attributes `speed`/`interactive`/`ink-color`/`paper-color`; no events)

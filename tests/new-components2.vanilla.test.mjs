@@ -14,12 +14,12 @@ const uiIconSource = readFileSync(join(root, 'vanilla/UiIcon.js'), 'utf8')
 
 const codeBlockSource = readFileSync(join(root, 'vanilla/CodeBlock.js'), 'utf8')
   .replace(/^import uiIcon from ['"].\/UiIcon.js['"];\s*$/m, '')
-  .replace(/^const escapeAttribute = [\s\S]*?;\n/m, '')
+  .replace(/^const escapeAttribute = [\s\S]*?;\r?\n/m, '')
   .replace(/^export default CodeBlockElement;\s*$/m, '')
   .replace(/^export class CodeBlockElement/m, 'class CodeBlockElement');
 
 const typingSource = readFileSync(join(root, 'vanilla/TypingIndicator.js'), 'utf8')
-  .replace(/^const escapeAttribute = [\s\S]*?;\n/m, '')
+  .replace(/^const escapeAttribute = [\s\S]*?;\r?\n/m, '')
   .replace(/^export default TypingIndicatorElement;\s*$/m, '')
   .replace(/^export class TypingIndicatorElement/m, 'class TypingIndicatorElement');
 

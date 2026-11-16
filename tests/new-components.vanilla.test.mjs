@@ -14,13 +14,13 @@ const uiIconSource = readFileSync(join(root, 'vanilla/UiIcon.js'), 'utf8')
 
 const ctxSource = readFileSync(join(root, 'vanilla/ContextUsageBadge.js'), 'utf8')
   .replace(/^import uiIcon from ['"].\/UiIcon.js['"];\s*$/m, '')
-  .replace(/^const escapeAttribute = [\s\S]*?;\n/m, '')
+  .replace(/^const escapeAttribute = [\s\S]*?;\r?\n/m, '')
   .replace(/^export default ContextUsageBadgeElement;\s*$/m, '')
   .replace(/^export class ContextUsageBadgeElement/m, 'class ContextUsageBadgeElement');
 
 const modelSource = readFileSync(join(root, 'vanilla/ModelSelector.js'), 'utf8')
   .replace(/^import uiIcon from ['"].\/UiIcon.js['"];\s*$/m, '')
-  .replace(/^const escapeAttribute = [\s\S]*?;\n/m, '')
+  .replace(/^const escapeAttribute = [\s\S]*?;\r?\n/m, '')
   .replace(/^export default ModelSelectorElement;\s*$/m, '')
   .replace(/^export class ModelSelectorElement/m, 'class ModelSelectorElement');
 
