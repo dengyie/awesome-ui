@@ -1165,6 +1165,26 @@ awesome-ui/
 - **Vanilla 用法**: `<docs-page-layout>` + `top-links`/`nav-groups`/`title`/`copy-label`/`blocks`/`toc`/`active-toc-id` 属性；事件 `nav-click {item}` / `toc-click {item}` / `copy-page`
 - **特性**: 三栏文档壳（220px 左导航：顶部链接 + 分组导航含 Start here 徽标；中栏文章：标题 + ⧉ Copy page 按钮点击后变 ✓ Copied、callout info/success/warning、cards 网格、终端代码块；右栏 On this page TOC 左边框活动高亮）（Mintlify 文档模式）。
 
+### 204. `TaskCardModal` (任务卡片弹窗)
+- **Props**: `title?`, `completed?`, `members?: [{id,name,initials?,avatarUrl?}]`, `labels?: [{id,label,color}]`, `dates?`, `description?`, `attachments?: [{id,name,meta,kind?:"link"|"file"}]`, `checklist?: [{id,text,done}]`, `comments?: [{id,author,initials?,text,time}]`, `commentPlaceholder?`, `className?`, `onCardClose?`, `onCompleteToggle?(completed)`, `onChecklistToggle?(item)`, `onCommentSubmit?(text)`
+- **Vanilla 用法**: `<task-card-modal>` + `title`/`completed`/`members`/`labels`/`dates`/`description`/`attachments`/`checklist`/`comments`/`comment-placeholder` 属性；事件 `card-close` / `complete-toggle {completed}` / `checklist-toggle {item}` / `comment-submit {text}`（输入框回车或 Comment 按钮提交）
+- **特性**: 半透明遮罩 + 居中弹窗（完成复选框切换标题删除线、右上 ✕ 关闭）、Members 圆形头像组 / Labels 彩色芯片 / Dates 区间行、描述区、链接/文件附件行（🔗/📄 图标）、Checklist 完成 % + 翡翠进度条 + 可勾选条目、右栏 Comments & activity 评论输入（Enter 提交）+ 时间线评论（Trello 卡片弹窗模式）。
+
+### 205. `FormTrackingDashboard` (表单追踪仪表盘)
+- **Props**: `title?`, `active?`, `stats?: [{id,label,value,pct,tone:"sky"|"emerald"|"amber"|"rose",icon?}]`, `details?: [{label,value}]`, `requests?: [{id,name,initials?,avatarUrl?,submitted,service,status:"completed"|"to-be-completed"|"not-completed"}]`, `sortOptions?: string[]`, `className?`, `onBack?`, `onSortChange?(option)`, `onRequestClick?(row)`
+- **Vanilla 用法**: `<form-tracking-dashboard>` + `title`/`active`/`stats`/`details`/`requests`/`sort-options` 属性；事件 `back` / `sort-change {option}` / `request-click {row}`（点击外部关闭下拉）
+- **特性**: ← 返回 + 标题 + Active 翡翠胶囊 + Options 排序下拉、四张统计卡（色调圆点 + 图标 + 大数值 + % 进度条）、Consultation form details 两列明细网格、Client form requests 表格（头像行 + Submitted/Service 列 + Completed 翡翠 / To be completed 琥珀 / Not completed 玫红状态胶囊）（Fresha 表单追踪模式）。
+
+### 206. `AudioPlaylistPage` (音频播放列表页)
+- **Props**: `title?`, `subtitle?`, `coverUrl?`, `tracks?: [{id,title,artist,duration,coverUrl?,version?,liked?}]`, `queue?: [{id,title,artist,duration}]`, `activeTrackId?`, `className?`, `onTrackClick?(track)`, `onLike?(track)`, `onRemix?(track)`, `onQueueClick?(track)`
+- **Vanilla 用法**: `<audio-playlist-page>` + `title`/`subtitle`/`cover-url`/`tracks`/`queue`/`active-track-id` 属性；事件 `track-click {track}` / `like {track}` / `remix {track}` / `queue-click {track}`（Play 按钮与播放条切换 ❚❚/▶）
+- **特性**: 品紫青渐变封面（径向纹理占位）+ Playlist 眉题 + Play/Share 按钮、曲目行（序号/迷你封面/标题艺人/version 胶囊/时长/Remix ▾/♡♥ 点赞切换且红心高亮）、工具栏（N songs + Like/Comment）、底部深色播放条（播放切换/曲名/进度条/快退快进音量）、右栏 Queue 队列 + 拖放占位（Suno 音频工作台模式）。
+
+### 207. `BlogPostArticle` (博客文章页)
+- **Props**: `siteName?`, `title?`, `subtitle?`, `meta?`, `blocks?: [{type:"paragraph"|"heading"|"list"|"code",...}]`, `toc?: [{id,text,level?}]`, `activeHeadingId?`, `codeLabel?`, `copiedLabel?`, `className?`, `onHeadingClick?(heading)`, `onCopyCode?`
+- **Vanilla 用法**: `<blog-post-article>` + `site-name`/`title`/`subtitle`/`meta`/`blocks`/`toc`/`active-heading-id`/`code-label`/`copied-label` 属性；事件 `heading-click {heading}` / `copy-code`（Copy 按钮 1.5s 后还原）
+- **特性**: 顶栏（站点名 + ⌕ Search ⌘K 胶囊 + ☾ 主题按钮）、左栏 On this page TOC（sky 活动高亮 + level 3 缩进 + Collapse ⌘\ 提示）、文章体（大标题 + 副题 + meta、段落、h2/h3 标题、圆点列表、深色代码块带 language 眉题 + ⧉ Copy 按钮点击变 Copied!）（Hashnode 文章模式）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

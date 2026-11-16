@@ -230,12 +230,16 @@
   <script type="module" src="./vanilla/GroupedTaskList.js"></script>
   <script type="module" src="./vanilla/EventLogTable.js"></script>
   <script type="module" src="./vanilla/DocsPageLayout.js"></script>
+  <script type="module" src="./vanilla/TaskCardModal.js"></script>
+  <script type="module" src="./vanilla/FormTrackingDashboard.js"></script>
+  <script type="module" src="./vanilla/AudioPlaylistPage.js"></script>
+  <script type="module" src="./vanilla/BlogPostArticle.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -3203,7 +3207,7 @@
     <section id="section-186" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">186 · ApiReferenceViewer</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">API reference section — method-badge endpoint header, query parameter definitions with type/meta rows, collapsible responses list and a right code panel with language select, sample request and JSON response (GitBook API Reference pattern).</p>
@@ -3221,7 +3225,7 @@
     <section id="section-187" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">187 · WeekCalendarGrid</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Week-view calendar grid — hour gutter, day columns with solid/dashed event blocks, red current-time line, Day/Week segmented toggle, "Find time" button and schedule composer (Clockwise week calendar pattern).</p>
@@ -3239,7 +3243,7 @@
     <section id="section-188" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">188 · VideoProjectSettings</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Video project settings — Chapters side panel with empty state and "Add a chapter" action, main form with Title input, Description textarea, Thumbnail selector and storage usage badge (Vimeo video settings pattern).</p>
@@ -3257,7 +3261,7 @@
     <section id="section-189" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">189 · EventStreamPanel</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Audit event stream — filter input, two-column event list (event name / date), right metadata panel with "View event" button, event details JSON block with line numbers and Previous/Next pager (WorkOS Events pattern).</p>
@@ -3275,7 +3279,7 @@
     <section id="section-190" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">190 · ProjectGanttTimeline</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Project gantt timeline — month tick header with week sub-ticks and red Today pill, project rows with emoji/status/pts badges and horizontal duration bars, current-date marker line (Linear projects timeline pattern).</p>
@@ -3293,7 +3297,7 @@
     <section id="section-191" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">191 · GroupedTaskList</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Grouped task list with detail pane — collapsible To Do / In Progress / Done sections, task rows with completion circle, counts and assignee avatar, right detail with fields grid, tags and comment composer (Asana list view pattern).</p>
@@ -3311,7 +3315,7 @@
     <section id="section-192" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">192 · EventLogTable</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Administrative event log — dropdown filter row (Type / Source / Action / Target) with date-range and Export CSV actions, six-column log table with muted rows for older entries (Vanta event log pattern).</p>
@@ -3329,7 +3333,7 @@
     <section id="section-193" class="space-y-3 pb-12">
       <div class="flex items-center gap-3">
         <h2 class="text-lg font-semibold text-zinc-100">193 · DocsPageLayout</h2>
-        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.4.0</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
         <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
       </div>
       <p class="text-sm text-zinc-400">Documentation page shell — left nav with grouped sections, center article with Copy page button, callout, cards grid and code examples, right "On this page" TOC with active highlight (Mintlify docs pattern).</p>
@@ -3339,6 +3343,78 @@
             <docs-page-layout id="demo-docspage51"></docs-page-layout>
             <div class="mt-3 flex items-center gap-2">
               <span id="demo-docspage51-status" class="text-[11px] text-zinc-500">Click a nav item / TOC entry — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-194" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">194 · TaskCardModal</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Task card modal overlay — completion checkbox header, Members/Labels/Dates attribute rows, description, link/file attachments, checklist with progress bar and a comments &amp; activity column (Trello card modal pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/TaskCardModal.js">
+          <div class="space-y-3">
+            <task-card-modal id="demo-taskcard52"></task-card-modal>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-taskcard52-status" class="text-[11px] text-zinc-500">Toggle checklist / submit a comment — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-195" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">195 · FormTrackingDashboard</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Form tracking dashboard — back header with Active pill and Options dropdown, four stat cards with tone dots and % bars, form details grid and a client requests table with status pills (Fresha form tracking pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/FormTrackingDashboard.js">
+          <div class="space-y-3">
+            <form-tracking-dashboard id="demo-formtrack52"></form-tracking-dashboard>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-formtrack52-status" class="text-[11px] text-zinc-500">Open Options / click a request row — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-196" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">196 · AudioPlaylistPage</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Music playlist page — gradient cover with Play/Share, track rows with version pills and Remix controls, like reactions, bottom player bar and a right Queue panel (Suno audio workspace pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/AudioPlaylistPage.js">
+          <div class="space-y-3">
+            <audio-playlist-page id="demo-audioplaylist52"></audio-playlist-page>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-audioplaylist52-status" class="text-[11px] text-zinc-500">Play a track / like / queue item — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-197" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">197 · BlogPostArticle</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.5.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Blog article page — top bar with logo and ⌘K search, left "On this page" nav highlight, headings / list / dark code block with Copy button (Hashnode article pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/BlogPostArticle.js">
+          <div class="space-y-3">
+            <blog-post-article id="demo-blogpost52"></blog-post-article>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-blogpost52-status" class="text-[11px] text-zinc-500">Click a TOC entry / copy code — events report here.</span>
             </div>
           </div>
         </div>
@@ -6570,6 +6646,39 @@ FAIL tests/ui.test.mjs
         docspage51.addEventListener('nav-click', (event) => { docspageStatus51.textContent = 'Nav → ' + event.detail.item.label; });
         docspage51.addEventListener('toc-click', (event) => { docspageStatus51.textContent = 'TOC → ' + event.detail.item.label; });
         docspage51.addEventListener('copy-page', () => { docspageStatus51.textContent = 'Page copied to clipboard.'; });
+      }
+
+      const taskcard52 = document.getElementById('demo-taskcard52');
+      const taskcardStatus52 = document.getElementById('demo-taskcard52-status');
+      if (taskcard52) {
+        taskcard52.addEventListener('complete-toggle', (event) => { taskcardStatus52.textContent = 'Card ' + (event.detail.completed ? 'marked complete ✓' : 'reopened.'); });
+        taskcard52.addEventListener('checklist-toggle', (event) => { taskcardStatus52.textContent = 'Checklist → ' + event.detail.item.text + ' (' + (event.detail.item.done ? 'done' : 'undone') + ')'; });
+        taskcard52.addEventListener('comment-submit', (event) => { taskcardStatus52.textContent = 'Comment → ' + event.detail.text.slice(0, 40); });
+        taskcard52.addEventListener('card-close', () => { taskcardStatus52.textContent = 'Card closed.'; });
+      }
+
+      const formtrack52 = document.getElementById('demo-formtrack52');
+      const formtrackStatus52 = document.getElementById('demo-formtrack52-status');
+      if (formtrack52) {
+        formtrack52.addEventListener('back', () => { formtrackStatus52.textContent = 'Back to forms list.'; });
+        formtrack52.addEventListener('sort-change', (event) => { formtrackStatus52.textContent = 'Sort → ' + event.detail.option; });
+        formtrack52.addEventListener('request-click', (event) => { formtrackStatus52.textContent = 'Request → ' + event.detail.row.name + ' (' + event.detail.row.status + ')'; });
+      }
+
+      const audioplaylist52 = document.getElementById('demo-audioplaylist52');
+      const audioplaylistStatus52 = document.getElementById('demo-audioplaylist52-status');
+      if (audioplaylist52) {
+        audioplaylist52.addEventListener('track-click', (event) => { audioplaylistStatus52.textContent = 'Track → ' + event.detail.track.title; });
+        audioplaylist52.addEventListener('like', (event) => { audioplaylistStatus52.textContent = 'Like → ' + event.detail.track.title; });
+        audioplaylist52.addEventListener('remix', (event) => { audioplaylistStatus52.textContent = 'Remix → ' + event.detail.track.title; });
+        audioplaylist52.addEventListener('queue-click', (event) => { audioplaylistStatus52.textContent = 'Queue → ' + event.detail.track.title; });
+      }
+
+      const blogpost52 = document.getElementById('demo-blogpost52');
+      const blogpostStatus52 = document.getElementById('demo-blogpost52-status');
+      if (blogpost52) {
+        blogpost52.addEventListener('heading-click', (event) => { blogpostStatus52.textContent = 'Heading → ' + event.detail.heading.text; });
+        blogpost52.addEventListener('copy-code', () => { blogpostStatus52.textContent = 'Code block copied.'; });
       }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');

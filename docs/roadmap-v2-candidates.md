@@ -17,6 +17,16 @@
 > Gallery sections 190–193，666 项回归测试全绿。原候选 Amie 周历与 #197
 > WeekCalendarGrid 重叠、Airtable 时间线与甘特图重叠，按"零重叠"规则跳过。
 > 全库组件总数 204（含 UiIcon）× 3 端。
+> 批次 v2.5.0 已完成 —— TaskCardModal（← workflow/09_Trello）、
+> FormTrackingDashboard（← workflow/20_Fresha）、AudioPlaylistPage（← media/21_Suno）、
+> BlogPostArticle（← docs-help/01_Hashnode）三端落地（组件编号 204–207），
+> Gallery sections 194–197，678 项回归测试全绿。重叠跳过记录：Wrike/Motion
+> （甘特变体）、Productboard（时间线泳道）、Evernote/Proton（周历）、Qatalog
+> （任务详情侧栏）、Rise（周历 + 事件编辑）、Remote/HoneyBook（OTP）、GitLab
+> （活动会话表）、Mixpanel（事件表）、Gumloop（changelog 页）、Grain/Vimeo 余量
+> （播放器空间）、Subframe（文档页）、Slite（搜索浮层与 #116 重叠）、Adaline
+> （代码面板与 #196 重叠）、Employment Hero（步骤条 + 状态表）、SuperHi（课程章节页）。
+> 全库组件总数 208（含 UiIcon）× 3 端。
 
 > 背景：roadmap v1 已收官（v1.47.0，190 组件 × 3 端，624 测试）。为延续迭代，
 > 已通过 `tools/mobbin_fetch.py` 新增 5 个分类并抓取 114 张 Mobbin 截图，

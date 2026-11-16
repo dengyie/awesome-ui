@@ -2692,6 +2692,153 @@ export default function AudioNotePlayer({
 
 
 ====
+File: react/AudioPlaylistPage.tsx
+====
+
+/**
+ * AudioPlaylistPage - Music playlist page with gradient cover, track rows,
+ * version/remix controls, reactions, bottom player bar and a right Queue
+ * panel (Suno audio workspace pattern).
+ */
+import React from "react";
+
+export interface PlaylistTrack {
+  id: string;
+  title: string;
+  artist: string;
+  duration: string;
+  coverUrl?: string;
+  version?: string;
+  liked?: boolean;
+}
+
+export interface AudioPlaylistPageProps {
+  title?: string;
+  subtitle?: string;
+  coverUrl?: string;
+  tracks?: PlaylistTrack[];
+  queue?: PlaylistTrack[];
+  activeTrackId?: string;
+  className?: string;
+  onTrackClick?: (track: PlaylistTrack) => void;
+  onLike?: (track: PlaylistTrack) => void;
+  onRemix?: (track: PlaylistTrack) => void;
+  onQueueClick?: (track: PlaylistTrack) => void;
+}
+
+export default function AudioPlaylistPage({
+  title = "Late night sketches",
+  subtitle = "A collection of new ideas and alternate versions",
+  coverUrl = "",
+  tracks = [
+    { id: "t1", title: "Neon after rain", artist: "Mira Sol", duration: "3:42", version: "v5", liked: true },
+    { id: "t2", title: "Soft focus", artist: "Mira Sol", duration: "2:58", version: "v3" },
+    { id: "t3", title: "Signals in the dark", artist: "Mira Sol", duration: "4:16", version: "v2" },
+    { id: "t4", title: "Morning light", artist: "Mira Sol", duration: "3:05", version: "v1" },
+  ],
+  queue = [
+    { id: "q1", title: "City windows", artist: "Mira Sol", duration: "3:10" },
+    { id: "q2", title: "Static bloom", artist: "Theo Park", duration: "2:46" },
+    { id: "q3", title: "Almost home", artist: "Mira Sol", duration: "3:31" },
+  ],
+  activeTrackId = tracks[0]?.id,
+  className = "",
+  onTrackClick,
+  onLike,
+  onRemix,
+  onQueueClick,
+}: AudioPlaylistPageProps) {
+  const active = tracks.find((track) => track.id === activeTrackId) ?? tracks[0];
+  const [liked, setLiked] = React.useState(() => new Set(tracks.filter((t) => t.liked).map((t) => t.id)));
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
+  return (
+    <div data-audioplaylist className={`overflow-hidden rounded-2xl border border-zinc-200 bg-white text-zinc-900 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 ${className}`}>
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_240px]">
+        <main data-audioplaylist-main className="min-w-0">
+          <div className="flex flex-col gap-5 border-b border-zinc-200 p-5 sm:flex-row sm:items-end sm:p-7 dark:border-zinc-800">
+            <div data-audioplaylist-cover className="relative h-40 w-40 shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-fuchsia-500 via-indigo-600 to-cyan-400 shadow-lg">
+              {coverUrl ? <img src={coverUrl} alt="" className="h-full w-full object-cover" /> : <div className="absolute inset-0 opacity-40" style={{ backgroundImage: "radial-gradient(circle at 25% 25%, white 0 2px, transparent 3px), radial-gradient(circle at 70% 70%, white 0 1px, transparent 2px)", backgroundSize: "22px 22px" }} />}
+              <span className="absolute bottom-3 left-3 text-3xl" aria-hidden="true">♫</span>
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">Playlist</p>
+              <h2 data-audioplaylist-title className="mt-1 truncate text-3xl font-black tracking-tight">{title}</h2>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{subtitle}</p>
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <button data-audioplaylist-play type="button" onClick={() => setIsPlaying((v) => !v)} className="rounded-full bg-zinc-900 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-zinc-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200">
+                  {isPlaying ? "❚❚ Pause" : "▶ Play"}
+                </button>
+                <button data-audioplaylist-share type="button" className="rounded-full border border-zinc-200 px-3 py-2 text-xs font-semibold text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">↗ Share</button>
+              </div>
+            </div>
+          </div>
+
+          <div data-audioplaylist-toolbar className="flex items-center justify-between gap-3 border-b border-zinc-100 px-5 py-3 dark:border-zinc-800/70">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">{tracks.length} songs · {tracks.reduce((total, track) => total + Number(track.duration.split(":")[0]) * 60 + Number(track.duration.split(":")[1] ?? 0), 0) > 0 ? "originals and versions" : ""}</p>
+            <div className="flex items-center gap-2">
+              <button data-audioplaylist-like type="button" className="rounded-lg px-2 py-1 text-sm text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800">♡ Like</button>
+              <button data-audioplaylist-comment type="button" className="rounded-lg px-2 py-1 text-sm text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800">◌ Comment</button>
+            </div>
+          </div>
+
+          <div data-audioplaylist-tracks className="divide-y divide-zinc-100 dark:divide-zinc-800/70">
+            {tracks.map((track, index) => {
+              const isActive = track.id === active?.id;
+              const isLiked = liked.has(track.id);
+              return (
+                <div key={track.id} data-audioplaylist-track={track.id} data-audioplaylist-active={isActive ? "true" : "false"} className={`group flex items-center gap-3 px-5 py-3.5 transition-colors sm:px-7 ${isActive ? "bg-indigo-50/70 dark:bg-indigo-950/30" : "hover:bg-zinc-50 dark:hover:bg-zinc-900"}`}>
+                  <button data-audioplaylist-track-play={track.id} type="button" aria-label={`Play ${track.title}`} onClick={() => onTrackClick?.(track)} className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm text-zinc-400 transition-colors hover:bg-zinc-200 hover:text-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">
+                    {isActive && isPlaying ? "❚❚" : <span className="text-xs">{String(index + 1).padStart(2, "0")}</span>}
+                  </button>
+                  <div className="h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-indigo-200 to-fuchsia-200 dark:from-indigo-950 dark:to-fuchsia-950">
+                    {track.coverUrl ? <img src={track.coverUrl} alt="" className="h-full w-full object-cover" /> : <span className="flex h-full items-center justify-center text-lg">♫</span>}
+                  </div>
+                  <button type="button" onClick={() => onTrackClick?.(track)} className="min-w-0 flex-1 text-left">
+                    <p className="truncate text-sm font-semibold">{track.title}</p>
+                    <p className="truncate text-xs text-zinc-500 dark:text-zinc-400">{track.artist}</p>
+                  </button>
+                  {track.version && <span data-audioplaylist-version className="rounded-md bg-zinc-100 px-2 py-0.5 text-[10px] font-semibold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">{track.version}</span>}
+                  <span className="hidden text-xs tabular-nums text-zinc-400 sm:inline">{track.duration}</span>
+                  <button data-audioplaylist-remix={track.id} type="button" onClick={() => onRemix?.(track)} className="hidden rounded-md px-2 py-1 text-xs font-medium text-zinc-500 hover:bg-zinc-100 sm:inline dark:hover:bg-zinc-800">Remix ▾</button>
+                  <button data-audioplaylist-like-track={track.id} type="button" aria-label={isLiked ? "Unlike" : "Like"} onClick={() => { setLiked((prev) => { const next = new Set(prev); if (next.has(track.id)) next.delete(track.id); else next.add(track.id); return next; }); onLike?.(track); }} className={`rounded-md px-1.5 py-1 text-base ${isLiked ? "text-rose-500" : "text-zinc-400 hover:text-rose-400"}`}>{isLiked ? "♥" : "♡"}</button>
+                </div>
+              );
+            })}
+          </div>
+        </main>
+
+        <aside data-audioplaylist-queue className="border-t border-zinc-200 bg-zinc-50/80 p-5 dark:border-zinc-800 dark:bg-zinc-900/60 lg:border-l lg:border-t-0">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold">Queue</h3>
+            <span className="text-xs text-zinc-400">{queue.length}</span>
+          </div>
+          <div className="mt-4 space-y-2.5">
+            {queue.map((track, index) => (
+              <button key={track.id} data-audioplaylist-queue-item={track.id} type="button" onClick={() => onQueueClick?.(track)} className="flex w-full items-center gap-2.5 rounded-lg p-1.5 text-left transition-colors hover:bg-white dark:hover:bg-zinc-800">
+                <span className="w-4 text-center text-[10px] text-zinc-400">{index + 1}</span>
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-cyan-200 to-indigo-200 text-sm dark:from-cyan-950 dark:to-indigo-950">♫</span>
+                <span className="min-w-0 flex-1"><span className="block truncate text-xs font-semibold">{track.title}</span><span className="block truncate text-[11px] text-zinc-400">{track.artist}</span></span>
+                <span className="text-[10px] tabular-nums text-zinc-400">{track.duration}</span>
+              </button>
+            ))}
+          </div>
+          <p className="mt-6 rounded-lg border border-dashed border-zinc-300 p-3 text-center text-xs text-zinc-400 dark:border-zinc-700">Drag songs here to build your queue</p>
+        </aside>
+      </div>
+
+      <div data-audioplaylist-player className="flex items-center gap-3 border-t border-zinc-200 bg-zinc-900 px-4 py-3 text-white dark:border-zinc-800">
+        <button data-audioplaylist-player-toggle type="button" onClick={() => setIsPlaying((v) => !v)} className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-xs text-zinc-900">{isPlaying ? "❚❚" : "▶"}</button>
+        <div className="min-w-0 w-36 sm:w-48"><p className="truncate text-xs font-semibold">{active?.title ?? "Nothing playing"}</p><p className="truncate text-[10px] text-zinc-400">{active?.artist ?? "Choose a track"}</p></div>
+        <div className="hidden flex-1 items-center gap-3 sm:flex"><span className="text-[10px] tabular-nums text-zinc-400">0:42</span><div className="h-1.5 flex-1 rounded-full bg-zinc-700"><div className="h-full w-1/4 rounded-full bg-indigo-400" /></div><span className="text-[10px] tabular-nums text-zinc-400">{active?.duration ?? "0:00"}</span></div>
+        <div className="ml-auto flex items-center gap-2 text-zinc-300"><button type="button" className="rounded p-1 hover:bg-zinc-800">↶</button><button type="button" className="rounded p-1 hover:bg-zinc-800">↷</button><button type="button" className="rounded p-1 hover:bg-zinc-800">🔊</button></div>
+      </div>
+    </div>
+  );
+}
+
+
+====
 File: react/AudioWaveVisualizer.tsx
 ====
 
@@ -3595,6 +3742,199 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
   );
 };
 export default BillingPanel;
+
+
+====
+File: react/BlogPostArticle.tsx
+====
+
+/**
+ * BlogPostArticle - Blog article page: top bar with logo and search, left
+ * "On this page" nav highlight, article body with headings, paragraphs,
+ * inline code, and a dark code block with Copy button (Hashnode article
+ * pattern).
+ */
+import React from "react";
+
+export interface ArticleHeading {
+  id: string;
+  text: string;
+  level?: 2 | 3;
+}
+
+export interface ArticleCodeBlock {
+  language: string;
+  code: string;
+}
+
+export type ArticleBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "heading"; text: string; id: string; level?: 2 | 3 }
+  | { type: "list"; items: string[] }
+  | { type: "code"; language: string; code: string };
+
+export interface BlogPostArticleProps {
+  siteName?: string;
+  title?: string;
+  subtitle?: string;
+  meta?: string;
+  blocks?: ArticleBlock[];
+  toc?: ArticleHeading[];
+  activeHeadingId?: string;
+  codeLabel?: string;
+  copiedLabel?: string;
+  className?: string;
+  onHeadingClick?: (heading: ArticleHeading) => void;
+  onCopyCode?: () => void;
+}
+
+export default function BlogPostArticle({
+  siteName = "SLMobbin",
+  title = "Introduction to Front-End Development: A Beginner's Guide",
+  subtitle = "What is Front-End Development?",
+  meta = "8 min read · Nov 14, 2026",
+  blocks = [
+    {
+      type: "paragraph",
+      text: "Front-end development is the process of designing and building the part of a website or web application that users interact with directly. It involves creating the structure, layout, and interactive features of a webpage, ensuring a seamless user experience.",
+    },
+    { type: "heading", text: "Key Technologies in Front-End Development", id: "key-technologies", level: 2 },
+    { type: "paragraph", text: "Front-end development primarily relies on three core technologies: HTML, CSS and JavaScript." },
+    { type: "list", items: ["HTML provides the basic structure of a webpage.", "CSS controls the presentation and layout.", "JavaScript adds interactivity and dynamic behavior."] },
+    { type: "heading", text: "1. HTML (HyperText Markup Language)", id: "html", level: 3 },
+    { type: "paragraph", text: "HTML provides the basic structure of a webpage. It defines elements such as headings, paragraphs, images, links, and forms." },
+    {
+      type: "code",
+      language: "html",
+      code: '<!DOCTYPE html>\n<html>\n  <head>\n    <title>My First Web Page</title>\n  </head>\n  <body>\n    <h1>Welcome to Front-End Development</h1>\n    <p>This is an example of HTML structure.</p>\n  </body>\n</html>',
+    },
+  ] as ArticleBlock[],
+  toc = [
+    { id: "key-technologies", text: "Key Technologies in Front-End Development", level: 2 },
+    { id: "html", text: "1. HTML (HyperText Markup Language)", level: 3 },
+  ] as ArticleHeading[],
+  activeHeadingId = "",
+  codeLabel = "Copy",
+  copiedLabel = "Copied!",
+  className = "",
+  onHeadingClick,
+  onCopyCode,
+}: BlogPostArticleProps) {
+  const [activeId, setActiveId] = React.useState(activeHeadingId || toc[0]?.id || "");
+  const [copied, setCopied] = React.useState(false);
+
+  const codeBlocks = blocks.filter((b): b is Extract<ArticleBlock, { type: "code" }> => b.type === "code");
+
+  return (
+    <div data-blogpost className={`w-full border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 ${className}`}>
+      {/* top bar */}
+      <header data-blogpost-topbar className="flex items-center justify-between gap-4 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+        <p data-blogpost-site className="text-sm font-black tracking-tight text-zinc-900 dark:text-zinc-50">{siteName}</p>
+        <div className="hidden min-w-0 flex-1 justify-center sm:flex">
+          <div className="flex w-full max-w-md items-center gap-2 rounded-full border border-zinc-200 px-4 py-1.5 text-xs text-zinc-400 dark:border-zinc-800">
+            <span aria-hidden="true">⌕</span>
+            <span className="flex-1">Search</span>
+            <kbd className="rounded border border-zinc-200 px-1.5 py-0.5 text-[10px] dark:border-zinc-700">⌘ K</kbd>
+          </div>
+        </div>
+        <button type="button" aria-label="Toggle theme" className="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800">☾</button>
+      </header>
+
+      <div className="grid lg:grid-cols-[200px_minmax(0,1fr)]">
+        {/* left toc */}
+        <nav data-blogpost-toc className="hidden border-r border-zinc-200 p-5 lg:block dark:border-zinc-800">
+          <div className="space-y-1">
+            {toc.map((h) => {
+              const active = h.id === activeId;
+              return (
+                <button
+                  key={h.id}
+                  data-blogpost-tocitem={h.id}
+                  data-blogpost-toc-active={active ? "true" : "false"}
+                  type="button"
+                  onClick={() => {
+                    setActiveId(h.id);
+                    onHeadingClick?.(h);
+                  }}
+                  className={`block w-full rounded-lg px-3 py-1.5 text-left text-xs leading-5 transition-colors ${
+                    h.level === 3 ? "pl-6" : ""
+                  } ${
+                    active
+                      ? "bg-sky-50 font-semibold text-sky-700 dark:bg-sky-950/50 dark:text-sky-300"
+                      : "text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+                  }`}
+                >
+                  {h.text}
+                </button>
+              );
+            })}
+          </div>
+          <p className="mt-6 flex items-center gap-2 text-xs text-zinc-400">
+            <span aria-hidden="true">⇥</span> Collapse
+            <kbd className="ml-auto rounded border border-zinc-200 px-1.5 py-0.5 text-[10px] dark:border-zinc-700">⌘ \</kbd>
+          </p>
+        </nav>
+
+        {/* article */}
+        <article data-blogpost-article className="min-w-0 px-6 py-8 sm:px-10">
+          <h1 data-blogpost-title className="text-3xl font-black leading-tight tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">{title}</h1>
+          {subtitle && <p className="mt-3 text-base text-zinc-600 dark:text-zinc-300">{subtitle}</p>}
+          {meta && <p data-blogpost-meta className="mt-2 text-xs text-zinc-400 dark:text-zinc-500">{meta}</p>}
+
+          <div data-blogpost-content className="mt-6 space-y-4">
+            {blocks.map((block, i) => {
+              if (block.type === "paragraph") {
+                return <p key={i} className="text-[15px] leading-7 text-zinc-700 dark:text-zinc-300">{block.text}</p>;
+              }
+              if (block.type === "heading") {
+                const Tag = block.level === 3 ? "h3" : "h2";
+                return (
+                  <Tag
+                    key={i}
+                    id={block.id}
+                    data-blogpost-heading={block.id}
+                    className={`font-bold tracking-tight text-zinc-900 dark:text-zinc-50 ${block.level === 3 ? "text-lg mt-8" : "text-xl mt-10"}`}
+                  >
+                    {block.text}
+                  </Tag>
+                );
+              }
+              if (block.type === "list") {
+                return (
+                  <ul key={i} className="list-disc space-y-1.5 pl-6 text-[15px] leading-7 text-zinc-700 dark:text-zinc-300">
+                    {block.items.map((item, j) => (
+                      <li key={j}>{item}</li>
+                    ))}
+                  </ul>
+                );
+              }
+              return (
+                <div key={i} data-blogpost-code className="overflow-hidden rounded-xl bg-zinc-950 dark:bg-black">
+                  <div className="flex items-center justify-between px-4 pt-3">
+                    <span className="text-[10px] uppercase tracking-wide text-zinc-500">{block.language}</span>
+                    <button
+                      data-blogpost-code-copy
+                      type="button"
+                      onClick={() => {
+                        setCopied(true);
+                        onCopyCode?.();
+                        window.setTimeout(() => setCopied(false), 1500);
+                      }}
+                      className="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-white"
+                    >
+                      <span aria-hidden="true">⧉</span> {copied ? copiedLabel : codeLabel}
+                    </button>
+                  </div>
+                  <pre className="overflow-x-auto px-4 pb-4 pt-1 text-xs leading-5 text-zinc-200"><code>{block.code}</code></pre>
+                </div>
+              );
+            })}
+          </div>
+        </article>
+      </div>
+    </div>
+  );
+}
 
 
 ====
@@ -10581,6 +10921,247 @@ export const FormField: React.FC<FormFieldProps> = ({
 );
 
 export default FormField;
+
+
+====
+File: react/FormTrackingDashboard.tsx
+====
+
+/**
+ * FormTrackingDashboard - Form tracking dashboard: back arrow header with
+ * title, Active pill and Options dropdown, four stat cards with colored
+ * icon dots and % progress bars, a two-column form details grid, and a
+ * sortable client requests table with avatar rows and status pills
+ * (Fresha form tracking pattern).
+ */
+import React from "react";
+
+export interface FormStat {
+  id: string;
+  label: string;
+  value: number;
+  pct: number; // 0-100
+  tone: "sky" | "emerald" | "amber" | "rose";
+  icon?: string;
+}
+
+export interface FormDetail {
+  label: string;
+  value: string;
+}
+
+export interface FormRequestRow {
+  id: string;
+  name: string;
+  initials?: string;
+  avatarUrl?: string;
+  submitted: string;
+  service: string;
+  status: "completed" | "to-be-completed" | "not-completed";
+}
+
+export interface FormTrackingDashboardProps {
+  title?: string;
+  active?: boolean;
+  stats?: FormStat[];
+  details?: FormDetail[];
+  requests?: FormRequestRow[];
+  sortOptions?: string[];
+  className?: string;
+  onBack?: () => void;
+  onSortChange?: (option: string) => void;
+  onRequestClick?: (row: FormRequestRow) => void;
+}
+
+const STATUS_META: Record<FormRequestRow["status"], { label: string; cls: string }> = {
+  completed: { label: "Completed", cls: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300" },
+  "to-be-completed": { label: "To be completed", cls: "bg-amber-100 text-amber-700 dark:bg-amber-950/70 dark:text-amber-300" },
+  "not-completed": { label: "Not completed", cls: "bg-rose-100 text-rose-700 dark:bg-rose-950/70 dark:text-rose-300" },
+};
+
+const TONE_DOT: Record<FormStat["tone"], string> = {
+  sky: "bg-sky-500",
+  emerald: "bg-emerald-500",
+  amber: "bg-amber-500",
+  rose: "bg-rose-500",
+};
+
+const TONE_BAR: Record<FormStat["tone"], string> = {
+  sky: "bg-sky-500",
+  emerald: "bg-emerald-500",
+  amber: "bg-amber-500",
+  rose: "bg-rose-500",
+};
+
+export default function FormTrackingDashboard({
+  title = "Consultation form",
+  active = true,
+  stats = [
+    { id: "s1", label: "Sent to", value: 12, pct: 100, tone: "sky", icon: "📤" },
+    { id: "s2", label: "Completed", value: 8, pct: 67, tone: "emerald", icon: "✅" },
+    { id: "s3", label: "To be completed", value: 2, pct: 17, tone: "amber", icon: "⏳" },
+    { id: "s4", label: "Not completed", value: 2, pct: 17, tone: "rose", icon: "⛔" },
+  ],
+  details = [
+    { label: "Form name", value: "Consultation form" },
+    { label: "Service", value: "Initial consultation" },
+    { label: "Sent to", value: "12 clients" },
+    { label: "Created", value: "Nov 2, 2026" },
+    { label: "Reminder", value: "Automatic · 3 days" },
+    { label: "Expiration", value: "No expiration" },
+  ],
+  requests = [
+    { id: "r1", name: "Anna Kowalski", initials: "AK", submitted: "Nov 12, 2026", service: "Initial consultation", status: "completed" },
+    { id: "r2", name: "Ben Carter", initials: "BC", submitted: "Nov 13, 2026", service: "Initial consultation", status: "to-be-completed" },
+    { id: "r3", name: "Chen Wei", initials: "CW", submitted: "—", service: "Initial consultation", status: "not-completed" },
+    { id: "r4", name: "Dana Patel", initials: "DP", submitted: "Nov 14, 2026", service: "Initial consultation", status: "completed" },
+  ],
+  sortOptions = ["Newest first", "Oldest first", "Name A–Z", "Status"],
+  className = "",
+  onBack,
+  onSortChange,
+  onRequestClick,
+}: FormTrackingDashboardProps) {
+  const [sortOpen, setSortOpen] = React.useState(false);
+  const [sort, setSort] = React.useState(sortOptions[0] ?? "Newest first");
+
+  return (
+    <div data-formtrack className={`w-full rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 sm:p-6 ${className}`}>
+      {/* header */}
+      <div data-formtrack-header className="flex items-center gap-3">
+        <button
+          data-formtrack-back
+          type="button"
+          aria-label="Back"
+          onClick={() => onBack?.()}
+          className="rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+        >
+          ←
+        </button>
+        <h2 data-formtrack-title className="text-xl font-bold text-zinc-900 dark:text-zinc-50">{title}</h2>
+        {active && (
+          <span data-formtrack-active className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300">
+            Active
+          </span>
+        )}
+        <div className="relative ml-auto">
+          <button
+            data-formtrack-options
+            type="button"
+            onClick={() => setSortOpen((v) => !v)}
+            className="rounded-lg border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+          >
+            Options ▾
+          </button>
+          {sortOpen && (
+            <div data-formtrack-sortmenu className="absolute right-0 z-10 mt-1 w-44 overflow-hidden rounded-xl border border-zinc-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-800">
+              {sortOptions.map((opt) => (
+                <button
+                  key={opt}
+                  data-formtrack-sortoption={opt}
+                  type="button"
+                  onClick={() => {
+                    setSort(opt);
+                    setSortOpen(false);
+                    onSortChange?.(opt);
+                  }}
+                  className={`block w-full px-3 py-1.5 text-left text-xs transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-700 ${
+                    opt === sort ? "font-semibold text-indigo-600 dark:text-indigo-300" : "text-zinc-600 dark:text-zinc-300"
+                  }`}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* stat cards */}
+      <div data-formtrack-stats className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((s) => (
+          <div
+            key={s.id}
+            data-formtrack-stat={s.id}
+            className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800"
+          >
+            <div className="flex items-center gap-2">
+              <span className={`h-2.5 w-2.5 rounded-full ${TONE_DOT[s.tone]}`} aria-hidden="true" />
+              <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                {s.icon ? <span aria-hidden="true" className="mr-1">{s.icon}</span> : null}
+                {s.label}
+              </p>
+            </div>
+            <p data-formtrack-stat-value={s.id} className="mt-1.5 text-2xl font-black text-zinc-900 dark:text-zinc-50">{s.value}</p>
+            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
+              <div className={`h-full rounded-full ${TONE_BAR[s.tone]}`} style={{ width: `${Math.min(100, Math.max(0, s.pct))}%` }} />
+            </div>
+            <p className="mt-1 text-[11px] text-zinc-400 dark:text-zinc-500">{s.pct}% of sent</p>
+          </div>
+        ))}
+      </div>
+
+      {/* details grid */}
+      <div data-formtrack-details className="mt-6">
+        <p className="text-sm font-bold text-zinc-900 dark:text-zinc-50">Consultation form details</p>
+        <div className="mt-2 grid gap-x-8 gap-y-2 rounded-xl border border-zinc-200 p-4 sm:grid-cols-2 dark:border-zinc-800">
+          {details.map((d) => (
+            <div key={d.label} className="flex items-center justify-between gap-4 text-sm">
+              <span className="text-zinc-500 dark:text-zinc-400">{d.label}</span>
+              <span className="font-medium text-zinc-800 dark:text-zinc-100">{d.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* requests table */}
+      <div data-formtrack-table className="mt-6">
+        <p className="text-sm font-bold text-zinc-900 dark:text-zinc-50">Client form requests</p>
+        <div className="mt-2 overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="border-b border-zinc-200 bg-zinc-50 text-xs uppercase tracking-wide text-zinc-400 dark:border-zinc-800 dark:bg-zinc-800/50 dark:text-zinc-500">
+                <th className="px-4 py-2.5 font-semibold">Client</th>
+                <th className="px-4 py-2.5 font-semibold">Submitted</th>
+                <th className="px-4 py-2.5 font-semibold">Service</th>
+                <th className="px-4 py-2.5 font-semibold">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {requests.map((r) => {
+                const meta = STATUS_META[r.status];
+                return (
+                  <tr
+                    key={r.id}
+                    data-formtrack-row={r.id}
+                    onClick={() => onRequestClick?.(r)}
+                    className="cursor-pointer border-b border-zinc-100 transition-colors last:border-0 hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/40"
+                  >
+                    <td className="px-4 py-2.5">
+                      <span className="flex items-center gap-2.5">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-indigo-100 text-xs font-bold text-indigo-700 dark:bg-indigo-950/70 dark:text-indigo-300">
+                          {r.avatarUrl ? <img src={r.avatarUrl} alt={r.name} className="h-8 w-8 rounded-full object-cover" /> : r.initials ?? r.name.slice(0, 2).toUpperCase()}
+                        </span>
+                        <span className="font-medium text-zinc-800 dark:text-zinc-100">{r.name}</span>
+                      </span>
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-2.5 text-zinc-500 dark:text-zinc-400">{r.submitted}</td>
+                    <td className="px-4 py-2.5 text-zinc-500 dark:text-zinc-400">{r.service}</td>
+                    <td className="px-4 py-2.5">
+                      <span data-formtrack-status={r.status} className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${meta.cls}`}>
+                        {meta.label}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 
 ====
@@ -21050,6 +21631,314 @@ export default TargetGauge;
 
 
 ====
+File: react/TaskCardModal.tsx
+====
+
+/**
+ * TaskCardModal - Task card modal overlay: backdrop with centered dialog,
+ * header with completion checkbox and close button, Members/Labels/Dates
+ * attribute rows, description textarea, link/file attachments, checklist
+ * with progress bar, and a right activity column with comment composer
+ * (Trello card modal pattern).
+ */
+import React from "react";
+
+export interface TaskCardMember {
+  id: string;
+  name: string;
+  initials?: string;
+  avatarUrl?: string;
+}
+
+export interface TaskCardLabel {
+  id: string;
+  label: string;
+  color: string; // tailwind bg classes, e.g. "bg-emerald-500"
+}
+
+export interface TaskCardChecklistItem {
+  id: string;
+  text: string;
+  done: boolean;
+}
+
+export interface TaskCardAttachment {
+  id: string;
+  name: string;
+  meta: string;
+  kind?: "link" | "file";
+}
+
+export interface TaskCardComment {
+  id: string;
+  author: string;
+  initials?: string;
+  text: string;
+  time: string;
+}
+
+export interface TaskCardModalProps {
+  title?: string;
+  completed?: boolean;
+  members?: TaskCardMember[];
+  labels?: TaskCardLabel[];
+  dates?: string;
+  description?: string;
+  attachments?: TaskCardAttachment[];
+  checklist?: TaskCardChecklistItem[];
+  comments?: TaskCardComment[];
+  commentPlaceholder?: string;
+  className?: string;
+  onCardClose?: () => void;
+  onCompleteToggle?: (completed: boolean) => void;
+  onChecklistToggle?: (item: TaskCardChecklistItem) => void;
+  onCommentSubmit?: (text: string) => void;
+}
+
+export default function TaskCardModal({
+  title = "Design landing page hero",
+  completed = false,
+  members = [
+    { id: "m1", name: "Jane Smith", initials: "JS" },
+    { id: "m2", name: "Omar Diallo", initials: "OD" },
+  ],
+  labels = [
+    { id: "l1", label: "Design", color: "bg-violet-500" },
+    { id: "l2", label: "Web", color: "bg-emerald-500" },
+  ],
+  dates = "Nov 10 – Nov 24",
+  description = "Hero section with headline, product screenshot and a primary CTA. Keep it consistent with the brand palette.",
+  attachments = [
+    { id: "a1", name: "Brand guidelines", meta: "notion.so/brand", kind: "link" },
+    { id: "a2", name: "hero-spec.pdf", meta: "1.2 MB · added Nov 12", kind: "file" },
+  ],
+  checklist = [
+    { id: "c1", text: "Collect references", done: true },
+    { id: "c2", text: "Wireframe variants", done: true },
+    { id: "c3", text: "High-fidelity mockup", done: false },
+    { id: "c4", text: "Dev handoff notes", done: false },
+  ],
+  comments = [
+    { id: "k1", author: "Jane Smith", initials: "JS", text: "Draft uploaded, take a look at the spacing pass.", time: "2 hours ago" },
+    { id: "k2", author: "Omar Diallo", initials: "OD", text: "Looks great — let's swap the CTA copy before handoff.", time: "1 hour ago" },
+  ],
+  commentPlaceholder = "Write a comment…",
+  className = "",
+  onCardClose,
+  onCompleteToggle,
+  onChecklistToggle,
+  onCommentSubmit,
+}: TaskCardModalProps) {
+  const [isCompleted, setIsCompleted] = React.useState(completed);
+  const [items, setItems] = React.useState(checklist);
+  const [draft, setDraft] = React.useState("");
+
+  const doneCount = items.filter((i) => i.done).length;
+  const pct = items.length === 0 ? 0 : Math.round((doneCount / items.length) * 100);
+
+  return (
+    <div data-taskcard className={`fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-zinc-900/60 p-4 sm:p-8 ${className}`}>
+      <div
+        data-taskcard-dialog
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        className="w-full max-w-3xl rounded-xl bg-white shadow-2xl dark:bg-zinc-900"
+      >
+        <div className="flex items-center justify-between gap-4 border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
+          <div className="flex min-w-0 items-center gap-3">
+            <button
+              data-taskcard-complete
+              type="button"
+              aria-pressed={isCompleted}
+              onClick={() => {
+                const next = !isCompleted;
+                setIsCompleted(next);
+                onCompleteToggle?.(next);
+              }}
+              className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md border text-xs font-bold transition-colors ${
+                isCompleted
+                  ? "border-emerald-500 bg-emerald-500 text-white"
+                  : "border-zinc-300 text-transparent hover:border-zinc-400 dark:border-zinc-600"
+              }`}
+            >
+              ✓
+            </button>
+            <h2 data-taskcard-title className={`truncate text-lg font-bold ${isCompleted ? "text-zinc-400 line-through dark:text-zinc-500" : "text-zinc-900 dark:text-zinc-50"}`}>
+              {title}
+            </h2>
+          </div>
+          <button
+            data-taskcard-close
+            type="button"
+            aria-label="Close"
+            onClick={() => onCardClose?.()}
+            className="shrink-0 rounded-lg px-2 py-1 text-lg leading-none text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="grid gap-6 px-6 py-5 md:grid-cols-[minmax(0,1fr)_240px]">
+          {/* main column */}
+          <div className="min-w-0 space-y-5">
+            <div data-taskcard-attrs className="flex flex-wrap gap-6">
+              <div data-taskcard-members>
+                <p className="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Members</p>
+                <div className="mt-1.5 flex gap-1.5">
+                  {members.map((m) => (
+                    <span
+                      key={m.id}
+                      data-taskcard-member={m.id}
+                      title={m.name}
+                      className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700 dark:bg-indigo-950/70 dark:text-indigo-300"
+                    >
+                      {m.avatarUrl ? <img src={m.avatarUrl} alt={m.name} className="h-8 w-8 rounded-full object-cover" /> : m.initials ?? m.name.slice(0, 2).toUpperCase()}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              {labels.length > 0 && (
+                <div data-taskcard-labels>
+                  <p className="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Labels</p>
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    {labels.map((l) => (
+                      <span
+                        key={l.id}
+                        data-taskcard-label={l.id}
+                        className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold text-white ${l.color}`}
+                      >
+                        {l.label}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {dates && (
+                <div data-taskcard-dates>
+                  <p className="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Dates</p>
+                  <p className="mt-1.5 rounded-md bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">{dates}</p>
+                </div>
+              )}
+            </div>
+
+            <div data-taskcard-description>
+              <p className="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Description</p>
+              <p className="mt-1.5 text-sm leading-6 text-zinc-600 dark:text-zinc-300">{description}</p>
+            </div>
+
+            {attachments.length > 0 && (
+              <div data-taskcard-attachments>
+                <p className="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Attachments</p>
+                <div className="mt-1.5 space-y-1.5">
+                  {attachments.map((a) => (
+                    <div
+                      key={a.id}
+                      data-taskcard-attachment={a.id}
+                      className="flex items-center gap-2.5 rounded-lg border border-zinc-200 px-3 py-2 dark:border-zinc-800"
+                    >
+                      <span aria-hidden="true" className="text-sm">{a.kind === "file" ? "📄" : "🔗"}</span>
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium text-zinc-800 dark:text-zinc-100">{a.name}</p>
+                        <p className="truncate text-xs text-zinc-400 dark:text-zinc-500">{a.meta}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div data-taskcard-checklist>
+              <div className="flex items-center justify-between">
+                <p className="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Checklist</p>
+                <span data-taskcard-checklist-count className="text-xs font-medium text-zinc-500 dark:text-zinc-400">{pct}%</span>
+              </div>
+              <div data-taskcard-checklist-bar className="mt-1.5 h-2 overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
+                <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${pct}%` }} />
+              </div>
+              <div className="mt-2 space-y-1">
+                {items.map((item) => (
+                  <button
+                    key={item.id}
+                    data-taskcard-checkitem={item.id}
+                    data-taskcard-checkitem-done={item.done ? "true" : "false"}
+                    type="button"
+                    onClick={() => {
+                      setItems((prev) => prev.map((i) => (i.id === item.id ? { ...i, done: !i.done } : i)));
+                      onChecklistToggle?.(item);
+                    }}
+                    className="flex w-full items-center gap-2.5 rounded-lg px-2 py-1.5 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
+                  >
+                    <span
+                      className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] font-bold ${
+                        item.done ? "border-emerald-500 bg-emerald-500 text-white" : "border-zinc-300 text-transparent dark:border-zinc-600"
+                      }`}
+                    >
+                      ✓
+                    </span>
+                    <span className={`text-sm ${item.done ? "text-zinc-400 line-through dark:text-zinc-500" : "text-zinc-700 dark:text-zinc-200"}`}>{item.text}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* activity column */}
+          <aside data-taskcard-activity className="md:border-l md:border-zinc-200 md:pl-6 dark:md:border-zinc-800">
+            <p className="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Comments &amp; activity</p>
+            <form
+              data-taskcard-composer
+              className="mt-3"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const text = draft.trim();
+                if (!text) return;
+                onCommentSubmit?.(text);
+                setDraft("");
+              }}
+            >
+              <textarea
+                data-taskcard-input
+                value={draft}
+                placeholder={commentPlaceholder}
+                onChange={(e) => setDraft(e.target.value)}
+                rows={3}
+                className="w-full resize-none rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-800 placeholder-zinc-400 focus:border-indigo-400 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+              />
+              <button
+                data-taskcard-send
+                type="submit"
+                className="mt-2 w-full rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-indigo-500 disabled:opacity-40"
+                disabled={draft.trim() === ""}
+              >
+                Comment
+              </button>
+            </form>
+            <div data-taskcard-feed className="mt-4 space-y-3">
+              {comments.map((c) => (
+                <div key={c.id} data-taskcard-comment={c.id} className="flex gap-2">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-[10px] font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                    {c.initials ?? c.author.slice(0, 2).toUpperCase()}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-xs">
+                      <span className="font-semibold text-zinc-800 dark:text-zinc-100">{c.author}</span>{" "}
+                      <span className="text-zinc-400 dark:text-zinc-500">{c.time}</span>
+                    </p>
+                    <p className="mt-0.5 text-xs leading-5 text-zinc-600 dark:text-zinc-300">{c.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+====
 File: react/TaskDetailPanel.tsx
 ====
 
@@ -27233,6 +28122,152 @@ const bars = props.waveform.length
 
 
 ====
+File: vue/AudioPlaylistPage.vue
+====
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface PlaylistTrack {
+  id: string;
+  title: string;
+  artist: string;
+  duration: string;
+  coverUrl?: string;
+  version?: string;
+  liked?: boolean;
+}
+
+export interface AudioPlaylistPageProps {
+  title?: string;
+  subtitle?: string;
+  coverUrl?: string;
+  tracks?: PlaylistTrack[];
+  queue?: PlaylistTrack[];
+  activeTrackId?: string;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<AudioPlaylistPageProps>(), {
+  title: "Late night sketches",
+  subtitle: "A collection of new ideas and alternate versions",
+  coverUrl: "",
+  tracks: () => [
+    { id: "t1", title: "Neon after rain", artist: "Mira Sol", duration: "3:42", version: "v5", liked: true },
+    { id: "t2", title: "Soft focus", artist: "Mira Sol", duration: "2:58", version: "v3" },
+    { id: "t3", title: "Signals in the dark", artist: "Mira Sol", duration: "4:16", version: "v2" },
+    { id: "t4", title: "Morning light", artist: "Mira Sol", duration: "3:05", version: "v1" },
+  ],
+  queue: () => [
+    { id: "q1", title: "City windows", artist: "Mira Sol", duration: "3:10" },
+    { id: "q2", title: "Static bloom", artist: "Theo Park", duration: "2:46" },
+    { id: "q3", title: "Almost home", artist: "Mira Sol", duration: "3:31" },
+  ],
+  activeTrackId: "",
+  class: "",
+});
+
+const emit = defineEmits(["track-click", "like", "remix", "queue-click"]);
+
+const isPlaying = ref(false);
+const liked = ref(new Set(props.tracks.filter((t) => t.liked).map((t) => t.id)));
+const active = props.tracks.find((t) => t.id === props.activeTrackId) ?? props.tracks[0];
+
+const toggleLike = (track: PlaylistTrack) => {
+  const next = new Set(liked.value);
+  if (next.has(track.id)) next.delete(track.id);
+  else next.add(track.id);
+  liked.value = next;
+  emit("like", track);
+};
+</script>
+
+<template>
+  <div data-audioplaylist class="overflow-hidden rounded-2xl border border-zinc-200 bg-white text-zinc-900 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50" :class="props.class">
+    <div class="grid lg:grid-cols-[minmax(0,1fr)_240px]">
+      <main data-audioplaylist-main class="min-w-0">
+        <div class="flex flex-col gap-5 border-b border-zinc-200 p-5 sm:flex-row sm:items-end sm:p-7 dark:border-zinc-800">
+          <div data-audioplaylist-cover class="relative h-40 w-40 shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-fuchsia-500 via-indigo-600 to-cyan-400 shadow-lg">
+            <img v-if="props.coverUrl" :src="props.coverUrl" alt="" class="h-full w-full object-cover" />
+            <div v-else class="absolute inset-0 opacity-40" style="background-image: radial-gradient(circle at 25% 25%, white 0 2px, transparent 3px), radial-gradient(circle at 70% 70%, white 0 1px, transparent 2px); background-size: 22px 22px;" />
+            <span class="absolute bottom-3 left-3 text-3xl" aria-hidden="true">♫</span>
+          </div>
+          <div class="min-w-0">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">Playlist</p>
+            <h2 data-audioplaylist-title class="mt-1 truncate text-3xl font-black tracking-tight">{{ props.title }}</h2>
+            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ props.subtitle }}</p>
+            <div class="mt-4 flex flex-wrap items-center gap-2">
+              <button data-audioplaylist-play type="button" class="rounded-full bg-zinc-900 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-zinc-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200" @click="isPlaying = !isPlaying">{{ isPlaying ? "❚❚ Pause" : "▶ Play" }}</button>
+              <button data-audioplaylist-share type="button" class="rounded-full border border-zinc-200 px-3 py-2 text-xs font-semibold text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">↗ Share</button>
+            </div>
+          </div>
+        </div>
+
+        <div data-audioplaylist-toolbar class="flex items-center justify-between gap-3 border-b border-zinc-100 px-5 py-3 dark:border-zinc-800/70">
+          <p class="text-xs text-zinc-500 dark:text-zinc-400">{{ props.tracks.length }} songs · originals and versions</p>
+          <div class="flex items-center gap-2">
+            <button data-audioplaylist-like type="button" class="rounded-lg px-2 py-1 text-sm text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800">♡ Like</button>
+            <button data-audioplaylist-comment type="button" class="rounded-lg px-2 py-1 text-sm text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800">◌ Comment</button>
+          </div>
+        </div>
+
+        <div data-audioplaylist-tracks class="divide-y divide-zinc-100 dark:divide-zinc-800/70">
+          <div
+            v-for="(track, index) in props.tracks"
+            :key="track.id"
+            :data-audioplaylist-track="track.id"
+            :data-audioplaylist-active="track.id === active?.id ? 'true' : 'false'"
+            class="group flex items-center gap-3 px-5 py-3.5 transition-colors sm:px-7"
+            :class="track.id === active?.id ? 'bg-indigo-50/70 dark:bg-indigo-950/30' : 'hover:bg-zinc-50 dark:hover:bg-zinc-900'"
+          >
+            <button :data-audioplaylist-track-play="track.id" type="button" :aria-label="'Play ' + track.title" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm text-zinc-400 transition-colors hover:bg-zinc-200 hover:text-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-100" @click="emit('track-click', track)">
+              <span v-if="track.id === active?.id && isPlaying" class="text-xs">❚❚</span>
+              <span v-else class="text-xs">{{ String(index + 1).padStart(2, "0") }}</span>
+            </button>
+            <div class="h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-indigo-200 to-fuchsia-200 dark:from-indigo-950 dark:to-fuchsia-950">
+              <img v-if="track.coverUrl" :src="track.coverUrl" alt="" class="h-full w-full object-cover" />
+              <span v-else class="flex h-full items-center justify-center text-lg">♫</span>
+            </div>
+            <button type="button" class="min-w-0 flex-1 text-left" @click="emit('track-click', track)">
+              <p class="truncate text-sm font-semibold">{{ track.title }}</p>
+              <p class="truncate text-xs text-zinc-500 dark:text-zinc-400">{{ track.artist }}</p>
+            </button>
+            <span v-if="track.version" data-audioplaylist-version class="rounded-md bg-zinc-100 px-2 py-0.5 text-[10px] font-semibold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">{{ track.version }}</span>
+            <span class="hidden text-xs tabular-nums text-zinc-400 sm:inline">{{ track.duration }}</span>
+            <button :data-audioplaylist-remix="track.id" type="button" class="hidden rounded-md px-2 py-1 text-xs font-medium text-zinc-500 hover:bg-zinc-100 sm:inline dark:hover:bg-zinc-800" @click="emit('remix', track)">Remix ▾</button>
+            <button :data-audioplaylist-like-track="track.id" type="button" :aria-label="liked.has(track.id) ? 'Unlike' : 'Like'" class="rounded-md px-1.5 py-1 text-base" :class="liked.has(track.id) ? 'text-rose-500' : 'text-zinc-400 hover:text-rose-400'" @click="toggleLike(track)">{{ liked.has(track.id) ? "♥" : "♡" }}</button>
+          </div>
+        </div>
+      </main>
+
+      <aside data-audioplaylist-queue class="border-t border-zinc-200 bg-zinc-50/80 p-5 dark:border-zinc-800 dark:bg-zinc-900/60 lg:border-l lg:border-t-0">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold">Queue</h3>
+          <span class="text-xs text-zinc-400">{{ props.queue.length }}</span>
+        </div>
+        <div class="mt-4 space-y-2.5">
+          <button v-for="(track, index) in props.queue" :key="track.id" :data-audioplaylist-queue-item="track.id" type="button" class="flex w-full items-center gap-2.5 rounded-lg p-1.5 text-left transition-colors hover:bg-white dark:hover:bg-zinc-800" @click="emit('queue-click', track)">
+            <span class="w-4 text-center text-[10px] text-zinc-400">{{ index + 1 }}</span>
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-cyan-200 to-indigo-200 text-sm dark:from-cyan-950 dark:to-indigo-950">♫</span>
+            <span class="min-w-0 flex-1"><span class="block truncate text-xs font-semibold">{{ track.title }}</span><span class="block truncate text-[11px] text-zinc-400">{{ track.artist }}</span></span>
+            <span class="text-[10px] tabular-nums text-zinc-400">{{ track.duration }}</span>
+          </button>
+        </div>
+        <p class="mt-6 rounded-lg border border-dashed border-zinc-300 p-3 text-center text-xs text-zinc-400 dark:border-zinc-700">Drag songs here to build your queue</p>
+      </aside>
+    </div>
+
+    <div data-audioplaylist-player class="flex items-center gap-3 border-t border-zinc-200 bg-zinc-900 px-4 py-3 text-white dark:border-zinc-800">
+      <button data-audioplaylist-player-toggle type="button" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-xs text-zinc-900" @click="isPlaying = !isPlaying">{{ isPlaying ? "❚❚" : "▶" }}</button>
+      <div class="min-w-0 w-36 sm:w-48"><p class="truncate text-xs font-semibold">{{ active?.title ?? "Nothing playing" }}</p><p class="truncate text-[10px] text-zinc-400">{{ active?.artist ?? "Choose a track" }}</p></div>
+      <div class="hidden flex-1 items-center gap-3 sm:flex"><span class="text-[10px] tabular-nums text-zinc-400">0:42</span><div class="h-1.5 flex-1 rounded-full bg-zinc-700"><div class="h-full w-1/4 rounded-full bg-indigo-400" /></div><span class="text-[10px] tabular-nums text-zinc-400">{{ active?.duration ?? "0:00" }}</span></div>
+      <div class="ml-auto flex items-center gap-2 text-zinc-300"><button type="button" class="rounded p-1 hover:bg-zinc-800">↶</button><button type="button" class="rounded p-1 hover:bg-zinc-800">↷</button><button type="button" class="rounded p-1 hover:bg-zinc-800">🔊</button></div>
+    </div>
+  </div>
+</template>
+
+
+====
 File: vue/AudioWaveVisualizer.vue
 ====
 
@@ -27907,6 +28942,150 @@ const periods: { id: 'monthly' | 'annual'; label: string }[] = [
 ];
 void props;
 </script>
+
+
+====
+File: vue/BlogPostArticle.vue
+====
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface ArticleHeading {
+  id: string;
+  text: string;
+  level?: 2 | 3;
+}
+
+export type ArticleBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "heading"; text: string; id: string; level?: 2 | 3 }
+  | { type: "list"; items: string[] }
+  | { type: "code"; language: string; code: string };
+
+export interface BlogPostArticleProps {
+  siteName?: string;
+  title?: string;
+  subtitle?: string;
+  meta?: string;
+  blocks?: ArticleBlock[];
+  toc?: ArticleHeading[];
+  activeHeadingId?: string;
+  codeLabel?: string;
+  copiedLabel?: string;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<BlogPostArticleProps>(), {
+  siteName: "SLMobbin",
+  title: "Introduction to Front-End Development: A Beginner's Guide",
+  subtitle: "What is Front-End Development?",
+  meta: "8 min read · Nov 14, 2026",
+  blocks: () => [
+    {
+      type: "paragraph",
+      text: "Front-end development is the process of designing and building the part of a website or web application that users interact with directly. It involves creating the structure, layout, and interactive features of a webpage, ensuring a seamless user experience.",
+    },
+    { type: "heading", text: "Key Technologies in Front-End Development", id: "key-technologies", level: 2 },
+    { type: "paragraph", text: "Front-end development primarily relies on three core technologies: HTML, CSS and JavaScript." },
+    { type: "list", items: ["HTML provides the basic structure of a webpage.", "CSS controls the presentation and layout.", "JavaScript adds interactivity and dynamic behavior."] },
+    { type: "heading", text: "1. HTML (HyperText Markup Language)", id: "html", level: 3 },
+    { type: "paragraph", text: "HTML provides the basic structure of a webpage. It defines elements such as headings, paragraphs, images, links, and forms." },
+    {
+      type: "code",
+      language: "html",
+      code: '<!DOCTYPE html>\n<html>\n  <head>\n    <title>My First Web Page</title>\n  </head>\n  <body>\n    <h1>Welcome to Front-End Development</h1>\n    <p>This is an example of HTML structure.</p>\n  </body>\n</html>',
+    },
+  ] as ArticleBlock[],
+  toc: () => [
+    { id: "key-technologies", text: "Key Technologies in Front-End Development", level: 2 as const },
+    { id: "html", text: "1. HTML (HyperText Markup Language)", level: 3 as const },
+  ] as ArticleHeading[],
+  activeHeadingId: "",
+  codeLabel: "Copy",
+  copiedLabel: "Copied!",
+  class: "",
+});
+
+const emit = defineEmits(["heading-click", "copy-code"]);
+
+const activeId = ref(props.activeHeadingId || props.toc[0]?.id || "");
+const copied = ref(false);
+
+const copyCode = () => {
+  copied.value = true;
+  emit("copy-code");
+  window.setTimeout(() => (copied.value = false), 1500);
+};
+</script>
+
+<template>
+  <div data-blogpost class="w-full border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950" :class="props.class">
+    <header data-blogpost-topbar class="flex items-center justify-between gap-4 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+      <p data-blogpost-site class="text-sm font-black tracking-tight text-zinc-900 dark:text-zinc-50">{{ props.siteName }}</p>
+      <div class="hidden min-w-0 flex-1 justify-center sm:flex">
+        <div class="flex w-full max-w-md items-center gap-2 rounded-full border border-zinc-200 px-4 py-1.5 text-xs text-zinc-400 dark:border-zinc-800">
+          <span aria-hidden="true">⌕</span>
+          <span class="flex-1">Search</span>
+          <kbd class="rounded border border-zinc-200 px-1.5 py-0.5 text-[10px] dark:border-zinc-700">⌘ K</kbd>
+        </div>
+      </div>
+      <button type="button" aria-label="Toggle theme" class="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800">☾</button>
+    </header>
+
+    <div class="grid lg:grid-cols-[200px_minmax(0,1fr)]">
+      <nav data-blogpost-toc class="hidden border-r border-zinc-200 p-5 lg:block dark:border-zinc-800">
+        <div class="space-y-1">
+          <button
+            v-for="h in props.toc"
+            :key="h.id"
+            :data-blogpost-tocitem="h.id"
+            :data-blogpost-toc-active="h.id === activeId ? 'true' : 'false'"
+            type="button"
+            class="block w-full rounded-lg px-3 py-1.5 text-left text-xs leading-5 transition-colors"
+            :class="[
+              h.level === 3 ? 'pl-6' : '',
+              h.id === activeId ? 'bg-sky-50 font-semibold text-sky-700 dark:bg-sky-950/50 dark:text-sky-300' : 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200',
+            ]"
+            @click="activeId = h.id; emit('heading-click', h)"
+          >
+            {{ h.text }}
+          </button>
+        </div>
+        <p class="mt-6 flex items-center gap-2 text-xs text-zinc-400">
+          <span aria-hidden="true">⇥</span> Collapse
+          <kbd class="ml-auto rounded border border-zinc-200 px-1.5 py-0.5 text-[10px] dark:border-zinc-700">⌘ \</kbd>
+        </p>
+      </nav>
+
+      <article data-blogpost-article class="min-w-0 px-6 py-8 sm:px-10">
+        <h1 data-blogpost-title class="text-3xl font-black leading-tight tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">{{ props.title }}</h1>
+        <p v-if="props.subtitle" class="mt-3 text-base text-zinc-600 dark:text-zinc-300">{{ props.subtitle }}</p>
+        <p v-if="props.meta" data-blogpost-meta class="mt-2 text-xs text-zinc-400 dark:text-zinc-500">{{ props.meta }}</p>
+
+        <div data-blogpost-content class="mt-6 space-y-4">
+          <template v-for="(block, i) in props.blocks" :key="i">
+            <p v-if="block.type === 'paragraph'" class="text-[15px] leading-7 text-zinc-700 dark:text-zinc-300">{{ block.text }}</p>
+            <h2 v-else-if="block.type === 'heading' && block.level === 3" :id="block.id" :data-blogpost-heading="block.id" class="mt-8 text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-50">{{ block.text }}</h2>
+            <h2 v-else-if="block.type === 'heading'" :id="block.id" :data-blogpost-heading="block.id" class="mt-10 text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">{{ block.text }}</h2>
+            <ul v-else-if="block.type === 'list'" class="list-disc space-y-1.5 pl-6 text-[15px] leading-7 text-zinc-700 dark:text-zinc-300">
+              <li v-for="(item, j) in block.items" :key="j">{{ item }}</li>
+            </ul>
+            <div v-else data-blogpost-code class="overflow-hidden rounded-xl bg-zinc-950 dark:bg-black">
+              <div class="flex items-center justify-between px-4 pt-3">
+                <span class="text-[10px] uppercase tracking-wide text-zinc-500">{{ block.language }}</span>
+                <button data-blogpost-code-copy type="button" class="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-white" @click="copyCode">
+                  <span aria-hidden="true">⧉</span> {{ copied ? props.copiedLabel : props.codeLabel }}
+                </button>
+              </div>
+              <pre class="overflow-x-auto px-4 pb-4 pt-1 text-xs leading-5 text-zinc-200"><code>{{ block.code }}</code></pre>
+            </div>
+          </template>
+        </div>
+      </article>
+    </div>
+  </div>
+</template>
 
 
 ====
@@ -33850,6 +35029,199 @@ withDefaults(
   { required: false, optional: false, className: '' }
 );
 </script>
+
+
+====
+File: vue/FormTrackingDashboard.vue
+====
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface FormStat {
+  id: string;
+  label: string;
+  value: number;
+  pct: number;
+  tone: "sky" | "emerald" | "amber" | "rose";
+  icon?: string;
+}
+
+export interface FormDetail {
+  label: string;
+  value: string;
+}
+
+export interface FormRequestRow {
+  id: string;
+  name: string;
+  initials?: string;
+  avatarUrl?: string;
+  submitted: string;
+  service: string;
+  status: "completed" | "to-be-completed" | "not-completed";
+}
+
+export interface FormTrackingDashboardProps {
+  title?: string;
+  active?: boolean;
+  stats?: FormStat[];
+  details?: FormDetail[];
+  requests?: FormRequestRow[];
+  sortOptions?: string[];
+  class?: string;
+}
+
+const props = withDefaults(defineProps<FormTrackingDashboardProps>(), {
+  title: "Consultation form",
+  active: true,
+  stats: () => [
+    { id: "s1", label: "Sent to", value: 12, pct: 100, tone: "sky", icon: "📤" },
+    { id: "s2", label: "Completed", value: 8, pct: 67, tone: "emerald", icon: "✅" },
+    { id: "s3", label: "To be completed", value: 2, pct: 17, tone: "amber", icon: "⏳" },
+    { id: "s4", label: "Not completed", value: 2, pct: 17, tone: "rose", icon: "⛔" },
+  ],
+  details: () => [
+    { label: "Form name", value: "Consultation form" },
+    { label: "Service", value: "Initial consultation" },
+    { label: "Sent to", value: "12 clients" },
+    { label: "Created", value: "Nov 2, 2026" },
+    { label: "Reminder", value: "Automatic · 3 days" },
+    { label: "Expiration", value: "No expiration" },
+  ],
+  requests: () => [
+    { id: "r1", name: "Anna Kowalski", initials: "AK", submitted: "Nov 12, 2026", service: "Initial consultation", status: "completed" },
+    { id: "r2", name: "Ben Carter", initials: "BC", submitted: "Nov 13, 2026", service: "Initial consultation", status: "to-be-completed" },
+    { id: "r3", name: "Chen Wei", initials: "CW", submitted: "—", service: "Initial consultation", status: "not-completed" },
+    { id: "r4", name: "Dana Patel", initials: "DP", submitted: "Nov 14, 2026", service: "Initial consultation", status: "completed" },
+  ],
+  sortOptions: () => ["Newest first", "Oldest first", "Name A–Z", "Status"],
+  class: "",
+});
+
+const emit = defineEmits(["back", "sort-change", "request-click"]);
+
+const sortOpen = ref(false);
+const sort = ref(props.sortOptions[0] ?? "Newest first");
+
+const STATUS_META: Record<string, { label: string; cls: string }> = {
+  completed: { label: "Completed", cls: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300" },
+  "to-be-completed": { label: "To be completed", cls: "bg-amber-100 text-amber-700 dark:bg-amber-950/70 dark:text-amber-300" },
+  "not-completed": { label: "Not completed", cls: "bg-rose-100 text-rose-700 dark:bg-rose-950/70 dark:text-rose-300" },
+};
+
+const TONE_DOT: Record<string, string> = {
+  sky: "bg-sky-500",
+  emerald: "bg-emerald-500",
+  amber: "bg-amber-500",
+  rose: "bg-rose-500",
+};
+
+const TONE_BAR: Record<string, string> = {
+  sky: "bg-sky-500",
+  emerald: "bg-emerald-500",
+  amber: "bg-amber-500",
+  rose: "bg-rose-500",
+};
+
+const pickSort = (opt: string) => {
+  sort.value = opt;
+  sortOpen.value = false;
+  emit("sort-change", opt);
+};
+
+const clampPct = (n: number) => Math.min(100, Math.max(0, n));
+</script>
+
+<template>
+  <div data-formtrack class="w-full rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 sm:p-6" :class="props.class">
+    <div data-formtrack-header class="flex items-center gap-3">
+      <button data-formtrack-back type="button" aria-label="Back" class="rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-100" @click="emit('back')">←</button>
+      <h2 data-formtrack-title class="text-xl font-bold text-zinc-900 dark:text-zinc-50">{{ props.title }}</h2>
+      <span v-if="props.active" data-formtrack-active class="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300">Active</span>
+      <div class="relative ml-auto">
+        <button data-formtrack-options type="button" class="rounded-lg border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800" @click="sortOpen = !sortOpen">Options ▾</button>
+        <div v-if="sortOpen" data-formtrack-sortmenu class="absolute right-0 z-10 mt-1 w-44 overflow-hidden rounded-xl border border-zinc-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-800">
+          <button
+            v-for="opt in props.sortOptions"
+            :key="opt"
+            :data-formtrack-sortoption="opt"
+            type="button"
+            class="block w-full px-3 py-1.5 text-left text-xs transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-700"
+            :class="opt === sort ? 'font-semibold text-indigo-600 dark:text-indigo-300' : 'text-zinc-600 dark:text-zinc-300'"
+            @click="pickSort(opt)"
+          >
+            {{ opt }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div data-formtrack-stats class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div v-for="s in props.stats" :key="s.id" :data-formtrack-stat="s.id" class="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+        <div class="flex items-center gap-2">
+          <span class="h-2.5 w-2.5 rounded-full" :class="TONE_DOT[s.tone]" aria-hidden="true" />
+          <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400"><span v-if="s.icon" aria-hidden="true" class="mr-1">{{ s.icon }}</span>{{ s.label }}</p>
+        </div>
+        <p :data-formtrack-stat-value="s.id" class="mt-1.5 text-2xl font-black text-zinc-900 dark:text-zinc-50">{{ s.value }}</p>
+        <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
+          <div class="h-full rounded-full" :class="TONE_BAR[s.tone]" :style="{ width: clampPct(s.pct) + '%' }" />
+        </div>
+        <p class="mt-1 text-[11px] text-zinc-400 dark:text-zinc-500">{{ s.pct }}% of sent</p>
+      </div>
+    </div>
+
+    <div data-formtrack-details class="mt-6">
+      <p class="text-sm font-bold text-zinc-900 dark:text-zinc-50">Consultation form details</p>
+      <div class="mt-2 grid gap-x-8 gap-y-2 rounded-xl border border-zinc-200 p-4 sm:grid-cols-2 dark:border-zinc-800">
+        <div v-for="d in props.details" :key="d.label" class="flex items-center justify-between gap-4 text-sm">
+          <span class="text-zinc-500 dark:text-zinc-400">{{ d.label }}</span>
+          <span class="font-medium text-zinc-800 dark:text-zinc-100">{{ d.value }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div data-formtrack-table class="mt-6">
+      <p class="text-sm font-bold text-zinc-900 dark:text-zinc-50">Client form requests</p>
+      <div class="mt-2 overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800">
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="border-b border-zinc-200 bg-zinc-50 text-xs uppercase tracking-wide text-zinc-400 dark:border-zinc-800 dark:bg-zinc-800/50 dark:text-zinc-500">
+              <th class="px-4 py-2.5 font-semibold">Client</th>
+              <th class="px-4 py-2.5 font-semibold">Submitted</th>
+              <th class="px-4 py-2.5 font-semibold">Service</th>
+              <th class="px-4 py-2.5 font-semibold">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="r in props.requests"
+              :key="r.id"
+              :data-formtrack-row="r.id"
+              class="cursor-pointer border-b border-zinc-100 transition-colors last:border-0 hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/40"
+              @click="emit('request-click', r)"
+            >
+              <td class="px-4 py-2.5">
+                <span class="flex items-center gap-2.5">
+                  <span class="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-indigo-100 text-xs font-bold text-indigo-700 dark:bg-indigo-950/70 dark:text-indigo-300">
+                    <img v-if="r.avatarUrl" :src="r.avatarUrl" :alt="r.name" class="h-8 w-8 rounded-full object-cover" />
+                    <template v-else>{{ r.initials ?? r.name.slice(0, 2).toUpperCase() }}</template>
+                  </span>
+                  <span class="font-medium text-zinc-800 dark:text-zinc-100">{{ r.name }}</span>
+                </span>
+              </td>
+              <td class="whitespace-nowrap px-4 py-2.5 text-zinc-500 dark:text-zinc-400">{{ r.submitted }}</td>
+              <td class="px-4 py-2.5 text-zinc-500 dark:text-zinc-400">{{ r.service }}</td>
+              <td class="px-4 py-2.5">
+                <span :data-formtrack-status="r.status" class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold" :class="STATUS_META[r.status]?.cls">{{ STATUS_META[r.status]?.label }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
 
 
 ====
@@ -42574,6 +43946,218 @@ const currentTone = computed<'rose' | 'amber' | 'emerald'>(() => {
 
 
 ====
+File: vue/TaskCardModal.vue
+====
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface TaskCardMember {
+  id: string;
+  name: string;
+  initials?: string;
+  avatarUrl?: string;
+}
+
+export interface TaskCardLabel {
+  id: string;
+  label: string;
+  color: string;
+}
+
+export interface TaskCardChecklistItem {
+  id: string;
+  text: string;
+  done: boolean;
+}
+
+export interface TaskCardAttachment {
+  id: string;
+  name: string;
+  meta: string;
+  kind?: "link" | "file";
+}
+
+export interface TaskCardComment {
+  id: string;
+  author: string;
+  initials?: string;
+  text: string;
+  time: string;
+}
+
+export interface TaskCardModalProps {
+  title?: string;
+  completed?: boolean;
+  members?: TaskCardMember[];
+  labels?: TaskCardLabel[];
+  dates?: string;
+  description?: string;
+  attachments?: TaskCardAttachment[];
+  checklist?: TaskCardChecklistItem[];
+  comments?: TaskCardComment[];
+  commentPlaceholder?: string;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<TaskCardModalProps>(), {
+  title: "Design landing page hero",
+  completed: false,
+  members: () => [
+    { id: "m1", name: "Jane Smith", initials: "JS" },
+    { id: "m2", name: "Omar Diallo", initials: "OD" },
+  ],
+  labels: () => [
+    { id: "l1", label: "Design", color: "bg-violet-500" },
+    { id: "l2", label: "Web", color: "bg-emerald-500" },
+  ],
+  dates: "Nov 10 – Nov 24",
+  description: "Hero section with headline, product screenshot and a primary CTA. Keep it consistent with the brand palette.",
+  attachments: () => [
+    { id: "a1", name: "Brand guidelines", meta: "notion.so/brand", kind: "link" },
+    { id: "a2", name: "hero-spec.pdf", meta: "1.2 MB · added Nov 12", kind: "file" },
+  ],
+  checklist: () => [
+    { id: "c1", text: "Collect references", done: true },
+    { id: "c2", text: "Wireframe variants", done: true },
+    { id: "c3", text: "High-fidelity mockup", done: false },
+    { id: "c4", text: "Dev handoff notes", done: false },
+  ],
+  comments: () => [
+    { id: "k1", author: "Jane Smith", initials: "JS", text: "Draft uploaded, take a look at the spacing pass.", time: "2 hours ago" },
+    { id: "k2", author: "Omar Diallo", initials: "OD", text: "Looks great — let's swap the CTA copy before handoff.", time: "1 hour ago" },
+  ],
+  commentPlaceholder: "Write a comment…",
+  class: "",
+});
+
+const emit = defineEmits(["card-close", "complete-toggle", "checklist-toggle", "comment-submit"]);
+
+const isCompleted = ref(props.completed);
+const items = ref<TaskCardChecklistItem[]>([...props.checklist]);
+const draft = ref("");
+
+const doneCount = items.value.filter((i) => i.done).length;
+const pct = items.value.length === 0 ? 0 : Math.round((doneCount / items.value.length) * 100);
+
+const submitComment = () => {
+  const text = draft.value.trim();
+  if (!text) return;
+  emit("comment-submit", text);
+  draft.value = "";
+};
+</script>
+
+<template>
+  <div data-taskcard class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-zinc-900/60 p-4 sm:p-8" :class="props.class">
+    <div data-taskcard-dialog role="dialog" aria-modal="true" :aria-label="props.title" class="w-full max-w-3xl rounded-xl bg-white shadow-2xl dark:bg-zinc-900">
+      <div class="flex items-center justify-between gap-4 border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
+        <div class="flex min-w-0 items-center gap-3">
+          <button
+            data-taskcard-complete
+            type="button"
+            :aria-pressed="isCompleted"
+            class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border text-xs font-bold transition-colors"
+            :class="isCompleted ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-zinc-300 text-transparent hover:border-zinc-400 dark:border-zinc-600'"
+            @click="isCompleted = !isCompleted; emit('complete-toggle', isCompleted)"
+          >
+            ✓
+          </button>
+          <h2 data-taskcard-title class="truncate text-lg font-bold" :class="isCompleted ? 'text-zinc-400 line-through dark:text-zinc-500' : 'text-zinc-900 dark:text-zinc-50'">{{ props.title }}</h2>
+        </div>
+        <button data-taskcard-close type="button" aria-label="Close" class="shrink-0 rounded-lg px-2 py-1 text-lg leading-none text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200" @click="emit('card-close')">✕</button>
+      </div>
+
+      <div class="grid gap-6 px-6 py-5 md:grid-cols-[minmax(0,1fr)_240px]">
+        <div class="min-w-0 space-y-5">
+          <div data-taskcard-attrs class="flex flex-wrap gap-6">
+            <div data-taskcard-members>
+              <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Members</p>
+              <div class="mt-1.5 flex gap-1.5">
+                <span v-for="m in props.members" :key="m.id" :data-taskcard-member="m.id" :title="m.name" class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700 dark:bg-indigo-950/70 dark:text-indigo-300">
+                  <img v-if="m.avatarUrl" :src="m.avatarUrl" :alt="m.name" class="h-8 w-8 rounded-full object-cover" />
+                  <template v-else>{{ m.initials ?? m.name.slice(0, 2).toUpperCase() }}</template>
+                </span>
+              </div>
+            </div>
+            <div v-if="props.labels.length > 0" data-taskcard-labels>
+              <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Labels</p>
+              <div class="mt-1.5 flex flex-wrap gap-1.5">
+                <span v-for="l in props.labels" :key="l.id" :data-taskcard-label="l.id" class="inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold text-white" :class="l.color">{{ l.label }}</span>
+              </div>
+            </div>
+            <div v-if="props.dates" data-taskcard-dates>
+              <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Dates</p>
+              <p class="mt-1.5 rounded-md bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">{{ props.dates }}</p>
+            </div>
+          </div>
+
+          <div data-taskcard-description>
+            <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Description</p>
+            <p class="mt-1.5 text-sm leading-6 text-zinc-600 dark:text-zinc-300">{{ props.description }}</p>
+          </div>
+
+          <div v-if="props.attachments.length > 0" data-taskcard-attachments>
+            <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Attachments</p>
+            <div class="mt-1.5 space-y-1.5">
+              <div v-for="a in props.attachments" :key="a.id" :data-taskcard-attachment="a.id" class="flex items-center gap-2.5 rounded-lg border border-zinc-200 px-3 py-2 dark:border-zinc-800">
+                <span aria-hidden="true" class="text-sm">{{ a.kind === 'file' ? '📄' : '🔗' }}</span>
+                <div class="min-w-0">
+                  <p class="truncate text-sm font-medium text-zinc-800 dark:text-zinc-100">{{ a.name }}</p>
+                  <p class="truncate text-xs text-zinc-400 dark:text-zinc-500">{{ a.meta }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div data-taskcard-checklist>
+            <div class="flex items-center justify-between">
+              <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Checklist</p>
+              <span data-taskcard-checklist-count class="text-xs font-medium text-zinc-500 dark:text-zinc-400">{{ pct }}%</span>
+            </div>
+            <div data-taskcard-checklist-bar class="mt-1.5 h-2 overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
+              <div class="h-full rounded-full bg-emerald-500 transition-all" :style="{ width: pct + '%' }" />
+            </div>
+            <div class="mt-2 space-y-1">
+              <button
+                v-for="item in items"
+                :key="item.id"
+                :data-taskcard-checkitem="item.id"
+                :data-taskcard-checkitem-done="item.done ? 'true' : 'false'"
+                type="button"
+                class="flex w-full items-center gap-2.5 rounded-lg px-2 py-1.5 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
+                @click="item.done = !item.done; emit('checklist-toggle', item)"
+              >
+                <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] font-bold" :class="item.done ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-zinc-300 text-transparent dark:border-zinc-600'">✓</span>
+                <span class="text-sm" :class="item.done ? 'text-zinc-400 line-through dark:text-zinc-500' : 'text-zinc-700 dark:text-zinc-200'">{{ item.text }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <aside data-taskcard-activity class="md:border-l md:border-zinc-200 md:pl-6 dark:md:border-zinc-800">
+          <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Comments &amp; activity</p>
+          <form data-taskcard-composer class="mt-3" @submit.prevent="submitComment">
+            <textarea data-taskcard-input v-model="draft" :placeholder="props.commentPlaceholder" rows="3" class="w-full resize-none rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-800 placeholder-zinc-400 focus:border-indigo-400 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100" />
+            <button data-taskcard-send type="submit" class="mt-2 w-full rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-indigo-500 disabled:opacity-40" :disabled="draft.trim() === ''">Comment</button>
+          </form>
+          <div data-taskcard-feed class="mt-4 space-y-3">
+            <div v-for="c in props.comments" :key="c.id" :data-taskcard-comment="c.id" class="flex gap-2">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-[10px] font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">{{ c.initials ?? c.author.slice(0, 2).toUpperCase() }}</span>
+              <div class="min-w-0">
+                <p class="text-xs"><span class="font-semibold text-zinc-800 dark:text-zinc-100">{{ c.author }}</span> <span class="text-zinc-400 dark:text-zinc-500">{{ c.time }}</span></p>
+                <p class="mt-0.5 text-xs leading-5 text-zinc-600 dark:text-zinc-300">{{ c.text }}</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+====
 File: vue/TaskDetailPanel.vue
 ====
 
@@ -49153,6 +50737,215 @@ export default AudioNotePlayerElement;
 
 
 ====
+File: vanilla/AudioPlaylistPage.js
+====
+
+/**
+ * AudioPlaylistPage - Music playlist page with gradient cover, track rows,
+ * version/remix controls, reactions, bottom player bar and a right Queue
+ * panel (Suno audio workspace pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_TRACKS = () => [
+  { id: 't1', title: 'Neon after rain', artist: 'Mira Sol', duration: '3:42', version: 'v5', liked: true },
+  { id: 't2', title: 'Soft focus', artist: 'Mira Sol', duration: '2:58', version: 'v3' },
+  { id: 't3', title: 'Signals in the dark', artist: 'Mira Sol', duration: '4:16', version: 'v2' },
+  { id: 't4', title: 'Morning light', artist: 'Mira Sol', duration: '3:05', version: 'v1' },
+];
+
+const DEFAULT_QUEUE = () => [
+  { id: 'q1', title: 'City windows', artist: 'Mira Sol', duration: '3:10' },
+  { id: 'q2', title: 'Static bloom', artist: 'Theo Park', duration: '2:46' },
+  { id: 'q3', title: 'Almost home', artist: 'Mira Sol', duration: '3:31' },
+];
+
+class AudioPlaylistPageElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'subtitle', 'cover-url', 'tracks', 'queue', 'active-track-id'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._playing = false;
+    this._liked = new Set();
+    this._likedInitialized = false;
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  _tracks() {
+    const tracks = parseJsonAttr(this.getAttribute('tracks'), DEFAULT_TRACKS());
+    if (!this._likedInitialized) {
+      this._liked = new Set(tracks.filter((t) => t.liked).map((t) => t.id));
+      this._likedInitialized = true;
+    }
+    return tracks;
+  }
+
+  _onClick(event) {
+    const trackPlay = event.target.closest('[data-audioplaylist-track-play]');
+    if (trackPlay) {
+      const id = trackPlay.getAttribute('data-audioplaylist-track-play');
+      const found = this._tracks().find((t) => t.id === id);
+      if (found) this.dispatchEvent(new CustomEvent('track-click', { detail: { track: found }, bubbles: true }));
+      return;
+    }
+    const remix = event.target.closest('[data-audioplaylist-remix]');
+    if (remix) {
+      const id = remix.getAttribute('data-audioplaylist-remix');
+      const found = this._tracks().find((t) => t.id === id);
+      if (found) this.dispatchEvent(new CustomEvent('remix', { detail: { track: found }, bubbles: true }));
+      return;
+    }
+    const like = event.target.closest('[data-audioplaylist-like-track]');
+    if (like) {
+      const id = like.getAttribute('data-audioplaylist-like-track');
+      const found = this._tracks().find((t) => t.id === id);
+      if (found) {
+        if (this._liked.has(id)) this._liked.delete(id);
+        else this._liked.add(id);
+        this.dispatchEvent(new CustomEvent('like', { detail: { track: found }, bubbles: true }));
+        this._render();
+      }
+      return;
+    }
+    const queueItem = event.target.closest('[data-audioplaylist-queue-item]');
+    if (queueItem) {
+      const id = queueItem.getAttribute('data-audioplaylist-queue-item');
+      const found = parseJsonAttr(this.getAttribute('queue'), DEFAULT_QUEUE()).find((t) => t.id === id);
+      if (found) this.dispatchEvent(new CustomEvent('queue-click', { detail: { track: found }, bubbles: true }));
+      return;
+    }
+    if (event.target.closest('[data-audioplaylist-play]') || event.target.closest('[data-audioplaylist-player-toggle]')) {
+      this._playing = !this._playing;
+      this._render();
+    }
+  }
+
+  _render() {
+    const title = this.getAttribute('title') || 'Late night sketches';
+    const subtitle = this.getAttribute('subtitle') || 'A collection of new ideas and alternate versions';
+    const coverUrl = this.getAttribute('cover-url') || '';
+    const tracks = this._tracks();
+    const queue = parseJsonAttr(this.getAttribute('queue'), DEFAULT_QUEUE());
+    const activeId = this.getAttribute('active-track-id') || tracks[0]?.id || '';
+    const active = tracks.find((t) => t.id === activeId) ?? tracks[0];
+
+    const tracksHtml = tracks
+      .map((track, index) => {
+        const isActive = track.id === active?.id;
+        const isLiked = this._liked.has(track.id);
+        return `<div data-audioplaylist-track="${escapeAttribute(track.id)}" data-audioplaylist-active="${isActive ? 'true' : 'false'}" class="group flex items-center gap-3 px-5 py-3.5 transition-colors sm:px-7 ${isActive ? 'bg-indigo-50/70 dark:bg-indigo-950/30' : 'hover:bg-zinc-50 dark:hover:bg-zinc-900'}">
+            <button data-audioplaylist-track-play="${escapeAttribute(track.id)}" aria-label="Play ${escapeAttribute(track.title)}" type="button" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm text-zinc-400 transition-colors hover:bg-zinc-200 hover:text-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">${isActive && this._playing ? '<span class="text-xs">❚❚</span>' : `<span class="text-xs">${String(index + 1).padStart(2, '0')}</span>`}</button>
+            <div class="h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-indigo-200 to-fuchsia-200 dark:from-indigo-950 dark:to-fuchsia-950">${track.coverUrl ? `<img src="${escapeAttribute(track.coverUrl)}" alt="" class="h-full w-full object-cover" />` : '<span class="flex h-full items-center justify-center text-lg">♫</span>'}</div>
+            <button type="button" class="min-w-0 flex-1 text-left" data-audioplaylist-track-play="${escapeAttribute(track.id)}">
+              <p class="truncate text-sm font-semibold">${escapeAttribute(track.title)}</p>
+              <p class="truncate text-xs text-zinc-500 dark:text-zinc-400">${escapeAttribute(track.artist)}</p>
+            </button>
+            ${track.version ? `<span data-audioplaylist-version class="rounded-md bg-zinc-100 px-2 py-0.5 text-[10px] font-semibold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">${escapeAttribute(track.version)}</span>` : ''}
+            <span class="hidden text-xs tabular-nums text-zinc-400 sm:inline">${escapeAttribute(track.duration)}</span>
+            <button data-audioplaylist-remix="${escapeAttribute(track.id)}" type="button" class="hidden rounded-md px-2 py-1 text-xs font-medium text-zinc-500 hover:bg-zinc-100 sm:inline dark:hover:bg-zinc-800">Remix ▾</button>
+            <button data-audioplaylist-like-track="${escapeAttribute(track.id)}" aria-label="${isLiked ? 'Unlike' : 'Like'}" type="button" class="rounded-md px-1.5 py-1 text-base ${isLiked ? 'text-rose-500' : 'text-zinc-400 hover:text-rose-400'}">${isLiked ? '♥' : '♡'}</button>
+          </div>`;
+      })
+      .join('');
+
+    const queueHtml = queue
+      .map(
+        (track, index) => `<button data-audioplaylist-queue-item="${escapeAttribute(track.id)}" type="button" class="flex w-full items-center gap-2.5 rounded-lg p-1.5 text-left transition-colors hover:bg-white dark:hover:bg-zinc-800">
+            <span class="w-4 text-center text-[10px] text-zinc-400">${index + 1}</span>
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-cyan-200 to-indigo-200 text-sm dark:from-cyan-950 dark:to-indigo-950">♫</span>
+            <span class="min-w-0 flex-1"><span class="block truncate text-xs font-semibold">${escapeAttribute(track.title)}</span><span class="block truncate text-[11px] text-zinc-400">${escapeAttribute(track.artist)}</span></span>
+            <span class="text-[10px] tabular-nums text-zinc-400">${escapeAttribute(track.duration)}</span>
+          </button>`
+      )
+      .join('');
+
+    this.innerHTML = `
+      <div data-audioplaylist class="overflow-hidden rounded-2xl border border-zinc-200 bg-white text-zinc-900 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
+        <div class="grid lg:grid-cols-[minmax(0,1fr)_240px]">
+          <main data-audioplaylist-main class="min-w-0">
+            <div class="flex flex-col gap-5 border-b border-zinc-200 p-5 sm:flex-row sm:items-end sm:p-7 dark:border-zinc-800">
+              <div data-audioplaylist-cover class="relative h-40 w-40 shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-fuchsia-500 via-indigo-600 to-cyan-400 shadow-lg">${coverUrl ? `<img src="${escapeAttribute(coverUrl)}" alt="" class="h-full w-full object-cover" />` : '<div class="absolute inset-0 opacity-40" style="background-image:radial-gradient(circle at 25% 25%, white 0 2px, transparent 3px), radial-gradient(circle at 70% 70%, white 0 1px, transparent 2px);background-size:22px 22px"></div>'}<span class="absolute bottom-3 left-3 text-3xl" aria-hidden="true">♫</span></div>
+              <div class="min-w-0">
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">Playlist</p>
+                <h2 data-audioplaylist-title class="mt-1 truncate text-3xl font-black tracking-tight">${escapeAttribute(title)}</h2>
+                <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">${escapeAttribute(subtitle)}</p>
+                <div class="mt-4 flex flex-wrap items-center gap-2">
+                  <button data-audioplaylist-play type="button" class="rounded-full bg-zinc-900 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-zinc-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200">${this._playing ? '❚❚ Pause' : '▶ Play'}</button>
+                  <button data-audioplaylist-share type="button" class="rounded-full border border-zinc-200 px-3 py-2 text-xs font-semibold text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">↗ Share</button>
+                </div>
+              </div>
+            </div>
+            <div data-audioplaylist-toolbar class="flex items-center justify-between gap-3 border-b border-zinc-100 px-5 py-3 dark:border-zinc-800/70">
+              <p class="text-xs text-zinc-500 dark:text-zinc-400">${tracks.length} songs · originals and versions</p>
+              <div class="flex items-center gap-2">
+                <button data-audioplaylist-like type="button" class="rounded-lg px-2 py-1 text-sm text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800">♡ Like</button>
+                <button data-audioplaylist-comment type="button" class="rounded-lg px-2 py-1 text-sm text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800">◌ Comment</button>
+              </div>
+            </div>
+            <div data-audioplaylist-tracks class="divide-y divide-zinc-100 dark:divide-zinc-800/70">${tracksHtml}</div>
+          </main>
+          <aside data-audioplaylist-queue class="border-t border-zinc-200 bg-zinc-50/80 p-5 dark:border-zinc-800 dark:bg-zinc-900/60 lg:border-l lg:border-t-0">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold">Queue</h3>
+              <span class="text-xs text-zinc-400">${queue.length}</span>
+            </div>
+            <div class="mt-4 space-y-2.5">${queueHtml}</div>
+            <p class="mt-6 rounded-lg border border-dashed border-zinc-300 p-3 text-center text-xs text-zinc-400 dark:border-zinc-700">Drag songs here to build your queue</p>
+          </aside>
+        </div>
+        <div data-audioplaylist-player class="flex items-center gap-3 border-t border-zinc-200 bg-zinc-900 px-4 py-3 text-white dark:border-zinc-800">
+          <button data-audioplaylist-player-toggle type="button" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-xs text-zinc-900">${this._playing ? '❚❚' : '▶'}</button>
+          <div class="min-w-0 w-36 sm:w-48"><p class="truncate text-xs font-semibold">${escapeAttribute(active?.title ?? 'Nothing playing')}</p><p class="truncate text-[10px] text-zinc-400">${escapeAttribute(active?.artist ?? 'Choose a track')}</p></div>
+          <div class="hidden flex-1 items-center gap-3 sm:flex"><span class="text-[10px] tabular-nums text-zinc-400">0:42</span><div class="h-1.5 flex-1 rounded-full bg-zinc-700"><div class="h-full w-1/4 rounded-full bg-indigo-400"></div></div><span class="text-[10px] tabular-nums text-zinc-400">${escapeAttribute(active?.duration ?? '0:00')}</span></div>
+          <div class="ml-auto flex items-center gap-2 text-zinc-300"><button type="button" class="rounded p-1 hover:bg-zinc-800">↶</button><button type="button" class="rounded p-1 hover:bg-zinc-800">↷</button><button type="button" class="rounded p-1 hover:bg-zinc-800">🔊</button></div>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('audio-playlist-page')) {
+  customElements.define('audio-playlist-page', AudioPlaylistPageElement);
+}
+
+export default AudioPlaylistPageElement;
+
+
+====
 File: vanilla/AudioWaveVisualizer.js
 ====
 
@@ -50138,6 +51931,183 @@ if (typeof customElements !== 'undefined' && !customElements.get('billing-panel'
   customElements.define('billing-panel', BillingPanelElement);
 }
 export default BillingPanelElement;
+
+
+====
+File: vanilla/BlogPostArticle.js
+====
+
+/**
+ * BlogPostArticle - Blog article page: top bar with logo and search, left
+ * "On this page" nav highlight, article body with headings, paragraphs,
+ * inline code, and a dark code block with Copy button (Hashnode article
+ * pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_BLOCKS = () => [
+  { type: 'paragraph', text: 'Front-end development is the process of designing and building the part of a website or web application that users interact with directly. It involves creating the structure, layout, and interactive features of a webpage, ensuring a seamless user experience.' },
+  { type: 'heading', text: 'Key Technologies in Front-End Development', id: 'key-technologies', level: 2 },
+  { type: 'paragraph', text: 'Front-end development primarily relies on three core technologies: HTML, CSS and JavaScript.' },
+  { type: 'list', items: ['HTML provides the basic structure of a webpage.', 'CSS controls the presentation and layout.', 'JavaScript adds interactivity and dynamic behavior.'] },
+  { type: 'heading', text: '1. HTML (HyperText Markup Language)', id: 'html', level: 3 },
+  { type: 'paragraph', text: 'HTML provides the basic structure of a webpage. It defines elements such as headings, paragraphs, images, links, and forms.' },
+  {
+    type: 'code',
+    language: 'html',
+    code: '<!DOCTYPE html>\n<html>\n  <head>\n    <title>My First Web Page</title>\n  </head>\n  <body>\n    <h1>Welcome to Front-End Development</h1>\n    <p>This is an example of HTML structure.</p>\n  </body>\n</html>',
+  },
+];
+
+const DEFAULT_TOC = () => [
+  { id: 'key-technologies', text: 'Key Technologies in Front-End Development', level: 2 },
+  { id: 'html', text: '1. HTML (HyperText Markup Language)', level: 3 },
+];
+
+class BlogPostArticleElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['site-name', 'title', 'subtitle', 'meta', 'blocks', 'toc', 'active-heading-id', 'code-label', 'copied-label'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._activeId = '';
+    this._copied = false;
+    this._copiedTimer = null;
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    if (!this._activeId) {
+      const toc = parseJsonAttr(this.getAttribute('toc'), DEFAULT_TOC());
+      this._activeId = this.getAttribute('active-heading-id') || toc[0]?.id || '';
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+    if (this._copiedTimer) clearTimeout(this._copiedTimer);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  _onClick(event) {
+    const tocitem = event.target.closest('[data-blogpost-tocitem]');
+    if (tocitem) {
+      this._activeId = tocitem.getAttribute('data-blogpost-tocitem');
+      const found = parseJsonAttr(this.getAttribute('toc'), DEFAULT_TOC()).find((t) => t.id === this._activeId);
+      if (found) this.dispatchEvent(new CustomEvent('heading-click', { detail: { heading: found }, bubbles: true }));
+      this._render();
+      return;
+    }
+    if (event.target.closest('[data-blogpost-code-copy]')) {
+      this._copied = true;
+      this._render();
+      this.dispatchEvent(new CustomEvent('copy-code', { bubbles: true }));
+      this._copiedTimer = setTimeout(() => {
+        this._copied = false;
+        this._render();
+      }, 1500);
+    }
+  }
+
+  _blockHtml(block) {
+    if (block.type === 'paragraph') {
+      return `<p class="text-[15px] leading-7 text-zinc-700 dark:text-zinc-300">${escapeAttribute(block.text)}</p>`;
+    }
+    if (block.type === 'heading') {
+      const isH3 = block.level === 3;
+      return `<${isH3 ? 'h3' : 'h2'} id="${escapeAttribute(block.id)}" data-blogpost-heading="${escapeAttribute(block.id)}" class="font-bold tracking-tight text-zinc-900 dark:text-zinc-50 ${isH3 ? 'mt-8 text-lg' : 'mt-10 text-xl'}">${escapeAttribute(block.text)}</${isH3 ? 'h3' : 'h2'}>`;
+    }
+    if (block.type === 'list') {
+      return `<ul class="list-disc space-y-1.5 pl-6 text-[15px] leading-7 text-zinc-700 dark:text-zinc-300">${(block.items ?? [])
+        .map((item) => `<li>${escapeAttribute(item)}</li>`)
+        .join('')}</ul>`;
+    }
+    return `<div data-blogpost-code class="overflow-hidden rounded-xl bg-zinc-950 dark:bg-black">
+        <div class="flex items-center justify-between px-4 pt-3">
+          <span class="text-[10px] uppercase tracking-wide text-zinc-500">${escapeAttribute(block.language)}</span>
+          <button data-blogpost-code-copy type="button" class="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-white"><span aria-hidden="true">⧉</span> ${this._copied ? escapeAttribute(this.getAttribute('copied-label') || 'Copied!') : escapeAttribute(this.getAttribute('code-label') || 'Copy')}</button>
+        </div>
+        <pre class="overflow-x-auto px-4 pb-4 pt-1 text-xs leading-5 text-zinc-200"><code>${escapeAttribute(block.code)}</code></pre>
+      </div>`;
+  }
+
+  _render() {
+    const siteName = this.getAttribute('site-name') || 'SLMobbin';
+    const title = this.getAttribute('title') || "Introduction to Front-End Development: A Beginner's Guide";
+    const subtitle = this.getAttribute('subtitle') ?? 'What is Front-End Development?';
+    const meta = this.getAttribute('meta') ?? '8 min read · Nov 14, 2026';
+    const blocks = parseJsonAttr(this.getAttribute('blocks'), DEFAULT_BLOCKS());
+    const toc = parseJsonAttr(this.getAttribute('toc'), DEFAULT_TOC());
+
+    const tocHtml = toc
+      .map((h) => {
+        const active = h.id === this._activeId;
+        return `<button data-blogpost-tocitem="${escapeAttribute(h.id)}" data-blogpost-toc-active="${active ? 'true' : 'false'}" type="button" class="block w-full rounded-lg px-3 py-1.5 text-left text-xs leading-5 transition-colors ${h.level === 3 ? 'pl-6' : ''} ${active ? 'bg-sky-50 font-semibold text-sky-700 dark:bg-sky-950/50 dark:text-sky-300' : 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200'}">${escapeAttribute(h.text)}</button>`;
+      })
+      .join('');
+
+    const contentHtml = blocks.map((b) => this._blockHtml(b)).join('');
+
+    this.innerHTML = `
+      <div data-blogpost class="w-full border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+        <header data-blogpost-topbar class="flex items-center justify-between gap-4 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
+          <p data-blogpost-site class="text-sm font-black tracking-tight text-zinc-900 dark:text-zinc-50">${escapeAttribute(siteName)}</p>
+          <div class="hidden min-w-0 flex-1 justify-center sm:flex">
+            <div class="flex w-full max-w-md items-center gap-2 rounded-full border border-zinc-200 px-4 py-1.5 text-xs text-zinc-400 dark:border-zinc-800">
+              <span aria-hidden="true">⌕</span>
+              <span class="flex-1">Search</span>
+              <kbd class="rounded border border-zinc-200 px-1.5 py-0.5 text-[10px] dark:border-zinc-700">⌘ K</kbd>
+            </div>
+          </div>
+          <button type="button" aria-label="Toggle theme" class="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800">☾</button>
+        </header>
+        <div class="grid lg:grid-cols-[200px_minmax(0,1fr)]">
+          <nav data-blogpost-toc class="hidden border-r border-zinc-200 p-5 lg:block dark:border-zinc-800">
+            <div class="space-y-1">${tocHtml}</div>
+            <p class="mt-6 flex items-center gap-2 text-xs text-zinc-400"><span aria-hidden="true">⇥</span> Collapse <kbd class="ml-auto rounded border border-zinc-200 px-1.5 py-0.5 text-[10px] dark:border-zinc-700">⌘ \\</kbd></p>
+          </nav>
+          <article data-blogpost-article class="min-w-0 px-6 py-8 sm:px-10">
+            <h1 data-blogpost-title class="text-3xl font-black leading-tight tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">${escapeAttribute(title)}</h1>
+            ${subtitle ? `<p class="mt-3 text-base text-zinc-600 dark:text-zinc-300">${escapeAttribute(subtitle)}</p>` : ''}
+            ${meta ? `<p data-blogpost-meta class="mt-2 text-xs text-zinc-400 dark:text-zinc-500">${escapeAttribute(meta)}</p>` : ''}
+            <div data-blogpost-content class="mt-6 space-y-4">${contentHtml}</div>
+          </article>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('blog-post-article')) {
+  customElements.define('blog-post-article', BlogPostArticleElement);
+}
+
+export default BlogPostArticleElement;
 
 
 ====
@@ -58315,6 +60285,241 @@ if (typeof customElements !== 'undefined' && !customElements.get('form-field')) 
   customElements.define('form-field', FormFieldElement);
 }
 export default FormFieldElement;
+
+
+====
+File: vanilla/FormTrackingDashboard.js
+====
+
+/**
+ * FormTrackingDashboard - Form tracking dashboard: back arrow header with
+ * title, Active pill and Options dropdown, four stat cards with colored
+ * icon dots and % progress bars, a two-column form details grid, and a
+ * sortable client requests table with avatar rows and status pills
+ * (Fresha form tracking pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_STATS = () => [
+  { id: 's1', label: 'Sent to', value: 12, pct: 100, tone: 'sky', icon: '📤' },
+  { id: 's2', label: 'Completed', value: 8, pct: 67, tone: 'emerald', icon: '✅' },
+  { id: 's3', label: 'To be completed', value: 2, pct: 17, tone: 'amber', icon: '⏳' },
+  { id: 's4', label: 'Not completed', value: 2, pct: 17, tone: 'rose', icon: '⛔' },
+];
+
+const DEFAULT_DETAILS = () => [
+  { label: 'Form name', value: 'Consultation form' },
+  { label: 'Service', value: 'Initial consultation' },
+  { label: 'Sent to', value: '12 clients' },
+  { label: 'Created', value: 'Nov 2, 2026' },
+  { label: 'Reminder', value: 'Automatic · 3 days' },
+  { label: 'Expiration', value: 'No expiration' },
+];
+
+const DEFAULT_REQUESTS = () => [
+  { id: 'r1', name: 'Anna Kowalski', initials: 'AK', submitted: 'Nov 12, 2026', service: 'Initial consultation', status: 'completed' },
+  { id: 'r2', name: 'Ben Carter', initials: 'BC', submitted: 'Nov 13, 2026', service: 'Initial consultation', status: 'to-be-completed' },
+  { id: 'r3', name: 'Chen Wei', initials: 'CW', submitted: '—', service: 'Initial consultation', status: 'not-completed' },
+  { id: 'r4', name: 'Dana Patel', initials: 'DP', submitted: 'Nov 14, 2026', service: 'Initial consultation', status: 'completed' },
+];
+
+const DEFAULT_SORT_OPTIONS = () => ['Newest first', 'Oldest first', 'Name A–Z', 'Status'];
+
+const STATUS_META = {
+  completed: { label: 'Completed', cls: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300' },
+  'to-be-completed': { label: 'To be completed', cls: 'bg-amber-100 text-amber-700 dark:bg-amber-950/70 dark:text-amber-300' },
+  'not-completed': { label: 'Not completed', cls: 'bg-rose-100 text-rose-700 dark:bg-rose-950/70 dark:text-rose-300' },
+};
+
+const TONE_DOT = { sky: 'bg-sky-500', emerald: 'bg-emerald-500', amber: 'bg-amber-500', rose: 'bg-rose-500' };
+const TONE_BAR = { sky: 'bg-sky-500', emerald: 'bg-emerald-500', amber: 'bg-amber-500', rose: 'bg-rose-500' };
+
+const clampPct = (n) => Math.min(100, Math.max(0, Number(n) || 0));
+
+class FormTrackingDashboardElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'active', 'stats', 'details', 'requests', 'sort-options'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._sortOpen = false;
+    this._sort = '';
+    this._onDocClick = (event) => {
+      if (this._sortOpen && !event.target.closest('[data-formtrack-options]') && !event.target.closest('[data-formtrack-sortmenu]')) {
+        this._sortOpen = false;
+        this._render();
+      }
+    };
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    if (!this._sort) this._sort = parseJsonAttr(this.getAttribute('sort-options'), DEFAULT_SORT_OPTIONS())[0] ?? 'Newest first';
+    this._render();
+    this.addEventListener('click', this._onClick);
+    document.addEventListener('click', this._onDocClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+    document.removeEventListener('click', this._onDocClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    if (name === 'sort-options' && !this._sort) {
+      this._sort = parseJsonAttr(newValue, DEFAULT_SORT_OPTIONS())[0] ?? 'Newest first';
+    }
+    this._render();
+  }
+
+  _onClick(event) {
+    if (event.target.closest('[data-formtrack-back]')) {
+      this.dispatchEvent(new CustomEvent('back', { bubbles: true }));
+      return;
+    }
+    if (event.target.closest('[data-formtrack-options]')) {
+      this._sortOpen = !this._sortOpen;
+      this._render();
+      return;
+    }
+    const sortOption = event.target.closest('[data-formtrack-sortoption]');
+    if (sortOption) {
+      this._sort = sortOption.getAttribute('data-formtrack-sortoption');
+      this._sortOpen = false;
+      this.dispatchEvent(new CustomEvent('sort-change', { detail: { option: this._sort }, bubbles: true }));
+      this._render();
+      return;
+    }
+    const row = event.target.closest('[data-formtrack-row]');
+    if (row) {
+      const requests = parseJsonAttr(this.getAttribute('requests'), DEFAULT_REQUESTS());
+      const found = requests.find((r) => r.id === row.getAttribute('data-formtrack-row'));
+      if (found) this.dispatchEvent(new CustomEvent('request-click', { detail: { row: found }, bubbles: true }));
+    }
+  }
+
+  _render() {
+    const title = this.getAttribute('title') || 'Consultation form';
+    const active = this.getAttribute('active') !== 'false';
+    const stats = parseJsonAttr(this.getAttribute('stats'), DEFAULT_STATS());
+    const details = parseJsonAttr(this.getAttribute('details'), DEFAULT_DETAILS());
+    const requests = parseJsonAttr(this.getAttribute('requests'), DEFAULT_REQUESTS());
+    const sortOptions = parseJsonAttr(this.getAttribute('sort-options'), DEFAULT_SORT_OPTIONS());
+
+    const statsHtml = stats
+      .map(
+        (s) => `<div data-formtrack-stat="${escapeAttribute(s.id)}" class="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+            <div class="flex items-center gap-2">
+              <span class="h-2.5 w-2.5 rounded-full ${TONE_DOT[s.tone] ?? TONE_DOT.sky}" aria-hidden="true"></span>
+              <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400">${s.icon ? `<span aria-hidden="true" class="mr-1">${escapeAttribute(s.icon)}</span>` : ''}${escapeAttribute(s.label)}</p>
+            </div>
+            <p data-formtrack-stat-value="${escapeAttribute(s.id)}" class="mt-1.5 text-2xl font-black text-zinc-900 dark:text-zinc-50">${escapeAttribute(s.value)}</p>
+            <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
+              <div class="h-full rounded-full ${TONE_BAR[s.tone] ?? TONE_BAR.sky}" style="width:${clampPct(s.pct)}%"></div>
+            </div>
+            <p class="mt-1 text-[11px] text-zinc-400 dark:text-zinc-500">${clampPct(s.pct)}% of sent</p>
+          </div>`
+      )
+      .join('');
+
+    const detailsHtml = details
+      .map(
+        (d) => `<div class="flex items-center justify-between gap-4 text-sm">
+            <span class="text-zinc-500 dark:text-zinc-400">${escapeAttribute(d.label)}</span>
+            <span class="font-medium text-zinc-800 dark:text-zinc-100">${escapeAttribute(d.value)}</span>
+          </div>`
+      )
+      .join('');
+
+    const rowsHtml = requests
+      .map((r) => {
+        const meta = STATUS_META[r.status] ?? STATUS_META['not-completed'];
+        return `<tr data-formtrack-row="${escapeAttribute(r.id)}" class="cursor-pointer border-b border-zinc-100 transition-colors last:border-0 hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/40">
+            <td class="px-4 py-2.5">
+              <span class="flex items-center gap-2.5">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-indigo-100 text-xs font-bold text-indigo-700 dark:bg-indigo-950/70 dark:text-indigo-300">${r.avatarUrl ? `<img src="${escapeAttribute(r.avatarUrl)}" alt="${escapeAttribute(r.name)}" class="h-8 w-8 rounded-full object-cover" />` : escapeAttribute(r.initials ?? r.name.slice(0, 2).toUpperCase())}</span>
+                <span class="font-medium text-zinc-800 dark:text-zinc-100">${escapeAttribute(r.name)}</span>
+              </span>
+            </td>
+            <td class="whitespace-nowrap px-4 py-2.5 text-zinc-500 dark:text-zinc-400">${escapeAttribute(r.submitted)}</td>
+            <td class="px-4 py-2.5 text-zinc-500 dark:text-zinc-400">${escapeAttribute(r.service)}</td>
+            <td class="px-4 py-2.5">
+              <span data-formtrack-status="${escapeAttribute(r.status)}" class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${meta.cls}">${meta.label}</span>
+            </td>
+          </tr>`;
+      })
+      .join('');
+
+    const sortMenuHtml = this._sortOpen
+      ? `<div data-formtrack-sortmenu class="absolute right-0 z-10 mt-1 w-44 overflow-hidden rounded-xl border border-zinc-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-800">${sortOptions
+          .map(
+            (opt) => `<button data-formtrack-sortoption="${escapeAttribute(opt)}" type="button" class="block w-full px-3 py-1.5 text-left text-xs transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-700 ${opt === this._sort ? 'font-semibold text-indigo-600 dark:text-indigo-300' : 'text-zinc-600 dark:text-zinc-300'}">${escapeAttribute(opt)}</button>`
+          )
+          .join('')}</div>`
+      : '';
+
+    this.innerHTML = `
+      <div data-formtrack class="w-full rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900 sm:p-6">
+        <div data-formtrack-header class="flex items-center gap-3">
+          <button data-formtrack-back aria-label="Back" type="button" class="rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">←</button>
+          <h2 data-formtrack-title class="text-xl font-bold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</h2>
+          ${active ? '<span data-formtrack-active class="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300">Active</span>' : ''}
+          <div class="relative ml-auto">
+            <button data-formtrack-options type="button" class="rounded-lg border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">Options ▾</button>
+            ${sortMenuHtml}
+          </div>
+        </div>
+        <div data-formtrack-stats class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">${statsHtml}</div>
+        <div data-formtrack-details class="mt-6">
+          <p class="text-sm font-bold text-zinc-900 dark:text-zinc-50">Consultation form details</p>
+          <div class="mt-2 grid gap-x-8 gap-y-2 rounded-xl border border-zinc-200 p-4 sm:grid-cols-2 dark:border-zinc-800">${detailsHtml}</div>
+        </div>
+        <div data-formtrack-table class="mt-6">
+          <p class="text-sm font-bold text-zinc-900 dark:text-zinc-50">Client form requests</p>
+          <div class="mt-2 overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800">
+            <table class="w-full text-left text-sm">
+              <thead>
+                <tr class="border-b border-zinc-200 bg-zinc-50 text-xs uppercase tracking-wide text-zinc-400 dark:border-zinc-800 dark:bg-zinc-800/50 dark:text-zinc-500">
+                  <th class="px-4 py-2.5 font-semibold">Client</th>
+                  <th class="px-4 py-2.5 font-semibold">Submitted</th>
+                  <th class="px-4 py-2.5 font-semibold">Service</th>
+                  <th class="px-4 py-2.5 font-semibold">Status</th>
+                </tr>
+              </thead>
+              <tbody>${rowsHtml}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('form-tracking-dashboard')) {
+  customElements.define('form-tracking-dashboard', FormTrackingDashboardElement);
+}
+
+export default FormTrackingDashboardElement;
 
 
 ====
@@ -70995,6 +73200,286 @@ if (typeof customElements !== 'undefined' && !customElements.get('target-gauge')
   customElements.define('target-gauge', TargetGaugeElement);
 }
 export default TargetGaugeElement;
+
+
+====
+File: vanilla/TaskCardModal.js
+====
+
+/**
+ * TaskCardModal - Task card modal overlay: backdrop with centered dialog,
+ * header with completion checkbox and close button, Members/Labels/Dates
+ * attribute rows, description textarea, link/file attachments, checklist
+ * with progress bar, and a right activity column with comment composer
+ * (Trello card modal pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_MEMBERS = () => [
+  { id: 'm1', name: 'Jane Smith', initials: 'JS' },
+  { id: 'm2', name: 'Omar Diallo', initials: 'OD' },
+];
+
+const DEFAULT_LABELS = () => [
+  { id: 'l1', label: 'Design', color: 'bg-violet-500' },
+  { id: 'l2', label: 'Web', color: 'bg-emerald-500' },
+];
+
+const DEFAULT_ATTACHMENTS = () => [
+  { id: 'a1', name: 'Brand guidelines', meta: 'notion.so/brand', kind: 'link' },
+  { id: 'a2', name: 'hero-spec.pdf', meta: '1.2 MB · added Nov 12', kind: 'file' },
+];
+
+const DEFAULT_CHECKLIST = () => [
+  { id: 'c1', text: 'Collect references', done: true },
+  { id: 'c2', text: 'Wireframe variants', done: true },
+  { id: 'c3', text: 'High-fidelity mockup', done: false },
+  { id: 'c4', text: 'Dev handoff notes', done: false },
+];
+
+const DEFAULT_COMMENTS = () => [
+  { id: 'k1', author: 'Jane Smith', initials: 'JS', text: 'Draft uploaded, take a look at the spacing pass.', time: '2 hours ago' },
+  { id: 'k2', author: 'Omar Diallo', initials: 'OD', text: "Looks great — let's swap the CTA copy before handoff.", time: '1 hour ago' },
+];
+
+class TaskCardModalElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'completed', 'members', 'labels', 'dates', 'description', 'attachments', 'checklist', 'comments', 'comment-placeholder'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._done = new Set();
+    this._doneInitialized = false;
+    this._draft = '';
+  }
+
+  connectedCallback() {
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+    this.addEventListener('input', this._onInput);
+    this.addEventListener('keydown', this._onKeydown);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+    this.removeEventListener('input', this._onInput);
+    this.removeEventListener('keydown', this._onKeydown);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    this._render();
+  }
+
+  _checklist() {
+    const list = parseJsonAttr(this.getAttribute('checklist'), DEFAULT_CHECKLIST());
+    if (!this._doneInitialized) {
+      this._done = new Set(list.filter((i) => i.done).map((i) => i.id));
+      this._doneInitialized = true;
+    }
+    return list.map((i) => ({ ...i, done: this._done.has(i.id) }));
+  }
+
+  _onClick(event) {
+    if (event.target.closest('[data-taskcard-close]')) {
+      this.dispatchEvent(new CustomEvent('card-close', { bubbles: true }));
+      return;
+    }
+    const complete = event.target.closest('[data-taskcard-complete]');
+    if (complete) {
+      const next = complete.getAttribute('aria-pressed') !== 'true';
+      complete.setAttribute('aria-pressed', String(next));
+      this.dispatchEvent(new CustomEvent('complete-toggle', { detail: { completed: next }, bubbles: true }));
+      this._render();
+      return;
+    }
+    const checkitem = event.target.closest('[data-taskcard-checkitem]');
+    if (checkitem) {
+      const id = checkitem.getAttribute('data-taskcard-checkitem');
+      const list = this._checklist();
+      const found = list.find((i) => i.id === id);
+      if (found) {
+        if (this._done.has(id)) this._done.delete(id);
+        else this._done.add(id);
+        this.dispatchEvent(new CustomEvent('checklist-toggle', { detail: { item: { ...found, done: !found.done } }, bubbles: true }));
+        this._render();
+      }
+    }
+  }
+
+  _onInput(event) {
+    if (event.target.hasAttribute && event.target.hasAttribute('data-taskcard-input')) {
+      this._draft = event.target.value ?? '';
+    }
+  }
+
+  _onKeydown(event) {
+    if (event.target.hasAttribute && event.target.hasAttribute('data-taskcard-input') && event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this._submitComment();
+    }
+  }
+
+  _submitComment() {
+    const text = String(this._draft ?? '').trim();
+    if (!text) return;
+    this._draft = '';
+    this.dispatchEvent(new CustomEvent('comment-submit', { detail: { text }, bubbles: true }));
+    const input = this.querySelector('[data-taskcard-input]');
+    if (input) input.value = '';
+    this._render();
+  }
+
+  _render() {
+    const title = this.getAttribute('title') || 'Design landing page hero';
+    const completed = this.getAttribute('completed') === 'true';
+    const members = parseJsonAttr(this.getAttribute('members'), DEFAULT_MEMBERS());
+    const labels = parseJsonAttr(this.getAttribute('labels'), DEFAULT_LABELS());
+    const dates = this.getAttribute('dates') || 'Nov 10 – Nov 24';
+    const description = this.getAttribute('description') || 'Hero section with headline, product screenshot and a primary CTA.';
+    const attachments = parseJsonAttr(this.getAttribute('attachments'), DEFAULT_ATTACHMENTS());
+    const checklist = this._checklist();
+    const comments = parseJsonAttr(this.getAttribute('comments'), DEFAULT_COMMENTS());
+    const placeholder = this.getAttribute('comment-placeholder') || 'Write a comment…';
+
+    const doneCount = checklist.filter((i) => i.done).length;
+    const pct = checklist.length === 0 ? 0 : Math.round((doneCount / checklist.length) * 100);
+
+    const membersHtml = members
+      .map(
+        (m) => `<span data-taskcard-member="${escapeAttribute(m.id)}" title="${escapeAttribute(m.name)}" class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700 dark:bg-indigo-950/70 dark:text-indigo-300">${m.avatarUrl ? `<img src="${escapeAttribute(m.avatarUrl)}" alt="${escapeAttribute(m.name)}" class="h-8 w-8 rounded-full object-cover" />` : escapeAttribute(m.initials ?? m.name.slice(0, 2).toUpperCase())}</span>`
+      )
+      .join('');
+
+    const labelsHtml = labels
+      .map(
+        (l) => `<span data-taskcard-label="${escapeAttribute(l.id)}" class="inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold text-white ${escapeAttribute(l.color ?? 'bg-zinc-500')}">${escapeAttribute(l.label)}</span>`
+      )
+      .join('');
+
+    const attachmentsHtml = attachments
+      .map(
+        (a) => `<div data-taskcard-attachment="${escapeAttribute(a.id)}" class="flex items-center gap-2.5 rounded-lg border border-zinc-200 px-3 py-2 dark:border-zinc-800">
+            <span aria-hidden="true" class="text-sm">${a.kind === 'file' ? '📄' : '🔗'}</span>
+            <div class="min-w-0">
+              <p class="truncate text-sm font-medium text-zinc-800 dark:text-zinc-100">${escapeAttribute(a.name)}</p>
+              <p class="truncate text-xs text-zinc-400 dark:text-zinc-500">${escapeAttribute(a.meta)}</p>
+            </div>
+          </div>`
+      )
+      .join('');
+
+    const checklistHtml = checklist
+      .map(
+        (item) => `<button data-taskcard-checkitem="${escapeAttribute(item.id)}" data-taskcard-checkitem-done="${item.done ? 'true' : 'false'}" type="button" class="flex w-full items-center gap-2.5 rounded-lg px-2 py-1.5 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60">
+            <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] font-bold ${item.done ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-zinc-300 text-transparent dark:border-zinc-600'}">✓</span>
+            <span class="text-sm ${item.done ? 'text-zinc-400 line-through dark:text-zinc-500' : 'text-zinc-700 dark:text-zinc-200'}">${escapeAttribute(item.text)}</span>
+          </button>`
+      )
+      .join('');
+
+    const commentsHtml = comments
+      .map(
+        (c) => `<div data-taskcard-comment="${escapeAttribute(c.id)}" class="flex gap-2">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-[10px] font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">${escapeAttribute(c.initials ?? c.author.slice(0, 2).toUpperCase())}</span>
+            <div class="min-w-0">
+              <p class="text-xs"><span class="font-semibold text-zinc-800 dark:text-zinc-100">${escapeAttribute(c.author)}</span> <span class="text-zinc-400 dark:text-zinc-500">${escapeAttribute(c.time)}</span></p>
+              <p class="mt-0.5 text-xs leading-5 text-zinc-600 dark:text-zinc-300">${escapeAttribute(c.text)}</p>
+            </div>
+          </div>`
+      )
+      .join('');
+
+    this.innerHTML = `
+      <div data-taskcard class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-zinc-900/60 p-4 sm:p-8">
+        <div data-taskcard-dialog role="dialog" aria-modal="true" aria-label="${escapeAttribute(title)}" class="w-full max-w-3xl rounded-xl bg-white shadow-2xl dark:bg-zinc-900">
+          <div class="flex items-center justify-between gap-4 border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
+            <div class="flex min-w-0 items-center gap-3">
+              <button data-taskcard-complete aria-pressed="${completed ? 'true' : 'false'}" type="button" class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border text-xs font-bold transition-colors ${completed ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-zinc-300 text-transparent hover:border-zinc-400 dark:border-zinc-600'}">✓</button>
+              <h2 data-taskcard-title class="truncate text-lg font-bold ${completed ? 'text-zinc-400 line-through dark:text-zinc-500' : 'text-zinc-900 dark:text-zinc-50'}">${escapeAttribute(title)}</h2>
+            </div>
+            <button data-taskcard-close type="button" aria-label="Close" class="shrink-0 rounded-lg px-2 py-1 text-lg leading-none text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">✕</button>
+          </div>
+          <div class="grid gap-6 px-6 py-5 md:grid-cols-[minmax(0,1fr)_240px]">
+            <div class="min-w-0 space-y-5">
+              <div data-taskcard-attrs class="flex flex-wrap gap-6">
+                <div data-taskcard-members>
+                  <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Members</p>
+                  <div class="mt-1.5 flex gap-1.5">${membersHtml}</div>
+                </div>
+                ${labels.length > 0 ? `<div data-taskcard-labels>
+                  <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Labels</p>
+                  <div class="mt-1.5 flex flex-wrap gap-1.5">${labelsHtml}</div>
+                </div>` : ''}
+                ${dates ? `<div data-taskcard-dates>
+                  <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Dates</p>
+                  <p class="mt-1.5 rounded-md bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">${escapeAttribute(dates)}</p>
+                </div>` : ''}
+              </div>
+              <div data-taskcard-description>
+                <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Description</p>
+                <p class="mt-1.5 text-sm leading-6 text-zinc-600 dark:text-zinc-300">${escapeAttribute(description)}</p>
+              </div>
+              ${attachments.length > 0 ? `<div data-taskcard-attachments>
+                <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Attachments</p>
+                <div class="mt-1.5 space-y-1.5">${attachmentsHtml}</div>
+              </div>` : ''}
+              <div data-taskcard-checklist>
+                <div class="flex items-center justify-between">
+                  <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Checklist</p>
+                  <span data-taskcard-checklist-count class="text-xs font-medium text-zinc-500 dark:text-zinc-400">${pct}%</span>
+                </div>
+                <div data-taskcard-checklist-bar class="mt-1.5 h-2 overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
+                  <div class="h-full rounded-full bg-emerald-500 transition-all" style="width:${pct}%"></div>
+                </div>
+                <div class="mt-2 space-y-1">${checklistHtml}</div>
+              </div>
+            </div>
+            <aside data-taskcard-activity class="md:border-l md:border-zinc-200 md:pl-6 dark:md:border-zinc-800">
+              <p class="text-[11px] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Comments &amp; activity</p>
+              <form data-taskcard-composer class="mt-3">
+                <textarea data-taskcard-input rows="3" placeholder="${escapeAttribute(placeholder)}" class="w-full resize-none rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-800 placeholder-zinc-400 focus:border-indigo-400 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"></textarea>
+                <button data-taskcard-send type="button" class="mt-2 w-full rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-indigo-500">Comment</button>
+              </form>
+              <div data-taskcard-feed class="mt-4 space-y-3">${commentsHtml}</div>
+            </aside>
+          </div>
+        </div>
+      </div>`;
+
+    const send = this.querySelector('[data-taskcard-send]');
+    if (send) {
+      send.addEventListener('click', () => this._submitComment());
+    }
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('task-card-modal')) {
+  customElements.define('task-card-modal', TaskCardModalElement);
+}
+
+export default TaskCardModalElement;
 
 
 ====

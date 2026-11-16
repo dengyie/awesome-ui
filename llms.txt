@@ -829,6 +829,22 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/DocsPageLayout.tsx
    - Vue 3: vue/DocsPageLayout.vue
    - Vanilla: vanilla/DocsPageLayout.js (custom element `<docs-page-layout>`, attributes `top-links` JSON/`nav-groups` JSON/`title`/`copy-label`/`blocks` JSON/`toc` JSON/`active-toc-id`; events `nav-click {item}`, `toc-click {item}`, `copy-page`)
+204. TaskCardModal: task card modal overlay — backdrop dialog with completion checkbox header and close, Members avatars / Labels chips / Dates range attribute rows, description, link & file attachments, checklist with % progress bar, and a comments & activity column with composer (Trello card modal pattern).
+   - React: react/TaskCardModal.tsx
+   - Vue 3: vue/TaskCardModal.vue
+   - Vanilla: vanilla/TaskCardModal.js (custom element `<task-card-modal>`, attributes `title`/`completed`/`members` JSON/`labels` JSON/`dates`/`description`/`attachments` JSON/`checklist` JSON/`comments` JSON/`comment-placeholder`; events `card-close`, `complete-toggle {completed}`, `checklist-toggle {item}`, `comment-submit {text}`)
+205. FormTrackingDashboard: form tracking dashboard — back header with title, Active pill and Options sort dropdown, four stat cards with tone dots, values and % progress bars, two-column form details grid and a client requests table with avatar rows and Completed / To be completed / Not completed status pills (Fresha form tracking pattern).
+   - React: react/FormTrackingDashboard.tsx
+   - Vue 3: vue/FormTrackingDashboard.vue
+   - Vanilla: vanilla/FormTrackingDashboard.js (custom element `<form-tracking-dashboard>`, attributes `title`/`active`/`stats` JSON/`details` JSON/`requests` JSON/`sort-options` JSON; events `back`, `sort-change {option}`, `request-click {row}`)
+206. AudioPlaylistPage: music playlist page — gradient cover with Play/Share, track rows with index/cover/version pill/duration/Remix dropdown and like toggles, header reactions row, bottom player bar with progress and right Queue panel with drop zone (Suno audio workspace pattern).
+   - React: react/AudioPlaylistPage.tsx
+   - Vue 3: vue/AudioPlaylistPage.vue
+   - Vanilla: vanilla/AudioPlaylistPage.js (custom element `<audio-playlist-page>`, attributes `title`/`subtitle`/`cover-url`/`tracks` JSON/`queue` JSON/`active-track-id`; events `track-click {track}`, `like {track}`, `remix {track}`, `queue-click {track}`)
+207. BlogPostArticle: blog article page — top bar with site name, ⌘K search pill and theme toggle, left "On this page" TOC with active highlight and collapse hint, article body with title/subtitle/meta, paragraphs, headings, bullet lists and a dark code block with Copy button (Hashnode article pattern).
+   - React: react/BlogPostArticle.tsx
+   - Vue 3: vue/BlogPostArticle.vue
+   - Vanilla: vanilla/BlogPostArticle.js (custom element `<blog-post-article>`, attributes `site-name`/`title`/`subtitle`/`meta`/`blocks` JSON/`toc` JSON/`active-heading-id`/`code-label`/`copied-label`; events `heading-click {heading}`, `copy-code`)
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)
