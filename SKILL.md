@@ -1110,6 +1110,21 @@ awesome-ui/
 - **Vanilla 用法**: `<session-device-table>` + `title`/`description`/`learn-more-label`/`logout-all-label`/`page-label`/`page`/`rows-per-page-label`/`rows-per-page`/`sessions` 属性；`sessions` property；事件 `session-click {session}` / `logout-all` / `rows-per-page-change {rowsPerPage}`
 - **特性**: 头部（标题 + 帮助文案 + Learn more 链接 + Log out 全部按钮）、六列表格（OS/应用/位置/IP/最近活跃/状态，OS 图标按名称子串匹配）、Current(紫)/Active(绿)/Logged out(灰) 徽章、底部分页器 + 每页行数选择器（10/25/50）。
 
+### 193. `TaskDetailPanel` (任务详情面板)
+- **Props**: `type?`, `title?`, `aiBarText?`, `aiBarActions?: string[]`, `statusLabel?`, `fields?: [{label,value,icon?,tag?}]`, `description?`, `actions?: [{id,icon,label}]`, `activityTitle?`, `activity?: [{id,actor,text,time}]`, `commentPlaceholder?`, `className?`, `onActionClick?(action)`, `onCommentSubmit?(text)`
+- **Vanilla 用法**: `<task-detail-panel>` + `type`/`title`/`ai-bar-text`/`ai-bar-actions`/`status-label`/`fields`/`description`/`actions`/`activity-title`/`activity`/`comment-placeholder` 属性；事件 `action-click {action}` / `comment-submit {text}`（发送按钮或输入框 Enter 触发）
+- **特性**: 类型胶囊头 + Ask AI / Share、AI 建议条（or 连接的动作链接）、双列字段网格（sky 状态胶囊 + 标签值紫 chip）、描述折叠区、动作列表（图标 + 标签）、Activity 侧栏（Show more + 动态流 + Comment/Email tab + 评论框）。
+
+### 194. `DeliveryTrackingPanel` (配送追踪面板)
+- **Props**: `title?`, `etaPrefix?`, `eta?`, `statusText?`, `steps?: [{id,icon,label,state}]`, `courierName?`, `courierRole?`, `orderName?`, `orderSummary?`, `items?: [{id,name,quantity,price}]`, `giftRecipient?`, `giftMessage?`, `shareTitle?`, `shareDescription?`, `copyLinkLabel?`, `textLinkLabel?`, `className?`, `onCourierCall?()`, `onCourierMessage?()`, `onCopyLink?()`, `onTextLink?()`
+- **Vanilla 用法**: `<delivery-tracking-panel>` + `title`/`eta-prefix`/`eta`/`status-text`/`steps`/`courier-name`/`courier-role`/`order-name`/`order-summary`/`items`/`gift-recipient`/`gift-message`/`share-title`/`share-description`/`copy-link-label`/`text-link-label` 属性；事件 `courier-call` / `courier-message` / `copy-link` / `text-link`
+- **特性**: 地图占位（渐变 + 骑手/目的地 pin + 返回/Help/缩放控件）、ETA 头部、四段 stepper（done/active 黑色 + pending 灰）、骑手卡片（📞/💬 圆形按钮）、Order Details 圆形折叠条（内部更新开合）、订单明细 + 礼品区块 + Copy link / Text me the link 双按钮（红色主按钮）。
+
+### 195. `MapPropertyCard` (地图房源卡片)
+- **Props**: `pins?: [{id,price,x,y}]`, `activePinId?`, `card?: {id?,images?,title,rating,reviews,subtitle,price,dates?} | null`, `likeLabel?`, `closeLabel?`, `className?`, `onPinClick?(pin)`, `onCardClose?()`, `onCardLike?()`
+- **Vanilla 用法**: `<map-property-card>` + `pins`/`active-pin-id`/`card`（`"null"` 隐藏预览卡）/`like-label`/`close-label` 属性；事件 `pin-click {pin}`（点击内部激活 pin）/ `card-close`（内部移除预览卡）/ `card-like`
+- **特性**: 地图占位（渐变 + 缩放控件）、价格 pin（激活黑底白字）、悬浮预览卡（渐变图区 + 收藏/关闭按钮 + 轮播点 + 下一张箭头、标题 + ★ 评分(评论数)、副标题、价格 · 日期）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

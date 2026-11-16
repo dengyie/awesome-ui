@@ -4,8 +4,10 @@
 > AuditLogTable（← Okta）、ChangelogTimeline（← Canny）三端落地（组件编号 190–192），
 > Gallery sections 180–182，633 项回归测试全绿。原候选 OtpCodeEntry 实施时发现与
 > 既有组件 #97 `OtpInput` 功能重叠，按"零重叠"规则撤销，改用 security/10_Airwallex
-> 登录会话表补位。全库组件总数 193（含 UiIcon）× 3 端。
-> v2.2（TaskDetailPanel / DeliveryTrackingPanel / MapPropertyCard）为下一批次。
+> 登录会话表补位。批次 v2.2.0 已完成 —— TaskDetailPanel（← ClickUp）、
+> DeliveryTrackingPanel（← DoorDash）、MapPropertyCard（← Airbnb）三端落地
+>（组件编号 193–195），Gallery sections 183–185，642 项回归测试全绿。
+> 全库组件总数 196（含 UiIcon）× 3 端。
 
 > 背景：roadmap v1 已收官（v1.47.0，190 组件 × 3 端，624 测试）。为延续迭代，
 > 已通过 `tools/mobbin_fetch.py` 新增 5 个分类并抓取 114 张 Mobbin 截图，

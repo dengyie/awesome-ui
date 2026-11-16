@@ -208,6 +208,9 @@
 | **`EventTagGrid`** | 事件标签网格 | Sentry Tags：scope pills、双列 key/value 网格（mono 键 + 可检索值链接样式） |
 | **`PromptTunerResult`** | 提示词调优结果 | Cohere Prompt Tuner：OPTIMIZED PROMPT 暗色代码面板 + Copy、COMPLETIONS 选择器与完成文本查看器 |
 | **`SessionDeviceTable`** | 登录会话/设备列表 | Airwallex Login Sessions：六列 OS/应用/位置/IP/最近活跃/状态表，Current/Logged out 徽章，分页器与每页行数选择 |
+| **`TaskDetailPanel`** | 任务详情面板 | ClickUp 任务详情：类型胶囊 + AI 建议条、状态胶囊 + 双列字段网格、动作列表与 Activity 侧栏评论框 |
+| **`DeliveryTrackingPanel`** | 配送追踪面板 | DoorDash 配送追踪：地图占位 + ETA + 四段 stepper、骑手卡片（📞/💬）、订单折叠与分享链接双按钮 |
+| **`MapPropertyCard`** | 地图房源卡片 | Airbnb 地图房源：价格 pin + 悬浮预览卡（轮播点、收藏/关闭、标题评分、价格日期） |
 | **`AuditLogTable`** | 审计日志表 | Okta System Log：日期/关键词筛选 pills、迷你柱状趋势、事件计数 + 视图切换、四列事件表（SUCCESS/FAILURE/PENDING 徽章） |
 | **`ChangelogTimeline`** | 产品更新日志 | Canny Changelog：大标题头部、搜索 + Filters 控件、左日期栏 + 四色分类 tag、点赞/浏览/分享 meta 行 |
 | **`CampsiteHandoff`** | 设计交付面板 | Campsite 设计 handoff：完成态检查清单（负责人首字母头像 + 截止日期）、x/y done 计数与 AI 摘要块 |
@@ -407,7 +410,10 @@ awesome-ui/
 │   └── PromptTunerResult.tsx
 │   ├── SessionDeviceTable.tsx
 │   ├── AuditLogTable.tsx
-│   └── ChangelogTimeline.tsx
+│   ├── ChangelogTimeline.tsx
+│   ├── TaskDetailPanel.tsx
+│   ├── DeliveryTrackingPanel.tsx
+│   └── MapPropertyCard.tsx
 │    └── CreationComposer.tsx
 │    ├── TraceSpanWaterfall.tsx
 │    ├── EvalScoreTable.tsx
@@ -597,7 +603,10 @@ awesome-ui/
 │   └── PromptTunerResult.vue
 │   ├── SessionDeviceTable.vue
 │   ├── AuditLogTable.vue
-│   └── ChangelogTimeline.vue
+│   ├── ChangelogTimeline.vue
+│   ├── TaskDetailPanel.vue
+│   ├── DeliveryTrackingPanel.vue
+│   └── MapPropertyCard.vue
 │    └── CreationComposer.vue
 │    ├── TraceSpanWaterfall.vue
 │    ├── EvalScoreTable.vue
@@ -787,7 +796,10 @@ awesome-ui/
 │   └── PromptTunerResult.js
 │   ├── SessionDeviceTable.js
 │   ├── AuditLogTable.js
-│   └── ChangelogTimeline.js
+│   ├── ChangelogTimeline.js
+│   ├── TaskDetailPanel.js
+│   ├── DeliveryTrackingPanel.js
+│   └── MapPropertyCard.js
      └── CreationComposer.js
      ├── TraceSpanWaterfall.js
      ├── EvalScoreTable.js

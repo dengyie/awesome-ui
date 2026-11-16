@@ -6688,6 +6688,204 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 export default DatePicker;
 
 ====
+File: react/DeliveryTrackingPanel.tsx
+====
+/**
+ * DeliveryTrackingPanel - Delivery tracking: map placeholder with floating
+ * controls, right info column with ETA header, four-step progress stepper,
+ * courier card with contact buttons, collapsible order details, gift share
+ * block and copy-link / text-me actions
+ * (DoorDash delivery tracking pattern).
+ */
+import React from "react";
+
+export interface DeliveryStep {
+  id: string;
+  icon: string;
+  label: string;
+  state: "done" | "active" | "pending";
+}
+
+export interface DeliveryItem {
+  id: string;
+  name: string;
+  quantity: string;
+  price: string;
+}
+
+export interface DeliveryTrackingPanelProps {
+  title?: string;
+  etaPrefix?: string;
+  eta?: string;
+  statusText?: string;
+  steps?: DeliveryStep[];
+  courierName?: string;
+  courierRole?: string;
+  orderName?: string;
+  orderSummary?: string;
+  items?: DeliveryItem[];
+  giftRecipient?: string;
+  giftMessage?: string;
+  shareTitle?: string;
+  shareDescription?: string;
+  copyLinkLabel?: string;
+  textLinkLabel?: string;
+  className?: string;
+  onCourierCall?: () => void;
+  onCourierMessage?: () => void;
+  onCopyLink?: () => void;
+  onTextLink?: () => void;
+}
+
+const STEP_ICONS: Record<string, string> = {
+  store: "🏪",
+  rider: "🛵",
+  car: "🚗",
+  home: "🏠",
+  check: "✓",
+};
+
+export default function DeliveryTrackingPanel({
+  title = "Heading to Sam Lee",
+  etaPrefix = "Arrives between",
+  eta = "8:35 - 8:41 AM",
+  statusText = "Your Dasher is heading to Sam Lee with your order.",
+  steps = [
+    { id: "store", icon: "store", label: "Store", state: "done" },
+    { id: "pickup", icon: "rider", label: "Pickup", state: "done" },
+    { id: "enroute", icon: "car", label: "En route", state: "active" },
+    { id: "delivered", icon: "home", label: "Delivered", state: "pending" },
+  ],
+  courierName = "JOSHUA L",
+  courierRole = "Your Dasher",
+  orderName = "Shake Shack",
+  orderSummary = "3 Items",
+  items = [
+    { id: "i1", name: "Shack Stack", quantity: "2×", price: "$32.78" },
+    { id: "i2", name: "Cheese Fries", quantity: "1×", price: "$7.49" },
+  ],
+  giftRecipient = "Sam Lee",
+  giftMessage = "Hey, sending over some dinner, hope you enjoy!",
+  shareTitle = "Share your digital card with Sam Lee",
+  shareDescription = "Send a link to your recipient so they can view your digital card and track their gift. They don't need an account.",
+  copyLinkLabel = "Copy link",
+  textLinkLabel = "Text me the link",
+  className = "",
+  onCourierCall,
+  onCourierMessage,
+  onCopyLink,
+  onTextLink,
+}: DeliveryTrackingPanelProps) {
+  const [detailsOpen, setDetailsOpen] = React.useState(true);
+
+  return (
+    <div data-delivery-panel className={`flex w-full overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      {/* map placeholder */}
+      <div data-delivery-map className="relative hidden min-h-[420px] flex-1 bg-zinc-100 lg:block dark:bg-zinc-800">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,#d1fae5_0%,transparent_45%),radial-gradient(circle_at_70%_60%,#dbeafe_0%,transparent_40%)] dark:bg-[radial-gradient(circle_at_30%_40%,#064e3b_0%,transparent_45%),radial-gradient(circle_at_70%_60%,#1e3a8a_0%,transparent_40%)]" aria-hidden="true" />
+        <div data-delivery-pin className="absolute left-1/2 top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-red-500 text-lg text-white shadow-lg" aria-hidden="true">🚗</div>
+        <div data-delivery-pin-destination className="absolute left-[60%] top-[45%] flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900 text-base text-white shadow-lg" aria-hidden="true">🏠</div>
+        <button data-delivery-back className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-zinc-700 shadow-md transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:text-zinc-200" aria-label="Back">←</button>
+        <button data-delivery-help className="absolute right-4 top-4 rounded-full bg-white px-4 py-2 text-sm font-semibold text-zinc-800 shadow-md transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:text-zinc-100">Help</button>
+        <div data-delivery-zoom className="absolute bottom-6 right-4 flex flex-col overflow-hidden rounded-xl bg-white shadow-md dark:bg-zinc-900">
+          <button className="border-b border-zinc-100 px-3 py-2 text-zinc-600 dark:border-zinc-800 dark:text-zinc-300" aria-label="Zoom in">＋</button>
+          <button className="px-3 py-2 text-zinc-600 dark:text-zinc-300" aria-label="Zoom out">－</button>
+        </div>
+      </div>
+
+      {/* info column */}
+      <div data-delivery-info className="flex w-full flex-col border-l border-zinc-100 lg:w-96 lg:shrink-0 dark:border-zinc-800">
+        <div data-delivery-header className="flex items-start justify-between gap-3 px-6 pt-5">
+          <div>
+            <h2 data-delivery-title className="text-xl font-bold text-zinc-900 dark:text-zinc-50">{title}</h2>
+            <p data-delivery-eta className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{etaPrefix} <span className="font-semibold text-zinc-900 dark:text-zinc-50">{eta}</span></p>
+          </div>
+          <span data-delivery-avatar className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xl dark:bg-emerald-950/60" aria-hidden="true">🍔</span>
+        </div>
+
+        <div data-delivery-stepper className="flex items-center px-6 pt-5">
+          {steps.map((step, i) => (
+            <React.Fragment key={step.id}>
+              {i > 0 && <div className={`h-0.5 flex-1 ${step.state === "pending" ? "bg-zinc-200 dark:bg-zinc-700" : "bg-zinc-900 dark:bg-zinc-100"}`} aria-hidden="true" />}
+              <div
+                data-delivery-step={step.id}
+                data-delivery-step-state={step.state}
+                title={step.label}
+                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm ${
+                  step.state === "pending"
+                    ? "bg-zinc-100 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500"
+                    : "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+                }`}
+              >
+                {STEP_ICONS[step.icon] ?? "•"}
+              </div>
+            </React.Fragment>
+          ))}
+        </div>
+        <p data-delivery-status className="px-6 pt-3 text-sm text-zinc-700 dark:text-zinc-200">{statusText}</p>
+
+        <div data-delivery-courier className="mt-4 flex items-center justify-between border-y border-zinc-100 px-6 py-4 dark:border-zinc-800">
+          <div className="flex items-center gap-3">
+            <span aria-hidden="true" className="text-zinc-400 dark:text-zinc-500">👤</span>
+            <div>
+              <p data-delivery-courier-role className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{courierRole}</p>
+              <p data-delivery-courier-name className="text-sm text-zinc-500 dark:text-zinc-400">{courierName}</p>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <button data-delivery-call type="button" onClick={() => onCourierCall?.()} className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700" aria-label="Call courier">📞</button>
+            <button data-delivery-message type="button" onClick={() => onCourierMessage?.()} className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700" aria-label="Message courier">💬</button>
+          </div>
+        </div>
+
+        <div className="px-6 py-4">
+          <button
+            data-delivery-details-toggle
+            type="button"
+            onClick={() => setDetailsOpen((v) => !v)}
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-zinc-100 py-2.5 text-sm font-semibold text-zinc-800 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
+          >
+            Order Details <span aria-hidden="true">{detailsOpen ? "▴" : "▾"}</span>
+          </button>
+
+          {detailsOpen && (
+            <div data-delivery-items className="mt-4 space-y-3">
+              <div className="flex items-center gap-3">
+                <span data-delivery-order-avatar className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-lg dark:bg-emerald-950/60" aria-hidden="true">🍔</span>
+                <div>
+                  <p data-delivery-order-name className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{orderName}</p>
+                  <p data-delivery-order-summary className="text-sm text-zinc-500 dark:text-zinc-400">{orderSummary}</p>
+                </div>
+              </div>
+              {items.map((item) => (
+                <div key={item.id} data-delivery-item={item.id} className="flex items-center justify-between text-sm">
+                  <span className="text-zinc-800 dark:text-zinc-100">{item.quantity} {item.name}</span>
+                  <span className="font-medium text-zinc-900 dark:text-zinc-50">{item.price}</span>
+                </div>
+              ))}
+
+              <div data-delivery-gift className="border-t border-zinc-100 pt-4 dark:border-zinc-800">
+                <p data-delivery-gift-recipient className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{giftRecipient}</p>
+                <p data-delivery-gift-message className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">{giftMessage}</p>
+              </div>
+
+              <div data-delivery-share className="border-t border-zinc-100 pt-4 dark:border-zinc-800">
+                <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{shareTitle}</p>
+                <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{shareDescription}</p>
+                <div className="mt-3 flex justify-end gap-2">
+                  <button data-delivery-copy-link type="button" onClick={() => onCopyLink?.()} className="rounded-full bg-zinc-100 px-4 py-2 text-sm font-semibold text-zinc-800 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700">{copyLinkLabel}</button>
+                  <button data-delivery-text-link type="button" onClick={() => onTextLink?.()} className="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700">{textLinkLabel}</button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+====
 File: react/DeploymentCard.tsx
 ====
 import React from "react";
@@ -11450,6 +11648,138 @@ export default function LiveTailLogConsole({
             </div>
           ))
         )}
+      </div>
+    </div>
+  );
+}
+
+====
+File: react/MapPropertyCard.tsx
+====
+/**
+ * MapPropertyCard - Map property bubble: price pins over a map placeholder
+ * and a floating preview card with image dots, like/close buttons, title +
+ * rating, subtitle and price range with dates
+ * (Airbnb map property pattern).
+ */
+import React from "react";
+
+export interface MapPin {
+  id: string;
+  price: string;
+  x: number;
+  y: number;
+}
+
+export interface MapPropertyCardProps {
+  pins?: MapPin[];
+  activePinId?: string;
+  card?: {
+    id?: string;
+    images?: string[];
+    title: string;
+    rating: string;
+    reviews: number;
+    subtitle: string;
+    price: string;
+    dates?: string;
+  } | null;
+  likeLabel?: string;
+  closeLabel?: string;
+  className?: string;
+  onPinClick?: (pin: MapPin) => void;
+  onCardClose?: () => void;
+  onCardLike?: () => void;
+}
+
+const DEFAULT_PINS: MapPin[] = [
+  { id: "p1", price: "$148", x: 22, y: 30 },
+  { id: "p2", price: "$111", x: 68, y: 48 },
+  { id: "p3", price: "$136", x: 40, y: 70 },
+  { id: "p4", price: "$137", x: 58, y: 82 },
+  { id: "p5", price: "$112", x: 82, y: 25 },
+];
+
+export default function MapPropertyCard({
+  pins = DEFAULT_PINS,
+  activePinId = "p2",
+  card = {
+    id: "p2",
+    images: [],
+    title: "Home in Kecamatan Denpasar",
+    rating: "4.93",
+    reviews: 27,
+    subtitle: "Private Joglo in heart of Sanur",
+    price: "$111 for 2 nights",
+    dates: "Jun 20 – 22",
+  },
+  likeLabel = "♡",
+  closeLabel = "✕",
+  className = "",
+  onPinClick,
+  onCardClose,
+  onCardLike,
+}: MapPropertyCardProps) {
+  return (
+    <div data-mappin-card className={`relative min-h-[420px] w-full overflow-hidden rounded-xl border border-zinc-200 bg-sky-50 shadow-sm dark:border-zinc-800 dark:bg-sky-950/30 ${className}`}>
+      {/* map placeholder */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_30%,#a7f3d0_0%,transparent_35%),radial-gradient(circle_at_70%_70%,#bfdbfe_0%,transparent_40%)] dark:bg-[radial-gradient(circle_at_25%_30%,#065f46_0%,transparent_35%),radial-gradient(circle_at_70%_70%,#1e40af_0%,transparent_40%)]" aria-hidden="true" />
+
+      {/* price pins */}
+      {pins.map((pin) => {
+        const active = pin.id === activePinId;
+        return (
+          <button
+            key={pin.id}
+            data-mappin-pin={pin.id}
+            data-mappin-price={pin.price}
+            type="button"
+            onClick={() => onPinClick?.(pin)}
+            style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
+            className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full px-3 py-1.5 text-sm font-semibold shadow-md transition-transform hover:scale-105 ${
+              active
+                ? "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900"
+                : "bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50"
+            }`}
+          >
+            {pin.price}
+          </button>
+        );
+      })}
+
+      {/* floating preview card */}
+      {card && (
+        <div data-mappin-preview className="absolute bottom-8 left-1/2 z-20 w-72 -translate-x-1/2 overflow-hidden rounded-2xl bg-white shadow-xl dark:bg-zinc-900">
+          <div data-mappin-image className="relative h-36 bg-gradient-to-br from-amber-200 via-orange-200 to-rose-200 dark:from-amber-900 dark:via-orange-900 dark:to-rose-900">
+            <div className="absolute right-3 top-3 flex gap-2">
+              <button data-mappin-like type="button" onClick={() => onCardLike?.()} aria-label="Save" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-sm text-zinc-800 shadow transition-colors hover:bg-white dark:bg-zinc-800/90 dark:text-zinc-100">{likeLabel}</button>
+              <button data-mappin-close type="button" onClick={() => onCardClose?.()} aria-label="Close preview" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-sm text-zinc-800 shadow transition-colors hover:bg-white dark:bg-zinc-800/90 dark:text-zinc-100">{closeLabel}</button>
+            </div>
+            <div data-mappin-dots className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-white" aria-hidden="true" />
+              <span className="h-1.5 w-1.5 rounded-full bg-white/50" aria-hidden="true" />
+              <span className="h-1.5 w-1.5 rounded-full bg-white/50" aria-hidden="true" />
+              <span className="h-1.5 w-1.5 rounded-full bg-white/50" aria-hidden="true" />
+            </div>
+            <button data-mappin-next aria-label="Next image" className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-xs text-zinc-800 shadow transition-colors hover:bg-white dark:bg-zinc-800/90 dark:text-zinc-100">›</button>
+          </div>
+          <div className="space-y-0.5 px-4 py-3">
+            <div className="flex items-center justify-between gap-2">
+              <p data-mappin-title className="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">{card.title}</p>
+              <p data-mappin-rating className="shrink-0 text-xs text-zinc-700 dark:text-zinc-200">★ {card.rating} ({card.reviews})</p>
+            </div>
+            <p data-mappin-subtitle className="truncate text-sm text-zinc-500 dark:text-zinc-400">{card.subtitle}</p>
+            <p data-mappin-price className="text-sm text-zinc-900 dark:text-zinc-50">
+              {card.price}{card.dates ? <span className="text-zinc-500 dark:text-zinc-400"> · {card.dates}</span> : null}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* floating zoom controls */}
+      <div data-mappin-zoom className="absolute right-4 top-4 z-20 flex flex-col overflow-hidden rounded-xl bg-white shadow-md dark:bg-zinc-900">
+        <button className="border-b border-zinc-100 px-3 py-2 text-zinc-600 dark:border-zinc-800 dark:text-zinc-300" aria-label="Zoom in">＋</button>
+        <button className="px-3 py-2 text-zinc-600 dark:text-zinc-300" aria-label="Zoom out">－</button>
       </div>
     </div>
   );
@@ -19084,6 +19414,223 @@ export const TargetGauge: React.FC<TargetGaugeProps> = ({
 };
 
 export default TargetGauge;
+
+====
+File: react/TaskDetailPanel.tsx
+====
+/**
+ * TaskDetailPanel - Task/milestone detail sidebar: header with type pill and
+ * AI summary bar, status pill with two-column field grid (assignees, dates,
+ * priority, time estimate, sprint points, tags), collapsible description,
+ * action list and an activity column with comment box
+ * (ClickUp task detail pattern).
+ */
+import React from "react";
+
+export interface TaskField {
+  label: string;
+  value: string;
+  icon?: string;
+  tag?: boolean;
+}
+
+export interface TaskAction {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+export interface TaskActivityItem {
+  id: string;
+  actor: string;
+  text: string;
+  time: string;
+}
+
+export interface TaskDetailPanelProps {
+  type?: string;
+  title?: string;
+  aiBarText?: string;
+  aiBarActions?: string[];
+  statusLabel?: string;
+  fields?: TaskField[];
+  description?: string;
+  actions?: TaskAction[];
+  activityTitle?: string;
+  activity?: TaskActivityItem[];
+  commentPlaceholder?: string;
+  className?: string;
+  onActionClick?: (action: TaskAction) => void;
+  onCommentSubmit?: (text: string) => void;
+}
+
+const ACTION_ICONS: Record<string, string> = {
+  fields: "▤",
+  subtask: "⑂",
+  relate: "⤱",
+  checklist: "☑",
+  attach: "📎",
+  link: "🔗",
+  clock: "⏱",
+  target: "◎",
+  calendar: "📅",
+  flag: "⚑",
+  tag: "🏷",
+  person: "👤",
+};
+
+export default function TaskDetailPanel({
+  type = "Milestone",
+  title = "Complete Dashboard Feature Screens",
+  aiBarText = "Ask Brain to",
+  aiBarActions = ["create a summary", "generate subtasks", "find similar milestones"],
+  statusLabel = "IN DEVELOPMENT",
+  fields = [
+    { label: "Assignees", value: "J", icon: "person" },
+    { label: "Dates", value: "Yesterday → 10/31/25", icon: "calendar" },
+    { label: "Priority", value: "Normal", icon: "flag" },
+    { label: "Time estimate", value: "1h", icon: "clock" },
+    { label: "Sprint points", value: "Empty", icon: "target" },
+    { label: "Tags", value: "dashboard", icon: "tag", tag: true },
+  ],
+  description = "Finalize all design deliverables for the Dashboard feature. This includes ensuring layout compositions, maintaining component consistency, and applying visual polish. This milestone marks the completion of all Dashboard-related UI screens, ready for review and developer handoff.",
+  actions = [
+    { id: "fields", icon: "fields", label: "Custom Fields" },
+    { id: "subtask", icon: "subtask", label: "Add subtask" },
+    { id: "relate", icon: "relate", label: "Relate items or add dependencies" },
+    { id: "checklist", icon: "checklist", label: "Create checklist" },
+    { id: "attach", icon: "attach", label: "Attach file" },
+  ],
+  activityTitle = "Activity",
+  activity = [
+    { id: "a1", actor: "You", text: "tracked time · 1m on Oct 22", time: "1 hour ago" },
+  ],
+  commentPlaceholder = "Write a comment...",
+  className = "",
+  onActionClick,
+  onCommentSubmit,
+}: TaskDetailPanelProps) {
+  const [comment, setComment] = React.useState("");
+
+  const submit = () => {
+    const text = comment.trim();
+    if (!text) return;
+    onCommentSubmit?.(text);
+    setComment("");
+  };
+
+  return (
+    <div data-task-panel className={`flex w-full overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      {/* main column */}
+      <div data-task-main className="min-w-0 flex-1">
+        <div data-task-header className="flex items-center justify-between border-b border-zinc-100 px-6 py-3 dark:border-zinc-800">
+          <div className="flex items-center gap-3">
+            <button data-task-type className="flex items-center gap-1.5 rounded-lg border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800">
+              <span aria-hidden="true">◆</span> {type} <span aria-hidden="true" className="text-zinc-400">▾</span>
+            </button>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
+            <span data-task-created className="hidden sm:inline">Created on Oct 21</span>
+            <button data-task-ai className="flex items-center gap-1 rounded-lg px-2 py-1 font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800">✦ Ask AI</button>
+            <button data-task-share className="flex items-center gap-1 rounded-lg px-2 py-1 font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800">Share</button>
+          </div>
+        </div>
+
+        <div className="px-6 py-5">
+          <h2 data-task-title className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">{title}</h2>
+
+          <div data-task-ai-bar className="mt-4 flex flex-wrap items-center gap-1.5 rounded-xl bg-zinc-50 px-4 py-3 text-sm text-zinc-600 dark:bg-zinc-800/60 dark:text-zinc-300">
+            <span aria-hidden="true">✦</span>
+            <span>{aiBarText}</span>
+            {aiBarActions.map((label, i) => (
+              <React.Fragment key={label}>
+                <button data-task-ai-action={label} className="font-medium text-zinc-800 underline-offset-2 hover:underline dark:text-zinc-100">{label}</button>
+                {i < aiBarActions.length - 1 && <span className="text-zinc-400 dark:text-zinc-500">or</span>}
+              </React.Fragment>
+            ))}
+          </div>
+
+          <div data-task-fields className="mt-6 grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2">
+            <div data-task-field="Status" className="flex items-center gap-3">
+              <span className="flex w-36 shrink-0 items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400"><span aria-hidden="true">◎</span> Status</span>
+              <button data-task-status className="flex items-center gap-1 rounded-md bg-sky-500 px-2.5 py-1 text-xs font-bold tracking-wide text-white">
+                {statusLabel} <span aria-hidden="true">▸</span>
+              </button>
+            </div>
+            {fields.map((field) => (
+              <div key={field.label} data-task-field={field.label} className="flex items-center gap-3">
+                <span className="flex w-36 shrink-0 items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400"><span aria-hidden="true">{ACTION_ICONS[field.icon ?? ""] ?? "•"}</span> {field.label}</span>
+                {field.tag ? (
+                  <span data-task-field-value={field.value} className="rounded bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-700 dark:bg-violet-950/70 dark:text-violet-300">{field.value}</span>
+                ) : (
+                  <span data-task-field-value={field.value} className="truncate text-sm text-zinc-800 dark:text-zinc-100">{field.value}</span>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div data-task-description className="mt-6 border-t border-zinc-100 pt-5 dark:border-zinc-800">
+            <p className="text-sm leading-6 text-zinc-700 dark:text-zinc-200">{description}</p>
+            <p className="mt-2 text-sm text-zinc-400 dark:text-zinc-500">Empty. Click or drag text/images inside</p>
+          </div>
+
+          <div data-task-actions className="mt-6 space-y-1">
+            {actions.map((action) => (
+              <button
+                key={action.id}
+                data-task-action={action.id}
+                type="button"
+                onClick={() => onActionClick?.(action)}
+                className="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left text-sm text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800/60"
+              >
+                <span aria-hidden="true" className="text-zinc-400 dark:text-zinc-500">{ACTION_ICONS[action.icon] ?? "•"}</span>
+                {action.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* activity column */}
+      <div data-task-activity className="hidden w-72 shrink-0 flex-col border-l border-zinc-100 md:flex dark:border-zinc-800">
+        <div className="flex items-center justify-between px-5 py-3.5">
+          <p data-task-activity-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{activityTitle}</p>
+          <span className="text-sm text-zinc-400 dark:text-zinc-500">🔔 1 🔍 ≡</span>
+        </div>
+        <div className="flex-1 space-y-3 px-5">
+          <button data-task-activity-more className="flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"><span aria-hidden="true">›</span> Show more</button>
+          {activity.map((item) => (
+            <div key={item.id} data-task-activity-item={item.id} className="flex items-start justify-between gap-3 text-sm">
+              <div className="min-w-0">
+                <p className="text-zinc-800 dark:text-zinc-100"><span className="mr-1 text-zinc-400" aria-hidden="true">•</span>{item.actor} {item.text}</p>
+                <p className="mt-0.5 text-xs text-zinc-400 dark:text-zinc-500">⏱ {item.time}</p>
+              </div>
+              <span className="shrink-0 text-xs text-zinc-400 dark:text-zinc-500">{item.time}</span>
+            </div>
+          ))}
+        </div>
+        <div data-task-comment className="border-t border-zinc-100 px-4 py-3 dark:border-zinc-800">
+          <div className="mb-2 flex gap-4 text-sm">
+            <button data-task-comment-tab className="border-b-2 border-zinc-900 pb-1 font-medium text-zinc-900 dark:border-zinc-100 dark:text-zinc-50">Comment</button>
+            <button data-task-comment-tab-alt className="pb-1 text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200">Email</button>
+          </div>
+          <textarea
+            data-task-comment-input
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder={commentPlaceholder}
+            rows={2}
+            className="w-full resize-none rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-800 outline-none placeholder:text-zinc-400 focus:border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-zinc-600"
+          />
+          <div className="mt-2 flex items-center justify-between">
+            <span className="text-sm text-zinc-400 dark:text-zinc-500">＋ ✦ @ 📎 ⋯</span>
+            <button data-task-comment-send type="button" onClick={submit} className="rounded-lg px-2 py-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200" aria-label="Send comment">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 ====
 File: react/TestimonialGrid.tsx
@@ -27934,6 +28481,182 @@ function selectToday() {
 </script>
 
 ====
+File: vue/DeliveryTrackingPanel.vue
+====
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface DeliveryStep {
+  id: string;
+  icon: string;
+  label: string;
+  state: "done" | "active" | "pending";
+}
+
+export interface DeliveryItem {
+  id: string;
+  name: string;
+  quantity: string;
+  price: string;
+}
+
+export interface DeliveryTrackingPanelProps {
+  title?: string;
+  etaPrefix?: string;
+  eta?: string;
+  statusText?: string;
+  steps?: DeliveryStep[];
+  courierName?: string;
+  courierRole?: string;
+  orderName?: string;
+  orderSummary?: string;
+  items?: DeliveryItem[];
+  giftRecipient?: string;
+  giftMessage?: string;
+  shareTitle?: string;
+  shareDescription?: string;
+  copyLinkLabel?: string;
+  textLinkLabel?: string;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<DeliveryTrackingPanelProps>(), {
+  title: "Heading to Sam Lee",
+  etaPrefix: "Arrives between",
+  eta: "8:35 - 8:41 AM",
+  statusText: "Your Dasher is heading to Sam Lee with your order.",
+  steps: () => [
+    { id: "store", icon: "store", label: "Store", state: "done" },
+    { id: "pickup", icon: "rider", label: "Pickup", state: "done" },
+    { id: "enroute", icon: "car", label: "En route", state: "active" },
+    { id: "delivered", icon: "home", label: "Delivered", state: "pending" },
+  ],
+  courierName: "JOSHUA L",
+  courierRole: "Your Dasher",
+  orderName: "Shake Shack",
+  orderSummary: "3 Items",
+  items: () => [
+    { id: "i1", name: "Shack Stack", quantity: "2×", price: "$32.78" },
+    { id: "i2", name: "Cheese Fries", quantity: "1×", price: "$7.49" },
+  ],
+  giftRecipient: "Sam Lee",
+  giftMessage: "Hey, sending over some dinner, hope you enjoy!",
+  shareTitle: "Share your digital card with Sam Lee",
+  shareDescription: "Send a link to your recipient so they can view your digital card and track their gift. They don't need an account.",
+  copyLinkLabel: "Copy link",
+  textLinkLabel: "Text me the link",
+  class: "",
+});
+const emit = defineEmits(["courier-call", "courier-message", "copy-link", "text-link"]);
+
+const STEP_ICONS: Record<string, string> = {
+  store: "🏪",
+  rider: "🛵",
+  car: "🚗",
+  home: "🏠",
+  check: "✓",
+};
+const stepIcon = (name: string) => STEP_ICONS[name] ?? "•";
+
+const detailsOpen = ref(true);
+const toggleDetails = () => { detailsOpen.value = !detailsOpen.value; };
+</script>
+
+<template>
+  <div data-delivery-panel class="flex w-full overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900" :class="props.class">
+    <div data-delivery-map class="relative hidden min-h-[420px] flex-1 bg-zinc-100 lg:block dark:bg-zinc-800">
+      <div class="absolute inset-0" aria-hidden="true" />
+      <div data-delivery-pin class="absolute left-1/2 top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-red-500 text-lg text-white shadow-lg" aria-hidden="true">🚗</div>
+      <div data-delivery-pin-destination class="absolute left-[60%] top-[45%] flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900 text-base text-white shadow-lg" aria-hidden="true">🏠</div>
+      <button data-delivery-back class="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-zinc-700 shadow-md transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:text-zinc-200" aria-label="Back">←</button>
+      <button data-delivery-help class="absolute right-4 top-4 rounded-full bg-white px-4 py-2 text-sm font-semibold text-zinc-800 shadow-md transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:text-zinc-100">Help</button>
+      <div data-delivery-zoom class="absolute bottom-6 right-4 flex flex-col overflow-hidden rounded-xl bg-white shadow-md dark:bg-zinc-900">
+        <button class="border-b border-zinc-100 px-3 py-2 text-zinc-600 dark:border-zinc-800 dark:text-zinc-300" aria-label="Zoom in">＋</button>
+        <button class="px-3 py-2 text-zinc-600 dark:text-zinc-300" aria-label="Zoom out">－</button>
+      </div>
+    </div>
+
+    <div data-delivery-info class="flex w-full flex-col border-l border-zinc-100 lg:w-96 lg:shrink-0 dark:border-zinc-800">
+      <div data-delivery-header class="flex items-start justify-between gap-3 px-6 pt-5">
+        <div>
+          <h2 data-delivery-title class="text-xl font-bold text-zinc-900 dark:text-zinc-50">{{ props.title }}</h2>
+          <p data-delivery-eta class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ props.etaPrefix }} <span class="font-semibold text-zinc-900 dark:text-zinc-50">{{ props.eta }}</span></p>
+        </div>
+        <span data-delivery-avatar class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xl dark:bg-emerald-950/60" aria-hidden="true">🍔</span>
+      </div>
+
+      <div data-delivery-stepper class="flex items-center px-6 pt-5">
+        <template v-for="(step, i) in props.steps" :key="step.id">
+          <div v-if="i > 0" :class="step.state === 'pending' ? 'h-0.5 flex-1 bg-zinc-200 dark:bg-zinc-700' : 'h-0.5 flex-1 bg-zinc-900 dark:bg-zinc-100'" aria-hidden="true" />
+          <div
+            :data-delivery-step="step.id"
+            :data-delivery-step-state="step.state"
+            :title="step.label"
+            :class="step.state === 'pending'
+              ? 'flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-sm text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500'
+              : 'flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-sm text-white dark:bg-zinc-100 dark:text-zinc-900'"
+          >{{ stepIcon(step.icon) }}</div>
+        </template>
+      </div>
+      <p data-delivery-status class="px-6 pt-3 text-sm text-zinc-700 dark:text-zinc-200">{{ props.statusText }}</p>
+
+      <div data-delivery-courier class="mt-4 flex items-center justify-between border-y border-zinc-100 px-6 py-4 dark:border-zinc-800">
+        <div class="flex items-center gap-3">
+          <span aria-hidden="true" class="text-zinc-400 dark:text-zinc-500">👤</span>
+          <div>
+            <p data-delivery-courier-role class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.courierRole }}</p>
+            <p data-delivery-courier-name class="text-sm text-zinc-500 dark:text-zinc-400">{{ props.courierName }}</p>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button data-delivery-call type="button" class="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700" aria-label="Call courier" @click="emit('courier-call')">📞</button>
+          <button data-delivery-message type="button" class="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700" aria-label="Message courier" @click="emit('courier-message')">💬</button>
+        </div>
+      </div>
+
+      <div class="px-6 py-4">
+        <button
+          data-delivery-details-toggle
+          type="button"
+          class="flex w-full items-center justify-center gap-2 rounded-full bg-zinc-100 py-2.5 text-sm font-semibold text-zinc-800 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
+          @click="toggleDetails"
+        >
+          Order Details <span aria-hidden="true">{{ detailsOpen ? "▴" : "▾" }}</span>
+        </button>
+
+        <div v-if="detailsOpen" data-delivery-items class="mt-4 space-y-3">
+          <div class="flex items-center gap-3">
+            <span data-delivery-order-avatar class="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-lg dark:bg-emerald-950/60" aria-hidden="true">🍔</span>
+            <div>
+              <p data-delivery-order-name class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.orderName }}</p>
+              <p data-delivery-order-summary class="text-sm text-zinc-500 dark:text-zinc-400">{{ props.orderSummary }}</p>
+            </div>
+          </div>
+          <div v-for="item in props.items" :key="item.id" :data-delivery-item="item.id" class="flex items-center justify-between text-sm">
+            <span class="text-zinc-800 dark:text-zinc-100">{{ item.quantity }} {{ item.name }}</span>
+            <span class="font-medium text-zinc-900 dark:text-zinc-50">{{ item.price }}</span>
+          </div>
+
+          <div data-delivery-gift class="border-t border-zinc-100 pt-4 dark:border-zinc-800">
+            <p data-delivery-gift-recipient class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.giftRecipient }}</p>
+            <p data-delivery-gift-message class="mt-1 text-sm text-zinc-600 dark:text-zinc-300">{{ props.giftMessage }}</p>
+          </div>
+
+          <div data-delivery-share class="border-t border-zinc-100 pt-4 dark:border-zinc-800">
+            <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.shareTitle }}</p>
+            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ props.shareDescription }}</p>
+            <div class="mt-3 flex justify-end gap-2">
+              <button data-delivery-copy-link type="button" class="rounded-full bg-zinc-100 px-4 py-2 text-sm font-semibold text-zinc-800 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700" @click="emit('copy-link')">{{ props.copyLinkLabel }}</button>
+              <button data-delivery-text-link type="button" class="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700" @click="emit('text-link')">{{ props.textLinkLabel }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+====
 File: vue/DeploymentCard.vue
 ====
 <template>
@@ -31954,6 +32677,115 @@ const toggleFollow = () => {
   emit('live-tail-change', follow.value);
 };
 </script>
+
+====
+File: vue/MapPropertyCard.vue
+====
+<script setup lang="ts">
+export interface MapPin {
+  id: string;
+  price: string;
+  x: number;
+  y: number;
+}
+
+export interface MapCard {
+  id?: string;
+  images?: string[];
+  title: string;
+  rating: string;
+  reviews: number;
+  subtitle: string;
+  price: string;
+  dates?: string;
+}
+
+export interface MapPropertyCardProps {
+  pins?: MapPin[];
+  activePinId?: string;
+  card?: MapCard | null;
+  likeLabel?: string;
+  closeLabel?: string;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<MapPropertyCardProps>(), {
+  pins: () => [
+    { id: "p1", price: "$148", x: 22, y: 30 },
+    { id: "p2", price: "$111", x: 68, y: 48 },
+    { id: "p3", price: "$136", x: 40, y: 70 },
+    { id: "p4", price: "$137", x: 58, y: 82 },
+    { id: "p5", price: "$112", x: 82, y: 25 },
+  ],
+  activePinId: "p2",
+  card: () => ({
+    id: "p2",
+    images: [],
+    title: "Home in Kecamatan Denpasar",
+    rating: "4.93",
+    reviews: 27,
+    subtitle: "Private Joglo in heart of Sanur",
+    price: "$111 for 2 nights",
+    dates: "Jun 20 – 22",
+  }),
+  likeLabel: "♡",
+  closeLabel: "✕",
+  class: "",
+});
+const emit = defineEmits(["pin-click", "card-close", "card-like"]);
+</script>
+
+<template>
+  <div data-mappin-card class="relative min-h-[420px] w-full overflow-hidden rounded-xl border border-zinc-200 bg-sky-50 shadow-sm dark:border-zinc-800 dark:bg-sky-950/30" :class="props.class">
+    <div class="absolute inset-0" aria-hidden="true" />
+
+    <button
+      v-for="pin in props.pins"
+      :key="pin.id"
+      :data-mappin-pin="pin.id"
+      :data-mappin-price="pin.price"
+      type="button"
+      :style="{ left: pin.x + '%', top: pin.y + '%' }"
+      :class="pin.id === props.activePinId
+        ? 'absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-zinc-900 px-3 py-1.5 text-sm font-semibold text-white shadow-md transition-transform hover:scale-105 dark:bg-white dark:text-zinc-900'
+        : 'absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white px-3 py-1.5 text-sm font-semibold text-zinc-900 shadow-md transition-transform hover:scale-105 dark:bg-zinc-900 dark:text-zinc-50'"
+      @click="emit('pin-click', pin)"
+    >
+      {{ pin.price }}
+    </button>
+
+    <div v-if="props.card" data-mappin-preview class="absolute bottom-8 left-1/2 z-20 w-72 -translate-x-1/2 overflow-hidden rounded-2xl bg-white shadow-xl dark:bg-zinc-900">
+      <div data-mappin-image class="relative h-36 bg-gradient-to-br from-amber-200 via-orange-200 to-rose-200 dark:from-amber-900 dark:via-orange-900 dark:to-rose-900">
+        <div class="absolute right-3 top-3 flex gap-2">
+          <button data-mappin-like type="button" aria-label="Save" class="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-sm text-zinc-800 shadow transition-colors hover:bg-white dark:bg-zinc-800/90 dark:text-zinc-100" @click="emit('card-like')">{{ props.likeLabel }}</button>
+          <button data-mappin-close type="button" aria-label="Close preview" class="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-sm text-zinc-800 shadow transition-colors hover:bg-white dark:bg-zinc-800/90 dark:text-zinc-100" @click="emit('card-close')">{{ props.closeLabel }}</button>
+        </div>
+        <div data-mappin-dots class="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
+          <span class="h-1.5 w-1.5 rounded-full bg-white" aria-hidden="true" />
+          <span class="h-1.5 w-1.5 rounded-full bg-white/50" aria-hidden="true" />
+          <span class="h-1.5 w-1.5 rounded-full bg-white/50" aria-hidden="true" />
+          <span class="h-1.5 w-1.5 rounded-full bg-white/50" aria-hidden="true" />
+        </div>
+        <button data-mappin-next aria-label="Next image" class="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-xs text-zinc-800 shadow transition-colors hover:bg-white dark:bg-zinc-800/90 dark:text-zinc-100">›</button>
+      </div>
+      <div class="space-y-0.5 px-4 py-3">
+        <div class="flex items-center justify-between gap-2">
+          <p data-mappin-title class="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.card.title }}</p>
+          <p data-mappin-rating class="shrink-0 text-xs text-zinc-700 dark:text-zinc-200">★ {{ props.card.rating }} ({{ props.card.reviews }})</p>
+        </div>
+        <p data-mappin-subtitle class="truncate text-sm text-zinc-500 dark:text-zinc-400">{{ props.card.subtitle }}</p>
+        <p data-mappin-price class="text-sm text-zinc-900 dark:text-zinc-50">
+          {{ props.card.price }}<span v-if="props.card.dates" class="text-zinc-500 dark:text-zinc-400"> · {{ props.card.dates }}</span>
+        </p>
+      </div>
+    </div>
+
+    <div data-mappin-zoom class="absolute right-4 top-4 z-20 flex flex-col overflow-hidden rounded-xl bg-white shadow-md dark:bg-zinc-900">
+      <button class="border-b border-zinc-100 px-3 py-2 text-zinc-600 dark:border-zinc-800 dark:text-zinc-300" aria-label="Zoom in">＋</button>
+      <button class="px-3 py-2 text-zinc-600 dark:text-zinc-300" aria-label="Zoom out">－</button>
+    </div>
+  </div>
+</template>
 
 ====
 File: vue/MarqueeWall.vue
@@ -38227,6 +39059,206 @@ const currentTone = computed<'rose' | 'amber' | 'emerald'>(() => {
   return found?.tone ?? 'rose';
 });
 </script>
+
+====
+File: vue/TaskDetailPanel.vue
+====
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface TaskField {
+  label: string;
+  value: string;
+  icon?: string;
+  tag?: boolean;
+}
+
+export interface TaskAction {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+export interface TaskActivityItem {
+  id: string;
+  actor: string;
+  text: string;
+  time: string;
+}
+
+export interface TaskDetailPanelProps {
+  type?: string;
+  title?: string;
+  aiBarText?: string;
+  aiBarActions?: string[];
+  statusLabel?: string;
+  fields?: TaskField[];
+  description?: string;
+  actions?: TaskAction[];
+  activityTitle?: string;
+  activity?: TaskActivityItem[];
+  commentPlaceholder?: string;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<TaskDetailPanelProps>(), {
+  type: "Milestone",
+  title: "Complete Dashboard Feature Screens",
+  aiBarText: "Ask Brain to",
+  aiBarActions: () => ["create a summary", "generate subtasks", "find similar milestones"],
+  statusLabel: "IN DEVELOPMENT",
+  fields: () => [
+    { label: "Assignees", value: "J", icon: "person" },
+    { label: "Dates", value: "Yesterday → 10/31/25", icon: "calendar" },
+    { label: "Priority", value: "Normal", icon: "flag" },
+    { label: "Time estimate", value: "1h", icon: "clock" },
+    { label: "Sprint points", value: "Empty", icon: "target" },
+    { label: "Tags", value: "dashboard", icon: "tag", tag: true },
+  ],
+  description: "Finalize all design deliverables for the Dashboard feature. This includes ensuring layout compositions, maintaining component consistency, and applying visual polish. This milestone marks the completion of all Dashboard-related UI screens, ready for review and developer handoff.",
+  actions: () => [
+    { id: "fields", icon: "fields", label: "Custom Fields" },
+    { id: "subtask", icon: "subtask", label: "Add subtask" },
+    { id: "relate", icon: "relate", label: "Relate items or add dependencies" },
+    { id: "checklist", icon: "checklist", label: "Create checklist" },
+    { id: "attach", icon: "attach", label: "Attach file" },
+  ],
+  activityTitle: "Activity",
+  activity: () => [
+    { id: "a1", actor: "You", text: "tracked time · 1m on Oct 22", time: "1 hour ago" },
+  ],
+  commentPlaceholder: "Write a comment...",
+  class: "",
+});
+const emit = defineEmits(["action-click", "comment-submit"]);
+
+const ACTION_ICONS: Record<string, string> = {
+  fields: "▤",
+  subtask: "⑂",
+  relate: "⤱",
+  checklist: "☑",
+  attach: "📎",
+  link: "🔗",
+  clock: "⏱",
+  target: "◎",
+  calendar: "📅",
+  flag: "⚑",
+  tag: "🏷",
+  person: "👤",
+};
+const iconFor = (name?: string) => ACTION_ICONS[name ?? ""] ?? "•";
+
+const comment = ref("");
+const submit = () => {
+  const text = comment.value.trim();
+  if (!text) return;
+  emit("comment-submit", text);
+  comment.value = "";
+};
+</script>
+
+<template>
+  <div data-task-panel class="flex w-full overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900" :class="props.class">
+    <div data-task-main class="min-w-0 flex-1">
+      <div data-task-header class="flex items-center justify-between border-b border-zinc-100 px-6 py-3 dark:border-zinc-800">
+        <div class="flex items-center gap-3">
+          <button data-task-type class="flex items-center gap-1.5 rounded-lg border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800">
+            <span aria-hidden="true">◆</span> {{ props.type }} <span aria-hidden="true" class="text-zinc-400">▾</span>
+          </button>
+        </div>
+        <div class="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
+          <span data-task-created class="hidden sm:inline">Created on Oct 21</span>
+          <button data-task-ai class="flex items-center gap-1 rounded-lg px-2 py-1 font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800">✦ Ask AI</button>
+          <button data-task-share class="flex items-center gap-1 rounded-lg px-2 py-1 font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800">Share</button>
+        </div>
+      </div>
+
+      <div class="px-6 py-5">
+        <h2 data-task-title class="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">{{ props.title }}</h2>
+
+        <div data-task-ai-bar class="mt-4 flex flex-wrap items-center gap-1.5 rounded-xl bg-zinc-50 px-4 py-3 text-sm text-zinc-600 dark:bg-zinc-800/60 dark:text-zinc-300">
+          <span aria-hidden="true">✦</span>
+          <span>{{ props.aiBarText }}</span>
+          <template v-for="(label, i) in props.aiBarActions" :key="label">
+            <button :data-task-ai-action="label" class="font-medium text-zinc-800 underline-offset-2 hover:underline dark:text-zinc-100">{{ label }}</button>
+            <span v-if="i < props.aiBarActions.length - 1" class="text-zinc-400 dark:text-zinc-500">or</span>
+          </template>
+        </div>
+
+        <div data-task-fields class="mt-6 grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2">
+          <div data-task-field="Status" class="flex items-center gap-3">
+            <span class="flex w-36 shrink-0 items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400"><span aria-hidden="true">◎</span> Status</span>
+            <button data-task-status class="flex items-center gap-1 rounded-md bg-sky-500 px-2.5 py-1 text-xs font-bold tracking-wide text-white">
+              {{ props.statusLabel }} <span aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div v-for="field in props.fields" :key="field.label" :data-task-field="field.label" class="flex items-center gap-3">
+            <span class="flex w-36 shrink-0 items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400"><span aria-hidden="true">{{ iconFor(field.icon) }}</span> {{ field.label }}</span>
+            <span
+              v-if="field.tag"
+              :data-task-field-value="field.value"
+              class="rounded bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-700 dark:bg-violet-950/70 dark:text-violet-300"
+            >{{ field.value }}</span>
+            <span v-else :data-task-field-value="field.value" class="truncate text-sm text-zinc-800 dark:text-zinc-100">{{ field.value }}</span>
+          </div>
+        </div>
+
+        <div data-task-description class="mt-6 border-t border-zinc-100 pt-5 dark:border-zinc-800">
+          <p class="text-sm leading-6 text-zinc-700 dark:text-zinc-200">{{ props.description }}</p>
+          <p class="mt-2 text-sm text-zinc-400 dark:text-zinc-500">Empty. Click or drag text/images inside</p>
+        </div>
+
+        <div data-task-actions class="mt-6 space-y-1">
+          <button
+            v-for="action in props.actions"
+            :key="action.id"
+            :data-task-action="action.id"
+            type="button"
+            class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left text-sm text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800/60"
+            @click="emit('action-click', action)"
+          >
+            <span aria-hidden="true" class="text-zinc-400 dark:text-zinc-500">{{ iconFor(action.icon) }}</span>
+            {{ action.label }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div data-task-activity class="hidden w-72 shrink-0 flex-col border-l border-zinc-100 md:flex dark:border-zinc-800">
+      <div class="flex items-center justify-between px-5 py-3.5">
+        <p data-task-activity-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.activityTitle }}</p>
+        <span class="text-sm text-zinc-400 dark:text-zinc-500">🔔 1 🔍 ≡</span>
+      </div>
+      <div class="flex-1 space-y-3 px-5">
+        <button data-task-activity-more class="flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"><span aria-hidden="true">›</span> Show more</button>
+        <div v-for="item in props.activity" :key="item.id" :data-task-activity-item="item.id" class="flex items-start justify-between gap-3 text-sm">
+          <div class="min-w-0">
+            <p class="text-zinc-800 dark:text-zinc-100"><span class="mr-1 text-zinc-400" aria-hidden="true">•</span>{{ item.actor }} {{ item.text }}</p>
+            <p class="mt-0.5 text-xs text-zinc-400 dark:text-zinc-500">⏱ {{ item.time }}</p>
+          </div>
+          <span class="shrink-0 text-xs text-zinc-400 dark:text-zinc-500">{{ item.time }}</span>
+        </div>
+      </div>
+      <div data-task-comment class="border-t border-zinc-100 px-4 py-3 dark:border-zinc-800">
+        <div class="mb-2 flex gap-4 text-sm">
+          <button data-task-comment-tab class="border-b-2 border-zinc-900 pb-1 font-medium text-zinc-900 dark:border-zinc-100 dark:text-zinc-50">Comment</button>
+          <button data-task-comment-tab-alt class="pb-1 text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200">Email</button>
+        </div>
+        <textarea
+          v-model="comment"
+          data-task-comment-input
+          :placeholder="props.commentPlaceholder"
+          rows="2"
+          class="w-full resize-none rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-800 outline-none placeholder:text-zinc-400 focus:border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-zinc-600"
+        />
+        <div class="mt-2 flex items-center justify-between">
+          <span class="text-sm text-zinc-400 dark:text-zinc-500">＋ ✦ @ 📎 ⋯</span>
+          <button data-task-comment-send type="button" class="rounded-lg px-2 py-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200" aria-label="Send comment" @click="submit">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 ====
 File: vue/TestimonialGrid.vue
@@ -48708,6 +49740,243 @@ if (typeof customElements !== 'undefined' && !customElements.get('date-picker'))
 export default DatePickerElement;
 
 ====
+File: vanilla/DeliveryTrackingPanel.js
+====
+/**
+ * DeliveryTrackingPanel - Delivery tracking: map placeholder with floating
+ * controls, right info column with ETA header, four-step progress stepper,
+ * courier card with contact buttons, collapsible order details, gift share
+ * block and copy-link / text-me actions
+ * (DoorDash delivery tracking pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const STEP_ICONS = { store: '🏪', rider: '🛵', car: '🚗', home: '🏠', check: '✓' };
+const stepIcon = (name) => STEP_ICONS[name] || '•';
+
+const DEFAULT_STEPS = () => [
+  { id: 'store', icon: 'store', label: 'Store', state: 'done' },
+  { id: 'pickup', icon: 'rider', label: 'Pickup', state: 'done' },
+  { id: 'enroute', icon: 'car', label: 'En route', state: 'active' },
+  { id: 'delivered', icon: 'home', label: 'Delivered', state: 'pending' },
+];
+
+const DEFAULT_ITEMS = () => [
+  { id: 'i1', name: 'Shack Stack', quantity: '2×', price: '$32.78' },
+  { id: 'i2', name: 'Cheese Fries', quantity: '1×', price: '$7.49' },
+];
+
+class DeliveryTrackingPanelElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'eta-prefix', 'eta', 'status-text', 'steps', 'courier-name', 'courier-role', 'order-name', 'order-summary', 'items', 'gift-recipient', 'gift-message', 'share-title', 'share-description', 'copy-link-label', 'text-link-label'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._detailsOpen = true;
+    this._title = 'Heading to Sam Lee';
+    this._etaPrefix = 'Arrives between';
+    this._eta = '8:35 - 8:41 AM';
+    this._statusText = 'Your Dasher is heading to Sam Lee with your order.';
+    this._steps = DEFAULT_STEPS();
+    this._courierName = 'JOSHUA L';
+    this._courierRole = 'Your Dasher';
+    this._orderName = 'Shake Shack';
+    this._orderSummary = '3 Items';
+    this._items = DEFAULT_ITEMS();
+    this._giftRecipient = 'Sam Lee';
+    this._giftMessage = 'Hey, sending over some dinner, hope you enjoy!';
+    this._shareTitle = 'Share your digital card with Sam Lee';
+    this._shareDescription = "Send a link to your recipient so they can view your digital card and track their gift. They don't need an account.";
+    this._copyLinkLabel = 'Copy link';
+    this._textLinkLabel = 'Text me the link';
+  }
+
+  connectedCallback() {
+    const read = (attr, key) => {
+      const v = this.getAttribute(attr);
+      if (v !== null && v !== '') this[`_${key}`] = v;
+    };
+    const readJson = (attr, key, fallback) => {
+      const v = this.getAttribute(attr);
+      if (v) this[`_${key}`] = parseJsonAttr(v, fallback());
+    };
+    read('title', 'title');
+    read('eta-prefix', 'etaPrefix');
+    read('eta', 'eta');
+    read('status-text', 'statusText');
+    readJson('steps', 'steps', DEFAULT_STEPS);
+    read('courier-name', 'courierName');
+    read('courier-role', 'courierRole');
+    read('order-name', 'orderName');
+    read('order-summary', 'orderSummary');
+    readJson('items', 'items', DEFAULT_ITEMS);
+    read('gift-recipient', 'giftRecipient');
+    read('gift-message', 'giftMessage');
+    read('share-title', 'shareTitle');
+    read('share-description', 'shareDescription');
+    read('copy-link-label', 'copyLinkLabel');
+    read('text-link-label', 'textLinkLabel');
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    if (name === 'title') this._title = newValue || 'Heading to Sam Lee';
+    if (name === 'eta-prefix') this._etaPrefix = newValue || 'Arrives between';
+    if (name === 'eta') this._eta = newValue || '8:35 - 8:41 AM';
+    if (name === 'status-text') this._statusText = newValue || '';
+    if (name === 'steps') this._steps = parseJsonAttr(newValue, DEFAULT_STEPS());
+    if (name === 'courier-name') this._courierName = newValue || 'JOSHUA L';
+    if (name === 'courier-role') this._courierRole = newValue || 'Your Dasher';
+    if (name === 'order-name') this._orderName = newValue || 'Shake Shack';
+    if (name === 'order-summary') this._orderSummary = newValue || '3 Items';
+    if (name === 'items') this._items = parseJsonAttr(newValue, DEFAULT_ITEMS());
+    if (name === 'gift-recipient') this._giftRecipient = newValue || 'Sam Lee';
+    if (name === 'gift-message') this._giftMessage = newValue || '';
+    if (name === 'share-title') this._shareTitle = newValue || '';
+    if (name === 'share-description') this._shareDescription = newValue || '';
+    if (name === 'copy-link-label') this._copyLinkLabel = newValue || 'Copy link';
+    if (name === 'text-link-label') this._textLinkLabel = newValue || 'Text me the link';
+    this._render();
+  }
+
+  _onClick(event) {
+    const dispatchIf = (attr, eventName) => {
+      if (event.target.closest(`[${attr}]`)) {
+        this.dispatchEvent(new CustomEvent(eventName, { bubbles: true }));
+        return true;
+      }
+      return false;
+    };
+    if (dispatchIf('data-delivery-call', 'courier-call')) return;
+    if (dispatchIf('data-delivery-message', 'courier-message')) return;
+    if (dispatchIf('data-delivery-copy-link', 'copy-link')) return;
+    if (dispatchIf('data-delivery-text-link', 'text-link')) return;
+    if (event.target.closest('[data-delivery-details-toggle]')) {
+      this._detailsOpen = !this._detailsOpen;
+      this._render();
+    }
+  }
+
+  _render() {
+    const stepperHtml = this._steps
+      .map((step, i) => {
+        const connector = i === 0 ? '' : `<div class="${step.state === 'pending' ? 'h-0.5 flex-1 bg-zinc-200 dark:bg-zinc-700' : 'h-0.5 flex-1 bg-zinc-900 dark:bg-zinc-100'}" aria-hidden="true"></div>`;
+        const bubble = step.state === 'pending'
+          ? 'flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-sm text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500'
+          : 'flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-sm text-white dark:bg-zinc-100 dark:text-zinc-900';
+        return `${connector}<div data-delivery-step="${escapeAttribute(step.id)}" data-delivery-step-state="${escapeAttribute(step.state)}" title="${escapeAttribute(step.label)}" class="${bubble}">${stepIcon(step.icon)}</div>`;
+      })
+      .join('');
+
+    const itemsHtml = this._items
+      .map((item) => `<div data-delivery-item="${escapeAttribute(item.id)}" class="flex items-center justify-between text-sm">
+          <span class="text-zinc-800 dark:text-zinc-100">${escapeAttribute(item.quantity)} ${escapeAttribute(item.name)}</span>
+          <span class="font-medium text-zinc-900 dark:text-zinc-50">${escapeAttribute(item.price)}</span>
+        </div>`)
+      .join('');
+
+    this.innerHTML = `
+      <div data-delivery-panel class="flex w-full overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div data-delivery-map class="relative hidden min-h-[420px] flex-1 bg-zinc-100 lg:block dark:bg-zinc-800">
+          <div class="absolute inset-0" aria-hidden="true"></div>
+          <div data-delivery-pin class="absolute left-1/2 top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-red-500 text-lg text-white shadow-lg" aria-hidden="true">🚗</div>
+          <div data-delivery-pin-destination class="absolute left-[60%] top-[45%] flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900 text-base text-white shadow-lg" aria-hidden="true">🏠</div>
+          <button data-delivery-back class="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-zinc-700 shadow-md transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:text-zinc-200" aria-label="Back">←</button>
+          <button data-delivery-help class="absolute right-4 top-4 rounded-full bg-white px-4 py-2 text-sm font-semibold text-zinc-800 shadow-md transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:text-zinc-100">Help</button>
+          <div data-delivery-zoom class="absolute bottom-6 right-4 flex flex-col overflow-hidden rounded-xl bg-white shadow-md dark:bg-zinc-900">
+            <button class="border-b border-zinc-100 px-3 py-2 text-zinc-600 dark:border-zinc-800 dark:text-zinc-300" aria-label="Zoom in">＋</button>
+            <button class="px-3 py-2 text-zinc-600 dark:text-zinc-300" aria-label="Zoom out">－</button>
+          </div>
+        </div>
+        <div data-delivery-info class="flex w-full flex-col border-l border-zinc-100 lg:w-96 lg:shrink-0 dark:border-zinc-800">
+          <div data-delivery-header class="flex items-start justify-between gap-3 px-6 pt-5">
+            <div>
+              <h2 data-delivery-title class="text-xl font-bold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this._title)}</h2>
+              <p data-delivery-eta class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">${escapeAttribute(this._etaPrefix)} <span class="font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this._eta)}</span></p>
+            </div>
+            <span data-delivery-avatar class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xl dark:bg-emerald-950/60" aria-hidden="true">🍔</span>
+          </div>
+          <div data-delivery-stepper class="flex items-center px-6 pt-5">${stepperHtml}</div>
+          <p data-delivery-status class="px-6 pt-3 text-sm text-zinc-700 dark:text-zinc-200">${escapeAttribute(this._statusText)}</p>
+          <div data-delivery-courier class="mt-4 flex items-center justify-between border-y border-zinc-100 px-6 py-4 dark:border-zinc-800">
+            <div class="flex items-center gap-3">
+              <span aria-hidden="true" class="text-zinc-400 dark:text-zinc-500">👤</span>
+              <div>
+                <p data-delivery-courier-role class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this._courierRole)}</p>
+                <p data-delivery-courier-name class="text-sm text-zinc-500 dark:text-zinc-400">${escapeAttribute(this._courierName)}</p>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button data-delivery-call type="button" class="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700" aria-label="Call courier">📞</button>
+              <button data-delivery-message type="button" class="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700" aria-label="Message courier">💬</button>
+            </div>
+          </div>
+          <div class="px-6 py-4">
+            <button data-delivery-details-toggle type="button" class="flex w-full items-center justify-center gap-2 rounded-full bg-zinc-100 py-2.5 text-sm font-semibold text-zinc-800 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700">
+              Order Details <span aria-hidden="true">${this._detailsOpen ? '▴' : '▾'}</span>
+            </button>
+            ${this._detailsOpen ? `<div data-delivery-items class="mt-4 space-y-3">
+              <div class="flex items-center gap-3">
+                <span data-delivery-order-avatar class="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-lg dark:bg-emerald-950/60" aria-hidden="true">🍔</span>
+                <div>
+                  <p data-delivery-order-name class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this._orderName)}</p>
+                  <p data-delivery-order-summary class="text-sm text-zinc-500 dark:text-zinc-400">${escapeAttribute(this._orderSummary)}</p>
+                </div>
+              </div>
+              ${itemsHtml}
+              <div data-delivery-gift class="border-t border-zinc-100 pt-4 dark:border-zinc-800">
+                <p data-delivery-gift-recipient class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this._giftRecipient)}</p>
+                <p data-delivery-gift-message class="mt-1 text-sm text-zinc-600 dark:text-zinc-300">${escapeAttribute(this._giftMessage)}</p>
+              </div>
+              <div data-delivery-share class="border-t border-zinc-100 pt-4 dark:border-zinc-800">
+                <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this._shareTitle)}</p>
+                <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">${escapeAttribute(this._shareDescription)}</p>
+                <div class="mt-3 flex justify-end gap-2">
+                  <button data-delivery-copy-link type="button" class="rounded-full bg-zinc-100 px-4 py-2 text-sm font-semibold text-zinc-800 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700">${escapeAttribute(this._copyLinkLabel)}</button>
+                  <button data-delivery-text-link type="button" class="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700">${escapeAttribute(this._textLinkLabel)}</button>
+                </div>
+              </div>
+            </div>` : ''}
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('delivery-tracking-panel')) {
+  customElements.define('delivery-tracking-panel', DeliveryTrackingPanelElement);
+}
+
+export default DeliveryTrackingPanelElement;
+
+====
 File: vanilla/DeploymentCard.js
 ====
 /**
@@ -54652,6 +55921,178 @@ if (typeof customElements !== 'undefined' && !customElements.get('live-tail-log-
   customElements.define('live-tail-log-console', LiveTailLogConsoleElement);
 }
 export default LiveTailLogConsoleElement;
+
+====
+File: vanilla/MapPropertyCard.js
+====
+/**
+ * MapPropertyCard - Map property bubble: price pins over a map placeholder
+ * and a floating preview card with image dots, like/close buttons, title +
+ * rating, subtitle and price range with dates
+ * (Airbnb map property pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const DEFAULT_PINS = () => [
+  { id: 'p1', price: '$148', x: 22, y: 30 },
+  { id: 'p2', price: '$111', x: 68, y: 48 },
+  { id: 'p3', price: '$136', x: 40, y: 70 },
+  { id: 'p4', price: '$137', x: 58, y: 82 },
+  { id: 'p5', price: '$112', x: 82, y: 25 },
+];
+
+const DEFAULT_CARD = () => ({
+  id: 'p2',
+  images: [],
+  title: 'Home in Kecamatan Denpasar',
+  rating: '4.93',
+  reviews: 27,
+  subtitle: 'Private Joglo in heart of Sanur',
+  price: '$111 for 2 nights',
+  dates: 'Jun 20 – 22',
+});
+
+class MapPropertyCardElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['pins', 'active-pin-id', 'card', 'like-label', 'close-label'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._pins = DEFAULT_PINS();
+    this._activePinId = 'p2';
+    this._card = DEFAULT_CARD();
+    this._likeLabel = '♡';
+    this._closeLabel = '✕';
+  }
+
+  connectedCallback() {
+    this._pins = parseJsonAttr(this.getAttribute('pins'), DEFAULT_PINS());
+    const ap = this.getAttribute('active-pin-id');
+    if (ap) this._activePinId = ap;
+    const cardRaw = this.getAttribute('card');
+    if (cardRaw === 'null' || cardRaw === '') this._card = null;
+    else if (cardRaw) this._card = parseJsonAttr(cardRaw, DEFAULT_CARD());
+    const ll = this.getAttribute('like-label');
+    if (ll) this._likeLabel = ll;
+    const cl = this.getAttribute('close-label');
+    if (cl) this._closeLabel = cl;
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    if (name === 'pins') this._pins = parseJsonAttr(newValue, DEFAULT_PINS());
+    if (name === 'active-pin-id') this._activePinId = newValue || 'p2';
+    if (name === 'card') this._card = (newValue === 'null' || newValue === '') ? null : parseJsonAttr(newValue, DEFAULT_CARD());
+    if (name === 'like-label') this._likeLabel = newValue || '♡';
+    if (name === 'close-label') this._closeLabel = newValue || '✕';
+    this._render();
+  }
+
+  _onClick(event) {
+    const pin = event.target.closest('[data-mappin-pin]');
+    if (pin) {
+      const found = this._pins.find((p) => p.id === pin.getAttribute('data-mappin-pin'));
+      if (found) {
+        this._activePinId = found.id;
+        this._render();
+        this.dispatchEvent(new CustomEvent('pin-click', { detail: { pin: found }, bubbles: true }));
+        return;
+      }
+    }
+    if (event.target.closest('[data-mappin-close]')) {
+      this._card = null;
+      this._render();
+      this.dispatchEvent(new CustomEvent('card-close', { bubbles: true }));
+      return;
+    }
+    if (event.target.closest('[data-mappin-like]')) {
+      this.dispatchEvent(new CustomEvent('card-like', { bubbles: true }));
+    }
+  }
+
+  _render() {
+    const pinsHtml = this._pins
+      .map((pin) => {
+        const active = pin.id === this._activePinId;
+        const cls = active
+          ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900'
+          : 'bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50';
+        return `<button data-mappin-pin="${escapeAttribute(pin.id)}" data-mappin-price="${escapeAttribute(pin.price)}" type="button" style="left:${Number(pin.x)}%;top:${Number(pin.y)}%" class="absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full px-3 py-1.5 text-sm font-semibold shadow-md transition-transform hover:scale-105 ${cls}">${escapeAttribute(pin.price)}</button>`;
+      })
+      .join('');
+
+    const card = this._card;
+    const cardHtml = card
+      ? `<div data-mappin-preview class="absolute bottom-8 left-1/2 z-20 w-72 -translate-x-1/2 overflow-hidden rounded-2xl bg-white shadow-xl dark:bg-zinc-900">
+          <div data-mappin-image class="relative h-36 bg-gradient-to-br from-amber-200 via-orange-200 to-rose-200 dark:from-amber-900 dark:via-orange-900 dark:to-rose-900">
+            <div class="absolute right-3 top-3 flex gap-2">
+              <button data-mappin-like type="button" aria-label="Save" class="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-sm text-zinc-800 shadow transition-colors hover:bg-white dark:bg-zinc-800/90 dark:text-zinc-100">${escapeAttribute(this._likeLabel)}</button>
+              <button data-mappin-close type="button" aria-label="Close preview" class="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-sm text-zinc-800 shadow transition-colors hover:bg-white dark:bg-zinc-800/90 dark:text-zinc-100">${escapeAttribute(this._closeLabel)}</button>
+            </div>
+            <div data-mappin-dots class="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
+              <span class="h-1.5 w-1.5 rounded-full bg-white" aria-hidden="true"></span>
+              <span class="h-1.5 w-1.5 rounded-full bg-white/50" aria-hidden="true"></span>
+              <span class="h-1.5 w-1.5 rounded-full bg-white/50" aria-hidden="true"></span>
+              <span class="h-1.5 w-1.5 rounded-full bg-white/50" aria-hidden="true"></span>
+            </div>
+            <button data-mappin-next aria-label="Next image" class="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-xs text-zinc-800 shadow transition-colors hover:bg-white dark:bg-zinc-800/90 dark:text-zinc-100">›</button>
+          </div>
+          <div class="space-y-0.5 px-4 py-3">
+            <div class="flex items-center justify-between gap-2">
+              <p data-mappin-title class="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(card.title)}</p>
+              <p data-mappin-rating class="shrink-0 text-xs text-zinc-700 dark:text-zinc-200">★ ${escapeAttribute(card.rating)} (${escapeAttribute(card.reviews)})</p>
+            </div>
+            <p data-mappin-subtitle class="truncate text-sm text-zinc-500 dark:text-zinc-400">${escapeAttribute(card.subtitle)}</p>
+            <p data-mappin-price class="text-sm text-zinc-900 dark:text-zinc-50">${escapeAttribute(card.price)}${card.dates ? `<span class="text-zinc-500 dark:text-zinc-400"> · ${escapeAttribute(card.dates)}</span>` : ''}</p>
+          </div>
+        </div>`
+      : '';
+
+    this.innerHTML = `
+      <div data-mappin-card class="relative min-h-[420px] w-full overflow-hidden rounded-xl border border-zinc-200 bg-sky-50 shadow-sm dark:border-zinc-800 dark:bg-sky-950/30">
+        <div class="absolute inset-0" aria-hidden="true"></div>
+        ${pinsHtml}
+        ${cardHtml}
+        <div data-mappin-zoom class="absolute right-4 top-4 z-20 flex flex-col overflow-hidden rounded-xl bg-white shadow-md dark:bg-zinc-900">
+          <button class="border-b border-zinc-100 px-3 py-2 text-zinc-600 dark:border-zinc-800 dark:text-zinc-300" aria-label="Zoom in">＋</button>
+          <button class="px-3 py-2 text-zinc-600 dark:text-zinc-300" aria-label="Zoom out">－</button>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('map-property-card')) {
+  customElements.define('map-property-card', MapPropertyCardElement);
+}
+
+export default MapPropertyCardElement;
 
 ====
 File: vanilla/MarqueeWall.js
@@ -63990,6 +65431,265 @@ if (typeof customElements !== 'undefined' && !customElements.get('target-gauge')
   customElements.define('target-gauge', TargetGaugeElement);
 }
 export default TargetGaugeElement;
+
+====
+File: vanilla/TaskDetailPanel.js
+====
+/**
+ * TaskDetailPanel - Task/milestone detail sidebar: header with type pill and
+ * AI summary bar, status pill with two-column field grid, collapsible
+ * description, action list and an activity column with comment box
+ * (ClickUp task detail pattern).
+ */
+const escapeAttribute = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const parseJsonAttr = (raw, fallback) => {
+  if (typeof raw !== 'string' || raw.trim() === '') return fallback;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const ACTION_ICONS = {
+  fields: '▤', subtask: '⑂', relate: '⤱', checklist: '☑', attach: '📎', link: '🔗',
+  clock: '⏱', target: '◎', calendar: '📅', flag: '⚑', tag: '🏷', person: '👤',
+};
+const iconFor = (name) => ACTION_ICONS[name] || '•';
+
+const DEFAULT_FIELDS = () => [
+  { label: 'Assignees', value: 'J', icon: 'person' },
+  { label: 'Dates', value: 'Yesterday → 10/31/25', icon: 'calendar' },
+  { label: 'Priority', value: 'Normal', icon: 'flag' },
+  { label: 'Time estimate', value: '1h', icon: 'clock' },
+  { label: 'Sprint points', value: 'Empty', icon: 'target' },
+  { label: 'Tags', value: 'dashboard', icon: 'tag', tag: true },
+];
+
+const DEFAULT_ACTIONS = () => [
+  { id: 'fields', icon: 'fields', label: 'Custom Fields' },
+  { id: 'subtask', icon: 'subtask', label: 'Add subtask' },
+  { id: 'relate', icon: 'relate', label: 'Relate items or add dependencies' },
+  { id: 'checklist', icon: 'checklist', label: 'Create checklist' },
+  { id: 'attach', icon: 'attach', label: 'Attach file' },
+];
+
+const DEFAULT_ACTIVITY = () => [
+  { id: 'a1', actor: 'You', text: 'tracked time · 1m on Oct 22', time: '1 hour ago' },
+];
+
+class TaskDetailPanelElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['type', 'title', 'ai-bar-text', 'ai-bar-actions', 'status-label', 'fields', 'description', 'actions', 'activity-title', 'activity', 'comment-placeholder'];
+  }
+
+  constructor() {
+    super();
+    this._bound = false;
+    this._type = 'Milestone';
+    this._title = 'Complete Dashboard Feature Screens';
+    this._aiBarText = 'Ask Brain to';
+    this._aiBarActions = ['create a summary', 'generate subtasks', 'find similar milestones'];
+    this._statusLabel = 'IN DEVELOPMENT';
+    this._fields = DEFAULT_FIELDS();
+    this._description = 'Finalize all design deliverables for the Dashboard feature. This includes ensuring layout compositions, maintaining component consistency, and applying visual polish. This milestone marks the completion of all Dashboard-related UI screens, ready for review and developer handoff.';
+    this._actions = DEFAULT_ACTIONS();
+    this._activityTitle = 'Activity';
+    this._activity = DEFAULT_ACTIVITY();
+    this._commentPlaceholder = 'Write a comment...';
+  }
+
+  connectedCallback() {
+    const read = (attr, key, fallback) => {
+      const v = this.getAttribute(attr);
+      if (v !== null && v !== '') this[`_${key}`] = v;
+      else if (this[`_${key}`] === undefined) this[`_${key}`] = fallback;
+    };
+    const readJson = (attr, key, fallback) => {
+      const v = this.getAttribute(attr);
+      if (v) this[`_${key}`] = parseJsonAttr(v, fallback());
+    };
+    read('type', 'type');
+    read('title', 'title');
+    read('ai-bar-text', 'aiBarText');
+    readJson('ai-bar-actions', 'aiBarActions', () => ['create a summary', 'generate subtasks', 'find similar milestones']);
+    read('status-label', 'statusLabel');
+    readJson('fields', 'fields', DEFAULT_FIELDS);
+    read('description', 'description');
+    readJson('actions', 'actions', DEFAULT_ACTIONS);
+    read('activity-title', 'activityTitle');
+    readJson('activity', 'activity', DEFAULT_ACTIVITY);
+    read('comment-placeholder', 'commentPlaceholder');
+    if (this._bound === false && this.innerHTML === '') {
+      this._bound = true;
+    }
+    this._render();
+    this.addEventListener('click', this._onClick);
+    this.addEventListener('keydown', this._onKeydown);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this._onClick);
+    this.removeEventListener('keydown', this._onKeydown);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (this._bound === false && this.innerHTML === '') return;
+    if (name === 'type') this._type = newValue || 'Milestone';
+    if (name === 'title') this._title = newValue || 'Complete Dashboard Feature Screens';
+    if (name === 'ai-bar-text') this._aiBarText = newValue || 'Ask Brain to';
+    if (name === 'ai-bar-actions') this._aiBarActions = parseJsonAttr(newValue, ['create a summary', 'generate subtasks', 'find similar milestones']);
+    if (name === 'status-label') this._statusLabel = newValue || 'IN DEVELOPMENT';
+    if (name === 'fields') this._fields = parseJsonAttr(newValue, DEFAULT_FIELDS());
+    if (name === 'description') this._description = newValue || '';
+    if (name === 'actions') this._actions = parseJsonAttr(newValue, DEFAULT_ACTIONS());
+    if (name === 'activity-title') this._activityTitle = newValue || 'Activity';
+    if (name === 'activity') this._activity = parseJsonAttr(newValue, DEFAULT_ACTIVITY());
+    if (name === 'comment-placeholder') this._commentPlaceholder = newValue || 'Write a comment...';
+    this._render();
+  }
+
+  _onClick(event) {
+    const actionBtn = event.target.closest('[data-task-action]');
+    if (actionBtn) {
+      const action = this._actions.find((a) => a.id === actionBtn.getAttribute('data-task-action'));
+      if (action) {
+        this.dispatchEvent(new CustomEvent('action-click', { detail: { action }, bubbles: true }));
+        return;
+      }
+    }
+    if (event.target.closest('[data-task-comment-send]')) {
+      const input = this.querySelector('[data-task-comment-input]');
+      const text = (input ? input.value : '').trim();
+      if (text) {
+        this.dispatchEvent(new CustomEvent('comment-submit', { detail: { text }, bubbles: true }));
+        if (input) input.value = '';
+      }
+    }
+  }
+
+  _onKeydown(event) {
+    if (event.key !== 'Enter' || event.shiftKey) return;
+    const input = event.target.closest('[data-task-comment-input]');
+    if (!input) return;
+    const text = input.value.trim();
+    if (text) {
+      this.dispatchEvent(new CustomEvent('comment-submit', { detail: { text }, bubbles: true }));
+      input.value = '';
+    }
+  }
+
+  _render() {
+    const fieldsHtml = this._fields
+      .map((f) => {
+        const valueHtml = f.tag
+          ? `<span data-task-field-value="${escapeAttribute(f.value)}" class="rounded bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-700 dark:bg-violet-950/70 dark:text-violet-300">${escapeAttribute(f.value)}</span>`
+          : `<span data-task-field-value="${escapeAttribute(f.value)}" class="truncate text-sm text-zinc-800 dark:text-zinc-100">${escapeAttribute(f.value)}</span>`;
+        return `<div data-task-field="${escapeAttribute(f.label)}" class="flex items-center gap-3">
+            <span class="flex w-36 shrink-0 items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400"><span aria-hidden="true">${iconFor(f.icon)}</span> ${escapeAttribute(f.label)}</span>
+            ${valueHtml}
+          </div>`;
+      })
+      .join('');
+
+    const aiBarActions = this._aiBarActions
+      .map((label, i) => `<button data-task-ai-action="${escapeAttribute(label)}" class="font-medium text-zinc-800 underline-offset-2 hover:underline dark:text-zinc-100">${escapeAttribute(label)}</button>${i < this._aiBarActions.length - 1 ? '<span class="text-zinc-400 dark:text-zinc-500">or</span>' : ''}`)
+      .join('');
+
+    const actionsHtml = this._actions
+      .map((a) => `<button data-task-action="${escapeAttribute(a.id)}" type="button" class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left text-sm text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800/60">
+          <span aria-hidden="true" class="text-zinc-400 dark:text-zinc-500">${iconFor(a.icon)}</span> ${escapeAttribute(a.label)}
+        </button>`)
+      .join('');
+
+    const activityHtml = this._activity
+      .map((item) => `<div data-task-activity-item="${escapeAttribute(item.id)}" class="flex items-start justify-between gap-3 text-sm">
+          <div class="min-w-0">
+            <p class="text-zinc-800 dark:text-zinc-100"><span class="mr-1 text-zinc-400" aria-hidden="true">•</span>${escapeAttribute(item.actor)} ${escapeAttribute(item.text)}</p>
+            <p class="mt-0.5 text-xs text-zinc-400 dark:text-zinc-500">⏱ ${escapeAttribute(item.time)}</p>
+          </div>
+          <span class="shrink-0 text-xs text-zinc-400 dark:text-zinc-500">${escapeAttribute(item.time)}</span>
+        </div>`)
+      .join('');
+
+    this.innerHTML = `
+      <div data-task-panel class="flex w-full overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div data-task-main class="min-w-0 flex-1">
+          <div data-task-header class="flex items-center justify-between border-b border-zinc-100 px-6 py-3 dark:border-zinc-800">
+            <div class="flex items-center gap-3">
+              <button data-task-type class="flex items-center gap-1.5 rounded-lg border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800">
+                <span aria-hidden="true">◆</span> ${escapeAttribute(this._type)} <span aria-hidden="true" class="text-zinc-400">▾</span>
+              </button>
+            </div>
+            <div class="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
+              <span data-task-created class="hidden sm:inline">Created on Oct 21</span>
+              <button data-task-ai class="flex items-center gap-1 rounded-lg px-2 py-1 font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800">✦ Ask AI</button>
+              <button data-task-share class="flex items-center gap-1 rounded-lg px-2 py-1 font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800">Share</button>
+            </div>
+          </div>
+          <div class="px-6 py-5">
+            <h2 data-task-title class="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">${escapeAttribute(this._title)}</h2>
+            <div data-task-ai-bar class="mt-4 flex flex-wrap items-center gap-1.5 rounded-xl bg-zinc-50 px-4 py-3 text-sm text-zinc-600 dark:bg-zinc-800/60 dark:text-zinc-300">
+              <span aria-hidden="true">✦</span>
+              <span>${escapeAttribute(this._aiBarText)}</span>
+              ${aiBarActions}
+            </div>
+            <div data-task-fields class="mt-6 grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2">
+              <div data-task-field="Status" class="flex items-center gap-3">
+                <span class="flex w-36 shrink-0 items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400"><span aria-hidden="true">◎</span> Status</span>
+                <button data-task-status class="flex items-center gap-1 rounded-md bg-sky-500 px-2.5 py-1 text-xs font-bold tracking-wide text-white">
+                  ${escapeAttribute(this._statusLabel)} <span aria-hidden="true">▸</span>
+                </button>
+              </div>
+              ${fieldsHtml}
+            </div>
+            <div data-task-description class="mt-6 border-t border-zinc-100 pt-5 dark:border-zinc-800">
+              <p class="text-sm leading-6 text-zinc-700 dark:text-zinc-200">${escapeAttribute(this._description)}</p>
+              <p class="mt-2 text-sm text-zinc-400 dark:text-zinc-500">Empty. Click or drag text/images inside</p>
+            </div>
+            <div data-task-actions class="mt-6 space-y-1">
+              ${actionsHtml}
+            </div>
+          </div>
+        </div>
+        <div data-task-activity class="hidden w-72 shrink-0 flex-col border-l border-zinc-100 md:flex dark:border-zinc-800">
+          <div class="flex items-center justify-between px-5 py-3.5">
+            <p data-task-activity-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(this._activityTitle)}</p>
+            <span class="text-sm text-zinc-400 dark:text-zinc-500">🔔 1 🔍 ≡</span>
+          </div>
+          <div class="flex-1 space-y-3 px-5">
+            <button data-task-activity-more class="flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"><span aria-hidden="true">›</span> Show more</button>
+            ${activityHtml}
+          </div>
+          <div data-task-comment class="border-t border-zinc-100 px-4 py-3 dark:border-zinc-800">
+            <div class="mb-2 flex gap-4 text-sm">
+              <button data-task-comment-tab class="border-b-2 border-zinc-900 pb-1 font-medium text-zinc-900 dark:border-zinc-100 dark:text-zinc-50">Comment</button>
+              <button data-task-comment-tab-alt class="pb-1 text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200">Email</button>
+            </div>
+            <textarea data-task-comment-input placeholder="${escapeAttribute(this._commentPlaceholder)}" rows="2" class="w-full resize-none rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-800 outline-none placeholder:text-zinc-400 focus:border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-zinc-600"></textarea>
+            <div class="mt-2 flex items-center justify-between">
+              <span class="text-sm text-zinc-400 dark:text-zinc-500">＋ ✦ @ 📎 ⋯</span>
+              <button data-task-comment-send type="button" class="rounded-lg px-2 py-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200" aria-label="Send comment">➤</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('task-detail-panel')) {
+  customElements.define('task-detail-panel', TaskDetailPanelElement);
+}
+
+export default TaskDetailPanelElement;
 
 ====
 File: vanilla/TestimonialGrid.js

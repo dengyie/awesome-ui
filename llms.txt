@@ -785,6 +785,18 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/SessionDeviceTable.tsx
    - Vue 3: vue/SessionDeviceTable.vue
    - Vanilla: vanilla/SessionDeviceTable.js (custom element `<session-device-table>`, attributes `title`/`description`/`learn-more-label`/`logout-all-label`/`page-label`/`page`/`rows-per-page-label`/`rows-per-page`/`sessions` JSON; properties `sessions`; events `session-click {session}`, `logout-all`, `rows-per-page-change {rowsPerPage}`)
+193. TaskDetailPanel: task/milestone detail panel — type pill header with Ask AI / Share, AI suggestion bar, status pill with two-column field grid (assignees/dates/priority/time estimate/sprint points/tags), description block, action list and an activity column with comment box (ClickUp task detail pattern).
+   - React: react/TaskDetailPanel.tsx
+   - Vue 3: vue/TaskDetailPanel.vue
+   - Vanilla: vanilla/TaskDetailPanel.js (custom element `<task-detail-panel>`, attributes `type`/`title`/`ai-bar-text`/`ai-bar-actions` JSON/`status-label`/`fields` JSON/`description`/`actions` JSON/`activity-title`/`activity` JSON/`comment-placeholder`; events `action-click {action}`, `comment-submit {text}`)
+194. DeliveryTrackingPanel: delivery tracking — map placeholder with floating back/help/zoom controls, ETA header, four-step progress stepper (done/active/pending), courier card with call/message buttons, collapsible order details with items, gift share block and Copy link / Text me the link actions (DoorDash delivery pattern).
+   - React: react/DeliveryTrackingPanel.tsx
+   - Vue 3: vue/DeliveryTrackingPanel.vue
+   - Vanilla: vanilla/DeliveryTrackingPanel.js (custom element `<delivery-tracking-panel>`, attributes `title`/`eta-prefix`/`eta`/`status-text`/`steps` JSON/`courier-name`/`courier-role`/`order-name`/`order-summary`/`items` JSON/`gift-recipient`/`gift-message`/`share-title`/`share-description`/`copy-link-label`/`text-link-label`; events `courier-call`, `courier-message`, `copy-link`, `text-link`)
+195. MapPropertyCard: map property bubble — price pins over a map placeholder and a floating preview card with image dots, like/close buttons, title + rating, subtitle and price range with dates (Airbnb map property pattern).
+   - React: react/MapPropertyCard.tsx
+   - Vue 3: vue/MapPropertyCard.vue
+   - Vanilla: vanilla/MapPropertyCard.js (custom element `<map-property-card>`, attributes `pins` JSON/`active-pin-id`/`card` JSON (`"null"` hides preview)/`like-label`/`close-label`; events `pin-click {pin}`, `card-close`, `card-like`)
    - React: react/VoiceSessionHistory.tsx
    - Vue 3: vue/VoiceSessionHistory.vue
    - Vanilla: vanilla/VoiceSessionHistory.js (custom element `<voice-session-history>`, attributes `title`/`sessions` JSON/`empty-label`; property `sessions`; events `select {session}`, `play {session}`)

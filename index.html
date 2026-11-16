@@ -219,12 +219,15 @@
   <script type="module" src="./vanilla/SessionDeviceTable.js"></script>
   <script type="module" src="./vanilla/AuditLogTable.js"></script>
   <script type="module" src="./vanilla/ChangelogTimeline.js"></script>
+  <script type="module" src="./vanilla/TaskDetailPanel.js"></script>
+  <script type="module" src="./vanilla/DeliveryTrackingPanel.js"></script>
+  <script type="module" src="./vanilla/MapPropertyCard.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.1.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.2.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -3130,6 +3133,60 @@
             <changelog-timeline id="demo-changelog48"></changelog-timeline>
             <div class="mt-3 flex items-center gap-2">
               <span id="demo-changelog48-status" class="text-[11px] text-zinc-500">Click an entry — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-183" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">183 · TaskDetailPanel</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.2.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Task detail panel — type pill header with Ask AI / Share, AI suggestion bar, status pill with two-column field grid, description block, action list and an activity column with comment box (ClickUp task detail pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/TaskDetailPanel.js">
+          <div class="space-y-3">
+            <task-detail-panel id="demo-task49"></task-detail-panel>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-task49-status" class="text-[11px] text-zinc-500">Click an action / send a comment — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-184" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">184 · DeliveryTrackingPanel</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.2.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Delivery tracking — map placeholder with floating controls, ETA header, four-step progress stepper, courier card with call/message buttons, collapsible order details, gift share block and Copy link / Text me the link actions (DoorDash delivery pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/DeliveryTrackingPanel.js">
+          <div class="space-y-3">
+            <delivery-tracking-panel id="demo-delivery49"></delivery-tracking-panel>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-delivery49-status" class="text-[11px] text-zinc-500">Call / message the courier, share a link — events report here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-185" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">185 · MapPropertyCard</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.2.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Map property bubble — price pins over a map placeholder with a floating preview card: image dots, like/close buttons, title + rating, subtitle and price range with dates (Airbnb map property pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/MapPropertyCard.js">
+          <div class="space-y-3">
+            <map-property-card id="demo-mappin49"></map-property-card>
+            <div class="mt-3 flex items-center gap-2">
+              <span id="demo-mappin49-status" class="text-[11px] text-zinc-500">Click a price pin — events report here.</span>
             </div>
           </div>
         </div>
@@ -6277,6 +6334,30 @@ FAIL tests/ui.test.mjs
       const changelogStatus48 = document.getElementById('demo-changelog48-status');
       if (changelog48) {
         changelog48.addEventListener('entry-click', (event) => { changelogStatus48.textContent = 'Entry → ' + event.detail.entry.title; });
+      }
+
+      const task49 = document.getElementById('demo-task49');
+      const taskStatus49 = document.getElementById('demo-task49-status');
+      if (task49) {
+        task49.addEventListener('action-click', (event) => { taskStatus49.textContent = 'Action → ' + event.detail.action.label; });
+        task49.addEventListener('comment-submit', (event) => { taskStatus49.textContent = 'Comment → ' + event.detail.text; });
+      }
+
+      const delivery49 = document.getElementById('demo-delivery49');
+      const deliveryStatus49 = document.getElementById('demo-delivery49-status');
+      if (delivery49) {
+        delivery49.addEventListener('courier-call', () => { deliveryStatus49.textContent = 'Calling the Dasher…'; });
+        delivery49.addEventListener('courier-message', () => { deliveryStatus49.textContent = 'Message thread opened'; });
+        delivery49.addEventListener('copy-link', () => { deliveryStatus49.textContent = 'Share link copied'; });
+        delivery49.addEventListener('text-link', () => { deliveryStatus49.textContent = 'Link text sent'; });
+      }
+
+      const mappin49 = document.getElementById('demo-mappin49');
+      const mappinStatus49 = document.getElementById('demo-mappin49-status');
+      if (mappin49) {
+        mappin49.addEventListener('pin-click', (event) => { mappinStatus49.textContent = 'Pin → ' + event.detail.pin.price; });
+        mappin49.addEventListener('card-close', () => { mappinStatus49.textContent = 'Preview closed'; });
+        mappin49.addEventListener('card-like', () => { mappinStatus49.textContent = 'Saved to wishlist'; });
       }
 
       const pvdiff37 = document.getElementById('demo-pvdiff');
