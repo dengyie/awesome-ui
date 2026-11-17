@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 z-40" :data-side="side" data-side-drawer>
+  <div v-if="isOpen" class="fixed inset-0 z-40" :data-side="side" data-side-drawer>
     <div class="absolute inset-0 bg-zinc-950/50" data-drawer-overlay @click="emit('close')" />
     <aside
       :class="['absolute top-0 flex h-full w-full max-w-md flex-col border-zinc-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-900', side === 'left' ? 'left-0 rounded-r-2xl' : 'right-0 rounded-l-2xl']"
@@ -105,6 +105,8 @@ export interface SettingsSection {
 
 withDefaults(
   defineProps<{
+    /** Render the fixed overlay; closed by default (inset-0 would blanket the page). */
+    isOpen?: boolean;
     title?: string;
     side?: 'right' | 'left';
     tabs?: { id: string; label: string }[];
@@ -113,7 +115,7 @@ withDefaults(
     footerPrimary?: string;
     footerSecondary?: string;
   }>(),
-  { title: 'Settings', side: 'right', tabs: () => [], activeTab: '', sections: () => [], footerPrimary: '', footerSecondary: '' },
+  { isOpen: false, title: 'Settings', side: 'right', tabs: () => [], activeTab: '', sections: () => [], footerPrimary: '', footerSecondary: '' },
 );
 
 const emit = defineEmits<{

@@ -219,11 +219,13 @@ test('CookieConsent — categories, always active, cookie list and confirm event
 
 test('SettingsSideDrawer — tabs, rows, controls and footer events', () => {
   const { el } = mount(drawerSource, 'SettingsSideDrawerElement', 'settings-side-drawer', {
+    open: '',
     title: 'Settings',
     'active-tab': 'general',
     'footer-primary': 'Deploy',
     'footer-secondary': 'Cancel',
   });
+  assert.ok(el.querySelector('[data-side-drawer]'), 'overlay rendered with open attr');
   const closes = collect(el, 'close');
   const tabChanges = collect(el, 'tab-change');
   const toggles = collect(el, 'row-toggle');
@@ -276,7 +278,7 @@ test('SettingsSideDrawer — tabs, rows, controls and footer events', () => {
 });
 
 test('SettingsSideDrawer — left side variant', () => {
-  const { el } = mount(drawerSource, 'SettingsSideDrawerElement', 'settings-side-drawer', { side: 'left' });
+  const { el } = mount(drawerSource, 'SettingsSideDrawerElement', 'settings-side-drawer', { side: 'left', open: '' });
   el.sections = [{ rows: [{ label: 'Enabled', control: 'toggle', enabled: true }] }];
   assert.ok(el.innerHTML.includes('left-0'), 'left anchored');
   assert.ok(el.innerHTML.includes('rounded-r-2xl'), 'rounded right corners');

@@ -4,6 +4,7 @@
  * Attributes: title, side, footer-primary, footer-secondary
  * Properties: tabs ({ id, label }[]), active-tab (string attr), sections ({ title?, rows: { label, description?, control?, value?, options?, buttonLabel?, buttonTone?, enabled? }[] }[])
  * Events: close, tab-change (detail {id}), row-toggle (detail {label, enabled}), row-action (detail {label}), footer-primary
+ * Attrs: open — gates the fixed overlay (closed by default)
  */
 import uiIcon from './UiIcon.js';
 
@@ -24,7 +25,7 @@ const BUTTON_TONE = {
 
 export class SettingsSideDrawerElement extends HTMLElement {
   static get observedAttributes() {
-    return ['title', 'side', 'active-tab', 'footer-primary', 'footer-secondary'];
+    return ['open', 'title', 'side', 'active-tab', 'footer-primary', 'footer-secondary'];
   }
 
   constructor() {
@@ -69,6 +70,13 @@ export class SettingsSideDrawerElement extends HTMLElement {
   }
 
   render() {
+    // Closed by default: the fixed inset-0 overlay must not blanket the page
+    // until the `open` attribute is set.
+    if (!this.hasAttribute('open')) {
+      this._applyHostClass('');
+      this.innerHTML = '';
+      return;
+    }
     this._applyHostClass('block');
     const title = this.getAttribute('title') || 'Settings';
     const side = this.getAttribute('side') || 'right';

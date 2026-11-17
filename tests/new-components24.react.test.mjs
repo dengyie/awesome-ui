@@ -152,6 +152,7 @@ test('React SSR — SettingsSideDrawer tabs, rows and footer', async () => {
   const { default: SettingsSideDrawer } = await load('SettingsSideDrawer.tsx');
   const html = renderToStaticMarkup(
     h(SettingsSideDrawer, {
+      isOpen: true,
       title: 'Settings',
       tabs: [
         { id: 'general', label: 'Settings' },

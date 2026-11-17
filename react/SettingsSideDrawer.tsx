@@ -16,6 +16,8 @@ export interface SettingsSection {
 }
 
 export interface SideDrawerProps {
+  /** Render the fixed overlay; closed by default (inset-0 would blanket the page). */
+  isOpen?: boolean;
   title?: string;
   side?: "right" | "left";
   tabs?: { id: string; label: string }[];
@@ -52,9 +54,12 @@ export default function SettingsSideDrawer({
   onRowToggle,
   onRowAction,
   onClose,
+  isOpen = false,
   onFooterPrimary,
 }: SideDrawerProps) {
   const sideClass = side === "left" ? "left-0 rounded-r-2xl" : "right-0 rounded-l-2xl";
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-40" data-side-drawer data-side={side}>

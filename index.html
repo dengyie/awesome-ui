@@ -1469,6 +1469,10 @@
       </div>
       <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
         <div class="rounded-lg bg-zinc-800 p-4 text-sm text-zinc-300">Page content behind the drawer is dimmed by the overlay layer.</div>
+        <div class="mb-2 flex items-center gap-2">
+          <button type="button" id="demo-drawer2-open" class="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-indigo-500">Open settings drawer</button>
+          <span class="text-[11px] text-zinc-500">Drawer is closed by default — open it, then close via ✕ or the overlay.</span>
+        </div>
         <settings-side-drawer id="demo-drawer2" title="Settings" active-tab="general" footer-primary="Deploy" footer-secondary="Cancel"></settings-side-drawer>
         <p id="demo-drawer2-status" class="mt-2 text-[11px] text-zinc-500">Click the overlay to fire the close event (demo status only).</p>
       </div>
@@ -5674,8 +5678,14 @@ FAIL tests/ui.test.mjs
           if (drawerStatus) drawerStatus.textContent = `${event.detail.label} action fired (demo status only).`;
         });
         drawerEl.addEventListener('close', () => {
-          if (drawerStatus) drawerStatus.textContent = 'Drawer close requested (demo status only).';
+          drawerEl.removeAttribute('open');
+          if (drawerStatus) drawerStatus.textContent = 'Drawer closed.';
         });
+      }
+
+      const drawerOpen = document.getElementById('demo-drawer2-open');
+      if (drawerOpen && drawerEl) {
+        drawerOpen.addEventListener('click', () => { drawerEl.setAttribute('open', ''); if (drawerStatus) drawerStatus.textContent = 'Drawer opened.'; });
       }
 
       // 93. ClarifyQuestionCard — answer via Enter, page with ‹ ›.

@@ -498,7 +498,7 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/CookieConsent.tsx
    - Vue 3: vue/CookieConsent.vue
    - Vanilla: vanilla/CookieConsent.js (custom element `<cookie-consent>`, attributes `title`/`description`/`policy-label`/`accept-label`/`reject-label`/`save-label`, property `categories`; event `confirm` detail `{accepted}`)
-101. SettingsSideDrawer: Side-anchored settings panel over a fixed overlay with tab strip, setting rows (title + description + toggle/select/3-tone button controls) and a sticky footer (primary + secondary).
+101. SettingsSideDrawer: Side-anchored settings panel gated by the `open` attribute / `isOpen` prop (closed by default) over a fixed overlay with tab strip, setting rows (title + description + toggle/select/3-tone button controls) and a sticky footer (primary + secondary).
    - React: react/SettingsSideDrawer.tsx
    - Vue 3: vue/SettingsSideDrawer.vue
    - Vanilla: vanilla/SettingsSideDrawer.js (custom element `<settings-side-drawer>`, attributes `title`/`side`/`active-tab`/`footer-primary`/`footer-secondary`, properties `tabs`/`sections`; events `close`/`tab-change`/`row-toggle`/`row-action`/`footer-primary`)
