@@ -8,6 +8,14 @@
  * </liquid-glass>
  */
 
+// Motion preference is resolved per-call (cheap) so tests and embeds can stub
+// matchMedia dynamically; absent matchMedia (jsdom) means "no short-circuit".
+function prefersReducedMotion() {
+  return typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 class LiquidGlass extends HTMLElement {
   static get observedAttributes() {
     return ["variant", "intensity", "interactive", "enable-tilt", "max-tilt", "glare-opacity"];
@@ -156,7 +164,7 @@ class LiquidGlass extends HTMLElement {
       glare.style.background = `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.2) 35%, transparent 65%)`;
     }
 
-    if (enableTilt && variant !== "sidebar") {
+    if (enableTilt && variant !== "sidebar" && !prefersReducedMotion()) {
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
       const ry = ((x - centerX) / centerX) * maxTilt;

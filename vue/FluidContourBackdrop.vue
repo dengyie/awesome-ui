@@ -209,7 +209,12 @@ onMounted(() => {
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     document.documentElement.addEventListener("pointerleave", onPointerLeave);
 
-    const reducedQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // Guard matchMedia (absent in jsdom); resolve before any listener is
+    // registered so a throw here cannot leak the handlers below.
+    const reducedQuery =
+      typeof window.matchMedia === "function"
+        ? window.matchMedia("(prefers-reduced-motion: reduce)")
+        : { matches: false };
     let t = 17;
     let last = performance.now();
     let raf = 0;

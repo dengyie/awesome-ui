@@ -3,6 +3,14 @@
  * Usage: <spotlight-glare-card enable-tilt="true" glare-opacity="0.5">...</spotlight-glare-card>
  */
 
+// Respect prefers-reduced-motion for JS-driven tilt (inline transform would
+// override the CSS motion-reduce class); absent matchMedia => no short-circuit.
+function prefersReducedMotion() {
+  return typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 class SpotlightGlareCard extends HTMLElement {
   static get observedAttributes() {
     return ["glare-opacity", "glare-radius", "enable-tilt", "max-tilt"];
@@ -73,7 +81,7 @@ class SpotlightGlareCard extends HTMLElement {
       glare.style.background = `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.15) 30%, transparent ${glareRadius}%)`;
     }
 
-    if (enableTilt) {
+    if (enableTilt && !prefersReducedMotion()) {
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
       const ry = ((x - centerX) / centerX) * maxTilt;
@@ -97,8 +105,4 @@ class SpotlightGlareCard extends HTMLElement {
 
 if (typeof customElements !== "undefined" && !customElements.get("spotlight-glare-card")) {
   customElements.define("spotlight-glare-card", SpotlightGlareCard);
-}
-
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = { SpotlightGlareCard };
 }

@@ -99,9 +99,14 @@ void main() {
 }
 `;
 
+// Module-level defaults: a fresh array literal per render would change the
+// effect deps identity every parent render and rebuild the WebGL context.
+const DEFAULT_INK_COLOR: [number, number, number] = [0.17, 0.23, 0.19];
+const DEFAULT_PAPER_COLOR: [number, number, number] = [0.98, 0.98, 0.96];
+
 export const FluidContourBackdrop: React.FC<FluidContourBackdropProps> = ({
-  inkColor = [0.17, 0.23, 0.19],
-  paperColor = [0.98, 0.98, 0.96],
+  inkColor = DEFAULT_INK_COLOR,
+  paperColor = DEFAULT_PAPER_COLOR,
   speed = 0.035,
   interactive = true,
   className = "",
@@ -208,7 +213,12 @@ export const FluidContourBackdrop: React.FC<FluidContourBackdropProps> = ({
       window.addEventListener("pointermove", onPointerMove, { passive: true });
       document.documentElement.addEventListener("pointerleave", onPointerLeave);
 
-      const reducedQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      // Guard matchMedia (absent in jsdom); resolve before any listener is
+      // registered so a throw here cannot leak the handlers below.
+      const reducedQuery =
+        typeof window.matchMedia === "function"
+          ? window.matchMedia("(prefers-reduced-motion: reduce)")
+          : { matches: false };
       let t = 17;
       let last = performance.now();
       let raf = 0;

@@ -1197,9 +1197,11 @@ export const PointerRipples: React.FC<PointerRipplesProps> = ({
     const canvas = canvasRef.current;
     if (!canvas || typeof window === "undefined") return;
 
-    // Check accessibility & coarse pointer
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const coarsePointer = window.matchMedia("(pointer: coarse)");
+    // Check accessibility; guard matchMedia (absent in jsdom / old embeds)
+    const reduceMotion =
+      typeof window.matchMedia === "function"
+        ? window.matchMedia("(prefers-reduced-motion: reduce)")
+        : { matches: false };
     if (reduceMotion.matches) return;
 
     let engine: FluidSimulationEngine | null = null;

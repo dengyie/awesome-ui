@@ -980,7 +980,7 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
 219. PointerRipples: WebGL Navier-Stokes pointer ripples backdrop — rainbow dye splats, vorticity swirls, 3D diffuse shading, idle auto-settle (hero background pattern).
    - React: react/PointerRipples.tsx
    - Vue 3: vue/PointerRipples.vue
-   - Vanilla: vanilla/PointerRipples.js (custom element `<pointer-ripples>`, numeric sim attributes `sim-resolution`/`dye-resolution`/`density-dissipation`/`velocity-dissipation`/`pressure`/`curl`/`splat-radius`/`splat-force`/`color-*` etc., plus `shading`/`class`; no events)
+   - Vanilla: vanilla/PointerRipples.js (custom element `<pointer-ripples>`, numeric sim attributes `sim-resolution`/`dye-resolution`/`density-dissipation`/`velocity-dissipation`/`pressure`/`curl`/`splat-radius`/`splat-force`/`color-*` etc., plus `shading`; no events)
 220. FluidContourBackdrop: animated fluid ink contour backdrop — flowing marbled lines with speed/interactive controls and ink/paper colors (ambient background pattern).
    - React: react/FluidContourBackdrop.tsx
    - Vue 3: vue/FluidContourBackdrop.vue

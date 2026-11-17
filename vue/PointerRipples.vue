@@ -1252,7 +1252,11 @@ onMounted(() => {
   if (!canvas || typeof window === "undefined") return;
 
   // Accessibility: static fallback for reduced-motion users
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  // (guard matchMedia — absent in jsdom / old embeds)
+  const reduceMotion =
+    typeof window.matchMedia === "function"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")
+      : { matches: false };
   if (reduceMotion.matches) return;
 
   try {

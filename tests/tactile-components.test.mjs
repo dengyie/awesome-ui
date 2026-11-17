@@ -46,6 +46,7 @@ test("Vanilla: Web Components define and render safely in DOM", async () => {
   await import(pathToFileURL(path.join(projectRoot, "vanilla/SpotlightGlareCard.js")));
   await import(pathToFileURL(path.join(projectRoot, "vanilla/PointerRipples.js")));
   await import(pathToFileURL(path.join(projectRoot, "vanilla/LiquidGlass.js")));
+  await import(pathToFileURL(path.join(projectRoot, "vanilla/FluidContourBackdrop.js")));
 
   assert.ok(dom.window.customElements.get("animated-counter"));
   assert.ok(dom.window.customElements.get("spotlight-glare-card"));
@@ -131,6 +132,62 @@ test("Vanilla: Web Components define and render safely in DOM", async () => {
   glassCard.dispatchEvent(leaveEvent);
   assert.equal(glareEl.style.opacity, "0");
   assert.equal(glassCard.style.transform, "");
+
+  // FluidContourBackdrop vanilla: canvas shell + WebGL-unavailable fallback path
+  // (jsdom has no WebGL: init() must fail gracefully inside try/catch, and the
+  // matchMedia typeof guard must keep it from throwing on listeners setup).
+  const contour = dom.window.document.createElement("fluid-contour-backdrop");
+  contour.setAttribute("speed", "0.05");
+  contour.setAttribute("ink-color", "0.1,0.2,0.3");
+  contour.setAttribute("paper-color", "not-a-color");
+  dom.window.document.body.appendChild(contour);
+  const contourCanvas = contour.querySelector("canvas");
+  assert.ok(contourCanvas, "FluidContourBackdrop should render a canvas element");
+  assert.equal(contourCanvas.getAttribute("aria-hidden"), "true");
+  assert.ok(contourCanvas.className.includes("pointer-events-none"));
+  // Removing from DOM (disconnect) and re-adding must not throw in fallback mode
+  contour.remove();
+  dom.window.document.body.appendChild(contour);
+  contour.remove();
+});
+
+// Same JSDOM instance on purpose: ESM module cache means the vanilla modules
+// register their custom elements on the FIRST jsdom's customElements only.
+test("Vanilla: tactile components lifecycle & payload hardening", async () => {
+  // Malformed numeric payloads must not throw (parseFloat whitelist + NaN guard)
+  for (const [tag, attrs] of [
+    ["animated-counter", { target: "NaN", duration: "0;url(javascript:x)", start: "1e999" }],
+    ["spotlight-glare-card", { "glare-opacity": "0;url(javascript:x)", "glare-radius": "NaN", "max-tilt": "Infinity" }],
+    ["liquid-glass", { "glare-opacity": "<script>", "max-tilt": "NaN", "enable-tilt": "true" }],
+    ["pointer-ripples", { curl: "NaN", "sim-resolution": "1e999", opacity: "0.9;url(javascript:x)" }],
+    ["fluid-contour-backdrop", { speed: "NaN", "ink-color": "1,2", "paper-color": "a,b,c,d" }],
+  ]) {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+    document.body.appendChild(el);
+    assert.ok(customElements.get(tag), `${tag} should be defined`);
+    el.remove();
+  }
+
+  // Disconnect cleanliness: removing elements must not throw (engine teardown)
+  const ripples = document.createElement("pointer-ripples");
+  document.body.appendChild(ripples);
+  ripples.remove();
+  ripples.remove();
+
+  // Reduced-motion short-circuit: tilt must NOT write inline transform
+  window.matchMedia = (query) => ({ matches: query.includes("reduce"), media: query, addListener() {}, removeListener() {} });
+  const glass = document.createElement("liquid-glass");
+  glass.setAttribute("variant", "card");
+  glass.setAttribute("enable-tilt", "true");
+  glass.innerHTML = "<span>x</span>";
+  document.body.appendChild(glass);
+  glass.getBoundingClientRect = () => ({ left: 0, top: 0, width: 200, height: 100, right: 200, bottom: 100 });
+  const move = new window.Event("pointermove");
+  move.clientX = 40;
+  move.clientY = 20;
+  glass.dispatchEvent(move);
+  assert.equal(glass.style.transform, "", "tilt must be suppressed under prefers-reduced-motion");
 });
 
 test("React: Components SSR render without throwing", async () => {

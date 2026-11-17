@@ -1089,7 +1089,9 @@ const NUM_ATTRS = {
 
 class PointerRipples extends HTMLElement {
   static get observedAttributes() {
-    return [...Object.keys(NUM_ATTRS), "shading", "class"];
+    // NOTE: no "class" here — observing it would force a full WebGL engine
+    // rebuild on any host class change (browsers cap ~16 live GL contexts).
+    return [...Object.keys(NUM_ATTRS), "shading"];
   }
 
   constructor() {
@@ -1188,8 +1190,4 @@ class PointerRipples extends HTMLElement {
 
 if (typeof customElements !== "undefined" && !customElements.get("pointer-ripples")) {
   customElements.define("pointer-ripples", PointerRipples);
-}
-
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = { PointerRipples, FluidSimulationEngine };
 }

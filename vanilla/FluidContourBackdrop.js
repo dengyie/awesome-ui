@@ -178,8 +178,27 @@ class FluidContourBackdrop extends HTMLElement {
       const speed = parseFloat(this.getAttribute("speed") || "0.035");
       const interactive = this.getAttribute("interactive") !== "false";
 
-      gl.uniform3fv(uInk, [0.17, 0.23, 0.19]);
-      gl.uniform3fv(uPaper, [0.98, 0.98, 0.96]);
+      // ink-color/paper-color: "r,g,b" normalized 0-1, clamped; must match the
+      // React/Vue props so the three stacks stay in parity (llms.txt #220).
+      const parseColor3 = (raw, fallback) => {
+        const parts = String(raw || "")
+          .split(",")
+          .map((n) => Number.parseFloat(n));
+        if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) return fallback;
+        return parts.map((n) => Math.min(1, Math.max(0, n)));
+      };
+      const ink = parseColor3(this.getAttribute("ink-color"), [0.17, 0.23, 0.19]);
+      const paper = parseColor3(this.getAttribute("paper-color"), [0.98, 0.98, 0.96]);
+
+      // Resolve reduced-motion FIRST: matchMedia may be absent (jsdom) and
+      // throwing here must not leak the listeners registered below.
+      const reducedQuery =
+        typeof window.matchMedia === "function"
+          ? window.matchMedia("(prefers-reduced-motion: reduce)")
+          : { matches: false };
+
+      gl.uniform3fv(uInk, ink);
+      gl.uniform3fv(uPaper, paper);
 
       const dpr = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
       const scale = Math.min(dpr, 2) * 0.75;
@@ -215,7 +234,6 @@ class FluidContourBackdrop extends HTMLElement {
       window.addEventListener("pointermove", onPointerMove, { passive: true });
       document.documentElement.addEventListener("pointerleave", onPointerLeave);
 
-      const reducedQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
       let t = 17;
       let last = performance.now();
       let raf = 0;
@@ -283,8 +301,4 @@ class FluidContourBackdrop extends HTMLElement {
 
 if (typeof customElements !== "undefined" && !customElements.get("fluid-contour-backdrop")) {
   customElements.define("fluid-contour-backdrop", FluidContourBackdrop);
-}
-
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = { FluidContourBackdrop };
 }

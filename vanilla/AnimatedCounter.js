@@ -100,7 +100,3 @@ class AnimatedCounter extends HTMLElement {
 if (typeof customElements !== "undefined" && !customElements.get("animated-counter")) {
   customElements.define("animated-counter", AnimatedCounter);
 }
-
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = { AnimatedCounter };
-}
