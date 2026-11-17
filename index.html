@@ -273,8 +273,6 @@
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
-      <context-usage-badge id="header-context-badge" used-tokens="68500" max-tokens="128000" model-name="claude-3-5-sonnet"></context-usage-badge>
-      <model-selector id="header-model-selector" selected-id="claude-3-5-sonnet"></model-selector>
       <theme-toggle></theme-toggle>
       <a href="https://github.com/dengyie/awesome-ui" target="_blank" class="hover:text-zinc-100 transition-colors">GitHub ↗</a>
     </div>
@@ -411,7 +409,7 @@
         <span class="text-xs font-mono text-zinc-500">User / Assistant / System Roles, Avatar, Timestamp</span>
       </div>
       <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
-        <chat-message-row role="system" content="Session started · claude-3-5-sonnet"></chat-message-row>
+        <chat-message-row role="system" content="Session started · claude-sonnet-4-5"></chat-message-row>
         <chat-message-row role="user" name="Mango" timestamp="21:30" content="Help me scaffold a streaming chat UI with Tailwind."></chat-message-row>
         <chat-message-row role="assistant" name="Claude" timestamp="21:30" content="Sure — combine ChatPromptInput, StreamMarkdown and AutoScrollAnchor from this kit. Copy the single files and you're done."></chat-message-row>
       </div>
@@ -3857,6 +3855,35 @@
         </div>
       </div>
     </section>
+    <section id="section-224" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">224 · ContextUsageBadge</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.1.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Context window / token consumption indicator — model name pill, usage bar with color thresholds and a tabular readout (chat header pattern).</p>
+      <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vanilla" data-file="vanilla/ContextUsageBadge.js">
+        <div class="flex items-center gap-6">
+          <context-usage-badge id="demo-ctx-badge" used-tokens="96000" max-tokens="200000" model-name="claude-sonnet-4-5"></context-usage-badge>
+          <context-usage-badge used-tokens="178000" max-tokens="200000" model-name="gpt-5.2"></context-usage-badge>
+        </div>
+        <p id="demo-ctx-badge-status" class="mt-2 text-[11px] text-zinc-500">Demo values — colors shift toward amber/red as the window fills.</p>
+      </div>
+    </section>
+    <section id="section-225" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">225 · ModelSelector</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.1.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Model switcher dropdown — provider grouped list with context lengths and tags, wired to the ContextUsageBadge demo beside it (chat header pattern).</p>
+      <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vanilla" data-file="vanilla/ModelSelector.js">
+        <div class="flex items-center gap-6">
+          <model-selector id="demo-model-selector" selected-id="claude-sonnet-4-5"></model-selector>
+          <span id="demo-model-status" class="text-[11px] text-zinc-500">Pick a model — the badge above follows.</span>
+        </div>
+      </div>
+    </section>
   <auto-scroll-anchor></auto-scroll-anchor>
 
   <script>
@@ -3958,7 +3985,7 @@
       const demoPrompt = document.getElementById('demo-prompt');
       if (demoPrompt) {
         demoPrompt.chips = [
-          { id: 'model', label: 'Claude 3.5 Sonnet', icon: 'sparkles', active: true },
+          { id: 'model', label: 'Claude Sonnet 4.5', icon: 'sparkles', active: true },
           { id: 'web', label: 'Web search', icon: 'globe' },
           { id: 'deep', label: 'Deep think', icon: 'cpu' },
         ];
@@ -4002,7 +4029,7 @@
       });
 
       const toastMessages = {
-        success: 'Model switched to Claude 3.5 Sonnet',
+        success: 'Model switched to Claude Sonnet 4.5',
         warning: 'Context window above 80%',
         error: 'Request failed — rate limit reached',
       };
@@ -4149,15 +4176,15 @@
         });
       }
 
-      const modelSel = document.getElementById('header-model-selector');
-      const ctxBadge = document.getElementById('header-context-badge');
+      const modelSel = document.getElementById('demo-model-selector');
+      const ctxBadge = document.getElementById('demo-ctx-badge');
 
       if (modelSel) {
         modelSel.models = [
-          { id: 'claude-3-5-sonnet', name: 'Claude 3.5 Sonnet', provider: 'Anthropic', contextLength: '200k', tags: ['Default', 'Coding'] },
-          { id: 'gpt-4o', name: 'GPT-4o', provider: 'OpenAI', contextLength: '128k', tags: ['General'] },
-          { id: 'deepseek-r1', name: 'DeepSeek R1', provider: 'DeepSeek', contextLength: '64k', tags: ['Reasoning'] },
-          { id: 'gemini-1-5-pro', name: 'Gemini 1.5 Pro', provider: 'Google', contextLength: '2M', tags: ['Long Context'] }
+          { id: 'claude-sonnet-4-5', name: 'Claude Sonnet 4.5', provider: 'Anthropic', contextLength: '200k', tags: ['Default', 'Coding'] },
+          { id: 'gpt-5.2', name: 'GPT-5.2', provider: 'OpenAI', contextLength: '400k', tags: ['General'] },
+          { id: 'gemini-3-pro', name: 'Gemini 3 Pro', provider: 'Google', contextLength: '2M', tags: ['Long Context'] },
+          { id: 'deepseek-v4', name: 'DeepSeek V4', provider: 'DeepSeek', contextLength: '160k', tags: ['Reasoning'] }
         ];
 
         modelSel.addEventListener('select', (e) => {
@@ -4165,6 +4192,8 @@
           if (ctxBadge) {
             ctxBadge.setAttribute('model-name', model.id);
           }
+          const status = document.getElementById('demo-model-status');
+          if (status) status.textContent = 'Model switched to ' + model.name + ' (' + model.contextLength + ' context).';
         });
       }
 
@@ -4199,7 +4228,7 @@
           { key: 'calls', label: 'Calls', align: 'right' },
         ];
         table.rows = [
-          { model: 'Claude 3.5 Sonnet', context: '200k', price: '$3.00', calls: 12840 },
+          { model: 'Claude Sonnet 4.5', context: '200k', price: '$3.00', calls: 12840 },
           { model: 'GPT-4o', context: '128k', price: '$2.50', calls: 9320 },
           { model: 'DeepSeek R1', context: '64k', price: '$0.55', calls: 7415 },
           { model: 'Gemini 1.5 Pro', context: '2M', price: '$1.25', calls: 3110 },
