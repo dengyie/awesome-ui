@@ -100,6 +100,6 @@ test('StatsBand — cells, value echo and responsive columns', () => {
   const { el } = mount(statsSource, 'StatsBandElement');
   assert.equal(el.querySelectorAll('[data-stats-cell]').length, 4);
   assert.ok(el.querySelector('[data-stats-grid]').className.includes('sm:grid-cols-4'));
-  assert.ok(el.querySelector('[data-stats-value="221+"]'));
+  assert.ok(el.querySelector('[data-stats-value="235+"]'));
   assert.ok(el.querySelector('[data-stats-note="0"]'));
 });

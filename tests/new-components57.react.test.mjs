@@ -72,7 +72,7 @@ test('React SSR — LogoCloud kicker and tiles', async () => {
 test('React SSR — StatsBand values and responsive grid', async () => {
   const { default: StatsBand } = await load('StatsBand.tsx');
   const html = renderToStaticMarkup(h(StatsBand, {}));
-  assert.ok(html.includes('221+'));
+  assert.ok(html.includes('235+'));
   assert.ok(html.includes('sm:grid-cols-4'));
   assert.ok(html.includes('Production components'));
 });

@@ -82,6 +82,6 @@ test('vue SSR — LogoCloud kicker and tiles', async () => {
 
 test('vue SSR — StatsBand values and responsive grid', async () => {
   const html = await renderSfc('StatsBand.vue', {});
-  assert.ok(html.includes('221+'));
+  assert.ok(html.includes('235+'));
   assert.ok(html.includes('Production components'));
 });

@@ -17,9 +17,9 @@ export interface StatsBandProps {
 }
 
 const DEFAULT_STATS: StatItem[] = [
-  { value: "221+", label: "Production components", note: "React / Vue / Vanilla" },
-  { value: "732", label: "Regression tests", note: "jsdom + SSR + compile" },
-  { value: "664", label: "Source files", note: "Single-file, copy-paste" },
+  { value: "235+", label: "Production components", note: "React / Vue / Vanilla" },
+  { value: "771", label: "Regression tests", note: "jsdom + SSR + compile" },
+  { value: "706", label: "Source files", note: "Single-file, copy-paste" },
   { value: "3.5k", label: "Reference screens", note: "Mobbin-curated patterns" },
 ];
 
