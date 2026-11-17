@@ -1110,11 +1110,20 @@ class PointerRipples extends HTMLElement {
     }
   }
 
-  attributeChangedCallback() {
-    if (this.isConnected) {
-      this.disconnectedCallback();
-      this.init();
+  attributeChangedCallback(name) {
+    if (!this.isConnected) return;
+    // opacity only touches canvas style — patch it in place instead of tearing
+    // down and rebuilding the whole WebGL engine (browsers cap ~16 GL contexts).
+    if (name === "opacity") {
+      const canvas = this.querySelector("canvas");
+      if (canvas) {
+        const opacity = Number.parseFloat(this.getAttribute("opacity") || "0.58");
+        if (!Number.isNaN(opacity)) canvas.style.opacity = String(opacity);
+      }
+      return;
     }
+    this.disconnectedCallback();
+    this.init();
   }
 
   init() {

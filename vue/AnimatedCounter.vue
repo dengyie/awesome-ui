@@ -48,6 +48,16 @@ onMounted(() => {
     return;
   }
 
+  // Respect prefers-reduced-motion: jump straight to the final value.
+  if (
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    displayValue.value = props.target;
+    animated = true;
+    return;
+  }
+
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {

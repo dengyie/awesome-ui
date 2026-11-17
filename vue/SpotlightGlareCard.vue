@@ -42,6 +42,14 @@ const props = withDefaults(defineProps<Props>(), {
   className: "",
 });
 
+// Sanitize numeric props: TS types are compile-time only, so a plain-JS
+// caller could pass arbitrary strings that would land inside CSS values.
+function numOr(v: unknown, fallback: number, min = -Infinity, max = Infinity): number {
+  const n = typeof v === "number" ? v : Number.parseFloat(String(v));
+  if (Number.isNaN(n)) return fallback;
+  return Math.min(max, Math.max(min, n));
+}
+
 const cardRef = ref<HTMLDivElement | null>(null);
 const gx = ref("50%");
 const gy = ref("50%");
@@ -60,10 +68,11 @@ const handlePointerMove = (e: PointerEvent) => {
   gy.value = `${((y / rect.height) * 100).toFixed(1)}%`;
 
   if (props.enableTilt) {
+    const maxTilt = numOr(props.maxTilt, 5, 0, 90);
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    ry.value = ((x - centerX) / centerX) * props.maxTilt;
-    rx.value = -((y - centerY) / centerY) * props.maxTilt;
+    ry.value = ((x - centerX) / centerX) * maxTilt;
+    rx.value = -((y - centerY) / centerY) * maxTilt;
   }
   isHovered.value = true;
 };
@@ -87,8 +96,8 @@ const cardStyle = computed(() => {
 });
 
 const glareStyle = computed(() => ({
-  opacity: isHovered.value ? props.glareOpacity : 0,
-  background: `radial-gradient(circle at ${gx.value} ${gy.value}, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.15) 30%, transparent ${props.glareRadius}%)`,
+  opacity: isHovered.value ? numOr(props.glareOpacity, 0.45, 0, 1) : 0,
+  background: `radial-gradient(circle at ${gx.value} ${gy.value}, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.15) 30%, transparent ${numOr(props.glareRadius, 55, 0, 100)}%)`,
   mixBlendMode: "overlay" as const,
 }));
 </script>

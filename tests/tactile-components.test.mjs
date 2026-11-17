@@ -188,6 +188,23 @@ test("Vanilla: tactile components lifecycle & payload hardening", async () => {
   move.clientY = 20;
   glass.dispatchEvent(move);
   assert.equal(glass.style.transform, "", "tilt must be suppressed under prefers-reduced-motion");
+
+  // AnimatedCounter under reduced motion: jump straight to the final value
+  // (needs an IntersectionObserver stub so the counter reaches its motion branch)
+  class IOStub {
+    constructor(cb) { this._cb = cb; }
+    observe(el) { this._cb([{ isIntersecting: true, target: el }]); }
+    unobserve() {}
+    disconnect() {}
+  }
+  const RealIO = window.IntersectionObserver;
+  window.IntersectionObserver = IOStub;
+  const counter = document.createElement("animated-counter");
+  counter.setAttribute("target", "999");
+  counter.setAttribute("prefix", "#");
+  document.body.appendChild(counter);
+  assert.equal(counter.textContent, "#999", "reduced motion must render the final value immediately");
+  window.IntersectionObserver = RealIO;
 });
 
 test("React: Components SSR render without throwing", async () => {

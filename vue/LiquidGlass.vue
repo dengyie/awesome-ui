@@ -63,6 +63,17 @@ const props = withDefaults(defineProps<Props>(), {
   className: "",
 });
 
+// Sanitize numeric props (TS types are compile-time only; plain-JS callers
+// could pass strings that would land inside CSS values).
+function numOr(v: unknown, fallback: number, min = -Infinity, max = Infinity): number {
+  const n = typeof v === "number" ? v : Number.parseFloat(String(v));
+  if (Number.isNaN(n)) return fallback;
+  return Math.min(max, Math.max(min, n));
+}
+
+const safeMaxTilt = computed(() => numOr(props.maxTilt, 4, 0, 90));
+const safeGlareOpacity = computed(() => numOr(props.glareOpacity, 0.35, 0, 1));
+
 const containerRef = ref<HTMLDivElement | null>(null);
 const gx = ref("50%");
 const gy = ref("50%");
@@ -85,8 +96,8 @@ const handlePointerMove = (e: PointerEvent) => {
   if (props.enableTilt && props.variant !== "sidebar") {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    ry.value = ((x - centerX) / centerX) * props.maxTilt;
-    rx.value = -((y - centerY) / centerY) * props.maxTilt;
+    ry.value = ((x - centerX) / centerX) * safeMaxTilt.value;
+    rx.value = -((y - centerY) / centerY) * safeMaxTilt.value;
   }
   isHovered.value = true;
 };
@@ -135,7 +146,7 @@ const computedStyle = computed(() => {
 
 const glareStyle = computed(() => {
   return {
-    opacity: isHovered.value ? props.glareOpacity : 0,
+    opacity: isHovered.value ? safeGlareOpacity.value : 0,
     background: `radial-gradient(circle at ${gx.value} ${gy.value}, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.2) 35%, transparent 65%)`,
     mixBlendMode: "overlay" as const,
   };

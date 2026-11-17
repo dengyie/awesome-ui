@@ -246,6 +246,11 @@
   <script type="module" src="./vanilla/HelpCenterHome.js"></script>
   <script type="module" src="./vanilla/AccountSecurityPanel.js"></script>
   <script type="module" src="./vanilla/MasonryDensityControls.js"></script>
+  <script type="module" src="./vanilla/LiquidGlass.js"></script>
+  <script type="module" src="./vanilla/AnimatedCounter.js"></script>
+  <script type="module" src="./vanilla/SpotlightGlareCard.js"></script>
+  <script type="module" src="./vanilla/PointerRipples.js"></script>
+  <script type="module" src="./vanilla/FluidContourBackdrop.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
@@ -3574,6 +3579,90 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+    <section id="section-206" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">206 · LiquidGlass</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.7.3</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Apple-grade Liquid Glass material container — backdrop blur, specular rim reflection and optional pointer tilt/refraction. Hover the pills (Apple material pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6 flex items-center justify-center gap-4" data-skip="vanilla" data-file="vanilla/LiquidGlass.js">
+          <liquid-glass variant="capsule" intensity="regular" enable-tilt="true" style="padding:10px 22px"><span class="text-sm text-zinc-100">Action Pill</span></liquid-glass>
+          <liquid-glass variant="capsule" intensity="thick" style="padding:10px 22px"><span class="text-sm text-zinc-100">Static Pill</span></liquid-glass>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6 flex items-center justify-center" data-skip="vanilla" data-file="vanilla/LiquidGlass.js">
+          <liquid-glass variant="card" intensity="thick" enable-tilt="true" style="padding:20px 28px;border-radius:16px">
+            <div><h3 class="text-sm font-semibold text-zinc-100">Glass Card</h3><p class="text-xs text-zinc-400">Hover to tilt &amp; glare.</p></div>
+          </liquid-glass>
+        </div>
+      </div>
+    </section>
+    <section id="section-207" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">207 · AnimatedCounter</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.7.3</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Animated number counter — counts up on view with duration easing and prefix/suffix (stat card pattern).</p>
+      <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6 flex items-center justify-center gap-10" data-skip="vanilla" data-file="vanilla/AnimatedCounter.js">
+        <div class="text-center"><animated-counter target="12480" duration="1600" class="text-2xl font-bold text-zinc-100 font-mono"></animated-counter><p class="text-[11px] text-zinc-500 mt-1">API calls today</p></div>
+        <div class="text-center"><animated-counter target="98.6" suffix="%" duration="1400" class="text-2xl font-bold text-emerald-400 font-mono"></animated-counter><p class="text-[11px] text-zinc-500 mt-1">Uptime</p></div>
+        <div class="text-center"><animated-counter target="4271" prefix="$" duration="1800" class="text-2xl font-bold text-zinc-100 font-mono"></animated-counter><p class="text-[11px] text-zinc-500 mt-1">Saved cost</p></div>
+      </div>
+    </section>
+    <section id="section-208" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">208 · SpotlightGlareCard</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.7.3</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Pointer-tracking spotlight glare card — cursor-follow radial highlight with optional 3D tilt (hero card pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6 flex items-center justify-center" data-skip="vanilla" data-file="vanilla/SpotlightGlareCard.js">
+          <spotlight-glare-card enable-tilt="true" glare-opacity="0.5" style="width:260px;padding:24px;border-radius:14px">
+            <h3 class="text-sm font-semibold text-zinc-100">Spotlight Hero</h3>
+            <p class="text-xs text-zinc-400 mt-1">Move the cursor across this card to see the glare follow.</p>
+          </spotlight-glare-card>
+        </div>
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6 flex items-center justify-center" data-skip="vanilla" data-file="vanilla/SpotlightGlareCard.js">
+          <spotlight-glare-card glare-opacity="0.35" style="width:260px;padding:24px;border-radius:14px">
+            <h3 class="text-sm font-semibold text-zinc-100">Glare Only</h3>
+            <p class="text-xs text-zinc-400 mt-1">Same highlight, no 3D tilt.</p>
+          </spotlight-glare-card>
+        </div>
+      </div>
+    </section>
+    <section id="section-209" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">209 · PointerRipples</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.7.3</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">WebGL Navier-Stokes pointer ripples backdrop — rainbow dye splats, vorticity swirls and idle auto-settle (hero background pattern). Move the cursor inside the frame.</p>
+      <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vanilla" data-file="vanilla/PointerRipples.js">
+        <div id="demo-ripples-frame" class="relative h-56 overflow-hidden rounded-lg border border-zinc-800">
+          <pointer-ripples sim-resolution="96" curl="14" idle-ms="3000" style="position:absolute;inset:0"></pointer-ripples>
+          <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><span class="text-xs text-zinc-400 bg-zinc-900/70 px-3 py-1 rounded-full border border-zinc-700">WebGL fluid playground</span></div>
+        </div>
+        <style>#demo-ripples-frame pointer-ripples canvas{position:absolute!important;inset:0}</style>
+      </div>
+    </section>
+    <section id="section-210" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">210 · FluidContourBackdrop</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.7.3</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Animated fluid ink contour backdrop — flowing marbled lines with speed/interactive controls and ink/paper colors (ambient background pattern).</p>
+      <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4" data-skip="vanilla" data-file="vanilla/FluidContourBackdrop.js">
+        <div id="demo-contour-frame" class="relative h-56 overflow-hidden rounded-lg border border-zinc-800">
+          <fluid-contour-backdrop speed="0.05" interactive="true" style="position:absolute;inset:0"></fluid-contour-backdrop>
+          <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><span class="text-xs text-zinc-400 bg-zinc-900/70 px-3 py-1 rounded-full border border-zinc-700">Fluid ink contours</span></div>
+        </div>
+        <style>#demo-contour-frame fluid-contour-backdrop canvas{position:absolute!important;inset:0}</style>
       </div>
     </section>
   <auto-scroll-anchor></auto-scroll-anchor>

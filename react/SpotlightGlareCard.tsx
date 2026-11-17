@@ -15,16 +15,27 @@ export interface SpotlightGlareCardProps {
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
+// Sanitize numeric props: TS types are compile-time only, so a plain-JS
+// caller could pass arbitrary strings that would land inside CSS values.
+const numOr = (v: unknown, fallback: number, min = -Infinity, max = Infinity): number => {
+  const n = typeof v === "number" ? v : Number.parseFloat(String(v));
+  if (Number.isNaN(n)) return fallback;
+  return Math.min(max, Math.max(min, n));
+};
+
 export const SpotlightGlareCard: React.FC<SpotlightGlareCardProps> = ({
   children,
-  glareOpacity = 0.45,
-  glareRadius = 55,
+  glareOpacity: glareOpacityProp = 0.45,
+  glareRadius: glareRadiusProp = 55,
   enableTilt = false,
-  maxTilt = 5,
+  maxTilt: maxTiltProp = 5,
   className = "",
   style,
   onClick,
 }) => {
+  const glareOpacity = numOr(glareOpacityProp, 0.45, 0, 1);
+  const glareRadius = numOr(glareRadiusProp, 55, 0, 100);
+  const maxTilt = numOr(maxTiltProp, 5, 0, 90);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [coords, setCoords] = useState<{ gx: string; gy: string; rx: number; ry: number; isHovered: boolean }>({
     gx: "50%",

@@ -43,6 +43,16 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
       return;
     }
 
+    // Respect prefers-reduced-motion: jump straight to the final value.
+    if (
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setDisplayValue(target);
+      animatedRef.current = true;
+      return;
+    }
+
     let rafId = 0;
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 

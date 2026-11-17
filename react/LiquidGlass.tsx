@@ -37,18 +37,28 @@ export interface LiquidGlassProps {
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
+function numOr(v: unknown, fallback: number, min = -Infinity, max = Infinity): number {
+  const n = typeof v === "number" ? v : Number.parseFloat(String(v));
+  if (Number.isNaN(n)) return fallback;
+  return Math.min(max, Math.max(min, n));
+}
+
 export const LiquidGlass: React.FC<LiquidGlassProps> = ({
   children,
   variant = "card",
   intensity = "regular",
   interactive = true,
   enableTilt = false,
-  maxTilt = 4,
-  glareOpacity = 0.35,
+  maxTilt: maxTiltProp = 4,
+  glareOpacity: glareOpacityProp = 0.35,
   className = "",
   style,
   onClick,
 }) => {
+  // Sanitize numeric props (TS types are compile-time only; plain-JS callers
+  // could pass strings that would land inside CSS values).
+  const glareOpacity = numOr(glareOpacityProp, 0.35, 0, 1);
+  const maxTilt = numOr(maxTiltProp, 4, 0, 90);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const glareRef = useRef<HTMLDivElement | null>(null);
 

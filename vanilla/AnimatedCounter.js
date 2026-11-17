@@ -62,6 +62,17 @@ class AnimatedCounter extends HTMLElement {
       return;
     }
 
+    // Respect prefers-reduced-motion: jump straight to the final value
+    // instead of running the count-up animation.
+    if (
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      this.textContent = `${prefix}${target}${suffix}`;
+      this._animated = true;
+      return;
+    }
+
     this._observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
