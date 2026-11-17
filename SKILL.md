@@ -1324,6 +1324,11 @@ awesome-ui/
 - **Vanilla 用法**: `<stats-band>` + `stats` 属性（JSON）；无事件
 - **特性**: 2-4 列自适应、分隔线带状布局（落地页社会证明模式）。
 
+### 235. `AmberEmbersBackdrop` (暖金余烬氛围背景)
+- **Props**: `speed?=1`, `density?=72`, `baseColor?='#0d0d0d'`, `bloomColor?='#6b5947'`, `emberColor?='#e6b745'`, `interactive?=false`, `paused?=false`, `className?`, `style?`
+- **Vanilla 用法**: `<amber-embers-backdrop>` + `speed`/`density`/`base-color`/`bloom-color`/`ember-color`/`interactive`/`paused` 属性；无事件
+- **特性**: 深橄榄/炭黑渐变 + 底部暖金 bloom + 边缘暗角 + 上浮微光余烬（Canvas 2D，零依赖、无需 WebGL）；reduced-motion / visibilitychange 降级为静止首帧；灵感源自 ArkZero 暖金花谷氛围（原创实现，非源码复制）。受限容器内需覆写 `canvas{position:absolute!important;inset:0}` + 容器 `relative overflow-hidden`（Gallery section 226）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

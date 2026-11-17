@@ -1036,3 +1036,7 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/StatsBand.tsx
    - Vue 3: vue/StatsBand.vue
    - Vanilla: vanilla/StatsBand.js (custom element `<stats-band>`, attributes `stats` JSON; no events)
+235. AmberEmbersBackdrop: ambient backdrop inspired by a dark golden-hour valley — warm olive/charcoal vertical gradient, soft amber bloom pooled bottom-center, edge vignette and sparse glowing embers drifting upward with a gentle twinkle; zero-dependency Canvas 2D (works without WebGL, ArkZero-style atmospheric background pattern).
+   - React: react/AmberEmbersBackdrop.tsx
+   - Vue 3: vue/AmberEmbersBackdrop.vue
+   - Vanilla: vanilla/AmberEmbersBackdrop.js (custom element `<amber-embers-backdrop>`, attributes `speed`/`density`/`base-color`/`bloom-color`/`ember-color`/`interactive`/`paused`; no events)
