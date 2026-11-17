@@ -40,6 +40,7 @@ const renderTsx = async (file, props) => {
 
 test('react SSR — TaskCardModal header, attrs, checklist and activity', async () => {
   const html = await renderTsx('TaskCardModal.tsx', {
+    isOpen: true,
     title: 'Ship pricing page',
     completed: false,
     members: [{ id: 'm1', name: 'Ada Lovelace', initials: 'AL' }],
@@ -82,7 +83,9 @@ test('react SSR — TaskCardModal header, attrs, checklist and activity', async 
   assert.ok(html.includes('data-taskcard-comment="k1"'), 'comment row');
   assert.ok(html.includes('First draft is up.'), 'comment text');
 
-  const defaults = await renderTsx('TaskCardModal.tsx', {});
+  const defaults = await renderTsx('TaskCardModal.tsx', { isOpen: true });
+  const closed = await renderTsx('TaskCardModal.tsx', {});
+  assert.equal(closed, '', 'closed by default renders nothing');
   assert.ok(defaults.includes('Design landing page hero'), 'default title');
   assert.ok(defaults.includes('hero-spec.pdf'), 'default attachment');
 });

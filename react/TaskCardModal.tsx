@@ -42,6 +42,8 @@ export interface TaskCardComment {
 }
 
 export interface TaskCardModalProps {
+  /** Render the overlay; closed by default (fixed inset-0 would blanket the page). */
+  isOpen?: boolean;
   title?: string;
   completed?: boolean;
   members?: TaskCardMember[];
@@ -60,6 +62,8 @@ export interface TaskCardModalProps {
 }
 
 export default function TaskCardModal({
+  /** Render the overlay; closed by default (fixed inset-0 would blanket the page). */
+  isOpen = false,
   title = "Design landing page hero",
   completed = false,
   members = [
@@ -99,6 +103,8 @@ export default function TaskCardModal({
 
   const doneCount = items.filter((i) => i.done).length;
   const pct = items.length === 0 ? 0 : Math.round((doneCount / items.length) * 100);
+
+  if (!isOpen) return null;
 
   return (
     <div data-taskcard className={`fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-zinc-900/60 p-4 sm:p-8 ${className}`}>

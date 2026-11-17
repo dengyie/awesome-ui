@@ -45,7 +45,10 @@ test('vanilla TaskCardModal — structure, checklist toggle and comment submit',
   );
   window.document.body.appendChild(el);
 
-  assert.ok(el.querySelector('[data-taskcard]'), 'root rendered');
+  // Closed by default: the fixed inset-0 overlay must not blanket the page
+  assert.equal(el.querySelector('[data-taskcard]'), null, 'overlay hidden without open attr');
+  el.setAttribute('open', '');
+  assert.ok(el.querySelector('[data-taskcard]'), 'root rendered after open');
   assert.ok(el.querySelector('[data-taskcard-dialog]'), 'dialog');
   assert.ok(el.querySelector('[data-taskcard-title]').textContent.includes('Design landing page hero'), 'default title');
   assert.ok(el.querySelector('[data-taskcard-complete]'), 'complete toggle');

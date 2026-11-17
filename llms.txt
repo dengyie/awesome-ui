@@ -910,7 +910,7 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/DocsPageLayout.tsx
    - Vue 3: vue/DocsPageLayout.vue
    - Vanilla: vanilla/DocsPageLayout.js (custom element `<docs-page-layout>`, attributes `top-links` JSON/`nav-groups` JSON/`title`/`copy-label`/`blocks` JSON/`toc` JSON/`active-toc-id`; events `nav-click {item}`, `toc-click {item}`, `copy-page`)
-204. TaskCardModal: task card modal overlay — backdrop dialog with completion checkbox header and close, Members avatars / Labels chips / Dates range attribute rows, description, link & file attachments, checklist with % progress bar, and a comments & activity column with composer (Trello card modal pattern).
+204. TaskCardModal: task card modal overlay — backdrop dialog gated by the `open` attribute / `isOpen` prop (closed by default), completion checkbox header and close, Members avatars / Labels chips / Dates range attribute rows, description, link & file attachments, checklist with % progress bar, and a comments & activity column with composer (Trello card modal pattern).
    - React: react/TaskCardModal.tsx
    - Vue 3: vue/TaskCardModal.vue
    - Vanilla: vanilla/TaskCardModal.js (custom element `<task-card-modal>`, attributes `title`/`completed`/`members` JSON/`labels` JSON/`dates`/`description`/`attachments` JSON/`checklist` JSON/`comments` JSON/`comment-placeholder`; events `card-close`, `complete-toggle {completed}`, `checklist-toggle {item}`, `comment-submit {text}`)

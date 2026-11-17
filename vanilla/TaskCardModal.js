@@ -51,7 +51,7 @@ const DEFAULT_COMMENTS = () => [
 
 class TaskCardModalElement extends HTMLElement {
   static get observedAttributes() {
-    return ['title', 'completed', 'members', 'labels', 'dates', 'description', 'attachments', 'checklist', 'comments', 'comment-placeholder'];
+    return ['open'];
   }
 
   constructor() {
@@ -63,13 +63,14 @@ class TaskCardModalElement extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this._bound === false && this.innerHTML === '') {
-      this._bound = true;
+    // Closed by default: render nothing until the `open` attribute is set
+    // (fixed inset-0 overlay would otherwise blanket the page).
+    if (!this.hasAttribute('open')) {
+      this.innerHTML = '';
+      return;
     }
     this._render();
-    this.addEventListener('click', this._onClick);
-    this.addEventListener('input', this._onInput);
-    this.addEventListener('keydown', this._onKeydown);
+    this._bind();
   }
 
   disconnectedCallback() {
@@ -80,8 +81,19 @@ class TaskCardModalElement extends HTMLElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue === newValue) return;
-    if (this._bound === false && this.innerHTML === '') return;
+    if (name === 'open') {
+      // Re-bind listeners alongside the re-render so a late-open still works.
+      this._render();
+      this._bind();
+      return;
+    }
     this._render();
+  }
+
+  _bind() {
+    this.addEventListener('click', this._onClick);
+    this.addEventListener('input', this._onInput);
+    this.addEventListener('keydown', this._onKeydown);
   }
 
   _checklist() {

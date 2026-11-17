@@ -60,6 +60,7 @@ const renderSfc = async (file, props) => {
 
 test('vue SSR — TaskCardModal header, attrs, checklist and activity', async () => {
   const html = await renderSfc('TaskCardModal.vue', {
+    isOpen: true,
     title: 'Ship pricing page',
     members: [{ id: 'm1', name: 'Ada Lovelace', initials: 'AL' }],
     labels: [{ id: 'l1', label: 'Growth', color: 'bg-sky-500' }],
@@ -94,9 +95,11 @@ test('vue SSR — TaskCardModal header, attrs, checklist and activity', async ()
   assert.ok(html.includes('data-taskcard-comment="k1"'), 'comment row');
   assert.ok(html.includes('First draft is up.'), 'comment text');
 
-  const defaults = await renderSfc('TaskCardModal.vue', {});
+  const defaults = await renderSfc('TaskCardModal.vue', { isOpen: true });
   assert.ok(defaults.includes('Design landing page hero'), 'default title');
   assert.ok(defaults.includes('hero-spec.pdf'), 'default attachment');
+  const closed = await renderSfc('TaskCardModal.vue', {});
+  assert.ok(!closed.includes('data-taskcard'), 'closed by default renders no overlay');
 });
 
 test('vue SSR — FormTrackingDashboard stats, details and requests table', async () => {

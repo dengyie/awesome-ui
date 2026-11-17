@@ -36,6 +36,7 @@ export interface TaskCardComment {
 }
 
 export interface TaskCardModalProps {
+    isOpen?: boolean;
   title?: string;
   completed?: boolean;
   members?: TaskCardMember[];
@@ -50,6 +51,7 @@ export interface TaskCardModalProps {
 }
 
 const props = withDefaults(defineProps<TaskCardModalProps>(), {
+  isOpen: false,
   title: "Design landing page hero",
   completed: false,
   members: () => [
@@ -98,7 +100,7 @@ const submitComment = () => {
 </script>
 
 <template>
-  <div data-taskcard class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-zinc-900/60 p-4 sm:p-8" :class="props.class">
+  <div data-taskcard class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-zinc-900/60 p-4 sm:p-8" :class="props.class" v-if="isOpen">
     <div data-taskcard-dialog role="dialog" aria-modal="true" :aria-label="props.title" class="w-full max-w-3xl rounded-xl bg-white shadow-2xl dark:bg-zinc-900">
       <div class="flex items-center justify-between gap-4 border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
         <div class="flex min-w-0 items-center gap-3">
