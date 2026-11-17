@@ -251,6 +251,19 @@
   <script type="module" src="./vanilla/SpotlightGlareCard.js"></script>
   <script type="module" src="./vanilla/PointerRipples.js"></script>
   <script type="module" src="./vanilla/FluidContourBackdrop.js"></script>
+  <script type="module" src="./vanilla/InvoiceHistoryTable.js"></script>
+  <script type="module" src="./vanilla/UsagePricingBreakdown.js"></script>
+  <script type="module" src="./vanilla/CancelRetentionFlow.js"></script>
+  <script type="module" src="./vanilla/WebhookConfigPanel.js"></script>
+  <script type="module" src="./vanilla/IntegrationConnectGrid.js"></script>
+  <script type="module" src="./vanilla/NotificationPrefsMatrix.js"></script>
+  <script type="module" src="./vanilla/PermissionDeniedState.js"></script>
+  <script type="module" src="./vanilla/NoResultsState.js"></script>
+  <script type="module" src="./vanilla/TableSavedViews.js"></script>
+  <script type="module" src="./vanilla/BottomTabBar.js"></script>
+  <script type="module" src="./vanilla/BentoFeatureGrid.js"></script>
+  <script type="module" src="./vanilla/LogoCloud.js"></script>
+  <script type="module" src="./vanilla/StatsBand.js"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased">
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
@@ -3663,6 +3676,175 @@
           <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><span class="text-xs text-zinc-400 bg-zinc-900/70 px-3 py-1 rounded-full border border-zinc-700">Fluid ink contours</span></div>
         </div>
         <style>#demo-contour-frame fluid-contour-backdrop canvas{position:absolute!important;inset:0}</style>
+      </div>
+    </section>
+    <section id="section-211" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">211 · InvoiceHistoryTable</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.1.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Billing invoice history — currency chip, status badges and a paid-total footer (Contractbook / Remote billing pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/InvoiceHistoryTable.js">
+          <invoice-history-table></invoice-history-table>
+        </div>
+      </div>
+    </section>
+    <section id="section-212" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">212 · UsagePricingBreakdown</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.1.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Metered usage pricing — tiered unit-price table with current-tier highlight and estimated total (usage-based billing pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/UsagePricingBreakdown.js">
+          <usage-pricing-breakdown></usage-pricing-breakdown>
+        </div>
+      </div>
+    </section>
+    <section id="section-213" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">213 · CancelRetentionFlow</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.1.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Plan-cancellation retention — pick a reason, then see the discounted keep-plan offer vs confirm cancel (SaaS downgrade retention pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/CancelRetentionFlow.js">
+          <cancel-retention-flow></cancel-retention-flow>
+        </div>
+      </div>
+    </section>
+    <section id="section-214" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">214 · WebhookConfigPanel</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.1.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Webhook endpoint management — active toggles, event chips, delivery status badges and a Test action (webhook settings pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/WebhookConfigPanel.js">
+          <webhook-config-panel></webhook-config-panel>
+        </div>
+      </div>
+    </section>
+    <section id="section-215" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">215 · IntegrationConnectGrid</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.1.1</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Settings integrations — category filter tabs and service cards with Connect / Disconnect toggles (integration settings pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/IntegrationConnectGrid.js">
+          <integration-connect-grid></integration-connect-grid>
+        </div>
+      </div>
+    </section>
+    <section id="section-216" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">216 · NotificationPrefsMatrix</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.1.1</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Notification preferences — event rows × channel columns as a checkbox matrix (notification settings pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/NotificationPrefsMatrix.js">
+          <notification-prefs-matrix></notification-prefs-matrix>
+        </div>
+      </div>
+    </section>
+    <section id="section-217" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">217 · PermissionDeniedState</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.1.1</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Permission-restricted empty state — lock illustration, Request access CTA and contact-admin link (permission denied pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/PermissionDeniedState.js">
+          <permission-denied-state></permission-denied-state>
+        </div>
+      </div>
+    </section>
+    <section id="section-218" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">218 · NoResultsState</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.1.1</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Search zero-results empty state — quoted query, Did-you-mean suggestion chips and clear filters (zero results pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/NoResultsState.js">
+          <no-results-state query="deploy" suggestions='["deployment","deploys","release"]'></no-results-state>
+        </div>
+      </div>
+    </section>
+    <section id="section-219" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">219 · TableSavedViews</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.2.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Data-table saved views bar — view tabs, filter chips and Save view / Share actions (Attio / Rows views pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/TableSavedViews.js">
+          <table-saved-views></table-saved-views>
+        </div>
+      </div>
+    </section>
+    <section id="section-220" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">220 · BottomTabBar</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.2.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Mobile-style bottom navigation — icon + label tabs, badges and active indicator (mobile web navigation pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/BottomTabBar.js">
+          <bottom-tab-bar></bottom-tab-bar>
+        </div>
+      </div>
+    </section>
+    <section id="section-221" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">221 · BentoFeatureGrid</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.2.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Marketing bento grid — mixed-span feature tiles with icons and descriptions (Krea AI / Magnific bento pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/BentoFeatureGrid.js">
+          <bento-feature-grid></bento-feature-grid>
+        </div>
+      </div>
+    </section>
+    <section id="section-222" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">222 · LogoCloud</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.2.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">"Trusted by" logo wall — grayscale tiles with hover emphasis (logo cloud social proof pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/LogoCloud.js">
+          <logo-cloud></logo-cloud>
+        </div>
+      </div>
+    </section>
+    <section id="section-223" class="space-y-3 pb-12">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">223 · StatsBand</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.2.0</span>
+        <a href="#top" class="text-xs text-zinc-500 hover:text-zinc-300">back to top ↑</a>
+      </div>
+      <p class="text-sm text-zinc-400">Marketing metrics band — big-number stats with labels and trend footnotes (landing social proof pattern).</p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 lg:col-span-2" data-skip="vanilla" data-file="vanilla/StatsBand.js">
+          <stats-band></stats-band>
+        </div>
       </div>
     </section>
   <auto-scroll-anchor></auto-scroll-anchor>

@@ -19,9 +19,12 @@ export interface NotificationCenterProps {
   emptyText?: string;
   /** Show the All / Unread filter row. */
   showFilter?: boolean;
+  /** Render a gear button that emits onOpenPreferences. */
+  showPrefsButton?: boolean;
   onSelect?: (notification: NotificationItem) => void;
   onMarkRead?: (ids: Array<string | number>) => void;
   onMarkAllRead?: () => void;
+  onOpenPreferences?: () => void;
   onClose?: () => void;
   className?: string;
 }
@@ -39,9 +42,11 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
   title = "Notifications",
   emptyText = "You're all caught up",
   showFilter = true,
+  showPrefsButton = false,
   onSelect,
   onMarkRead,
   onMarkAllRead,
+  onOpenPreferences,
   onClose,
   className = "",
 }) => {
@@ -69,6 +74,16 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
             {unreadIds.length} new
           </span>
         )}
+        {showPrefsButton ? (
+          <button
+            type="button"
+            onClick={() => onOpenPreferences?.()}
+            aria-label="Notification preferences"
+            className="rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+          >
+            <UiIcon name={"settings" as UiIconName} size={12} />
+          </button>
+        ) : null}
         <button
           type="button"
           onClick={() => onMarkAllRead?.()}

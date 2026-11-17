@@ -13,12 +13,6 @@
    - Use this before writing SVG, emoji, or Unicode UI symbols.
 
 
-## Shared Theme Assets
-
-paper-theme: Paper Atelier & Trail theme system (aitubook.cn style) — pure-CSS design tokens: paper/ink palette, 8-stage milestone colors, dark-mode overrides, topography texture background. Inject the exported `PaperTrailThemeCSS` string into a <style> tag or Tailwind layer.
-   - React: react/paper-theme.ts
-   - Vue 3: vue/paper-theme.ts
-   - Vanilla: vanilla/paper-theme.js
 1. ChatPromptInput: Multi-modal auto-resizing prompt input with file/image attachments, submit/stop state, and an optional bottom chips row (`chips: [{ id, label, icon?, active? }]`, event `chip`).
    - React: react/ChatPromptInput.tsx
    - Vue 3: vue/ChatPromptInput.vue
@@ -238,7 +232,7 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - Vue 3: vue/FileDropzone.vue
    - Vanilla: vanilla/FileDropzone.js (custom element `<file-dropzone>`, attributes `accept`/`max-size-mb`/`multiple`/`hint`/`disabled`, `files` property, events `files`/`reject`/`remove`)
 
-42. NotificationCenter: Inbox panel with unread badge ("N new"), All/Unread filter row with inline counts, per-item read state, "Mark all read", typed icon chips (info/success/warning/error) and an empty state. Renders nothing while `isOpen` is false.
+42. NotificationCenter: Inbox panel with unread badge ("N new"), All/Unread filter row with inline counts, per-item read state, "Mark all read", typed icon chips (info/success/warning/error), an empty state and an optional preferences gear (show-prefs-button → open-preferences). Renders nothing while `isOpen` is false.
    - React: react/NotificationCenter.tsx
    - Vue 3: vue/NotificationCenter.vue
    - Vanilla: vanilla/NotificationCenter.js (custom element `<notification-center>`, attributes `open`/`title`/`empty-text`/`show-filter`, `notifications` property, events `select`/`mark-read`/`mark-all-read`/`close`)
@@ -985,3 +979,60 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/FluidContourBackdrop.tsx
    - Vue 3: vue/FluidContourBackdrop.vue
    - Vanilla: vanilla/FluidContourBackdrop.js (custom element `<fluid-contour-backdrop>`, attributes `speed`/`interactive`/`ink-color`/`paper-color`; no events)
+221. PaperTheme: shared theme asset (file paper-theme) — Paper Atelier & Trail theme system (aitubook.cn style) — pure-CSS design tokens: paper/ink palette, 8-stage milestone colors, dark-mode overrides, topography texture background. Inject the exported `PaperTrailThemeCSS` string into a <style> tag or Tailwind layer.
+   - React: react/paper-theme.ts
+   - Vue 3: vue/paper-theme.ts
+   - Vanilla: vanilla/paper-theme.js
+
+222. InvoiceHistoryTable: billing invoice history — header with currency chip, table of invoices (billing period / id / amount / status badge / date / download) with a paid-total footer (Contractbook / Remote billing pattern).
+   - React: react/InvoiceHistoryTable.tsx
+   - Vue 3: vue/InvoiceHistoryTable.vue
+   - Vanilla: vanilla/InvoiceHistoryTable.js (custom element `<invoice-history-table>`, attributes `title`/`currency`/`download-label`/`invoices` JSON; events `invoice-download {invoice}`)
+223. UsagePricingBreakdown: metered usage pricing — tiered unit-price table (tier range / usage / unit price / subtotal) with the current tier highlighted and an estimated-total footer (usage-based billing pattern).
+   - React: react/UsagePricingBreakdown.tsx
+   - Vue 3: vue/UsagePricingBreakdown.vue
+   - Vanilla: vanilla/UsagePricingBreakdown.js (custom element `<usage-pricing-breakdown>`, attributes `title`/`currency`/`tiers` JSON/`footer-note`; no events)
+224. CancelRetentionFlow: plan-cancellation retention — step 1 reason radio cards with Continue gating, step 2 discounted keep-plan offer card with Keep plan primary and Confirm cancel destructive ghost (SaaS downgrade retention pattern).
+   - React: react/CancelRetentionFlow.tsx
+   - Vue 3: vue/CancelRetentionFlow.vue
+   - Vanilla: vanilla/CancelRetentionFlow.js (custom element `<cancel-retention-flow>`, attributes `title`/`step-label`/`reasons-label`/`reasons` JSON/`offer` JSON/`keep-label`/`confirm-label`; events `keep`, `confirm-cancel {reason}`, `step-change {step}`)
+225. WebhookConfigPanel: webhook endpoint management — endpoint rows with active checkbox / mono URL / event chips / last-delivery status badge / Test action, plus an available-events legend (webhook settings pattern).
+   - React: react/WebhookConfigPanel.tsx
+   - Vue 3: vue/WebhookConfigPanel.vue
+   - Vanilla: vanilla/WebhookConfigPanel.js (custom element `<webhook-config-panel>`, attributes `title`/`description`/`endpoints` JSON/`events` JSON/`test-label`/`events-label`; events `webhook-test {endpoint}`, `webhook-toggle {endpoint, active}`)
+226. IntegrationConnectGrid: settings integrations — category filter tabs and responsive service cards with logo initial, Connected / Not connected badge and Connect / Disconnect action (integration settings pattern).
+   - React: react/IntegrationConnectGrid.tsx
+   - Vue 3: vue/IntegrationConnectGrid.vue
+   - Vanilla: vanilla/IntegrationConnectGrid.js (custom element `<integration-connect-grid>`, attributes `title`/`description`/`integrations` JSON/`connect-label`/`disconnect-label`; events `integration-toggle {integration, connected}`)
+227. NotificationPrefsMatrix: notification preference matrix — event rows × channel columns (In-app / Email / Push) as checkboxes with per-cell toggles (notification settings pattern).
+   - React: react/NotificationPrefsMatrix.tsx
+   - Vue 3: vue/NotificationPrefsMatrix.vue
+   - Vanilla: vanilla/NotificationPrefsMatrix.js (custom element `<notification-prefs-matrix>`, attributes `title`/`description`/`events` JSON/`columns` JSON; events `pref-change {event, channel, enabled}`)
+228. PermissionDeniedState: permission-restricted empty state — lock illustration slot, title/description, Request access primary CTA and optional contact-admin link (permission denied pattern).
+   - React: react/PermissionDeniedState.tsx
+   - Vue 3: vue/PermissionDeniedState.vue
+   - Vanilla: vanilla/PermissionDeniedState.js (custom element `<permission-denied-state>`, attributes `title`/`description`/`cta-label`/`contact-label`/`contact-href`; events `request-access`)
+229. NoResultsState: search zero-results empty state — illustration slot, quoted original query, Did-you-mean suggestion chips and a clear-filters ghost action (search zero-results pattern).
+   - React: react/NoResultsState.tsx
+   - Vue 3: vue/NoResultsState.vue
+   - Vanilla: vanilla/NoResultsState.js (custom element `<no-results-state>`, attributes `query`/`suggestions` JSON/`clear-label`/`did-you-mean-label`; events `suggestion {suggestion}`, `clear-filters`)
+230. TableSavedViews: data-table saved views bar — view tabs, active-view filter chips, No filters placeholder and Save view / Share actions (Attio / Rows table views pattern).
+   - React: react/TableSavedViews.tsx
+   - Vue 3: vue/TableSavedViews.vue
+   - Vanilla: vanilla/TableSavedViews.js (custom element `<table-saved-views>`, attributes `views` JSON/`active`/`save-label`/`share-label`; events `view-change {view, id}`, `view-save {id}`, `view-share {id}`)
+231. BottomTabBar: mobile-style bottom navigation — icon + label tabs, active top indicator, optional red badge count and safe-area padding (mobile web navigation pattern).
+   - React: react/BottomTabBar.tsx
+   - Vue 3: vue/BottomTabBar.vue
+   - Vanilla: vanilla/BottomTabBar.js (custom element `<bottom-tab-bar>`, attributes `tabs` JSON/`active`/`label`; events `tab-change {id}`)
+232. BentoFeatureGrid: marketing bento grid — mixed-span feature tiles (1-3 cols) with icon / title / description and optional media image, CSS grid layout (Krea AI / Magnific bento pattern).
+   - React: react/BentoFeatureGrid.tsx
+   - Vue 3: vue/BentoFeatureGrid.vue
+   - Vanilla: vanilla/BentoFeatureGrid.js (custom element `<bento-feature-grid>`, attributes `title`/`description`/`tiles` JSON; events `tile-click {tile}`)
+233. LogoCloud: "Trusted by" logo wall — kicker line and responsive grayscale logo tiles by name or image src with hover emphasis (logo cloud social proof pattern).
+   - React: react/LogoCloud.tsx
+   - Vue 3: vue/LogoCloud.vue
+   - Vanilla: vanilla/LogoCloud.js (custom element `<logo-cloud>`, attributes `kicker`/`logos` JSON; no events)
+234. StatsBand: marketing metrics band — 2-4 column big-number stats with labels and optional trend footnotes, divider-separated band (landing social proof pattern).
+   - React: react/StatsBand.tsx
+   - Vue 3: vue/StatsBand.vue
+   - Vanilla: vanilla/StatsBand.js (custom element `<stats-band>`, attributes `stats` JSON; no events)

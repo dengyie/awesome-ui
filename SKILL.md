@@ -1259,6 +1259,71 @@ awesome-ui/
 ### 221. `paper-theme` (共享主题资产，非组件)
 - 三端同构导出 `PaperTrailThemeCSS` 字符串（react/vue `.ts` + vanilla `.js`）：纸感 trail 主题 CSS 变量集，供组件外部注入主题基调；不注册 custom element，不在 Gallery 展示。
 
+### 222. `InvoiceHistoryTable` (发票历史表)
+- **Props**: `title?='Invoice history'`, `currency?='USD'`, `downloadLabel?='Download'`, `invoices?: [{id,period,amount,status:'paid'|'pending'|'failed',date}]`, `onDownload?(invoice)`
+- **Vanilla 用法**: `<invoice-history-table>` + `title`/`currency`/`download-label`/`invoices` 属性（JSON）；事件 `invoice-download {invoice}`
+- **特性**: 状态三色徽章、mono 金额、paid 合计页脚（Contractbook / Remote 账单模式）。
+
+### 223. `UsagePricingBreakdown` (用量计费拆解)
+- **Props**: `title?='Usage this cycle'`, `currency?='USD'`, `tiers?: [{range,unit?,usage,unitPrice}]`, `footerNote?`
+- **Vanilla 用法**: `<usage-pricing-breakdown>` + `title`/`currency`/`tiers`/`footer-note` 属性（JSON）；无事件
+- **特性**: 当前 tier 高亮、逐行小计、估算总额页脚（用量计费模式）。
+
+### 224. `CancelRetentionFlow` (取消挽留流程)
+- **Props**: `title?`, `stepLabel?='Step'`, `reasonsLabel?`, `reasons?: [{id,label}]`, `offer?: {title,description,discountedPrice,originalPrice,periodLabel}|null`, `keepLabel?`, `confirmLabel?`, `onKeep?`, `onConfirmCancel?(reason)`, `onStepChange?(step)`
+- **Vanilla 用法**: `<cancel-retention-flow>` + `title`/`step-label`/`reasons-label`/`reasons`/`offer`/`keep-label`/`confirm-label` 属性（JSON）；事件 `keep` / `confirm-cancel {reason}` / `step-change {step}`
+- **特性**: 两步流程（原因单选卡 gating → 折扣挽留 offer 卡）、offer 为 null 时裸确认态（SaaS 降级挽留模式）。
+
+### 225. `WebhookConfigPanel` (Webhook 端点管理)
+- **Props**: `title?='Webhooks'`, `description?`, `endpoints?: [{id,url,events[],lastStatus,lastDelivery,active?}]`, `events?: string[]`, `testLabel?='Test'`, `eventsLabel?`, `onTest?(endpoint)`, `onToggle?(endpoint, active)`
+- **Vanilla 用法**: `<webhook-config-panel>` + `title`/`description`/`endpoints`/`events`/`test-label`/`events-label` 属性（JSON）；事件 `webhook-test {endpoint}` / `webhook-toggle {endpoint, active}`
+- **特性**: active 开关行淡出、2xx/4xx/5xx 三档投递徽章、事件虚线图例（webhook 设置模式）。
+
+### 226. `IntegrationConnectGrid` (集成连接网格)
+- **Props**: `title?='Integrations'`, `description?`, `integrations?: [{id,name,category?,connected?}]`, `connectLabel?='Connect'`, `disconnectLabel?='Disconnect'`, `onToggle?(integration, connected)`
+- **Vanilla 用法**: `<integration-connect-grid>` + `title`/`description`/`integrations`/`connect-label`/`disconnect-label` 属性（JSON）；事件 `integration-toggle {integration, connected}`
+- **特性**: 分类筛选 tabs、首字母 logo 占位、绿点 Connected 徽章、切换即时重渲染（集成设置模式）。
+
+### 227. `NotificationPrefsMatrix` (通知偏好矩阵)
+- **Props**: `title?='Notification preferences'`, `description?`, `events?: [{id,label,channels:{inapp,email,push}}]`, `columns?: [{key,label}]`, `onChange?(event, channel, enabled)`
+- **Vanilla 用法**: `<notification-prefs-matrix>` + `title`/`description`/`events`/`columns` 属性（JSON）；事件 `pref-change {event, channel, enabled}`
+- **特性**: 事件行 × 渠道列 checkbox 矩阵、列头可自定义（通知设置模式）。
+
+### 228. `PermissionDeniedState` (权限受限空态)
+- **Props**: `title?`, `description?`, `ctaLabel?='Request access'`, `contactLabel?`, `contactHref?`, `children?`, `onRequestAccess?`
+- **Vanilla 用法**: `<permission-denied-state>` + `title`/`description`/`cta-label`/`contact-label`/`contact-href` 属性；事件 `request-access`；宿主可塞 `[data-denied-illustration-slot]` 自定义插画
+- **特性**: 锁插画、主 CTA + 副链接（权限拒绝模式）。
+
+### 229. `NoResultsState` (搜索无结果空态)
+- **Props**: `query?`, `suggestions?: string[]`, `clearLabel?='Clear all filters'`, `didYouMeanLabel?`, `children?`, `onSuggestion?(s)`, `onClearFilters?`
+- **Vanilla 用法**: `<no-results-state>` + `query`/`suggestions`/`clear-label`/`did-you-mean-label` 属性（JSON）；事件 `suggestion {suggestion}` / `clear-filters`
+- **特性**: 引号内原查询 mono 强调、Did-you-mean chips、清筛选幽灵钮（零结果模式）。
+
+### 230. `TableSavedViews` (数据表保存视图条)
+- **Props**: `views?: [{id,label,filters?[]}]`, `active?`, `saveLabel?='Save view'`, `shareLabel?='Share'`, `onViewChange?(view)`, `onSaveView?(id)`, `onShareView?(id)`
+- **Vanilla 用法**: `<table-saved-views>` + `views`/`active`/`save-label`/`share-label` 属性（JSON）；事件 `view-change {view, id}` / `view-save {id}` / `view-share {id}`
+- **特性**: 下边线激活 tab、筛选 chips、无筛选占位（Attio / Rows 视图模式）。
+
+### 231. `BottomTabBar` (移动端底部导航)
+- **Props**: `tabs?: [{id,label,icon?,badge?}]`, `active?`, `label?='Primary navigation'`, `onChange?(id)`
+- **Vanilla 用法**: `<bottom-tab-bar>` + `tabs`/`active`/`label` 属性（JSON）；事件 `tab-change {id}`
+- **特性**: 顶部激活指示条、红色计数徽章、safe-area padding（移动导航模式）。
+
+### 232. `BentoFeatureGrid` (Bento 特性网格)
+- **Props**: `title?`, `description?`, `tiles?: [{id,title,description?,icon?,span?:1|2|3,media?}]`, `onTileClick?(tile)`
+- **Vanilla 用法**: `<bento-feature-grid>` + `title`/`description`/`tiles` 属性（JSON）；事件 `tile-click {tile}`
+- **特性**: sm:col-span-2/3 混排、icon 视觉位、可选媒体图（Krea AI / Magnific bento 模式）。
+
+### 233. `LogoCloud` (客户 Logo 墙)
+- **Props**: `kicker?='Trusted by teams at'`, `logos?: [{name,src?}]`
+- **Vanilla 用法**: `<logo-cloud>` + `kicker`/`logos` 属性（JSON）；无事件
+- **特性**: 灰度名/图 tile、hover 强调（logo cloud 社会证明模式）。
+
+### 234. `StatsBand` (指标大数带)
+- **Props**: `stats?: [{value,label,note?}]`
+- **Vanilla 用法**: `<stats-band>` + `stats` 属性（JSON）；无事件
+- **特性**: 2-4 列自适应、分隔线带状布局（落地页社会证明模式）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

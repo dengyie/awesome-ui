@@ -1,6 +1,17 @@
 # Roadmap v3 组件选型候选报告（素材库 3575 张深挖后 · 2026-11-18）
 
-> **执行进度**：v2 系列已收官（v2.7.0 组件 216 + tactile 五组件并入 220 编号 + paper-theme，732 测试全绿，
+> **执行进度（2026-11-18）**：v2 系列已收官（v2.7.0 组件 216 + tactile 五组件并入 220 编号 + paper-theme，732 测试全绿，
+> Gallery 98 sections）。素材库三轮扩充定版：**28 品类 3575 张 ~273MB**（28 类 × ≥8 查询，全部增量同步
+> MangoDrive 并校验）。本报告从**未消费储备池**选型，延续「零重叠」规则。
+>
+> **批次执行记录（2026-11-18 一次拉完）**：v3.1.0（InvoiceHistoryTable 222 / UsagePricingBreakdown 223 /
+> CancelRetentionFlow 224 / WebhookConfigPanel 225）、v3.1.1（IntegrationConnectGrid 226 /
+> NotificationPrefsMatrix 227 / PermissionDeniedState 228 / NoResultsState 229）、v3.2.0（TableSavedViews 230 /
+> BottomTabBar 231 / BentoFeatureGrid 232 / LogoCloud 233 / StatsBand 234）三批次 13 组件 × 3 端全部落地，
+> 账本 235 条目 0..234，Gallery sections 211-223，测试 new-components55/56/57 三端三件套全绿。
+> NotificationCenter #42 加 show-prefs-button 偏好齿轮（open-preferences 事件）。
+> **勘误**：原 P1 增强「DataTable 批量工具条」经核对 #33 已内置 optional multi-select + floating
+> batch-action bar，无需增强，撤销该项。（v2.7.0 组件 216 + tactile 五组件并入 220 编号 + paper-theme，732 测试全绿，
 > Gallery 98 sections）。素材库三轮扩充定版：**28 品类 3575 张 ~273MB**（28 类 × ≥8 查询，全部增量同步
 > MangoDrive 并校验）。本报告从**未消费储备池**选型，延续「零重叠」规则。
 

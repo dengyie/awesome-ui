@@ -20,11 +20,12 @@ const TYPE_META = {
  * NotificationCenter - Vanilla Web Component
  * Usage: <notification-center open></notification-center>
  * Properties: notifications (NotificationItem[])
- * Events: select (detail: item), mark-read (detail: ids[]), mark-all-read, close
+ * Events: select (detail: item), mark-read (detail: ids[]), mark-all-read, close, open-preferences
+ * Attrs: show-prefs-button — renders a gear button that emits open-preferences
  */
 export class NotificationCenterElement extends HTMLElement {
   static get observedAttributes() {
-    return ['open', 'title', 'empty-text', 'show-filter'];
+    return ['open', 'title', 'empty-text', 'show-filter', 'show-prefs-button'];
   }
 
   constructor() {
@@ -131,6 +132,7 @@ export class NotificationCenterElement extends HTMLElement {
               ? `<span class="rounded-full bg-indigo-100 px-1.5 py-0.5 text-[10px] font-medium tabular-nums text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">${unreadIds.length} new</span>`
               : ''
           }
+          ${this.hasAttribute('show-prefs-button') ? `<button type="button" class="notif-prefs rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200" aria-label="Notification preferences">${uiIcon('settings', { size: 12 })}</button>` : ''}
           <button type="button" class="notif-mark-all ml-auto text-[11px] font-medium text-indigo-600 transition-colors hover:text-indigo-500 disabled:cursor-not-allowed disabled:text-zinc-300 dark:text-indigo-400 dark:disabled:text-zinc-600" ${unreadIds.length ? '' : 'disabled'}>Mark all read</button>
           <button type="button" class="notif-close rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200" aria-label="Close notifications">${uiIcon('x', { size: 12 })}</button>
         </div>
@@ -160,6 +162,13 @@ export class NotificationCenterElement extends HTMLElement {
       if (!this._unreadIds().length) return;
       this.dispatchEvent(new CustomEvent('mark-all-read'));
     });
+
+    const prefsBtn = this.querySelector('.notif-prefs');
+    if (prefsBtn) {
+      prefsBtn.addEventListener('click', () => {
+        this.dispatchEvent(new CustomEvent('open-preferences', { bubbles: true }));
+      });
+    }
 
     this.querySelector('.notif-close').addEventListener('click', () => {
       this.dispatchEvent(new CustomEvent('close'));

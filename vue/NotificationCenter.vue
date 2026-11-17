@@ -16,6 +16,15 @@
         {{ unreadIds.length }} new
       </span>
       <button
+        v-if="showPrefsButton"
+        type="button"
+        aria-label="Notification preferences"
+        class="rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+        @click="emit('open-preferences')"
+      >
+        <UiIcon name="settings" :size="12" />
+      </button>
+      <button
         type="button"
         :disabled="unreadIds.length === 0"
         class="ml-auto text-[11px] font-medium text-indigo-600 transition-colors hover:text-indigo-500 disabled:cursor-not-allowed disabled:text-zinc-300 dark:text-indigo-400 dark:disabled:text-zinc-600"
@@ -114,6 +123,7 @@ const props = withDefaults(
     title?: string;
     emptyText?: string;
     showFilter?: boolean;
+    showPrefsButton?: boolean;
     className?: string;
   }>(),
   {
@@ -121,6 +131,7 @@ const props = withDefaults(
     title: 'Notifications',
     emptyText: "You're all caught up",
     showFilter: true,
+    showPrefsButton: false,
     className: '',
   }
 );
@@ -129,6 +140,7 @@ const emit = defineEmits<{
   (e: 'select', notification: NotificationItem): void;
   (e: 'mark-read', ids: Array<string | number>): void;
   (e: 'mark-all-read'): void;
+  (e: 'open-preferences'): void;
   (e: 'close'): void;
 }>();
 
