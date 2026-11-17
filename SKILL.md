@@ -17,7 +17,9 @@ description: Use when building AI-native Web applications, chat interfaces, gene
 ## 设计与实现规范（实现/修改组件前必读）
 
 - **`docs/design-guidelines.md`**：视觉基调、交互模式（浮现式操作/渐进披露/命令面板等 8 大 Mobbin pattern）、动效、无障碍硬性要求、验收清单。**任何新增或修改组件都必须过一遍其第 7 节验收清单。**
-- **`docs/component-roadmap-v1.md`**：待实现组件的任务书（Props 设计 + 参考素材索引）。
+- **`docs/component-roadmap-v1.md`**：v1 任务书（已收官）。
+- **`docs/roadmap-v2-candidates.md`**：v2 候选与批次执行记录（已收官）。
+- **`docs/roadmap-v3-candidates.md`**：**v3 候选报告（当前活跃）**——储备池 8+5 新组件候选 + P1 增强 + 素材按需扩容策略。
 - **`docs/mobbin-patterns-2026-11.md`**：Mobbin pattern 研究报告（设计决策的依据来源）。
 - **素材 SOP**：`tools/mobbin_auth.py`（OAuth）/ `tools/mobbin_fetch.py`（分品类拉取）；参考图在 `references/`（gitignore，仅本地参考，勿提交）。
 
@@ -1224,6 +1226,38 @@ awesome-ui/
 - **Props**: `title?='Discovery wall'`, `items?: [{id,url,alt,span?}]`, `columns?=4`, `padding?=12`, `className?`, `onItemClick?(item)`
 - **Vanilla 用法**: `<masonry-density-controls>` + `title`/`items`/`columns`/`padding` 属性（JSON）；事件 `item-click {item}` / `density-change {columns, padding}` / `close`
 - **特性**: 黑底 zinc-950 沉浸容器、悬浮 bg-black/80 backdrop-blur 控制条（Size 2-6 滑杆 + Padding 4-32 滑杆 + ✕）、`N cols · Npx` meta 读数、CSS columns 瀑布流（break-inside-avoid、aspectRatio 按 span 3/4·4/5·1/1、hover scale-105）（Savee 发现墙模式）。
+
+### 216. `LiquidGlass` (Apple 液态玻璃材质容器)
+- **Props**: `variant?: 'capsule'|'card'|'sidebar'`, `intensity?: 'regular'|'thick'`, `interactive?=true`, `enableTilt?=false`, `maxTilt?=4`, `glareOpacity?=0.35`, `className?`
+- **Vanilla 用法**: `<liquid-glass>` + `variant`/`intensity`/`interactive`/`enable-tilt`/`max-tilt`/`glare-opacity` 属性；无事件
+- **特性**: backdrop blur + 镜面高光 rim + 可选指针 tilt 折射；capsule=悬浮药丸/工具坞、card=内容卡/模态面板、sidebar=边缘半透明导航（Apple material 模式）；数值 prop 已白名单化（JS 调用方传字符串也安全）。
+
+### 217. `AnimatedCounter` (数字滚动计数器)
+- **Props**: `target: number`, `start?=0`, `duration?=1500`, `delay?=0`, `suffix?`, `prefix?`, `className?`
+- **Vanilla 用法**: `<animated-counter>` + `target`/`start`/`duration`/`delay`/`suffix`/`prefix` 属性；无事件
+- **特性**: IntersectionObserver 进入视口后 easeOutCubic 计数；reduced-motion 直接跳终值；font-mono + tabular-nums（stat card 模式）。
+
+### 218. `SpotlightGlareCard` (指针追光卡片)
+- **Props**: `children?`, `glareOpacity?=0.45`, `glareRadius?=55`, `enableTilt?=false`, `maxTilt?=5`, `className?`, `style?`, `onClick?`
+- **Vanilla 用法**: `<spotlight-glare-card>` + `glare-opacity`/`glare-radius`/`enable-tilt`/`max-tilt` 属性；无事件
+- **特性**: 指针跟随径向 glare + 可选 3D tilt；reduced-motion 短路 tilt；数值 prop 白名单化（hero card 模式）。
+
+### 219. `PointerRipples` (WebGL 指针涟漪背景)
+- **Props**: `simResolution?=128`, `dyeResolution?=768`, `densityDissipation?=2.4`, `velocityDissipation?=1.6`, `pressure?=0.8`, `curl?=18`, `splatRadius?=0.25`, `splatForce?=6000`, `shading?=true`, `opacity?=0.58`, `idleMs?=5000`, `className?`
+- **Vanilla 用法**: `<pointer-ripples>` + 上述 kebab-case 属性（`sim-resolution` 等）+ `shading`；无事件
+- **特性**: Navier-Stokes 流体模拟、彩虹染色泼溅、涡量旋 swirl、3D diffuse shading、闲置自动沉降；WebGL 不可用时优雅降级；opacity 属性局部更新不重建引擎（hero background 模式）。
+
+### 220. `FluidContourBackdrop` (流体墨线等高线背景)
+- **Props**: `inkColor?: [r,g,b] 0-1`, `paperColor?: [r,g,b] 0-1`, `speed?=0.035`, `interactive?=true`, `className?`
+- **Vanilla 用法**: `<fluid-contour-backdrop>` + `speed`/`interactive`/`ink-color`("r,g,b")/`paper-color`("r,g,b") 属性；无事件
+- **特性**: 流动等高线墨纹、指针重力吸附、visibilitychange 暂停、WebGL 降级（ambient background 模式）。
+
+### 216-220 注意事项（tactile 套件）
+- PointerRipples/FluidContourBackdrop 的 canvas 为 `fixed inset-0` 全屏背景；在受限容器内展示时需用 CSS 覆写 `canvas{position:absolute!important;inset:0}` 并给容器 `relative overflow-hidden`（Gallery sections 209/210 即此做法）。
+- 全部五个组件尊重 prefers-reduced-motion（tilt 短路 / 计数跳终值 / 背景静止首帧）。
+
+### 221. `paper-theme` (共享主题资产，非组件)
+- 三端同构导出 `PaperTrailThemeCSS` 字符串（react/vue `.ts` + vanilla `.js`）：纸感 trail 主题 CSS 变量集，供组件外部注入主题基调；不注册 custom element，不在 Gallery 展示。
 
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
