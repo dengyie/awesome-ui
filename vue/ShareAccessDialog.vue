@@ -17,7 +17,7 @@ export interface ShareAccessDialogProps {
 }
 
 const props = withDefaults(defineProps<ShareAccessDialogProps>(), {
-  open: true,
+  open: false,
   title: 'Share Conversation',
   description:
     'Invite teammates to view this conversation. Everyone with access will see future replies.',

@@ -121,6 +121,7 @@ test('vue SSR — PromptPerformanceTable columns and export CTA', async () => {
 
 test('vue SSR — ShareAccessDialog people list and copy link', async () => {
   const html = await renderSfc('ShareAccessDialog.vue', {
+    open: true,
     url: 'https://superhuman.com/share/xyz',
     people: [
       { id: 'u1', name: 'Alex Smith', email: 'alex@team.com', role: 'Publisher' },
@@ -145,7 +146,7 @@ test('vue SSR — ShareAccessDialog people list and copy link', async () => {
   assert.ok(html.includes('data-share-access-copy'), 'copy CTA');
   assert.ok(html.includes('COPY LINK'), 'copy label');
 
-  const empty = await renderSfc('ShareAccessDialog.vue', { people: [] });
+  const empty = await renderSfc('ShareAccessDialog.vue', { open: true, people: [] });
   assert.ok(empty.includes('data-share-access-empty'), 'empty state');
 
   const closed = await renderSfc('ShareAccessDialog.vue', { open: false });

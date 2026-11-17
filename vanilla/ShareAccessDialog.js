@@ -29,7 +29,8 @@ class ShareAccessDialogElement extends HTMLElement {
     super();
     this._bound = false;
     this._people = [];
-    this._open = true;
+    // Dialogs default to closed (matches Modal / ConfirmDialog semantics).
+    this._open = false;
   }
 
   connectedCallback() {

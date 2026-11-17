@@ -269,7 +269,7 @@
   <header class="border-b border-zinc-800/80 bg-zinc-900/50 backdrop-blur sticky top-0 z-20 px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <span class="text-xl font-black bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">awesome-ui</span>
-      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v2.7.0</span>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono border border-zinc-700">v3.1.0</span>
       <status-indicator status="online" label="Core Ready" ping-ms="18"></status-indicator>
     </div>
     <div class="flex items-center gap-4 text-sm text-zinc-400">
@@ -379,7 +379,7 @@
           Open Artifact Canvas
         </button>
       </div>
-      <artifact-canvas is-open title="ButtonComponent.html" language="html" code="<div style='display:flex;justify-content:center;align-items:center;height:100%;background:#09090b;color:#fff;font-family:sans-serif;'><h2>Hello from Artifact Canvas! 🎉</h2></div>"></artifact-canvas>
+      <artifact-canvas title="ButtonComponent.html" language="html" code="<div style='display:flex;justify-content:center;align-items:center;height:100%;background:#09090b;color:#fff;font-family:sans-serif;'><h2>Hello from Artifact Canvas! 🎉</h2></div>"></artifact-canvas>
     </section>
 
     <!-- 9. CodeBlock -->
@@ -6692,10 +6692,11 @@ FAIL tests/ui.test.mjs
         ];
         shareAccess40.addEventListener('copy-link', (event) => { shareAccessStatus40.textContent = 'Copied → ' + event.detail.url; });
         shareAccess40.addEventListener('remove-person', (event) => { shareAccessStatus40.textContent = 'Removed → ' + event.detail.person.name; });
-        shareAccess40.addEventListener('close', () => { shareAccessStatus40.textContent = 'Dialog closed.'; });
+        shareAccess40.addEventListener('close', () => { shareAccess40.removeAttribute('open'); shareAccessStatus40.textContent = 'Dialog closed.'; });
       }
       if (shareAccessReopen40 && shareAccess40) {
         shareAccessReopen40.addEventListener('click', () => {
+          shareAccess40.setAttribute('open', 'true');
           shareAccess40.people = [
             { id: 'u1', name: 'Alex Smith', email: 'alex@team.com', role: 'Publisher' },
             { id: 'u2', name: 'Brook Taylor', email: 'brook@team.com' },

@@ -126,7 +126,10 @@ test('vanilla ShareAccessDialog — people rows, remove, copy-link, close', () =
   );
   window.document.body.appendChild(el);
 
-  assert.ok(el.querySelector('[data-share-access-dialog]'), 'dialog rendered');
+  // Dialogs are closed by default; open via the open attribute
+  assert.equal(el.querySelector('[data-share-access-dialog]'), null, 'closed by default');
+  el.setAttribute('open', 'true');
+  assert.ok(el.querySelector('[data-share-access-dialog]'), 'dialog rendered after open');
   assert.ok(el.querySelector('[data-share-access-title]').textContent.includes('Share Conversation'), 'default title');
   assert.ok(el.querySelector('[data-share-access-input]'), 'invite input');
   assert.equal(el.querySelectorAll('[data-access-person]').length, 2, 'two people');

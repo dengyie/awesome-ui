@@ -112,6 +112,7 @@ test('React SSR — ShareAccessDialog people list and copy link', async () => {
   const { default: ShareAccessDialog } = await load('ShareAccessDialog.tsx');
   const html = renderToStaticMarkup(
     h(ShareAccessDialog, {
+      open: true,
       title: 'Share Conversation',
       url: 'https://superhuman.com/share/xyz',
       people: [
@@ -140,9 +141,11 @@ test('React SSR — ShareAccessDialog people list and copy link', async () => {
   assert.ok(html.includes('data-share-access-copy'), 'copy CTA');
   assert.ok(html.includes('COPY LINK'), 'copy label');
 
-  const empty = renderToStaticMarkup(h(ShareAccessDialog, { people: [] }));
+  const empty = renderToStaticMarkup(h(ShareAccessDialog, { open: true, people: [] }));
   assert.ok(empty.includes('data-share-access-empty'), 'empty state');
 
   const closed = renderToStaticMarkup(h(ShareAccessDialog, { open: false }));
   assert.ok(!closed.includes('data-share-access-dialog'), 'not rendered when closed');
+  const defaults = renderToStaticMarkup(h(ShareAccessDialog, {}));
+  assert.ok(!defaults.includes('data-share-access-dialog'), 'closed by default');
 });

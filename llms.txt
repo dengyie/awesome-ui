@@ -766,7 +766,7 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/PromptPerformanceTable.tsx
    - Vue 3: vue/PromptPerformanceTable.vue
    - Vanilla: vanilla/PromptPerformanceTable.js (custom element `<prompt-performance-table>`, attributes `title`/`export-label`/`rows`; events `export`, `row-click`)
-168. ShareAccessDialog: Superhuman share dialog — invite input, people-with-access rows (avatar/name/email/role + remove), Copy link footer, open/close control.
+168. ShareAccessDialog: Superhuman (open/isOpen prop required to render; dialogs default closed) — Superhuman share dialog — invite input, people-with-access rows (avatar/name/email/role + remove), Copy link footer, open/close control.
    - React: react/ShareAccessDialog.tsx
    - Vue 3: vue/ShareAccessDialog.vue
    - Vanilla: vanilla/ShareAccessDialog.js (custom element `<share-access-dialog>`, attributes `title`/`description`/`url`/`copy-label`/`people`/`open`; events `close`, `copy-link`, `remove-person`)

@@ -26,7 +26,7 @@ export interface ShareAccessDialogProps {
  * role with per-row remove, plus a Copy link footer action.
  */
 export default function ShareAccessDialog({
-  open = true,
+  open = false,
   title = "Share Conversation",
   description = "Invite teammates to view this conversation. Everyone with access will see future replies.",
   url = "https://example.com/share/abc123",
