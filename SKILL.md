@@ -1329,6 +1329,11 @@ awesome-ui/
 - **Vanilla 用法**: `<amber-embers-backdrop>` + `speed`/`density`/`base-color`/`bloom-color`/`ember-color`/`interactive`/`paused` 属性；无事件
 - **特性**: 深橄榄/炭黑渐变 + 底部暖金 bloom + 边缘暗角 + 上浮微光余烬（Canvas 2D，零依赖、无需 WebGL）；reduced-motion / visibilitychange 降级为静止首帧；灵感源自 ArkZero 暖金花谷氛围（原创实现，非源码复制）。受限容器内需覆写 `canvas{position:absolute!important;inset:0}` + 容器 `relative overflow-hidden`（Gallery section 226）。
 
+### 236. `DriftEmbersBackdrop` (登录后花散冷灰背景)
+- **Props**: `speed?=1`, `density?=120`, `baseColor?='#0d1113'`, `bloomColor?='#4a4430'`, `emberColor?='#b9af39'`, `ashColor?='#c8c9ca'`, `interactive?=false`, `paused?=false`, `className?`, `style?`
+- **Vanilla 用法**: `<drift-embers-backdrop>` + `speed`/`density`/`base-color`/`bloom-color`/`ember-color`/`ash-color`/`interactive`/`paused` 属性；无事件
+- **特性**: 冷炭黑→橄榄纵向场 + 中部暖带 + 左中暖光 + 金/灰混合下沉微粒 + 细颗粒纹理 + 轻暗角（Canvas 2D，零依赖、无需 WebGL）；reduced-motion / visibilitychange 降级为静止首帧；灵感源自 ArkZero 登录后花谷消散的 drift 态（原创实现，非源码复制），与 AmberEmbersBackdrop (#235) 构成 garden→drift 转场。受限容器内覆写同上（Gallery section 227）。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

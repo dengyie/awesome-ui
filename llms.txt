@@ -1040,3 +1040,7 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/AmberEmbersBackdrop.tsx
    - Vue 3: vue/AmberEmbersBackdrop.vue
    - Vanilla: vanilla/AmberEmbersBackdrop.js (custom element `<amber-embers-backdrop>`, attributes `speed`/`density`/`base-color`/`bloom-color`/`ember-color`/`interactive`/`paused`; no events)
+236. DriftEmbersBackdrop: ambient backdrop inspired by the post-login dispersal of a warm flower valley — cool charcoal-to-olive vertical field, warm olive band across the middle, glow pooled mid-left, and a cloud of mixed gold + neutral ash motes slowly settling with fine grain and a light vignette; zero-dependency Canvas 2D (ArkZero-style drift/past-bloom background pattern).
+   - React: react/DriftEmbersBackdrop.tsx
+   - Vue 3: vue/DriftEmbersBackdrop.vue
+   - Vanilla: vanilla/DriftEmbersBackdrop.js (custom element `<drift-embers-backdrop>`, attributes `speed`/`density`/`base-color`/`bloom-color`/`ember-color`/`ash-color`/`interactive`/`paused`; no events)
