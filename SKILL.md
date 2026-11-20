@@ -1404,6 +1404,21 @@ awesome-ui/
 - **Vanilla 用法**: `<topup-balance-dialog>` + `trigger-label`/`title`/`balance`/`currency-symbol`/`min-amount`/`confirm-label`/`cancel-label` 属性；properties `billToOptions`/`currencies`/`quickAmounts`；事件 `topup-confirm` detail {billTo,currency,amount} / `topup-cancel`
 - **特性**: Bill-to/Currency 下拉、金额输入 + 快捷金额 chips（选中高亮）、实时新余额汇总行、最低额校验 role=alert 错误、确认成功态 + Done 关闭、cancel/close 重置。
 
+### 251. `MetricLineChart` (指标线图卡)
+- **Props**: `headline?='Active users'`, `value?='0'`, `delta?`, `deltaTone?='up'|'down'|'flat'`, `ranges?=['24h','7d','30d','90d']`, `defaultRange?`, `labels?: string[]`, `series?: [{name,color,values}]`, `unit?`, `onRangeChange?`
+- **Vanilla 用法**: `<metric-line-chart>` + `headline`/`value`/`delta`/`delta-tone`/`ranges`/`range`/`unit` 属性；properties `labels` / `series`；事件 `range-change` detail {range}
+- **特性**: 多系列 Catmull-Rom 平滑 SVG 折线（vector-effect 防缩放）、hover 列参考线 + 逐系列点标记 + tooltip（左右越界自动翻转）、delta 徽章三色调、时间范围 pill 组、2+ 系列出图例、文字走 HTML overlay 免 preserveAspectRatio 拉伸。
+
+### 252. `PaywallDialog` (付费墙拦截弹窗)
+- **Props**: `title?='Upgrade to continue'`, `description?`, `glyph?='🔒'`, `plans?: [{id,name,price,period?,originalPrice?,badge?,features,featured?}]`, `cadences?=['Monthly','Yearly']`, `defaultCadence?`, `cadenceNote?: Record<string,string>`, `cadencePrices?: Record<string,Record<string,string>>`, `ctaLabel?='Upgrade now'`, `discountBadge?`, `defaultOpen?`, `onUpgrade?`, `onDismiss?`
+- **Vanilla 用法**: `<paywall-dialog>` + `title`/`description`/`glyph`/`cadences`/`cadence`/`cta-label`/`discount-badge`/`default-open` 属性；properties `plans`/`cadenceNote`/`cadencePrices`；方法 `show()`/`close()`；事件 `cadence-change` detail {cadence} / `upgrade` detail {plan} / `dismiss`
+- **特性**: 拦截型弹窗（关闭态不渲染 DOM）、周期切换价格联动 + 注记 chips、featured 暗色方案卡 + 角标徽章 + 划线原价 + 权益清单、折扣旋转角标、CTA 带周期回显、backdrop 点击与 Maybe later 双关闭路径。
+
+### 253. `TrialExpiryNotice` (试用到期警告卡)
+- **Props**: `planName?='Pro'`, `daysLeft?=0`, `tone?='expiring'|'urgent'|'auto'`, `losingFeatures?: string[]`, `keepingFeatures?: string[]`, `expiresOn?`, `extendLabel?='Extend trial'`, `upgradeLabel?='Upgrade now'`, `onExtend?`, `onUpgrade?`
+- **Vanilla 用法**: `<trial-expiry-notice>` + `plan-name`/`days-left`/`tone`/`expires-on`/`extend-label`/`upgrade-label` 属性；properties `losingFeatures`/`keepingFeatures`；事件 `upgrade`/`extend`
+- **特性**: mono 倒计时大数、expiring（琥珀）/ urgent（红）双色调（auto 按 days-left≤3 判定）、截止日期 caption、锁定功能划线清单 vs 保留功能清单、Upgrade/Extend 双 CTA、role=alert。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

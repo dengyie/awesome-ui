@@ -118,6 +118,13 @@
 - **TopUpBalanceDialog** (#250)：充值弹窗（Bill-to/Currency 下拉 + 金额输入 + 快捷金额 chips + 实时新余额汇总 + 最低额校验 + 确认成功态）。素材：references/billing 51_Deel Top up balance 弹窗。既有 5 个 Dialog 均为分享/申诉/保存域，支付充值弹窗空白。
 - 选型说明：延续 v3.6.0 billing 纵深，取「余额状态 → 消费趋势 → 充值动作」三切面，全部零名称重叠；TopUpBalanceDialog 增加 defaultOpen prop/属性供 SSR 测试直接渲染打开态。
 
+## 已消费批次 v3.8.0（付费转化闭环批，#251-253）
+
+- **MetricLineChart** (#251)：指标线图卡（headline 数值 + delta 徽章 + 时间范围 pill 组 + 多系列 Catmull-Rom 平滑折线 + hover 列参考线/逐系列 tooltip）。素材：references/charts 02_Steep 粒度 tabs + 01_Amplitude headline/delta + 03_Mixpanel 多线图例。ForecastTrendChart 是 actual/forecast 对比、SpendTrendChart 是柱图粒度切换——多系列折线 + hover tooltip + 范围 pill 形态全库空白。
+- **PaywallDialog** (#252)：付费墙拦截弹窗（glyph 插画位 + Monthly/Yearly 周期切换价格联动 + featured 暗色方案卡 + 划线原价 + 权益清单 + 折扣角标 + Maybe later）。素材：references/paywall 10_Uxcel 答题拦截弹窗 25% OFF 角标 + 26_Uxcel 方案对比卡。既有 5 个 Dialog 均为分享/申诉/保存域——拦截型付费墙弹窗空白。
+- **TrialExpiryNotice** (#253)：试用到期警告卡（mono 倒计时大数 + expiring/urgent 双色调 + 锁定功能划线清单 + Upgrade/Extend 双 CTA）。素材：references/paywall 17_Docusign "expire in 4 days" 到期整页。TrialBanner (#134) 是单行横幅、UsageQuotaCard 是配额域——整卡式到期警告无。
+- 选型说明：从未消费的 charts(127)/paywall(119) 两池切入，构成「分析 → 拦截转化 → 到期挽留」付费转化闭环，全部零名称重叠；拦截型弹窗关闭态不渲染 DOM（无触发器），SSR 测试走 defaultOpen/default-open。
+
 ## 重叠跳过记录（选型时排除）
 
 - Outseta/Slite 通用空态 → #25/#125 已覆盖形态。

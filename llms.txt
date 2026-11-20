@@ -1100,3 +1100,15 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/TopUpBalanceDialog.tsx
    - Vue 3: vue/TopUpBalanceDialog.vue
    - Vanilla: vanilla/TopUpBalanceDialog.js (custom element `<topup-balance-dialog>`, attributes `trigger-label`/`title`/`balance`/`currency-symbol`/`min-amount`/`confirm-label`/`cancel-label`; properties `billToOptions`/`currencies`/`quickAmounts`; events `topup-confirm` detail {billTo,currency,amount} / `topup-cancel`)
+251. MetricLineChart: metric line chart — headline value with delta chip (up/down/flat tones), time-range pill group firing range-change, multi-series smooth SVG lines (Catmull-Rom to bezier), hover column guides with per-series tooltip, dashed grid, legend for 2+ series and HTML-overlay labels that survive preserveAspectRatio="none".
+   - React: react/MetricLineChart.tsx
+   - Vue 3: vue/MetricLineChart.vue
+   - Vanilla: vanilla/MetricLineChart.js (custom element `<metric-line-chart>`, attributes `headline`/`value`/`delta`/`delta-tone`/`ranges`/`range`/`unit`; properties `labels` {string[]} / `series` [{name,color,values}]; event `range-change` detail {range})
+252. PaywallDialog: intercepting paywall dialog — glyph tile, Monthly/Yearly cadence toggle with note chips and live per-cadence price swap, plan cards (featured dark card, badge chip, strikethrough original price, perk checklist), discount corner badge, upgrade CTA with cadence echo and "Maybe later" dismiss; backdrop click closes, defaultOpen/default-open for SSR-open state.
+   - React: react/PaywallDialog.tsx
+   - Vue 3: vue/PaywallDialog.vue
+   - Vanilla: vanilla/PaywallDialog.js (custom element `<paywall-dialog>`, attributes `title`/`description`/`glyph`/`cadences`/`cadence`/`cta-label`/`discount-badge`/`default-open`; properties `plans` [{id,name,price,period,originalPrice,badge,features,featured}] / `cadenceNote` / `cadencePrices`; methods `show()`/`close()`; events `cadence-change` detail {cadence} / `upgrade` detail {plan} / `dismiss`)
+253. TrialExpiryNotice: trial expiration warning card — big mono countdown, expiring (amber) vs urgent (red) tone resolved from days-left <=3 or explicit tone, deadline caption, locked-feature strikethrough list vs kept features, Upgrade / Extend trial CTA pair firing upgrade / extend.
+   - React: react/TrialExpiryNotice.tsx
+   - Vue 3: vue/TrialExpiryNotice.vue
+   - Vanilla: vanilla/TrialExpiryNotice.js (custom element `<trial-expiry-notice>`, attributes `plan-name`/`days-left`/`tone`/`expires-on`/`extend-label`/`upgrade-label`; properties `losingFeatures`/`keepingFeatures`; events `upgrade`/`extend`)

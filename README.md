@@ -249,6 +249,9 @@
 | **`CreditBalanceCard`** | 余额头卡 | mono 余额大数 + 币种前缀、plan 状态点徽章（常绿/低额琥珀）、warn-below 低额告警行、Buy/Coupon 双 CTA 脉冲 |
 | **`SpendTrendChart`** | 消费趋势柱图 | mono 总额 headline + 粒度 caption、Daily/Weekly 分段切换重绘 SVG 柱、虚线网格 y 刻度、稀疏 x 标签 |
 | **`TopUpBalanceDialog`** | 充值弹窗 | Bill-to/Currency 下拉、金额输入 + 快捷金额 chips、实时新余额汇总、最低额校验 role=alert、确认成功态 |
+| **`MetricLineChart`** | 指标线图卡 | headline 数值 + delta 徽章（up/down/flat）、时间范围 pill 组 range-change、多系列平滑 SVG 折线、hover 列参考线 + 逐系列 tooltip |
+| **`PaywallDialog`** | 付费墙拦截弹窗 | glyph 插画位、Monthly/Yearly 周期切换（注记 chips + 价格联动）、featured 暗色方案卡 + 划线原价 + 权益清单、折扣角标、Maybe later 关闭 |
+| **`TrialExpiryNotice`** | 试用到期警告卡 | mono 倒计时大数、expiring/urgent（≤3 天）双色调、截止日期 caption、锁定功能划线清单 vs 保留功能、Upgrade/Extend 双 CTA |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
