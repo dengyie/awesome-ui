@@ -1374,6 +1374,21 @@ awesome-ui/
 - **Vanilla 用法**: `<agent-model-fallback-list>` + `title`/`description` 属性；properties `entries`/`primaryId`；事件 `reorder {ids}`
 - **特性**: 优先级行 + 健康点（emerald/amber/rose）、Primary badge、provider+触发条件+延迟 caption、↑/↓ 重排 + "order updated" 闪示。
 
+### 245. `BillingAddressForm` (账单地址表单)
+- **Props**: `title?='Billing details'`, `countries?=['United States','Singapore',…]`, `labels?: {address1?,address2?,city?,state?,zip?}`, `defaultValue?: Partial<BillingAddress>`, `submitLabel?='Continue to next step'`, `showOptional?=true`
+- **Vanilla 用法**: `<billing-address-form>` + `title`/`submit-label`/`show-optional` 属性；properties `defaultValue`/`countries`/`labels`；事件 `billing-address-submit` detail {address}
+- **特性**: Country 下拉、address1/address2 行（optional 标注）、city+ZIP 双列 grid、可选 State 行、必填校验禁用提交、提交后 "Saved {city}, {country}" 反馈。
+
+### 246. `UsageCreditsDonut` (用量积分环图)
+- **Props**: `title?='Usage by Type'`, `unit?='credits'`, `total?`, `slices?: [{id,label,value,color?}]`, `ranges?=['Last 7 days','Last 30 days']`, `defaultRange?`
+- **Vanilla 用法**: `<usage-credits-donut>` + `title`/`unit`/`total` 属性；properties `slices`/`ranges`/`defaultRange`；事件 `range-change` detail {range}
+- **特性**: 纯 SVG 环段（polar/donutArc 数学、0.6° 间隙、6 色调色板）、legend hover 联动 dim 非活动弧 + 中心文字切换、空态圆环、总量摘要行。
+
+### 247. `SeatBillingTable` (席位计费表)
+- **Props**: `title?='Usage by User'`, `description?`, `rows?: [{id,user,email?,seat?,cost?,usage?,status?:'active'|'invited'|'suspended'}]`, `period?='Monthly'`, `currency?='$'`, `searchable?=true`
+- **Vanilla 用法**: `<seat-billing-table>` + `title`/`description`/`period`/`currency`/`searchable` 属性；property `rows`；事件 `seat-search` detail {query}
+- **特性**: 用户行 + email/席位/用量/费用、active/invited/suspended 徽章（suspended 不计费）、客户端搜索保焦、空搜索文案、billed seats 合计脚行。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

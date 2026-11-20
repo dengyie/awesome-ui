@@ -104,6 +104,13 @@
 - **AgentModelFallbackList** (#244)：模型降级链（优先级行 + 健康点 + 重排）。素材：references/ai-monitor 51_Adaline Providers 行形态。
 - 选型说明：TokenBudgetBar 候选因与 UsageMeter/UsageQuotaCard（账户级汇总）形态趋同被放弃，改为上述三件 Agent 域纵深。
 
+## 已消费批次 v3.6.0（Billing 计费纵深批，#245-247）
+
+- **BillingAddressForm** (#245)：账单地址表单（国家下拉 + optional 标注 + 必填校验 + 保存反馈）。素材：references/checkout 63_Xero / 64_Revolut / 61_Employment Hero。AuthForm 是登录域、AccountSecurityPanel 无地址——账单地址全库空白。
+- **UsageCreditsDonut** (#246)：用量积分环图（纯 SVG 环段 + legend hover 联动 + range 下拉）。素材：references/dashboard 66_Twenty 环图。HealthDonutStats 是健康卡网格、SegmentBreakdownBars 是横条——环图+时间范围选择器形态无。
+- **SeatBillingTable** (#247)：席位计费表（用户行 + 席位/用量/费用 + 状态徽章 + 合计）。素材：references/66_Twenty "Usage by User" 表 + references 12_Slack per-seat 语境。PaymentMethodCard 是单卡、CancelRetentionFlow 是挽留流——seat 域此前 0 组件。
+- 选型说明：billing 池 153 张素材此前仅消费 2 件，本批三件全部零名称重叠；发票域已有 InvoiceHistoryTable 需避开，故取地址/环图/席位三个互补切面。
+
 ## 重叠跳过记录（选型时排除）
 
 - Outseta/Slite 通用空态 → #25/#125 已覆盖形态。

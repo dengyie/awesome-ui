@@ -139,6 +139,7 @@ export default function AIInlineMenu({
   );
 }
 
+
 ====
 File: react/Accordion.tsx
 ====
@@ -245,6 +246,7 @@ export const Accordion: React.FC<AccordionProps> = ({
 };
 
 export default Accordion;
+
 
 ====
 File: react/AccountSecurityPanel.tsx
@@ -381,6 +383,7 @@ export default function AccountSecurityPanel({
     </div>
   );
 }
+
 
 ====
 File: react/AccountSwitcher.tsx
@@ -560,6 +563,7 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
 
 export default AccountSwitcher;
 
+
 ====
 File: react/ActivityFeed.tsx
 ====
@@ -632,6 +636,7 @@ export const ActivityFeed: React.FC<ActivityFeedProps> = ({ entries, title, clas
 };
 
 export default ActivityFeed;
+
 
 ====
 File: react/AddonPicker.tsx
@@ -736,6 +741,7 @@ export default function AddonPicker({
     </div>
   );
 }
+
 
 ====
 File: react/AgentBuilderCard.tsx
@@ -847,6 +853,7 @@ export default function AgentBuilderCard({
     </div>
   );
 }
+
 
 ====
 File: react/AgentEnvVarEditor.tsx
@@ -1000,6 +1007,7 @@ export default function AgentEnvVarEditor({
   );
 }
 
+
 ====
 File: react/AgentErrorRecovery.tsx
 ====
@@ -1084,6 +1092,7 @@ export default function AgentErrorRecovery({
     </div>
   );
 }
+
 
 ====
 File: react/AgentGuardrailViolationCard.tsx
@@ -1228,6 +1237,7 @@ export default function AgentGuardrailViolationCard({
     </div>
   );
 }
+
 
 ====
 File: react/AgentModelFallbackList.tsx
@@ -1377,6 +1387,7 @@ export default function AgentModelFallbackList({
   );
 }
 
+
 ====
 File: react/AgentNotificationFeed.tsx
 ====
@@ -1476,6 +1487,7 @@ export default function AgentNotificationFeed({
     </div>
   );
 }
+
 
 ====
 File: react/AgentRunLog.tsx
@@ -1607,6 +1619,7 @@ export const AgentRunLog: React.FC<AgentRunLogProps> = ({
 
 export default AgentRunLog;
 
+
 ====
 File: react/AgentScheduleEditor.tsx
 ====
@@ -1727,6 +1740,7 @@ export default function AgentScheduleEditor({
     </div>
   );
 }
+
 
 ====
 File: react/AgentSessionTimeline.tsx
@@ -1870,6 +1884,7 @@ export default function AgentSessionTimeline({
   );
 }
 
+
 ====
 File: react/AgentStepTimeline.tsx
 ====
@@ -1939,6 +1954,7 @@ export const AgentStepTimeline: React.FC<AgentStepTimelineProps> = ({ steps = []
   );
 };
 export default AgentStepTimeline;
+
 
 ====
 File: react/AgentTaskChecklist.tsx
@@ -2018,6 +2034,7 @@ export const AgentTaskChecklist: React.FC<AgentTaskChecklistProps> = ({
   );
 };
 export default AgentTaskChecklist;
+
 
 ====
 File: react/AgentTaskProgress.tsx
@@ -2126,6 +2143,7 @@ export default function AgentTaskProgress({
     </div>
   );
 }
+
 
 ====
 File: react/AgentWorkspaceSettings.tsx
@@ -2241,6 +2259,7 @@ export default function AgentWorkspaceSettings({
   );
 }
 
+
 ====
 File: react/AiNoteAnswer.tsx
 ====
@@ -2344,6 +2363,7 @@ export default function AiNoteAnswer({
   );
 }
 
+
 ====
 File: react/AiResearchPanel.tsx
 ====
@@ -2446,6 +2466,7 @@ export default function AiResearchPanel({
   );
 }
 
+
 ====
 File: react/AiRewriteMenu.tsx
 ====
@@ -2524,6 +2545,7 @@ export default function AiRewriteMenu({
   );
 }
 
+
 ====
 File: react/AiSuggestionCard.tsx
 ====
@@ -2586,6 +2608,7 @@ export default function AiSuggestionCard({
     </div>
   );
 }
+
 
 ====
 File: react/AiTemplatePicker.tsx
@@ -2728,6 +2751,7 @@ export default function AiTemplatePicker({
   );
 }
 
+
 ====
 File: react/AlertBanner.tsx
 ====
@@ -2851,6 +2875,7 @@ export const AlertBanner: React.FC<AlertBannerProps> = ({
 };
 
 export default AlertBanner;
+
 
 ====
 File: react/AmberEmbersBackdrop.tsx
@@ -3067,6 +3092,7 @@ const AmberEmbersBackdrop: React.FC<AmberEmbersBackdropProps> = ({
 
 export default AmberEmbersBackdrop;
 
+
 ====
 File: react/AnimatedCounter.tsx
 ====
@@ -3181,6 +3207,7 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     </span>
   );
 };
+
 
 ====
 File: react/ApiKeyTable.tsx
@@ -3301,6 +3328,7 @@ export default function ApiKeyTable({
     </div>
   );
 }
+
 
 ====
 File: react/ApiReferenceViewer.tsx
@@ -3505,6 +3533,7 @@ export default function ApiReferenceViewer({
   );
 }
 
+
 ====
 File: react/AppealRestrictionDialog.tsx
 ====
@@ -3608,6 +3637,7 @@ export default function AppealRestrictionDialog({
     </div>
   );
 }
+
 
 ====
 File: react/ApprovalCard.tsx
@@ -3758,6 +3788,7 @@ export const ApprovalCard: React.FC<ApprovalCardProps> = ({
 
 export default ApprovalCard;
 
+
 ====
 File: react/ArtifactCanvas.tsx
 ====
@@ -3884,6 +3915,7 @@ export const ArtifactCanvas: React.FC<ArtifactCanvasProps> = ({
   );
 };
 
+
 ====
 File: react/AttachmentChip.tsx
 ====
@@ -3931,6 +3963,7 @@ export default function AttachmentChip({ name, kind = "doc", size, meta, onRemov
     </span>
   );
 }
+
 
 ====
 File: react/AudioNotePlayer.tsx
@@ -3996,6 +4029,7 @@ export default function AudioNotePlayer({
     </div>
   );
 }
+
 
 ====
 File: react/AudioPlaylistPage.tsx
@@ -4143,6 +4177,7 @@ export default function AudioPlaylistPage({
   );
 }
 
+
 ====
 File: react/AudioWaveVisualizer.tsx
 ====
@@ -4193,6 +4228,7 @@ export const AudioWaveVisualizer: React.FC<AudioWaveVisualizerProps> = ({
     </div>
   );
 };
+
 
 ====
 File: react/AuditLogTable.tsx
@@ -4394,6 +4430,7 @@ export default function AuditLogTable({
   );
 }
 
+
 ====
 File: react/AuthForm.tsx
 ====
@@ -4572,6 +4609,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 
 export default AuthForm;
 
+
 ====
 File: react/AuthGatePrompt.tsx
 ====
@@ -4668,6 +4706,7 @@ export default function AuthGatePrompt({
   );
 }
 
+
 ====
 File: react/AuthSplitPanel.tsx
 ====
@@ -4741,6 +4780,7 @@ export default function AuthSplitPanel({
   );
 }
 
+
 ====
 File: react/AutoScrollAnchor.tsx
 ====
@@ -4807,6 +4847,7 @@ export const AutoScrollAnchor: React.FC<AutoScrollAnchorProps> = ({
     </>
   );
 };
+
 
 ====
 File: react/AvatarGroup.tsx
@@ -4904,6 +4945,7 @@ export const AvatarGroup: React.FC<AvatarGroupProps> = ({
 
 export default AvatarGroup;
 
+
 ====
 File: react/BentoFeatureGrid.tsx
 ====
@@ -4980,6 +5022,163 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
 };
 
 export default BentoFeatureGrid;
+
+
+====
+File: react/BillingAddressForm.tsx
+====
+
+import React, { useState } from "react";
+
+export interface BillingAddress {
+  country: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  state?: string;
+  zip: string;
+}
+
+export interface BillingAddressFormProps {
+  title?: string;
+  countries?: string[];
+  labels?: { address1?: string; address2?: string; city?: string; state?: string; zip?: string };
+  /** initial values (all optional; controlled-ish via defaultValue) */
+  defaultValue?: Partial<BillingAddress>;
+  submitLabel?: string;
+  showOptional?: boolean;
+  onSubmit?: (address: BillingAddress) => void;
+  className?: string;
+}
+
+const DEFAULT_COUNTRIES = ["United States", "Singapore", "United Kingdom", "Germany", "Japan"];
+
+export default function BillingAddressForm({
+  title = "Billing details",
+  countries = DEFAULT_COUNTRIES,
+  labels = {},
+  defaultValue = {},
+  submitLabel = "Continue to next step",
+  showOptional = true,
+  onSubmit,
+  className = "",
+}: BillingAddressFormProps) {
+  const [country, setCountry] = useState(defaultValue.country ?? countries[0] ?? "");
+  const [address1, setAddress1] = useState(defaultValue.address1 ?? "");
+  const [address2, setAddress2] = useState(defaultValue.address2 ?? "");
+  const [city, setCity] = useState(defaultValue.city ?? "");
+  const [state, setState] = useState(defaultValue.state ?? "");
+  const [zip, setZip] = useState(defaultValue.zip ?? "");
+  const [submitted, setSubmitted] = useState<BillingAddress | null>(null);
+
+  const valid = address1.trim() !== "" && city.trim() !== "" && zip.trim() !== "";
+
+  const handleSubmit = () => {
+    if (!valid) return;
+    const address: BillingAddress = { country, address1, address2: address2 || undefined, city, state: state || undefined, zip };
+    setSubmitted(address);
+    onSubmit?.(address);
+  };
+
+  return (
+    <div data-billing-address-form className={`rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <p data-billing-address-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</p>
+
+      <label data-billing-country-wrap className="mt-3 flex items-center gap-2">
+        <span className="w-24 shrink-0 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">Country</span>
+        <select
+          data-billing-country
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+          className="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+        >
+          {countries.map((c) => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+        </select>
+      </label>
+
+      <label data-billing-field-wrap className="mt-2 flex items-center gap-2">
+        <span className="w-24 shrink-0 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">{labels.address1 ?? "Address line 1"}</span>
+        <input
+          data-billing-address1
+          value={address1}
+          onChange={(e) => setAddress1(e.target.value)}
+          placeholder="Street address"
+          className="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+        />
+      </label>
+
+      {showOptional ? (
+        <label data-billing-field-wrap className="mt-2 flex items-center gap-2">
+          <span className="w-24 shrink-0 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">{labels.address2 ?? "Address line 2"}</span>
+          <span className="text-[10px] text-zinc-400 dark:text-zinc-500">optional</span>
+          <input
+            data-billing-address2
+            value={address2}
+            onChange={(e) => setAddress2(e.target.value)}
+            placeholder="Apt, suite, unit"
+            className="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+          />
+        </label>
+      ) : null}
+
+      <div className="mt-2 grid grid-cols-2 gap-2">
+        <label data-billing-city-wrap className="flex items-center gap-2">
+          <span className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">{labels.city ?? "City"}</span>
+          <input
+            data-billing-city
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            className="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+          />
+        </label>
+        <label data-billing-zip-wrap className="flex items-center gap-2">
+          <span className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">{labels.zip ?? "ZIP"}</span>
+          <input
+            data-billing-zip
+            value={zip}
+            onChange={(e) => setZip(e.target.value)}
+            className="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+          />
+        </label>
+      </div>
+
+      {showOptional ? (
+        <label data-billing-state-wrap className="mt-2 flex items-center gap-2">
+          <span className="w-24 shrink-0 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">{labels.state ?? "State"}</span>
+          <span className="text-[10px] text-zinc-400 dark:text-zinc-500">optional</span>
+          <input
+            data-billing-state
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            className="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+          />
+        </label>
+      ) : null}
+
+      <div className="mt-3 flex items-center justify-between">
+        {submitted ? (
+          <span data-billing-address-saved className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+            Saved {submitted.city}, {submitted.country}
+          </span>
+        ) : (
+          <span data-billing-address-hint className="text-[11px] text-zinc-400 dark:text-zinc-500">Address, city and ZIP are required.</span>
+        )}
+        <button
+          type="button"
+          data-billing-address-submit
+          disabled={!valid}
+          onClick={handleSubmit}
+          className="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          {submitLabel}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 
 ====
 File: react/BillingPanel.tsx
@@ -5117,6 +5316,7 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
   );
 };
 export default BillingPanel;
+
 
 ====
 File: react/BlogPostArticle.tsx
@@ -5310,6 +5510,7 @@ export default function BlogPostArticle({
   );
 }
 
+
 ====
 File: react/BottomTabBar.tsx
 ====
@@ -5388,6 +5589,7 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 };
 
 export default BottomTabBar;
+
 
 ====
 File: react/BrandPromptTable.tsx
@@ -5487,6 +5689,7 @@ export default function BrandPromptTable({
   );
 }
 
+
 ====
 File: react/Breadcrumb.tsx
 ====
@@ -5583,6 +5786,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
 
 export default Breadcrumb;
 
+
 ====
 File: react/CampsiteHandoff.tsx
 ====
@@ -5676,6 +5880,7 @@ export default function CampsiteHandoff({
     </div>
   );
 }
+
 
 ====
 File: react/CancelRetentionFlow.tsx
@@ -5830,6 +6035,7 @@ export const CancelRetentionFlow: React.FC<CancelRetentionFlowProps> = ({
 
 export default CancelRetentionFlow;
 
+
 ====
 File: react/ChangedFilesList.tsx
 ====
@@ -5942,6 +6148,7 @@ export default function ChangedFilesList({ title = "Files changed", files, group
   );
 }
 
+
 ====
 File: react/ChangelogFeed.tsx
 ====
@@ -6042,6 +6249,7 @@ export const ChangelogFeed: React.FC<ChangelogFeedProps> = ({
   </aside>
 );
 export default ChangelogFeed;
+
 
 ====
 File: react/ChangelogTimeline.tsx
@@ -6175,6 +6383,7 @@ export default function ChangelogTimeline({
   );
 }
 
+
 ====
 File: react/ChatMessageRow.tsx
 ====
@@ -6255,6 +6464,7 @@ export const ChatMessageRow: React.FC<ChatMessageRowProps> = ({
   );
 };
 export default ChatMessageRow;
+
 
 ====
 File: react/ChatPromptInput.tsx
@@ -6456,6 +6666,7 @@ export const ChatPromptInput: React.FC<ChatPromptInputProps> = ({
 
 export default ChatPromptInput;
 
+
 ====
 File: react/ChatSessionList.tsx
 ====
@@ -6632,6 +6843,7 @@ export const ChatSessionList: React.FC<ChatSessionListProps> = ({
 };
 export default ChatSessionList;
 
+
 ====
 File: react/ClarifyQuestionCard.tsx
 ====
@@ -6715,6 +6927,7 @@ export default function ClarifyQuestionCard({
     </div>
   );
 }
+
 
 ====
 File: react/CodeBlock.tsx
@@ -6816,6 +7029,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   );
 };
 export default CodeBlock;
+
 
 ====
 File: react/ColorPickerPopover.tsx
@@ -7032,6 +7246,7 @@ export default function ColorPickerPopover({
   );
 }
 
+
 ====
 File: react/ColumnVisibilityMenu.tsx
 ====
@@ -7180,6 +7395,7 @@ export default function ColumnVisibilityMenu({
     </div>
   );
 }
+
 
 ====
 File: react/ComboBox.tsx
@@ -7356,6 +7572,7 @@ export const ComboBox: React.FC<ComboBoxProps> = ({
 };
 
 export default ComboBox;
+
 
 ====
 File: react/CommandPalette.tsx
@@ -7549,6 +7766,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   );
 };
 export default CommandPalette;
+
 
 ====
 File: react/CommentThread.tsx
@@ -7776,6 +7994,7 @@ export const CommentThread: React.FC<CommentThreadProps> = ({
 
 export default CommentThread;
 
+
 ====
 File: react/ConfirmDialog.tsx
 ====
@@ -7924,6 +8143,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 
 export default ConfirmDialog;
 
+
 ====
 File: react/ConnectorGrid.tsx
 ====
@@ -8013,6 +8233,7 @@ export default function ConnectorGrid({
     </div>
   );
 }
+
 
 ====
 File: react/ContentReviewTable.tsx
@@ -8156,6 +8377,7 @@ export default function ContentReviewTable({
   );
 }
 
+
 ====
 File: react/ContextUsageBadge.tsx
 ====
@@ -8275,6 +8497,7 @@ export const ContextUsageBadge: React.FC<ContextUsageProps> = ({
 };
 export default ContextUsageBadge;
 
+
 ====
 File: react/CookieConsent.tsx
 ====
@@ -8387,6 +8610,7 @@ export default function CookieConsent({
     </div>
   );
 }
+
 
 ====
 File: react/CreationComposer.tsx
@@ -8526,6 +8750,7 @@ export default function CreationComposer({
     </div>
   );
 }
+
 
 ====
 File: react/DataTable.tsx
@@ -8741,6 +8966,7 @@ export const DataTable: React.FC<DataTableProps> = ({
 
 export default DataTable;
 
+
 ====
 File: react/DatePicker.tsx
 ====
@@ -8921,6 +9147,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 };
 
 export default DatePicker;
+
 
 ====
 File: react/DeliveryTrackingPanel.tsx
@@ -9121,6 +9348,7 @@ export default function DeliveryTrackingPanel({
   );
 }
 
+
 ====
 File: react/DeploymentCard.tsx
 ====
@@ -9194,6 +9422,7 @@ export default function DeploymentCard({ deployId, status, commit, createdAt, so
     </div>
   );
 }
+
 
 ====
 File: react/DiffViewer.tsx
@@ -9440,6 +9669,7 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
 };
 
 export default DiffViewer;
+
 
 ====
 File: react/DocsPageLayout.tsx
@@ -9730,6 +9960,7 @@ export default function DocsPageLayout({
   );
 }
 
+
 ====
 File: react/DriftEmbersBackdrop.tsx
 ====
@@ -9989,6 +10220,7 @@ const DriftEmbersBackdrop: React.FC<DriftEmbersBackdropProps> = ({
 
 export default DriftEmbersBackdrop;
 
+
 ====
 File: react/EditableHeading.tsx
 ====
@@ -10075,6 +10307,7 @@ export default function EditableHeading({
   );
 }
 
+
 ====
 File: react/EditorToolPalette.tsx
 ====
@@ -10160,6 +10393,7 @@ export default function EditorToolPalette({
   );
 }
 
+
 ====
 File: react/EmptyState.tsx
 ====
@@ -10204,6 +10438,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   );
 };
 export default EmptyState;
+
 
 ====
 File: react/EmptyStateStarter.tsx
@@ -10283,6 +10518,7 @@ export default function EmptyStateStarter({
     </div>
   );
 }
+
 
 ====
 File: react/EntityMultiSelectPicker.tsx
@@ -10433,6 +10669,7 @@ export default function EntityMultiSelectPicker({
     </div>
   );
 }
+
 
 ====
 File: react/EvalRunResults.tsx
@@ -10627,6 +10864,7 @@ export default function EvalRunResults({
   );
 }
 
+
 ====
 File: react/EvalScoreTable.tsx
 ====
@@ -10777,6 +11015,7 @@ export default function EvalScoreTable({
   );
 }
 
+
 ====
 File: react/EvalTurnBuilder.tsx
 ====
@@ -10890,6 +11129,7 @@ export default function EvalTurnBuilder({
     </div>
   );
 }
+
 
 ====
 File: react/EventLogTable.tsx
@@ -11086,6 +11326,7 @@ export default function EventLogTable({
   );
 }
 
+
 ====
 File: react/EventStreamPanel.tsx
 ====
@@ -11280,6 +11521,7 @@ export default function EventStreamPanel({
   );
 }
 
+
 ====
 File: react/EventTagGrid.tsx
 ====
@@ -11405,6 +11647,7 @@ export default function EventTagGrid({
   );
 }
 
+
 ====
 File: react/FalRunCard.tsx
 ====
@@ -11486,6 +11729,7 @@ export default function FalRunCard({
     </div>
   );
 }
+
 
 ====
 File: react/FederatedSearchResultsPanel.tsx
@@ -11639,6 +11883,7 @@ export default function FederatedSearchResultsPanel({
   );
 }
 
+
 ====
 File: react/FileAttachmentList.tsx
 ====
@@ -11704,6 +11949,7 @@ export const FileAttachmentList: React.FC<FileAttachmentListProps> = ({ files = 
   );
 };
 export default FileAttachmentList;
+
 
 ====
 File: react/FileDropzone.tsx
@@ -11915,6 +12161,7 @@ export const FileDropzone: React.FC<FileDropzoneProps> = ({
 
 export default FileDropzone;
 
+
 ====
 File: react/FilterBar.tsx
 ====
@@ -12074,6 +12321,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
 export default FilterBar;
 
+
 ====
 File: react/FilterQueryBuilder.tsx
 ====
@@ -12211,6 +12459,7 @@ export default function FilterQueryBuilder({
   );
 }
 
+
 ====
 File: react/FilterToolbar.tsx
 ====
@@ -12343,6 +12592,7 @@ export const FilterToolbar: React.FC<FilterToolbarProps> = ({
 
 export default FilterToolbar;
 
+
 ====
 File: react/FineTuneJobList.tsx
 ====
@@ -12456,6 +12706,7 @@ export default function FineTuneJobList({
     </div>
   );
 }
+
 
 ====
 File: react/FluidContourBackdrop.tsx
@@ -12759,6 +13010,7 @@ export const FluidContourBackdrop: React.FC<FluidContourBackdropProps> = ({
   );
 };
 
+
 ====
 File: react/FooterSection.tsx
 ====
@@ -12865,6 +13117,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
 
 export default FooterSection;
 
+
 ====
 File: react/ForecastTrendChart.tsx
 ====
@@ -12963,6 +13216,7 @@ export const ForecastTrendChart: React.FC<ForecastTrendChartProps> = ({
 
 export default ForecastTrendChart;
 
+
 ====
 File: react/FormField.tsx
 ====
@@ -13038,6 +13292,7 @@ export const FormField: React.FC<FormFieldProps> = ({
 );
 
 export default FormField;
+
 
 ====
 File: react/FormTrackingDashboard.tsx
@@ -13279,6 +13534,7 @@ export default function FormTrackingDashboard({
   );
 }
 
+
 ====
 File: react/GammaImageDetail.tsx
 ====
@@ -13346,6 +13602,7 @@ export default function GammaImageDetail({
     </div>
   );
 }
+
 
 ====
 File: react/GanttTimeline.tsx
@@ -13494,6 +13751,7 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({
 
 export default GanttTimeline;
 
+
 ====
 File: react/GroupedBarCompare.tsx
 ====
@@ -13584,6 +13842,7 @@ export const GroupedBarCompare: React.FC<GroupedBarCompareProps> = ({
 };
 
 export default GroupedBarCompare;
+
 
 ====
 File: react/GroupedTaskList.tsx
@@ -13853,6 +14112,7 @@ export default function GroupedTaskList({
   );
 }
 
+
 ====
 File: react/GuardrailReviewQueue.tsx
 ====
@@ -14006,6 +14266,7 @@ export default function GuardrailReviewQueue({
   );
 }
 
+
 ====
 File: react/HealthDonutStats.tsx
 ====
@@ -14121,6 +14382,7 @@ export const HealthDonutStats: React.FC<HealthDonutStatsProps> = ({ cards, class
 };
 
 export default HealthDonutStats;
+
 
 ====
 File: react/HelpCenterHome.tsx
@@ -14241,6 +14503,7 @@ export default function HelpCenterHome({
   );
 }
 
+
 ====
 File: react/HelpResourcesPanel.tsx
 ====
@@ -14340,6 +14603,7 @@ export default function HelpResourcesPanel({
   );
 }
 
+
 ====
 File: react/HeroSection.tsx
 ====
@@ -14434,6 +14698,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 };
 
 export default HeroSection;
+
 
 ====
 File: react/HomepageDashboard.tsx
@@ -14857,6 +15122,7 @@ export default function ImageActionMenu({
   );
 }
 
+
 ====
 File: react/ImageGenGallery.tsx
 ====
@@ -14988,6 +15254,7 @@ export default function ImageGenGallery({
   );
 }
 
+
 ====
 File: react/ImageGenMetaBar.tsx
 ====
@@ -15027,6 +15294,7 @@ export default function ImageGenMetaBar({
     </div>
   );
 }
+
 
 ====
 File: react/InboxList.tsx
@@ -15143,6 +15411,7 @@ export const InboxList: React.FC<InboxListProps> = ({
 };
 export default InboxList;
 
+
 ====
 File: react/IntegrationConnectGrid.tsx
 ====
@@ -15256,6 +15525,7 @@ export const IntegrationConnectGrid: React.FC<IntegrationConnectGridProps> = ({
 };
 
 export default IntegrationConnectGrid;
+
 
 ====
 File: react/InvoiceHistoryTable.tsx
@@ -15372,6 +15642,7 @@ export const InvoiceHistoryTable: React.FC<InvoiceHistoryTableProps> = ({
 
 export default InvoiceHistoryTable;
 
+
 ====
 File: react/IterationActionBar.tsx
 ====
@@ -15463,6 +15734,7 @@ export default function IterationActionBar({
   );
 }
 
+
 ====
 File: react/JumpBackIn.tsx
 ====
@@ -15547,6 +15819,7 @@ export default function JumpBackIn({
     </div>
   );
 }
+
 
 ====
 File: react/KanbanBoard.tsx
@@ -15754,6 +16027,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 
 export default KanbanBoard;
 
+
 ====
 File: react/KnowledgeDrawer.tsx
 ====
@@ -15909,6 +16183,7 @@ export const KnowledgeDrawer: React.FC<KnowledgeDrawerProps> = ({
     </div>
   );
 };
+
 
 ====
 File: react/LiquidGlass.tsx
@@ -16073,6 +16348,7 @@ export const LiquidGlass: React.FC<LiquidGlassProps> = ({
   );
 };
 
+
 ====
 File: react/LiveTailLogConsole.tsx
 ====
@@ -16186,6 +16462,7 @@ export default function LiveTailLogConsole({
   );
 }
 
+
 ====
 File: react/LogoCloud.tsx
 ====
@@ -16243,6 +16520,7 @@ export const LogoCloud: React.FC<LogoCloudProps> = ({
 };
 
 export default LogoCloud;
+
 
 ====
 File: react/MapActivityList.tsx
@@ -16389,6 +16667,7 @@ export default function MapActivityList({
   );
 }
 
+
 ====
 File: react/MapPropertyCard.tsx
 ====
@@ -16522,6 +16801,7 @@ export default function MapPropertyCard({
   );
 }
 
+
 ====
 File: react/MarqueeWall.tsx
 ====
@@ -16622,6 +16902,7 @@ export const MarqueeWall: React.FC<MarqueeWallProps> = ({ rows, speedSeconds = 4
 };
 
 export default MarqueeWall;
+
 
 ====
 File: react/MasonryDensityControls.tsx
@@ -16756,6 +17037,7 @@ export default function MasonryDensityControls({
   );
 }
 
+
 ====
 File: react/McpConnectPanel.tsx
 ====
@@ -16858,6 +17140,7 @@ export default function McpConnectPanel({
     </div>
   );
 }
+
 
 ====
 File: react/MembershipTierGrid.tsx
@@ -16964,6 +17247,7 @@ export default function MembershipTierGrid({
     </div>
   );
 }
+
 
 ====
 File: react/MemoryPanel.tsx
@@ -17100,6 +17384,7 @@ export default function MemoryPanel({
   );
 }
 
+
 ====
 File: react/MessageActionToolbar.tsx
 ====
@@ -17225,6 +17510,7 @@ export const MessageActionToolbar: React.FC<MessageActionToolbarProps> = ({
   );
 };
 
+
 ====
 File: react/MetricStrip.tsx
 ====
@@ -17312,6 +17598,7 @@ export const MetricStrip: React.FC<MetricStripProps> = ({
 };
 
 export default MetricStrip;
+
 
 ====
 File: react/Modal.tsx
@@ -17404,6 +17691,7 @@ export const Modal: React.FC<ModalProps> = ({
 };
 
 export default Modal;
+
 
 ====
 File: react/ModelComparePane.tsx
@@ -17510,6 +17798,7 @@ export default function ModelComparePane({
   );
 }
 
+
 ====
 File: react/ModelPricingCard.tsx
 ====
@@ -17591,6 +17880,7 @@ export default function ModelPricingCard({
     </div>
   );
 }
+
 
 ====
 File: react/ModelSelector.tsx
@@ -17796,6 +18086,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
 };
 export default ModelSelector;
 
+
 ====
 File: react/MonitorRunList.tsx
 ====
@@ -17946,6 +18237,7 @@ export default function MonitorRunList({
   );
 }
 
+
 ====
 File: react/Navbar.tsx
 ====
@@ -18083,6 +18375,7 @@ export const Navbar: React.FC<NavbarProps> = ({ brand, links = [], menus = [], c
 
 export default Navbar;
 
+
 ====
 File: react/NoResultsState.tsx
 ====
@@ -18150,6 +18443,7 @@ export const NoResultsState: React.FC<NoResultsStateProps> = ({
 };
 
 export default NoResultsState;
+
 
 ====
 File: react/NotificationCenter.tsx
@@ -18330,6 +18624,7 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
 
 export default NotificationCenter;
 
+
 ====
 File: react/NotificationPrefsMatrix.tsx
 ====
@@ -18426,6 +18721,7 @@ export const NotificationPrefsMatrix: React.FC<NotificationPrefsMatrixProps> = (
 };
 
 export default NotificationPrefsMatrix;
+
 
 ====
 File: react/OnboardingChecklist.tsx
@@ -18542,6 +18838,7 @@ export const OnboardingChecklist: React.FC<OnboardingChecklistProps> = ({
 };
 
 export default OnboardingChecklist;
+
 
 ====
 File: react/OnboardingStepper.tsx
@@ -18695,6 +18992,7 @@ export const OnboardingStepper: React.FC<OnboardingStepperProps> = ({
 
 export default OnboardingStepper;
 
+
 ====
 File: react/OrderCard.tsx
 ====
@@ -18809,6 +19107,7 @@ export default function OrderCard({
     </div>
   );
 }
+
 
 ====
 File: react/OrderSummaryPanel.tsx
@@ -18926,6 +19225,7 @@ export default function OrderSummaryPanel({
   );
 }
 
+
 ====
 File: react/OrderTracker.tsx
 ====
@@ -19038,6 +19338,7 @@ export default function OrderTracker({
     </div>
   );
 }
+
 
 ====
 File: react/OtpInput.tsx
@@ -19175,6 +19476,7 @@ export default function OtpInput({
   );
 }
 
+
 ====
 File: react/PageHeader.tsx
 ====
@@ -19291,6 +19593,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 
 export default PageHeader;
 
+
 ====
 File: react/Pagination.tsx
 ====
@@ -19397,6 +19700,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 
 export default Pagination;
 
+
 ====
 File: react/PaymentMethodCard.tsx
 ====
@@ -19475,6 +19779,7 @@ export default function PaymentMethodCard({
   );
 }
 
+
 ====
 File: react/PermissionDeniedState.tsx
 ====
@@ -19525,6 +19830,7 @@ export const PermissionDeniedState: React.FC<PermissionDeniedStateProps> = ({
 };
 
 export default PermissionDeniedState;
+
 
 ====
 File: react/PermissionMatrix.tsx
@@ -19691,6 +19997,7 @@ export default function PermissionMatrix({
   );
 }
 
+
 ====
 File: react/PersonaPresetGrid.tsx
 ====
@@ -19776,6 +20083,7 @@ export default function PersonaPresetGrid({
     </div>
   );
 }
+
 
 ====
 File: react/PipelineStageList.tsx
@@ -19896,6 +20204,7 @@ export default function PipelineStageList({ groups, defaultExpanded = [], showDu
     </div>
   );
 }
+
 
 ====
 File: react/PlanComparisonTable.tsx
@@ -20031,6 +20340,7 @@ export default function PlanComparisonTable({
     </div>
   );
 }
+
 
 ====
 File: react/PointerRipples.tsx
@@ -21336,6 +21646,7 @@ export const PointerRipples: React.FC<PointerRipplesProps> = ({
   );
 };
 
+
 ====
 File: react/PrReviewQueue.tsx
 ====
@@ -21432,6 +21743,7 @@ export default function PrReviewQueue({
   );
 }
 
+
 ====
 File: react/PricingTable.tsx
 ====
@@ -21516,6 +21828,7 @@ export const PricingTable: React.FC<PricingTableProps> = ({ plans, onSelect, cla
 };
 
 export default PricingTable;
+
 
 ====
 File: react/ProfileHeader.tsx
@@ -21686,6 +21999,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 };
 export default ProfileHeader;
 
+
 ====
 File: react/ProjectGanttTimeline.tsx
 ====
@@ -21836,6 +22150,7 @@ export default function ProjectGanttTimeline({
   );
 }
 
+
 ====
 File: react/PromptChips.tsx
 ====
@@ -21872,6 +22187,7 @@ export const PromptChips: React.FC<PromptChipsProps> = ({
     </div>
   );
 };
+
 
 ====
 File: react/PromptLibrary.tsx
@@ -22054,6 +22370,7 @@ export const PromptLibrary: React.FC<PromptLibraryProps> = ({
 
 export default PromptLibrary;
 
+
 ====
 File: react/PromptPerformanceTable.tsx
 ====
@@ -22162,6 +22479,7 @@ export default function PromptPerformanceTable({
     </div>
   );
 }
+
 
 ====
 File: react/PromptSaveDialog.tsx
@@ -22295,6 +22613,7 @@ export default function PromptSaveDialog({
   );
 }
 
+
 ====
 File: react/PromptTemplateGrid.tsx
 ====
@@ -22348,6 +22667,7 @@ export const PromptTemplateGrid: React.FC<PromptTemplateGridProps> = ({ template
   );
 };
 export default PromptTemplateGrid;
+
 
 ====
 File: react/PromptTunerResult.tsx
@@ -22435,6 +22755,7 @@ export default function PromptTunerResult({
     </div>
   );
 }
+
 
 ====
 File: react/PromptVariantDiff.tsx
@@ -22558,6 +22879,7 @@ export default function PromptVariantDiff({
     </div>
   );
 }
+
 
 ====
 File: react/QaTestTable.tsx
@@ -22687,6 +23009,7 @@ export default function QaTestTable({
   );
 }
 
+
 ====
 File: react/QuoteMasonry.tsx
 ====
@@ -22756,6 +23079,7 @@ export const QuoteMasonry: React.FC<QuoteMasonryProps> = ({ quotes, columns = 3,
 };
 
 export default QuoteMasonry;
+
 
 ====
 File: react/RankList.tsx
@@ -22859,6 +23183,7 @@ export const RankList: React.FC<RankListProps> = ({
 };
 
 export default RankList;
+
 
 ====
 File: react/ResourceList.tsx
@@ -22967,6 +23292,7 @@ export const ResourceList: React.FC<ResourceListProps> = ({
 
 export default ResourceList;
 
+
 ====
 File: react/RichToolbar.tsx
 ====
@@ -23047,6 +23373,7 @@ export const RichToolbar: React.FC<RichToolbarProps> = ({ groups = [], onAction,
 };
 
 export default RichToolbar;
+
 
 ====
 File: react/RoadmapTimeline.tsx
@@ -23173,6 +23500,7 @@ export const RoadmapTimeline: React.FC<RoadmapTimelineProps> = ({
     </div>
   );
 };
+
 
 ====
 File: react/SchedulerSlots.tsx
@@ -23309,6 +23637,7 @@ export const SchedulerSlots: React.FC<SchedulerSlotsProps> = ({
 
 export default SchedulerSlots;
 
+
 ====
 File: react/SearchInput.tsx
 ====
@@ -23403,6 +23732,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
 };
 
 export default SearchInput;
+
 
 ====
 File: react/SearchResultsPage.tsx
@@ -23598,6 +23928,7 @@ export default function SearchResultsPage({
   );
 }
 
+
 ====
 File: react/SearchTypeahead.tsx
 ====
@@ -23744,6 +24075,144 @@ export default function SearchTypeahead({
   );
 }
 
+
+====
+File: react/SeatBillingTable.tsx
+====
+
+import React, { useState } from "react";
+
+export interface SeatRow {
+  id: string;
+  user: string;
+  email?: string;
+  /** seat type, e.g. "Admin" / "Member" / "Guest" */
+  seat?: string;
+  /** monthly cost for this seat */
+  cost?: number;
+  /** usage snapshot, e.g. "1.2 credits" */
+  usage?: string;
+  status?: "active" | "invited" | "suspended";
+}
+
+export interface SeatBillingTableProps {
+  title?: string;
+  description?: string;
+  rows?: SeatRow[];
+  /** billing period label, e.g. "Monthly · Nov 2026" */
+  period?: string;
+  currency?: string;
+  /** searchable */
+  searchable?: boolean;
+  className?: string;
+}
+
+const STATUS_BADGE: Record<NonNullable<SeatRow["status"]>, string> = {
+  active: "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400",
+  invited: "bg-sky-50 text-sky-700 dark:bg-sky-500/10 dark:text-sky-400",
+  suspended: "bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400",
+};
+
+const STATUS_LABEL: Record<NonNullable<SeatRow["status"]>, string> = {
+  active: "Active",
+  invited: "Invited",
+  suspended: "Suspended",
+};
+
+export default function SeatBillingTable({
+  title = "Usage by User",
+  description = "Per-seat costs and credit consumption for the current billing period.",
+  rows = [],
+  period = "Monthly",
+  currency = "$",
+  searchable = true,
+  className = "",
+}: SeatBillingTableProps) {
+  const [query, setQuery] = useState("");
+  const q = query.trim().toLowerCase();
+  const filtered = q
+    ? rows.filter((r) => r.user.toLowerCase().includes(q) || (r.email ?? "").toLowerCase().includes(q))
+    : rows;
+
+  const billedSeats = rows.filter((r) => r.status !== "suspended");
+  const totalCost = billedSeats.reduce((acc, r) => acc + (r.cost ?? 0), 0);
+
+  return (
+    <div data-seat-table className={`rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p data-seat-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</p>
+        {period ? <span data-seat-period className="text-[11px] text-zinc-400 dark:text-zinc-500">{period}</span> : null}
+      </div>
+      <p data-seat-description className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">{description}</p>
+
+      {searchable ? (
+        <input
+          data-seat-search
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search for a user…"
+          className="mt-3 w-full rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+        />
+      ) : null}
+
+      <table data-seat-rows className="mt-2 w-full text-left text-xs">
+        <thead>
+          <tr className="border-b border-zinc-200 text-[10px] uppercase tracking-wide text-zinc-400 dark:border-zinc-700">
+            <th className="py-1.5 pr-2 font-semibold">Name</th>
+            <th className="py-1.5 pr-2 font-semibold">Seat</th>
+            <th className="py-1.5 pr-2 font-semibold">Usage</th>
+            <th className="py-1.5 text-right font-semibold">Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filtered.map((r) => (
+            <tr key={r.id} data-seat-row={r.id} className="border-b border-zinc-100 last:border-0 dark:border-zinc-800">
+              <td className="py-2 pr-2">
+                <div className="flex items-center gap-2">
+                  <span data-seat-user className="truncate font-medium text-zinc-700 dark:text-zinc-200">{r.user}</span>
+                  {r.status && r.status !== "active" ? (
+                    <span data-seat-status className={`rounded-full px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide ${STATUS_BADGE[r.status]}`}>
+                      {STATUS_LABEL[r.status]}
+                    </span>
+                  ) : null}
+                </div>
+                {r.email ? <p className="mt-0.5 truncate text-[10px] text-zinc-400 dark:text-zinc-500">{r.email}</p> : null}
+              </td>
+              <td className="py-2 pr-2 text-zinc-500 dark:text-zinc-400">{r.seat ?? "Member"}</td>
+              <td className="py-2 pr-2 font-mono text-[11px] text-zinc-500 dark:text-zinc-400">{r.usage ?? "—"}</td>
+              <td data-seat-cost className="py-2 text-right font-mono text-[11px] text-zinc-700 dark:text-zinc-200">
+                {r.cost != null ? `${currency}${r.cost.toFixed(2)}` : "—"}
+              </td>
+            </tr>
+          ))}
+          {filtered.length === 0 ? (
+            <tr>
+              <td colSpan={4} data-seat-empty className="py-4 text-center text-xs text-zinc-400 dark:text-zinc-500">
+                {q ? "No users match your search" : "No seats billed this period"}
+              </td>
+            </tr>
+          ) : null}
+        </tbody>
+        {billedSeats.length > 0 ? (
+          <tfoot>
+            <tr data-seat-total className="border-t border-zinc-200 dark:border-zinc-700">
+              <td className="py-2 pr-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-300">
+                {billedSeats.length} billed seat{billedSeats.length === 1 ? "" : "s"}
+              </td>
+              <td colSpan={2}></td>
+              <td data-seat-total-cost className="py-2 text-right font-mono text-xs font-semibold text-zinc-800 dark:text-zinc-100">
+                {currency}{totalCost.toFixed(2)}
+              </td>
+            </tr>
+          </tfoot>
+        ) : null}
+      </table>
+    </div>
+  );
+}
+
+
 ====
 File: react/SegmentBreakdownBars.tsx
 ====
@@ -23843,6 +24312,7 @@ export const SegmentBreakdownBars: React.FC<SegmentBreakdownBarsProps> = ({
 };
 
 export default SegmentBreakdownBars;
+
 
 ====
 File: react/ServiceStatusList.tsx
@@ -23947,6 +24417,7 @@ export default function ServiceStatusList({ services, checks = [], durationLabel
     </div>
   );
 }
+
 
 ====
 File: react/SessionDeviceTable.tsx
@@ -24096,6 +24567,7 @@ export default function SessionDeviceTable({
     </div>
   );
 }
+
 
 ====
 File: react/SessionDiagnosticsPanel.tsx
@@ -24252,6 +24724,7 @@ export default function SessionDiagnosticsPanel({
   );
 }
 
+
 ====
 File: react/SettingsPanel.tsx
 ====
@@ -24386,6 +24859,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
 };
 
 export default SettingsPanel;
+
 
 ====
 File: react/SettingsSideDrawer.tsx
@@ -24578,6 +25052,7 @@ export default function SettingsSideDrawer({
   );
 }
 
+
 ====
 File: react/ShareAccessDialog.tsx
 ====
@@ -24729,6 +25204,7 @@ export default function ShareAccessDialog({
   );
 }
 
+
 ====
 File: react/ShareChatDialog.tsx
 ====
@@ -24855,6 +25331,7 @@ export default function ShareChatDialog({
   );
 }
 
+
 ====
 File: react/SharedChatViewer.tsx
 ====
@@ -24939,6 +25416,7 @@ export default function SharedChatViewer({
     </div>
   );
 }
+
 
 ====
 File: react/ShortcutCheatSheet.tsx
@@ -25043,6 +25521,7 @@ export default function ShortcutCheatSheet({
 }
 
 export { KbdChip };
+
 
 ====
 File: react/ShortcutsOverlay.tsx
@@ -25218,6 +25697,7 @@ export const ShortcutsOverlay: React.FC<ShortcutsOverlayProps> = ({
 
 export default ShortcutsOverlay;
 
+
 ====
 File: react/SideDrawer.tsx
 ====
@@ -25316,6 +25796,7 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({
 
 export default SideDrawer;
 
+
 ====
 File: react/SideNav.tsx
 ====
@@ -25410,6 +25891,7 @@ export const SideNav: React.FC<SideNavProps> = ({
 };
 
 export default SideNav;
+
 
 ====
 File: react/SiteFooter.tsx
@@ -25507,6 +25989,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
 
 export default SiteFooter;
 
+
 ====
 File: react/SourcesCitation.tsx
 ====
@@ -25592,6 +26075,7 @@ export const SourcesCitation: React.FC<SourcesCitationProps> = ({
     </div>
   );
 };
+
 
 ====
 File: react/SpotlightGlareCard.tsx
@@ -25713,6 +26197,7 @@ export const SpotlightGlareCard: React.FC<SpotlightGlareCardProps> = ({
   );
 };
 
+
 ====
 File: react/StatCard.tsx
 ====
@@ -25808,6 +26293,7 @@ export const StatCard: React.FC<StatCardProps> = ({
 
 export default StatCard;
 
+
 ====
 File: react/StatsBand.tsx
 ====
@@ -25866,6 +26352,7 @@ export const StatsBand: React.FC<StatsBandProps> = ({
 };
 
 export default StatsBand;
+
 
 ====
 File: react/StatusCountTabs.tsx
@@ -25927,6 +26414,7 @@ export default function StatusCountTabs({ tabs, value, size = "md", fullWidth = 
     </div>
   );
 }
+
 
 ====
 File: react/StatusIndicator.tsx
@@ -26009,6 +26497,7 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
     </div>
   );
 };
+
 
 ====
 File: react/StepSlider.tsx
@@ -26117,6 +26606,7 @@ export const StepSlider: React.FC<StepSliderProps> = ({
 };
 export default StepSlider;
 
+
 ====
 File: react/Stepper.tsx
 ====
@@ -26202,6 +26692,7 @@ export const Stepper: React.FC<StepperProps> = ({ steps, current = 1, onStepClic
 };
 
 export default Stepper;
+
 
 ====
 File: react/StockPhotoPicker.tsx
@@ -26340,6 +26831,7 @@ export default function StockPhotoPicker({
   );
 }
 
+
 ====
 File: react/StreamMarkdown.tsx
 ====
@@ -26464,6 +26956,7 @@ export const StreamMarkdown: React.FC<StreamMarkdownProps> = ({
   );
 };
 
+
 ====
 File: react/StreamingProgressBar.tsx
 ====
@@ -26519,6 +27012,7 @@ export const StreamingProgressBar: React.FC<StreamingProgressBarProps> = ({
   );
 };
 export default StreamingProgressBar;
+
 
 ====
 File: react/SuccessToast.tsx
@@ -26594,6 +27088,7 @@ export default function SuccessToast({
     </div>
   );
 }
+
 
 ====
 File: react/SystemPromptEditor.tsx
@@ -26710,6 +27205,7 @@ export default function SystemPromptEditor({
   );
 }
 
+
 ====
 File: react/TableSavedViews.tsx
 ====
@@ -26800,6 +27296,7 @@ export const TableSavedViews: React.FC<TableSavedViewsProps> = ({
 };
 
 export default TableSavedViews;
+
 
 ====
 File: react/Tabs.tsx
@@ -26922,6 +27419,7 @@ export const Tabs: React.FC<TabsProps> = ({
 
 export default Tabs;
 
+
 ====
 File: react/Tag.tsx
 ====
@@ -26987,6 +27485,7 @@ export const Tag: React.FC<TagProps> = ({ label, tone = "neutral", size = "md", 
 };
 
 export default Tag;
+
 
 ====
 File: react/TargetGauge.tsx
@@ -27102,6 +27601,7 @@ export const TargetGauge: React.FC<TargetGaugeProps> = ({
 };
 
 export default TargetGauge;
+
 
 ====
 File: react/TaskCardModal.tsx
@@ -27416,6 +27916,7 @@ export default function TaskCardModal({
   );
 }
 
+
 ====
 File: react/TaskDetailPanel.tsx
 ====
@@ -27634,6 +28135,7 @@ export default function TaskDetailPanel({
   );
 }
 
+
 ====
 File: react/TestimonialGrid.tsx
 ====
@@ -27747,6 +28249,7 @@ export const TestimonialGrid: React.FC<TestimonialGridProps> = ({
 
 export default TestimonialGrid;
 
+
 ====
 File: react/ThemeToggle.tsx
 ====
@@ -27850,6 +28353,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
     </div>
   );
 };
+
 
 ====
 File: react/ThinkingBlock.tsx
@@ -28000,6 +28504,7 @@ export const ThinkingBlock: React.FC<ThinkingBlockProps> = ({
 
 export default ThinkingBlock;
 
+
 ====
 File: react/TimeSlotPicker.tsx
 ====
@@ -28148,6 +28653,7 @@ export default function TimeSlotPicker({
   );
 }
 
+
 ====
 File: react/TimeframePicker.tsx
 ====
@@ -28238,6 +28744,7 @@ export const TimeframePicker: React.FC<TimeframePickerProps> = ({
 };
 
 export default TimeframePicker;
+
 
 ====
 File: react/ToastStack.tsx
@@ -28349,6 +28856,7 @@ export const ToastStack: React.FC<ToastStackProps> = ({
 };
 export default ToastStack;
 
+
 ====
 File: react/ToggleSwitch.tsx
 ====
@@ -28416,6 +28924,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 };
 
 export default ToggleSwitch;
+
 
 ====
 File: react/TokenCostBreakdown.tsx
@@ -28546,6 +29055,7 @@ export default function TokenCostBreakdown({
   );
 }
 
+
 ====
 File: react/ToolApprovalCard.tsx
 ====
@@ -28649,6 +29159,7 @@ export const ToolApprovalCard: React.FC<ToolApprovalCardProps> = ({
   );
 };
 export default ToolApprovalCard;
+
 
 ====
 File: react/ToolCallBadge.tsx
@@ -28759,6 +29270,7 @@ export const ToolCallBadge: React.FC<ToolCallBadgeProps> = ({
     </div>
   );
 };
+
 
 ====
 File: react/ToolSchemaEditor.tsx
@@ -28885,6 +29397,7 @@ export default function ToolSchemaEditor({
   );
 }
 
+
 ====
 File: react/Tooltip.tsx
 ====
@@ -28925,6 +29438,7 @@ export const Tooltip: React.FC<TooltipProps> = ({ content, side = "top", childre
 };
 
 export default Tooltip;
+
 
 ====
 File: react/TourTooltip.tsx
@@ -29057,6 +29571,7 @@ export default function TourTooltip({
     </div>
   );
 }
+
 
 ====
 File: react/TraceSpanWaterfall.tsx
@@ -29195,6 +29710,7 @@ export default function TraceSpanWaterfall({
   );
 }
 
+
 ====
 File: react/TrialBanner.tsx
 ====
@@ -29276,6 +29792,7 @@ export default function TrialBanner({
   );
 }
 
+
 ====
 File: react/TypingIndicator.tsx
 ====
@@ -29325,6 +29842,7 @@ export const TypingIndicator: React.FC<TypingIndicatorProps> = ({
   );
 };
 export default TypingIndicator;
+
 
 ====
 File: react/UiIcon.tsx
@@ -29462,6 +29980,7 @@ export const Send = icon("send");
 export const Star = icon("star");
 export const Info = icon("info");
 export const CreditCard = icon("credit-card");
+
 
 ====
 File: react/UpgradeCheckoutPanel.tsx
@@ -29631,6 +30150,7 @@ export default function UpgradeCheckoutPanel({
   );
 }
 
+
 ====
 File: react/UpgradePromptCard.tsx
 ====
@@ -29721,6 +30241,155 @@ export const UpgradePromptCard: React.FC<UpgradePromptCardProps> = ({
 
 export default UpgradePromptCard;
 
+
+====
+File: react/UsageCreditsDonut.tsx
+====
+
+import React, { useState } from "react";
+
+export interface CreditSlice {
+  id: string;
+  label: string;
+  value: number;
+  color?: string;
+}
+
+export interface UsageCreditsDonutProps {
+  title?: string;
+  unit?: string;
+  /** summary line under the title, e.g. "3.54 credits" */
+  total?: number;
+  slices?: CreditSlice[];
+  /** dropdown options like Last 7 days / Last 30 days */
+  ranges?: string[];
+  defaultRange?: string;
+  /** render a flat legend list instead of inline labels */
+  className?: string;
+}
+
+const PALETTE = ["#6366f1", "#22c55e", "#f59e0b", "#ec4899", "#06b6d4", "#a855f7"];
+
+const polar = (cx: number, cy: number, r: number, deg: number) => {
+  const rad = ((deg - 90) * Math.PI) / 180;
+  return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
+};
+
+const donutArc = (cx: number, cy: number, rOuter: number, rInner: number, startDeg: number, endDeg: number) => {
+  const [x1, y1] = polar(cx, cy, rOuter, startDeg);
+  const [x2, y2] = polar(cx, cy, rOuter, endDeg);
+  const [x3, y3] = polar(cx, cy, rInner, endDeg);
+  const [x4, y4] = polar(cx, cy, rInner, startDeg);
+  const large = endDeg - startDeg > 180 ? 1 : 0;
+  return [
+    `M ${x1} ${y1}`,
+    `A ${rOuter} ${rOuter} 0 ${large} 1 ${x2} ${y2}`,
+    `L ${x3} ${y3}`,
+    `A ${rInner} ${rInner} 0 ${large} 0 ${x4} ${y4}`,
+    "Z",
+  ].join(" ");
+};
+
+export default function UsageCreditsDonut({
+  title = "Usage by Type",
+  unit = "credits",
+  total,
+  slices = [],
+  ranges = ["Last 7 days", "Last 30 days"],
+  defaultRange,
+  className = "",
+}: UsageCreditsDonutProps) {
+  const [range, setRange] = useState(defaultRange ?? ranges[0] ?? "");
+  const [active, setActive] = useState<string | null>(null);
+
+  const sum = total ?? slices.reduce((acc, s) => acc + s.value, 0);
+  const colored = slices.map((s, i) => ({ ...s, color: s.color ?? PALETTE[i % PALETTE.length] }));
+  const size = 160;
+  const cx = size / 2;
+  const cy = size / 2;
+  const rOuter = 70;
+  const rInner = 44;
+
+  let angle = 0;
+  const arcs = colored.map((s) => {
+    const sweep = sum > 0 ? (s.value / sum) * 360 : 0;
+    const start = angle;
+    const end = angle + sweep;
+    angle = end;
+    return { ...s, path: donutArc(cx, cy, rOuter, rInner, start, Math.max(end - 0.6, start + 0.1)) };
+  });
+
+  return (
+    <div data-usage-donut className={`rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p data-usage-donut-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</p>
+        {ranges.length > 0 ? (
+          <select
+            data-usage-donut-range
+            value={range}
+            onChange={(e) => setRange(e.target.value)}
+            className="rounded-md border border-zinc-200 bg-white px-2 py-1 text-[11px] text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+          >
+            {ranges.map((r) => (
+              <option key={r} value={r}>{r}</option>
+            ))}
+          </select>
+        ) : null}
+      </div>
+      <p data-usage-donut-total className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+        {sum.toFixed(2)} {unit}
+      </p>
+
+      <div className="mt-3 flex flex-wrap items-center gap-4">
+        <svg data-usage-donut-chart width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label={`${title} donut chart`}>
+          {arcs.map((a) => (
+            <path
+              key={a.id}
+              d={a.path}
+              fill={a.color}
+              opacity={active && active !== a.id ? 0.35 : 1}
+              onMouseEnter={() => setActive(a.id)}
+              onMouseLeave={() => setActive(null)}
+            />
+          ))}
+          {sum <= 0 ? (
+            <circle cx={cx} cy={cy} r={(rOuter + rInner) / 2} fill="none" stroke="#e4e4e7" strokeWidth={rOuter - rInner} className="dark:opacity-20" />
+          ) : null}
+          <text x={cx} y={cy - 2} textAnchor="middle" className="fill-zinc-900 text-sm font-semibold dark:fill-zinc-50">
+            {active ? colored.find((s) => s.id === active)?.label : `${((arcs[0]?.value ?? 0) / (sum || 1) * 100).toFixed(0)}%`}
+          </text>
+          <text x={cx} y={cy + 14} textAnchor="middle" className="fill-zinc-400 text-[10px]">
+            {active ? `${colored.find((s) => s.id === active)?.value} ${unit}` : unit}
+          </text>
+        </svg>
+
+        <ul data-usage-donut-legend className="min-w-0 flex-1 space-y-1.5">
+          {colored.map((s) => (
+            <li
+              key={s.id}
+              data-usage-donut-slice={s.id}
+              onMouseEnter={() => setActive(s.id)}
+              onMouseLeave={() => setActive(null)}
+              className="flex items-center gap-2 text-xs"
+            >
+              <span className="h-2.5 w-2.5 shrink-0 rounded-sm" style={{ backgroundColor: s.color }} />
+              <span className="min-w-0 flex-1 truncate text-zinc-600 dark:text-zinc-300">{s.label}</span>
+              <span className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">{s.value}</span>
+              <span className="w-10 text-right text-[10px] text-zinc-400 dark:text-zinc-500">
+                {sum > 0 ? `${((s.value / sum) * 100).toFixed(0)}%` : "—"}
+              </span>
+            </li>
+          ))}
+          {colored.length === 0 ? (
+            <li data-usage-donut-empty className="text-xs text-zinc-400 dark:text-zinc-500">No usage recorded</li>
+          ) : null}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+
 ====
 File: react/UsageMeter.tsx
 ====
@@ -29794,6 +30463,7 @@ export const UsageMeter: React.FC<UsageMeterProps> = ({
 };
 
 export default UsageMeter;
+
 
 ====
 File: react/UsagePricingBreakdown.tsx
@@ -29896,6 +30566,7 @@ export const UsagePricingBreakdown: React.FC<UsagePricingBreakdownProps> = ({
 
 export default UsagePricingBreakdown;
 
+
 ====
 File: react/UsageQuotaCard.tsx
 ====
@@ -29972,6 +30643,7 @@ export default function UsageQuotaCard({
     </div>
   );
 }
+
 
 ====
 File: react/VideoProjectSettings.tsx
@@ -30153,6 +30825,7 @@ export default function VideoProjectSettings({
   );
 }
 
+
 ====
 File: react/VisionAnalysisCard.tsx
 ====
@@ -30221,6 +30894,7 @@ export default function VisionAnalysisCard({
     </div>
   );
 }
+
 
 ====
 File: react/VoiceModePanel.tsx
@@ -30361,6 +31035,7 @@ export const VoiceModePanel: React.FC<VoiceModePanelProps> = ({
 
 export default VoiceModePanel;
 
+
 ====
 File: react/VoiceOrb.tsx
 ====
@@ -30472,6 +31147,7 @@ export default function VoiceOrb({
   );
 }
 
+
 ====
 File: react/VoiceSessionHistory.tsx
 ====
@@ -30569,6 +31245,7 @@ export default function VoiceSessionHistory({
     </div>
   );
 }
+
 
 ====
 File: react/WebhookConfigPanel.tsx
@@ -30692,6 +31369,7 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
 };
 
 export default WebhookConfigPanel;
+
 
 ====
 File: react/WeekCalendarGrid.tsx
@@ -30909,6 +31587,7 @@ export default function WeekCalendarGrid({
   );
 }
 
+
 ====
 File: react/WizardSteps.tsx
 ====
@@ -31044,6 +31723,7 @@ export const WizardSteps: React.FC<WizardStepsProps> = ({
 
 export default WizardSteps;
 
+
 ====
 File: react/WorkspaceSwitcherMenu.tsx
 ====
@@ -31170,6 +31850,7 @@ export default function WorkspaceSwitcherMenu({
   );
 }
 
+
 ====
 File: react/WriterStyleGuide.tsx
 ====
@@ -31271,6 +31952,7 @@ export default function WriterStyleGuide({
   );
 }
 
+
 ====
 File: react/ZendeskFieldSuggest.tsx
 ====
@@ -31334,6 +32016,7 @@ export default function ZendeskFieldSuggest({
     </div>
   );
 }
+
 
 ====
 File: react/ZoomControlBar.tsx
@@ -31505,6 +32188,102 @@ export default function ZoomControlBar({
   );
 }
 
+
+====
+File: react/paper-theme.ts
+====
+
+/**
+ * Paper Atelier & Trail Theme System (aitubook.cn 风格设计资产规范与预设)
+ * 纯 CSS 注入 / Tailwind 拓展方案
+ */
+
+export const PaperTrailThemeCSS = `
+/* -------------------------------------------------------------
+ * 1. 核心变量系统 (Paper, Ink & 8-Stage Colors)
+ * ------------------------------------------------------------- */
+:root {
+  --font-serif: "Songti SC", "Noto Serif SC", "STSong", "SimSun", Georgia, serif;
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, "Cascadia Code", Menlo, monospace;
+
+  /* 基础纸墨调色盘 (Light Mode) */
+  --paper: #f1efe7;
+  --paper-raised: #faf8f1;
+  --paper-sunken: #e7e4d7;
+  --ink: #22262d;
+  --ink-soft: #545b64;
+  --ink-faint: #8d9298;
+  --line: #d6d2c2;
+  --line-strong: #b3ac97;
+  --accent: #c2410c;
+  --accent-ink: #1d4ed8;
+  --danger: #b91c1c;
+
+  /* 8 阶段里程碑色阶 */
+  --stage-1: #1d4ed8;
+  --stage-2: #0f766e;
+  --stage-3: #4d7c0f;
+  --stage-4: #a16207;
+  --stage-5: #c2410c;
+  --stage-6: #0e7490;
+  --stage-7: #be185d;
+  --stage-8: #b91c1c;
+
+  /* 材质微纹理 */
+  --contour: rgba(34, 38, 45, 0.055);
+  --graticule: rgba(29, 78, 216, 0.05);
+
+  /* 投影与动效 */
+  --shadow-card: 0 1px 0 rgba(34, 38, 45, .07), 0 5px 16px rgba(34, 38, 45, .07);
+  --shadow-lift: 0 2px 0 rgba(34, 38, 45, .08), 0 12px 28px rgba(34, 38, 45, .12);
+  --ease-survey: cubic-bezier(.16, 1, .3, 1);
+  --ease-stake: cubic-bezier(.34, 1.4, .64, 1);
+}
+
+:root[data-theme="dark"], .dark {
+  --paper: #14171c;
+  --paper-raised: #1b1f26;
+  --paper-sunken: #0f1216;
+  --ink: #e9e6db;
+  --ink-soft: #a9a89c;
+  --ink-faint: #6f7268;
+  --line: #2b3038;
+  --line-strong: #3e444e;
+  --accent: #f0692e;
+  --accent-ink: #6ea8fe;
+  --danger: #f87171;
+
+  --stage-1: #6ea8fe;
+  --stage-2: #2dd4bf;
+  --stage-3: #84cc16;
+  --stage-4: #eab308;
+  --stage-5: #f0692e;
+  --stage-6: #22d3ee;
+  --stage-7: #f472b6;
+  --stage-8: #f87171;
+
+  --contour: rgba(233, 230, 219, 0.06);
+  --graticule: rgba(110, 168, 254, 0.06);
+  --shadow-card: 0 1px 0 rgba(0, 0, 0, .4), 0 8px 22px rgba(0, 0, 0, .42);
+  --shadow-lift: 0 2px 0 rgba(0, 0, 0, .4), 0 14px 32px rgba(0, 0, 0, .52);
+}
+
+/* -------------------------------------------------------------
+ * 2. 大地等高线与坐标网格背景 (Topography Texture)
+ * ------------------------------------------------------------- */
+.bg-paper-topography {
+  background-color: var(--paper);
+  background-image:
+    repeating-radial-gradient(circle at 18% 12%, transparent 0 46px, var(--contour) 46px 47px),
+    repeating-radial-gradient(circle at 86% 88%, transparent 0 64px, var(--contour) 64px 65px),
+    linear-gradient(90deg, var(--graticule) 1px, transparent 1px),
+    linear-gradient(180deg, var(--graticule) 1px, transparent 1px);
+  background-size: auto, auto, 120px 120px, 120px 120px;
+}
+`;
+
+
 ====
 File: vue/AIInlineMenu.vue
 ====
@@ -31609,6 +32388,7 @@ const run = (action: AIAction, option?: string) => {
 };
 </script>
 
+
 ====
 File: vue/Accordion.vue
 ====
@@ -31681,6 +32461,7 @@ const toggle = (id: string) => {
   emit('toggle', id, !wasOpen);
 };
 </script>
+
 
 ====
 File: vue/AccountSecurityPanel.vue
@@ -31798,6 +32579,7 @@ const removeSession = (s: AccountSession) => {
     </p>
   </div>
 </template>
+
 
 ====
 File: vue/AccountSwitcher.vue
@@ -31973,6 +32755,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
+
 ====
 File: vue/ActivityFeed.vue
 ====
@@ -32030,6 +32813,7 @@ const KIND: Record<ActivityFeedKind, { icon: IconName; iconClass: string }> = {
   alert: { icon: 'alert-triangle', iconClass: 'bg-rose-100 text-rose-600 dark:bg-rose-950/60 dark:text-rose-300' },
 };
 </script>
+
 
 ====
 File: vue/AddonPicker.vue
@@ -32108,6 +32892,7 @@ const toggle = (option: AddonOption) => {
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/AgentBuilderCard.vue
@@ -32189,6 +32974,7 @@ const STATUS_DOT: Record<string, string> = {
     </button>
   </div>
 </template>
+
 
 ====
 File: vue/AgentEnvVarEditor.vue
@@ -32322,6 +33108,7 @@ const isEmpty = computed(() => rows.value.length === 0);
   </div>
 </template>
 
+
 ====
 File: vue/AgentErrorRecovery.vue
 ====
@@ -32384,6 +33171,7 @@ const emit = defineEmits<{
     <p v-if="props.supportText" data-agent-error-support class="mt-4 text-[11px] text-zinc-400 dark:text-zinc-500">{{ props.supportText }}</p>
   </div>
 </template>
+
 
 ====
 File: vue/AgentGuardrailViolationCard.vue
@@ -32493,6 +33281,7 @@ const act = (kind: "proceeded" | "blocked") => {
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/AgentModelFallbackList.vue
@@ -32627,6 +33416,7 @@ const move = (id: string, dir: number) => {
   </div>
 </template>
 
+
 ====
 File: vue/AgentNotificationFeed.vue
 ====
@@ -32716,6 +33506,7 @@ const KIND_TEXT: Record<string, string> = {
   </div>
 </template>
 
+
 ====
 File: vue/AgentRunLog.vue
 ====
@@ -32780,6 +33571,7 @@ const toggle = (id: string) => {
   expanded.value = next;
 };
 </script>
+
 
 ====
 File: vue/AgentScheduleEditor.vue
@@ -32888,6 +33680,7 @@ const save = () => {
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/AgentSessionTimeline.vue
@@ -33005,6 +33798,7 @@ const stripColor = (kind: AgentStepKind) =>
   </div>
 </template>
 
+
 ====
 File: vue/AgentStepTimeline.vue
 ====
@@ -33071,6 +33865,7 @@ function statusMeta(status: string) {
 }
 </script>
 
+
 ====
 File: vue/AgentTaskChecklist.vue
 ====
@@ -33136,6 +33931,7 @@ function statusIcon(status: string) {
   return STATUS_ICON[status] || STATUS_ICON.pending;
 }
 </script>
+
 
 ====
 File: vue/AgentTaskProgress.vue
@@ -33210,6 +34006,7 @@ const emit = defineEmits<{
   (e: 'next'): void;
 }>();
 </script>
+
 
 ====
 File: vue/AgentWorkspaceSettings.vue
@@ -33310,6 +34107,7 @@ const sectionOnCount = (section: AgentSettingsSection) =>
   </div>
 </template>
 
+
 ====
 File: vue/AiNoteAnswer.vue
 ====
@@ -33401,6 +34199,7 @@ const bars = props.waveform.length
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/AiResearchPanel.vue
@@ -33499,6 +34298,7 @@ const visible = computed(() => props.templates);
   </aside>
 </template>
 
+
 ====
 File: vue/AiRewriteMenu.vue
 ====
@@ -33569,6 +34369,7 @@ const emit = defineEmits<{
   </div>
 </template>
 
+
 ====
 File: vue/AiSuggestionCard.vue
 ====
@@ -33617,6 +34418,7 @@ defineEmits(["chip-click", "close"]);
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/AiTemplatePicker.vue
@@ -33742,6 +34544,7 @@ const isActive = (id: string) => id === (props.activeCategory || props.categorie
   </div>
 </template>
 
+
 ====
 File: vue/AlertBanner.vue
 ====
@@ -33841,6 +34644,7 @@ const TONE: Record<AlertBannerTone, ToneStyle> = {
 
 const styles = computed(() => TONE[props.tone]);
 </script>
+
 
 ====
 File: vue/AmberEmbersBackdrop.vue
@@ -34056,6 +34860,7 @@ watch(
 );
 </script>
 
+
 ====
 File: vue/AnimatedCounter.vue
 ====
@@ -34159,6 +34964,7 @@ onUnmounted(() => {
   if (rafId) cancelAnimationFrame(rafId);
 });
 </script>
+
 
 ====
 File: vue/ApiKeyTable.vue
@@ -34278,6 +35084,7 @@ const meta = (row: ApiKeyRow) => (row.created ? `${row.preview} · created ${row
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/ApiReferenceViewer.vue
@@ -34456,6 +35263,7 @@ const activeLanguage = () => props.languages.find((l) => l.id === activeLang.val
   </div>
 </template>
 
+
 ====
 File: vue/AppealRestrictionDialog.vue
 ====
@@ -34551,6 +35359,7 @@ const emit = defineEmits<{
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/ApprovalCard.vue
@@ -34703,6 +35512,7 @@ const handleReject = () => {
 };
 </script>
 
+
 ====
 File: vue/ArtifactCanvas.vue
 ====
@@ -34829,6 +35639,7 @@ const handleCopy = async () => {
 };
 </script>
 
+
 ====
 File: vue/AttachmentChip.vue
 ====
@@ -34871,6 +35682,7 @@ const emit = defineEmits<{ (e: 'remove'): void }>();
 
 const tone = computed(() => KIND_TONE[props.kind] || KIND_TONE.doc);
 </script>
+
 
 ====
 File: vue/AudioNotePlayer.vue
@@ -34933,6 +35745,7 @@ const bars = props.waveform.length
     <p data-audio-note-title class="mt-3 truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">{{ props.title }}</p>
   </div>
 </template>
+
 
 ====
 File: vue/AudioPlaylistPage.vue
@@ -35079,6 +35892,7 @@ const toggleLike = (track: PlaylistTrack) => {
   </div>
 </template>
 
+
 ====
 File: vue/AudioWaveVisualizer.vue
 ====
@@ -35126,6 +35940,7 @@ withDefaults(
   }
 );
 </script>
+
 
 ====
 File: vue/AuditLogTable.vue
@@ -35269,6 +36084,7 @@ const barHeight = (value: number) => `${Math.round((value / maxTrend) * 36) + 4}
   </div>
 </template>
 
+
 ====
 File: vue/AuthForm.vue
 ====
@@ -35379,6 +36195,7 @@ const handleSubmit = () => {
 };
 </script>
 
+
 ====
 File: vue/AuthGatePrompt.vue
 ====
@@ -35462,6 +36279,7 @@ const TONE_CLASS: Record<string, string> = {
 const toneClass = (tone?: string) => TONE_CLASS[tone || 'white'];
 </script>
 
+
 ====
 File: vue/AuthSplitPanel.vue
 ====
@@ -35510,6 +36328,7 @@ withDefaults(
   { media: '', mediaSide: 'left', mediaTitle: '', mediaSubtitle: '', mediaBackground: 'tinted', footerLinks: () => [] },
 );
 </script>
+
 
 ====
 File: vue/AutoScrollAnchor.vue
@@ -35577,6 +36396,7 @@ const scrollToBottom = () => {
   bottomEl.value?.scrollIntoView({ behavior: 'smooth' });
 };
 </script>
+
 
 ====
 File: vue/AvatarGroup.vue
@@ -35649,6 +36469,7 @@ const initials = (name: string) =>
     .join('');
 </script>
 
+
 ====
 File: vue/BentoFeatureGrid.vue
 ====
@@ -35717,6 +36538,152 @@ const list = computed(() => (Array.isArray(props.tiles) ? props.tiles : []));
     </div>
   </div>
 </template>
+
+
+====
+File: vue/BillingAddressForm.vue
+====
+
+<script setup lang="ts">
+import { ref, computed } from "vue";
+
+export interface BillingAddress {
+  country: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  state?: string;
+  zip: string;
+}
+interface Props {
+  title?: string;
+  countries?: string[];
+  labels?: { address1?: string; address2?: string; city?: string; state?: string; zip?: string };
+  defaultValue?: Partial<BillingAddress>;
+  submitLabel?: string;
+  showOptional?: boolean;
+}
+const props = withDefaults(defineProps<Props>(), {
+  title: "Billing details",
+  countries: () => ["United States", "Singapore", "United Kingdom", "Germany", "Japan"],
+  labels: () => ({}),
+  defaultValue: () => ({}),
+  submitLabel: "Continue to next step",
+  showOptional: true,
+});
+const emit = defineEmits<{
+  (e: "submit", address: BillingAddress): void;
+}>();
+
+const DEFAULT_COUNTRIES = props.countries;
+const country = ref(props.defaultValue.country ?? DEFAULT_COUNTRIES[0] ?? "");
+const address1 = ref(props.defaultValue.address1 ?? "");
+const address2 = ref(props.defaultValue.address2 ?? "");
+const city = ref(props.defaultValue.city ?? "");
+const state = ref(props.defaultValue.state ?? "");
+const zip = ref(props.defaultValue.zip ?? "");
+const submitted = ref<BillingAddress | null>(null);
+
+const valid = computed(() => address1.value.trim() !== "" && city.value.trim() !== "" && zip.value.trim() !== "");
+
+const handleSubmit = () => {
+  if (!valid.value) return;
+  const address: BillingAddress = {
+    country: country.value,
+    address1: address1.value,
+    address2: address2.value || undefined,
+    city: city.value,
+    state: state.value || undefined,
+    zip: zip.value,
+  };
+  submitted.value = address;
+  emit("submit", address);
+};
+</script>
+
+<template>
+  <div data-billing-address-form class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+    <p data-billing-address-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</p>
+
+    <label data-billing-country-wrap class="mt-3 flex items-center gap-2">
+      <span class="w-24 shrink-0 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">Country</span>
+      <select
+        data-billing-country
+        v-model="country"
+        class="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+      >
+        <option v-for="c in props.countries" :key="c" :value="c">{{ c }}</option>
+      </select>
+    </label>
+
+    <label data-billing-field-wrap class="mt-2 flex items-center gap-2">
+      <span class="w-24 shrink-0 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">{{ props.labels.address1 ?? "Address line 1" }}</span>
+      <input
+        data-billing-address1
+        v-model="address1"
+        placeholder="Street address"
+        class="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+      />
+    </label>
+
+    <label v-if="props.showOptional" data-billing-field-wrap class="mt-2 flex items-center gap-2">
+      <span class="w-24 shrink-0 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">{{ props.labels.address2 ?? "Address line 2" }}</span>
+      <span class="text-[10px] text-zinc-400 dark:text-zinc-500">optional</span>
+      <input
+        data-billing-address2
+        v-model="address2"
+        placeholder="Apt, suite, unit"
+        class="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+      />
+    </label>
+
+    <div class="mt-2 grid grid-cols-2 gap-2">
+      <label data-billing-city-wrap class="flex items-center gap-2">
+        <span class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">{{ props.labels.city ?? "City" }}</span>
+        <input
+          data-billing-city
+          v-model="city"
+          class="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+        />
+      </label>
+      <label data-billing-zip-wrap class="flex items-center gap-2">
+        <span class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">{{ props.labels.zip ?? "ZIP" }}</span>
+        <input
+          data-billing-zip
+          v-model="zip"
+          class="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+        />
+      </label>
+    </div>
+
+    <label v-if="props.showOptional" data-billing-state-wrap class="mt-2 flex items-center gap-2">
+      <span class="w-24 shrink-0 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">{{ props.labels.state ?? "State" }}</span>
+      <span class="text-[10px] text-zinc-400 dark:text-zinc-500">optional</span>
+      <input
+        data-billing-state
+        v-model="state"
+        class="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+      />
+    </label>
+
+    <div class="mt-3 flex items-center justify-between">
+      <span v-if="submitted" data-billing-address-saved class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+        Saved {{ submitted.city }}, {{ submitted.country }}
+      </span>
+      <span v-else data-billing-address-hint class="text-[11px] text-zinc-400 dark:text-zinc-500">Address, city and ZIP are required.</span>
+      <button
+        type="button"
+        data-billing-address-submit
+        :disabled="!valid"
+        @click="handleSubmit"
+        class="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-40"
+      >
+        {{ props.submitLabel }}
+      </button>
+    </div>
+  </div>
+</template>
+
 
 ====
 File: vue/BillingPanel.vue
@@ -35816,6 +36783,7 @@ const periods: { id: 'monthly' | 'annual'; label: string }[] = [
 ];
 void props;
 </script>
+
 
 ====
 File: vue/BlogPostArticle.vue
@@ -35960,6 +36928,7 @@ const copyCode = () => {
   </div>
 </template>
 
+
 ====
 File: vue/BottomTabBar.vue
 ====
@@ -36031,6 +37000,7 @@ const select = (id: string) => {
     </div>
   </nav>
 </template>
+
 
 ====
 File: vue/BrandPromptTable.vue
@@ -36125,6 +37095,7 @@ const hasQuota = () => typeof props.quotaUsed === "number" && typeof props.quota
   </div>
 </template>
 
+
 ====
 File: vue/Breadcrumb.vue
 ====
@@ -36195,6 +37166,7 @@ const onLinkClick = (event: MouseEvent, item: BreadcrumbItem, index: number) => 
   emit('navigate', item, index);
 };
 </script>
+
 
 ====
 File: vue/CampsiteHandoff.vue
@@ -36282,6 +37254,7 @@ const initialsFor = (name: string) =>
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/CancelRetentionFlow.vue
@@ -36396,6 +37369,7 @@ const goTo = (next: 1 | 2) => {
   </div>
 </template>
 
+
 ====
 File: vue/ChangedFilesList.vue
 ====
@@ -36489,6 +37463,7 @@ const totals = computed(() =>
 );
 </script>
 
+
 ====
 File: vue/ChangelogFeed.vue
 ====
@@ -36561,6 +37536,7 @@ const TONE: Record<string, string> = {
   amber: 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300',
 };
 </script>
+
 
 ====
 File: vue/ChangelogTimeline.vue
@@ -36685,6 +37661,7 @@ const toneFor = (tone?: ChangelogTagTone) => TONE_STYLES[tone ?? "sky"];
   </div>
 </template>
 
+
 ====
 File: vue/ChatMessageRow.vue
 ====
@@ -36748,6 +37725,7 @@ const props = withDefaults(
 
 const isUser = computed(() => props.role === "user");
 </script>
+
 
 ====
 File: vue/ChatPromptInput.vue
@@ -36948,6 +37926,7 @@ const handleSubmit = () => {
 };
 </script>
 
+
 ====
 File: vue/ChatSessionList.vue
 ====
@@ -37101,6 +38080,7 @@ const initials = computed(() =>
 );
 </script>
 
+
 ====
 File: vue/ClarifyQuestionCard.vue
 ====
@@ -37163,6 +38143,7 @@ const emit = defineEmits<{
   (e: 'next'): void;
 }>();
 </script>
+
 
 ====
 File: vue/CodeBlock.vue
@@ -37246,6 +38227,7 @@ async function handleCopy() {
   }
 }
 </script>
+
 
 ====
 File: vue/ColorPickerPopover.vue
@@ -37469,6 +38451,7 @@ const onChannel = (channel: 'r' | 'g' | 'b', raw: string) => {
 };
 </script>
 
+
 ====
 File: vue/ColumnVisibilityMenu.vue
 ====
@@ -37575,6 +38558,7 @@ const toggle = (column: ColumnDef) => {
   emit('toggle', column.id, nextVisible);
 };
 </script>
+
 
 ====
 File: vue/ComboBox.vue
@@ -37705,6 +38689,7 @@ onBeforeUnmount(() => {
   document.removeEventListener('keydown', onDocKeyDown);
 });
 </script>
+
 
 ====
 File: vue/CommandPalette.vue
@@ -37875,6 +38860,7 @@ function onKey(e: KeyboardEvent) {
 onMounted(() => document.addEventListener("keydown", onKey));
 onUnmounted(() => document.removeEventListener("keydown", onKey));
 </script>
+
 
 ====
 File: vue/CommentThread.vue
@@ -38087,6 +39073,7 @@ function submitReply(parentId: string | number) {
 }
 </script>
 
+
 ====
 File: vue/ConfirmDialog.vue
 ====
@@ -38234,6 +39221,7 @@ onMounted(() => document.addEventListener("keydown", onKey));
 onUnmounted(() => document.removeEventListener("keydown", onKey));
 </script>
 
+
 ====
 File: vue/ConnectorGrid.vue
 ====
@@ -38306,6 +39294,7 @@ const connectedCount = props.connectors.filter((c) => c.connected).length;
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/ContentReviewTable.vue
@@ -38435,6 +39424,7 @@ const valid = props.rows.length - errors;
   </div>
 </template>
 
+
 ====
 File: vue/ContextUsageBadge.vue
 ====
@@ -38557,6 +39547,7 @@ function onBlur() {
 }
 </script>
 
+
 ====
 File: vue/CookieConsent.vue
 ====
@@ -38669,6 +39660,7 @@ const alwaysIds = computed(() => props.categories.filter((c) => c.alwaysActive).
 
 const confirm = (accepted: string[]) => emit('confirm', accepted);
 </script>
+
 
 ====
 File: vue/CreationComposer.vue
@@ -38789,6 +39781,7 @@ const submit = (event: Event) => {
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/DataTable.vue
@@ -38914,6 +39907,7 @@ const runBatch = (action: DataTableAction) => {
   selected.value = new Set();
 };
 </script>
+
 
 ====
 File: vue/DatePicker.vue
@@ -39073,6 +40067,7 @@ function selectToday() {
   emit('change', today);
 }
 </script>
+
 
 ====
 File: vue/DeliveryTrackingPanel.vue
@@ -39251,6 +40246,7 @@ const toggleDetails = () => { detailsOpen.value = !detailsOpen.value; };
   </div>
 </template>
 
+
 ====
 File: vue/DeploymentCard.vue
 ====
@@ -39323,6 +40319,7 @@ const emit = defineEmits<{
 const tone = computed(() => STATUS_TONE[props.status] || STATUS_TONE.queued);
 const terminal = computed(() => props.status === 'live' || props.status === 'failed' || props.status === 'canceled');
 </script>
+
 
 ====
 File: vue/DiffViewer.vue
@@ -39565,6 +40562,7 @@ const buildRows = (lines: DiffLine[], contextSize: number): RenderRow[] => {
 const rows = computed(() => buildRows(activeLines.value, props.contextSize));
 </script>
 
+
 ====
 File: vue/DocsPageLayout.vue
 ====
@@ -39799,6 +40797,7 @@ const tocCls = (item: DocsTocItem) =>
     </aside>
   </div>
 </template>
+
 
 ====
 File: vue/DriftEmbersBackdrop.vue
@@ -40056,6 +41055,7 @@ watch(
 );
 </script>
 
+
 ====
 File: vue/EditableHeading.vue
 ====
@@ -40129,6 +41129,7 @@ const cancel = () => {
 };
 </script>
 
+
 ====
 File: vue/EditorToolPalette.vue
 ====
@@ -40187,6 +41188,7 @@ const emit = defineEmits<{
 }>();
 </script>
 
+
 ====
 File: vue/EmptyState.vue
 ====
@@ -40227,6 +41229,7 @@ const emit = defineEmits<{
   (e: "action"): void;
 }>();
 </script>
+
 
 ====
 File: vue/EmptyStateStarter.vue
@@ -40286,6 +41289,7 @@ const ACTION_CLASS: Record<string, string> = {
 
 const actionClass = computed(() => ACTION_CLASS[props.actionVariant] || ACTION_CLASS.solid);
 </script>
+
 
 ====
 File: vue/EntityMultiSelectPicker.vue
@@ -40405,6 +41409,7 @@ const toggle = (id: string) => {
   picked.value = next;
 };
 </script>
+
 
 ====
 File: vue/EvalRunResults.vue
@@ -40584,6 +41589,7 @@ const styleFor = (status: string) => STATUS_STYLES[status] ?? STATUS_STYLES.unkn
   </div>
 </template>
 
+
 ====
 File: vue/EvalScoreTable.vue
 ====
@@ -40723,6 +41729,7 @@ const toneBar = (tone?: EvalScoreTone) => {
   </div>
 </template>
 
+
 ====
 File: vue/EvalTurnBuilder.vue
 ====
@@ -40809,6 +41816,7 @@ const addLabel = (role: EvalTurnRole) =>
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/EventLogTable.vue
@@ -40941,6 +41949,7 @@ const sourceCls = (entry: LogEntry) =>
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/EventStreamPanel.vue
@@ -41114,6 +42123,7 @@ const select = (ev: StreamEvent) => {
   </div>
 </template>
 
+
 ====
 File: vue/EventTagGrid.vue
 ====
@@ -41216,6 +42226,7 @@ const emit = defineEmits(["tag-click"]);
   </div>
 </template>
 
+
 ====
 File: vue/FalRunCard.vue
 ====
@@ -41287,6 +42298,7 @@ defineEmits(["duplicate", "rerun", "delete"]);
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/FederatedSearchResultsPanel.vue
@@ -41418,6 +42430,7 @@ const filtered = computed(() =>
 );
 </script>
 
+
 ====
 File: vue/FileAttachmentList.vue
 ====
@@ -41480,6 +42493,7 @@ function iconForType(type?: string, name?: string): string {
   return "paperclip";
 }
 </script>
+
 
 ====
 File: vue/FileDropzone.vue
@@ -41673,6 +42687,7 @@ function onChange(event: Event) {
 }
 </script>
 
+
 ====
 File: vue/FilterBar.vue
 ====
@@ -41796,6 +42811,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
+
 ====
 File: vue/FilterQueryBuilder.vue
 ====
@@ -41883,6 +42899,7 @@ const addRow = () => {
   ]);
 };
 </script>
+
 
 ====
 File: vue/FilterToolbar.vue
@@ -41991,6 +43008,7 @@ const valueTone: Record<string, string> = {
 };
 </script>
 
+
 ====
 File: vue/FineTuneJobList.vue
 ====
@@ -42069,6 +43087,7 @@ const isActive = (status: string) => status === "queued" || status === "training
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/FluidContourBackdrop.vue
@@ -42363,6 +43382,7 @@ onUnmounted(() => {
 });
 </script>
 
+
 ====
 File: vue/FooterSection.vue
 ====
@@ -42436,6 +43456,7 @@ withDefaults(
 );
 defineEmits<{ (e: 'link-click', link: FooterLink): void }>();
 </script>
+
 
 ====
 File: vue/ForecastTrendChart.vue
@@ -42529,6 +43550,7 @@ const max = computed(() => Math.max(...props.points.map((point) => point.value),
 const heightOf = (value: number) => Math.max(4, Math.round((value / max.value) * 100));
 </script>
 
+
 ====
 File: vue/FormField.vue
 ====
@@ -42586,6 +43608,7 @@ withDefaults(
   { required: false, optional: false, className: '' }
 );
 </script>
+
 
 ====
 File: vue/FormTrackingDashboard.vue
@@ -42779,6 +43802,7 @@ const clampPct = (n: number) => Math.min(100, Math.max(0, n));
   </div>
 </template>
 
+
 ====
 File: vue/GammaImageDetail.vue
 ====
@@ -42829,6 +43853,7 @@ defineEmits(["download", "zoom", "delete", "like", "dislike"]);
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/GanttTimeline.vue
@@ -42969,6 +43994,7 @@ const handleClick = (task: GanttTask, index: number) => {
 };
 </script>
 
+
 ====
 File: vue/GroupedBarCompare.vue
 ====
@@ -43061,6 +44087,7 @@ const props = withDefaults(
 const max = computed(() => Math.max(...props.rows.flatMap((row) => [row.estimated, row.actual]), 0.0001));
 const heightOf = (value: number) => Math.max(4, Math.round((value / max.value) * 100));
 </script>
+
 
 ====
 File: vue/GroupedTaskList.vue
@@ -43281,6 +44308,7 @@ const initials = (name: string) =>
   </div>
 </template>
 
+
 ====
 File: vue/GuardrailReviewQueue.vue
 ====
@@ -43396,6 +44424,7 @@ const pending = props.items.filter((i) => (i.verdict ?? 'pending') === 'pending'
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/HealthDonutStats.vue
@@ -43520,6 +44549,7 @@ const shareOf = (slice: HealthDonutSlice, slices: HealthDonutSlice[]) => {
 };
 </script>
 
+
 ====
 File: vue/HelpCenterHome.vue
 ====
@@ -43626,6 +44656,7 @@ const toggleTopic = (topic: HelpTopic) => {
   </div>
 </template>
 
+
 ====
 File: vue/HelpResourcesPanel.vue
 ====
@@ -43700,6 +44731,7 @@ const badgeTone = (badge: string) =>
   </div>
 </template>
 
+
 ====
 File: vue/HeroSection.vue
 ====
@@ -43757,6 +44789,7 @@ withDefaults(
 );
 defineEmits<{ (e: 'primary'): void; (e: 'secondary'): void }>();
 </script>
+
 
 ====
 File: vue/HomepageDashboard.vue
@@ -44174,6 +45207,7 @@ const iconFor = (action: ImageMenuAction) =>
   </div>
 </template>
 
+
 ====
 File: vue/ImageGenGallery.vue
 ====
@@ -44283,6 +45317,7 @@ const submit = () => {
   </div>
 </template>
 
+
 ====
 File: vue/ImageGenMetaBar.vue
 ====
@@ -44317,6 +45352,7 @@ const props = withDefaults(defineProps<ImageGenMetaBarProps>(), {
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/InboxList.vue
@@ -44393,6 +45429,7 @@ const TAG_TONE: Record<string, string> = {
   indigo: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300',
 };
 </script>
+
 
 ====
 File: vue/IntegrationConnectGrid.vue
@@ -44499,6 +45536,7 @@ const toggle = (integration: IntegrationService) => {
   </div>
 </template>
 
+
 ====
 File: vue/InvoiceHistoryTable.vue
 ====
@@ -44596,6 +45634,7 @@ const paidTotal = computed(() => {
   </div>
 </template>
 
+
 ====
 File: vue/IterationActionBar.vue
 ====
@@ -44634,6 +45673,7 @@ const arrow = `${pill} border border-zinc-200 bg-white px-2.5 py-1.5 text-xs tex
     </span>
   </div>
 </template>
+
 
 ====
 File: vue/JumpBackIn.vue
@@ -44701,6 +45741,7 @@ const kindTones: Record<string, string> = {
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/KanbanBoard.vue
@@ -44893,6 +45934,7 @@ function onKeydown(event: KeyboardEvent, card: KanbanCard) {
 }
 </script>
 
+
 ====
 File: vue/KnowledgeDrawer.vue
 ====
@@ -45027,6 +46069,7 @@ const emit = defineEmits<{
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/LiquidGlass.vue
@@ -45187,6 +46230,7 @@ const glareStyle = computed(() => {
 });
 </script>
 
+
 ====
 File: vue/LiveTailLogConsole.vue
 ====
@@ -45278,6 +46322,7 @@ const toggleFollow = () => {
 };
 </script>
 
+
 ====
 File: vue/LogoCloud.vue
 ====
@@ -45323,6 +46368,7 @@ const list = computed(() => (Array.isArray(props.logos) ? props.logos : []));
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/MapActivityList.vue
@@ -45453,6 +46499,7 @@ const pick = (a: MapActivity) => {
   </div>
 </template>
 
+
 ====
 File: vue/MapPropertyCard.vue
 ====
@@ -45563,6 +46610,7 @@ const emit = defineEmits(["pin-click", "card-close", "card-like"]);
   </div>
 </template>
 
+
 ====
 File: vue/MarqueeWall.vue
 ====
@@ -45655,6 +46703,7 @@ onMounted(() => {
   document.head.appendChild(style);
 });
 </script>
+
 
 ====
 File: vue/MasonryDensityControls.vue
@@ -45761,6 +46810,7 @@ const ratioFor = (span?: number) => (span === 3 ? "3 / 4" : span === 2 ? "4 / 5"
   </div>
 </template>
 
+
 ====
 File: vue/McpConnectPanel.vue
 ====
@@ -45851,6 +46901,7 @@ onUnmounted(() => { if (copyTimer) clearTimeout(copyTimer); });
   </div>
 </template>
 
+
 ====
 File: vue/MembershipTierGrid.vue
 ====
@@ -45939,6 +46990,7 @@ const gridClass = () =>
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/MemoryPanel.vue
@@ -46047,6 +47099,7 @@ const submitEdit = () => {
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/MessageActionToolbar.vue
@@ -46172,6 +47225,7 @@ const handleThumb = (type: 'up' | 'down') => {
 };
 </script>
 
+
 ====
 File: vue/MetricStrip.vue
 ====
@@ -46247,6 +47301,7 @@ const deltaIcon = (delta: number | undefined): IconName | null =>
   delta === undefined ? null : delta > 0 ? 'trending-up' : delta < 0 ? 'trending-down' : 'minus';
 </script>
 
+
 ====
 File: vue/Modal.vue
 ====
@@ -46307,6 +47362,7 @@ const onKey = (event: KeyboardEvent) => {
 onMounted(() => document.addEventListener('keydown', onKey));
 onBeforeUnmount(() => document.removeEventListener('keydown', onKey));
 </script>
+
 
 ====
 File: vue/ModelComparePane.vue
@@ -46388,6 +47444,7 @@ const ERROR_TEXT = "Generation failed — try again.";
   </div>
 </template>
 
+
 ====
 File: vue/ModelPricingCard.vue
 ====
@@ -46459,6 +47516,7 @@ const fmtPrice = (value: number | undefined) =>
     </dl>
   </div>
 </template>
+
 
 ====
 File: vue/ModelSelector.vue
@@ -46651,6 +47709,7 @@ onUnmounted(() => {
 });
 </script>
 
+
 ====
 File: vue/MonitorRunList.vue
 ====
@@ -46760,6 +47819,7 @@ const barHeight = (value: number) => `${Math.max(4, (value / max()) * 56)}px`;
   </div>
 </template>
 
+
 ====
 File: vue/Navbar.vue
 ====
@@ -46862,6 +47922,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
+
 ====
 File: vue/NoResultsState.vue
 ====
@@ -46914,6 +47975,7 @@ const emit = defineEmits<{
     <button type="button" data-noresults-clear class="rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800" @click="emit('clear-filters')">{{ props.clearLabel }}</button>
   </div>
 </template>
+
 
 ====
 File: vue/NotificationCenter.vue
@@ -47083,6 +48145,7 @@ function select(item: NotificationItem) {
 }
 </script>
 
+
 ====
 File: vue/NotificationPrefsMatrix.vue
 ====
@@ -47167,6 +48230,7 @@ const onCell = (ev: NotificationPrefEvent, col: NotificationPrefColumn, target: 
   </div>
 </template>
 
+
 ====
 File: vue/OnboardingChecklist.vue
 ====
@@ -47250,6 +48314,7 @@ const doneCount = computed(() => props.tasks.filter((task) => task.done).length)
 const percent = computed(() => (total.value === 0 ? 0 : Math.round((doneCount.value / total.value) * 100)));
 const allDone = computed(() => total.value > 0 && doneCount.value === total.value);
 </script>
+
 
 ====
 File: vue/OnboardingStepper.vue
@@ -47357,6 +48422,7 @@ const active = computed(() => Math.min(Math.max(props.current, 0), Math.max(prop
 const currentSegment = computed(() => props.segments[Math.min(activeSegment.value, Math.max(props.segments.length - 1, 0))]);
 </script>
 
+
 ====
 File: vue/OrderCard.vue
 ====
@@ -47453,6 +48519,7 @@ const emit = defineEmits<{
 
 const tone = computed(() => STATUS_TONE[props.status] || STATUS_TONE.placed);
 </script>
+
 
 ====
 File: vue/OrderSummaryPanel.vue
@@ -47552,6 +48619,7 @@ const submitPromo = () => {
 };
 </script>
 
+
 ====
 File: vue/OrderTracker.vue
 ====
@@ -47625,6 +48693,7 @@ const progress = computed(() => Math.round(((currentIndex.value + 1) / props.sta
 const reached = (index: number) => !canceled.value && index <= currentIndex.value;
 const isCurrent = (index: number) => !canceled.value && index === currentIndex.value;
 </script>
+
 
 ====
 File: vue/OtpInput.vue
@@ -47742,6 +48811,7 @@ const onPaste = (index: number, event: ClipboardEvent) => {
   }
 };
 </script>
+
 
 ====
 File: vue/PageHeader.vue
@@ -47862,6 +48932,7 @@ const handleTab = (tab: PageHeaderTab) => {
 };
 </script>
 
+
 ====
 File: vue/Pagination.vue
 ====
@@ -47946,6 +49017,7 @@ const go = (next: number) => {
 };
 </script>
 
+
 ====
 File: vue/PaymentMethodCard.vue
 ====
@@ -48005,6 +49077,7 @@ const brandLabel = computed(() => BRAND_LABEL[key.value] || String(props.brand).
 const brandTone = computed(() => BRAND_TONE[key.value] || 'bg-zinc-700 text-white');
 </script>
 
+
 ====
 File: vue/PermissionDeniedState.vue
 ====
@@ -48044,6 +49117,7 @@ const emit = defineEmits<{
     <a v-if="props.contactLabel" data-denied-contact :href="props.contactHref" class="text-xs font-medium text-zinc-500 underline-offset-2 hover:underline dark:text-zinc-400">{{ props.contactLabel }}</a>
   </div>
 </template>
+
 
 ====
 File: vue/PermissionMatrix.vue
@@ -48185,6 +49259,7 @@ const pickCell = (row: PermissionRow, role: string, state: PermissionCellState, 
   </div>
 </template>
 
+
 ====
 File: vue/PersonaPresetGrid.vue
 ====
@@ -48250,6 +49325,7 @@ const GRADIENTS = [
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/PipelineStageList.vue
@@ -48339,6 +49415,7 @@ const durationLabel = (ms?: number) => {
   return `${Math.floor(ms / 60000)}m ${Math.round((ms % 60000) / 1000)}s`;
 };
 </script>
+
 
 ====
 File: vue/PlanComparisonTable.vue
@@ -48446,6 +49523,7 @@ const cellValue = (row: { values: { value: boolean | string }[] }, idx: number) 
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/PointerRipples.vue
@@ -49753,6 +50831,7 @@ watch(
 );
 </script>
 
+
 ====
 File: vue/PrReviewQueue.vue
 ====
@@ -49833,6 +50912,7 @@ const initials = (author: string) =>
   </div>
 </template>
 
+
 ====
 File: vue/PricingTable.vue
 ====
@@ -49878,6 +50958,7 @@ export interface PricingPlan {
 withDefaults(defineProps<{ plans: PricingPlan[] }>(), { plans: () => [] });
 defineEmits<{ (e: 'select', plan: PricingPlan): void }>();
 </script>
+
 
 ====
 File: vue/ProfileHeader.vue
@@ -49986,6 +51067,7 @@ const initialsFallback = computed(() =>
   ((props.initials || props.name || '?').trim().split(/\s+/).map((w) => w[0]).slice(0, 2).join('') || '?').toUpperCase()
 );
 </script>
+
 
 ====
 File: vue/ProjectGanttTimeline.vue
@@ -50136,6 +51218,7 @@ const statusCls = (status: string) => STATUS_STYLES[status] ?? STATUS_STYLES["In
   </div>
 </template>
 
+
 ====
 File: vue/PromptChips.vue
 ====
@@ -50170,6 +51253,7 @@ defineEmits<{
   (e: 'select', prompt: string): void;
 }>();
 </script>
+
 
 ====
 File: vue/PromptLibrary.vue
@@ -50284,6 +51368,7 @@ const visible = computed(() => {
 });
 </script>
 
+
 ====
 File: vue/PromptPerformanceTable.vue
 ====
@@ -50377,6 +51462,7 @@ const emit = defineEmits<{
     </table>
   </div>
 </template>
+
 
 ====
 File: vue/PromptSaveDialog.vue
@@ -50491,6 +51577,7 @@ const varChip = (v: string) => `{{${v}}}`;
   </div>
 </template>
 
+
 ====
 File: vue/PromptTemplateGrid.vue
 ====
@@ -50545,6 +51632,7 @@ const emit = defineEmits<{
   (e: "use", template: PromptTemplate): void;
 }>();
 </script>
+
 
 ====
 File: vue/PromptTunerResult.vue
@@ -50622,6 +51710,7 @@ const onPick = (event: Event) => {
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/PromptVariantDiff.vue
@@ -50744,6 +51833,7 @@ const segments = (text: string) =>
   </div>
 </template>
 
+
 ====
 File: vue/QaTestTable.vue
 ====
@@ -50863,6 +51953,7 @@ const ratingLabel: Record<string, string> = {
   </div>
 </template>
 
+
 ====
 File: vue/QuoteMasonry.vue
 ====
@@ -50914,6 +52005,7 @@ withDefaults(
   { quotes: () => [], className: '' },
 );
 </script>
+
 
 ====
 File: vue/RankList.vue
@@ -51011,6 +52103,7 @@ const handleSelect = (index: number, item: RankListItem) => {
   emit('select', index, item);
 };
 </script>
+
 
 ====
 File: vue/ResourceList.vue
@@ -51114,6 +52207,7 @@ const handleKeydown = (event: KeyboardEvent, item: ResourceItem, index: number) 
 };
 </script>
 
+
 ====
 File: vue/RichToolbar.vue
 ====
@@ -51161,6 +52255,7 @@ export interface RichToolbarGroup {
 withDefaults(defineProps<{ groups?: RichToolbarGroup[] }>(), { groups: () => [] });
 defineEmits<{ (e: 'action', id: string): void }>();
 </script>
+
 
 ====
 File: vue/RoadmapTimeline.vue
@@ -51269,6 +52364,7 @@ const emit = defineEmits<{
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/SchedulerSlots.vue
@@ -51396,6 +52492,7 @@ const groups = computed(() =>
 const openCount = computed(() => props.slots.filter((slot) => slot.available !== false).length);
 </script>
 
+
 ====
 File: vue/SearchInput.vue
 ====
@@ -51465,6 +52562,7 @@ onMounted(() => {
   if (props.autoFocus) inputRef.value?.focus();
 });
 </script>
+
 
 ====
 File: vue/SearchResultsPage.vue
@@ -51618,6 +52716,7 @@ const submit = () => emit("search-submit", term.value);
   </div>
 </template>
 
+
 ====
 File: vue/SearchTypeahead.vue
 ====
@@ -51736,6 +52835,138 @@ const markMatches = (label: string) => {
 };
 </script>
 
+
+====
+File: vue/SeatBillingTable.vue
+====
+
+<script setup lang="ts">
+import { ref, computed } from "vue";
+
+export interface SeatRow {
+  id: string;
+  user: string;
+  email?: string;
+  seat?: string;
+  cost?: number;
+  usage?: string;
+  status?: "active" | "invited" | "suspended";
+}
+interface Props {
+  title?: string;
+  description?: string;
+  rows?: SeatRow[];
+  period?: string;
+  currency?: string;
+  searchable?: boolean;
+}
+const props = withDefaults(defineProps<Props>(), {
+  title: "Usage by User",
+  description: "Per-seat costs and credit consumption for the current billing period.",
+  rows: () => [],
+  period: "Monthly",
+  currency: "$",
+  searchable: true,
+});
+
+const query = ref("");
+const q = computed(() => query.value.trim().toLowerCase());
+const filtered = computed(() => {
+  if (!q.value) return props.rows;
+  return props.rows.filter(
+    (r) => r.user.toLowerCase().includes(q.value) || (r.email ?? "").toLowerCase().includes(q.value)
+  );
+});
+
+const billedSeats = computed(() => props.rows.filter((r) => r.status !== "suspended"));
+const totalCost = computed(() => billedSeats.value.reduce((acc, r) => acc + (r.cost ?? 0), 0));
+
+const statusBadge = (status: NonNullable<SeatRow["status"]>) =>
+  status === "active"
+    ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
+    : status === "invited"
+      ? "bg-sky-50 text-sky-700 dark:bg-sky-500/10 dark:text-sky-400"
+      : "bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400";
+const statusLabel = (status: NonNullable<SeatRow["status"]>) =>
+  status === "active" ? "Active" : status === "invited" ? "Invited" : "Suspended";
+
+const fmtCost = (cost: number) => `${props.currency}${cost.toFixed(2)}`;
+</script>
+
+<template>
+  <div data-seat-table class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <p data-seat-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</p>
+      <span v-if="props.period" data-seat-period class="text-[11px] text-zinc-400 dark:text-zinc-500">{{ props.period }}</span>
+    </div>
+    <p data-seat-description class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">{{ props.description }}</p>
+
+    <input
+      v-if="props.searchable"
+      data-seat-search
+      type="search"
+      v-model="query"
+      placeholder="Search for a user…"
+      class="mt-3 w-full rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+    />
+
+    <table data-seat-rows class="mt-2 w-full text-left text-xs">
+      <thead>
+        <tr class="border-b border-zinc-200 text-[10px] uppercase tracking-wide text-zinc-400 dark:border-zinc-700">
+          <th class="py-1.5 pr-2 font-semibold">Name</th>
+          <th class="py-1.5 pr-2 font-semibold">Seat</th>
+          <th class="py-1.5 pr-2 font-semibold">Usage</th>
+          <th class="py-1.5 text-right font-semibold">Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="r in filtered"
+          :key="r.id"
+          :data-seat-row="r.id"
+          class="border-b border-zinc-100 last:border-0 dark:border-zinc-800"
+        >
+          <td class="py-2 pr-2">
+            <div class="flex items-center gap-2">
+              <span data-seat-user class="truncate font-medium text-zinc-700 dark:text-zinc-200">{{ r.user }}</span>
+              <span
+                v-if="r.status && r.status !== 'active'"
+                data-seat-status
+                :class="`rounded-full px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide ${statusBadge(r.status)}`"
+              >
+                {{ statusLabel(r.status) }}
+              </span>
+            </div>
+            <p v-if="r.email" class="mt-0.5 truncate text-[10px] text-zinc-400 dark:text-zinc-500">{{ r.email }}</p>
+          </td>
+          <td class="py-2 pr-2 text-zinc-500 dark:text-zinc-400">{{ r.seat ?? "Member" }}</td>
+          <td class="py-2 pr-2 font-mono text-[11px] text-zinc-500 dark:text-zinc-400">{{ r.usage ?? "—" }}</td>
+          <td data-seat-cost class="py-2 text-right font-mono text-[11px] text-zinc-700 dark:text-zinc-200">
+            {{ r.cost != null ? fmtCost(r.cost) : "—" }}
+          </td>
+        </tr>
+        <tr v-if="filtered.length === 0">
+          <td colspan="4" data-seat-empty class="py-4 text-center text-xs text-zinc-400 dark:text-zinc-500">
+            {{ q ? "No users match your search" : "No seats billed this period" }}
+          </td>
+        </tr>
+      </tbody>
+      <tfoot v-if="billedSeats.length > 0">
+        <tr data-seat-total class="border-t border-zinc-200 dark:border-zinc-700">
+          <td class="py-2 pr-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-300">
+            {{ billedSeats.length }} billed seat{{ billedSeats.length === 1 ? "" : "s" }}
+          </td>
+          <td colspan="2"></td>
+          <td data-seat-total-cost class="py-2 text-right font-mono text-xs font-semibold text-zinc-800 dark:text-zinc-100">
+            {{ fmtCost(totalCost) }}
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</template>
+
+
 ====
 File: vue/SegmentBreakdownBars.vue
 ====
@@ -51829,6 +53060,7 @@ const widthOf = (item: SegmentBreakdownItem) =>
 const shareOf = (item: SegmentBreakdownItem) => Math.max(0, item.value);
 </script>
 
+
 ====
 File: vue/ServiceStatusList.vue
 ====
@@ -51905,6 +53137,7 @@ const TONE: Record<string, { text: string; tone: string }> = {
 const toneLabel = (status: string) => TONE[status]?.text || 'Stopped';
 const toneText = (status: string) => TONE[status]?.tone || TONE.stopped.tone;
 </script>
+
 
 ====
 File: vue/SessionDeviceTable.vue
@@ -52035,6 +53268,7 @@ const iconFor = (os: string) => {
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/SessionDiagnosticsPanel.vue
@@ -52184,6 +53418,7 @@ const onInput = (e: Event) => {
   </div>
 </template>
 
+
 ====
 File: vue/SettingsPanel.vue
 ====
@@ -52275,6 +53510,7 @@ const select = (id: string) => {
   emit('section-change', id);
 };
 </script>
+
 
 ====
 File: vue/SettingsSideDrawer.vue
@@ -52414,6 +53650,7 @@ const BUTTON_TONE: Record<string, string> = {
   outline: 'border border-zinc-300 text-zinc-600 hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800',
 };
 </script>
+
 
 ====
 File: vue/ShareAccessDialog.vue
@@ -52568,6 +53805,7 @@ const initials = (name: string) =>
   </div>
 </template>
 
+
 ====
 File: vue/ShareChatDialog.vue
 ====
@@ -52676,6 +53914,7 @@ const emit = defineEmits<{
   </div>
 </template>
 
+
 ====
 File: vue/SharedChatViewer.vue
 ====
@@ -52737,6 +53976,7 @@ const emit = defineEmits<{ (e: "cta"): void }>();
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/ShortcutCheatSheet.vue
@@ -52823,6 +54063,7 @@ const sections = computed(() => {
   return Array.from(map.entries());
 });
 </script>
+
 
 ====
 File: vue/ShortcutsOverlay.vue
@@ -52994,6 +54235,7 @@ onMounted(() => document.addEventListener("keydown", onKey));
 onUnmounted(() => document.removeEventListener("keydown", onKey));
 </script>
 
+
 ====
 File: vue/SideDrawer.vue
 ====
@@ -53082,6 +54324,7 @@ watch(
 onBeforeUnmount(() => document.removeEventListener('keydown', onKeyDown));
 </script>
 
+
 ====
 File: vue/SideNav.vue
 ====
@@ -53169,6 +54412,7 @@ const handleNavigate = (entry: SideNavEntry) => {
 };
 </script>
 
+
 ====
 File: vue/SiteFooter.vue
 ====
@@ -53245,6 +54489,7 @@ const statusTone: Record<string, string> = {
 };
 </script>
 
+
 ====
 File: vue/SourcesCitation.vue
 ====
@@ -53317,6 +54562,7 @@ const getDomain = (url: string, siteName?: string) => {
   }
 };
 </script>
+
 
 ====
 File: vue/SpotlightGlareCard.vue
@@ -53426,6 +54672,7 @@ const glareStyle = computed(() => ({
 }));
 </script>
 
+
 ====
 File: vue/StatCard.vue
 ====
@@ -53490,6 +54737,7 @@ const trendPoints = computed(() => {
 });
 </script>
 
+
 ====
 File: vue/StatsBand.vue
 ====
@@ -53539,6 +54787,7 @@ const columnsFor = (count: number) => {
   </div>
 </template>
 
+
 ====
 File: vue/StatusCountTabs.vue
 ====
@@ -53585,6 +54834,7 @@ withDefaults(
 
 const emit = defineEmits<{ (e: 'change', id: string): void }>();
 </script>
+
 
 ====
 File: vue/StatusIndicator.vue
@@ -53665,6 +54915,7 @@ const config = computed(() => {
 });
 </script>
 
+
 ====
 File: vue/StepSlider.vue
 ====
@@ -53736,6 +54987,7 @@ const onKeydown = (event: KeyboardEvent) => {
 };
 </script>
 
+
 ====
 File: vue/Stepper.vue
 ====
@@ -53798,6 +55050,7 @@ const statusFor = (step: StepperStep, index: number): StepperStatus =>
 
 const clickable = (step: StepperStep, index: number) => statusFor(step, index) !== 'upcoming';
 </script>
+
 
 ====
 File: vue/StockPhotoPicker.vue
@@ -53905,6 +55158,7 @@ const clearSearch = () => {
   </div>
 </template>
 
+
 ====
 File: vue/StreamMarkdown.vue
 ====
@@ -53991,6 +55245,7 @@ const htmlContent = computed(() => {
 });
 </script>
 
+
 ====
 File: vue/StreamingProgressBar.vue
 ====
@@ -54040,6 +55295,7 @@ const STATUS_BAR: Record<string, string> = {
 };
 const barColor = computed(() => STATUS_BAR[props.status] || STATUS_BAR.streaming);
 </script>
+
 
 ====
 File: vue/SuccessToast.vue
@@ -54110,6 +55366,7 @@ watch(
   { immediate: true },
 );
 </script>
+
 
 ====
 File: vue/SystemPromptEditor.vue
@@ -54205,6 +55462,7 @@ const varChip = (v: string) => `{{${v}}}`;
   </div>
 </template>
 
+
 ====
 File: vue/TableSavedViews.vue
 ====
@@ -54285,6 +55543,7 @@ const switchTo = (view: SavedView) => {
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/Tabs.vue
@@ -54368,6 +55627,7 @@ const move = (event: KeyboardEvent, index: number) => {
 };
 </script>
 
+
 ====
 File: vue/Tag.vue
 ====
@@ -54427,6 +55687,7 @@ const CLS = computed(
     }`
 );
 </script>
+
 
 ====
 File: vue/TargetGauge.vue
@@ -54529,6 +55790,7 @@ const currentTone = computed<'rose' | 'amber' | 'emerald'>(() => {
   return found?.tone ?? 'rose';
 });
 </script>
+
 
 ====
 File: vue/TaskCardModal.vue
@@ -54743,6 +56005,7 @@ const submitComment = () => {
   </div>
 </template>
 
+
 ====
 File: vue/TaskDetailPanel.vue
 ====
@@ -54944,6 +56207,7 @@ const submit = () => {
   </div>
 </template>
 
+
 ====
 File: vue/TestimonialGrid.vue
 ====
@@ -55009,6 +56273,7 @@ const initials = (name: string) =>
     .map((part) => part[0].toUpperCase())
     .join('');
 </script>
+
 
 ====
 File: vue/ThemeToggle.vue
@@ -55124,6 +56389,7 @@ onMounted(() => {
 });
 </script>
 
+
 ====
 File: vue/ThinkingBlock.vue
 ====
@@ -55234,6 +56500,7 @@ const formatDuration = (ms?: number) => {
   return ms >= 1000 ? `${(ms / 1000).toFixed(1)}s` : `${ms}ms`;
 };
 </script>
+
 
 ====
 File: vue/TimeSlotPicker.vue
@@ -55355,6 +56622,7 @@ const choose = (slot: TimeSlot) => {
 };
 </script>
 
+
 ====
 File: vue/TimeframePicker.vue
 ====
@@ -55453,6 +56721,7 @@ const handleStep = (direction: -1 | 1) => {
   emit('step', direction, current.value);
 };
 </script>
+
 
 ====
 File: vue/ToastStack.vue
@@ -55609,6 +56878,7 @@ onUnmounted(() => {
 });
 </script>
 
+
 ====
 File: vue/ToggleSwitch.vue
 ====
@@ -55656,6 +56926,7 @@ const track = computed(() => (props.size === 'sm' ? 'h-4 w-8' : 'h-5 w-9'));
 const knob = computed(() => (props.size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'));
 const shift = computed(() => (props.size === 'sm' ? 'translate-x-4' : 'translate-x-4'));
 </script>
+
 
 ====
 File: vue/TokenCostBreakdown.vue
@@ -55771,6 +57042,7 @@ const percent =
   </div>
 </template>
 
+
 ====
 File: vue/ToolApprovalCard.vue
 ====
@@ -55866,6 +57138,7 @@ const argsText = computed(() =>
 );
 </script>
 
+
 ====
 File: vue/ToolCallBadge.vue
 ====
@@ -55956,6 +57229,7 @@ const formattedOutput = computed(() => {
   return typeof props.output === 'object' ? JSON.stringify(props.output, null, 2) : props.output;
 });
 </script>
+
 
 ====
 File: vue/ToolSchemaEditor.vue
@@ -56070,6 +57344,7 @@ const TYPE_BADGE: Record<string, string> = {
   </div>
 </template>
 
+
 ====
 File: vue/Tooltip.vue
 ====
@@ -56106,6 +57381,7 @@ const SIDE_CLASS: Record<TooltipSide, string> = {
 
 const id = useId();
 </script>
+
 
 ====
 File: vue/TourTooltip.vue
@@ -56217,6 +57493,7 @@ const caretClass =
 
 void props;
 </script>
+
 
 ====
 File: vue/TraceSpanWaterfall.vue
@@ -56332,6 +57609,7 @@ const total = props.spans.length > 0 ? Math.max(...props.spans.map((s) => s.star
   </div>
 </template>
 
+
 ====
 File: vue/TrialBanner.vue
 ====
@@ -56394,6 +57672,7 @@ const messageText = () => props.message || `Your ${props.planName} trial ends so
   </div>
 </template>
 
+
 ====
 File: vue/TypingIndicator.vue
 ====
@@ -56443,6 +57722,7 @@ const gapClass = computed(() =>
 );
 </script>
 
+
 ====
 File: vue/UiIcon.vue
 ====
@@ -56458,6 +57738,7 @@ const shapes: Record<IconName, ReturnType<typeof p>[]> = {
  'alert-triangle':[p('path',{d:'M12 9v4'}),p('path',{d:'M12 17h.01'}),p('path',{d:'M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z'})], 'arrow-down':[p('path',{d:'m6 9 6 6 6-6'})], 'arrow-left':[p('path',{d:'m15 6-6 6 6 6'})], 'arrow-right':[p('path',{d:'m9 6 6 6-6 6'})], 'arrow-up':[p('path',{d:'m6 15 6-6 6 6'})], check:[p('path',{d:'m5 12 4 4L19 6'})], 'check-circle':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m8 12 2.5 2.5L16 9'})], 'chevron-down':[p('path',{d:'m6 9 6 6 6-6'})], 'chevron-left':[p('path',{d:'m14 6-6 6 6 6'})], 'chevron-right':[p('path',{d:'m10 6 6 6-6 6'})], 'chevron-up':[p('path',{d:'m6 15 6-6 6 6'})], 'circle-x':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m9 9 6 6m0-6-6 6'})], clock:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M12 7v5l3 3'})], code:[p('path',{d:'m8 9-3 3 3 3m8-6 3 3-3 3M14 5l-4 14'})], copy:[p('rect',{x:'8',y:'8',width:'11',height:'11',rx:'2'}),p('path',{d:'M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2'})], cpu:[p('rect',{x:'5',y:'5',width:'14',height:'14',rx:'2'}),p('path',{d:'M9 9h6v6H9zM9 1v4m6-4v4M9 19v4m6-4v4M1 9h4m-4 6h4M19 9h4m-4 6h4'})], eye:[p('path',{d:'M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z'}),p('circle',{cx:'12',cy:'12',r:'2.5'})], 'external-link':[p('path',{d:'M14 5h5v5M19 5l-8 8'}),p('path',{d:'M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3'})], globe:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18'})], 'git-branch':[p('path',{d:'M6 3v12a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9'}),p('circle',{cx:'6',cy:'3',r:'2'}),p('circle',{cx:'18',cy:'7',r:'2'}),p('circle',{cx:'12',cy:'18',r:'2'})], image:[p('rect',{x:'3',y:'4',width:'18',height:'16',rx:'2'}),p('circle',{cx:'8.5',cy:'9',r:'1.5'}),p('path',{d:'m21 15-4-4L5 20'})], layers:[p('path',{d:'m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5'})], lock:[p('rect',{x:'5',y:'10',width:'14',height:'11',rx:'2'}),p('path',{d:'M8 10V7a4 4 0 0 1 8 0v3'})], loader:[p('path',{d:'M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1'})], minus:[p('path',{d:'M5 12h14'})], moon:[p('path',{d:'M20 15.5A8 8 0 0 1 8.5 4 8 8 0 0 0 20 15.5Z'})], monitor:[p('rect',{x:'3',y:'4',width:'18',height:'13',rx:'2'}),p('path',{d:'M8 21h8m-4-4v4'})], paperclip:[p('path',{d:'m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7'})], plus:[p('path',{d:'M12 5v14M5 12h14'})], refresh:[p('path',{d:'M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5'})], search:[p('circle',{cx:'10',cy:'10',r:'7'}),p('path',{d:'m21 21-6-6'})], sliders:[p('path',{d:'M4 8h4m4 0h8M4 16h8m4 0h4M8 6v4m8 4v4'})], sparkles:[p('path',{d:'m12 3-1.2 4.8L6 9l4.8 1.2L12 15l1.2-4.8L18 9l-4.8-1.2L12 3Z'}),p('path',{d:'m19 15-.6 2.4L16 18l2.4.6L19 21l.6-2.4L22 18l-2.4-.6L19 15Z'})], square:[p('rect',{x:'6',y:'6',width:'12',height:'12',rx:'1'})], sun:[p('circle',{cx:'12',cy:'12',r:'4'}),p('path',{d:'M12 2v2m0 16v2M2 12h2m16 0h2'})], terminal:[p('path',{d:'m4 17 6-6-6-6m8 14h8'})], 'thumbs-down':[p('path',{d:'M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3'})], 'thumbs-up':[p('path',{d:'M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2'})], tool:[p('path',{d:'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z'})], user:[p('path',{d:'M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0'}),p('path',{d:'M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2'})], x:[p('path',{d:'m6 6 12 12M18 6 6 18'})], zap:[p('path',{d:'M13 3 4 14h7l-1 7 9-11h-7l1-7Z'})], 'trending-up':[p('path',{d:'m3 17 6-6 4 4 8-8'}),p('path',{d:'M14 7h7v7'})], 'trending-down':[p('path',{d:'m3 7 6 6 4-4 8 8'}),p('path',{d:'M14 17h7v-7'})], filter:[p('path',{d:'M4 4h16v2.2a2 2 0 0 1-.59 1.41L15 12v7l-6 2v-9L4.59 7.59A2 2 0 0 1 4 6.2V4Z'})], 'more-horizontal':[p('circle',{cx:'5',cy:'12',r:'1'}),p('circle',{cx:'12',cy:'12',r:'1'}),p('circle',{cx:'19',cy:'12',r:'1'})], trash:[p('path',{d:'M4 7h16M10 11v6M14 11v6'}),p('path',{d:'M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3'})], mail:[p('rect',{x:'3',y:'5',width:'18',height:'14',rx:'2'}),p('path',{d:'m3 7 9 6 9-6'})], settings:[p('path',{d:'M3 6h10m4 0h4M3 12h4m4 0h10M3 18h10m4 0h4'}),p('circle',{cx:'15',cy:'6',r:'2'}),p('circle',{cx:'9',cy:'12',r:'2'}),p('circle',{cx:'15',cy:'18',r:'2'})], users:[p('path',{d:'M9 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0'}),p('path',{d:'M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2'}),p('path',{d:'M16 3.1a4 4 0 0 1 0 7.8M21 21v-2a4 4 0 0 0-3-3.87'})], bell:[p('path',{d:'M10 5a2 2 0 1 1 4 0 7 7 0 0 1 4 6v3l1 2H5l1-2v-3a7 7 0 0 1 4-6Z'}),p('path',{d:'M9 19a3 3 0 0 0 6 0'})], calendar:[p('rect',{x:'4',y:'5',width:'16',height:'16',rx:'2'}),p('path',{d:'M16 3v4M8 3v4M4 11h16'})], upload:[p('path',{d:'M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2'}),p('path',{d:'m7 9 5-5 5 5M12 4v12'})], send:[p('path',{d:'m22 2-7 20-4-9-9-4 20-7Z'}),p('path',{d:'M22 2 11 13'})], star:[p('path',{d:'m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3Z'})], info:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M12 11v5M12 8h.01'})], 'credit-card':[p('rect',{x:'3',y:'5',width:'18',height:'14',rx:'2'}),p('path',{d:'M3 10h18'})], mic:[p('rect',{x:'9',y:'3',width:'6',height:'11',rx:'3'}),p('path',{d:'M5 11a7 7 0 0 0 14 0M12 18v3'})]
 };
 </script>
+
 
 ====
 File: vue/UpgradeCheckoutPanel.vue
@@ -56596,6 +57877,7 @@ const hasSeats = () => props.seats !== undefined;
   </div>
 </template>
 
+
 ====
 File: vue/UpgradePromptCard.vue
 ====
@@ -56674,6 +57956,169 @@ const tone = computed(() =>
 );
 </script>
 
+
+====
+File: vue/UsageCreditsDonut.vue
+====
+
+<script setup lang="ts">
+import { ref, computed } from "vue";
+
+export interface CreditSlice {
+  id: string;
+  label: string;
+  value: number;
+  color?: string;
+}
+interface Props {
+  title?: string;
+  unit?: string;
+  total?: number;
+  slices?: CreditSlice[];
+  ranges?: string[];
+  defaultRange?: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  title: "Usage by Type",
+  unit: "credits",
+  slices: () => [],
+  ranges: () => ["Last 7 days", "Last 30 days"],
+});
+
+const PALETTE = ["#6366f1", "#22c55e", "#f59e0b", "#ec4899", "#06b6d4", "#a855f7"];
+
+const emit = defineEmits<{
+  (e: "range-change", range: string): void;
+}>();
+
+const range = ref(props.defaultRange ?? props.ranges[0] ?? "");
+const active = ref<string | null>(null);
+
+const sum = computed(() => props.total ?? props.slices.reduce((acc, s) => acc + s.value, 0));
+const colored = computed(() => props.slices.map((s, i) => ({ ...s, color: s.color ?? PALETTE[i % PALETTE.length] })));
+
+const size = 160;
+const cx = size / 2;
+const cy = size / 2;
+const rOuter = 70;
+const rInner = 44;
+
+const polar = (r: number, deg: number): [number, number] => {
+  const rad = ((deg - 90) * Math.PI) / 180;
+  return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
+};
+
+const donutArc = (startDeg: number, endDeg: number) => {
+  const [x1, y1] = polar(rOuter, startDeg);
+  const [x2, y2] = polar(rOuter, endDeg);
+  const [x3, y3] = polar(rInner, endDeg);
+  const [x4, y4] = polar(rInner, startDeg);
+  const large = endDeg - startDeg > 180 ? 1 : 0;
+  return [
+    `M ${x1} ${y1}`,
+    `A ${rOuter} ${rOuter} 0 ${large} 1 ${x2} ${y2}`,
+    `L ${x3} ${y3}`,
+    `A ${rInner} ${rInner} 0 ${large} 0 ${x4} ${y4}`,
+    "Z",
+  ].join(" ");
+};
+
+const arcs = computed(() => {
+  let angle = 0;
+  return colored.value.map((s) => {
+    const sweep = sum.value > 0 ? (s.value / sum.value) * 360 : 0;
+    const start = angle;
+    const end = angle + sweep;
+    angle = end;
+    return { ...s, path: donutArc(start, Math.max(end - 0.6, start + 0.1)) };
+  });
+});
+
+const activeSlice = computed(() => (active.value ? colored.value.find((s) => s.id === active.value) : undefined));
+const firstPct = computed(() => `${(((arcs.value[0]?.value ?? 0) / (sum.value || 1)) * 100).toFixed(0)}%`);
+
+const setRange = (e: Event) => {
+  const value = (e.target as HTMLSelectElement | null)?.value ?? "";
+  range.value = value;
+  emit("range-change", value);
+};
+</script>
+
+<template>
+  <div data-usage-donut class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <p data-usage-donut-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</p>
+      <select
+        v-if="props.ranges.length > 0"
+        data-usage-donut-range
+        :value="range"
+        @change="setRange"
+        class="rounded-md border border-zinc-200 bg-white px-2 py-1 text-[11px] text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+      >
+        <option v-for="r in props.ranges" :key="r" :value="r">{{ r }}</option>
+      </select>
+    </div>
+    <p data-usage-donut-total class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">{{ sum.toFixed(2) }} {{ props.unit }}</p>
+
+    <div class="mt-3 flex flex-wrap items-center gap-4">
+      <svg
+        data-usage-donut-chart
+        :width="size"
+        :height="size"
+        :viewBox="`0 0 ${size} ${size}`"
+        role="img"
+        :aria-label="props.title + ' donut chart'"
+      >
+        <path
+          v-for="a in arcs"
+          :key="a.id"
+          :d="a.path"
+          :fill="a.color"
+          :opacity="active && active !== a.id ? 0.35 : 1"
+          @mouseenter="active = a.id"
+          @mouseleave="active = null"
+        />
+        <circle
+          v-if="sum <= 0"
+          :cx="cx"
+          :cy="cy"
+          :r="(rOuter + rInner) / 2"
+          fill="none"
+          stroke="#e4e4e7"
+          :stroke-width="rOuter - rInner"
+          class="dark:opacity-20"
+        />
+        <text :x="cx" :y="cy - 2" text-anchor="middle" class="fill-zinc-900 text-sm font-semibold dark:fill-zinc-50">
+          {{ activeSlice ? activeSlice.label : firstPct }}
+        </text>
+        <text :x="cx" :y="cy + 14" text-anchor="middle" class="fill-zinc-400 text-[10px]">
+          {{ activeSlice ? activeSlice.value + " " + props.unit : props.unit }}
+        </text>
+      </svg>
+
+      <ul data-usage-donut-legend class="min-w-0 flex-1 space-y-1.5">
+        <li
+          v-for="s in colored"
+          :key="s.id"
+          :data-usage-donut-slice="s.id"
+          @mouseenter="active = s.id"
+          @mouseleave="active = null"
+          class="flex items-center gap-2 text-xs"
+        >
+          <span class="h-2.5 w-2.5 shrink-0 rounded-sm" :style="{ backgroundColor: s.color }" />
+          <span class="min-w-0 flex-1 truncate text-zinc-600 dark:text-zinc-300">{{ s.label }}</span>
+          <span class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">{{ s.value }}</span>
+          <span class="w-10 text-right text-[10px] text-zinc-400 dark:text-zinc-500">
+            {{ sum > 0 ? ((s.value / sum) * 100).toFixed(0) + "%" : "—" }}
+          </span>
+        </li>
+        <li v-if="colored.length === 0" data-usage-donut-empty class="text-xs text-zinc-400 dark:text-zinc-500">No usage recorded</li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+
 ====
 File: vue/UsageMeter.vue
 ====
@@ -56738,6 +58183,7 @@ const styles = computed(() => TONE[tone.value]);
 const percent = computed(() => Math.round(ratio.value * 100));
 const remaining = computed(() => Math.max(0, props.limit - props.used));
 </script>
+
 
 ====
 File: vue/UsagePricingBreakdown.vue
@@ -56831,6 +58277,7 @@ const rows = computed(() => {
   </div>
 </template>
 
+
 ====
 File: vue/UsageQuotaCard.vue
 ====
@@ -56885,6 +58332,7 @@ const valueLabel = computed(
   () => `${props.used}${props.unit ? ` ${props.unit}` : ''}${props.total ? ` of ${props.total}${props.unit ? ` ${props.unit}` : ''}` : ''}`,
 );
 </script>
+
 
 ====
 File: vue/VideoProjectSettings.vue
@@ -57047,6 +58495,7 @@ const thumbCls = (thumb: VideoThumbnail) => {
   </div>
 </template>
 
+
 ====
 File: vue/VisionAnalysisCard.vue
 ====
@@ -57103,6 +58552,7 @@ defineEmits(["section-click"]);
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/VoiceModePanel.vue
@@ -57176,6 +58626,7 @@ const innerTone = computed(() => {
   return 'bg-zinc-200/50 dark:bg-zinc-700/40';
 });
 </script>
+
 
 ====
 File: vue/VoiceOrb.vue
@@ -57268,6 +58719,7 @@ const displayLabel = () => props.label ?? STATE_LABEL[props.state];
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/VoiceSessionHistory.vue
@@ -57371,6 +58823,7 @@ const statusLabel = (s: VoiceSession) =>
   </div>
 </template>
 
+
 ====
 File: vue/WebhookConfigPanel.vue
 ====
@@ -57470,6 +58923,7 @@ const deliveryCls = (status: number | string | undefined) => {
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/WeekCalendarGrid.vue
@@ -57687,6 +59141,7 @@ const nowTop = computed(() => ({ top: (props.nowHour - props.startHour) * HOUR_H
   </div>
 </template>
 
+
 ====
 File: vue/WizardSteps.vue
 ====
@@ -57795,6 +59250,7 @@ const handleClick = (index: number) => {
 };
 </script>
 
+
 ====
 File: vue/WorkspaceSwitcherMenu.vue
 ====
@@ -57895,6 +59351,7 @@ const roleLine = (workspace: WorkspaceOption) => {
 };
 </script>
 
+
 ====
 File: vue/WriterStyleGuide.vue
 ====
@@ -57970,6 +59427,7 @@ const tabs: Array<{ id: "company" | "team" | "my"; label: string }> = [
   </div>
 </template>
 
+
 ====
 File: vue/ZendeskFieldSuggest.vue
 ====
@@ -58025,6 +59483,7 @@ defineEmits(["apply", "dismiss"]);
     </div>
   </div>
 </template>
+
 
 ====
 File: vue/ZoomControlBar.vue
@@ -58124,6 +59583,102 @@ const change = (next: number) => {
   emit('zoom-change', clamped);
 };
 </script>
+
+
+====
+File: vue/paper-theme.ts
+====
+
+/**
+ * Paper Atelier & Trail Theme System (aitubook.cn 风格设计资产规范与预设)
+ * 纯 CSS 注入 / Tailwind 拓展方案
+ */
+
+export const PaperTrailThemeCSS = `
+/* -------------------------------------------------------------
+ * 1. 核心变量系统 (Paper, Ink & 8-Stage Colors)
+ * ------------------------------------------------------------- */
+:root {
+  --font-serif: "Songti SC", "Noto Serif SC", "STSong", "SimSun", Georgia, serif;
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, "Cascadia Code", Menlo, monospace;
+
+  /* 基础纸墨调色盘 (Light Mode) */
+  --paper: #f1efe7;
+  --paper-raised: #faf8f1;
+  --paper-sunken: #e7e4d7;
+  --ink: #22262d;
+  --ink-soft: #545b64;
+  --ink-faint: #8d9298;
+  --line: #d6d2c2;
+  --line-strong: #b3ac97;
+  --accent: #c2410c;
+  --accent-ink: #1d4ed8;
+  --danger: #b91c1c;
+
+  /* 8 阶段里程碑色阶 */
+  --stage-1: #1d4ed8;
+  --stage-2: #0f766e;
+  --stage-3: #4d7c0f;
+  --stage-4: #a16207;
+  --stage-5: #c2410c;
+  --stage-6: #0e7490;
+  --stage-7: #be185d;
+  --stage-8: #b91c1c;
+
+  /* 材质微纹理 */
+  --contour: rgba(34, 38, 45, 0.055);
+  --graticule: rgba(29, 78, 216, 0.05);
+
+  /* 投影与动效 */
+  --shadow-card: 0 1px 0 rgba(34, 38, 45, .07), 0 5px 16px rgba(34, 38, 45, .07);
+  --shadow-lift: 0 2px 0 rgba(34, 38, 45, .08), 0 12px 28px rgba(34, 38, 45, .12);
+  --ease-survey: cubic-bezier(.16, 1, .3, 1);
+  --ease-stake: cubic-bezier(.34, 1.4, .64, 1);
+}
+
+:root[data-theme="dark"], .dark {
+  --paper: #14171c;
+  --paper-raised: #1b1f26;
+  --paper-sunken: #0f1216;
+  --ink: #e9e6db;
+  --ink-soft: #a9a89c;
+  --ink-faint: #6f7268;
+  --line: #2b3038;
+  --line-strong: #3e444e;
+  --accent: #f0692e;
+  --accent-ink: #6ea8fe;
+  --danger: #f87171;
+
+  --stage-1: #6ea8fe;
+  --stage-2: #2dd4bf;
+  --stage-3: #84cc16;
+  --stage-4: #eab308;
+  --stage-5: #f0692e;
+  --stage-6: #22d3ee;
+  --stage-7: #f472b6;
+  --stage-8: #f87171;
+
+  --contour: rgba(233, 230, 219, 0.06);
+  --graticule: rgba(110, 168, 254, 0.06);
+  --shadow-card: 0 1px 0 rgba(0, 0, 0, .4), 0 8px 22px rgba(0, 0, 0, .42);
+  --shadow-lift: 0 2px 0 rgba(0, 0, 0, .4), 0 14px 32px rgba(0, 0, 0, .52);
+}
+
+/* -------------------------------------------------------------
+ * 2. 大地等高线与坐标网格背景 (Topography Texture)
+ * ------------------------------------------------------------- */
+.bg-paper-topography {
+  background-color: var(--paper);
+  background-image:
+    repeating-radial-gradient(circle at 18% 12%, transparent 0 46px, var(--contour) 46px 47px),
+    repeating-radial-gradient(circle at 86% 88%, transparent 0 64px, var(--contour) 64px 65px),
+    linear-gradient(90deg, var(--graticule) 1px, transparent 1px),
+    linear-gradient(180deg, var(--graticule) 1px, transparent 1px);
+  background-size: auto, auto, 120px 120px, 120px 120px;
+}
+`;
+
 
 ====
 File: vanilla/AIInlineMenu.js
@@ -58279,6 +59834,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-inline-menu
 
 export default AIInlineMenuElement;
 
+
 ====
 File: vanilla/Accordion.js
 ====
@@ -58408,6 +59964,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('accordion-list
   customElements.define('accordion-list', AccordionElement);
 }
 export default AccordionElement;
+
 
 ====
 File: vanilla/AccountSecurityPanel.js
@@ -58557,6 +60114,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('account-securi
 }
 
 export default AccountSecurityPanelElement;
+
 
 ====
 File: vanilla/AccountSwitcher.js
@@ -58767,6 +60325,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('account-switch
 }
 export default AccountSwitcherElement;
 
+
 ====
 File: vanilla/ActivityFeed.js
 ====
@@ -58866,6 +60425,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('activity-feed'
   customElements.define('activity-feed', ActivityFeedElement);
 }
 export default ActivityFeedElement;
+
 
 ====
 File: vanilla/AddonPicker.js
@@ -58985,6 +60545,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('addon-picker')
 
 export default AddonPickerElement;
 
+
 ====
 File: vanilla/AgentBuilderCard.js
 ====
@@ -59098,6 +60659,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-builder-
 }
 
 export default AgentBuilderCardElement;
+
 
 ====
 File: vanilla/AgentEnvVarEditor.js
@@ -59269,6 +60831,7 @@ if (!customElements.get('agent-env-var-editor')) {
   customElements.define('agent-env-var-editor', AgentEnvVarEditorElement);
 }
 
+
 ====
 File: vanilla/AgentErrorRecovery.js
 ====
@@ -59350,6 +60913,7 @@ export class AgentErrorRecoveryElement extends HTMLElement {
 if (!customElements.get('agent-error-recovery')) {
   customElements.define('agent-error-recovery', AgentErrorRecoveryElement);
 }
+
 
 ====
 File: vanilla/AgentGuardrailViolationCard.js
@@ -59489,6 +61053,7 @@ export default AgentGuardrailViolationCardElement;
 if (!customElements.get('agent-guardrail-violation-card')) {
   customElements.define('agent-guardrail-violation-card', AgentGuardrailViolationCardElement);
 }
+
 
 ====
 File: vanilla/AgentModelFallbackList.js
@@ -59653,6 +61218,7 @@ if (!customElements.get('agent-model-fallback-list')) {
   customElements.define('agent-model-fallback-list', AgentModelFallbackListElement);
 }
 
+
 ====
 File: vanilla/AgentNotificationFeed.js
 ====
@@ -59776,6 +61342,7 @@ export class AgentNotificationFeedElement extends HTMLElement {
 if (!customElements.get('agent-notification-feed')) {
   customElements.define('agent-notification-feed', AgentNotificationFeedElement);
 }
+
 
 ====
 File: vanilla/AgentRunLog.js
@@ -59904,6 +61471,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-run-log'
   customElements.define('agent-run-log', AgentRunLogElement);
 }
 export default AgentRunLogElement;
+
 
 ====
 File: vanilla/AgentScheduleEditor.js
@@ -60097,6 +61665,7 @@ if (!customElements.get('agent-schedule-editor')) {
   customElements.define('agent-schedule-editor', AgentScheduleEditorElement);
 }
 
+
 ====
 File: vanilla/AgentSessionTimeline.js
 ====
@@ -60276,6 +61845,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-session-
 
 export default AgentSessionTimelineElement;
 
+
 ====
 File: vanilla/AgentStepTimeline.js
 ====
@@ -60370,6 +61940,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-step-tim
   customElements.define('agent-step-timeline', AgentStepTimelineElement);
 }
 export default AgentStepTimelineElement;
+
 
 ====
 File: vanilla/AgentTaskChecklist.js
@@ -60482,6 +62053,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-task-che
   customElements.define('agent-task-checklist', AgentTaskChecklistElement);
 }
 export default AgentTaskChecklistElement;
+
 
 ====
 File: vanilla/AgentTaskProgress.js
@@ -60616,6 +62188,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-task-pro
   customElements.define('agent-task-progress', AgentTaskProgressElement);
 }
 export default AgentTaskProgressElement;
+
 
 ====
 File: vanilla/AgentWorkspaceSettings.js
@@ -60758,6 +62331,7 @@ export class AgentWorkspaceSettingsElement extends HTMLElement {
 if (!customElements.get('agent-workspace-settings')) {
   customElements.define('agent-workspace-settings', AgentWorkspaceSettingsElement);
 }
+
 
 ====
 File: vanilla/AiNoteAnswer.js
@@ -60922,6 +62496,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-note-answer
 
 export default AiNoteAnswerElement;
 
+
 ====
 File: vanilla/AiResearchPanel.js
 ====
@@ -61057,6 +62632,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-research-pa
 }
 
 export default AiResearchPanelElement;
+
 
 ====
 File: vanilla/AiRewriteMenu.js
@@ -61199,6 +62775,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-rewrite-men
 
 export default AiRewriteMenuElement;
 
+
 ====
 File: vanilla/AiSuggestionCard.js
 ====
@@ -61328,6 +62905,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-suggestion-
 }
 
 export default AiSuggestionCardElement;
+
 
 ====
 File: vanilla/AiTemplatePicker.js
@@ -61472,6 +63050,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-template-pi
 }
 
 export default AiTemplatePickerElement;
+
 
 ====
 File: vanilla/AlertBanner.js
@@ -61643,6 +63222,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('alert-banner')
   customElements.define('alert-banner', AlertBannerElement);
 }
 export default AlertBannerElement;
+
 
 ====
 File: vanilla/AmberEmbersBackdrop.js
@@ -61890,6 +63470,7 @@ if (typeof customElements !== "undefined" && !customElements.get("amber-embers-b
 
 export default AmberEmbersBackdropElement;
 
+
 ====
 File: vanilla/AnimatedCounter.js
 ====
@@ -62007,6 +63588,7 @@ class AnimatedCounter extends HTMLElement {
 if (typeof customElements !== "undefined" && !customElements.get("animated-counter")) {
   customElements.define("animated-counter", AnimatedCounter);
 }
+
 
 ====
 File: vanilla/ApiKeyTable.js
@@ -62152,6 +63734,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('api-key-table'
 }
 
 export default ApiKeyTableElement;
+
 
 ====
 File: vanilla/ApiReferenceViewer.js
@@ -62383,6 +63966,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('api-reference-
 
 export default ApiReferenceViewerElement;
 
+
 ====
 File: vanilla/AppealRestrictionDialog.js
 ====
@@ -62474,6 +64058,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('appeal-restric
 }
 
 export default AppealRestrictionDialogElement;
+
 
 ====
 File: vanilla/ApprovalCard.js
@@ -62639,6 +64224,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('approval-card'
 }
 export default ApprovalCardElement;
 
+
 ====
 File: vanilla/ArtifactCanvas.js
 ====
@@ -62770,6 +64356,7 @@ if (!customElements.get("artifact-canvas")) {
 }
 export default ArtifactCanvas;
 
+
 ====
 File: vanilla/AttachmentChip.js
 ====
@@ -62868,6 +64455,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('attachment-chi
   customElements.define('attachment-chip', AttachmentChipElement);
 }
 export default AttachmentChipElement;
+
 
 ====
 File: vanilla/AudioNotePlayer.js
@@ -63002,6 +64590,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('audio-note-pla
 }
 
 export default AudioNotePlayerElement;
+
 
 ====
 File: vanilla/AudioPlaylistPage.js
@@ -63211,6 +64800,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('audio-playlist
 
 export default AudioPlaylistPageElement;
 
+
 ====
 File: vanilla/AudioWaveVisualizer.js
 ====
@@ -63267,6 +64857,7 @@ if (!customElements.get("audio-wave-visualizer")) {
   customElements.define("audio-wave-visualizer", AudioWaveVisualizer);
 }
 export default AudioWaveVisualizer;
+
 
 ====
 File: vanilla/AuditLogTable.js
@@ -63452,6 +65043,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('audit-log-tabl
 }
 
 export default AuditLogTableElement;
+
 
 ====
 File: vanilla/AuthForm.js
@@ -63750,6 +65342,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('auth-gate-prom
 
 export default AuthGatePromptElement;
 
+
 ====
 File: vanilla/AuthSplitPanel.js
 ====
@@ -63881,6 +65474,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('auth-split-pan
 
 export default AuthSplitPanelElement;
 
+
 ====
 File: vanilla/AutoScrollAnchor.js
 ====
@@ -63946,6 +65540,7 @@ if (!customElements.get("auto-scroll-anchor")) {
   customElements.define("auto-scroll-anchor", AutoScrollAnchor);
 }
 export default AutoScrollAnchor;
+
 
 ====
 File: vanilla/AvatarGroup.js
@@ -64072,6 +65667,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('avatar-group')
 }
 export default AvatarGroupElement;
 
+
 ====
 File: vanilla/BentoFeatureGrid.js
 ====
@@ -64186,6 +65782,247 @@ if (typeof customElements !== 'undefined' && !customElements.get('bento-feature-
 }
 
 export default BentoFeatureGridElement;
+
+
+====
+File: vanilla/BillingAddressForm.js
+====
+
+/**
+ * BillingAddressForm - Vanilla Web Component
+ * Billing address form: country select, address lines, optional rows with
+ * "optional" tags, required-field validation, submit + saved feedback.
+ *
+ * Usage: <billing-address-form title="Billing details"></billing-address-form>
+ * Properties: defaultValue ({country?,address1?,address2?,city?,state?,zip?}), countries, labels
+ * Attributes: title, submit-label, show-optional ("false" hides optional rows)
+ * Events: billing-address-submit (detail {address})
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const DEFAULT_COUNTRIES = ['United States', 'Singapore', 'United Kingdom', 'Germany', 'Japan'];
+
+export class BillingAddressFormElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'submit-label', 'show-optional'];
+  }
+
+  constructor() {
+    super();
+    this._defaultValue = {};
+    this._countries = DEFAULT_COUNTRIES;
+    this._labels = {};
+    this._submitted = null;
+    this._bound = false;
+    this._values = { country: '', address1: '', address2: '', city: '', state: '', zip: '' };
+  }
+
+  get defaultValue() {
+    return this._defaultValue;
+  }
+
+  set defaultValue(value) {
+    this._defaultValue = value && typeof value === 'object' ? { ...value } : {};
+    this._resetValues();
+    this.render();
+  }
+
+  get countries() {
+    return this._countries;
+  }
+
+  set countries(value) {
+    this._countries = Array.isArray(value) && value.length ? value.map(String) : DEFAULT_COUNTRIES;
+    this.render();
+  }
+
+  get labels() {
+    return this._labels;
+  }
+
+  set labels(value) {
+    this._labels = value && typeof value === 'object' ? { ...value } : {};
+    this.render();
+  }
+
+  _resetValues() {
+    const d = this._defaultValue;
+    this._values = {
+      country: d.country || this._countries[0] || '',
+      address1: d.address1 || '',
+      address2: d.address2 || '',
+      city: d.city || '',
+      state: d.state || '',
+      zip: d.zip || '',
+    };
+    this._submitted = null;
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'show-optional' && newValue === null) return;
+    this.render();
+  }
+
+  connectedCallback() {
+    this._resetValues();
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('input', (event) => {
+        const input = event.target.closest('[data-billing-input]');
+        if (!input) return;
+        const key = input.getAttribute('data-billing-input');
+        if (key in this._values) {
+          this._values[key] = input.value;
+        }
+        this._refreshValidity();
+      });
+      this.addEventListener('change', (event) => {
+        const select = event.target.closest('[data-billing-country]');
+        if (!select) return;
+        this._values.country = select.value;
+      });
+      this.addEventListener('click', (event) => {
+        const btn = event.target.closest('[data-billing-address-submit]');
+        if (!btn) return;
+        if (btn.disabled) return;
+        this._submit();
+      });
+    }
+  }
+
+  get _valid() {
+    return (
+      this._values.address1.trim() !== '' &&
+      this._values.city.trim() !== '' &&
+      this._values.zip.trim() !== ''
+    );
+  }
+
+  _refreshValidity() {
+    const btn = this.querySelector('[data-billing-address-submit]');
+    if (btn) btn.disabled = !this._valid;
+    const hint = this.querySelector('[data-billing-address-hint]');
+    if (hint && this._valid) {
+      hint.textContent = 'All required fields filled.';
+      hint.setAttribute('data-billing-ready', '');
+    } else if (hint) {
+      hint.removeAttribute('data-billing-ready');
+    }
+  }
+
+  _submit() {
+    if (!this._valid) return;
+    const v = this._values;
+    const address = {
+      country: v.country,
+      address1: v.address1,
+      address2: v.address2 || undefined,
+      city: v.city,
+      state: v.state || undefined,
+      zip: v.zip,
+    };
+    this._submitted = address;
+    this.render();
+    this.dispatchEvent(new CustomEvent('billing-address-submit', { detail: { address: { ...address } } }));
+  }
+
+  render() {
+    if (this._bound && !this._submitted) {
+      // preserve live input state across re-renders
+      const current = {};
+      this.querySelectorAll('[data-billing-input]').forEach((el) => {
+        const key = el.getAttribute('data-billing-input');
+        current[key] = el.value;
+      });
+      Object.keys(current).forEach((key) => {
+        if (current[key] !== undefined) this._values[key] = current[key];
+      });
+      const countryEl = this.querySelector('[data-billing-country]');
+      if (countryEl) this._values.country = countryEl.value;
+    }
+    const title = this.getAttribute('title') || 'Billing details';
+    const submitLabel = this.getAttribute('submit-label') || 'Continue to next step';
+    const showOptional = this.getAttribute('show-optional') !== 'false';
+    const labels = this._labels;
+    const v = this._values;
+
+    const inputClass =
+      'min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200';
+    const labelClass = 'w-24 shrink-0 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400';
+
+    const optionalTag = '<span class="text-[10px] text-zinc-400 dark:text-zinc-500">optional</span>';
+
+    const options = this._countries
+      .map((c) => `<option value="${escapeAttribute(c)}" ${c === v.country ? 'selected' : ''}>${escapeAttribute(c)}</option>`)
+      .join('');
+
+    const feedback = this._submitted
+      ? `<span data-billing-address-saved class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">Saved ${escapeAttribute(this._submitted.city)}, ${escapeAttribute(this._submitted.country)}</span>`
+      : `<span data-billing-address-hint class="text-[11px] text-zinc-400 dark:text-zinc-500">Address, city and ZIP are required.</span>`;
+
+    this.innerHTML = `
+      <div data-billing-address-form class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+        <p data-billing-address-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</p>
+
+        <label data-billing-country-wrap class="mt-3 flex items-center gap-2">
+          <span class="${labelClass}">Country</span>
+          <select data-billing-country class="min-w-0 flex-1 rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">${options}</select>
+        </label>
+
+        <label data-billing-field-wrap class="mt-2 flex items-center gap-2">
+          <span class="${labelClass}">${escapeAttribute(labels.address1 || 'Address line 1')}</span>
+          <input data-billing-input="address1" data-billing-address1 value="${escapeAttribute(v.address1)}" placeholder="Street address" class="${inputClass}" />
+        </label>
+
+        ${showOptional ? `
+        <label data-billing-field-wrap class="mt-2 flex items-center gap-2">
+          <span class="${labelClass}">${escapeAttribute(labels.address2 || 'Address line 2')}</span>
+          ${optionalTag}
+          <input data-billing-input="address2" data-billing-address2 value="${escapeAttribute(v.address2)}" placeholder="Apt, suite, unit" class="${inputClass}" />
+        </label>` : ''}
+
+        <div class="mt-2 grid grid-cols-2 gap-2">
+          <label data-billing-city-wrap class="flex items-center gap-2">
+            <span class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">${escapeAttribute(labels.city || 'City')}</span>
+            <input data-billing-input="city" data-billing-city value="${escapeAttribute(v.city)}" class="${inputClass}" />
+          </label>
+          <label data-billing-zip-wrap class="flex items-center gap-2">
+            <span class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">${escapeAttribute(labels.zip || 'ZIP')}</span>
+            <input data-billing-input="zip" data-billing-zip value="${escapeAttribute(v.zip)}" class="${inputClass}" />
+          </label>
+        </div>
+
+        ${showOptional ? `
+        <label data-billing-state-wrap class="mt-2 flex items-center gap-2">
+          <span class="${labelClass}">${escapeAttribute(labels.state || 'State')}</span>
+          ${optionalTag}
+          <input data-billing-input="state" data-billing-state value="${escapeAttribute(v.state)}" class="${inputClass}" />
+        </label>` : ''}
+
+        <div class="mt-3 flex items-center justify-between">
+          ${feedback}
+          <button type="button" data-billing-address-submit ${this._valid ? '' : 'disabled'}
+            class="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-40">${escapeAttribute(submitLabel)}</button>
+        </div>
+      </div>`;
+  }
+}
+
+export default BillingAddressFormElement;
+
+if (!customElements.get('billing-address-form')) {
+  customElements.define('billing-address-form', BillingAddressFormElement);
+}
+
 
 ====
 File: vanilla/BillingPanel.js
@@ -64328,6 +66165,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('billing-panel'
   customElements.define('billing-panel', BillingPanelElement);
 }
 export default BillingPanelElement;
+
 
 ====
 File: vanilla/BlogPostArticle.js
@@ -64505,6 +66343,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('blog-post-arti
 
 export default BlogPostArticleElement;
 
+
 ====
 File: vanilla/BottomTabBar.js
 ====
@@ -64618,6 +66457,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('bottom-tab-bar
 
 export default BottomTabBarElement;
 
+
 ====
 File: vanilla/BrandPromptTable.js
 ====
@@ -64726,6 +66566,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('brand-prompt-t
 }
 
 export default BrandPromptTableElement;
+
 
 ====
 File: vanilla/Breadcrumb.js
@@ -64869,6 +66710,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('breadcrumb-tra
 }
 export default BreadcrumbElement;
 
+
 ====
 File: vanilla/CampsiteHandoff.js
 ====
@@ -65010,6 +66852,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('campsite-hando
 }
 
 export default CampsiteHandoffElement;
+
 
 ====
 File: vanilla/CancelRetentionFlow.js
@@ -65211,6 +67054,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('cancel-retenti
 
 export default CancelRetentionFlowElement;
 
+
 ====
 File: vanilla/ChangedFilesList.js
 ====
@@ -65366,6 +67210,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('changed-files-
 }
 export default ChangedFilesListElement;
 
+
 ====
 File: vanilla/ChangelogFeed.js
 ====
@@ -65485,6 +67330,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('changelog-feed
   customElements.define('changelog-feed', ChangelogFeedElement);
 }
 export default ChangelogFeedElement;
+
 
 ====
 File: vanilla/ChangelogTimeline.js
@@ -65654,6 +67500,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('changelog-time
 
 export default ChangelogTimelineElement;
 
+
 ====
 File: vanilla/ChatMessageRow.js
 ====
@@ -65762,6 +67609,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('chat-message-r
   customElements.define('chat-message-row', ChatMessageRowElement);
 }
 export default ChatMessageRowElement;
+
 
 ====
 File: vanilla/ChatPromptInput.js
@@ -65890,6 +67738,7 @@ if (!customElements.get("chat-prompt-input")) {
   customElements.define("chat-prompt-input", ChatPromptInput);
 }
 export default ChatPromptInput;
+
 
 ====
 File: vanilla/ChatSessionList.js
@@ -66121,6 +67970,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('chat-session-l
 }
 export default ChatSessionListElement;
 
+
 ====
 File: vanilla/ClarifyQuestionCard.js
 ====
@@ -66241,6 +68091,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('clarify-questi
   customElements.define('clarify-question', ClarifyQuestionCardElement);
 }
 export default ClarifyQuestionCardElement;
+
 
 ====
 File: vanilla/CodeBlock.js
@@ -66370,6 +68221,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('code-block')) 
   customElements.define('code-block', CodeBlockElement);
 }
 export default CodeBlockElement;
+
 
 ====
 File: vanilla/ColorPickerPopover.js
@@ -66591,6 +68443,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('color-picker-p
 }
 
 export default ColorPickerPopoverElement;
+
 
 ====
 File: vanilla/ColumnVisibilityMenu.js
@@ -66816,6 +68669,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('column-visibil
 
 export default ColumnVisibilityMenuElement;
 
+
 ====
 File: vanilla/ComboBox.js
 ====
@@ -67024,6 +68878,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('combo-select')
   customElements.define('combo-select', ComboBoxElement);
 }
 export default ComboBoxElement;
+
 
 ====
 File: vanilla/CommandPalette.js
@@ -67256,6 +69111,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('command-palett
 }
 export default CommandPaletteElement;
 
+
 ====
 File: vanilla/CommentThread.js
 ====
@@ -67475,6 +69331,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('comment-thread
 }
 export default CommentThreadElement;
 
+
 ====
 File: vanilla/ConfirmDialog.js
 ====
@@ -67652,6 +69509,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('confirm-dialog
 }
 export default ConfirmDialogElement;
 
+
 ====
 File: vanilla/ConnectorGrid.js
 ====
@@ -67751,6 +69609,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('connector-grid
 }
 
 export default ConnectorGridElement;
+
 
 ====
 File: vanilla/ContentReviewTable.js
@@ -67889,6 +69748,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('content-review
 }
 
 export default ContentReviewTableElement;
+
 
 ====
 File: vanilla/ContextUsageBadge.js
@@ -68032,6 +69892,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('context-usage-
 }
 export default ContextUsageBadgeElement;
 
+
 ====
 File: vanilla/CookieConsent.js
 ====
@@ -68151,6 +70012,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('cookie-consent
   customElements.define('cookie-consent', CookieConsentElement);
 }
 export default CookieConsentElement;
+
 
 ====
 File: vanilla/CreationComposer.js
@@ -68299,6 +70161,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('creation-compo
 }
 
 export default CreationComposerElement;
+
 
 ====
 File: vanilla/DataTable.js
@@ -68533,6 +70396,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('data-table')) 
 }
 export default DataTableElement;
 
+
 ====
 File: vanilla/DatePicker.js
 ====
@@ -68711,6 +70575,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('date-picker'))
   customElements.define('date-picker', DatePickerElement);
 }
 export default DatePickerElement;
+
 
 ====
 File: vanilla/DeliveryTrackingPanel.js
@@ -68950,6 +70815,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('delivery-track
 
 export default DeliveryTrackingPanelElement;
 
+
 ====
 File: vanilla/DeploymentCard.js
 ====
@@ -69051,6 +70917,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('deployment-car
   customElements.define('deployment-card', DeploymentCardElement);
 }
 export default DeploymentCardElement;
+
 
 ====
 File: vanilla/DiffViewer.js
@@ -69314,6 +71181,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('diff-viewer'))
 }
 export default DiffViewerElement;
 
+
 ====
 File: vanilla/DocsPageLayout.js
 ====
@@ -69576,6 +71444,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('docs-page-layo
 }
 
 export default DocsPageLayoutElement;
+
 
 ====
 File: vanilla/DriftEmbersBackdrop.js
@@ -69868,6 +71737,7 @@ if (typeof customElements !== "undefined" && !customElements.get("drift-embers-b
 
 export default DriftEmbersBackdropElement;
 
+
 ====
 File: vanilla/EditableHeading.js
 ====
@@ -69996,6 +71866,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('editable-headi
 
 export default EditableHeadingElement;
 
+
 ====
 File: vanilla/EditorToolPalette.js
 ====
@@ -70118,6 +71989,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('editor-tool-pa
 
 export default EditorToolPaletteElement;
 
+
 ====
 File: vanilla/EmptyState.js
 ====
@@ -70183,6 +72055,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('empty-state'))
   customElements.define('empty-state', EmptyStateElement);
 }
 export default EmptyStateElement;
+
 
 ====
 File: vanilla/EmptyStateStarter.js
@@ -70289,6 +72162,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('empty-state-st
 }
 
 export default EmptyStateStarterElement;
+
 
 ====
 File: vanilla/EntityMultiSelectPicker.js
@@ -70476,6 +72350,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('entity-picker'
 }
 
 export default EntityMultiSelectPickerElement;
+
 
 ====
 File: vanilla/EvalRunResults.js
@@ -70703,6 +72578,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('eval-run-resul
 
 export default EvalRunResultsElement;
 
+
 ====
 File: vanilla/EvalScoreTable.js
 ====
@@ -70859,6 +72735,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('eval-score-tab
 
 export default EvalScoreTableElement;
 
+
 ====
 File: vanilla/EvalTurnBuilder.js
 ====
@@ -71007,6 +72884,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('eval-turn-buil
 }
 
 export default EvalTurnBuilderElement;
+
 
 ====
 File: vanilla/EventLogTable.js
@@ -71167,6 +73045,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('event-log-tabl
 }
 
 export default EventLogTableElement;
+
 
 ====
 File: vanilla/EventStreamPanel.js
@@ -71379,6 +73258,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('event-stream-p
 
 export default EventStreamPanelElement;
 
+
 ====
 File: vanilla/EventTagGrid.js
 ====
@@ -71545,6 +73425,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('event-tag-grid
 
 export default EventTagGridElement;
 
+
 ====
 File: vanilla/FalRunCard.js
 ====
@@ -71700,6 +73581,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('fal-run-card')
 }
 
 export default FalRunCardElement;
+
 
 ====
 File: vanilla/FederatedSearchResultsPanel.js
@@ -71923,6 +73805,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('federated-sear
 
 export default FederatedSearchResultsPanelElement;
 
+
 ====
 File: vanilla/FileAttachmentList.js
 ====
@@ -72019,6 +73902,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('file-attachmen
   customElements.define('file-attachment-list', FileAttachmentListElement);
 }
 export default FileAttachmentListElement;
+
 
 ====
 File: vanilla/FileDropzone.js
@@ -72253,6 +74137,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('file-dropzone'
 }
 export default FileDropzoneElement;
 
+
 ====
 File: vanilla/FilterBar.js
 ====
@@ -72426,6 +74311,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('filter-bar')) 
   customElements.define('filter-bar', FilterBarElement);
 }
 export default FilterBarElement;
+
 
 ====
 File: vanilla/FilterQueryBuilder.js
@@ -72633,6 +74519,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('filter-query-b
 
 export default FilterQueryBuilderElement;
 
+
 ====
 File: vanilla/FilterToolbar.js
 ====
@@ -72791,6 +74678,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('filter-toolbar
 }
 export default FilterToolbarElement;
 
+
 ====
 File: vanilla/FineTuneJobList.js
 ====
@@ -72909,6 +74797,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('finetune-job-l
 }
 
 export default FineTuneJobListElement;
+
 
 ====
 File: vanilla/FluidContourBackdrop.js
@@ -73219,6 +75108,7 @@ if (typeof customElements !== "undefined" && !customElements.get("fluid-contour-
   customElements.define("fluid-contour-backdrop", FluidContourBackdrop);
 }
 
+
 ====
 File: vanilla/FooterSection.js
 ====
@@ -73370,6 +75260,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('footer-section
 }
 export default FooterSectionElement;
 
+
 ====
 File: vanilla/ForecastTrendChart.js
 ====
@@ -73486,6 +75377,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('forecast-trend
 }
 export default ForecastTrendChartElement;
 
+
 ====
 File: vanilla/FormField.js
 ====
@@ -73581,6 +75473,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('form-field')) 
   customElements.define('form-field', FormFieldElement);
 }
 export default FormFieldElement;
+
 
 ====
 File: vanilla/FormTrackingDashboard.js
@@ -73816,6 +75709,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('form-tracking-
 
 export default FormTrackingDashboardElement;
 
+
 ====
 File: vanilla/GammaImageDetail.js
 ====
@@ -73948,6 +75842,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('gamma-image-de
 }
 
 export default GammaImageDetailElement;
+
 
 ====
 File: vanilla/GanttTimeline.js
@@ -74097,6 +75992,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('gantt-timeline
 }
 export default GanttTimelineElement;
 
+
 ====
 File: vanilla/GroupedBarCompare.js
 ====
@@ -74199,6 +76095,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('grouped-bar-co
   customElements.define('grouped-bar-compare', GroupedBarCompareElement);
 }
 export default GroupedBarCompareElement;
+
 
 ====
 File: vanilla/GroupedTaskList.js
@@ -74450,6 +76347,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('grouped-task-l
 
 export default GroupedTaskListElement;
 
+
 ====
 File: vanilla/GuardrailReviewQueue.js
 ====
@@ -74580,6 +76478,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('guardrail-revi
 }
 
 export default GuardrailReviewQueueElement;
+
 
 ====
 File: vanilla/HealthDonutStats.js
@@ -74727,6 +76626,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('health-donut-s
   customElements.define('health-donut-stats', HealthDonutStatsElement);
 }
 export default HealthDonutStatsElement;
+
 
 ====
 File: vanilla/HelpCenterHome.js
@@ -74882,6 +76782,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('help-center-ho
 
 export default HelpCenterHomeElement;
 
+
 ====
 File: vanilla/HelpResourcesPanel.js
 ====
@@ -75030,6 +76931,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('help-resources
 
 export default HelpResourcesPanelElement;
 
+
 ====
 File: vanilla/HeroSection.js
 ====
@@ -75148,6 +77050,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('hero-section')
   customElements.define('hero-section', HeroSectionElement);
 }
 export default HeroSectionElement;
+
 
 ====
 File: vanilla/HomepageDashboard.js
@@ -75671,6 +77574,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('image-action-m
 
 export default ImageActionMenuElement;
 
+
 ====
 File: vanilla/ImageGenGallery.js
 ====
@@ -75807,6 +77711,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('image-gen-gall
 
 export default ImageGenGalleryElement;
 
+
 ====
 File: vanilla/ImageGenMetaBar.js
 ====
@@ -75894,6 +77799,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('image-gen-meta
 }
 
 export default ImageGenMetaBarElement;
+
 
 ====
 File: vanilla/InboxList.js
@@ -76007,6 +77913,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('inbox-list')) 
   customElements.define('inbox-list', InboxListElement);
 }
 export default InboxListElement;
+
 
 ====
 File: vanilla/IntegrationConnectGrid.js
@@ -76170,6 +78077,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('integration-co
 
 export default IntegrationConnectGridElement;
 
+
 ====
 File: vanilla/InvoiceHistoryTable.js
 ====
@@ -76320,6 +78228,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('invoice-histor
 
 export default InvoiceHistoryTableElement;
 
+
 ====
 File: vanilla/IterationActionBar.js
 ====
@@ -76448,6 +78357,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('iteration-acti
 
 export default IterationActionBarElement;
 
+
 ====
 File: vanilla/JumpBackIn.js
 ====
@@ -76570,6 +78480,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('jump-back-in')
 }
 
 export default JumpBackInElement;
+
 
 ====
 File: vanilla/KanbanBoard.js
@@ -76798,6 +78709,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('kanban-board')
 }
 export default KanbanBoardElement;
 
+
 ====
 File: vanilla/KnowledgeDrawer.js
 ====
@@ -76951,6 +78863,7 @@ export class KnowledgeDrawerElement extends HTMLElement {
 if (typeof customElements !== "undefined" && !customElements.get("knowledge-drawer")) {
   customElements.define("knowledge-drawer", KnowledgeDrawerElement);
 }
+
 
 ====
 File: vanilla/LiquidGlass.js
@@ -77148,6 +79061,7 @@ if (typeof window !== "undefined" && !customElements.get("liquid-glass")) {
 
 export { LiquidGlass };
 
+
 ====
 File: vanilla/LiveTailLogConsole.js
 ====
@@ -77340,6 +79254,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('live-tail-log-
 }
 export default LiveTailLogConsoleElement;
 
+
 ====
 File: vanilla/LogoCloud.js
 ====
@@ -77431,6 +79346,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('logo-cloud')) 
 }
 
 export default LogoCloudElement;
+
 
 ====
 File: vanilla/MapActivityList.js
@@ -77594,6 +79510,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('map-activity-l
 }
 
 export default MapActivityListElement;
+
 
 ====
 File: vanilla/MapPropertyCard.js
@@ -77768,6 +79685,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('map-property-c
 
 export default MapPropertyCardElement;
 
+
 ====
 File: vanilla/MarqueeWall.js
 ====
@@ -77877,6 +79795,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('marquee-wall')
   customElements.define('marquee-wall', MarqueeWallElement);
 }
 export default MarqueeWallElement;
+
 
 ====
 File: vanilla/MasonryDensityControls.js
@@ -78042,6 +79961,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('masonry-densit
 
 export default MasonryDensityControlsElement;
 
+
 ====
 File: vanilla/McpConnectPanel.js
 ====
@@ -78162,6 +80082,7 @@ if (!customElements.get('mcp-connect-panel')) {
   customElements.define('mcp-connect-panel', McpConnectPanelElement);
 }
 
+
 ====
 File: vanilla/MembershipTierGrid.js
 ====
@@ -78268,6 +80189,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('membership-tie
 }
 
 export default MembershipTierGridElement;
+
 
 ====
 File: vanilla/MemoryPanel.js
@@ -78445,6 +80367,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('memory-panel')
 
 export default MemoryPanelElement;
 
+
 ====
 File: vanilla/MessageActionToolbar.js
 ====
@@ -78519,6 +80442,7 @@ if (!customElements.get("message-action-toolbar")) {
   customElements.define("message-action-toolbar", MessageActionToolbar);
 }
 export default MessageActionToolbar;
+
 
 ====
 File: vanilla/MetricStrip.js
@@ -78634,6 +80558,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('metric-strip')
   customElements.define('metric-strip', MetricStripElement);
 }
 export default MetricStripElement;
+
 
 ====
 File: vanilla/Modal.js
@@ -78781,6 +80706,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('modal-dialog')
 }
 export default ModalElement;
 
+
 ====
 File: vanilla/ModelComparePane.js
 ====
@@ -78891,6 +80817,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('model-compare-
 
 export default ModelComparePaneElement;
 
+
 ====
 File: vanilla/ModelPricingCard.js
 ====
@@ -78977,6 +80904,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('model-pricing-
 }
 
 export default ModelPricingCardElement;
+
 
 ====
 File: vanilla/ModelSelector.js
@@ -79238,6 +81166,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('model-selector
 }
 export default ModelSelectorElement;
 
+
 ====
 File: vanilla/MonitorRunList.js
 ====
@@ -79408,6 +81337,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('monitor-run-li
 }
 
 export default MonitorRunListElement;
+
 
 ====
 File: vanilla/Navbar.js
@@ -79588,6 +81518,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('nav-bar')) {
 }
 export default NavbarElement;
 
+
 ====
 File: vanilla/NoResultsState.js
 ====
@@ -79701,6 +81632,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('no-results-sta
 }
 
 export default NoResultsStateElement;
+
 
 ====
 File: vanilla/NotificationCenter.js
@@ -79889,6 +81821,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('notification-c
 }
 export default NotificationCenterElement;
 
+
 ====
 File: vanilla/NotificationPrefsMatrix.js
 ====
@@ -80032,6 +81965,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('notification-p
 
 export default NotificationPrefsMatrixElement;
 
+
 ====
 File: vanilla/OnboardingChecklist.js
 ====
@@ -80158,6 +82092,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('onboarding-che
   customElements.define('onboarding-checklist', OnboardingChecklistElement);
 }
 export default OnboardingChecklistElement;
+
 
 ====
 File: vanilla/OnboardingStepper.js
@@ -80340,6 +82275,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('onboarding-ste
 }
 export default OnboardingStepperElement;
 
+
 ====
 File: vanilla/OrderCard.js
 ====
@@ -80510,6 +82446,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('order-card')) 
 
 export default OrderCardElement;
 
+
 ====
 File: vanilla/OrderSummaryPanel.js
 ====
@@ -80674,6 +82611,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('order-summary'
 
 export default OrderSummaryPanelElement;
 
+
 ====
 File: vanilla/OrderTracker.js
 ====
@@ -80826,6 +82764,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('order-tracker'
 
 export default OrderTrackerElement;
 
+
 ====
 File: vanilla/OtpInput.js
 ====
@@ -80977,6 +82916,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('otp-input')) {
   customElements.define('otp-input', OtpInputElement);
 }
 export default OtpInputElement;
+
 
 ====
 File: vanilla/PageHeader.js
@@ -81145,6 +83085,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('page-header'))
 }
 export default PageHeaderElement;
 
+
 ====
 File: vanilla/Pagination.js
 ====
@@ -81302,6 +83243,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('pagination-bar
 }
 export default PaginationElement;
 
+
 ====
 File: vanilla/PaymentMethodCard.js
 ====
@@ -81400,6 +83342,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('payment-method
 
 export default PaymentMethodCardElement;
 
+
 ====
 File: vanilla/PermissionDeniedState.js
 ====
@@ -81493,6 +83436,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('permission-den
 }
 
 export default PermissionDeniedStateElement;
+
 
 ====
 File: vanilla/PermissionMatrix.js
@@ -81697,6 +83641,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('permission-mat
 
 export default PermissionMatrixElement;
 
+
 ====
 File: vanilla/PersonaPresetGrid.js
 ====
@@ -81795,6 +83740,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('persona-preset
 }
 
 export default PersonaPresetGridElement;
+
 
 ====
 File: vanilla/PipelineStageList.js
@@ -81969,6 +83915,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('pipeline-stage
 }
 export default PipelineStageListElement;
 
+
 ====
 File: vanilla/PlanComparisonTable.js
 ====
@@ -82097,6 +84044,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('plan-compariso
 }
 
 export default PlanComparisonTableElement;
+
 
 ====
 File: vanilla/PointerRipples.js
@@ -83305,6 +85253,7 @@ if (typeof customElements !== "undefined" && !customElements.get("pointer-ripple
   customElements.define("pointer-ripples", PointerRipples);
 }
 
+
 ====
 File: vanilla/PrReviewQueue.js
 ====
@@ -83456,6 +85405,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('pr-review-queu
 
 export default PrReviewQueueElement;
 
+
 ====
 File: vanilla/PricingTable.js
 ====
@@ -83569,6 +85519,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('pricing-table'
   customElements.define('pricing-table', PricingTableElement);
 }
 export default PricingTableElement;
+
 
 ====
 File: vanilla/ProfileHeader.js
@@ -83746,6 +85697,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('profile-header
 }
 export default ProfileHeaderElement;
 
+
 ====
 File: vanilla/ProjectGanttTimeline.js
 ====
@@ -83921,6 +85873,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('project-gantt-
 
 export default ProjectGanttTimelineElement;
 
+
 ====
 File: vanilla/PromptChips.js
 ====
@@ -83986,6 +85939,7 @@ if (!customElements.get("prompt-chips")) {
   customElements.define("prompt-chips", PromptChips);
 }
 export default PromptChips;
+
 
 ====
 File: vanilla/PromptLibrary.js
@@ -84207,6 +86161,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-library
 }
 export default PromptLibraryElement;
 
+
 ====
 File: vanilla/PromptPerformanceTable.js
 ====
@@ -84353,6 +86308,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-perform
 
 export default PromptPerformanceTableElement;
 
+
 ====
 File: vanilla/PromptSaveDialog.js
 ====
@@ -84473,6 +86429,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-save-di
 
 export default PromptSaveDialogElement;
 
+
 ====
 File: vanilla/PromptTemplateGrid.js
 ====
@@ -84562,6 +86519,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-templat
   customElements.define('prompt-template-grid', PromptTemplateGridElement);
 }
 export default PromptTemplateGridElement;
+
 
 ====
 File: vanilla/PromptTunerResult.js
@@ -84700,6 +86658,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-tuner-r
 
 export default PromptTunerResultElement;
 
+
 ====
 File: vanilla/PromptVariantDiff.js
 ====
@@ -84835,6 +86794,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-variant
 }
 
 export default PromptVariantDiffElement;
+
 
 ====
 File: vanilla/QaTestTable.js
@@ -84972,6 +86932,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('qa-test-table'
 
 export default QaTestTableElement;
 
+
 ====
 File: vanilla/QuoteMasonry.js
 ====
@@ -85069,6 +87030,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('quote-masonry'
   customElements.define('quote-masonry', QuoteMasonryElement);
 }
 export default QuoteMasonryElement;
+
 
 ====
 File: vanilla/RankList.js
@@ -85195,6 +87157,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('rank-list')) {
   customElements.define('rank-list', RankListElement);
 }
 export default RankListElement;
+
 
 ====
 File: vanilla/ResourceList.js
@@ -85325,6 +87288,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('resource-list'
 }
 export default ResourceListElement;
 
+
 ====
 File: vanilla/RichToolbar.js
 ====
@@ -85421,6 +87385,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('rich-toolbar')
   customElements.define('rich-toolbar', RichToolbarElement);
 }
 export default RichToolbarElement;
+
 
 ====
 File: vanilla/RoadmapTimeline.js
@@ -85547,6 +87512,7 @@ export class RoadmapTimelineElement extends HTMLElement {
 if (typeof customElements !== "undefined" && !customElements.get("roadmap-timeline")) {
   customElements.define("roadmap-timeline", RoadmapTimelineElement);
 }
+
 
 ====
 File: vanilla/SchedulerSlots.js
@@ -85712,6 +87678,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('scheduler-slot
 }
 export default SchedulerSlotsElement;
 
+
 ====
 File: vanilla/SearchInput.js
 ====
@@ -85844,6 +87811,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('search-field')
   customElements.define('search-field', SearchInputElement);
 }
 export default SearchInputElement;
+
 
 ====
 File: vanilla/SearchResultsPage.js
@@ -86079,6 +88047,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('search-results
 
 export default SearchResultsPageElement;
 
+
 ====
 File: vanilla/SearchTypeahead.js
 ====
@@ -86246,6 +88215,175 @@ if (typeof customElements !== 'undefined' && !customElements.get('search-typeahe
 }
 export default SearchTypeaheadElement;
 
+
+====
+File: vanilla/SeatBillingTable.js
+====
+
+/**
+ * SeatBillingTable - Vanilla Web Component
+ * Per-seat billing table: user rows with seat type, usage, cost and status
+ * badges, client-side search and a billed-seats total footer.
+ *
+ * Usage: <seat-billing-table title="Usage by User"></seat-billing-table>
+ * Properties: rows ([{id,user,email?,seat?,cost?,usage?,status?}]), currency
+ * Attributes: title, description, period, currency, searchable ("false" hides search)
+ * Events: seat-search (detail {query})
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const STATUS_BADGE = {
+  active: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400',
+  invited: 'bg-sky-50 text-sky-700 dark:bg-sky-500/10 dark:text-sky-400',
+  suspended: 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400',
+};
+const STATUS_LABEL = {
+  active: 'Active',
+  invited: 'Invited',
+  suspended: 'Suspended',
+};
+
+export class SeatBillingTableElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'description', 'period', 'currency', 'searchable'];
+  }
+
+  constructor() {
+    super();
+    this._rows = [];
+    this._query = '';
+    this._bound = false;
+  }
+
+  get rows() {
+    return this._rows;
+  }
+
+  set rows(value) {
+    this._rows = Array.isArray(value) ? value.map((r) => ({ ...r })) : [];
+    this.render();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('input', (event) => {
+        const input = event.target.closest('[data-seat-search]');
+        if (!input) return;
+        this._query = input.value;
+        this.render();
+        const search = this.querySelector('[data-seat-search]');
+        if (search) {
+          search.focus();
+          search.setSelectionRange(search.value.length, search.value.length);
+          this.dispatchEvent(new CustomEvent('seat-search', { detail: { query: this._query } }));
+        }
+      });
+    }
+  }
+
+  _filtered() {
+    const q = this._query.trim().toLowerCase();
+    if (!q) return this._rows;
+    return this._rows.filter(
+      (r) => String(r.user).toLowerCase().includes(q) || String(r.email || '').toLowerCase().includes(q)
+    );
+  }
+
+  render() {
+    const title = this.getAttribute('title') || 'Usage by User';
+    const description = this.getAttribute('description') ||
+      'Per-seat costs and credit consumption for the current billing period.';
+    const period = this.getAttribute('period') || 'Monthly';
+    const currency = this.getAttribute('currency') || '$';
+    const searchable = this.getAttribute('searchable') !== 'false';
+
+    const filtered = this._filtered();
+    const billed = this._rows.filter((r) => r.status !== 'suspended');
+    const totalCost = billed.reduce((acc, r) => acc + (Number(r.cost) || 0), 0);
+    const fmt = (cost) => `${currency}${Number(cost).toFixed(2)}`;
+
+    const bodyRows = filtered.map((r) => {
+      const status = r.status && STATUS_BADGE[r.status] ? r.status : null;
+      const badge = status && status !== 'active'
+        ? `<span data-seat-status class="rounded-full px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide ${STATUS_BADGE[status]}">${STATUS_LABEL[status]}</span>`
+        : '';
+      const email = r.email
+        ? `<p class="mt-0.5 truncate text-[10px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(r.email)}</p>`
+        : '';
+      const cost = r.cost != null ? fmt(r.cost) : '—';
+      return `<tr data-seat-row="${escapeAttribute(r.id)}" class="border-b border-zinc-100 last:border-0 dark:border-zinc-800">
+          <td class="py-2 pr-2">
+            <div class="flex items-center gap-2">
+              <span data-seat-user class="truncate font-medium text-zinc-700 dark:text-zinc-200">${escapeAttribute(r.user)}</span>
+              ${badge}
+            </div>
+            ${email}
+          </td>
+          <td class="py-2 pr-2 text-zinc-500 dark:text-zinc-400">${escapeAttribute(r.seat || 'Member')}</td>
+          <td class="py-2 pr-2 font-mono text-[11px] text-zinc-500 dark:text-zinc-400">${escapeAttribute(r.usage || '—')}</td>
+          <td data-seat-cost class="py-2 text-right font-mono text-[11px] text-zinc-700 dark:text-zinc-200">${cost}</td>
+        </tr>`;
+    }).join('');
+
+    const emptyRow = `<tr><td colspan="4" data-seat-empty class="py-4 text-center text-xs text-zinc-400 dark:text-zinc-500">${
+      this._query.trim() ? 'No users match your search' : 'No seats billed this period'
+    }</td></tr>`;
+
+    const footer = billed.length > 0
+      ? `<tfoot><tr data-seat-total class="border-t border-zinc-200 dark:border-zinc-700">
+          <td class="py-2 pr-2 text-[11px] font-semibold text-zinc-600 dark:text-zinc-300">${billed.length} billed seat${billed.length === 1 ? '' : 's'}</td>
+          <td colspan="2"></td>
+          <td data-seat-total-cost class="py-2 text-right font-mono text-xs font-semibold text-zinc-800 dark:text-zinc-100">${fmt(totalCost)}</td>
+        </tr></tfoot>`
+      : '';
+
+    this.innerHTML = `
+      <div data-seat-table class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <p data-seat-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</p>
+          ${period ? `<span data-seat-period class="text-[11px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(period)}</span>` : ''}
+        </div>
+        <p data-seat-description class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">${escapeAttribute(description)}</p>
+
+        ${searchable ? `<input data-seat-search type="search" value="${escapeAttribute(this._query)}" placeholder="Search for a user…" class="mt-3 w-full rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200" />` : ''}
+
+        <table data-seat-rows class="mt-2 w-full text-left text-xs">
+          <thead>
+            <tr class="border-b border-zinc-200 text-[10px] uppercase tracking-wide text-zinc-400 dark:border-zinc-700">
+              <th class="py-1.5 pr-2 font-semibold">Name</th>
+              <th class="py-1.5 pr-2 font-semibold">Seat</th>
+              <th class="py-1.5 pr-2 font-semibold">Usage</th>
+              <th class="py-1.5 text-right font-semibold">Cost</th>
+            </tr>
+          </thead>
+          <tbody>${bodyRows || emptyRow}</tbody>
+          ${footer}
+        </table>
+      </div>`;
+  }
+}
+
+export default SeatBillingTableElement;
+
+if (!customElements.get('seat-billing-table')) {
+  customElements.define('seat-billing-table', SeatBillingTableElement);
+}
+
+
 ====
 File: vanilla/SegmentBreakdownBars.js
 ====
@@ -86355,6 +88493,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('segment-breakd
   customElements.define('segment-breakdown', SegmentBreakdownBarsElement);
 }
 export default SegmentBreakdownBarsElement;
+
 
 ====
 File: vanilla/ServiceStatusList.js
@@ -86526,6 +88665,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('service-status
   customElements.define('service-status-list', ServiceStatusListElement);
 }
 export default ServiceStatusListElement;
+
 
 ====
 File: vanilla/SessionDeviceTable.js
@@ -86722,6 +88862,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('session-device
 
 export default SessionDeviceTableElement;
 
+
 ====
 File: vanilla/SessionDiagnosticsPanel.js
 ====
@@ -86906,6 +89047,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('session-diagno
 
 export default SessionDiagnosticsPanelElement;
 
+
 ====
 File: vanilla/SettingsPanel.js
 ====
@@ -87058,6 +89200,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('settings-panel
   customElements.define('settings-panel', SettingsPanelElement);
 }
 export default SettingsPanelElement;
+
 
 ====
 File: vanilla/SettingsSideDrawer.js
@@ -87259,6 +89402,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('settings-side-
 }
 export default SettingsSideDrawerElement;
 
+
 ====
 File: vanilla/ShareAccessDialog.js
 ====
@@ -87458,6 +89602,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('share-access-d
 
 export default ShareAccessDialogElement;
 
+
 ====
 File: vanilla/ShareChatDialog.js
 ====
@@ -87577,6 +89722,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('share-chat-dia
 
 export default ShareChatDialogElement;
 
+
 ====
 File: vanilla/SharedChatViewer.js
 ====
@@ -87670,6 +89816,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('shared-chat-vi
 }
 
 export default SharedChatViewerElement;
+
 
 ====
 File: vanilla/ShortcutCheatSheet.js
@@ -87812,6 +89959,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('shortcut-cheat
 }
 
 export default ShortcutCheatSheetElement;
+
 
 ====
 File: vanilla/ShortcutsOverlay.js
@@ -88032,6 +90180,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('shortcuts-over
 }
 export default ShortcutsOverlayElement;
 
+
 ====
 File: vanilla/SideDrawer.js
 ====
@@ -88167,6 +90316,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('side-drawer'))
   customElements.define('side-drawer', SideDrawerElement);
 }
 export default SideDrawerElement;
+
 
 ====
 File: vanilla/SideNav.js
@@ -88306,6 +90456,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('side-nav')) {
 }
 export default SideNavElement;
 
+
 ====
 File: vanilla/SiteFooter.js
 ====
@@ -88442,6 +90593,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('site-footer'))
 }
 export default SiteFooterElement;
 
+
 ====
 File: vanilla/SourcesCitation.js
 ====
@@ -88534,6 +90686,7 @@ if (!customElements.get("sources-citation")) {
   customElements.define("sources-citation", SourcesCitation);
 }
 export default SourcesCitation;
+
 
 ====
 File: vanilla/SpotlightGlareCard.js
@@ -88648,6 +90801,7 @@ if (typeof customElements !== "undefined" && !customElements.get("spotlight-glar
   customElements.define("spotlight-glare-card", SpotlightGlareCard);
 }
 
+
 ====
 File: vanilla/StatCard.js
 ====
@@ -88749,6 +90903,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('stat-card')) {
 }
 export default StatCardElement;
 
+
 ====
 File: vanilla/StatsBand.js
 ====
@@ -88840,6 +90995,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('stats-band')) 
 }
 
 export default StatsBandElement;
+
 
 ====
 File: vanilla/StatusCountTabs.js
@@ -88957,6 +91113,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('status-count-t
 
 export default StatusCountTabsElement;
 
+
 ====
 File: vanilla/StatusIndicator.js
 ====
@@ -89025,6 +91182,7 @@ if (!customElements.get("status-indicator")) {
   customElements.define("status-indicator", StatusIndicator);
 }
 export default StatusIndicator;
+
 
 ====
 File: vanilla/StepSlider.js
@@ -89151,6 +91309,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('step-slider'))
 }
 export default StepSliderElement;
 
+
 ====
 File: vanilla/Stepper.js
 ====
@@ -89274,6 +91433,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('step-flow')) {
   customElements.define('step-flow', StepperElement);
 }
 export default StepperElement;
+
 
 ====
 File: vanilla/StockPhotoPicker.js
@@ -89453,6 +91613,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('stock-photo-pi
 
 export default StockPhotoPickerElement;
 
+
 ====
 File: vanilla/StreamMarkdown.js
 ====
@@ -89584,6 +91745,7 @@ if (!customElements.get("stream-markdown")) {
 }
 export default StreamMarkdown;
 
+
 ====
 File: vanilla/StreamingProgressBar.js
 ====
@@ -89665,6 +91827,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('streaming-prog
   customElements.define('streaming-progress-bar', StreamingProgressBarElement);
 }
 export default StreamingProgressBarElement;
+
 
 ====
 File: vanilla/SuccessToast.js
@@ -89793,6 +91956,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('success-toast'
 }
 
 export default SuccessToastElement;
+
 
 ====
 File: vanilla/SystemPromptEditor.js
@@ -89934,6 +92098,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('system-prompt-
 
 export default SystemPromptEditorElement;
 
+
 ====
 File: vanilla/TableSavedViews.js
 ====
@@ -90062,6 +92227,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('table-saved-vi
 }
 
 export default TableSavedViewsElement;
+
 
 ====
 File: vanilla/Tabs.js
@@ -90201,6 +92367,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('tabs-bar')) {
 }
 export default TabsElement;
 
+
 ====
 File: vanilla/Tag.js
 ====
@@ -90307,6 +92474,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('ui-tag')) {
   customElements.define('ui-tag', TagElement);
 }
 export default TagElement;
+
 
 ====
 File: vanilla/TargetGauge.js
@@ -90440,6 +92608,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('target-gauge')
   customElements.define('target-gauge', TargetGaugeElement);
 }
 export default TargetGaugeElement;
+
 
 ====
 File: vanilla/TaskCardModal.js
@@ -90732,6 +92901,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('task-card-moda
 
 export default TaskCardModalElement;
 
+
 ====
 File: vanilla/TaskDetailPanel.js
 ====
@@ -90992,6 +93162,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('task-detail-pa
 
 export default TaskDetailPanelElement;
 
+
 ====
 File: vanilla/TestimonialGrid.js
 ====
@@ -91120,6 +93291,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('testimonial-gr
 }
 export default TestimonialGridElement;
 
+
 ====
 File: vanilla/ThemeToggle.js
 ====
@@ -91208,6 +93380,7 @@ if (!customElements.get("theme-toggle")) {
   customElements.define("theme-toggle", ThemeToggle);
 }
 export default ThemeToggle;
+
 
 ====
 File: vanilla/ThinkingBlock.js
@@ -91341,6 +93514,7 @@ if (!customElements.get("thinking-block")) {
   customElements.define("thinking-block", ThinkingBlock);
 }
 export default ThinkingBlock;
+
 
 ====
 File: vanilla/TimeSlotPicker.js
@@ -91519,6 +93693,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('time-slot-pick
 
 export default TimeSlotPickerElement;
 
+
 ====
 File: vanilla/TimeframePicker.js
 ====
@@ -91635,6 +93810,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('timeframe-pick
   customElements.define('timeframe-picker', TimeframePickerElement);
 }
 export default TimeframePickerElement;
+
 
 ====
 File: vanilla/ToastStack.js
@@ -91832,6 +94008,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('toast-stack'))
 }
 export default ToastStackElement;
 
+
 ====
 File: vanilla/ToggleSwitch.js
 ====
@@ -91942,6 +94119,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('toggle-switch'
   customElements.define('toggle-switch', ToggleSwitchElement);
 }
 export default ToggleSwitchElement;
+
 
 ====
 File: vanilla/TokenCostBreakdown.js
@@ -92090,6 +94268,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('token-cost-bre
 
 export default TokenCostBreakdownElement;
 
+
 ====
 File: vanilla/ToolApprovalCard.js
 ====
@@ -92223,6 +94402,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('tool-approval-
 }
 export default ToolApprovalCardElement;
 
+
 ====
 File: vanilla/ToolCallBadge.js
 ====
@@ -92300,6 +94480,7 @@ if (!customElements.get("tool-call-badge")) {
   customElements.define("tool-call-badge", ToolCallBadge);
 }
 export default ToolCallBadge;
+
 
 ====
 File: vanilla/ToolSchemaEditor.js
@@ -92427,6 +94608,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('tool-schema-ed
 
 export default ToolSchemaEditorElement;
 
+
 ====
 File: vanilla/Tooltip.js
 ====
@@ -92521,6 +94703,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('tooltip-hint')
   customElements.define('tooltip-hint', TooltipElement);
 }
 export default TooltipElement;
+
 
 ====
 File: vanilla/TourTooltip.js
@@ -92630,6 +94813,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('tour-tooltip')
   customElements.define('tour-tooltip', TourTooltipElement);
 }
 export default TourTooltipElement;
+
 
 ====
 File: vanilla/TraceSpanWaterfall.js
@@ -92751,6 +94935,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('trace-span-wat
 
 export default TraceSpanWaterfallElement;
 
+
 ====
 File: vanilla/TrialBanner.js
 ====
@@ -92841,6 +95026,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('trial-banner')
 
 export default TrialBannerElement;
 
+
 ====
 File: vanilla/TypingIndicator.js
 ====
@@ -92908,6 +95094,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('typing-indicat
 }
 export default TypingIndicatorElement;
 
+
 ====
 File: vanilla/UiIcon.js
 ====
@@ -92927,6 +95114,7 @@ export function uiIcon(name, { size = 20, strokeWidth = 1.8, label = '', classNa
   return `<svg width="${escapeAttribute(size)}" height="${escapeAttribute(size)}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${escapeAttribute(strokeWidth)}" stroke-linecap="round" stroke-linejoin="round" class="${escapeAttribute(className)}" ${aria}>${ICONS[name] || ''}</svg>`;
 }
 export default uiIcon;
+
 
 ====
 File: vanilla/UpgradeCheckoutPanel.js
@@ -93084,6 +95272,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('upgrade-checko
 
 export default UpgradeCheckoutPanelElement;
 
+
 ====
 File: vanilla/UpgradePromptCard.js
 ====
@@ -93203,6 +95392,228 @@ if (typeof customElements !== 'undefined' && !customElements.get('upgrade-prompt
 }
 export default UpgradePromptCardElement;
 
+
+====
+File: vanilla/UsageCreditsDonut.js
+====
+
+/**
+ * UsageCreditsDonut - Vanilla Web Component
+ * Pure-SVG donut of credit usage by type: palette arcs with gaps,
+ * hover-linked legend, dynamic center text and a range dropdown.
+ *
+ * Usage: <usage-credits-donut title="Usage by Type"></usage-credits-donut>
+ * Properties: slices ([{id,label,value,color?}]), total, ranges, defaultRange
+ * Attributes: title, unit, total
+ * Events: range-change (detail {range})
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const PALETTE = ['#6366f1', '#22c55e', '#f59e0b', '#ec4899', '#06b6d4', '#a855f7'];
+const DEFAULT_RANGES = ['Last 7 days', 'Last 30 days'];
+
+export class UsageCreditsDonutElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'unit', 'total'];
+  }
+
+  constructor() {
+    super();
+    this._slices = [];
+    this._ranges = DEFAULT_RANGES;
+    this._defaultRange = '';
+    this._range = '';
+    this._active = null;
+    this._bound = false;
+  }
+
+  get slices() {
+    return this._slices;
+  }
+
+  set slices(value) {
+    this._slices = Array.isArray(value) ? value.map((s) => ({ ...s })) : [];
+    this.render();
+  }
+
+  get ranges() {
+    return this._ranges;
+  }
+
+  set ranges(value) {
+    this._ranges = Array.isArray(value) ? value.map(String) : DEFAULT_RANGES;
+    this.render();
+  }
+
+  get defaultRange() {
+    return this._defaultRange;
+  }
+
+  set defaultRange(value) {
+    this._defaultRange = value == null ? '' : String(value);
+    this._range = this._defaultRange || this._ranges[0] || '';
+    this.render();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    this.render();
+  }
+
+  connectedCallback() {
+    if (!this._range) this._range = this._defaultRange || this._ranges[0] || '';
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('change', (event) => {
+        const select = event.target.closest('[data-usage-donut-range]');
+        if (!select) return;
+        this._range = select.value;
+        this.dispatchEvent(new CustomEvent('range-change', { detail: { range: this._range } }));
+      });
+      this.addEventListener('mouseover', (event) => {
+        const slice = event.target.closest('[data-usage-donut-slice]');
+        const path = event.target.closest('[data-usage-donut-arc]');
+        const id = slice ? slice.getAttribute('data-usage-donut-slice') : path ? path.getAttribute('data-usage-donut-arc') : null;
+        if (id !== this._active) {
+          this._active = id;
+          this._refreshActive();
+        }
+      });
+      this.addEventListener('mouseout', () => {
+        if (this._active !== null) {
+          this._active = null;
+          this._refreshActive();
+        }
+      });
+    }
+  }
+
+  _sum() {
+    const totalAttr = this.getAttribute('total');
+    if (totalAttr !== null) return Number(totalAttr) || 0;
+    return this._slices.reduce((acc, s) => acc + (Number(s.value) || 0), 0);
+  }
+
+  _colored() {
+    return this._slices.map((s, i) => ({ ...s, color: s.color || PALETTE[i % PALETTE.length] }));
+  }
+
+  _polar(r, deg) {
+    const rad = ((deg - 90) * Math.PI) / 180;
+    return [80 + r * Math.cos(rad), 80 + r * Math.sin(rad)];
+  }
+
+  _donutArc(startDeg, endDeg) {
+    const [x1, y1] = this._polar(70, startDeg);
+    const [x2, y2] = this._polar(70, endDeg);
+    const [x3, y3] = this._polar(44, endDeg);
+    const [x4, y4] = this._polar(44, startDeg);
+    const large = endDeg - startDeg > 180 ? 1 : 0;
+    return [
+      `M ${x1.toFixed(2)} ${y1.toFixed(2)}`,
+      `A 70 70 0 ${large} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`,
+      `L ${x3.toFixed(2)} ${y3.toFixed(2)}`,
+      `A 44 44 0 ${large} 0 ${x4.toFixed(2)} ${y4.toFixed(2)}`,
+      'Z',
+    ].join(' ');
+  }
+
+  _refreshActive() {
+    const sum = this._sum();
+    const colored = this._colored();
+    const activeSlice = this._active ? colored.find((s) => s.id === this._active) : null;
+    const unit = this.getAttribute('unit') || 'credits';
+    const nameEl = this.querySelector('[data-usage-donut-center-name]');
+    const valueEl = this.querySelector('[data-usage-donut-center-value]');
+    if (nameEl) {
+      nameEl.textContent = activeSlice ? activeSlice.label : `${((((colored[0] || {}).value) || 0) / (sum || 1) * 100).toFixed(0)}%`;
+    }
+    if (valueEl) {
+      valueEl.textContent = activeSlice ? `${activeSlice.value} ${unit}` : unit;
+    }
+    this.querySelectorAll('[data-usage-donut-arc]').forEach((p) => {
+      const id = p.getAttribute('data-usage-donut-arc');
+      p.setAttribute('opacity', this._active && this._active !== id ? '0.35' : '1');
+    });
+  }
+
+  render() {
+    const title = this.getAttribute('title') || 'Usage by Type';
+    const unit = this.getAttribute('unit') || 'credits';
+    const sum = this._sum();
+    const colored = this._colored();
+
+    let angle = 0;
+    const paths = colored.map((s) => {
+      const sweep = sum > 0 ? ((Number(s.value) || 0) / sum) * 360 : 0;
+      const start = angle;
+      const end = angle + sweep;
+      angle = end;
+      return { id: s.id, color: s.color, path: this._donutArc(start, Math.max(end - 0.6, start + 0.1)) };
+    }).map((p) =>
+      `<path data-usage-donut-arc="${escapeAttribute(p.id)}" d="${p.path}" fill="${p.color}" opacity="${this._active && this._active !== p.id ? '0.35' : '1'}"></path>`
+    ).join('');
+
+    const emptyRing = sum <= 0
+      ? `<circle cx="80" cy="80" r="57" fill="none" stroke="#e4e4e7" stroke-width="26" class="dark:opacity-20"></circle>`
+      : '';
+
+    const legend = colored.map((s) => {
+      const pct = sum > 0 ? `${(((Number(s.value) || 0) / sum) * 100).toFixed(0)}%` : '—';
+      return `<li data-usage-donut-slice="${escapeAttribute(s.id)}" class="flex items-center gap-2 text-xs">
+          <span class="h-2.5 w-2.5 shrink-0 rounded-sm" style="background-color:${escapeAttribute(s.color)}"></span>
+          <span class="min-w-0 flex-1 truncate text-zinc-600 dark:text-zinc-300">${escapeAttribute(s.label)}</span>
+          <span class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">${escapeAttribute(s.value)}</span>
+          <span class="w-10 text-right text-[10px] text-zinc-400 dark:text-zinc-500">${pct}</span>
+        </li>`;
+    }).join('');
+
+    const rangeOptions = this._ranges.map((r) =>
+      `<option value="${escapeAttribute(r)}" ${r === this._range ? 'selected' : ''}>${escapeAttribute(r)}</option>`
+    ).join('');
+
+    const activeSlice = this._active ? colored.find((s) => s.id === this._active) : null;
+    const centerName = activeSlice ? activeSlice.label : `${((((colored[0] || {}).value) || 0) / (sum || 1) * 100).toFixed(0)}%`;
+    const centerValue = activeSlice ? `${activeSlice.value} ${unit}` : unit;
+
+    this.innerHTML = `
+      <div data-usage-donut class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <p data-usage-donut-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</p>
+          ${this._ranges.length > 0 ? `<select data-usage-donut-range class="rounded-md border border-zinc-200 bg-white px-2 py-1 text-[11px] text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">${rangeOptions}</select>` : ''}
+        </div>
+        <p data-usage-donut-total class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">${sum.toFixed(2)} ${escapeAttribute(unit)}</p>
+
+        <div class="mt-3 flex flex-wrap items-center gap-4">
+          <svg data-usage-donut-chart width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="${escapeAttribute(title)} donut chart">
+            ${paths}${emptyRing}
+            <text data-usage-donut-center-name x="80" y="78" text-anchor="middle" class="fill-zinc-900 text-sm font-semibold dark:fill-zinc-50">${escapeAttribute(centerName)}</text>
+            <text data-usage-donut-center-value x="80" y="94" text-anchor="middle" class="fill-zinc-400 text-[10px]">${escapeAttribute(centerValue)}</text>
+          </svg>
+
+          <ul data-usage-donut-legend class="min-w-0 flex-1 space-y-1.5">
+            ${legend || '<li data-usage-donut-empty class="text-xs text-zinc-400 dark:text-zinc-500">No usage recorded</li>'}
+          </ul>
+        </div>
+      </div>`;
+  }
+}
+
+export default UsageCreditsDonutElement;
+
+if (!customElements.get('usage-credits-donut')) {
+  customElements.define('usage-credits-donut', UsageCreditsDonutElement);
+}
+
+
 ====
 File: vanilla/UsageMeter.js
 ====
@@ -93316,6 +95727,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('usage-meter'))
   customElements.define('usage-meter', UsageMeterElement);
 }
 export default UsageMeterElement;
+
 
 ====
 File: vanilla/UsagePricingBreakdown.js
@@ -93452,6 +95864,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('usage-pricing-
 
 export default UsagePricingBreakdownElement;
 
+
 ====
 File: vanilla/UsageQuotaCard.js
 ====
@@ -93550,6 +95963,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('usage-quota'))
   customElements.define('usage-quota', UsageQuotaCardElement);
 }
 export default UsageQuotaCardElement;
+
 
 ====
 File: vanilla/VideoProjectSettings.js
@@ -93726,6 +96140,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('video-project-
 
 export default VideoProjectSettingsElement;
 
+
 ====
 File: vanilla/VisionAnalysisCard.js
 ====
@@ -93846,6 +96261,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('vision-analysi
 }
 
 export default VisionAnalysisCardElement;
+
 
 ====
 File: vanilla/VoiceModePanel.js
@@ -93982,6 +96398,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('voice-mode-pan
 }
 export default VoiceModePanelElement;
 
+
 ====
 File: vanilla/VoiceOrb.js
 ====
@@ -94080,6 +96497,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('voice-orb')) {
 }
 
 export default VoiceOrbElement;
+
 
 ====
 File: vanilla/VoiceSessionHistory.js
@@ -94216,6 +96634,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('voice-session-
 }
 
 export default VoiceSessionHistoryElement;
+
 
 ====
 File: vanilla/WebhookConfigPanel.js
@@ -94388,6 +96807,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('webhook-config
 }
 
 export default WebhookConfigPanelElement;
+
 
 ====
 File: vanilla/WeekCalendarGrid.js
@@ -94616,6 +97036,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('week-calendar-
 
 export default WeekCalendarGridElement;
 
+
 ====
 File: vanilla/WizardSteps.js
 ====
@@ -94764,6 +97185,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('wizard-steps')
   customElements.define('wizard-steps', WizardStepsElement);
 }
 export default WizardStepsElement;
+
 
 ====
 File: vanilla/WorkspaceSwitcherMenu.js
@@ -94952,6 +97374,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('workspace-swit
 }
 export default WorkspaceSwitcherMenuElement;
 
+
 ====
 File: vanilla/WriterStyleGuide.js
 ====
@@ -95100,6 +97523,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('writer-style-g
 
 export default WriterStyleGuideElement;
 
+
 ====
 File: vanilla/ZendeskFieldSuggest.js
 ====
@@ -95222,6 +97646,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('zendesk-field-
 }
 
 export default ZendeskFieldSuggestElement;
+
 
 ====
 File: vanilla/ZoomControlBar.js
@@ -95391,6 +97816,7 @@ if (typeof customElements !== 'undefined' && !customElements.get('zoom-control-b
 
 export default ZoomControlBarElement;
 
+
 ====
 File: vanilla/paper-theme.js
 ====
@@ -95484,4 +97910,5 @@ export const PaperTrailThemeCSS = `
   background-size: auto, auto, 120px 120px, 120px 120px;
 }
 `;
+
 

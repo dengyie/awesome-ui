@@ -243,6 +243,9 @@
 | **`AgentScheduleEditor`** | Agent 定时调度 | 频率 pill 切 cron、time+时区输入、cron/next-run 预览条、保存反馈 |
 | **`AgentGuardrailViolationCard`** | 护栏违规详情卡 | severity 三级 badge、触发输入摘要 + match 高亮、policy 引用、Proceed/Block 裁决 |
 | **`AgentModelFallbackList`** | 模型降级链 | 优先级行 + 健康点、Primary badge、条件/延迟 caption、↑/↓ 重排 + reorder 事件 |
+| **`BillingAddressForm`** | 账单地址表单 | 国家下拉、地址行 + optional 标注、城市/邮编双列、必填校验禁用提交、保存确认反馈 |
+| **`UsageCreditsDonut`** | 用量积分环图 | 纯 SVG 环段 + 6 色调色板、legend hover 联动中心文字、总量摘要、时间范围下拉 + range-change |
+| **`SeatBillingTable`** | 席位计费表 | 用户行 + 席位类型/用量/费用、状态徽章、客户端搜索保焦、billed seats 合计脚行 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---

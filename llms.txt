@@ -1076,3 +1076,15 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/AgentModelFallbackList.tsx
    - Vue 3: vue/AgentModelFallbackList.vue
    - Vanilla: vanilla/AgentModelFallbackList.js (custom element `<agent-model-fallback-list>`, attributes `title`/`description`; properties `entries` [{id,model,provider?,health?,condition?,latency?}] and `primaryId`; event `reorder` detail {ids})
+245. BillingAddressForm: billing address form — country select, address lines with optional-row "optional" tags, city/ZIP two-column grid, required-field gating that disables submit until address1/city/zip are filled and a saved confirmation line (data-billing-address-saved) after submit with a billing-address-submit event.
+   - React: react/BillingAddressForm.tsx
+   - Vue 3: vue/BillingAddressForm.vue
+   - Vanilla: vanilla/BillingAddressForm.js (custom element `<billing-address-form>`, attributes `title`/`submit-label`/`show-optional`; properties `defaultValue`/`countries`/`labels`; event `billing-address-submit` detail {address})
+246. UsageCreditsDonut: credit-usage donut chart — pure-SVG arcs with slice gaps and 6-color palette fallback, hover-linked legend that dims non-active arcs and swaps the center text to the active slice label/value, total summary line and a range dropdown that fires a range-change event.
+   - React: react/UsageCreditsDonut.tsx
+   - Vue 3: vue/UsageCreditsDonut.vue
+   - Vanilla: vanilla/UsageCreditsDonut.js (custom element `<usage-credits-donut>`, attributes `title`/`unit`/`total`; properties `slices` [{id,label,value,color?}]/`ranges`/`defaultRange`; event `range-change` detail {range})
+247. SeatBillingTable: per-seat billing table — user rows with email, seat type, usage snapshot and cost, active/invited/suspended status badges, client-side search that keeps focus after re-render, empty-search message and a billed-seats total footer that excludes suspended seats.
+   - React: react/SeatBillingTable.tsx
+   - Vue 3: vue/SeatBillingTable.vue
+   - Vanilla: vanilla/SeatBillingTable.js (custom element `<seat-billing-table>`, attributes `title`/`description`/`period`/`currency`/`searchable`; property `rows` [{id,user,email?,seat?,cost?,usage?,status?}]; event `seat-search` detail {query})
