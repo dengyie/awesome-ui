@@ -235,6 +235,11 @@
 | **`ChangelogTimeline`** | 产品更新日志 | Canny Changelog：大标题头部、搜索 + Filters 控件、左日期栏 + 四色分类 tag、点赞/浏览/分享 meta 行 |
 | **`CampsiteHandoff`** | 设计交付面板 | Campsite 设计 handoff：完成态检查清单（负责人首字母头像 + 截止日期）、x/y done 计数与 AI 摘要块 |
 | **`ZendeskFieldSuggest`** | 工单字段建议条 | Zendesk AI 字段建议：琥珀色建议条、字段 chips（标签: 值 + 置信度 %）点击即应用、Ignore 忽略按钮 |
+| **`McpConnectPanel`** | MCP 连接引导 | 按 client 切 tab（ChatGPT/Claude/Cursor）、编号步骤 + 可复制 config snippet 块 + Copied! 反馈 |
+| **`AgentNotificationFeed`** | Agent 通知流 | started/completed/failed/info 状态点行、statusText 高亮 + caption、未读标记与 "N new" 徽章、点击标记已读 |
+| **`AgentErrorRecovery`** | 失败恢复态 | 居中 alert + run-id mono chip、Retry / Start over 双按钮、reset-label 空隐藏次按钮、support 可选 |
+| **`AgentWorkspaceSettings`** | 工作区设置 | pill 分区 tab、描述前置 toggle 行（emerald 开关）、每组 N/M on 计数 |
+| **`AgentEnvVarEditor`** | 环境变量编辑器 | key/value 行 + secret 掩码与 Show/Hide、逐行删除、底部新增行、change 事件携带完整列表 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---

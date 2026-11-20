@@ -1044,3 +1044,23 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/DriftEmbersBackdrop.tsx
    - Vue 3: vue/DriftEmbersBackdrop.vue
    - Vanilla: vanilla/DriftEmbersBackdrop.js (custom element `<drift-embers-backdrop>`, attributes `speed`/`density`/`base-color`/`bloom-color`/`ember-color`/`ash-color`/`interactive`/`paused`; no events)
+237. McpConnectPanel: MCP (Model Context Protocol) server connection guide — per-client tabs (ChatGPT / Claude Desktop / Cursor), numbered setup steps and a copyable config snippet block with copy feedback, in the Customer.io settings style.
+   - React: react/McpConnectPanel.tsx
+   - Vue 3: vue/McpConnectPanel.vue
+   - Vanilla: vanilla/McpConnectPanel.js (custom element `<mcp-connect-panel>`, attributes `title`/`description`; property `clients` [{id,label,mark?,steps[],snippet?}]; event `copy` detail {client})
+238. AgentNotificationFeed: agent run/training notification feed — status-dot rows (started sky/completed emerald/failed rose/info zinc) with title + highlighted status text, caption line, relative time and unread markers with an "N new" badge; clicking a row marks it read (Delphi/Jira notifications style).
+   - React: react/AgentNotificationFeed.tsx
+   - Vue 3: vue/AgentNotificationFeed.vue
+   - Vanilla: vanilla/AgentNotificationFeed.js (custom element `<agent-notification-feed>`, attribute `title`; property `items` [{id,kind,title,statusText?,caption?,time,unread?}]; event `open` detail {item})
+239. AgentErrorRecovery: agent run failure recovery state — centered alert with warning icon, error headline, optional run-id mono chip, Retry / Start-over actions and an optional support line (Typeform/Rive error-state style); reset-label="" hides the secondary action.
+   - React: react/AgentErrorRecovery.tsx
+   - Vue 3: vue/AgentErrorRecovery.vue
+   - Vanilla: vanilla/AgentErrorRecovery.js (custom element `<agent-error-recovery>`, attributes `title`/`description`/`run-id`/`retry-label`/`reset-label`/`support-text`; events `retry`/`reset`)
+240. AgentWorkspaceSettings: agent workspace settings page body — optional pill section tabs, titled groups with description and description-led toggle rows (emerald switches) with a per-group on-count, in the Uxcel/Contra settings style.
+   - React: react/AgentWorkspaceSettings.tsx
+   - Vue 3: vue/AgentWorkspaceSettings.vue
+   - Vanilla: vanilla/AgentWorkspaceSettings.js (custom element `<agent-workspace-settings>`, attributes `title`/`subtitle`; properties `sections` [{id,title,description?,toggles:[{id,label,description?,enabled}]}] and `tabs` [{id,label}]; event `toggle` detail {toggle,enabled})
+241. AgentEnvVarEditor: agent environment variable editor — key/value rows with secret masking (password input) + reveal toggle, per-row delete and an add-row input (key, value, secret checkbox); fires a change event with the full list after any edit.
+   - React: react/AgentEnvVarEditor.tsx
+   - Vue 3: vue/AgentEnvVarEditor.vue
+   - Vanilla: vanilla/AgentEnvVarEditor.js (custom element `<agent-env-var-editor>`, attributes `title`/`description`; property `vars` [{key,value,secret?}]; event `change` detail {vars})

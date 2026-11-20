@@ -1334,6 +1334,31 @@ awesome-ui/
 - **Vanilla 用法**: `<drift-embers-backdrop>` + `speed`/`density`/`base-color`/`bloom-color`/`ember-color`/`ash-color`/`interactive`/`paused` 属性；无事件
 - **特性**: 冷炭黑→橄榄纵向场 + 中部暖带 + 左中暖光 + 金/灰混合下沉微粒 + 细颗粒纹理 + 轻暗角（Canvas 2D，零依赖、无需 WebGL）；reduced-motion / visibilitychange 降级为静止首帧；灵感源自 ArkZero 登录后花谷消散的 drift 态（原创实现，非源码复制），与 AmberEmbersBackdrop (#235) 构成 garden→drift 转场。受限容器内覆写同上（Gallery section 227）。
 
+### 237. `McpConnectPanel` (MCP 服务器连接引导)
+- **Props**: `title?='Connection guide'`, `description?`, `clients?: [{id,label,mark?,steps[],snippet?}]`
+- **Vanilla 用法**: `<mcp-connect-panel>` + `title`/`description` 属性；property `clients`（JSON）；事件 `copy {client}`
+- **特性**: 按 client 切 tab、编号步骤列表、可复制 config snippet 块 + Copied! 反馈（1600ms 复位）；Customer.io settings 风格。
+
+### 238. `AgentNotificationFeed` (Agent 通知流)
+- **Props**: `title?='Notifications'`, `items?: [{id,kind:'started'|'completed'|'failed'|'info',title,statusText?,caption?,time,unread?}]`
+- **Vanilla 用法**: `<agent-notification-feed>` + `title` 属性；property `items`（JSON）；事件 `open {item}`
+- **特性**: 状态点色映射（started sky/completed emerald/failed rose/info zinc）、statusText 高亮 + caption 行、相对时间 + 未读标记、"N new" 徽章；点击行标记已读。
+
+### 239. `AgentErrorRecovery` (Agent 失败恢复态)
+- **Props**: `title?='Oops! Something went wrong'`, `description?`, `runId?`, `retryLabel?='Retry'`, `resetLabel?='Start over'`, `supportText?`
+- **Vanilla 用法**: `<agent-error-recovery>` + `title`/`description`/`run-id`/`retry-label`/`reset-label`/`support-text` 属性；事件 `retry`/`reset`
+- **特性**: 居中 alert（warning 图标）+ run-id mono chip、Retry / Start over 双按钮，`reset-label` 为空隐藏次按钮；Typeform/Rive 错误态风格。
+
+### 240. `AgentWorkspaceSettings` (Agent 工作区设置)
+- **Props**: `title?='Workspace settings'`, `subtitle?`, `tabs?: [{id,label}]`, `sections?: [{id,title,description?,toggles:[{id,label,description?,enabled}]}]`
+- **Vanilla 用法**: `<agent-workspace-settings>` + `title`/`subtitle` 属性；properties `tabs`/`sections`（JSON）；事件 `toggle {toggle,enabled}`
+- **特性**: 可选 pill 分区 tab、分组标题 + 描述前置 toggle 行（emerald 开关）、每组 on 计数（N/M on）；Uxcel/Contra 设置页风格。
+
+### 241. `AgentEnvVarEditor` (环境变量编辑器)
+- **Props**: `title?='Environment variables'`, `description?`, `vars?: [{key,value,secret?}]`
+- **Vanilla 用法**: `<agent-env-var-editor>` + `title`/`description` 属性；property `vars`（JSON）；事件 `change {vars}`
+- **特性**: key/value 行 + secret 掩码（password）与 Show/Hide 切换、逐行 Delete、底部新增行（key+value+secret checkbox，空 key 禁用 Add）；任意编辑后 change 事件携带完整列表。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

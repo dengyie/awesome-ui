@@ -88,6 +88,15 @@
   InvoiceHistoryTable 落地后回灌增强。
 - **NotificationCenter**：偏好入口（齿轮钮 → NotificationPrefsMatrix）联动。
 
+## 已消费批次 v3.4.0（Agent 工作台扩展批，#237-241）
+
+- **McpConnectPanel** (#237)：MCP 服务器连接引导（按 client 切 tab + 编号步骤 + 可复制 snippet）。素材：references/agent 414。
+- **AgentNotificationFeed** (#238)：Agent 通知流（四态状态点 + statusText 高亮 + 未读徽章）。素材：references/notifications 105。与 #39 NotificationCenter 区分：本组件为 Agent 运行域专用流式行。
+- **AgentErrorRecovery** (#239)：失败恢复态（alert + run-id chip + Retry/Start over）。素材：references/empty-error 145。
+- **AgentWorkspaceSettings** (#240)：工作区设置（分区 tab + 描述前置 toggle 组 + on 计数）。素材：references/settings 110。
+- **AgentEnvVarEditor** (#241)：环境变量编辑器（secret 掩码 + reveal + 行级增删）。素材：references/agent。
+- 选型说明：延续 v3.3 Agent 工作台五件的自然进化，全部 Agent 域专用、零名称重叠；空态/通知/权限的通用形态分别由 #25/#125、#39、#24 已覆盖，本批不做通用变体。
+
 ## 重叠跳过记录（选型时排除）
 
 - Outseta/Slite 通用空态 → #25/#125 已覆盖形态。
