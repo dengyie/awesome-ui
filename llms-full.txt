@@ -1,6 +1,6 @@
 # awesome-ui: full component sources
 
-> Single-file bundle of all 771 source files (React tsx/ts, Vue vue/ts, Vanilla js) for one-shot LLM ingestion.
+> Single-file bundle of all 780 source files (React tsx/ts, Vue vue/ts, Vanilla js) for one-shot LLM ingestion.
 
 ## react\AIInlineMenu.tsx
 
@@ -4810,6 +4810,206 @@ export const AutoScrollAnchor: React.FC<AutoScrollAnchorProps> = ({
     </>
   );
 };
+```
+
+## react\AvatarCropDialog.tsx
+
+```tsx
+import React, { useState } from "react";
+
+export interface AvatarCropDialogProps {
+  title?: string;
+  hint?: string;
+  initials?: string;
+  avatarUrl?: string;
+  /** zoom slider range 0-100 */
+  defaultZoom?: number;
+  minZoom?: number;
+  maxZoom?: number;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  /** render the dialog open on first mount (SSR/testing) */
+  defaultOpen?: boolean;
+  onConfirm?: (detail: { zoom: number }) => void;
+  onCancel?: () => void;
+  className?: string;
+}
+
+export default function AvatarCropDialog({
+  title = "Avatar preview",
+  hint = "For best results, upload images of at least 1000×1000 pixels.",
+  initials = "AS",
+  avatarUrl,
+  defaultZoom = 50,
+  minZoom = 0,
+  maxZoom = 100,
+  confirmLabel = "Save",
+  cancelLabel = "Cancel",
+  defaultOpen = false,
+  onConfirm,
+  onCancel,
+  className = "",
+}: AvatarCropDialogProps) {
+  const [open, setOpen] = useState(defaultOpen);
+  const [zoom, setZoom] = useState(defaultZoom);
+  const [saved, setSaved] = useState<number | null>(null);
+
+  const step = (delta: number) => {
+    setZoom((z) => Math.min(maxZoom, Math.max(minZoom, z + delta)));
+  };
+
+  const close = () => {
+    setOpen(false);
+    setSaved(null);
+    setZoom(defaultZoom);
+  };
+
+  const handleConfirm = () => {
+    setSaved(zoom);
+    onConfirm?.({ zoom });
+  };
+
+  const scale = 0.8 + (zoom / 100) * 0.6;
+
+  return (
+    <div data-avatar-crop-dialog className={className}>
+      <button
+        type="button"
+        data-avatar-crop-open
+        onClick={() => setOpen(true)}
+        className="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500"
+      >
+        {title}
+      </button>
+
+      {open ? (
+        <div
+          data-avatar-crop-overlay
+          className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/50 p-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) close();
+          }}
+        >
+          <div
+            data-avatar-crop-panel
+            role="dialog"
+            aria-modal="true"
+            aria-label={title}
+            className="w-full max-w-sm rounded-xl border border-zinc-200 bg-white p-4 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+          >
+            {saved !== null ? (
+              <>
+                <p data-avatar-crop-saved className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                  Avatar updated
+                </p>
+                <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+                  Your new profile picture has been saved.
+                </p>
+                <div className="mt-3 flex justify-end">
+                  <button
+                    type="button"
+                    data-avatar-crop-done
+                    onClick={close}
+                    className="rounded-md bg-zinc-900 px-3 py-1.5 text-[11px] font-semibold text-white dark:bg-zinc-100 dark:text-zinc-900"
+                  >
+                    Done
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center justify-between">
+                  <p data-avatar-crop-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</p>
+                  <button
+                    type="button"
+                    data-avatar-crop-close
+                    aria-label="Close"
+                    onClick={close}
+                    className="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">{hint}</p>
+
+                <div data-avatar-crop-preview className="mt-3 flex justify-center">
+                  <div className="flex h-40 w-40 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-zinc-100 shadow-inner dark:border-zinc-800 dark:bg-zinc-800">
+                    {avatarUrl ? (
+                      <img
+                        src={avatarUrl}
+                        alt=""
+                        style={{ transform: `scale(${scale.toFixed(2)})` }}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <span
+                        style={{ transform: `scale(${scale.toFixed(2)})` }}
+                        className="flex h-full w-full items-center justify-center rounded-full bg-indigo-100 text-2xl font-semibold text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-400"
+                      >
+                        {initials}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div data-avatar-crop-zoom-row className="mt-3 flex items-center gap-2">
+                  <button
+                    type="button"
+                    data-avatar-crop-zoom-out
+                    aria-label="Zoom out"
+                    onClick={() => step(-10)}
+                    className="h-6 w-6 rounded border border-zinc-200 text-xs font-semibold text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                  >
+                    −
+                  </button>
+                  <input
+                    data-avatar-crop-zoom
+                    type="range"
+                    min={minZoom}
+                    max={maxZoom}
+                    value={zoom}
+                    onChange={(e) => setZoom(Number(e.target.value))}
+                    aria-label="Zoom"
+                    className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-zinc-200 accent-indigo-600 dark:bg-zinc-700"
+                  />
+                  <button
+                    type="button"
+                    data-avatar-crop-zoom-in
+                    aria-label="Zoom in"
+                    onClick={() => step(10)}
+                    className="h-6 w-6 rounded border border-zinc-200 text-xs font-semibold text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <div className="mt-3 flex items-center justify-end gap-2">
+                  <button
+                    type="button"
+                    data-avatar-crop-cancel
+                    onClick={onCancel ?? close}
+                    className="rounded-md border border-zinc-200 px-3 py-1.5 text-[11px] font-semibold text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                  >
+                    {cancelLabel}
+                  </button>
+                  <button
+                    type="button"
+                    data-avatar-crop-confirm
+                    onClick={handleConfirm}
+                    className="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500"
+                  >
+                    {confirmLabel}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
 ```
 
 ## react\AvatarGroup.tsx
@@ -13033,6 +13233,133 @@ export const FluidContourBackdrop: React.FC<FluidContourBackdropProps> = ({
     />
   );
 };
+```
+
+## react\FollowSuggestionsCard.tsx
+
+```tsx
+import React, { useState } from "react";
+
+export interface FollowSuggestion {
+  id: string;
+  name: string;
+  handle?: string;
+  avatarUrl?: string;
+  initials?: string;
+}
+
+export interface FollowSuggestionsCardProps {
+  title?: string;
+  suggestions?: FollowSuggestion[];
+  followLabel?: string;
+  followingLabel?: string;
+  emptyText?: string;
+  /** follow new people on follow-click instead of toggling in place */
+  onFollow?: (person: FollowSuggestion) => void;
+  onDismiss?: (person: FollowSuggestion) => void;
+  className?: string;
+}
+
+export default function FollowSuggestionsCard({
+  title = "Discover more people",
+  suggestions = [],
+  followLabel = "Follow",
+  followingLabel = "Following",
+  emptyText = "No more suggestions right now — check back later.",
+  onFollow,
+  onDismiss,
+  className = "",
+}: FollowSuggestionsCardProps) {
+  const [followed, setFollowed] = useState<Record<string, boolean>>({});
+  const [dismissed, setDismissed] = useState<Record<string, boolean>>({});
+  const [collapsed, setCollapsed] = useState(false);
+
+  const visible = suggestions.filter((s) => !dismissed[s.id]);
+
+  const toggleFollow = (person: FollowSuggestion) => {
+    setFollowed((prev) => ({ ...prev, [person.id]: !prev[person.id] }));
+    if (!followed[person.id]) onFollow?.(person);
+  };
+
+  const initialsOf = (person: FollowSuggestion) =>
+    person.initials ??
+    person.name
+      .split(/\s+/)
+      .map((w) => w[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase();
+
+  return (
+    <div data-follow-suggestions className={`rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <button
+        type="button"
+        data-follow-suggestions-toggle
+        aria-expanded={!collapsed}
+        onClick={() => setCollapsed(!collapsed)}
+        className="flex w-full items-center justify-between px-4 py-3"
+      >
+        <span data-follow-suggestions-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</span>
+        <span aria-hidden="true" className={`text-xs text-zinc-400 transition-transform ${collapsed ? "" : "rotate-180"}`}>▾</span>
+      </button>
+
+      {!collapsed ? (
+        visible.length > 0 ? (
+          <div data-follow-suggestions-grid className="grid grid-cols-2 gap-2 px-4 pb-4 sm:grid-cols-3">
+            {visible.map((person) => (
+              <div
+                key={person.id}
+                data-follow-suggestions-card={person.id}
+                className="relative flex flex-col items-center rounded-lg border border-zinc-200 px-3 py-4 text-center dark:border-zinc-700"
+              >
+                <button
+                  type="button"
+                  data-follow-suggestions-dismiss={person.id}
+                  aria-label={`Dismiss ${person.name}`}
+                  onClick={() => {
+                    setDismissed((prev) => ({ ...prev, [person.id]: true }));
+                    onDismiss?.(person);
+                  }}
+                  className="absolute right-1.5 top-1.5 rounded p-0.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+                >
+                  ✕
+                </button>
+                {person.avatarUrl ? (
+                  <img src={person.avatarUrl} alt="" className="h-10 w-10 rounded-full bg-zinc-100 object-cover dark:bg-zinc-800" />
+                ) : (
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-xs font-semibold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                    {initialsOf(person)}
+                  </span>
+                )}
+                <p className="mt-2 text-xs font-semibold text-zinc-900 dark:text-zinc-50">{person.name}</p>
+                {person.handle ? (
+                  <p className="text-[11px] text-zinc-400 dark:text-zinc-500">{person.handle}</p>
+                ) : null}
+                <button
+                  type="button"
+                  data-follow-suggestions-follow={person.id}
+                  aria-pressed={!!followed[person.id]}
+                  onClick={() => toggleFollow(person)}
+                  className={`mt-2.5 w-full rounded-full px-3 py-1 text-[11px] font-semibold transition-colors ${
+                    followed[person.id]
+                      ? "border border-zinc-200 bg-white text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+                      : "bg-emerald-600 text-white hover:bg-emerald-500"
+                  }`}
+                >
+                  {followed[person.id] ? followingLabel : followLabel}
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p data-follow-suggestions-empty className="px-4 pb-4 text-[11px] text-zinc-400 dark:text-zinc-500">
+            {emptyText}
+          </p>
+        )
+      ) : null}
+    </div>
+  );
+}
 ```
 
 ## react\FooterSection.tsx
@@ -22501,6 +22828,210 @@ export const PricingTable: React.FC<PricingTableProps> = ({ plans, onSelect, cla
 };
 
 export default PricingTable;
+```
+
+## react\ProfileEditForm.tsx
+
+```tsx
+import React, { useState } from "react";
+
+export interface ProfileSocialLink {
+  id: string;
+  label: string;
+  placeholder?: string;
+  value?: string;
+}
+
+export interface ProfileEditFormProps {
+  title?: string;
+  handle?: string;
+  countries?: string[];
+  defaultCountry?: string;
+  defaultCity?: string;
+  bio?: string;
+  bioLimit?: number;
+  socials?: ProfileSocialLink[];
+  showEmailLabel?: string;
+  defaultShowEmail?: boolean;
+  saveLabel?: string;
+  cancelLabel?: string;
+  onSave?: (profile: {
+    handle: string;
+    country: string;
+    city: string;
+    bio: string;
+    showEmail: boolean;
+    socials: Record<string, string>;
+  }) => void;
+  onCancel?: () => void;
+  className?: string;
+}
+
+const DEFAULT_COUNTRIES = ["United States", "Singapore", "United Kingdom", "Germany", "Japan"];
+
+export default function ProfileEditForm({
+  title = "Personal info",
+  handle = "@alexsmith",
+  countries = DEFAULT_COUNTRIES,
+  defaultCountry,
+  defaultCity = "",
+  bio = "",
+  bioLimit = 750,
+  socials = [],
+  showEmailLabel = "Display your account email",
+  defaultShowEmail = false,
+  saveLabel = "Save changes",
+  cancelLabel = "Cancel",
+  onSave,
+  onCancel,
+  className = "",
+}: ProfileEditFormProps) {
+  const [country, setCountry] = useState(defaultCountry ?? countries[0] ?? "");
+  const [city, setCity] = useState(defaultCity);
+  const [bioValue, setBioValue] = useState(bio.slice(0, bioLimit));
+  const [socialValues, setSocialValues] = useState<Record<string, string>>(() =>
+    Object.fromEntries(socials.map((s) => [s.id, s.value ?? ""])),
+  );
+  const [showEmail, setShowEmail] = useState(defaultShowEmail);
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = () => {
+    setSaved(true);
+    onSave?.({
+      handle,
+      country,
+      city,
+      bio: bioValue,
+      showEmail,
+      socials: { ...socialValues },
+    });
+  };
+
+  return (
+    <div data-profile-edit-form className={`rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <div className="flex items-center justify-between">
+        <p data-profile-edit-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</p>
+        <span data-profile-edit-handle className="flex items-center gap-1 text-xs font-medium text-zinc-500 dark:text-zinc-400">
+          {handle}
+          <span aria-hidden="true" className="text-[10px]">✏️</span>
+        </span>
+      </div>
+
+      <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <label className="block">
+          <span className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">Country</span>
+          <select
+            data-profile-edit-country
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            className="mt-1 w-full rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+          >
+            {countries.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+        </label>
+        <label className="block">
+          <span className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">City</span>
+          <input
+            data-profile-edit-city
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder="e.g. San Francisco"
+            className="mt-1 w-full rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:placeholder-zinc-500"
+          />
+        </label>
+      </div>
+
+      <label className="mt-2 block">
+        <span className="flex items-center justify-between text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">
+          Bio
+          <span data-profile-edit-bio-count className="tabular-nums text-zinc-400 dark:text-zinc-500">
+            {bioValue.length}/{bioLimit}
+          </span>
+        </span>
+        <textarea
+          data-profile-edit-bio
+          rows={3}
+          maxLength={bioLimit}
+          value={bioValue}
+          onChange={(e) => {
+            setBioValue(e.target.value);
+            setSaved(false);
+          }}
+          placeholder="Write a short bio about yourself…"
+          className="mt-1 w-full rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 focus:border-indigo-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:placeholder-zinc-500"
+        />
+      </label>
+
+      <div className="mt-2 flex items-center gap-2">
+        <button
+          type="button"
+          data-profile-edit-email-toggle
+          role="switch"
+          aria-checked={showEmail}
+          onClick={() => {
+            setShowEmail(!showEmail);
+            setSaved(false);
+          }}
+          className={`relative h-4 w-7 rounded-full transition-colors ${showEmail ? "bg-indigo-600" : "bg-zinc-300 dark:bg-zinc-700"}`}
+        >
+          <span
+            className={`absolute top-0.5 h-3 w-3 rounded-full bg-white transition-all ${showEmail ? "left-3.5" : "left-0.5"}`}
+          />
+        </button>
+        <span className="text-[11px] text-zinc-600 dark:text-zinc-300">{showEmailLabel}</span>
+      </div>
+
+      {socials.length > 0 ? (
+        <div data-profile-edit-socials className="mt-3 border-t border-zinc-100 pt-3 dark:border-zinc-800">
+          {socials.map((s) => (
+            <label key={s.id} className="mt-2 block first:mt-0" data-profile-edit-social={s.id}>
+              <span className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">{s.label}</span>
+              <input
+                data-profile-edit-social-input={s.id}
+                type="text"
+                value={socialValues[s.id] ?? ""}
+                onChange={(e) => {
+                  setSocialValues({ ...socialValues, [s.id]: e.target.value });
+                  setSaved(false);
+                }}
+                placeholder={s.placeholder ?? `Your ${s.label}`}
+                className="mt-1 w-full rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:placeholder-zinc-500"
+              />
+            </label>
+          ))}
+        </div>
+      ) : null}
+
+      {saved ? (
+        <p data-profile-edit-saved role="status" className="mt-3 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+          Profile saved.
+        </p>
+      ) : null}
+
+      <div className="mt-3 flex items-center justify-end gap-2">
+        <button
+          type="button"
+          data-profile-edit-cancel
+          onClick={onCancel}
+          className="rounded-md border border-zinc-200 px-3 py-1.5 text-[11px] font-semibold text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        >
+          {cancelLabel}
+        </button>
+        <button
+          type="button"
+          data-profile-edit-save
+          onClick={handleSave}
+          className="rounded-md bg-zinc-900 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+        >
+          {saveLabel}
+        </button>
+      </div>
+    </div>
+  );
+}
 ```
 
 ## react\ProfileHeader.tsx
@@ -39584,6 +40115,199 @@ if (!customElements.get("auto-scroll-anchor")) {
 export default AutoScrollAnchor;
 ```
 
+## vanilla\AvatarCropDialog.js
+
+```js
+/**
+ * AvatarCropDialog - Vanilla Web Component
+ * Avatar crop dialog: circular preview with initials/image fallback, zoom
+ * slider with -/+ steppers, hint line, saved confirmation state.
+ *
+ * Usage: <avatar-crop-dialog initials="AS" default-open></avatar-crop-dialog>
+ * Attributes: trigger-label, title, hint, initials, avatar-url, default-zoom,
+ *             min-zoom, max-zoom, confirm-label, cancel-label, default-open
+ * Events: avatar-crop-confirm (detail {zoom}), avatar-crop-cancel
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class AvatarCropDialogElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['trigger-label', 'title', 'hint', 'initials', 'avatar-url', 'min-zoom', 'max-zoom', 'confirm-label', 'cancel-label'];
+  }
+
+  constructor() {
+    super();
+    this._open = false;
+    this._zoom = 50;
+    this._saved = null;
+    this._bound = false;
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    this.render();
+  }
+
+  connectedCallback() {
+    if (this.hasAttribute('default-open')) this._open = true;
+    this._zoom = Number.parseInt(this.getAttribute('default-zoom') || '50', 10) || 50;
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        if (event.target.closest('[data-avatar-crop-open]')) {
+          this._open = true;
+          this._saved = null;
+          this.render();
+          return;
+        }
+        if (event.target.closest('[data-avatar-crop-close]') || event.target.closest('[data-avatar-crop-done]')) {
+          this._close();
+          return;
+        }
+        if (event.target.closest('[data-avatar-crop-cancel]')) {
+          this.dispatchEvent(new CustomEvent('avatar-crop-cancel'));
+          this._close();
+          return;
+        }
+        if (event.target.closest('[data-avatar-crop-zoom-in]')) {
+          this._step(10);
+          return;
+        }
+        if (event.target.closest('[data-avatar-crop-zoom-out]')) {
+          this._step(-10);
+          return;
+        }
+        if (event.target.closest('[data-avatar-crop-confirm]')) {
+          this._confirm();
+          return;
+        }
+        if (event.target === this.querySelector('[data-avatar-crop-overlay]')) {
+          this._close();
+        }
+      });
+      this.addEventListener('input', (event) => {
+        const slider = event.target.closest('[data-avatar-crop-zoom]');
+        if (!slider) return;
+        this._zoom = Number.parseInt(slider.value, 10) || 0;
+        this._updatePreview();
+      });
+    }
+  }
+
+  _close() {
+    this._open = false;
+    this._saved = null;
+    this._zoom = Number.parseInt(this.getAttribute('default-zoom') || '50', 10) || 50;
+    this.render();
+  }
+
+  _step(delta) {
+    const min = Number.parseInt(this.getAttribute('min-zoom') || '0', 10) || 0;
+    const max = Number.parseInt(this.getAttribute('max-zoom') || '100', 10) || 100;
+    this._zoom = Math.min(max, Math.max(min, this._zoom + delta));
+    const slider = this.querySelector('[data-avatar-crop-zoom]');
+    if (slider) slider.value = String(this._zoom);
+    this._updatePreview();
+  }
+
+  _updatePreview() {
+    const inner = this.querySelector('[data-avatar-crop-inner]');
+    if (inner) inner.style.transform = `scale(${(0.8 + (this._zoom / 100) * 0.6).toFixed(2)})`;
+  }
+
+  _confirm() {
+    this._saved = this._zoom;
+    this.render();
+    this.dispatchEvent(new CustomEvent('avatar-crop-confirm', { detail: { zoom: this._zoom } }));
+  }
+
+  render() {
+    const title = this.getAttribute('title') || 'Avatar preview';
+    const trigger = this.getAttribute('trigger-label') || title;
+    const hint = this.getAttribute('hint') || 'For best results, upload images of at least 1000×1000 pixels.';
+    const initials = this.getAttribute('initials') || 'AS';
+    const avatarUrl = this.getAttribute('avatar-url') || '';
+    const min = Number.parseInt(this.getAttribute('min-zoom') || '0', 10) || 0;
+    const max = Number.parseInt(this.getAttribute('max-zoom') || '100', 10) || 100;
+    const confirmLabel = this.getAttribute('confirm-label') || 'Save';
+    const cancelLabel = this.getAttribute('cancel-label') || 'Cancel';
+
+    if (!this._open) {
+      this.innerHTML = `
+        <div data-avatar-crop-dialog>
+          <button type="button" data-avatar-crop-open class="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500">${escapeAttribute(trigger)}</button>
+        </div>`;
+      return;
+    }
+
+    if (this._saved !== null) {
+      this.innerHTML = `
+        <div data-avatar-crop-dialog>
+          <button type="button" data-avatar-crop-open class="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500">${escapeAttribute(trigger)}</button>
+          <div data-avatar-crop-overlay class="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/50 p-4">
+            <div data-avatar-crop-panel role="dialog" aria-modal="true" aria-label="${escapeAttribute(title)}" class="w-full max-w-sm rounded-xl border border-zinc-200 bg-white p-4 shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
+              <p data-avatar-crop-saved class="text-sm font-semibold text-emerald-600 dark:text-emerald-400">Avatar updated</p>
+              <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">Your new profile picture has been saved.</p>
+              <div class="mt-3 flex justify-end">
+                <button type="button" data-avatar-crop-done class="rounded-md bg-zinc-900 px-3 py-1.5 text-[11px] font-semibold text-white dark:bg-zinc-100 dark:text-zinc-900">Done</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      return;
+    }
+
+    const previewInner = avatarUrl
+      ? `<img data-avatar-crop-inner src="${escapeAttribute(avatarUrl)}" alt="" class="h-full w-full object-cover" style="transform: scale(${(0.8 + (this._zoom / 100) * 0.6).toFixed(2)})" />`
+      : `<span data-avatar-crop-inner class="flex h-full w-full items-center justify-center rounded-full bg-indigo-100 text-2xl font-semibold text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-400" style="transform: scale(${(0.8 + (this._zoom / 100) * 0.6).toFixed(2)})">${escapeAttribute(initials)}</span>`;
+
+    this.innerHTML = `
+      <div data-avatar-crop-dialog>
+        <button type="button" data-avatar-crop-open class="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500">${escapeAttribute(trigger)}</button>
+        <div data-avatar-crop-overlay class="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/50 p-4">
+          <div data-avatar-crop-panel role="dialog" aria-modal="true" aria-label="${escapeAttribute(title)}" class="w-full max-w-sm rounded-xl border border-zinc-200 bg-white p-4 shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
+            <div class="flex items-center justify-between">
+              <p data-avatar-crop-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</p>
+              <button type="button" data-avatar-crop-close aria-label="Close" class="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300">✕</button>
+            </div>
+
+            <p class="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">${escapeAttribute(hint)}</p>
+
+            <div data-avatar-crop-preview class="mt-3 flex justify-center">
+              <div class="flex h-40 w-40 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-zinc-100 shadow-inner dark:border-zinc-800 dark:bg-zinc-800">${previewInner}</div>
+            </div>
+
+            <div data-avatar-crop-zoom-row class="mt-3 flex items-center gap-2">
+              <button type="button" data-avatar-crop-zoom-out aria-label="Zoom out" class="h-6 w-6 rounded border border-zinc-200 text-xs font-semibold text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">−</button>
+              <input data-avatar-crop-zoom type="range" min="${min}" max="${max}" value="${this._zoom}" aria-label="Zoom" class="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-zinc-200 accent-indigo-600 dark:bg-zinc-700" />
+              <button type="button" data-avatar-crop-zoom-in aria-label="Zoom in" class="h-6 w-6 rounded border border-zinc-200 text-xs font-semibold text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">+</button>
+            </div>
+
+            <div class="mt-3 flex items-center justify-end gap-2">
+              <button type="button" data-avatar-crop-cancel class="rounded-md border border-zinc-200 px-3 py-1.5 text-[11px] font-semibold text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">${escapeAttribute(cancelLabel)}</button>
+              <button type="button" data-avatar-crop-confirm class="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500">${escapeAttribute(confirmLabel)}</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+export default AvatarCropDialogElement;
+
+if (!customElements.get('avatar-crop-dialog')) {
+  customElements.define('avatar-crop-dialog', AvatarCropDialogElement);
+}
+```
+
 ## vanilla\AvatarGroup.js
 
 ```js
@@ -49217,6 +49941,152 @@ class FluidContourBackdrop extends HTMLElement {
 
 if (typeof customElements !== "undefined" && !customElements.get("fluid-contour-backdrop")) {
   customElements.define("fluid-contour-backdrop", FluidContourBackdrop);
+}
+```
+
+## vanilla\FollowSuggestionsCard.js
+
+```js
+/**
+ * FollowSuggestionsCard - Vanilla Web Component
+ * "Discover more people" suggestions card: collapsible header, person cards
+ * with avatar/initials + Follow/Following toggle + dismiss ×, empty state.
+ *
+ * Usage: <follow-suggestions-card title="Discover more people"></follow-suggestions-card>
+ * Attributes: title, follow-label, following-label, empty-text
+ * Properties: suggestions [{id, name, handle?, avatarUrl?, initials?}]
+ * Events: follow-suggest-follow (detail person), follow-suggest-dismiss (detail person)
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class FollowSuggestionsCardElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'follow-label', 'following-label', 'empty-text'];
+  }
+
+  constructor() {
+    super();
+    this._suggestions = [];
+    this._followed = {};
+    this._dismissed = {};
+    this._collapsed = false;
+    this._bound = false;
+  }
+
+  get suggestions() {
+    return this._suggestions;
+  }
+
+  set suggestions(value) {
+    this._suggestions = Array.isArray(value) ? value : [];
+    this.render();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        if (event.target.closest('[data-follow-suggestions-toggle]')) {
+          this._collapsed = !this._collapsed;
+          this.render();
+          return;
+        }
+        const dismiss = event.target.closest('[data-follow-suggestions-dismiss]');
+        if (dismiss) {
+          const id = dismiss.getAttribute('data-follow-suggestions-dismiss');
+          const person = this._suggestions.find((s) => s.id === id);
+          this._dismissed[id] = true;
+          this.render();
+          if (person) this.dispatchEvent(new CustomEvent('follow-suggest-dismiss', { detail: person }));
+          return;
+        }
+        const follow = event.target.closest('[data-follow-suggestions-follow]');
+        if (follow) {
+          const id = follow.getAttribute('data-follow-suggestions-follow');
+          const person = this._suggestions.find((s) => s.id === id);
+          this._followed[id] = !this._followed[id];
+          this.render();
+          if (person && this._followed[id]) {
+            this.dispatchEvent(new CustomEvent('follow-suggest-follow', { detail: person }));
+          }
+        }
+      });
+    }
+  }
+
+  _initialsOf(person) {
+    if (person.initials) return person.initials;
+    return person.name
+      .split(/\s+/)
+      .map((w) => w[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
+  }
+
+  render() {
+    const title = this.getAttribute('title') || 'Discover more people';
+    const followLabel = this.getAttribute('follow-label') || 'Follow';
+    const followingLabel = this.getAttribute('following-label') || 'Following';
+    const emptyText = this.getAttribute('empty-text') || 'No more suggestions right now — check back later.';
+
+    const visible = this._suggestions.filter((s) => !this._dismissed[s.id]);
+
+    const cards = visible
+      .map((person) => {
+        const isFollowed = !!this._followed[person.id];
+        const avatar = person.avatarUrl
+          ? `<img src="${escapeAttribute(person.avatarUrl)}" alt="" class="h-10 w-10 rounded-full bg-zinc-100 object-cover dark:bg-zinc-800" />`
+          : `<span class="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-xs font-semibold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">${escapeAttribute(this._initialsOf(person))}</span>`;
+        const handleLine = person.handle
+          ? `<p class="text-[11px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(person.handle)}</p>`
+          : '';
+        const followCls = isFollowed
+          ? 'border border-zinc-200 bg-white text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300'
+          : 'bg-emerald-600 text-white hover:bg-emerald-500';
+        return `
+        <div data-follow-suggestions-card="${escapeAttribute(person.id)}" class="relative flex flex-col items-center rounded-lg border border-zinc-200 px-3 py-4 text-center dark:border-zinc-700">
+          <button type="button" data-follow-suggestions-dismiss="${escapeAttribute(person.id)}" aria-label="Dismiss ${escapeAttribute(person.name)}" class="absolute right-1.5 top-1.5 rounded p-0.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300">✕</button>
+          ${avatar}
+          <p class="mt-2 text-xs font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(person.name)}</p>
+          ${handleLine}
+          <button type="button" data-follow-suggestions-follow="${escapeAttribute(person.id)}" aria-pressed="${isFollowed}" class="mt-2.5 w-full rounded-full px-3 py-1 text-[11px] font-semibold transition-colors ${followCls}">${isFollowed ? escapeAttribute(followingLabel) : escapeAttribute(followLabel)}</button>
+        </div>`;
+      })
+      .join('');
+
+    const grid = visible.length
+      ? `<div data-follow-suggestions-grid class="grid grid-cols-2 gap-2 px-4 pb-4 sm:grid-cols-3">${cards}</div>`
+      : `<p data-follow-suggestions-empty class="px-4 pb-4 text-[11px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(emptyText)}</p>`;
+
+    this.innerHTML = `
+      <div data-follow-suggestions class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <button type="button" data-follow-suggestions-toggle aria-expanded="${!this._collapsed}" class="flex w-full items-center justify-between px-4 py-3">
+          <span data-follow-suggestions-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</span>
+          <span aria-hidden="true" class="text-xs text-zinc-400 transition-transform ${this._collapsed ? '' : 'rotate-180'}">▾</span>
+        </button>
+        ${this._collapsed ? '' : grid}
+      </div>`;
+  }
+}
+
+export default FollowSuggestionsCardElement;
+
+if (!customElements.get('follow-suggestions-card')) {
+  customElements.define('follow-suggestions-card', FollowSuggestionsCardElement);
 }
 ```
 
@@ -60252,6 +61122,223 @@ if (typeof customElements !== 'undefined' && !customElements.get('pricing-table'
   customElements.define('pricing-table', PricingTableElement);
 }
 export default PricingTableElement;
+```
+
+## vanilla\ProfileEditForm.js
+
+```js
+/**
+ * ProfileEditForm - Vanilla Web Component
+ * Profile editing form: country select + city input, bio textarea with
+ * character counter, show-email switch, social link rows, saved status.
+ *
+ * Usage: <profile-edit-form handle="@alexsmith"></profile-edit-form>
+ * Attributes: title, handle, bio-limit, show-email-label, save-label, cancel-label,
+ *             default-country, default-city, bio, default-show-email
+ * Properties: countries, socials
+ * Events: profile-save (detail {handle, country, city, bio, showEmail, socials}),
+ *         profile-cancel
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class ProfileEditFormElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'handle', 'bio-limit', 'show-email-label', 'save-label', 'cancel-label', 'default-country', 'default-city', 'bio', 'default-show-email'];
+  }
+
+  constructor() {
+    super();
+    this._countries = ['United States', 'Singapore', 'United Kingdom', 'Germany', 'Japan'];
+    this._socials = [];
+    this._socialValues = {};
+    this._saved = false;
+    this._bound = false;
+  }
+
+  get countries() {
+    return this._countries;
+  }
+
+  set countries(value) {
+    this._countries = Array.isArray(value) && value.length ? value.map(String) : ['United States'];
+    this.render();
+  }
+
+  get socials() {
+    return this._socials;
+  }
+
+  set socials(value) {
+    this._socials = Array.isArray(value) ? value : [];
+    this._socialValues = Object.fromEntries(this._socials.map((s) => [s.id, s.value ?? '']));
+    this.render();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        if (event.target.closest('[data-profile-edit-save]')) {
+          this._save();
+          return;
+        }
+        if (event.target.closest('[data-profile-edit-cancel]')) {
+          this.dispatchEvent(new CustomEvent('profile-cancel'));
+          return;
+        }
+        const toggle = event.target.closest('[data-profile-edit-email-toggle]');
+        if (toggle) {
+          const next = toggle.getAttribute('aria-checked') !== 'true';
+          toggle.setAttribute('aria-checked', String(next));
+          const knob = toggle.querySelector('span');
+          if (knob) knob.className = next
+            ? 'absolute left-3.5 top-0.5 h-3 w-3 rounded-full bg-white transition-all'
+            : 'absolute left-0.5 top-0.5 h-3 w-3 rounded-full bg-white transition-all';
+          toggle.className = `relative h-4 w-7 rounded-full transition-colors ${next ? 'bg-indigo-600' : 'bg-zinc-300 dark:bg-zinc-700'}`;
+          this._saved = false;
+        }
+      });
+      this.addEventListener('input', (event) => {
+        if (event.target.closest('[data-profile-edit-bio]')) {
+          const bio = this.querySelector('[data-profile-edit-bio]');
+          const count = this.querySelector('[data-profile-edit-bio-count]');
+          if (bio && count) {
+            const limit = Number.parseInt(this.getAttribute('bio-limit') || '750', 10) || 750;
+            count.textContent = `${bio.value.length}/${limit}`;
+          }
+          this._saved = false;
+        }
+        const socialInput = event.target.closest('[data-profile-edit-social-input]');
+        if (socialInput) {
+          this._socialValues[socialInput.getAttribute('data-profile-edit-social-input')] = socialInput.value;
+          this._saved = false;
+        }
+        if (event.target.closest('[data-profile-edit-city]')) this._saved = false;
+      });
+      this.addEventListener('change', (event) => {
+        if (event.target.closest('[data-profile-edit-country]')) this._saved = false;
+      });
+    }
+  }
+
+  _save() {
+    this._saved = true;
+    const country = this.querySelector('[data-profile-edit-country]');
+    const city = this.querySelector('[data-profile-edit-city]');
+    const bio = this.querySelector('[data-profile-edit-bio]');
+    const toggle = this.querySelector('[data-profile-edit-email-toggle]');
+    this.render();
+    this.dispatchEvent(
+      new CustomEvent('profile-save', {
+        detail: {
+          handle: this.getAttribute('handle') || '@alexsmith',
+          country: country ? country.value : this._countries[0],
+          city: city ? city.value : '',
+          bio: bio ? bio.value : '',
+          showEmail: toggle ? toggle.getAttribute('aria-checked') === 'true' : false,
+          socials: { ...this._socialValues },
+        },
+      }),
+    );
+  }
+
+  render() {
+    const title = this.getAttribute('title') || 'Personal info';
+    const handle = this.getAttribute('handle') || '@alexsmith';
+    const limit = Number.parseInt(this.getAttribute('bio-limit') || '750', 10) || 750;
+    const bio = this.getAttribute('bio') || '';
+    const showEmailLabel = this.getAttribute('show-email-label') || 'Display your account email';
+    const showEmail = (this.getAttribute('default-show-email') || 'false') === 'true';
+    const saveLabel = this.getAttribute('save-label') || 'Save changes';
+    const cancelLabel = this.getAttribute('cancel-label') || 'Cancel';
+    const country = this.getAttribute('default-country') || this._countries[0] || '';
+    const city = this.getAttribute('default-city') || '';
+
+    const countryOptions = this._countries
+      .map((c) => `<option value="${escapeAttribute(c)}" ${c === country ? 'selected' : ''}>${escapeAttribute(c)}</option>`)
+      .join('');
+
+    const socialRows = this._socials
+      .map(
+        (s) => `
+        <label class="mt-2 block first:mt-0" data-profile-edit-social="${escapeAttribute(s.id)}">
+          <span class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">${escapeAttribute(s.label)}</span>
+          <input data-profile-edit-social-input="${escapeAttribute(s.id)}" type="text" value="${escapeAttribute(this._socialValues[s.id] ?? '')}" placeholder="${escapeAttribute(s.placeholder || `Your ${s.label}`)}" class="mt-1 w-full rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:placeholder-zinc-500" />
+        </label>`,
+      )
+      .join('');
+
+    const socialsBlock = this._socials.length
+      ? `<div data-profile-edit-socials class="mt-3 border-t border-zinc-100 pt-3 dark:border-zinc-800">${socialRows}</div>`
+      : '';
+
+    const savedLine = this._saved
+      ? `<p data-profile-edit-saved role="status" class="mt-3 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">Profile saved.</p>`
+      : '';
+
+    this.innerHTML = `
+      <div data-profile-edit-form class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+        <div class="flex items-center justify-between">
+          <p data-profile-edit-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</p>
+          <span data-profile-edit-handle class="flex items-center gap-1 text-xs font-medium text-zinc-500 dark:text-zinc-400">${escapeAttribute(handle)}<span aria-hidden="true" class="text-[10px]">✏️</span></span>
+        </div>
+
+        <div class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <label class="block">
+            <span class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">Country</span>
+            <select data-profile-edit-country class="mt-1 w-full rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">${countryOptions}</select>
+          </label>
+          <label class="block">
+            <span class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">City</span>
+            <input data-profile-edit-city type="text" value="${escapeAttribute(city)}" placeholder="e.g. San Francisco" class="mt-1 w-full rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:placeholder-zinc-500" />
+          </label>
+        </div>
+
+        <label class="mt-2 block">
+          <span class="flex items-center justify-between text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">
+            Bio
+            <span data-profile-edit-bio-count class="tabular-nums text-zinc-400 dark:text-zinc-500">${bio.length}/${limit}</span>
+          </span>
+          <textarea data-profile-edit-bio rows="3" maxlength="${limit}" placeholder="Write a short bio about yourself…" class="mt-1 w-full rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 focus:border-indigo-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:placeholder-zinc-500">${escapeAttribute(bio)}</textarea>
+        </label>
+
+        <div class="mt-2 flex items-center gap-2">
+          <button type="button" data-profile-edit-email-toggle role="switch" aria-checked="${showEmail}" class="relative h-4 w-7 rounded-full transition-colors ${showEmail ? 'bg-indigo-600' : 'bg-zinc-300 dark:bg-zinc-700'}">
+            <span class="${showEmail ? 'absolute left-3.5' : 'absolute left-0.5'} top-0.5 h-3 w-3 rounded-full bg-white transition-all"></span>
+          </button>
+          <span class="text-[11px] text-zinc-600 dark:text-zinc-300">${escapeAttribute(showEmailLabel)}</span>
+        </div>
+
+        ${socialsBlock}
+
+        ${savedLine}
+
+        <div class="mt-3 flex items-center justify-end gap-2">
+          <button type="button" data-profile-edit-cancel class="rounded-md border border-zinc-200 px-3 py-1.5 text-[11px] font-semibold text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">${escapeAttribute(cancelLabel)}</button>
+          <button type="button" data-profile-edit-save class="rounded-md bg-zinc-900 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300">${escapeAttribute(saveLabel)}</button>
+        </div>
+      </div>`;
+  }
+}
+
+export default ProfileEditFormElement;
+
+if (!customElements.get('profile-edit-form')) {
+  customElements.define('profile-edit-form', ProfileEditFormElement);
+}
 ```
 
 ## vanilla\ProfileHeader.js
@@ -77563,6 +78650,207 @@ const scrollToBottom = () => {
 </script>
 ```
 
+## vue\AvatarCropDialog.vue
+
+```vue
+<script setup lang="ts">
+import { ref, computed } from "vue";
+
+interface Props {
+  title?: string;
+  hint?: string;
+  initials?: string;
+  avatarUrl?: string;
+  defaultZoom?: number;
+  minZoom?: number;
+  maxZoom?: number;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  defaultOpen?: boolean;
+}
+const props = withDefaults(defineProps<Props>(), {
+  title: "Avatar preview",
+  hint: "For best results, upload images of at least 1000×1000 pixels.",
+  initials: "AS",
+  avatarUrl: "",
+  defaultZoom: 50,
+  minZoom: 0,
+  maxZoom: 100,
+  confirmLabel: "Save",
+  cancelLabel: "Cancel",
+  defaultOpen: false,
+});
+
+const emit = defineEmits<{
+  (e: "confirm", detail: { zoom: number }): void;
+  (e: "cancel"): void;
+}>();
+
+const open = ref(props.defaultOpen);
+const zoom = ref(props.defaultZoom);
+const saved = ref<number | null>(null);
+
+const step = (delta: number) => {
+  const next = zoom.value + delta;
+  zoom.value = Math.min(props.maxZoom, Math.max(props.minZoom, next));
+};
+
+const close = () => {
+  open.value = false;
+  saved.value = null;
+  zoom.value = props.defaultZoom;
+};
+
+const handleConfirm = () => {
+  saved.value = zoom.value;
+  emit("confirm", { zoom: zoom.value });
+};
+
+const handleCancel = () => {
+  emit("cancel");
+  close();
+};
+
+const overlayClick = (e: MouseEvent) => {
+  if (e.target === e.currentTarget) close();
+};
+
+const scale = computed(() => (0.8 + (zoom.value / 100) * 0.6).toFixed(2));
+</script>
+
+<template>
+  <div data-avatar-crop-dialog>
+    <button
+      type="button"
+      data-avatar-crop-open
+      class="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500"
+      @click="open = true"
+    >
+      {{ props.title }}
+    </button>
+
+    <div
+      v-if="open"
+      data-avatar-crop-overlay
+      class="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/50 p-4"
+      @click="overlayClick"
+    >
+      <div
+        data-avatar-crop-panel
+        role="dialog"
+        aria-modal="true"
+        :aria-label="props.title"
+        class="w-full max-w-sm rounded-xl border border-zinc-200 bg-white p-4 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <template v-if="saved !== null">
+          <p data-avatar-crop-saved class="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+            Avatar updated
+          </p>
+          <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+            Your new profile picture has been saved.
+          </p>
+          <div class="mt-3 flex justify-end">
+            <button
+              type="button"
+              data-avatar-crop-done
+              class="rounded-md bg-zinc-900 px-3 py-1.5 text-[11px] font-semibold text-white dark:bg-zinc-100 dark:text-zinc-900"
+              @click="close"
+            >
+              Done
+            </button>
+          </div>
+        </template>
+
+        <template v-else>
+          <div class="flex items-center justify-between">
+            <p data-avatar-crop-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</p>
+            <button
+              type="button"
+              data-avatar-crop-close
+              aria-label="Close"
+              class="rounded p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+              @click="close"
+            >
+              ✕
+            </button>
+          </div>
+
+          <p class="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">{{ props.hint }}</p>
+
+          <div data-avatar-crop-preview class="mt-3 flex justify-center">
+            <div class="flex h-40 w-40 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-zinc-100 shadow-inner dark:border-zinc-800 dark:bg-zinc-800">
+              <img
+                v-if="props.avatarUrl"
+                :src="props.avatarUrl"
+                alt=""
+                :style="{ transform: `scale(${scale})` }"
+                class="h-full w-full object-cover"
+              />
+              <span
+                v-else
+                :style="{ transform: `scale(${scale})` }"
+                class="flex h-full w-full items-center justify-center rounded-full bg-indigo-100 text-2xl font-semibold text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-400"
+              >
+                {{ props.initials }}
+              </span>
+            </div>
+          </div>
+
+          <div data-avatar-crop-zoom-row class="mt-3 flex items-center gap-2">
+            <button
+              type="button"
+              data-avatar-crop-zoom-out
+              aria-label="Zoom out"
+              class="h-6 w-6 rounded border border-zinc-200 text-xs font-semibold text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+              @click="step(-10)"
+            >
+              −
+            </button>
+            <input
+              v-model.number="zoom"
+              data-avatar-crop-zoom
+              type="range"
+              :min="props.minZoom"
+              :max="props.maxZoom"
+              aria-label="Zoom"
+              class="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-zinc-200 accent-indigo-600 dark:bg-zinc-700"
+            />
+            <button
+              type="button"
+              data-avatar-crop-zoom-in
+              aria-label="Zoom in"
+              class="h-6 w-6 rounded border border-zinc-200 text-xs font-semibold text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+              @click="step(10)"
+            >
+              +
+            </button>
+          </div>
+
+          <div class="mt-3 flex items-center justify-end gap-2">
+            <button
+              type="button"
+              data-avatar-crop-cancel
+              class="rounded-md border border-zinc-200 px-3 py-1.5 text-[11px] font-semibold text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+              @click="handleCancel"
+            >
+              {{ props.cancelLabel }}
+            </button>
+            <button
+              type="button"
+              data-avatar-crop-confirm
+              class="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500"
+              @click="handleConfirm"
+            >
+              {{ props.confirmLabel }}
+            </button>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</template>
+```
+
 ## vue\AvatarGroup.vue
 
 ```vue
@@ -84605,6 +85893,131 @@ onUnmounted(() => {
   if (cleanup) cleanup();
 });
 </script>
+```
+
+## vue\FollowSuggestionsCard.vue
+
+```vue
+<script setup lang="ts">
+import { ref, computed } from "vue";
+
+export interface FollowSuggestion {
+  id: string;
+  name: string;
+  handle?: string;
+  avatarUrl?: string;
+  initials?: string;
+}
+
+interface Props {
+  title?: string;
+  suggestions?: FollowSuggestion[];
+  followLabel?: string;
+  followingLabel?: string;
+  emptyText?: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  title: "Discover more people",
+  suggestions: () => [],
+  followLabel: "Follow",
+  followingLabel: "Following",
+  emptyText: "No more suggestions right now — check back later.",
+});
+
+const emit = defineEmits<{
+  (e: "follow", detail: FollowSuggestion): void;
+  (e: "dismiss", detail: FollowSuggestion): void;
+}>();
+
+const followed = ref<Record<string, boolean>>({});
+const dismissed = ref<Record<string, boolean>>({});
+const collapsed = ref(false);
+
+const visible = computed(() => props.suggestions.filter((s) => !dismissed.value[s.id]));
+
+const toggleFollow = (person: FollowSuggestion) => {
+  const next = !followed.value[person.id];
+  followed.value[person.id] = next;
+  if (next) emit("follow", person);
+};
+
+const initialsOf = (person: FollowSuggestion): string =>
+  person.initials ??
+  person.name
+    .split(/\s+/)
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+</script>
+
+<template>
+  <div data-follow-suggestions class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+    <button
+      type="button"
+      data-follow-suggestions-toggle
+      :aria-expanded="!collapsed"
+      class="flex w-full items-center justify-between px-4 py-3"
+      @click="collapsed = !collapsed"
+    >
+      <span data-follow-suggestions-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</span>
+      <span aria-hidden="true" :class="['text-xs text-zinc-400 transition-transform', collapsed ? '' : 'rotate-180']">▾</span>
+    </button>
+
+    <div v-if="!collapsed && visible.length > 0" data-follow-suggestions-grid class="grid grid-cols-2 gap-2 px-4 pb-4 sm:grid-cols-3">
+      <div
+        v-for="person in visible"
+        :key="person.id"
+        :data-follow-suggestions-card="person.id"
+        class="relative flex flex-col items-center rounded-lg border border-zinc-200 px-3 py-4 text-center dark:border-zinc-700"
+      >
+        <button
+          type="button"
+          :data-follow-suggestions-dismiss="person.id"
+          :aria-label="`Dismiss ${person.name}`"
+          class="absolute right-1.5 top-1.5 rounded p-0.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+          @click="dismissed[person.id] = true; emit('dismiss', person)"
+        >
+          ✕
+        </button>
+        <img
+          v-if="person.avatarUrl"
+          :src="person.avatarUrl"
+          alt=""
+          class="h-10 w-10 rounded-full bg-zinc-100 object-cover dark:bg-zinc-800"
+        />
+        <span
+          v-else
+          class="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-xs font-semibold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
+        >
+          {{ initialsOf(person) }}
+        </span>
+        <p class="mt-2 text-xs font-semibold text-zinc-900 dark:text-zinc-50">{{ person.name }}</p>
+        <p v-if="person.handle" class="text-[11px] text-zinc-400 dark:text-zinc-500">{{ person.handle }}</p>
+        <button
+          type="button"
+          :data-follow-suggestions-follow="person.id"
+          :aria-pressed="!!followed[person.id]"
+          :class="['mt-2.5 w-full rounded-full px-3 py-1 text-[11px] font-semibold transition-colors',
+            followed[person.id]
+              ? 'border border-zinc-200 bg-white text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300'
+              : 'bg-emerald-600 text-white hover:bg-emerald-500']"
+          @click="toggleFollow(person)"
+        >
+          {{ followed[person.id] ? props.followingLabel : props.followLabel }}
+        </button>
+      </div>
+    </div>
+
+    <p
+      v-if="!collapsed && visible.length === 0"
+      data-follow-suggestions-empty
+      class="px-4 pb-4 text-[11px] text-zinc-400 dark:text-zinc-500"
+    >
+      {{ props.emptyText }}
+    </p>
+  </div>
+</template>
 ```
 
 ## vue\FooterSection.vue
@@ -92754,6 +94167,203 @@ export interface PricingPlan {
 withDefaults(defineProps<{ plans: PricingPlan[] }>(), { plans: () => [] });
 defineEmits<{ (e: 'select', plan: PricingPlan): void }>();
 </script>
+```
+
+## vue\ProfileEditForm.vue
+
+```vue
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface ProfileSocialLink {
+  id: string;
+  label: string;
+  placeholder?: string;
+  value?: string;
+}
+
+interface Props {
+  title?: string;
+  handle?: string;
+  countries?: string[];
+  defaultCountry?: string;
+  defaultCity?: string;
+  bio?: string;
+  bioLimit?: number;
+  socials?: ProfileSocialLink[];
+  showEmailLabel?: string;
+  defaultShowEmail?: boolean;
+  saveLabel?: string;
+  cancelLabel?: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  title: "Personal info",
+  handle: "@alexsmith",
+  countries: () => ["United States", "Singapore", "United Kingdom", "Germany", "Japan"],
+  defaultCountry: undefined,
+  defaultCity: "",
+  bio: "",
+  bioLimit: 750,
+  socials: () => [],
+  showEmailLabel: "Display your account email",
+  defaultShowEmail: false,
+  saveLabel: "Save changes",
+  cancelLabel: "Cancel",
+});
+
+const emit = defineEmits<{
+  (e: "save", detail: {
+    handle: string;
+    country: string;
+    city: string;
+    bio: string;
+    showEmail: boolean;
+    socials: Record<string, string>;
+  }): void;
+  (e: "cancel"): void;
+}>();
+
+const country = ref(props.defaultCountry ?? props.countries[0] ?? "");
+const city = ref(props.defaultCity);
+const bioValue = ref(props.bio.slice(0, props.bioLimit));
+const socialValues = ref<Record<string, string>>(
+  Object.fromEntries(props.socials.map((s) => [s.id, s.value ?? ""])),
+);
+const showEmail = ref(props.defaultShowEmail);
+const saved = ref(false);
+
+const handleSave = () => {
+  saved.value = true;
+  emit("save", {
+    handle: props.handle,
+    country: country.value,
+    city: city.value,
+    bio: bioValue.value,
+    showEmail: showEmail.value,
+    socials: { ...socialValues.value },
+  });
+};
+
+const handleCancel = () => {
+  emit("cancel");
+};
+</script>
+
+<template>
+  <div data-profile-edit-form class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+    <div class="flex items-center justify-between">
+      <p data-profile-edit-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</p>
+      <span data-profile-edit-handle class="flex items-center gap-1 text-xs font-medium text-zinc-500 dark:text-zinc-400">
+        {{ props.handle }}
+        <span aria-hidden="true" class="text-[10px]">✏️</span>
+      </span>
+    </div>
+
+    <div class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+      <label class="block">
+        <span class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">Country</span>
+        <select
+          v-model="country"
+          data-profile-edit-country
+          class="mt-1 w-full rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+        >
+          <option v-for="c in props.countries" :key="c" :value="c">{{ c }}</option>
+        </select>
+      </label>
+      <label class="block">
+        <span class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">City</span>
+        <input
+          v-model="city"
+          data-profile-edit-city
+          type="text"
+          placeholder="e.g. San Francisco"
+          class="mt-1 w-full rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:placeholder-zinc-500"
+        />
+      </label>
+    </div>
+
+    <label class="mt-2 block">
+      <span class="flex items-center justify-between text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">
+        Bio
+        <span data-profile-edit-bio-count class="tabular-nums text-zinc-400 dark:text-zinc-500">
+          {{ bioValue.length }}/{{ props.bioLimit }}
+        </span>
+      </span>
+      <textarea
+        v-model="bioValue"
+        data-profile-edit-bio
+        rows="3"
+        :maxlength="props.bioLimit"
+        placeholder="Write a short bio about yourself…"
+        class="mt-1 w-full rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 focus:border-indigo-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:placeholder-zinc-500"
+        @input="saved = false"
+      />
+    </label>
+
+    <div class="mt-2 flex items-center gap-2">
+      <button
+        type="button"
+        data-profile-edit-email-toggle
+        role="switch"
+        :aria-checked="showEmail"
+        :class="['relative h-4 w-7 rounded-full transition-colors', showEmail ? 'bg-indigo-600' : 'bg-zinc-300 dark:bg-zinc-700']"
+        @click="showEmail = !showEmail; saved = false"
+      >
+        <span
+          :class="['absolute top-0.5 h-3 w-3 rounded-full bg-white transition-all', showEmail ? 'left-3.5' : 'left-0.5']"
+        />
+      </button>
+      <span class="text-[11px] text-zinc-600 dark:text-zinc-300">{{ props.showEmailLabel }}</span>
+    </div>
+
+    <div v-if="props.socials.length > 0" data-profile-edit-socials class="mt-3 border-t border-zinc-100 pt-3 dark:border-zinc-800">
+      <label
+        v-for="s in props.socials"
+        :key="s.id"
+        class="mt-2 block first:mt-0"
+        :data-profile-edit-social="s.id"
+      >
+        <span class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">{{ s.label }}</span>
+        <input
+          :value="socialValues[s.id] ?? ''"
+          :data-profile-edit-social-input="s.id"
+          type="text"
+          :placeholder="s.placeholder ?? `Your ${s.label}`"
+          class="mt-1 w-full rounded-md border border-zinc-200 bg-white px-2 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:placeholder-zinc-500"
+          @input="socialValues[s.id] = ($event.target)?.value ?? ''; saved = false"
+        />
+      </label>
+    </div>
+
+    <p
+      v-if="saved"
+      data-profile-edit-saved
+      role="status"
+      class="mt-3 text-[11px] font-medium text-emerald-600 dark:text-emerald-400"
+    >
+      Profile saved.
+    </p>
+
+    <div class="mt-3 flex items-center justify-end gap-2">
+      <button
+        type="button"
+        data-profile-edit-cancel
+        class="rounded-md border border-zinc-200 px-3 py-1.5 text-[11px] font-semibold text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        @click="handleCancel"
+      >
+        {{ props.cancelLabel }}
+      </button>
+      <button
+        type="button"
+        data-profile-edit-save
+        class="rounded-md bg-zinc-900 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+        @click="handleSave"
+      >
+        {{ props.saveLabel }}
+      </button>
+    </div>
+  </div>
+</template>
 ```
 
 ## vue\ProfileHeader.vue

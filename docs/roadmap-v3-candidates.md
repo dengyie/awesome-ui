@@ -132,6 +132,13 @@
 - **InviteTeammatesCard** (#256)：团队邀请卡（邮箱 chips 输入 + 校验 + 角色行 + Send/Skip）。素材：references/onboarding 26/27 Up next "Invite team member" 语境。ShareAccessDialog #168 是分享域链接/权限，无批量邀请 + 角色——邀请域空白。
 - 选型说明： Clerk 02 危险确认弹窗（type-to-confirm）候选因与 #39 ConfirmDialog（已内置 requireText 门 + danger tone + loading lock）形态重叠被放弃；Replit/Dropbox Settings 与 SettingsPanel/AgentWorkspaceSettings 重叠弃用。本批从未消费的 onboarding 池（110 张）切入，构成「问卷 → 设置面板 → 邀请协作」onboarding 纵深闭环，全部零名称重叠。
 
+## 已消费批次 v3.10.0（Profile 档案编辑批，#257-259）
+
+- **ProfileEditForm** (#257)：档案编辑表单（handle 行内标注 + 国家下拉/城市输入 + Bio 计数 textarea + 显示邮箱 switch + 社链行 + 保存反馈）。素材：references/profile 02_Base44 Personal info。ProfileHeader (#72) 是只读展示头、BillingAddressForm 是账单域——档案编辑表单全库空白。
+- **AvatarCropDialog** (#258)：头像裁剪弹窗（圆形预览 initials/图片回退 + 缩放滑杆 ± 步进钳位 + 确认态）。素材：references/profile 06_SoundCloud 头像弹窗。既有 6 个 Dialog 均为分享/申诉/保存/付费墙/充值域——头像上传弹窗空白；弹窗走 defaultOpen 惯例。
+- **FollowSuggestionsCard** (#259)：推荐关注卡（可折叠头部 + 人员卡网格 + Follow→Following 切换 + Dismiss × + 空态兜底）。素材：references/profile 05_GoFundMe "Discover more people"。AvatarGroup (#57) 是重叠头像堆、testimonial 家族是推荐语域——推荐关注卡网格无。
+- 选型说明：Oyster 09 团队成员访问表（Invited 徽章 + Actions Revoke/Reinvite）因与 #247 SeatBillingTable（用户行 + 状态徽章）和 #256 InviteTeammatesCard（邀请域）双重趋同被放弃。本批从未消费的 profile 池（135 张，此前仅消费 #72 一件）切入，构成「档案编辑 → 头像上传 → 社交推荐」profile 纵深闭环，全部零名称重叠。
+
 ## 重叠跳过记录（选型时排除）
 
 - Outseta/Slite 通用空态 → #25/#125 已覆盖形态。

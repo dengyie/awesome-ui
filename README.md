@@ -255,6 +255,9 @@
 | **`WorkspaceSurveyCard`** | 工作区问卷卡 | 分组问题单选 pills（aria-checked）+ 多选 chips（aria-pressed）、可选开放输入、进度点线 + 已答计数、答满解锁 Continue（answer/text/next）|
 | **`WorkspaceSetupPanel`** | 分区设置面板 | 分区 checklist + 翡翠 n/m 徽章、完成行划线 + 箭头、全局 N of M caption、Up next 卡网格（task-click/up-next）|
 | **`InviteTeammatesCard`** | 团队邀请卡 | 邮箱输入 Enter/按钮添加、邮箱+重复校验 role=alert、角色选择、pending 行可移除、Send 门控 + Skip（invite/remove/send/skip）|
+| **`ProfileEditForm`** | 档案编辑表单 | handle 行内标注、国家下拉 + 城市输入、Bio 计数 textarea、显示邮箱 switch（role=switch）、社链行、保存反馈（profile-save/profile-cancel）|
+| **`AvatarCropDialog`** | 头像裁剪弹窗 | 圆形预览 initials/图片回退、缩放滑杆 + −/+ 步进钳位、上传提示行、Avatar updated 确认态（avatar-crop-confirm/cancel，default-open）|
+| **`FollowSuggestionsCard`** | 推荐关注卡 | 可折叠头部 aria-expanded、人员卡头像/缩写 + handle、Follow→Following 切换 aria-pressed、Dismiss × 与空态兜底（follow-suggest-follow/dismiss）|
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---

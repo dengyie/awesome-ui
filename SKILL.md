@@ -1434,6 +1434,21 @@ awesome-ui/
 - **Vanilla 用法**: `<invite-teammates-card>` + `title`/`description`/`email-placeholder`/`send-label`/`skip-label`/`default-role` 属性；properties `roles` / `pending`；事件 `invite` detail {email,role} / `remove` / `send` detail pending / `skip`
 - **特性**: 邮箱输入 Enter/按钮双添加路径、邮箱格式 + 重复校验 role=alert、角色下拉随行添加、pending 行 mail 图标 + 角色 pill + 移除钮、Send 按待发数门控、pending 计数角标。
 
+### 257. `ProfileEditForm` (档案编辑表单)
+- **Props**: `title?='Personal info'`, `handle?`, `countries?=5 国`, `defaultCountry?`, `defaultCity?`, `bio?`, `bioLimit?=750`, `socials?: [{id,label,placeholder?,value?}]`, `showEmailLabel?`, `defaultShowEmail?=false`, `saveLabel?='Save changes'`, `cancelLabel?='Cancel'`, `onSave?({handle,country,city,bio,showEmail,socials})`, `onCancel?`
+- **Vanilla 用法**: `<profile-edit-form>` + `title`/`handle`/`bio-limit`/`show-email-label`/`save-label`/`cancel-label`/`default-country`/`default-city`/`bio`/`default-show-email` 属性；properties `countries` / `socials`；事件 `profile-save` detail {handle,country,city,bio,showEmail,socials} / `profile-cancel`
+- **特性**: handle 行内 ✏️ 标注、国家下拉 + 城市输入双列、Bio textarea 实时 n/limit 计数、显示邮箱 role=switch 滑钮、社链行组、保存后 emerald "Profile saved." 反馈。
+
+### 258. `AvatarCropDialog` (头像裁剪弹窗)
+- **Props**: `title?='Avatar preview'`, `hint?`, `initials?`, `avatarUrl?`, `defaultZoom?=50`, `minZoom?=0`, `maxZoom?=100`, `confirmLabel?='Save'`, `cancelLabel?='Cancel'`, `defaultOpen?=false`, `onConfirm?({zoom})`, `onCancel?`
+- **Vanilla 用法**: `<avatar-crop-dialog>` + `trigger-label`/`title`/`hint`/`initials`/`avatar-url`/`default-zoom`/`min-zoom`/`max-zoom`/`confirm-label`/`cancel-label`/`default-open` 属性；事件 `avatar-crop-confirm` detail {zoom} / `avatar-crop-cancel`
+- **特性**: 圆形预览 initials/图片回退 + transform scale 缩放联动、滑杆 + −/+ 步进钮钳位、"Avatar updated" 确认态 + Done 关闭；关闭态仅渲染触发钮。
+
+### 259. `FollowSuggestionsCard` (推荐关注卡)
+- **Props**: `title?='Discover more people'`, `suggestions?: [{id,name,handle?,avatarUrl?,initials?}]`, `followLabel?='Follow'`, `followingLabel?='Following'`, `emptyText?`, `onFollow?(person)`, `onDismiss?(person)`
+- **Vanilla 用法**: `<follow-suggestions-card>` + `title`/`follow-label`/`following-label`/`empty-text` 属性；properties `suggestions`；事件 `follow-suggest-follow` detail person / `follow-suggest-dismiss` detail person
+- **特性**: 可折叠头部 aria-expanded + 旋转箭头、人员卡头像/姓名缩写回退 + handle 行、Follow → Following 状态切换 aria-pressed、Dismiss × 即时移除、全空后 empty-state 兜底文案。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

@@ -1124,3 +1124,15 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/InviteTeammatesCard.tsx
    - Vue 3: vue/InviteTeammatesCard.vue
    - Vanilla: vanilla/InviteTeammatesCard.js (custom element `<invite-teammates-card>`, attributes `title`/`description`/`email-placeholder`/`send-label`/`skip-label`/`default-role`; properties `roles`/`pending`; events `invite`/`remove`/`send`/`skip`)
+257. ProfileEditForm: profile editing form — handle caption, country select + city input row, bio textarea with live n/limit counter, show-email switch (role=switch), social link rows and a saved confirmation line (fires profile-save {handle,country,city,bio,showEmail,socials} / profile-cancel).
+   - React: react/ProfileEditForm.tsx
+   - Vue 3: vue/ProfileEditForm.vue
+   - Vanilla: vanilla/ProfileEditForm.js (custom element `<profile-edit-form>`, attributes `title`/`handle`/`bio-limit`/`show-email-label`/`save-label`/`cancel-label`/`default-country`/`default-city`/`bio`/`default-show-email`; properties `countries`/`socials`; events `profile-save`/`profile-cancel`)
+258. AvatarCropDialog: avatar crop dialog (open/isOpen prop required to render; dialogs default closed) — circular preview with initials/image fallback, zoom slider with −/+ steppers clamped to range, upload hint line and an "Avatar updated" confirmation state (fires avatar-crop-confirm {zoom} / avatar-crop-cancel).
+   - React: react/AvatarCropDialog.tsx
+   - Vue 3: vue/AvatarCropDialog.vue
+   - Vanilla: vanilla/AvatarCropDialog.js (custom element `<avatar-crop-dialog>`, attributes `trigger-label`/`title`/`hint`/`initials`/`avatar-url`/`default-zoom`/`min-zoom`/`max-zoom`/`confirm-label`/`cancel-label`/`default-open`; events `avatar-crop-confirm`/`avatar-crop-cancel`)
+259. FollowSuggestionsCard: "Discover more people" follow rail — collapsible header with aria-expanded, person cards with avatar/initials + handle, Follow → Following toggle (aria-pressed) and dismiss × with empty-state fallback (fires follow-suggest-follow {person} / follow-suggest-dismiss {person}).
+   - React: react/FollowSuggestionsCard.tsx
+   - Vue 3: vue/FollowSuggestionsCard.vue
+   - Vanilla: vanilla/FollowSuggestionsCard.js (custom element `<follow-suggestions-card>`, attributes `title`/`follow-label`/`following-label`/`empty-text`; properties `suggestions` [{id,name,handle,avatarUrl,initials}]; events `follow-suggest-follow`/`follow-suggest-dismiss`)
