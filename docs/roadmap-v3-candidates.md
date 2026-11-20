@@ -125,6 +125,13 @@
 - **TrialExpiryNotice** (#253)：试用到期警告卡（mono 倒计时大数 + expiring/urgent 双色调 + 锁定功能划线清单 + Upgrade/Extend 双 CTA）。素材：references/paywall 17_Docusign "expire in 4 days" 到期整页。TrialBanner (#134) 是单行横幅、UsageQuotaCard 是配额域——整卡式到期警告无。
 - 选型说明：从未消费的 charts(127)/paywall(119) 两池切入，构成「分析 → 拦截转化 → 到期挽留」付费转化闭环，全部零名称重叠；拦截型弹窗关闭态不渲染 DOM（无触发器），SSR 测试走 defaultOpen/default-open。
 
+## 已消费批次 v3.9.0（Onboarding 问卷与协作批，#254-256）
+
+- **WorkspaceSurveyCard** (#254)：工作区问卷卡（单选 pills + 多选 chips + 开放输入 + 进度点线 + 答满解锁 Continue）。素材：references/onboarding 110 张（Hex 23/24 问卷 + AirOps 17 personalize）。WizardSteps #82/Stepper #68 是步骤导航跳转，问卷是分组选项组合——形态全库空白。
+- **WorkspaceSetupPanel** (#255)：分区设置面板（分区 checklist + emerald n/m 徽章 + 划线完成行 + Up next 卡网格）。素材：references/onboarding 26/27_Customer.io Workspace setup。OnboardingChecklist #37 是单列表全局进度条——分区面板 + 卡网格无。
+- **InviteTeammatesCard** (#256)：团队邀请卡（邮箱 chips 输入 + 校验 + 角色行 + Send/Skip）。素材：references/onboarding 26/27 Up next "Invite team member" 语境。ShareAccessDialog #168 是分享域链接/权限，无批量邀请 + 角色——邀请域空白。
+- 选型说明： Clerk 02 危险确认弹窗（type-to-confirm）候选因与 #39 ConfirmDialog（已内置 requireText 门 + danger tone + loading lock）形态重叠被放弃；Replit/Dropbox Settings 与 SettingsPanel/AgentWorkspaceSettings 重叠弃用。本批从未消费的 onboarding 池（110 张）切入，构成「问卷 → 设置面板 → 邀请协作」onboarding 纵深闭环，全部零名称重叠。
+
 ## 重叠跳过记录（选型时排除）
 
 - Outseta/Slite 通用空态 → #25/#125 已覆盖形态。

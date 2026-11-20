@@ -1,6 +1,6 @@
 # awesome-ui: full component sources
 
-> Single-file bundle of all 762 source files (React tsx/ts, Vue vue/ts, Vanilla js) for one-shot LLM ingestion.
+> Single-file bundle of all 771 source files (React tsx/ts, Vue vue/ts, Vanilla js) for one-shot LLM ingestion.
 
 ## react\AIInlineMenu.tsx
 
@@ -141,7 +141,6 @@ export default function AIInlineMenu({
     </div>
   );
 }
-
 ```
 
 ## react\Accordion.tsx
@@ -249,7 +248,6 @@ export const Accordion: React.FC<AccordionProps> = ({
 };
 
 export default Accordion;
-
 ```
 
 ## react\AccountSecurityPanel.tsx
@@ -386,7 +384,6 @@ export default function AccountSecurityPanel({
     </div>
   );
 }
-
 ```
 
 ## react\AccountSwitcher.tsx
@@ -565,7 +562,6 @@ export const AccountSwitcher: React.FC<AccountSwitcherProps> = ({
 };
 
 export default AccountSwitcher;
-
 ```
 
 ## react\ActivityFeed.tsx
@@ -639,7 +635,6 @@ export const ActivityFeed: React.FC<ActivityFeedProps> = ({ entries, title, clas
 };
 
 export default ActivityFeed;
-
 ```
 
 ## react\AddonPicker.tsx
@@ -744,7 +739,6 @@ export default function AddonPicker({
     </div>
   );
 }
-
 ```
 
 ## react\AgentBuilderCard.tsx
@@ -856,7 +850,6 @@ export default function AgentBuilderCard({
     </div>
   );
 }
-
 ```
 
 ## react\AgentEnvVarEditor.tsx
@@ -1009,7 +1002,6 @@ export default function AgentEnvVarEditor({
     </div>
   );
 }
-
 ```
 
 ## react\AgentErrorRecovery.tsx
@@ -1095,7 +1087,6 @@ export default function AgentErrorRecovery({
     </div>
   );
 }
-
 ```
 
 ## react\AgentGuardrailViolationCard.tsx
@@ -1240,7 +1231,6 @@ export default function AgentGuardrailViolationCard({
     </div>
   );
 }
-
 ```
 
 ## react\AgentModelFallbackList.tsx
@@ -1389,7 +1379,6 @@ export default function AgentModelFallbackList({
     </div>
   );
 }
-
 ```
 
 ## react\AgentNotificationFeed.tsx
@@ -1490,7 +1479,6 @@ export default function AgentNotificationFeed({
     </div>
   );
 }
-
 ```
 
 ## react\AgentRunLog.tsx
@@ -1621,7 +1609,6 @@ export const AgentRunLog: React.FC<AgentRunLogProps> = ({
 };
 
 export default AgentRunLog;
-
 ```
 
 ## react\AgentScheduleEditor.tsx
@@ -1743,7 +1730,6 @@ export default function AgentScheduleEditor({
     </div>
   );
 }
-
 ```
 
 ## react\AgentSessionTimeline.tsx
@@ -1886,7 +1872,6 @@ export default function AgentSessionTimeline({
     </div>
   );
 }
-
 ```
 
 ## react\AgentStepTimeline.tsx
@@ -1957,7 +1942,6 @@ export const AgentStepTimeline: React.FC<AgentStepTimelineProps> = ({ steps = []
   );
 };
 export default AgentStepTimeline;
-
 ```
 
 ## react\AgentTaskChecklist.tsx
@@ -2037,7 +2021,6 @@ export const AgentTaskChecklist: React.FC<AgentTaskChecklistProps> = ({
   );
 };
 export default AgentTaskChecklist;
-
 ```
 
 ## react\AgentTaskProgress.tsx
@@ -2146,7 +2129,6 @@ export default function AgentTaskProgress({
     </div>
   );
 }
-
 ```
 
 ## react\AgentWorkspaceSettings.tsx
@@ -2261,7 +2243,6 @@ export default function AgentWorkspaceSettings({
     </div>
   );
 }
-
 ```
 
 ## react\AiNoteAnswer.tsx
@@ -2365,7 +2346,6 @@ export default function AiNoteAnswer({
     </div>
   );
 }
-
 ```
 
 ## react\AiResearchPanel.tsx
@@ -2468,7 +2448,6 @@ export default function AiResearchPanel({
     </aside>
   );
 }
-
 ```
 
 ## react\AiRewriteMenu.tsx
@@ -2547,7 +2526,6 @@ export default function AiRewriteMenu({
     </div>
   );
 }
-
 ```
 
 ## react\AiSuggestionCard.tsx
@@ -2611,7 +2589,6 @@ export default function AiSuggestionCard({
     </div>
   );
 }
-
 ```
 
 ## react\AiTemplatePicker.tsx
@@ -2753,7 +2730,6 @@ export default function AiTemplatePicker({
     </div>
   );
 }
-
 ```
 
 ## react\AlertBanner.tsx
@@ -2878,7 +2854,6 @@ export const AlertBanner: React.FC<AlertBannerProps> = ({
 };
 
 export default AlertBanner;
-
 ```
 
 ## react\AmberEmbersBackdrop.tsx
@@ -3094,7 +3069,6 @@ const AmberEmbersBackdrop: React.FC<AmberEmbersBackdropProps> = ({
 };
 
 export default AmberEmbersBackdrop;
-
 ```
 
 ## react\AnimatedCounter.tsx
@@ -3210,7 +3184,6 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     </span>
   );
 };
-
 ```
 
 ## react\ApiKeyTable.tsx
@@ -3331,7 +3304,6 @@ export default function ApiKeyTable({
     </div>
   );
 }
-
 ```
 
 ## react\ApiReferenceViewer.tsx
@@ -3535,7 +3507,6 @@ export default function ApiReferenceViewer({
     </div>
   );
 }
-
 ```
 
 ## react\AppealRestrictionDialog.tsx
@@ -3640,7 +3611,6 @@ export default function AppealRestrictionDialog({
     </div>
   );
 }
-
 ```
 
 ## react\ApprovalCard.tsx
@@ -3790,7 +3760,6 @@ export const ApprovalCard: React.FC<ApprovalCardProps> = ({
 };
 
 export default ApprovalCard;
-
 ```
 
 ## react\ArtifactCanvas.tsx
@@ -3917,7 +3886,6 @@ export const ArtifactCanvas: React.FC<ArtifactCanvasProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\AttachmentChip.tsx
@@ -3966,7 +3934,6 @@ export default function AttachmentChip({ name, kind = "doc", size, meta, onRemov
     </span>
   );
 }
-
 ```
 
 ## react\AudioNotePlayer.tsx
@@ -4032,7 +3999,6 @@ export default function AudioNotePlayer({
     </div>
   );
 }
-
 ```
 
 ## react\AudioPlaylistPage.tsx
@@ -4179,7 +4145,6 @@ export default function AudioPlaylistPage({
     </div>
   );
 }
-
 ```
 
 ## react\AudioWaveVisualizer.tsx
@@ -4231,7 +4196,6 @@ export const AudioWaveVisualizer: React.FC<AudioWaveVisualizerProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\AuditLogTable.tsx
@@ -4432,7 +4396,6 @@ export default function AuditLogTable({
     </div>
   );
 }
-
 ```
 
 ## react\AuthForm.tsx
@@ -4611,7 +4574,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 };
 
 export default AuthForm;
-
 ```
 
 ## react\AuthGatePrompt.tsx
@@ -4708,7 +4670,6 @@ export default function AuthGatePrompt({
     </div>
   );
 }
-
 ```
 
 ## react\AuthSplitPanel.tsx
@@ -4782,7 +4743,6 @@ export default function AuthSplitPanel({
     </div>
   );
 }
-
 ```
 
 ## react\AutoScrollAnchor.tsx
@@ -4850,7 +4810,6 @@ export const AutoScrollAnchor: React.FC<AutoScrollAnchorProps> = ({
     </>
   );
 };
-
 ```
 
 ## react\AvatarGroup.tsx
@@ -4947,7 +4906,6 @@ export const AvatarGroup: React.FC<AvatarGroupProps> = ({
 };
 
 export default AvatarGroup;
-
 ```
 
 ## react\BentoFeatureGrid.tsx
@@ -5025,7 +4983,6 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
 };
 
 export default BentoFeatureGrid;
-
 ```
 
 ## react\BillingAddressForm.tsx
@@ -5181,7 +5138,6 @@ export default function BillingAddressForm({
     </div>
   );
 }
-
 ```
 
 ## react\BillingPanel.tsx
@@ -5319,7 +5275,6 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
   );
 };
 export default BillingPanel;
-
 ```
 
 ## react\BlogPostArticle.tsx
@@ -5512,7 +5467,6 @@ export default function BlogPostArticle({
     </div>
   );
 }
-
 ```
 
 ## react\BottomTabBar.tsx
@@ -5592,7 +5546,6 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 };
 
 export default BottomTabBar;
-
 ```
 
 ## react\BrandPromptTable.tsx
@@ -5691,7 +5644,6 @@ export default function BrandPromptTable({
     </div>
   );
 }
-
 ```
 
 ## react\Breadcrumb.tsx
@@ -5788,7 +5740,6 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
 };
 
 export default Breadcrumb;
-
 ```
 
 ## react\CampsiteHandoff.tsx
@@ -5883,7 +5834,6 @@ export default function CampsiteHandoff({
     </div>
   );
 }
-
 ```
 
 ## react\CancelRetentionFlow.tsx
@@ -6037,7 +5987,6 @@ export const CancelRetentionFlow: React.FC<CancelRetentionFlowProps> = ({
 };
 
 export default CancelRetentionFlow;
-
 ```
 
 ## react\ChangedFilesList.tsx
@@ -6150,7 +6099,6 @@ export default function ChangedFilesList({ title = "Files changed", files, group
     </div>
   );
 }
-
 ```
 
 ## react\ChangelogFeed.tsx
@@ -6252,7 +6200,6 @@ export const ChangelogFeed: React.FC<ChangelogFeedProps> = ({
   </aside>
 );
 export default ChangelogFeed;
-
 ```
 
 ## react\ChangelogTimeline.tsx
@@ -6385,7 +6332,6 @@ export default function ChangelogTimeline({
     </div>
   );
 }
-
 ```
 
 ## react\ChatMessageRow.tsx
@@ -6467,7 +6413,6 @@ export const ChatMessageRow: React.FC<ChatMessageRowProps> = ({
   );
 };
 export default ChatMessageRow;
-
 ```
 
 ## react\ChatPromptInput.tsx
@@ -6668,7 +6613,6 @@ export const ChatPromptInput: React.FC<ChatPromptInputProps> = ({
 };
 
 export default ChatPromptInput;
-
 ```
 
 ## react\ChatSessionList.tsx
@@ -6845,7 +6789,6 @@ export const ChatSessionList: React.FC<ChatSessionListProps> = ({
   );
 };
 export default ChatSessionList;
-
 ```
 
 ## react\ClarifyQuestionCard.tsx
@@ -6930,7 +6873,6 @@ export default function ClarifyQuestionCard({
     </div>
   );
 }
-
 ```
 
 ## react\CodeBlock.tsx
@@ -7032,7 +6974,6 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   );
 };
 export default CodeBlock;
-
 ```
 
 ## react\ColorPickerPopover.tsx
@@ -7248,7 +7189,6 @@ export default function ColorPickerPopover({
     </div>
   );
 }
-
 ```
 
 ## react\ColumnVisibilityMenu.tsx
@@ -7398,7 +7338,6 @@ export default function ColumnVisibilityMenu({
     </div>
   );
 }
-
 ```
 
 ## react\ComboBox.tsx
@@ -7575,7 +7514,6 @@ export const ComboBox: React.FC<ComboBoxProps> = ({
 };
 
 export default ComboBox;
-
 ```
 
 ## react\CommandPalette.tsx
@@ -7769,7 +7707,6 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   );
 };
 export default CommandPalette;
-
 ```
 
 ## react\CommentThread.tsx
@@ -7996,7 +7933,6 @@ export const CommentThread: React.FC<CommentThreadProps> = ({
 };
 
 export default CommentThread;
-
 ```
 
 ## react\ConfirmDialog.tsx
@@ -8145,7 +8081,6 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 };
 
 export default ConfirmDialog;
-
 ```
 
 ## react\ConnectorGrid.tsx
@@ -8236,7 +8171,6 @@ export default function ConnectorGrid({
     </div>
   );
 }
-
 ```
 
 ## react\ContentReviewTable.tsx
@@ -8379,7 +8313,6 @@ export default function ContentReviewTable({
     </div>
   );
 }
-
 ```
 
 ## react\ContextUsageBadge.tsx
@@ -8499,7 +8432,6 @@ export const ContextUsageBadge: React.FC<ContextUsageProps> = ({
   );
 };
 export default ContextUsageBadge;
-
 ```
 
 ## react\CookieConsent.tsx
@@ -8613,7 +8545,6 @@ export default function CookieConsent({
     </div>
   );
 }
-
 ```
 
 ## react\CreationComposer.tsx
@@ -8753,7 +8684,6 @@ export default function CreationComposer({
     </div>
   );
 }
-
 ```
 
 ## react\CreditBalanceCard.tsx
@@ -8871,7 +8801,6 @@ export default function CreditBalanceCard({
     </div>
   );
 }
-
 ```
 
 ## react\DataTable.tsx
@@ -9086,7 +9015,6 @@ export const DataTable: React.FC<DataTableProps> = ({
 };
 
 export default DataTable;
-
 ```
 
 ## react\DatePicker.tsx
@@ -9268,7 +9196,6 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 };
 
 export default DatePicker;
-
 ```
 
 ## react\DeliveryTrackingPanel.tsx
@@ -9468,7 +9395,6 @@ export default function DeliveryTrackingPanel({
     </div>
   );
 }
-
 ```
 
 ## react\DeploymentCard.tsx
@@ -9543,7 +9469,6 @@ export default function DeploymentCard({ deployId, status, commit, createdAt, so
     </div>
   );
 }
-
 ```
 
 ## react\DiffViewer.tsx
@@ -9790,7 +9715,6 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
 };
 
 export default DiffViewer;
-
 ```
 
 ## react\DocsPageLayout.tsx
@@ -10080,7 +10004,6 @@ export default function DocsPageLayout({
     </div>
   );
 }
-
 ```
 
 ## react\DriftEmbersBackdrop.tsx
@@ -10340,7 +10263,6 @@ const DriftEmbersBackdrop: React.FC<DriftEmbersBackdropProps> = ({
 };
 
 export default DriftEmbersBackdrop;
-
 ```
 
 ## react\EditableHeading.tsx
@@ -10427,7 +10349,6 @@ export default function EditableHeading({
     </div>
   );
 }
-
 ```
 
 ## react\EditorToolPalette.tsx
@@ -10513,7 +10434,6 @@ export default function EditorToolPalette({
     </div>
   );
 }
-
 ```
 
 ## react\EmptyState.tsx
@@ -10559,7 +10479,6 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   );
 };
 export default EmptyState;
-
 ```
 
 ## react\EmptyStateStarter.tsx
@@ -10639,7 +10558,6 @@ export default function EmptyStateStarter({
     </div>
   );
 }
-
 ```
 
 ## react\EntityMultiSelectPicker.tsx
@@ -10790,7 +10708,6 @@ export default function EntityMultiSelectPicker({
     </div>
   );
 }
-
 ```
 
 ## react\EvalRunResults.tsx
@@ -10984,7 +10901,6 @@ export default function EvalRunResults({
     </div>
   );
 }
-
 ```
 
 ## react\EvalScoreTable.tsx
@@ -11135,7 +11051,6 @@ export default function EvalScoreTable({
     </div>
   );
 }
-
 ```
 
 ## react\EvalTurnBuilder.tsx
@@ -11250,7 +11165,6 @@ export default function EvalTurnBuilder({
     </div>
   );
 }
-
 ```
 
 ## react\EventLogTable.tsx
@@ -11446,7 +11360,6 @@ export default function EventLogTable({
     </div>
   );
 }
-
 ```
 
 ## react\EventStreamPanel.tsx
@@ -11641,7 +11554,6 @@ export default function EventStreamPanel({
     </div>
   );
 }
-
 ```
 
 ## react\EventTagGrid.tsx
@@ -11767,7 +11679,6 @@ export default function EventTagGrid({
     </div>
   );
 }
-
 ```
 
 ## react\FalRunCard.tsx
@@ -11850,7 +11761,6 @@ export default function FalRunCard({
     </div>
   );
 }
-
 ```
 
 ## react\FederatedSearchResultsPanel.tsx
@@ -12003,7 +11913,6 @@ export default function FederatedSearchResultsPanel({
     </div>
   );
 }
-
 ```
 
 ## react\FileAttachmentList.tsx
@@ -12070,7 +11979,6 @@ export const FileAttachmentList: React.FC<FileAttachmentListProps> = ({ files = 
   );
 };
 export default FileAttachmentList;
-
 ```
 
 ## react\FileDropzone.tsx
@@ -12281,7 +12189,6 @@ export const FileDropzone: React.FC<FileDropzoneProps> = ({
 };
 
 export default FileDropzone;
-
 ```
 
 ## react\FilterBar.tsx
@@ -12441,7 +12348,6 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 };
 
 export default FilterBar;
-
 ```
 
 ## react\FilterQueryBuilder.tsx
@@ -12579,7 +12485,6 @@ export default function FilterQueryBuilder({
     </div>
   );
 }
-
 ```
 
 ## react\FilterToolbar.tsx
@@ -12712,7 +12617,6 @@ export const FilterToolbar: React.FC<FilterToolbarProps> = ({
 );
 
 export default FilterToolbar;
-
 ```
 
 ## react\FineTuneJobList.tsx
@@ -12827,7 +12731,6 @@ export default function FineTuneJobList({
     </div>
   );
 }
-
 ```
 
 ## react\FluidContourBackdrop.tsx
@@ -13130,7 +13033,6 @@ export const FluidContourBackdrop: React.FC<FluidContourBackdropProps> = ({
     />
   );
 };
-
 ```
 
 ## react\FooterSection.tsx
@@ -13237,7 +13139,6 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
 };
 
 export default FooterSection;
-
 ```
 
 ## react\ForecastTrendChart.tsx
@@ -13336,7 +13237,6 @@ export const ForecastTrendChart: React.FC<ForecastTrendChartProps> = ({
 };
 
 export default ForecastTrendChart;
-
 ```
 
 ## react\FormField.tsx
@@ -13413,7 +13313,6 @@ export const FormField: React.FC<FormFieldProps> = ({
 );
 
 export default FormField;
-
 ```
 
 ## react\FormTrackingDashboard.tsx
@@ -13654,7 +13553,6 @@ export default function FormTrackingDashboard({
     </div>
   );
 }
-
 ```
 
 ## react\GammaImageDetail.tsx
@@ -13723,7 +13621,6 @@ export default function GammaImageDetail({
     </div>
   );
 }
-
 ```
 
 ## react\GanttTimeline.tsx
@@ -13871,7 +13768,6 @@ export const GanttTimeline: React.FC<GanttTimelineProps> = ({
 };
 
 export default GanttTimeline;
-
 ```
 
 ## react\GroupedBarCompare.tsx
@@ -13963,7 +13859,6 @@ export const GroupedBarCompare: React.FC<GroupedBarCompareProps> = ({
 };
 
 export default GroupedBarCompare;
-
 ```
 
 ## react\GroupedTaskList.tsx
@@ -14232,7 +14127,6 @@ export default function GroupedTaskList({
     </div>
   );
 }
-
 ```
 
 ## react\GuardrailReviewQueue.tsx
@@ -14386,7 +14280,6 @@ export default function GuardrailReviewQueue({
     </div>
   );
 }
-
 ```
 
 ## react\HealthDonutStats.tsx
@@ -14503,7 +14396,6 @@ export const HealthDonutStats: React.FC<HealthDonutStatsProps> = ({ cards, class
 };
 
 export default HealthDonutStats;
-
 ```
 
 ## react\HelpCenterHome.tsx
@@ -14623,7 +14515,6 @@ export default function HelpCenterHome({
     </div>
   );
 }
-
 ```
 
 ## react\HelpResourcesPanel.tsx
@@ -14723,7 +14614,6 @@ export default function HelpResourcesPanel({
     </div>
   );
 }
-
 ```
 
 ## react\HeroSection.tsx
@@ -14819,7 +14709,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 };
 
 export default HeroSection;
-
 ```
 
 ## react\HomepageDashboard.tsx
@@ -15242,7 +15131,6 @@ export default function ImageActionMenu({
     </div>
   );
 }
-
 ```
 
 ## react\ImageGenGallery.tsx
@@ -15374,7 +15262,6 @@ export default function ImageGenGallery({
     </div>
   );
 }
-
 ```
 
 ## react\ImageGenMetaBar.tsx
@@ -15415,7 +15302,6 @@ export default function ImageGenMetaBar({
     </div>
   );
 }
-
 ```
 
 ## react\InboxList.tsx
@@ -15531,7 +15417,6 @@ export const InboxList: React.FC<InboxListProps> = ({
   );
 };
 export default InboxList;
-
 ```
 
 ## react\IntegrationConnectGrid.tsx
@@ -15646,7 +15531,203 @@ export const IntegrationConnectGrid: React.FC<IntegrationConnectGridProps> = ({
 };
 
 export default IntegrationConnectGrid;
+```
 
+## react\InviteTeammatesCard.tsx
+
+```tsx
+import React, { useState } from "react";
+import { UiIcon } from "./UiIcon";
+
+export interface Invitee {
+  email: string;
+  role: string;
+}
+
+export interface InviteTeammatesCardProps {
+  title?: string;
+  description?: string;
+  roles?: string[];
+  defaultRole?: string;
+  pending?: Invitee[];
+  emailPlaceholder?: string;
+  sendLabel?: string;
+  skipLabel?: string;
+  className?: string;
+  onInvite?: (invitee: Invitee) => void;
+  onRemove?: (invitee: Invitee) => void;
+  onSend?: (invitees: Invitee[]) => void;
+  onSkip?: () => void;
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/**
+ * InviteTeammatesCard - onboarding "Invite your team" card: email input with
+ * Enter-to-add validation, role select per pending row, removable chips list
+ * and Send invites / Skip footer actions.
+ */
+export const InviteTeammatesCard: React.FC<InviteTeammatesCardProps> = ({
+  title = "Invite your teammates",
+  description = "Collaboration is better together. Add teammates by email to get started.",
+  roles = ["Admin", "Editor", "Viewer"],
+  defaultRole,
+  pending = [],
+  emailPlaceholder = "teammate@company.com",
+  sendLabel = "Send invites",
+  skipLabel = "Skip for now",
+  className = "",
+  onInvite,
+  onRemove,
+  onSend,
+  onSkip,
+}) => {
+  const [draft, setDraft] = useState("");
+  const [error, setError] = useState("");
+  const [selectedRole, setSelectedRole] = useState(defaultRole ?? roles[0] ?? "Viewer");
+
+  const submit = () => {
+    const email = draft.trim();
+    if (!email) return;
+    if (!EMAIL_RE.test(email)) {
+      setError("Enter a valid email address.");
+      return;
+    }
+    if (pending.some((p) => p.email.toLowerCase() === email.toLowerCase())) {
+      setError("That teammate is already on the list.");
+      return;
+    }
+    setError("");
+    setDraft("");
+    onInvite?.({ email, role: selectedRole });
+  };
+
+  return (
+    <div
+      data-invite-teammates
+      className={`rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 ${className}`}
+    >
+      <div className="border-b border-zinc-100 dark:border-zinc-800 px-5 py-4">
+        <h4 data-invite-teammates-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+          {title}
+        </h4>
+        <p data-invite-teammates-description className="mt-1 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+          {description}
+        </p>
+      </div>
+
+      <div className="px-5 py-4">
+        <div
+          data-invite-teammates-composer
+          className="flex items-center gap-2 rounded-md border border-zinc-200 bg-white px-2 py-1.5 focus-within:border-indigo-500 dark:border-zinc-700 dark:bg-zinc-900"
+        >
+          <input
+            type="email"
+            data-invite-teammates-input
+            value={draft}
+            placeholder={emailPlaceholder}
+            onChange={(e) => {
+              setDraft(e.target.value);
+              if (error) setError("");
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                submit();
+              }
+            }}
+            className="min-w-0 flex-1 bg-transparent text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none dark:text-zinc-50 dark:placeholder-zinc-500"
+          />
+          <select
+            data-invite-teammates-role
+            value={selectedRole}
+            aria-label="Invite role"
+            onChange={(e) => setSelectedRole(e.target.value)}
+            className="shrink-0 rounded border border-zinc-200 bg-white px-1.5 py-1 text-[11px] text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 focus:outline-none"
+          >
+            {roles.map((role) => (
+              <option key={role} value={role}>
+                {role}
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            data-invite-teammates-add
+            onClick={submit}
+            className="shrink-0 rounded bg-zinc-900 p-1 text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+            aria-label="Add teammate"
+          >
+            <UiIcon name="plus" size={12} />
+          </button>
+        </div>
+        {error && (
+          <p data-invite-teammates-error role="alert" className="mt-1.5 text-[11px] text-red-500">
+            {error}
+          </p>
+        )}
+
+        {pending.length > 0 && (
+          <ul data-invite-teammates-list className="mt-3 space-y-1.5">
+            {pending.map((invitee) => (
+              <li
+                key={invitee.email}
+                data-invite-teammates-row={invitee.email}
+                className="flex items-center gap-2 rounded-md border border-zinc-100 bg-zinc-50 px-2.5 py-1.5 dark:border-zinc-800 dark:bg-zinc-800/60"
+              >
+                <UiIcon name="mail" size={13} className="shrink-0 text-zinc-400 dark:text-zinc-500" />
+                <span className="min-w-0 flex-1 truncate text-xs text-zinc-700 dark:text-zinc-200">
+                  {invitee.email}
+                </span>
+                <span className="shrink-0 rounded-full bg-zinc-200 px-1.5 py-0.5 text-[10px] font-medium text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">
+                  {invitee.role}
+                </span>
+                <button
+                  type="button"
+                  data-invite-teammates-remove
+                  aria-label={`Remove ${invitee.email}`}
+                  onClick={() => onRemove?.(invitee)}
+                  className="shrink-0 rounded p-0.5 text-zinc-400 transition-colors hover:text-red-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                >
+                  <UiIcon name="x" size={11} />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div className="flex items-center gap-2 border-t border-zinc-100 dark:border-zinc-800 px-5 py-3">
+        <button
+          type="button"
+          data-invite-teammates-send
+          disabled={pending.length === 0}
+          onClick={() => pending.length > 0 && onSend?.(pending)}
+          className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+            pending.length > 0
+              ? "bg-indigo-600 text-white hover:bg-indigo-500"
+              : "cursor-not-allowed bg-zinc-100 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500"
+          }`}
+        >
+          {sendLabel}
+        </button>
+        <button
+          type="button"
+          data-invite-teammates-skip
+          onClick={() => onSkip?.()}
+          className="rounded-md px-3 py-1.5 text-xs font-medium text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+        >
+          {skipLabel}
+        </button>
+        <span className="ml-auto text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">
+          {pending.length} pending
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export default InviteTeammatesCard;
 ```
 
 ## react\InvoiceHistoryTable.tsx
@@ -15762,7 +15843,6 @@ export const InvoiceHistoryTable: React.FC<InvoiceHistoryTableProps> = ({
 };
 
 export default InvoiceHistoryTable;
-
 ```
 
 ## react\IterationActionBar.tsx
@@ -15854,7 +15934,6 @@ export default function IterationActionBar({
     </div>
   );
 }
-
 ```
 
 ## react\JumpBackIn.tsx
@@ -15940,7 +16019,6 @@ export default function JumpBackIn({
     </div>
   );
 }
-
 ```
 
 ## react\KanbanBoard.tsx
@@ -16147,7 +16225,6 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 };
 
 export default KanbanBoard;
-
 ```
 
 ## react\KnowledgeDrawer.tsx
@@ -16304,7 +16381,6 @@ export const KnowledgeDrawer: React.FC<KnowledgeDrawerProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\LiquidGlass.tsx
@@ -16468,7 +16544,6 @@ export const LiquidGlass: React.FC<LiquidGlassProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\LiveTailLogConsole.tsx
@@ -16582,7 +16657,6 @@ export default function LiveTailLogConsole({
     </div>
   );
 }
-
 ```
 
 ## react\LogoCloud.tsx
@@ -16641,7 +16715,6 @@ export const LogoCloud: React.FC<LogoCloudProps> = ({
 };
 
 export default LogoCloud;
-
 ```
 
 ## react\MapActivityList.tsx
@@ -16787,7 +16860,6 @@ export default function MapActivityList({
     </div>
   );
 }
-
 ```
 
 ## react\MapPropertyCard.tsx
@@ -16921,7 +16993,6 @@ export default function MapPropertyCard({
     </div>
   );
 }
-
 ```
 
 ## react\MarqueeWall.tsx
@@ -17023,7 +17094,6 @@ export const MarqueeWall: React.FC<MarqueeWallProps> = ({ rows, speedSeconds = 4
 };
 
 export default MarqueeWall;
-
 ```
 
 ## react\MasonryDensityControls.tsx
@@ -17157,7 +17227,6 @@ export default function MasonryDensityControls({
     </div>
   );
 }
-
 ```
 
 ## react\McpConnectPanel.tsx
@@ -17261,7 +17330,6 @@ export default function McpConnectPanel({
     </div>
   );
 }
-
 ```
 
 ## react\MembershipTierGrid.tsx
@@ -17368,7 +17436,6 @@ export default function MembershipTierGrid({
     </div>
   );
 }
-
 ```
 
 ## react\MemoryPanel.tsx
@@ -17504,7 +17571,6 @@ export default function MemoryPanel({
     </div>
   );
 }
-
 ```
 
 ## react\MessageActionToolbar.tsx
@@ -17630,7 +17696,6 @@ export const MessageActionToolbar: React.FC<MessageActionToolbarProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\MetricLineChart.tsx
@@ -17934,7 +17999,6 @@ export default function MetricLineChart({
     </div>
   );
 }
-
 ```
 
 ## react\MetricStrip.tsx
@@ -18023,7 +18087,6 @@ export const MetricStrip: React.FC<MetricStripProps> = ({
 };
 
 export default MetricStrip;
-
 ```
 
 ## react\Modal.tsx
@@ -18116,7 +18179,6 @@ export const Modal: React.FC<ModalProps> = ({
 };
 
 export default Modal;
-
 ```
 
 ## react\ModelComparePane.tsx
@@ -18222,7 +18284,6 @@ export default function ModelComparePane({
     </div>
   );
 }
-
 ```
 
 ## react\ModelPricingCard.tsx
@@ -18305,7 +18366,6 @@ export default function ModelPricingCard({
     </div>
   );
 }
-
 ```
 
 ## react\ModelSelector.tsx
@@ -18510,7 +18570,6 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
   );
 };
 export default ModelSelector;
-
 ```
 
 ## react\MonitorRunList.tsx
@@ -18661,7 +18720,6 @@ export default function MonitorRunList({
     </div>
   );
 }
-
 ```
 
 ## react\Navbar.tsx
@@ -18799,7 +18857,6 @@ export const Navbar: React.FC<NavbarProps> = ({ brand, links = [], menus = [], c
 };
 
 export default Navbar;
-
 ```
 
 ## react\NoResultsState.tsx
@@ -18868,7 +18925,6 @@ export const NoResultsState: React.FC<NoResultsStateProps> = ({
 };
 
 export default NoResultsState;
-
 ```
 
 ## react\NotificationCenter.tsx
@@ -19048,7 +19104,6 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
 };
 
 export default NotificationCenter;
-
 ```
 
 ## react\NotificationPrefsMatrix.tsx
@@ -19146,7 +19201,6 @@ export const NotificationPrefsMatrix: React.FC<NotificationPrefsMatrixProps> = (
 };
 
 export default NotificationPrefsMatrix;
-
 ```
 
 ## react\OnboardingChecklist.tsx
@@ -19263,7 +19317,6 @@ export const OnboardingChecklist: React.FC<OnboardingChecklistProps> = ({
 };
 
 export default OnboardingChecklist;
-
 ```
 
 ## react\OnboardingStepper.tsx
@@ -19416,7 +19469,6 @@ export const OnboardingStepper: React.FC<OnboardingStepperProps> = ({
 };
 
 export default OnboardingStepper;
-
 ```
 
 ## react\OrderCard.tsx
@@ -19532,7 +19584,6 @@ export default function OrderCard({
     </div>
   );
 }
-
 ```
 
 ## react\OrderSummaryPanel.tsx
@@ -19649,7 +19700,6 @@ export default function OrderSummaryPanel({
     </div>
   );
 }
-
 ```
 
 ## react\OrderTracker.tsx
@@ -19763,7 +19813,6 @@ export default function OrderTracker({
     </div>
   );
 }
-
 ```
 
 ## react\OtpInput.tsx
@@ -19900,7 +19949,6 @@ export default function OtpInput({
     </div>
   );
 }
-
 ```
 
 ## react\PageHeader.tsx
@@ -20017,7 +20065,6 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 );
 
 export default PageHeader;
-
 ```
 
 ## react\Pagination.tsx
@@ -20124,7 +20171,6 @@ export const Pagination: React.FC<PaginationProps> = ({
 };
 
 export default Pagination;
-
 ```
 
 ## react\PaymentMethodCard.tsx
@@ -20203,7 +20249,6 @@ export default function PaymentMethodCard({
     </div>
   );
 }
-
 ```
 
 ## react\PaywallDialog.tsx
@@ -20414,7 +20459,6 @@ export default function PaywallDialog({
     </div>
   );
 }
-
 ```
 
 ## react\PermissionDeniedState.tsx
@@ -20466,7 +20510,6 @@ export const PermissionDeniedState: React.FC<PermissionDeniedStateProps> = ({
 };
 
 export default PermissionDeniedState;
-
 ```
 
 ## react\PermissionMatrix.tsx
@@ -20632,7 +20675,6 @@ export default function PermissionMatrix({
     </div>
   );
 }
-
 ```
 
 ## react\PersonaPresetGrid.tsx
@@ -20719,7 +20761,6 @@ export default function PersonaPresetGrid({
     </div>
   );
 }
-
 ```
 
 ## react\PipelineStageList.tsx
@@ -20840,7 +20881,6 @@ export default function PipelineStageList({ groups, defaultExpanded = [], showDu
     </div>
   );
 }
-
 ```
 
 ## react\PlanComparisonTable.tsx
@@ -20976,7 +21016,6 @@ export default function PlanComparisonTable({
     </div>
   );
 }
-
 ```
 
 ## react\PointerRipples.tsx
@@ -22281,7 +22320,6 @@ export const PointerRipples: React.FC<PointerRipplesProps> = ({
     />
   );
 };
-
 ```
 
 ## react\PrReviewQueue.tsx
@@ -22378,7 +22416,6 @@ export default function PrReviewQueue({
     </div>
   );
 }
-
 ```
 
 ## react\PricingTable.tsx
@@ -22464,7 +22501,6 @@ export const PricingTable: React.FC<PricingTableProps> = ({ plans, onSelect, cla
 };
 
 export default PricingTable;
-
 ```
 
 ## react\ProfileHeader.tsx
@@ -22634,7 +22670,6 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   );
 };
 export default ProfileHeader;
-
 ```
 
 ## react\ProjectGanttTimeline.tsx
@@ -22785,7 +22820,6 @@ export default function ProjectGanttTimeline({
     </div>
   );
 }
-
 ```
 
 ## react\PromptChips.tsx
@@ -22823,7 +22857,6 @@ export const PromptChips: React.FC<PromptChipsProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\PromptLibrary.tsx
@@ -23005,7 +23038,6 @@ export const PromptLibrary: React.FC<PromptLibraryProps> = ({
 };
 
 export default PromptLibrary;
-
 ```
 
 ## react\PromptPerformanceTable.tsx
@@ -23115,7 +23147,6 @@ export default function PromptPerformanceTable({
     </div>
   );
 }
-
 ```
 
 ## react\PromptSaveDialog.tsx
@@ -23248,7 +23279,6 @@ export default function PromptSaveDialog({
     </div>
   );
 }
-
 ```
 
 ## react\PromptTemplateGrid.tsx
@@ -23303,7 +23333,6 @@ export const PromptTemplateGrid: React.FC<PromptTemplateGridProps> = ({ template
   );
 };
 export default PromptTemplateGrid;
-
 ```
 
 ## react\PromptTunerResult.tsx
@@ -23391,7 +23420,6 @@ export default function PromptTunerResult({
     </div>
   );
 }
-
 ```
 
 ## react\PromptVariantDiff.tsx
@@ -23515,7 +23543,6 @@ export default function PromptVariantDiff({
     </div>
   );
 }
-
 ```
 
 ## react\QaTestTable.tsx
@@ -23644,7 +23671,6 @@ export default function QaTestTable({
     </div>
   );
 }
-
 ```
 
 ## react\QuoteMasonry.tsx
@@ -23715,7 +23741,6 @@ export const QuoteMasonry: React.FC<QuoteMasonryProps> = ({ quotes, columns = 3,
 };
 
 export default QuoteMasonry;
-
 ```
 
 ## react\RankList.tsx
@@ -23819,7 +23844,6 @@ export const RankList: React.FC<RankListProps> = ({
 };
 
 export default RankList;
-
 ```
 
 ## react\ResourceList.tsx
@@ -23927,7 +23951,6 @@ export const ResourceList: React.FC<ResourceListProps> = ({
 };
 
 export default ResourceList;
-
 ```
 
 ## react\RichToolbar.tsx
@@ -24009,7 +24032,6 @@ export const RichToolbar: React.FC<RichToolbarProps> = ({ groups = [], onAction,
 };
 
 export default RichToolbar;
-
 ```
 
 ## react\RoadmapTimeline.tsx
@@ -24136,7 +24158,6 @@ export const RoadmapTimeline: React.FC<RoadmapTimelineProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\SchedulerSlots.tsx
@@ -24272,7 +24293,6 @@ export const SchedulerSlots: React.FC<SchedulerSlotsProps> = ({
 };
 
 export default SchedulerSlots;
-
 ```
 
 ## react\SearchInput.tsx
@@ -24368,7 +24388,6 @@ export const SearchInput: React.FC<SearchInputProps> = ({
 };
 
 export default SearchInput;
-
 ```
 
 ## react\SearchResultsPage.tsx
@@ -24563,7 +24582,6 @@ export default function SearchResultsPage({
     </div>
   );
 }
-
 ```
 
 ## react\SearchTypeahead.tsx
@@ -24710,7 +24728,6 @@ export default function SearchTypeahead({
     </div>
   );
 }
-
 ```
 
 ## react\SeatBillingTable.tsx
@@ -24847,7 +24864,6 @@ export default function SeatBillingTable({
     </div>
   );
 }
-
 ```
 
 ## react\SegmentBreakdownBars.tsx
@@ -24948,7 +24964,6 @@ export const SegmentBreakdownBars: React.FC<SegmentBreakdownBarsProps> = ({
 };
 
 export default SegmentBreakdownBars;
-
 ```
 
 ## react\ServiceStatusList.tsx
@@ -25053,7 +25068,6 @@ export default function ServiceStatusList({ services, checks = [], durationLabel
     </div>
   );
 }
-
 ```
 
 ## react\SessionDeviceTable.tsx
@@ -25203,7 +25217,6 @@ export default function SessionDeviceTable({
     </div>
   );
 }
-
 ```
 
 ## react\SessionDiagnosticsPanel.tsx
@@ -25359,7 +25372,6 @@ export default function SessionDiagnosticsPanel({
     </div>
   );
 }
-
 ```
 
 ## react\SettingsPanel.tsx
@@ -25495,7 +25507,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
 };
 
 export default SettingsPanel;
-
 ```
 
 ## react\SettingsSideDrawer.tsx
@@ -25687,7 +25698,6 @@ export default function SettingsSideDrawer({
     </div>
   );
 }
-
 ```
 
 ## react\ShareAccessDialog.tsx
@@ -25839,7 +25849,6 @@ export default function ShareAccessDialog({
     </div>
   );
 }
-
 ```
 
 ## react\ShareChatDialog.tsx
@@ -25966,7 +25975,6 @@ export default function ShareChatDialog({
     </div>
   );
 }
-
 ```
 
 ## react\SharedChatViewer.tsx
@@ -26052,7 +26060,6 @@ export default function SharedChatViewer({
     </div>
   );
 }
-
 ```
 
 ## react\ShortcutCheatSheet.tsx
@@ -26157,7 +26164,6 @@ export default function ShortcutCheatSheet({
 }
 
 export { KbdChip };
-
 ```
 
 ## react\ShortcutsOverlay.tsx
@@ -26332,7 +26338,6 @@ export const ShortcutsOverlay: React.FC<ShortcutsOverlayProps> = ({
 };
 
 export default ShortcutsOverlay;
-
 ```
 
 ## react\SideDrawer.tsx
@@ -26431,7 +26436,6 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({
 };
 
 export default SideDrawer;
-
 ```
 
 ## react\SideNav.tsx
@@ -26527,7 +26531,6 @@ export const SideNav: React.FC<SideNavProps> = ({
 };
 
 export default SideNav;
-
 ```
 
 ## react\SiteFooter.tsx
@@ -26624,7 +26627,6 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
 );
 
 export default SiteFooter;
-
 ```
 
 ## react\SourcesCitation.tsx
@@ -26711,7 +26713,6 @@ export const SourcesCitation: React.FC<SourcesCitationProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\SpendTrendChart.tsx
@@ -26909,7 +26910,6 @@ export default function SpendTrendChart({
     </div>
   );
 }
-
 ```
 
 ## react\SpotlightGlareCard.tsx
@@ -27030,7 +27030,6 @@ export const SpotlightGlareCard: React.FC<SpotlightGlareCardProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\StatCard.tsx
@@ -27126,7 +27125,6 @@ export const StatCard: React.FC<StatCardProps> = ({
 };
 
 export default StatCard;
-
 ```
 
 ## react\StatsBand.tsx
@@ -27186,7 +27184,6 @@ export const StatsBand: React.FC<StatsBandProps> = ({
 };
 
 export default StatsBand;
-
 ```
 
 ## react\StatusCountTabs.tsx
@@ -27248,7 +27245,6 @@ export default function StatusCountTabs({ tabs, value, size = "md", fullWidth = 
     </div>
   );
 }
-
 ```
 
 ## react\StatusIndicator.tsx
@@ -27331,7 +27327,6 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\StepSlider.tsx
@@ -27439,7 +27434,6 @@ export const StepSlider: React.FC<StepSliderProps> = ({
   );
 };
 export default StepSlider;
-
 ```
 
 ## react\Stepper.tsx
@@ -27526,7 +27520,6 @@ export const Stepper: React.FC<StepperProps> = ({ steps, current = 1, onStepClic
 };
 
 export default Stepper;
-
 ```
 
 ## react\StockPhotoPicker.tsx
@@ -27664,7 +27657,6 @@ export default function StockPhotoPicker({
     </div>
   );
 }
-
 ```
 
 ## react\StreamMarkdown.tsx
@@ -27789,7 +27781,6 @@ export const StreamMarkdown: React.FC<StreamMarkdownProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\StreamingProgressBar.tsx
@@ -27846,7 +27837,6 @@ export const StreamingProgressBar: React.FC<StreamingProgressBarProps> = ({
   );
 };
 export default StreamingProgressBar;
-
 ```
 
 ## react\SuccessToast.tsx
@@ -27922,7 +27912,6 @@ export default function SuccessToast({
     </div>
   );
 }
-
 ```
 
 ## react\SystemPromptEditor.tsx
@@ -28038,7 +28027,6 @@ export default function SystemPromptEditor({
     </div>
   );
 }
-
 ```
 
 ## react\TableSavedViews.tsx
@@ -28130,7 +28118,6 @@ export const TableSavedViews: React.FC<TableSavedViewsProps> = ({
 };
 
 export default TableSavedViews;
-
 ```
 
 ## react\Tabs.tsx
@@ -28252,7 +28239,6 @@ export const Tabs: React.FC<TabsProps> = ({
 };
 
 export default Tabs;
-
 ```
 
 ## react\Tag.tsx
@@ -28319,7 +28305,6 @@ export const Tag: React.FC<TagProps> = ({ label, tone = "neutral", size = "md", 
 };
 
 export default Tag;
-
 ```
 
 ## react\TargetGauge.tsx
@@ -28435,7 +28420,6 @@ export const TargetGauge: React.FC<TargetGaugeProps> = ({
 };
 
 export default TargetGauge;
-
 ```
 
 ## react\TaskCardModal.tsx
@@ -28749,7 +28733,6 @@ export default function TaskCardModal({
     </div>
   );
 }
-
 ```
 
 ## react\TaskDetailPanel.tsx
@@ -28968,7 +28951,6 @@ export default function TaskDetailPanel({
     </div>
   );
 }
-
 ```
 
 ## react\TestimonialGrid.tsx
@@ -29082,7 +29064,6 @@ export const TestimonialGrid: React.FC<TestimonialGridProps> = ({
 };
 
 export default TestimonialGrid;
-
 ```
 
 ## react\ThemeToggle.tsx
@@ -29187,7 +29168,6 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\ThinkingBlock.tsx
@@ -29337,7 +29317,6 @@ export const ThinkingBlock: React.FC<ThinkingBlockProps> = ({
 };
 
 export default ThinkingBlock;
-
 ```
 
 ## react\TimeSlotPicker.tsx
@@ -29486,7 +29465,6 @@ export default function TimeSlotPicker({
     </div>
   );
 }
-
 ```
 
 ## react\TimeframePicker.tsx
@@ -29578,7 +29556,6 @@ export const TimeframePicker: React.FC<TimeframePickerProps> = ({
 };
 
 export default TimeframePicker;
-
 ```
 
 ## react\ToastStack.tsx
@@ -29689,7 +29666,6 @@ export const ToastStack: React.FC<ToastStackProps> = ({
   );
 };
 export default ToastStack;
-
 ```
 
 ## react\ToggleSwitch.tsx
@@ -29758,7 +29734,6 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 };
 
 export default ToggleSwitch;
-
 ```
 
 ## react\TokenCostBreakdown.tsx
@@ -29888,7 +29863,6 @@ export default function TokenCostBreakdown({
     </div>
   );
 }
-
 ```
 
 ## react\ToolApprovalCard.tsx
@@ -29993,7 +29967,6 @@ export const ToolApprovalCard: React.FC<ToolApprovalCardProps> = ({
   );
 };
 export default ToolApprovalCard;
-
 ```
 
 ## react\ToolCallBadge.tsx
@@ -30104,7 +30077,6 @@ export const ToolCallBadge: React.FC<ToolCallBadgeProps> = ({
     </div>
   );
 };
-
 ```
 
 ## react\ToolSchemaEditor.tsx
@@ -30230,7 +30202,6 @@ export default function ToolSchemaEditor({
     </div>
   );
 }
-
 ```
 
 ## react\Tooltip.tsx
@@ -30272,7 +30243,6 @@ export const Tooltip: React.FC<TooltipProps> = ({ content, side = "top", childre
 };
 
 export default Tooltip;
-
 ```
 
 ## react\TopUpBalanceDialog.tsx
@@ -30520,7 +30490,6 @@ export default function TopUpBalanceDialog({
     </div>
   );
 }
-
 ```
 
 ## react\TourTooltip.tsx
@@ -30653,7 +30622,6 @@ export default function TourTooltip({
     </div>
   );
 }
-
 ```
 
 ## react\TraceSpanWaterfall.tsx
@@ -30791,7 +30759,6 @@ export default function TraceSpanWaterfall({
     </div>
   );
 }
-
 ```
 
 ## react\TrialBanner.tsx
@@ -30873,7 +30840,6 @@ export default function TrialBanner({
     </div>
   );
 }
-
 ```
 
 ## react\TrialExpiryNotice.tsx
@@ -31008,7 +30974,6 @@ export default function TrialExpiryNotice({
     </div>
   );
 }
-
 ```
 
 ## react\TypingIndicator.tsx
@@ -31059,7 +31024,6 @@ export const TypingIndicator: React.FC<TypingIndicatorProps> = ({
   );
 };
 export default TypingIndicator;
-
 ```
 
 ## react\UiIcon.tsx
@@ -31197,7 +31161,6 @@ export const Send = icon("send");
 export const Star = icon("star");
 export const Info = icon("info");
 export const CreditCard = icon("credit-card");
-
 ```
 
 ## react\UpgradeCheckoutPanel.tsx
@@ -31366,7 +31329,6 @@ export default function UpgradeCheckoutPanel({
     </div>
   );
 }
-
 ```
 
 ## react\UpgradePromptCard.tsx
@@ -31457,7 +31419,6 @@ export const UpgradePromptCard: React.FC<UpgradePromptCardProps> = ({
 };
 
 export default UpgradePromptCard;
-
 ```
 
 ## react\UsageCreditsDonut.tsx
@@ -31605,7 +31566,6 @@ export default function UsageCreditsDonut({
     </div>
   );
 }
-
 ```
 
 ## react\UsageMeter.tsx
@@ -31680,7 +31640,6 @@ export const UsageMeter: React.FC<UsageMeterProps> = ({
 };
 
 export default UsageMeter;
-
 ```
 
 ## react\UsagePricingBreakdown.tsx
@@ -31782,7 +31741,6 @@ export const UsagePricingBreakdown: React.FC<UsagePricingBreakdownProps> = ({
 };
 
 export default UsagePricingBreakdown;
-
 ```
 
 ## react\UsageQuotaCard.tsx
@@ -31860,7 +31818,6 @@ export default function UsageQuotaCard({
     </div>
   );
 }
-
 ```
 
 ## react\VideoProjectSettings.tsx
@@ -32041,7 +31998,6 @@ export default function VideoProjectSettings({
     </div>
   );
 }
-
 ```
 
 ## react\VisionAnalysisCard.tsx
@@ -32111,7 +32067,6 @@ export default function VisionAnalysisCard({
     </div>
   );
 }
-
 ```
 
 ## react\VoiceModePanel.tsx
@@ -32251,7 +32206,6 @@ export const VoiceModePanel: React.FC<VoiceModePanelProps> = ({
 };
 
 export default VoiceModePanel;
-
 ```
 
 ## react\VoiceOrb.tsx
@@ -32363,7 +32317,6 @@ export default function VoiceOrb({
     </div>
   );
 }
-
 ```
 
 ## react\VoiceSessionHistory.tsx
@@ -32462,7 +32415,6 @@ export default function VoiceSessionHistory({
     </div>
   );
 }
-
 ```
 
 ## react\WebhookConfigPanel.tsx
@@ -32586,7 +32538,6 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
 };
 
 export default WebhookConfigPanel;
-
 ```
 
 ## react\WeekCalendarGrid.tsx
@@ -32803,7 +32754,6 @@ export default function WeekCalendarGrid({
     </div>
   );
 }
-
 ```
 
 ## react\WizardSteps.tsx
@@ -32939,7 +32889,322 @@ export const WizardSteps: React.FC<WizardStepsProps> = ({
 };
 
 export default WizardSteps;
+```
 
+## react\WorkspaceSetupPanel.tsx
+
+```tsx
+import React from "react";
+import { UiIcon } from "./UiIcon";
+
+export interface SetupSection {
+  id: string;
+  title: string;
+  tasks: { id: string; label: string; done: boolean; href?: string }[];
+}
+
+export interface UpNextCard {
+  id: string;
+  title: string;
+  description?: string;
+}
+
+export interface WorkspaceSetupPanelProps {
+  title?: string;
+  sections: SetupSection[];
+  upNext?: UpNextCard[];
+  className?: string;
+  onTaskClick?: (section: SetupSection, task: SetupSection["tasks"][number]) => void;
+  onUpNext?: (card: UpNextCard) => void;
+}
+
+/**
+ * WorkspaceSetupPanel - Customer.io "Workspace setup" panel: per-section
+ * checklists with strikethrough completed rows and per-task link arrows,
+ * plus an optional "Up next" card grid for the following actions.
+ */
+export const WorkspaceSetupPanel: React.FC<WorkspaceSetupPanelProps> = ({
+  title = "Workspace setup",
+  sections,
+  upNext = [],
+  className = "",
+  onTaskClick,
+  onUpNext,
+}) => {
+  const total = sections.reduce((sum, s) => sum + s.tasks.length, 0);
+  const done = sections.reduce(
+    (sum, s) => sum + s.tasks.filter((t) => t.done).length,
+    0
+  );
+  const allDone = total > 0 && done === total;
+
+  return (
+    <div
+      data-workspace-setup
+      className={`rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 ${className}`}
+    >
+      <div className="border-b border-zinc-100 dark:border-zinc-800 px-5 py-4">
+        <h4 data-workspace-setup-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+          {title}
+        </h4>
+        <p data-workspace-setup-count className="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">
+          {allDone ? "All steps complete — your workspace is ready." : `${done} of ${total} steps complete`}
+        </p>
+      </div>
+
+      <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
+        {sections.map((section) => {
+          const sectionDone = section.tasks.filter((t) => t.done).length;
+          return (
+            <div key={section.id} data-workspace-setup-section={section.id} className="px-5 py-4">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-100">{section.title}</span>
+                <span
+                  data-workspace-setup-section-count={section.id}
+                  className={`rounded-full px-1.5 py-0.5 text-[10px] font-medium tabular-nums ${
+                    sectionDone === section.tasks.length
+                      ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400"
+                      : "bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400"
+                  }`}
+                >
+                  {sectionDone}/{section.tasks.length}
+                </span>
+              </div>
+              <ul className="mt-2 space-y-1.5">
+                {section.tasks.map((task) => (
+                  <li key={task.id} data-workspace-setup-task={task.id}>
+                    <button
+                      type="button"
+                      onClick={() => onTaskClick?.(section, task)}
+                      className="flex w-full items-center gap-2 rounded-md px-1 py-0.5 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                    >
+                      <span
+                        className={`flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border ${
+                          task.done
+                            ? "border-emerald-500 bg-emerald-500 text-white"
+                            : "border-zinc-300 dark:border-zinc-600"
+                        }`}
+                      >
+                        {task.done && <UiIcon name="check" size={8} />}
+                      </span>
+                      <span
+                        className={`min-w-0 flex-1 truncate text-xs ${
+                          task.done
+                            ? "text-zinc-400 dark:text-zinc-500 line-through"
+                            : "text-zinc-700 dark:text-zinc-200"
+                        }`}
+                      >
+                        {task.label}
+                      </span>
+                      {!task.done && (
+                        <UiIcon
+                          name="arrow-right"
+                          size={12}
+                          className="shrink-0 text-zinc-300 dark:text-zinc-600"
+                        />
+                      )}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
+
+      {upNext.length > 0 && (
+        <div className="border-t border-zinc-100 dark:border-zinc-800 px-5 py-4">
+          <div className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
+            Up next
+          </div>
+          <div data-workspace-setup-up-next className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
+            {upNext.map((card) => (
+              <button
+                key={card.id}
+                type="button"
+                data-workspace-setup-next-card={card.id}
+                onClick={() => onUpNext?.(card)}
+                className="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3 py-2.5 text-left transition-colors hover:border-indigo-400 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+              >
+                <div className="text-xs font-medium text-zinc-800 dark:text-zinc-200">{card.title}</div>
+                {card.description && (
+                  <div className="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">{card.description}</div>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default WorkspaceSetupPanel;
+```
+
+## react\WorkspaceSurveyCard.tsx
+
+```tsx
+import React, { useState } from "react";
+
+export interface SurveyQuestion {
+  id: string;
+  label: string;
+  description?: string;
+  options: { id: string; label: string }[];
+  multi?: boolean;
+  placeholder?: string;
+}
+
+export interface WorkspaceSurveyCardProps {
+  title?: string;
+  stepLabel?: string;
+  questions: SurveyQuestion[];
+  answers?: Record<string, string | string[]>;
+  nextLabel?: string;
+  className?: string;
+  onAnswer?: (questionId: string, optionId: string) => void;
+  onText?: (questionId: string, text: string) => void;
+  onNext?: () => void;
+}
+
+/**
+ * WorkspaceSurveyCard - Hex/AirOps onboarding survey: one card per question
+ * group with option pills (single-select) or chips (multi-select), an optional
+ * free-text line, a progress-dot strip and a gated Continue button.
+ */
+export const WorkspaceSurveyCard: React.FC<WorkspaceSurveyCardProps> = ({
+  title = "Tell us about your workspace",
+  stepLabel,
+  questions,
+  answers = {},
+  nextLabel = "Continue",
+  className = "",
+  onAnswer,
+  onText,
+  onNext,
+}) => {
+  const [texts, setTexts] = useState<Record<string, string>>({});
+
+  const answeredCount = questions.filter((q) => {
+    const a = answers[q.id];
+    return Array.isArray(a) ? a.length > 0 : typeof a === "string" && a.length > 0;
+  }).length;
+  const allAnswered = answeredCount === questions.length && questions.length > 0;
+
+  return (
+    <div
+      data-workspace-survey
+      className={`rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 ${className}`}
+    >
+      <div className="border-b border-zinc-100 dark:border-zinc-800 px-5 py-4">
+        <h4 data-workspace-survey-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+          {title}
+        </h4>
+        {stepLabel && (
+          <p data-workspace-survey-step className="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">
+            {stepLabel}
+          </p>
+        )}
+        <div data-workspace-survey-dots className="mt-3 flex items-center gap-1.5">
+          {questions.map((q) => {
+            const a = answers[q.id];
+            const filled = Array.isArray(a) ? a.length > 0 : typeof a === "string" && a.length > 0;
+            return (
+              <span
+                key={q.id}
+                title={q.label}
+                className={`h-1.5 w-6 rounded-full transition-colors ${filled ? "bg-indigo-600" : "bg-zinc-200 dark:bg-zinc-700"}`}
+              />
+            );
+          })}
+          <span className="ml-1 text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">
+            {answeredCount}/{questions.length}
+          </span>
+        </div>
+      </div>
+
+      <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
+        {questions.map((q) => {
+          const answer = answers[q.id];
+          const selected = Array.isArray(answer) ? answer : typeof answer === "string" ? [answer] : [];
+          return (
+            <div key={q.id} data-workspace-survey-question={q.id} className="px-5 py-4">
+              <div className="text-xs font-medium text-zinc-800 dark:text-zinc-200">{q.label}</div>
+              {q.description && (
+                <p className="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">{q.description}</p>
+              )}
+              <div
+                data-workspace-survey-options={q.id}
+                role={q.multi ? "group" : "radiogroup"}
+                aria-label={q.label}
+                className="mt-2.5 flex flex-wrap gap-1.5"
+              >
+                {q.options.map((opt) => {
+                  const active = selected.includes(opt.id);
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      data-workspace-survey-option={opt.id}
+                      aria-pressed={q.multi ? active : undefined}
+                      aria-checked={q.multi ? undefined : active}
+                      onClick={() => onAnswer?.(q.id, opt.id)}
+                      className={`rounded-full border px-3 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+                        active
+                          ? "border-indigo-600 bg-indigo-600 text-white"
+                          : "border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400"
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </div>
+              {q.placeholder && (
+                <input
+                  type="text"
+                  data-workspace-survey-input={q.id}
+                  value={texts[q.id] ?? ""}
+                  placeholder={q.placeholder}
+                  onChange={(e) => {
+                    const text = e.target.value;
+                    setTexts((prev) => ({ ...prev, [q.id]: text }));
+                    onText?.(q.id, text);
+                  }}
+                  className="mt-2.5 w-full rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-xs text-zinc-900 placeholder-zinc-400 focus:border-indigo-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder-zinc-500"
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="border-t border-zinc-100 dark:border-zinc-800 px-5 py-3">
+        <button
+          type="button"
+          data-workspace-survey-next
+          disabled={!allAnswered}
+          onClick={() => onNext?.()}
+          className={`w-full rounded-md px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+            allAnswered
+              ? "bg-indigo-600 text-white hover:bg-indigo-500"
+              : "cursor-not-allowed bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500"
+          }`}
+        >
+          {nextLabel}
+        </button>
+        {!allAnswered && (
+          <p className="mt-1.5 text-center text-[11px] text-zinc-400 dark:text-zinc-500">
+            Answer all {questions.length} questions to continue.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default WorkspaceSurveyCard;
 ```
 
 ## react\WorkspaceSwitcherMenu.tsx
@@ -33066,7 +33331,6 @@ export default function WorkspaceSwitcherMenu({
     </div>
   );
 }
-
 ```
 
 ## react\WriterStyleGuide.tsx
@@ -33168,7 +33432,6 @@ export default function WriterStyleGuide({
     </div>
   );
 }
-
 ```
 
 ## react\ZendeskFieldSuggest.tsx
@@ -33233,7 +33496,6 @@ export default function ZendeskFieldSuggest({
     </div>
   );
 }
-
 ```
 
 ## react\ZoomControlBar.tsx
@@ -33404,7 +33666,6 @@ export default function ZoomControlBar({
     </div>
   );
 }
-
 ```
 
 ## react\paper-theme.ts
@@ -33499,7 +33760,6 @@ export const PaperTrailThemeCSS = `
   background-size: auto, auto, 120px 120px, 120px 120px;
 }
 `;
-
 ```
 
 ## vanilla\AIInlineMenu.js
@@ -33654,7 +33914,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-inline-menu
 }
 
 export default AIInlineMenuElement;
-
 ```
 
 ## vanilla\Accordion.js
@@ -33785,7 +34044,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('accordion-list
   customElements.define('accordion-list', AccordionElement);
 }
 export default AccordionElement;
-
 ```
 
 ## vanilla\AccountSecurityPanel.js
@@ -33935,7 +34193,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('account-securi
 }
 
 export default AccountSecurityPanelElement;
-
 ```
 
 ## vanilla\AccountSwitcher.js
@@ -34145,7 +34402,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('account-switch
   customElements.define('account-switcher', AccountSwitcherElement);
 }
 export default AccountSwitcherElement;
-
 ```
 
 ## vanilla\ActivityFeed.js
@@ -34246,7 +34502,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('activity-feed'
   customElements.define('activity-feed', ActivityFeedElement);
 }
 export default ActivityFeedElement;
-
 ```
 
 ## vanilla\AddonPicker.js
@@ -34365,7 +34620,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('addon-picker')
 }
 
 export default AddonPickerElement;
-
 ```
 
 ## vanilla\AgentBuilderCard.js
@@ -34480,7 +34734,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-builder-
 }
 
 export default AgentBuilderCardElement;
-
 ```
 
 ## vanilla\AgentEnvVarEditor.js
@@ -34651,7 +34904,6 @@ export class AgentEnvVarEditorElement extends HTMLElement {
 if (!customElements.get('agent-env-var-editor')) {
   customElements.define('agent-env-var-editor', AgentEnvVarEditorElement);
 }
-
 ```
 
 ## vanilla\AgentErrorRecovery.js
@@ -34734,7 +34986,6 @@ export class AgentErrorRecoveryElement extends HTMLElement {
 if (!customElements.get('agent-error-recovery')) {
   customElements.define('agent-error-recovery', AgentErrorRecoveryElement);
 }
-
 ```
 
 ## vanilla\AgentGuardrailViolationCard.js
@@ -34874,7 +35125,6 @@ export default AgentGuardrailViolationCardElement;
 if (!customElements.get('agent-guardrail-violation-card')) {
   customElements.define('agent-guardrail-violation-card', AgentGuardrailViolationCardElement);
 }
-
 ```
 
 ## vanilla\AgentModelFallbackList.js
@@ -35038,7 +35288,6 @@ export default AgentModelFallbackListElement;
 if (!customElements.get('agent-model-fallback-list')) {
   customElements.define('agent-model-fallback-list', AgentModelFallbackListElement);
 }
-
 ```
 
 ## vanilla\AgentNotificationFeed.js
@@ -35163,7 +35412,6 @@ export class AgentNotificationFeedElement extends HTMLElement {
 if (!customElements.get('agent-notification-feed')) {
   customElements.define('agent-notification-feed', AgentNotificationFeedElement);
 }
-
 ```
 
 ## vanilla\AgentRunLog.js
@@ -35292,7 +35540,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-run-log'
   customElements.define('agent-run-log', AgentRunLogElement);
 }
 export default AgentRunLogElement;
-
 ```
 
 ## vanilla\AgentScheduleEditor.js
@@ -35485,7 +35732,6 @@ export default AgentScheduleEditorElement;
 if (!customElements.get('agent-schedule-editor')) {
   customElements.define('agent-schedule-editor', AgentScheduleEditorElement);
 }
-
 ```
 
 ## vanilla\AgentSessionTimeline.js
@@ -35665,7 +35911,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-session-
 }
 
 export default AgentSessionTimelineElement;
-
 ```
 
 ## vanilla\AgentStepTimeline.js
@@ -35761,7 +36006,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-step-tim
   customElements.define('agent-step-timeline', AgentStepTimelineElement);
 }
 export default AgentStepTimelineElement;
-
 ```
 
 ## vanilla\AgentTaskChecklist.js
@@ -35874,7 +36118,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-task-che
   customElements.define('agent-task-checklist', AgentTaskChecklistElement);
 }
 export default AgentTaskChecklistElement;
-
 ```
 
 ## vanilla\AgentTaskProgress.js
@@ -36009,7 +36252,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-task-pro
   customElements.define('agent-task-progress', AgentTaskProgressElement);
 }
 export default AgentTaskProgressElement;
-
 ```
 
 ## vanilla\AgentWorkspaceSettings.js
@@ -36152,7 +36394,6 @@ export class AgentWorkspaceSettingsElement extends HTMLElement {
 if (!customElements.get('agent-workspace-settings')) {
   customElements.define('agent-workspace-settings', AgentWorkspaceSettingsElement);
 }
-
 ```
 
 ## vanilla\AiNoteAnswer.js
@@ -36316,7 +36557,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-note-answer
 }
 
 export default AiNoteAnswerElement;
-
 ```
 
 ## vanilla\AiResearchPanel.js
@@ -36453,7 +36693,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-research-pa
 }
 
 export default AiResearchPanelElement;
-
 ```
 
 ## vanilla\AiRewriteMenu.js
@@ -36595,7 +36834,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-rewrite-men
 }
 
 export default AiRewriteMenuElement;
-
 ```
 
 ## vanilla\AiSuggestionCard.js
@@ -36726,7 +36964,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-suggestion-
 }
 
 export default AiSuggestionCardElement;
-
 ```
 
 ## vanilla\AiTemplatePicker.js
@@ -36871,7 +37108,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('ai-template-pi
 }
 
 export default AiTemplatePickerElement;
-
 ```
 
 ## vanilla\AlertBanner.js
@@ -37043,7 +37279,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('alert-banner')
   customElements.define('alert-banner', AlertBannerElement);
 }
 export default AlertBannerElement;
-
 ```
 
 ## vanilla\AmberEmbersBackdrop.js
@@ -37290,7 +37525,6 @@ if (typeof customElements !== "undefined" && !customElements.get("amber-embers-b
 }
 
 export default AmberEmbersBackdropElement;
-
 ```
 
 ## vanilla\AnimatedCounter.js
@@ -37409,7 +37643,6 @@ class AnimatedCounter extends HTMLElement {
 if (typeof customElements !== "undefined" && !customElements.get("animated-counter")) {
   customElements.define("animated-counter", AnimatedCounter);
 }
-
 ```
 
 ## vanilla\ApiKeyTable.js
@@ -37555,7 +37788,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('api-key-table'
 }
 
 export default ApiKeyTableElement;
-
 ```
 
 ## vanilla\ApiReferenceViewer.js
@@ -37786,7 +38018,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('api-reference-
 }
 
 export default ApiReferenceViewerElement;
-
 ```
 
 ## vanilla\AppealRestrictionDialog.js
@@ -37879,7 +38110,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('appeal-restric
 }
 
 export default AppealRestrictionDialogElement;
-
 ```
 
 ## vanilla\ApprovalCard.js
@@ -38044,7 +38274,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('approval-card'
   customElements.define('approval-card', ApprovalCardElement);
 }
 export default ApprovalCardElement;
-
 ```
 
 ## vanilla\ArtifactCanvas.js
@@ -38176,7 +38405,6 @@ if (!customElements.get("artifact-canvas")) {
   customElements.define("artifact-canvas", ArtifactCanvas);
 }
 export default ArtifactCanvas;
-
 ```
 
 ## vanilla\AttachmentChip.js
@@ -38276,7 +38504,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('attachment-chi
   customElements.define('attachment-chip', AttachmentChipElement);
 }
 export default AttachmentChipElement;
-
 ```
 
 ## vanilla\AudioNotePlayer.js
@@ -38411,7 +38638,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('audio-note-pla
 }
 
 export default AudioNotePlayerElement;
-
 ```
 
 ## vanilla\AudioPlaylistPage.js
@@ -38620,7 +38846,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('audio-playlist
 }
 
 export default AudioPlaylistPageElement;
-
 ```
 
 ## vanilla\AudioWaveVisualizer.js
@@ -38678,7 +38903,6 @@ if (!customElements.get("audio-wave-visualizer")) {
   customElements.define("audio-wave-visualizer", AudioWaveVisualizer);
 }
 export default AudioWaveVisualizer;
-
 ```
 
 ## vanilla\AuditLogTable.js
@@ -38864,7 +39088,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('audit-log-tabl
 }
 
 export default AuditLogTableElement;
-
 ```
 
 ## vanilla\AuthForm.js
@@ -39162,7 +39385,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('auth-gate-prom
 }
 
 export default AuthGatePromptElement;
-
 ```
 
 ## vanilla\AuthSplitPanel.js
@@ -39294,7 +39516,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('auth-split-pan
 }
 
 export default AuthSplitPanelElement;
-
 ```
 
 ## vanilla\AutoScrollAnchor.js
@@ -39361,7 +39582,6 @@ if (!customElements.get("auto-scroll-anchor")) {
   customElements.define("auto-scroll-anchor", AutoScrollAnchor);
 }
 export default AutoScrollAnchor;
-
 ```
 
 ## vanilla\AvatarGroup.js
@@ -39487,7 +39707,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('avatar-group')
   customElements.define('avatar-group', AvatarGroupElement);
 }
 export default AvatarGroupElement;
-
 ```
 
 ## vanilla\BentoFeatureGrid.js
@@ -39603,7 +39822,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('bento-feature-
 }
 
 export default BentoFeatureGridElement;
-
 ```
 
 ## vanilla\BillingAddressForm.js
@@ -39846,7 +40064,6 @@ export default BillingAddressFormElement;
 if (!customElements.get('billing-address-form')) {
   customElements.define('billing-address-form', BillingAddressFormElement);
 }
-
 ```
 
 ## vanilla\BillingPanel.js
@@ -39989,7 +40206,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('billing-panel'
   customElements.define('billing-panel', BillingPanelElement);
 }
 export default BillingPanelElement;
-
 ```
 
 ## vanilla\BlogPostArticle.js
@@ -40166,7 +40382,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('blog-post-arti
 }
 
 export default BlogPostArticleElement;
-
 ```
 
 ## vanilla\BottomTabBar.js
@@ -40280,7 +40495,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('bottom-tab-bar
 }
 
 export default BottomTabBarElement;
-
 ```
 
 ## vanilla\BrandPromptTable.js
@@ -40390,7 +40604,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('brand-prompt-t
 }
 
 export default BrandPromptTableElement;
-
 ```
 
 ## vanilla\Breadcrumb.js
@@ -40533,7 +40746,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('breadcrumb-tra
   customElements.define('breadcrumb-trail', BreadcrumbElement);
 }
 export default BreadcrumbElement;
-
 ```
 
 ## vanilla\CampsiteHandoff.js
@@ -40676,7 +40888,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('campsite-hando
 }
 
 export default CampsiteHandoffElement;
-
 ```
 
 ## vanilla\CancelRetentionFlow.js
@@ -40877,7 +41088,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('cancel-retenti
 }
 
 export default CancelRetentionFlowElement;
-
 ```
 
 ## vanilla\ChangedFilesList.js
@@ -41033,7 +41243,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('changed-files-
   customElements.define('changed-files-list', ChangedFilesListElement);
 }
 export default ChangedFilesListElement;
-
 ```
 
 ## vanilla\ChangelogFeed.js
@@ -41154,7 +41363,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('changelog-feed
   customElements.define('changelog-feed', ChangelogFeedElement);
 }
 export default ChangelogFeedElement;
-
 ```
 
 ## vanilla\ChangelogTimeline.js
@@ -41323,7 +41531,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('changelog-time
 }
 
 export default ChangelogTimelineElement;
-
 ```
 
 ## vanilla\ChatMessageRow.js
@@ -41433,7 +41640,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('chat-message-r
   customElements.define('chat-message-row', ChatMessageRowElement);
 }
 export default ChatMessageRowElement;
-
 ```
 
 ## vanilla\ChatPromptInput.js
@@ -41562,7 +41768,6 @@ if (!customElements.get("chat-prompt-input")) {
   customElements.define("chat-prompt-input", ChatPromptInput);
 }
 export default ChatPromptInput;
-
 ```
 
 ## vanilla\ChatSessionList.js
@@ -41793,7 +41998,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('chat-session-l
   customElements.define('chat-session-list', ChatSessionListElement);
 }
 export default ChatSessionListElement;
-
 ```
 
 ## vanilla\ClarifyQuestionCard.js
@@ -41915,7 +42119,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('clarify-questi
   customElements.define('clarify-question', ClarifyQuestionCardElement);
 }
 export default ClarifyQuestionCardElement;
-
 ```
 
 ## vanilla\CodeBlock.js
@@ -42045,7 +42248,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('code-block')) 
   customElements.define('code-block', CodeBlockElement);
 }
 export default CodeBlockElement;
-
 ```
 
 ## vanilla\ColorPickerPopover.js
@@ -42267,7 +42469,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('color-picker-p
 }
 
 export default ColorPickerPopoverElement;
-
 ```
 
 ## vanilla\ColumnVisibilityMenu.js
@@ -42492,7 +42693,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('column-visibil
 }
 
 export default ColumnVisibilityMenuElement;
-
 ```
 
 ## vanilla\ComboBox.js
@@ -42702,7 +42902,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('combo-select')
   customElements.define('combo-select', ComboBoxElement);
 }
 export default ComboBoxElement;
-
 ```
 
 ## vanilla\CommandPalette.js
@@ -42934,7 +43133,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('command-palett
   customElements.define('command-palette', CommandPaletteElement);
 }
 export default CommandPaletteElement;
-
 ```
 
 ## vanilla\CommentThread.js
@@ -43154,7 +43352,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('comment-thread
   customElements.define('comment-thread', CommentThreadElement);
 }
 export default CommentThreadElement;
-
 ```
 
 ## vanilla\ConfirmDialog.js
@@ -43332,7 +43529,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('confirm-dialog
   customElements.define('confirm-dialog', ConfirmDialogElement);
 }
 export default ConfirmDialogElement;
-
 ```
 
 ## vanilla\ConnectorGrid.js
@@ -43433,7 +43629,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('connector-grid
 }
 
 export default ConnectorGridElement;
-
 ```
 
 ## vanilla\ContentReviewTable.js
@@ -43572,7 +43767,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('content-review
 }
 
 export default ContentReviewTableElement;
-
 ```
 
 ## vanilla\ContextUsageBadge.js
@@ -43715,7 +43909,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('context-usage-
   customElements.define('context-usage-badge', ContextUsageBadgeElement);
 }
 export default ContextUsageBadgeElement;
-
 ```
 
 ## vanilla\CookieConsent.js
@@ -43836,7 +44029,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('cookie-consent
   customElements.define('cookie-consent', CookieConsentElement);
 }
 export default CookieConsentElement;
-
 ```
 
 ## vanilla\CreationComposer.js
@@ -43985,7 +44177,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('creation-compo
 }
 
 export default CreationComposerElement;
-
 ```
 
 ## vanilla\CreditBalanceCard.js
@@ -44108,7 +44299,6 @@ export default CreditBalanceCardElement;
 if (!customElements.get('credit-balance-card')) {
   customElements.define('credit-balance-card', CreditBalanceCardElement);
 }
-
 ```
 
 ## vanilla\DataTable.js
@@ -44342,7 +44532,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('data-table')) 
   customElements.define('data-table', DataTableElement);
 }
 export default DataTableElement;
-
 ```
 
 ## vanilla\DatePicker.js
@@ -44522,7 +44711,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('date-picker'))
   customElements.define('date-picker', DatePickerElement);
 }
 export default DatePickerElement;
-
 ```
 
 ## vanilla\DeliveryTrackingPanel.js
@@ -44761,7 +44949,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('delivery-track
 }
 
 export default DeliveryTrackingPanelElement;
-
 ```
 
 ## vanilla\DeploymentCard.js
@@ -44864,7 +45051,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('deployment-car
   customElements.define('deployment-card', DeploymentCardElement);
 }
 export default DeploymentCardElement;
-
 ```
 
 ## vanilla\DiffViewer.js
@@ -45127,7 +45313,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('diff-viewer'))
   customElements.define('diff-viewer', DiffViewerElement);
 }
 export default DiffViewerElement;
-
 ```
 
 ## vanilla\DocsPageLayout.js
@@ -45391,7 +45576,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('docs-page-layo
 }
 
 export default DocsPageLayoutElement;
-
 ```
 
 ## vanilla\DriftEmbersBackdrop.js
@@ -45683,7 +45867,6 @@ if (typeof customElements !== "undefined" && !customElements.get("drift-embers-b
 }
 
 export default DriftEmbersBackdropElement;
-
 ```
 
 ## vanilla\EditableHeading.js
@@ -45812,7 +45995,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('editable-headi
 }
 
 export default EditableHeadingElement;
-
 ```
 
 ## vanilla\EditorToolPalette.js
@@ -45935,7 +46117,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('editor-tool-pa
 }
 
 export default EditorToolPaletteElement;
-
 ```
 
 ## vanilla\EmptyState.js
@@ -46002,7 +46183,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('empty-state'))
   customElements.define('empty-state', EmptyStateElement);
 }
 export default EmptyStateElement;
-
 ```
 
 ## vanilla\EmptyStateStarter.js
@@ -46109,7 +46289,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('empty-state-st
 }
 
 export default EmptyStateStarterElement;
-
 ```
 
 ## vanilla\EntityMultiSelectPicker.js
@@ -46297,7 +46476,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('entity-picker'
 }
 
 export default EntityMultiSelectPickerElement;
-
 ```
 
 ## vanilla\EvalRunResults.js
@@ -46524,7 +46702,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('eval-run-resul
 }
 
 export default EvalRunResultsElement;
-
 ```
 
 ## vanilla\EvalScoreTable.js
@@ -46681,7 +46858,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('eval-score-tab
 }
 
 export default EvalScoreTableElement;
-
 ```
 
 ## vanilla\EvalTurnBuilder.js
@@ -46831,7 +47007,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('eval-turn-buil
 }
 
 export default EvalTurnBuilderElement;
-
 ```
 
 ## vanilla\EventLogTable.js
@@ -46992,7 +47167,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('event-log-tabl
 }
 
 export default EventLogTableElement;
-
 ```
 
 ## vanilla\EventStreamPanel.js
@@ -47204,7 +47378,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('event-stream-p
 }
 
 export default EventStreamPanelElement;
-
 ```
 
 ## vanilla\EventTagGrid.js
@@ -47371,7 +47544,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('event-tag-grid
 }
 
 export default EventTagGridElement;
-
 ```
 
 ## vanilla\FalRunCard.js
@@ -47528,7 +47700,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('fal-run-card')
 }
 
 export default FalRunCardElement;
-
 ```
 
 ## vanilla\FederatedSearchResultsPanel.js
@@ -47751,7 +47922,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('federated-sear
 }
 
 export default FederatedSearchResultsPanelElement;
-
 ```
 
 ## vanilla\FileAttachmentList.js
@@ -47849,7 +48019,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('file-attachmen
   customElements.define('file-attachment-list', FileAttachmentListElement);
 }
 export default FileAttachmentListElement;
-
 ```
 
 ## vanilla\FileDropzone.js
@@ -48083,7 +48252,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('file-dropzone'
   customElements.define('file-dropzone', FileDropzoneElement);
 }
 export default FileDropzoneElement;
-
 ```
 
 ## vanilla\FilterBar.js
@@ -48258,7 +48426,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('filter-bar')) 
   customElements.define('filter-bar', FilterBarElement);
 }
 export default FilterBarElement;
-
 ```
 
 ## vanilla\FilterQueryBuilder.js
@@ -48465,7 +48632,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('filter-query-b
 }
 
 export default FilterQueryBuilderElement;
-
 ```
 
 ## vanilla\FilterToolbar.js
@@ -48624,7 +48790,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('filter-toolbar
   customElements.define('filter-toolbar', FilterToolbarElement);
 }
 export default FilterToolbarElement;
-
 ```
 
 ## vanilla\FineTuneJobList.js
@@ -48744,7 +48909,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('finetune-job-l
 }
 
 export default FineTuneJobListElement;
-
 ```
 
 ## vanilla\FluidContourBackdrop.js
@@ -49054,7 +49218,6 @@ class FluidContourBackdrop extends HTMLElement {
 if (typeof customElements !== "undefined" && !customElements.get("fluid-contour-backdrop")) {
   customElements.define("fluid-contour-backdrop", FluidContourBackdrop);
 }
-
 ```
 
 ## vanilla\FooterSection.js
@@ -49206,7 +49369,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('footer-section
   customElements.define('footer-section', FooterSectionElement);
 }
 export default FooterSectionElement;
-
 ```
 
 ## vanilla\ForecastTrendChart.js
@@ -49323,7 +49485,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('forecast-trend
   customElements.define('forecast-trend', ForecastTrendChartElement);
 }
 export default ForecastTrendChartElement;
-
 ```
 
 ## vanilla\FormField.js
@@ -49420,7 +49581,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('form-field')) 
   customElements.define('form-field', FormFieldElement);
 }
 export default FormFieldElement;
-
 ```
 
 ## vanilla\FormTrackingDashboard.js
@@ -49655,7 +49815,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('form-tracking-
 }
 
 export default FormTrackingDashboardElement;
-
 ```
 
 ## vanilla\GammaImageDetail.js
@@ -49789,7 +49948,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('gamma-image-de
 }
 
 export default GammaImageDetailElement;
-
 ```
 
 ## vanilla\GanttTimeline.js
@@ -49938,7 +50096,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('gantt-timeline
   customElements.define('gantt-timeline', GanttTimelineElement);
 }
 export default GanttTimelineElement;
-
 ```
 
 ## vanilla\GroupedBarCompare.js
@@ -50042,7 +50199,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('grouped-bar-co
   customElements.define('grouped-bar-compare', GroupedBarCompareElement);
 }
 export default GroupedBarCompareElement;
-
 ```
 
 ## vanilla\GroupedTaskList.js
@@ -50293,7 +50449,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('grouped-task-l
 }
 
 export default GroupedTaskListElement;
-
 ```
 
 ## vanilla\GuardrailReviewQueue.js
@@ -50425,7 +50580,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('guardrail-revi
 }
 
 export default GuardrailReviewQueueElement;
-
 ```
 
 ## vanilla\HealthDonutStats.js
@@ -50573,7 +50727,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('health-donut-s
   customElements.define('health-donut-stats', HealthDonutStatsElement);
 }
 export default HealthDonutStatsElement;
-
 ```
 
 ## vanilla\HelpCenterHome.js
@@ -50728,7 +50881,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('help-center-ho
 }
 
 export default HelpCenterHomeElement;
-
 ```
 
 ## vanilla\HelpResourcesPanel.js
@@ -50877,7 +51029,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('help-resources
 }
 
 export default HelpResourcesPanelElement;
-
 ```
 
 ## vanilla\HeroSection.js
@@ -50997,7 +51148,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('hero-section')
   customElements.define('hero-section', HeroSectionElement);
 }
 export default HeroSectionElement;
-
 ```
 
 ## vanilla\HomepageDashboard.js
@@ -51520,7 +51670,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('image-action-m
 }
 
 export default ImageActionMenuElement;
-
 ```
 
 ## vanilla\ImageGenGallery.js
@@ -51657,7 +51806,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('image-gen-gall
 }
 
 export default ImageGenGalleryElement;
-
 ```
 
 ## vanilla\ImageGenMetaBar.js
@@ -51746,7 +51894,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('image-gen-meta
 }
 
 export default ImageGenMetaBarElement;
-
 ```
 
 ## vanilla\InboxList.js
@@ -51860,7 +52007,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('inbox-list')) 
   customElements.define('inbox-list', InboxListElement);
 }
 export default InboxListElement;
-
 ```
 
 ## vanilla\IntegrationConnectGrid.js
@@ -52023,7 +52169,208 @@ if (typeof customElements !== 'undefined' && !customElements.get('integration-co
 }
 
 export default IntegrationConnectGridElement;
+```
 
+## vanilla\InviteTeammatesCard.js
+
+```js
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export class InviteTeammatesCardElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['pending', 'roles', 'title', 'description', 'email-placeholder', 'send-label', 'skip-label', 'default-role'];
+  }
+
+  connectedCallback() {
+    this._draft = '';
+    this._error = '';
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    if (this.isConnected) this.render();
+  }
+
+  get pending() {
+    if (this._pending) return this._pending;
+    try {
+      return JSON.parse(this.getAttribute('pending') || '[]');
+    } catch {
+      return [];
+    }
+  }
+
+  set pending(value) {
+    this._pending = Array.isArray(value) ? value : [];
+    this.render();
+  }
+
+  get roles() {
+    if (this._roles) return this._roles;
+    try {
+      return JSON.parse(this.getAttribute('roles') || '["Admin","Editor","Viewer"]');
+    } catch {
+      return ['Admin', 'Editor', 'Viewer'];
+    }
+  }
+
+  set roles(value) {
+    this._roles = Array.isArray(value) ? value : [];
+    this.render();
+  }
+
+  _applyHostClass(hostClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = hostClass;
+    const next = `${hostClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
+  render() {
+    const pending = this.pending;
+    const roles = this.roles;
+    const title = this.getAttribute('title') || 'Invite your teammates';
+    const description = this.getAttribute('description') || 'Collaboration is better together. Add teammates by email to get started.';
+    const emailPlaceholder = this.getAttribute('email-placeholder') || 'teammate@company.com';
+    const sendLabel = this.getAttribute('send-label') || 'Send invites';
+    const skipLabel = this.getAttribute('skip-label') || 'Skip for now';
+    const draft = this._draft || '';
+    const error = this._error || '';
+    if (!this._selectedRole) this._selectedRole = this.getAttribute('default-role') || roles[0] || 'Viewer';
+    const selectedRole = this._selectedRole;
+
+    this._applyHostClass('block');
+
+    const rows = pending
+      .map(
+        (invitee) => `
+        <li data-invite-teammates-row="${escapeAttribute(invitee.email)}"
+          class="flex items-center gap-2 rounded-md border border-zinc-100 bg-zinc-50 px-2.5 py-1.5 dark:border-zinc-800 dark:bg-zinc-800/60">
+          ${uiIcon('mail', { size: 13, className: 'shrink-0 text-zinc-400 dark:text-zinc-500' })}
+          <span class="min-w-0 flex-1 truncate text-xs text-zinc-700 dark:text-zinc-200">${escapeAttribute(invitee.email)}</span>
+          <span class="shrink-0 rounded-full bg-zinc-200 px-1.5 py-0.5 text-[10px] font-medium text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">${escapeAttribute(invitee.role)}</span>
+          <button type="button" data-invite-teammates-remove data-email="${escapeAttribute(invitee.email)}"
+            aria-label="Remove ${escapeAttribute(invitee.email)}"
+            class="shrink-0 rounded p-0.5 text-zinc-400 transition-colors hover:text-red-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">${uiIcon('x', { size: 11 })}</button>
+        </li>`
+      )
+      .join('');
+
+    this.innerHTML = `
+      <div data-invite-teammates class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+        <div class="border-b border-zinc-100 dark:border-zinc-800 px-5 py-4">
+          <h4 data-invite-teammates-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</h4>
+          <p data-invite-teammates-description class="mt-1 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">${escapeAttribute(description)}</p>
+        </div>
+        <div class="px-5 py-4">
+          <div data-invite-teammates-composer
+            class="flex items-center gap-2 rounded-md border border-zinc-200 bg-white px-2 py-1.5 focus-within:border-indigo-500 dark:border-zinc-700 dark:bg-zinc-900">
+            <input type="email" data-invite-teammates-input value="${escapeAttribute(draft)}" placeholder="${escapeAttribute(emailPlaceholder)}"
+              class="min-w-0 flex-1 bg-transparent text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none dark:text-zinc-50 dark:placeholder-zinc-500" />
+            <select data-invite-teammates-role aria-label="Invite role"
+              class="shrink-0 rounded border border-zinc-200 bg-white px-1.5 py-1 text-[11px] text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 focus:outline-none">
+              ${roles.map((role) => `<option value="${escapeAttribute(role)}" ${role === selectedRole ? 'selected' : ''}>${escapeAttribute(role)}</option>`).join('')}
+            </select>
+            <button type="button" data-invite-teammates-add aria-label="Add teammate"
+              class="shrink-0 rounded bg-zinc-900 p-1 text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">${uiIcon('plus', { size: 12 })}</button>
+          </div>
+          ${error ? `<p data-invite-teammates-error role="alert" class="mt-1.5 text-[11px] text-red-500">${escapeAttribute(error)}</p>` : ''}
+          ${pending.length > 0 ? `<ul data-invite-teammates-list class="mt-3 space-y-1.5">${rows}</ul>` : ''}
+        </div>
+        <div class="flex items-center gap-2 border-t border-zinc-100 dark:border-zinc-800 px-5 py-3">
+          <button type="button" data-invite-teammates-send ${pending.length === 0 ? 'disabled' : ''}
+            class="rounded-md px-3 py-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+              pending.length > 0
+                ? 'bg-indigo-600 text-white hover:bg-indigo-500'
+                : 'cursor-not-allowed bg-zinc-100 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500'
+            }">${escapeAttribute(sendLabel)}</button>
+          <button type="button" data-invite-teammates-skip
+            class="rounded-md px-3 py-1.5 text-xs font-medium text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">${escapeAttribute(skipLabel)}</button>
+          <span class="ml-auto text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">${pending.length} pending</span>
+        </div>
+      </div>`;
+
+    const input = this.querySelector('[data-invite-teammates-input]');
+    if (input) {
+      input.addEventListener('input', () => {
+        this._draft = input.value;
+        if (this._error) {
+          this._error = '';
+          this.render();
+        }
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          this._submit();
+        }
+      });
+    }
+
+    const roleSelect = this.querySelector('[data-invite-teammates-role]');
+    if (roleSelect) {
+      roleSelect.addEventListener('change', () => {
+        this._selectedRole = roleSelect.value;
+      });
+    }
+
+    this.querySelector('[data-invite-teammates-add]').addEventListener('click', () => this._submit());
+
+    this.querySelectorAll('[data-invite-teammates-remove]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const invitee = pending.find((p) => p.email === btn.getAttribute('data-email'));
+        if (invitee) this.dispatchEvent(new CustomEvent('remove', { detail: invitee }));
+      });
+    });
+
+    const sendBtn = this.querySelector('[data-invite-teammates-send]');
+    if (sendBtn && pending.length > 0) {
+      sendBtn.addEventListener('click', () => {
+        this.dispatchEvent(new CustomEvent('send', { detail: pending }));
+      });
+    }
+
+    this.querySelector('[data-invite-teammates-skip]').addEventListener('click', () => {
+      this.dispatchEvent(new CustomEvent('skip'));
+    });
+  }
+
+  _submit() {
+    const email = (this._draft || '').trim();
+    if (!email) return;
+    if (!EMAIL_RE.test(email)) {
+      this._error = 'Enter a valid email address.';
+      this.render();
+      return;
+    }
+    if (this.pending.some((p) => p.email.toLowerCase() === email.toLowerCase())) {
+      this._error = 'That teammate is already on the list.';
+      this.render();
+      return;
+    }
+    this._error = '';
+    this._draft = '';
+    this.dispatchEvent(new CustomEvent('invite', { detail: { email, role: this._selectedRole } }));
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('invite-teammates-card')) {
+  customElements.define('invite-teammates-card', InviteTeammatesCardElement);
+}
+export default InviteTeammatesCardElement;
 ```
 
 ## vanilla\InvoiceHistoryTable.js
@@ -52174,7 +52521,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('invoice-histor
 }
 
 export default InvoiceHistoryTableElement;
-
 ```
 
 ## vanilla\IterationActionBar.js
@@ -52303,7 +52649,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('iteration-acti
 }
 
 export default IterationActionBarElement;
-
 ```
 
 ## vanilla\JumpBackIn.js
@@ -52427,7 +52772,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('jump-back-in')
 }
 
 export default JumpBackInElement;
-
 ```
 
 ## vanilla\KanbanBoard.js
@@ -52655,7 +52999,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('kanban-board')
   customElements.define('kanban-board', KanbanBoardElement);
 }
 export default KanbanBoardElement;
-
 ```
 
 ## vanilla\KnowledgeDrawer.js
@@ -52810,7 +53153,6 @@ export class KnowledgeDrawerElement extends HTMLElement {
 if (typeof customElements !== "undefined" && !customElements.get("knowledge-drawer")) {
   customElements.define("knowledge-drawer", KnowledgeDrawerElement);
 }
-
 ```
 
 ## vanilla\LiquidGlass.js
@@ -53007,7 +53349,6 @@ if (typeof window !== "undefined" && !customElements.get("liquid-glass")) {
 }
 
 export { LiquidGlass };
-
 ```
 
 ## vanilla\LiveTailLogConsole.js
@@ -53200,7 +53541,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('live-tail-log-
   customElements.define('live-tail-log-console', LiveTailLogConsoleElement);
 }
 export default LiveTailLogConsoleElement;
-
 ```
 
 ## vanilla\LogoCloud.js
@@ -53293,7 +53633,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('logo-cloud')) 
 }
 
 export default LogoCloudElement;
-
 ```
 
 ## vanilla\MapActivityList.js
@@ -53457,7 +53796,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('map-activity-l
 }
 
 export default MapActivityListElement;
-
 ```
 
 ## vanilla\MapPropertyCard.js
@@ -53631,7 +53969,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('map-property-c
 }
 
 export default MapPropertyCardElement;
-
 ```
 
 ## vanilla\MarqueeWall.js
@@ -53742,7 +54079,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('marquee-wall')
   customElements.define('marquee-wall', MarqueeWallElement);
 }
 export default MarqueeWallElement;
-
 ```
 
 ## vanilla\MasonryDensityControls.js
@@ -53907,7 +54243,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('masonry-densit
 }
 
 export default MasonryDensityControlsElement;
-
 ```
 
 ## vanilla\McpConnectPanel.js
@@ -54028,7 +54363,6 @@ export class McpConnectPanelElement extends HTMLElement {
 if (!customElements.get('mcp-connect-panel')) {
   customElements.define('mcp-connect-panel', McpConnectPanelElement);
 }
-
 ```
 
 ## vanilla\MembershipTierGrid.js
@@ -54136,7 +54470,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('membership-tie
 }
 
 export default MembershipTierGridElement;
-
 ```
 
 ## vanilla\MemoryPanel.js
@@ -54313,7 +54646,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('memory-panel')
 }
 
 export default MemoryPanelElement;
-
 ```
 
 ## vanilla\MessageActionToolbar.js
@@ -54389,7 +54721,6 @@ if (!customElements.get("message-action-toolbar")) {
   customElements.define("message-action-toolbar", MessageActionToolbar);
 }
 export default MessageActionToolbar;
-
 ```
 
 ## vanilla\MetricLineChart.js
@@ -54653,7 +54984,6 @@ export default MetricLineChartElement;
 if (!customElements.get('metric-line-chart')) {
   customElements.define('metric-line-chart', MetricLineChartElement);
 }
-
 ```
 
 ## vanilla\MetricStrip.js
@@ -54769,7 +55099,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('metric-strip')
   customElements.define('metric-strip', MetricStripElement);
 }
 export default MetricStripElement;
-
 ```
 
 ## vanilla\Modal.js
@@ -54916,7 +55245,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('modal-dialog')
   customElements.define('modal-dialog', ModalElement);
 }
 export default ModalElement;
-
 ```
 
 ## vanilla\ModelComparePane.js
@@ -55027,7 +55355,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('model-compare-
 }
 
 export default ModelComparePaneElement;
-
 ```
 
 ## vanilla\ModelPricingCard.js
@@ -55115,7 +55442,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('model-pricing-
 }
 
 export default ModelPricingCardElement;
-
 ```
 
 ## vanilla\ModelSelector.js
@@ -55376,7 +55702,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('model-selector
   customElements.define('model-selector', ModelSelectorElement);
 }
 export default ModelSelectorElement;
-
 ```
 
 ## vanilla\MonitorRunList.js
@@ -55548,7 +55873,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('monitor-run-li
 }
 
 export default MonitorRunListElement;
-
 ```
 
 ## vanilla\Navbar.js
@@ -55728,7 +56052,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('nav-bar')) {
   customElements.define('nav-bar', NavbarElement);
 }
 export default NavbarElement;
-
 ```
 
 ## vanilla\NoResultsState.js
@@ -55843,7 +56166,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('no-results-sta
 }
 
 export default NoResultsStateElement;
-
 ```
 
 ## vanilla\NotificationCenter.js
@@ -56031,7 +56353,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('notification-c
   customElements.define('notification-center', NotificationCenterElement);
 }
 export default NotificationCenterElement;
-
 ```
 
 ## vanilla\NotificationPrefsMatrix.js
@@ -56175,7 +56496,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('notification-p
 }
 
 export default NotificationPrefsMatrixElement;
-
 ```
 
 ## vanilla\OnboardingChecklist.js
@@ -56303,7 +56623,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('onboarding-che
   customElements.define('onboarding-checklist', OnboardingChecklistElement);
 }
 export default OnboardingChecklistElement;
-
 ```
 
 ## vanilla\OnboardingStepper.js
@@ -56485,7 +56804,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('onboarding-ste
   customElements.define('onboarding-stepper', OnboardingStepperElement);
 }
 export default OnboardingStepperElement;
-
 ```
 
 ## vanilla\OrderCard.js
@@ -56656,7 +56974,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('order-card')) 
 }
 
 export default OrderCardElement;
-
 ```
 
 ## vanilla\OrderSummaryPanel.js
@@ -56821,7 +57138,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('order-summary'
 }
 
 export default OrderSummaryPanelElement;
-
 ```
 
 ## vanilla\OrderTracker.js
@@ -56974,7 +57290,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('order-tracker'
 }
 
 export default OrderTrackerElement;
-
 ```
 
 ## vanilla\OtpInput.js
@@ -57127,7 +57442,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('otp-input')) {
   customElements.define('otp-input', OtpInputElement);
 }
 export default OtpInputElement;
-
 ```
 
 ## vanilla\PageHeader.js
@@ -57295,7 +57609,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('page-header'))
   customElements.define('page-header', PageHeaderElement);
 }
 export default PageHeaderElement;
-
 ```
 
 ## vanilla\Pagination.js
@@ -57453,7 +57766,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('pagination-bar
   customElements.define('pagination-bar', PaginationElement);
 }
 export default PaginationElement;
-
 ```
 
 ## vanilla\PaymentMethodCard.js
@@ -57552,7 +57864,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('payment-method
 }
 
 export default PaymentMethodCardElement;
-
 ```
 
 ## vanilla\PaywallDialog.js
@@ -57771,7 +58082,6 @@ export default PaywallDialogElement;
 if (!customElements.get('paywall-dialog')) {
   customElements.define('paywall-dialog', PaywallDialogElement);
 }
-
 ```
 
 ## vanilla\PermissionDeniedState.js
@@ -57866,7 +58176,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('permission-den
 }
 
 export default PermissionDeniedStateElement;
-
 ```
 
 ## vanilla\PermissionMatrix.js
@@ -58070,7 +58379,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('permission-mat
 }
 
 export default PermissionMatrixElement;
-
 ```
 
 ## vanilla\PersonaPresetGrid.js
@@ -58170,7 +58478,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('persona-preset
 }
 
 export default PersonaPresetGridElement;
-
 ```
 
 ## vanilla\PipelineStageList.js
@@ -58344,7 +58651,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('pipeline-stage
   customElements.define('pipeline-stage-list', PipelineStageListElement);
 }
 export default PipelineStageListElement;
-
 ```
 
 ## vanilla\PlanComparisonTable.js
@@ -58474,7 +58780,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('plan-compariso
 }
 
 export default PlanComparisonTableElement;
-
 ```
 
 ## vanilla\PointerRipples.js
@@ -59682,7 +59987,6 @@ class PointerRipples extends HTMLElement {
 if (typeof customElements !== "undefined" && !customElements.get("pointer-ripples")) {
   customElements.define("pointer-ripples", PointerRipples);
 }
-
 ```
 
 ## vanilla\PrReviewQueue.js
@@ -59834,7 +60138,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('pr-review-queu
 }
 
 export default PrReviewQueueElement;
-
 ```
 
 ## vanilla\PricingTable.js
@@ -59949,7 +60252,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('pricing-table'
   customElements.define('pricing-table', PricingTableElement);
 }
 export default PricingTableElement;
-
 ```
 
 ## vanilla\ProfileHeader.js
@@ -60126,7 +60428,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('profile-header
   customElements.define('profile-header', ProfileHeaderElement);
 }
 export default ProfileHeaderElement;
-
 ```
 
 ## vanilla\ProjectGanttTimeline.js
@@ -60302,7 +60603,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('project-gantt-
 }
 
 export default ProjectGanttTimelineElement;
-
 ```
 
 ## vanilla\PromptChips.js
@@ -60369,7 +60669,6 @@ if (!customElements.get("prompt-chips")) {
   customElements.define("prompt-chips", PromptChips);
 }
 export default PromptChips;
-
 ```
 
 ## vanilla\PromptLibrary.js
@@ -60590,7 +60889,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-library
   customElements.define('prompt-library', PromptLibraryElement);
 }
 export default PromptLibraryElement;
-
 ```
 
 ## vanilla\PromptPerformanceTable.js
@@ -60737,7 +61035,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-perform
 }
 
 export default PromptPerformanceTableElement;
-
 ```
 
 ## vanilla\PromptSaveDialog.js
@@ -60858,7 +61155,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-save-di
 }
 
 export default PromptSaveDialogElement;
-
 ```
 
 ## vanilla\PromptTemplateGrid.js
@@ -60949,7 +61245,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-templat
   customElements.define('prompt-template-grid', PromptTemplateGridElement);
 }
 export default PromptTemplateGridElement;
-
 ```
 
 ## vanilla\PromptTunerResult.js
@@ -61087,7 +61382,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-tuner-r
 }
 
 export default PromptTunerResultElement;
-
 ```
 
 ## vanilla\PromptVariantDiff.js
@@ -61224,7 +61518,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('prompt-variant
 }
 
 export default PromptVariantDiffElement;
-
 ```
 
 ## vanilla\QaTestTable.js
@@ -61361,7 +61654,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('qa-test-table'
 }
 
 export default QaTestTableElement;
-
 ```
 
 ## vanilla\QuoteMasonry.js
@@ -61460,7 +61752,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('quote-masonry'
   customElements.define('quote-masonry', QuoteMasonryElement);
 }
 export default QuoteMasonryElement;
-
 ```
 
 ## vanilla\RankList.js
@@ -61587,7 +61878,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('rank-list')) {
   customElements.define('rank-list', RankListElement);
 }
 export default RankListElement;
-
 ```
 
 ## vanilla\ResourceList.js
@@ -61717,7 +62007,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('resource-list'
   customElements.define('resource-list', ResourceListElement);
 }
 export default ResourceListElement;
-
 ```
 
 ## vanilla\RichToolbar.js
@@ -61815,7 +62104,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('rich-toolbar')
   customElements.define('rich-toolbar', RichToolbarElement);
 }
 export default RichToolbarElement;
-
 ```
 
 ## vanilla\RoadmapTimeline.js
@@ -61942,7 +62230,6 @@ export class RoadmapTimelineElement extends HTMLElement {
 if (typeof customElements !== "undefined" && !customElements.get("roadmap-timeline")) {
   customElements.define("roadmap-timeline", RoadmapTimelineElement);
 }
-
 ```
 
 ## vanilla\SchedulerSlots.js
@@ -62107,7 +62394,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('scheduler-slot
   customElements.define('scheduler-slots', SchedulerSlotsElement);
 }
 export default SchedulerSlotsElement;
-
 ```
 
 ## vanilla\SearchInput.js
@@ -62241,7 +62527,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('search-field')
   customElements.define('search-field', SearchInputElement);
 }
 export default SearchInputElement;
-
 ```
 
 ## vanilla\SearchResultsPage.js
@@ -62476,7 +62761,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('search-results
 }
 
 export default SearchResultsPageElement;
-
 ```
 
 ## vanilla\SearchTypeahead.js
@@ -62644,7 +62928,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('search-typeahe
   customElements.define('search-typeahead', SearchTypeaheadElement);
 }
 export default SearchTypeaheadElement;
-
 ```
 
 ## vanilla\SeatBillingTable.js
@@ -62812,7 +63095,6 @@ export default SeatBillingTableElement;
 if (!customElements.get('seat-billing-table')) {
   customElements.define('seat-billing-table', SeatBillingTableElement);
 }
-
 ```
 
 ## vanilla\SegmentBreakdownBars.js
@@ -62923,7 +63205,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('segment-breakd
   customElements.define('segment-breakdown', SegmentBreakdownBarsElement);
 }
 export default SegmentBreakdownBarsElement;
-
 ```
 
 ## vanilla\ServiceStatusList.js
@@ -63095,7 +63376,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('service-status
   customElements.define('service-status-list', ServiceStatusListElement);
 }
 export default ServiceStatusListElement;
-
 ```
 
 ## vanilla\SessionDeviceTable.js
@@ -63291,7 +63571,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('session-device
 }
 
 export default SessionDeviceTableElement;
-
 ```
 
 ## vanilla\SessionDiagnosticsPanel.js
@@ -63476,7 +63755,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('session-diagno
 }
 
 export default SessionDiagnosticsPanelElement;
-
 ```
 
 ## vanilla\SettingsPanel.js
@@ -63630,7 +63908,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('settings-panel
   customElements.define('settings-panel', SettingsPanelElement);
 }
 export default SettingsPanelElement;
-
 ```
 
 ## vanilla\SettingsSideDrawer.js
@@ -63831,7 +64108,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('settings-side-
   customElements.define('settings-side-drawer', SettingsSideDrawerElement);
 }
 export default SettingsSideDrawerElement;
-
 ```
 
 ## vanilla\ShareAccessDialog.js
@@ -64031,7 +64307,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('share-access-d
 }
 
 export default ShareAccessDialogElement;
-
 ```
 
 ## vanilla\ShareChatDialog.js
@@ -64151,7 +64426,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('share-chat-dia
 }
 
 export default ShareChatDialogElement;
-
 ```
 
 ## vanilla\SharedChatViewer.js
@@ -64246,7 +64520,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('shared-chat-vi
 }
 
 export default SharedChatViewerElement;
-
 ```
 
 ## vanilla\ShortcutCheatSheet.js
@@ -64389,7 +64662,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('shortcut-cheat
 }
 
 export default ShortcutCheatSheetElement;
-
 ```
 
 ## vanilla\ShortcutsOverlay.js
@@ -64609,7 +64881,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('shortcuts-over
   customElements.define('shortcuts-overlay', ShortcutsOverlayElement);
 }
 export default ShortcutsOverlayElement;
-
 ```
 
 ## vanilla\SideDrawer.js
@@ -64746,7 +65017,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('side-drawer'))
   customElements.define('side-drawer', SideDrawerElement);
 }
 export default SideDrawerElement;
-
 ```
 
 ## vanilla\SideNav.js
@@ -64885,7 +65155,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('side-nav')) {
   customElements.define('side-nav', SideNavElement);
 }
 export default SideNavElement;
-
 ```
 
 ## vanilla\SiteFooter.js
@@ -65022,7 +65291,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('site-footer'))
   customElements.define('site-footer', SiteFooterElement);
 }
 export default SiteFooterElement;
-
 ```
 
 ## vanilla\SourcesCitation.js
@@ -65116,7 +65384,6 @@ if (!customElements.get("sources-citation")) {
   customElements.define("sources-citation", SourcesCitation);
 }
 export default SourcesCitation;
-
 ```
 
 ## vanilla\SpendTrendChart.js
@@ -65278,7 +65545,6 @@ export default SpendTrendChartElement;
 if (!customElements.get('spend-trend-chart')) {
   customElements.define('spend-trend-chart', SpendTrendChartElement);
 }
-
 ```
 
 ## vanilla\SpotlightGlareCard.js
@@ -65392,7 +65658,6 @@ class SpotlightGlareCard extends HTMLElement {
 if (typeof customElements !== "undefined" && !customElements.get("spotlight-glare-card")) {
   customElements.define("spotlight-glare-card", SpotlightGlareCard);
 }
-
 ```
 
 ## vanilla\StatCard.js
@@ -65494,7 +65759,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('stat-card')) {
   customElements.define('stat-card', StatCardElement);
 }
 export default StatCardElement;
-
 ```
 
 ## vanilla\StatsBand.js
@@ -65587,7 +65851,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('stats-band')) 
 }
 
 export default StatsBandElement;
-
 ```
 
 ## vanilla\StatusCountTabs.js
@@ -65704,7 +65967,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('status-count-t
 }
 
 export default StatusCountTabsElement;
-
 ```
 
 ## vanilla\StatusIndicator.js
@@ -65774,7 +66036,6 @@ if (!customElements.get("status-indicator")) {
   customElements.define("status-indicator", StatusIndicator);
 }
 export default StatusIndicator;
-
 ```
 
 ## vanilla\StepSlider.js
@@ -65900,7 +66161,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('step-slider'))
   customElements.define('step-slider', StepSliderElement);
 }
 export default StepSliderElement;
-
 ```
 
 ## vanilla\Stepper.js
@@ -66025,7 +66285,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('step-flow')) {
   customElements.define('step-flow', StepperElement);
 }
 export default StepperElement;
-
 ```
 
 ## vanilla\StockPhotoPicker.js
@@ -66204,7 +66463,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('stock-photo-pi
 }
 
 export default StockPhotoPickerElement;
-
 ```
 
 ## vanilla\StreamMarkdown.js
@@ -66336,7 +66594,6 @@ if (!customElements.get("stream-markdown")) {
   customElements.define("stream-markdown", StreamMarkdown);
 }
 export default StreamMarkdown;
-
 ```
 
 ## vanilla\StreamingProgressBar.js
@@ -66419,7 +66676,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('streaming-prog
   customElements.define('streaming-progress-bar', StreamingProgressBarElement);
 }
 export default StreamingProgressBarElement;
-
 ```
 
 ## vanilla\SuccessToast.js
@@ -66548,7 +66804,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('success-toast'
 }
 
 export default SuccessToastElement;
-
 ```
 
 ## vanilla\SystemPromptEditor.js
@@ -66689,7 +66944,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('system-prompt-
 }
 
 export default SystemPromptEditorElement;
-
 ```
 
 ## vanilla\TableSavedViews.js
@@ -66819,7 +67073,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('table-saved-vi
 }
 
 export default TableSavedViewsElement;
-
 ```
 
 ## vanilla\Tabs.js
@@ -66958,7 +67211,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('tabs-bar')) {
   customElements.define('tabs-bar', TabsElement);
 }
 export default TabsElement;
-
 ```
 
 ## vanilla\Tag.js
@@ -67066,7 +67318,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('ui-tag')) {
   customElements.define('ui-tag', TagElement);
 }
 export default TagElement;
-
 ```
 
 ## vanilla\TargetGauge.js
@@ -67200,7 +67451,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('target-gauge')
   customElements.define('target-gauge', TargetGaugeElement);
 }
 export default TargetGaugeElement;
-
 ```
 
 ## vanilla\TaskCardModal.js
@@ -67492,7 +67742,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('task-card-moda
 }
 
 export default TaskCardModalElement;
-
 ```
 
 ## vanilla\TaskDetailPanel.js
@@ -67753,7 +68002,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('task-detail-pa
 }
 
 export default TaskDetailPanelElement;
-
 ```
 
 ## vanilla\TestimonialGrid.js
@@ -67882,7 +68130,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('testimonial-gr
   customElements.define('testimonial-grid', TestimonialGridElement);
 }
 export default TestimonialGridElement;
-
 ```
 
 ## vanilla\ThemeToggle.js
@@ -67972,7 +68219,6 @@ if (!customElements.get("theme-toggle")) {
   customElements.define("theme-toggle", ThemeToggle);
 }
 export default ThemeToggle;
-
 ```
 
 ## vanilla\ThinkingBlock.js
@@ -68106,7 +68352,6 @@ if (!customElements.get("thinking-block")) {
   customElements.define("thinking-block", ThinkingBlock);
 }
 export default ThinkingBlock;
-
 ```
 
 ## vanilla\TimeSlotPicker.js
@@ -68284,7 +68529,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('time-slot-pick
 }
 
 export default TimeSlotPickerElement;
-
 ```
 
 ## vanilla\TimeframePicker.js
@@ -68402,7 +68646,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('timeframe-pick
   customElements.define('timeframe-picker', TimeframePickerElement);
 }
 export default TimeframePickerElement;
-
 ```
 
 ## vanilla\ToastStack.js
@@ -68599,7 +68842,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('toast-stack'))
   customElements.define('toast-stack', ToastStackElement);
 }
 export default ToastStackElement;
-
 ```
 
 ## vanilla\ToggleSwitch.js
@@ -68711,7 +68953,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('toggle-switch'
   customElements.define('toggle-switch', ToggleSwitchElement);
 }
 export default ToggleSwitchElement;
-
 ```
 
 ## vanilla\TokenCostBreakdown.js
@@ -68859,7 +69100,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('token-cost-bre
 }
 
 export default TokenCostBreakdownElement;
-
 ```
 
 ## vanilla\ToolApprovalCard.js
@@ -68993,7 +69233,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('tool-approval-
   customElements.define('tool-approval-card', ToolApprovalCardElement);
 }
 export default ToolApprovalCardElement;
-
 ```
 
 ## vanilla\ToolCallBadge.js
@@ -69072,7 +69311,6 @@ if (!customElements.get("tool-call-badge")) {
   customElements.define("tool-call-badge", ToolCallBadge);
 }
 export default ToolCallBadge;
-
 ```
 
 ## vanilla\ToolSchemaEditor.js
@@ -69199,7 +69437,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('tool-schema-ed
 }
 
 export default ToolSchemaEditorElement;
-
 ```
 
 ## vanilla\Tooltip.js
@@ -69295,7 +69532,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('tooltip-hint')
   customElements.define('tooltip-hint', TooltipElement);
 }
 export default TooltipElement;
-
 ```
 
 ## vanilla\TopUpBalanceDialog.js
@@ -69584,7 +69820,6 @@ export default TopUpBalanceDialogElement;
 if (!customElements.get('topup-balance-dialog')) {
   customElements.define('topup-balance-dialog', TopUpBalanceDialogElement);
 }
-
 ```
 
 ## vanilla\TourTooltip.js
@@ -69694,7 +69929,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('tour-tooltip')
   customElements.define('tour-tooltip', TourTooltipElement);
 }
 export default TourTooltipElement;
-
 ```
 
 ## vanilla\TraceSpanWaterfall.js
@@ -69815,7 +70049,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('trace-span-wat
 }
 
 export default TraceSpanWaterfallElement;
-
 ```
 
 ## vanilla\TrialBanner.js
@@ -69906,7 +70139,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('trial-banner')
 }
 
 export default TrialBannerElement;
-
 ```
 
 ## vanilla\TrialExpiryNotice.js
@@ -70062,7 +70294,6 @@ export default TrialExpiryNoticeElement;
 if (!customElements.get('trial-expiry-notice')) {
   customElements.define('trial-expiry-notice', TrialExpiryNoticeElement);
 }
-
 ```
 
 ## vanilla\TypingIndicator.js
@@ -70130,7 +70361,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('typing-indicat
   customElements.define('typing-indicator', TypingIndicatorElement);
 }
 export default TypingIndicatorElement;
-
 ```
 
 ## vanilla\UiIcon.js
@@ -70151,7 +70381,6 @@ export function uiIcon(name, { size = 20, strokeWidth = 1.8, label = '', classNa
   return `<svg width="${escapeAttribute(size)}" height="${escapeAttribute(size)}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${escapeAttribute(strokeWidth)}" stroke-linecap="round" stroke-linejoin="round" class="${escapeAttribute(className)}" ${aria}>${ICONS[name] || ''}</svg>`;
 }
 export default uiIcon;
-
 ```
 
 ## vanilla\UpgradeCheckoutPanel.js
@@ -70308,7 +70537,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('upgrade-checko
 }
 
 export default UpgradeCheckoutPanelElement;
-
 ```
 
 ## vanilla\UpgradePromptCard.js
@@ -70428,7 +70656,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('upgrade-prompt
   customElements.define('upgrade-prompt-card', UpgradePromptCardElement);
 }
 export default UpgradePromptCardElement;
-
 ```
 
 ## vanilla\UsageCreditsDonut.js
@@ -70649,7 +70876,6 @@ export default UsageCreditsDonutElement;
 if (!customElements.get('usage-credits-donut')) {
   customElements.define('usage-credits-donut', UsageCreditsDonutElement);
 }
-
 ```
 
 ## vanilla\UsageMeter.js
@@ -70764,7 +70990,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('usage-meter'))
   customElements.define('usage-meter', UsageMeterElement);
 }
 export default UsageMeterElement;
-
 ```
 
 ## vanilla\UsagePricingBreakdown.js
@@ -70900,7 +71125,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('usage-pricing-
 }
 
 export default UsagePricingBreakdownElement;
-
 ```
 
 ## vanilla\UsageQuotaCard.js
@@ -71000,7 +71224,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('usage-quota'))
   customElements.define('usage-quota', UsageQuotaCardElement);
 }
 export default UsageQuotaCardElement;
-
 ```
 
 ## vanilla\VideoProjectSettings.js
@@ -71176,7 +71399,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('video-project-
 }
 
 export default VideoProjectSettingsElement;
-
 ```
 
 ## vanilla\VisionAnalysisCard.js
@@ -71298,7 +71520,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('vision-analysi
 }
 
 export default VisionAnalysisCardElement;
-
 ```
 
 ## vanilla\VoiceModePanel.js
@@ -71434,7 +71655,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('voice-mode-pan
   customElements.define('voice-mode-panel', VoiceModePanelElement);
 }
 export default VoiceModePanelElement;
-
 ```
 
 ## vanilla\VoiceOrb.js
@@ -71534,7 +71754,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('voice-orb')) {
 }
 
 export default VoiceOrbElement;
-
 ```
 
 ## vanilla\VoiceSessionHistory.js
@@ -71671,7 +71890,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('voice-session-
 }
 
 export default VoiceSessionHistoryElement;
-
 ```
 
 ## vanilla\WebhookConfigPanel.js
@@ -71844,7 +72062,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('webhook-config
 }
 
 export default WebhookConfigPanelElement;
-
 ```
 
 ## vanilla\WeekCalendarGrid.js
@@ -72072,7 +72289,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('week-calendar-
 }
 
 export default WeekCalendarGridElement;
-
 ```
 
 ## vanilla\WizardSteps.js
@@ -72222,7 +72438,336 @@ if (typeof customElements !== 'undefined' && !customElements.get('wizard-steps')
   customElements.define('wizard-steps', WizardStepsElement);
 }
 export default WizardStepsElement;
+```
 
+## vanilla\WorkspaceSetupPanel.js
+
+```js
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class WorkspaceSetupPanelElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['sections', 'up-next', 'title'];
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  get sections() {
+    if (this._sections) return this._sections;
+    try {
+      return JSON.parse(this.getAttribute('sections') || '[]');
+    } catch {
+      return [];
+    }
+  }
+
+  set sections(value) {
+    this._sections = Array.isArray(value) ? value : [];
+    this.render();
+  }
+
+  get upNext() {
+    if (this._upNext) return this._upNext;
+    try {
+      return JSON.parse(this.getAttribute('up-next') || '[]');
+    } catch {
+      return [];
+    }
+  }
+
+  set upNext(value) {
+    this._upNext = Array.isArray(value) ? value : [];
+    this.render();
+  }
+
+  _applyHostClass(hostClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = hostClass;
+    const next = `${hostClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
+  render() {
+    const sections = this.sections;
+    const upNext = this.upNext;
+    const title = this.getAttribute('title') || 'Workspace setup';
+
+    const total = sections.reduce((sum, s) => sum + s.tasks.length, 0);
+    const done = sections.reduce((sum, s) => sum + s.tasks.filter((t) => t.done).length, 0);
+    const allDone = total > 0 && done === total;
+
+    this._applyHostClass('block');
+
+    const sectionBlocks = sections
+      .map((section) => {
+        const sectionDone = section.tasks.filter((t) => t.done).length;
+        const tasks = section.tasks
+          .map(
+            (task) => `
+          <li data-workspace-setup-task="${escapeAttribute(task.id)}">
+            <button type="button" data-task-id="${escapeAttribute(task.id)}" data-section-id="${escapeAttribute(section.id)}"
+              class="flex w-full items-center gap-2 rounded-md px-1 py-0.5 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              <span class="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border ${
+                task.done
+                  ? 'border-emerald-500 bg-emerald-500 text-white'
+                  : 'border-zinc-300 dark:border-zinc-600'
+              }">${task.done ? uiIcon('check', { size: 8 }) : ''}</span>
+              <span class="min-w-0 flex-1 truncate text-xs ${task.done ? 'text-zinc-400 dark:text-zinc-500 line-through' : 'text-zinc-700 dark:text-zinc-200'}">${escapeAttribute(task.label)}</span>
+              ${task.done ? '' : uiIcon('arrow-right', { size: 12, className: 'shrink-0 text-zinc-300 dark:text-zinc-600' })}
+            </button>
+          </li>`
+          )
+          .join('');
+        return `
+        <div data-workspace-setup-section="${escapeAttribute(section.id)}" class="px-5 py-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold text-zinc-900 dark:text-zinc-100">${escapeAttribute(section.title)}</span>
+            <span data-workspace-setup-section-count="${escapeAttribute(section.id)}" class="rounded-full px-1.5 py-0.5 text-[10px] font-medium tabular-nums ${
+              sectionDone === section.tasks.length
+                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400'
+                : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400'
+            }">${sectionDone}/${section.tasks.length}</span>
+          </div>
+          <ul class="mt-2 space-y-1.5">${tasks}</ul>
+        </div>`;
+      })
+      .join('');
+
+    const upNextBlock =
+      upNext.length > 0
+        ? `
+        <div class="border-t border-zinc-100 dark:border-zinc-800 px-5 py-4">
+          <div class="text-[11px] font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Up next</div>
+          <div data-workspace-setup-up-next class="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
+            ${upNext
+              .map(
+                (card) => `
+              <button type="button" data-workspace-setup-next-card="${escapeAttribute(card.id)}"
+                class="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3 py-2.5 text-left transition-colors hover:border-indigo-400 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+                <div class="text-xs font-medium text-zinc-800 dark:text-zinc-200">${escapeAttribute(card.title)}</div>
+                ${card.description ? `<div class="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">${escapeAttribute(card.description)}</div>` : ''}
+              </button>`
+              )
+              .join('')}
+          </div>
+        </div>`
+        : '';
+
+    this.innerHTML = `
+      <div data-workspace-setup class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+        <div class="border-b border-zinc-100 dark:border-zinc-800 px-5 py-4">
+          <h4 data-workspace-setup-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</h4>
+          <p data-workspace-setup-count class="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">${allDone ? 'All steps complete — your workspace is ready.' : `${done} of ${total} steps complete`}</p>
+        </div>
+        <div class="divide-y divide-zinc-100 dark:divide-zinc-800">${sectionBlocks}</div>
+        ${upNextBlock}
+      </div>`;
+
+    this.querySelectorAll('[data-task-id]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const section = sections.find((s) => s.id === btn.getAttribute('data-section-id'));
+        const task = section && section.tasks.find((t) => t.id === btn.getAttribute('data-task-id'));
+        if (section && task) this.dispatchEvent(new CustomEvent('task-click', { detail: { section, task } }));
+      });
+    });
+
+    this.querySelectorAll('[data-workspace-setup-next-card]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const card = upNext.find((c) => c.id === btn.getAttribute('data-workspace-setup-next-card'));
+        if (card) this.dispatchEvent(new CustomEvent('up-next', { detail: card }));
+      });
+    });
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('workspace-setup-panel')) {
+  customElements.define('workspace-setup-panel', WorkspaceSetupPanelElement);
+}
+export default WorkspaceSetupPanelElement;
+```
+
+## vanilla\WorkspaceSurveyCard.js
+
+```js
+import uiIcon from './UiIcon.js';
+
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class WorkspaceSurveyCardElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['questions', 'answers', 'title', 'step-label', 'next-label'];
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  get questions() {
+    if (this._questions) return this._questions;
+    try {
+      return JSON.parse(this.getAttribute('questions') || '[]');
+    } catch {
+      return [];
+    }
+  }
+
+  set questions(value) {
+    this._questions = Array.isArray(value) ? value : [];
+    this.render();
+  }
+
+  get answers() {
+    if (this._answers) return this._answers;
+    try {
+      return JSON.parse(this.getAttribute('answers') || '{}');
+    } catch {
+      return {};
+    }
+  }
+
+  set answers(value) {
+    this._answers = value && typeof value === 'object' ? value : {};
+    this.render();
+  }
+
+  _applyHostClass(hostClass) {
+    const prev = this._appliedLayout || '';
+    let user = this.className || '';
+    if (prev && user.startsWith(prev)) user = user.slice(prev.length).trim();
+    this._appliedLayout = hostClass;
+    const next = `${hostClass}${user ? ` ${user}` : ''}`;
+    if (this.className !== next) this.className = next;
+  }
+
+  _selectedIds(q) {
+    const a = this.answers[q.id];
+    if (Array.isArray(a)) return a;
+    return typeof a === 'string' && a.length > 0 ? [a] : [];
+  }
+
+  render() {
+    const questions = this.questions;
+    const answers = this.answers;
+    const title = this.getAttribute('title') || 'Tell us about your workspace';
+    const stepLabel = this.getAttribute('step-label') || '';
+    const nextLabel = this.getAttribute('next-label') || 'Continue';
+
+    const answeredCount = questions.filter((q) => this._selectedIds(q).length > 0).length;
+    const allAnswered = questions.length > 0 && answeredCount === questions.length;
+
+    this._applyHostClass('block');
+
+    const dots = questions
+      .map((q) => {
+        const filled = this._selectedIds(q).length > 0;
+        return `<span title="${escapeAttribute(q.label)}" class="h-1.5 w-6 rounded-full transition-colors ${filled ? 'bg-indigo-600' : 'bg-zinc-200 dark:bg-zinc-700'}"></span>`;
+      })
+      .join('');
+
+    const blocks = questions
+      .map((q) => {
+        const selected = this._selectedIds(q);
+        const options = q.options
+          .map((opt) => {
+            const active = selected.includes(opt.id);
+            return `<button type="button" data-workspace-survey-option="${escapeAttribute(opt.id)}"
+              ${q.multi ? `aria-pressed="${active}"` : `aria-checked="${active}"`}
+              class="rounded-full border px-3 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+                active
+                  ? 'border-indigo-600 bg-indigo-600 text-white'
+                  : 'border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400'
+              }">${escapeAttribute(opt.label)}</button>`;
+          })
+          .join('');
+        return `
+        <div data-workspace-survey-question="${escapeAttribute(q.id)}" class="px-5 py-4">
+          <div class="text-xs font-medium text-zinc-800 dark:text-zinc-200">${escapeAttribute(q.label)}</div>
+          ${q.description ? `<p class="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">${escapeAttribute(q.description)}</p>` : ''}
+          <div data-workspace-survey-options="${escapeAttribute(q.id)}" role="${q.multi ? 'group' : 'radiogroup'}"
+            aria-label="${escapeAttribute(q.label)}" class="mt-2.5 flex flex-wrap gap-1.5">${options}</div>
+          ${q.placeholder ? `<input type="text" data-workspace-survey-input="${escapeAttribute(q.id)}" placeholder="${escapeAttribute(q.placeholder)}"
+            class="mt-2.5 w-full rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-xs text-zinc-900 placeholder-zinc-400 focus:border-indigo-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder-zinc-500" />` : ''}
+        </div>`;
+      })
+      .join('');
+
+    this.innerHTML = `
+      <div data-workspace-survey class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+        <div class="border-b border-zinc-100 dark:border-zinc-800 px-5 py-4">
+          <h4 data-workspace-survey-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</h4>
+          ${stepLabel ? `<p data-workspace-survey-step class="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">${escapeAttribute(stepLabel)}</p>` : ''}
+          <div data-workspace-survey-dots class="mt-3 flex items-center gap-1.5">${dots}
+            <span class="ml-1 text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">${answeredCount}/${questions.length}</span>
+          </div>
+        </div>
+        <div class="divide-y divide-zinc-100 dark:divide-zinc-800">${blocks}</div>
+        <div class="border-t border-zinc-100 dark:border-zinc-800 px-5 py-3">
+          <button type="button" data-workspace-survey-next ${allAnswered ? '' : 'disabled'}
+            class="w-full rounded-md px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+              allAnswered
+                ? 'bg-indigo-600 text-white hover:bg-indigo-500'
+                : 'cursor-not-allowed bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500'
+            }">${escapeAttribute(nextLabel)}</button>
+          ${allAnswered ? '' : `<p class="mt-1.5 text-center text-[11px] text-zinc-400 dark:text-zinc-500">Answer all ${questions.length} questions to continue.</p>`}
+        </div>
+      </div>`;
+
+    this.querySelectorAll('[data-workspace-survey-option]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const container = btn.closest('[data-workspace-survey-options]');
+        const q = questions.find((entry) => entry.id === container.getAttribute('data-workspace-survey-options'));
+        if (q) this.dispatchEvent(new CustomEvent('answer', { detail: { questionId: q.id, optionId: btn.getAttribute('data-workspace-survey-option') } }));
+      });
+    });
+
+    this.querySelectorAll('[data-workspace-survey-input]').forEach((input) => {
+      input.addEventListener('input', () => {
+        const qid = input.getAttribute('data-workspace-survey-input');
+        this.dispatchEvent(new CustomEvent('text', { detail: { questionId: qid, text: input.value } }));
+      });
+    });
+
+    const nextBtn = this.querySelector('[data-workspace-survey-next]');
+    if (nextBtn && allAnswered) {
+      nextBtn.addEventListener('click', () => {
+        this.dispatchEvent(new CustomEvent('next', { detail: { answers } }));
+      });
+    }
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get('workspace-survey-card')) {
+  customElements.define('workspace-survey-card', WorkspaceSurveyCardElement);
+}
+export default WorkspaceSurveyCardElement;
 ```
 
 ## vanilla\WorkspaceSwitcherMenu.js
@@ -72410,7 +72955,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('workspace-swit
   customElements.define('workspace-switcher', WorkspaceSwitcherMenuElement);
 }
 export default WorkspaceSwitcherMenuElement;
-
 ```
 
 ## vanilla\WriterStyleGuide.js
@@ -72559,7 +73103,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('writer-style-g
 }
 
 export default WriterStyleGuideElement;
-
 ```
 
 ## vanilla\ZendeskFieldSuggest.js
@@ -72683,7 +73226,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('zendesk-field-
 }
 
 export default ZendeskFieldSuggestElement;
-
 ```
 
 ## vanilla\ZoomControlBar.js
@@ -72852,7 +73394,6 @@ if (typeof customElements !== 'undefined' && !customElements.get('zoom-control-b
 }
 
 export default ZoomControlBarElement;
-
 ```
 
 ## vanilla\paper-theme.js
@@ -72947,7 +73488,6 @@ export const PaperTrailThemeCSS = `
   background-size: auto, auto, 120px 120px, 120px 120px;
 }
 `;
-
 ```
 
 ## vue\AIInlineMenu.vue
@@ -73052,7 +73592,6 @@ const run = (action: AIAction, option?: string) => {
   emit('action', action.id, option);
 };
 </script>
-
 ```
 
 ## vue\Accordion.vue
@@ -73126,7 +73665,6 @@ const toggle = (id: string) => {
   emit('toggle', id, !wasOpen);
 };
 </script>
-
 ```
 
 ## vue\AccountSecurityPanel.vue
@@ -73244,7 +73782,6 @@ const removeSession = (s: AccountSession) => {
     </p>
   </div>
 </template>
-
 ```
 
 ## vue\AccountSwitcher.vue
@@ -73419,7 +73956,6 @@ onBeforeUnmount(() => {
   document.removeEventListener('keydown', onKeyDown);
 });
 </script>
-
 ```
 
 ## vue\ActivityFeed.vue
@@ -73478,7 +74014,6 @@ const KIND: Record<ActivityFeedKind, { icon: IconName; iconClass: string }> = {
   alert: { icon: 'alert-triangle', iconClass: 'bg-rose-100 text-rose-600 dark:bg-rose-950/60 dark:text-rose-300' },
 };
 </script>
-
 ```
 
 ## vue\AddonPicker.vue
@@ -73557,7 +74092,6 @@ const toggle = (option: AddonOption) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AgentBuilderCard.vue
@@ -73639,7 +74173,6 @@ const STATUS_DOT: Record<string, string> = {
     </button>
   </div>
 </template>
-
 ```
 
 ## vue\AgentEnvVarEditor.vue
@@ -73772,7 +74305,6 @@ const isEmpty = computed(() => rows.value.length === 0);
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AgentErrorRecovery.vue
@@ -73836,7 +74368,6 @@ const emit = defineEmits<{
     <p v-if="props.supportText" data-agent-error-support class="mt-4 text-[11px] text-zinc-400 dark:text-zinc-500">{{ props.supportText }}</p>
   </div>
 </template>
-
 ```
 
 ## vue\AgentGuardrailViolationCard.vue
@@ -73946,7 +74477,6 @@ const act = (kind: "proceeded" | "blocked") => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AgentModelFallbackList.vue
@@ -74080,7 +74610,6 @@ const move = (id: string, dir: number) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AgentNotificationFeed.vue
@@ -74170,7 +74699,6 @@ const KIND_TEXT: Record<string, string> = {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AgentRunLog.vue
@@ -74236,7 +74764,6 @@ const toggle = (id: string) => {
   expanded.value = next;
 };
 </script>
-
 ```
 
 ## vue\AgentScheduleEditor.vue
@@ -74345,7 +74872,6 @@ const save = () => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AgentSessionTimeline.vue
@@ -74462,7 +74988,6 @@ const stripColor = (kind: AgentStepKind) =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AgentStepTimeline.vue
@@ -74529,7 +75054,6 @@ function statusMeta(status: string) {
   return STATUS_META[status] || STATUS_META.pending;
 }
 </script>
-
 ```
 
 ## vue\AgentTaskChecklist.vue
@@ -74596,7 +75120,6 @@ function statusIcon(status: string) {
   return STATUS_ICON[status] || STATUS_ICON.pending;
 }
 </script>
-
 ```
 
 ## vue\AgentTaskProgress.vue
@@ -74671,7 +75194,6 @@ const emit = defineEmits<{
   (e: 'next'): void;
 }>();
 </script>
-
 ```
 
 ## vue\AgentWorkspaceSettings.vue
@@ -74771,7 +75293,6 @@ const sectionOnCount = (section: AgentSettingsSection) =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AiNoteAnswer.vue
@@ -74864,7 +75385,6 @@ const bars = props.waveform.length
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AiResearchPanel.vue
@@ -74962,7 +75482,6 @@ const visible = computed(() => props.templates);
     </footer>
   </aside>
 </template>
-
 ```
 
 ## vue\AiRewriteMenu.vue
@@ -75033,7 +75552,6 @@ const emit = defineEmits<{
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AiSuggestionCard.vue
@@ -75083,7 +75601,6 @@ defineEmits(["chip-click", "close"]);
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AiTemplatePicker.vue
@@ -75208,7 +75725,6 @@ const isActive = (id: string) => id === (props.activeCategory || props.categorie
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AlertBanner.vue
@@ -75309,7 +75825,6 @@ const TONE: Record<AlertBannerTone, ToneStyle> = {
 
 const styles = computed(() => TONE[props.tone]);
 </script>
-
 ```
 
 ## vue\AmberEmbersBackdrop.vue
@@ -75524,7 +76039,6 @@ watch(
   () => { if (cleanup) cleanup(); cleanup = null; mount(); },
 );
 </script>
-
 ```
 
 ## vue\AnimatedCounter.vue
@@ -75629,7 +76143,6 @@ onUnmounted(() => {
   if (rafId) cancelAnimationFrame(rafId);
 });
 </script>
-
 ```
 
 ## vue\ApiKeyTable.vue
@@ -75749,7 +76262,6 @@ const meta = (row: ApiKeyRow) => (row.created ? `${row.preview} · created ${row
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\ApiReferenceViewer.vue
@@ -75927,7 +76439,6 @@ const activeLanguage = () => props.languages.find((l) => l.id === activeLang.val
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AppealRestrictionDialog.vue
@@ -76024,7 +76535,6 @@ const emit = defineEmits<{
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\ApprovalCard.vue
@@ -76176,7 +76686,6 @@ const handleReject = () => {
   emit('reject');
 };
 </script>
-
 ```
 
 ## vue\ArtifactCanvas.vue
@@ -76303,7 +76812,6 @@ const handleCopy = async () => {
   setTimeout(() => (copied.value = false), 2000);
 };
 </script>
-
 ```
 
 ## vue\AttachmentChip.vue
@@ -76347,7 +76855,6 @@ const emit = defineEmits<{ (e: 'remove'): void }>();
 
 const tone = computed(() => KIND_TONE[props.kind] || KIND_TONE.doc);
 </script>
-
 ```
 
 ## vue\AudioNotePlayer.vue
@@ -76410,7 +76917,6 @@ const bars = props.waveform.length
     <p data-audio-note-title class="mt-3 truncate text-xs font-medium text-zinc-900 dark:text-zinc-50">{{ props.title }}</p>
   </div>
 </template>
-
 ```
 
 ## vue\AudioPlaylistPage.vue
@@ -76556,7 +77062,6 @@ const toggleLike = (track: PlaylistTrack) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\AudioWaveVisualizer.vue
@@ -76605,7 +77110,6 @@ withDefaults(
   }
 );
 </script>
-
 ```
 
 ## vue\AuditLogTable.vue
@@ -76748,7 +77252,6 @@ const barHeight = (value: number) => `${Math.round((value / maxTrend) * 36) + 4}
     </table>
   </div>
 </template>
-
 ```
 
 ## vue\AuthForm.vue
@@ -76859,7 +77362,6 @@ const handleSubmit = () => {
   emit('submit', { ...(isSignup.value ? { name: name.value } : {}), email: email.value, password: password.value });
 };
 </script>
-
 ```
 
 ## vue\AuthGatePrompt.vue
@@ -76943,7 +77445,6 @@ const TONE_CLASS: Record<string, string> = {
 
 const toneClass = (tone?: string) => TONE_CLASS[tone || 'white'];
 </script>
-
 ```
 
 ## vue\AuthSplitPanel.vue
@@ -76993,7 +77494,6 @@ withDefaults(
   { media: '', mediaSide: 'left', mediaTitle: '', mediaSubtitle: '', mediaBackground: 'tinted', footerLinks: () => [] },
 );
 </script>
-
 ```
 
 ## vue\AutoScrollAnchor.vue
@@ -77061,7 +77561,6 @@ const scrollToBottom = () => {
   bottomEl.value?.scrollIntoView({ behavior: 'smooth' });
 };
 </script>
-
 ```
 
 ## vue\AvatarGroup.vue
@@ -77133,7 +77632,6 @@ const initials = (name: string) =>
     .map((part) => part.charAt(0).toUpperCase())
     .join('');
 </script>
-
 ```
 
 ## vue\BentoFeatureGrid.vue
@@ -77203,7 +77701,6 @@ const list = computed(() => (Array.isArray(props.tiles) ? props.tiles : []));
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\BillingAddressForm.vue
@@ -77348,7 +77845,6 @@ const handleSubmit = () => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\BillingPanel.vue
@@ -77448,7 +77944,6 @@ const periods: { id: 'monthly' | 'annual'; label: string }[] = [
 ];
 void props;
 </script>
-
 ```
 
 ## vue\BlogPostArticle.vue
@@ -77592,7 +78087,6 @@ const copyCode = () => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\BottomTabBar.vue
@@ -77665,7 +78159,6 @@ const select = (id: string) => {
     </div>
   </nav>
 </template>
-
 ```
 
 ## vue\BrandPromptTable.vue
@@ -77759,7 +78252,6 @@ const hasQuota = () => typeof props.quotaUsed === "number" && typeof props.quota
     </table>
   </div>
 </template>
-
 ```
 
 ## vue\Breadcrumb.vue
@@ -77831,7 +78323,6 @@ const onLinkClick = (event: MouseEvent, item: BreadcrumbItem, index: number) => 
   emit('navigate', item, index);
 };
 </script>
-
 ```
 
 ## vue\CampsiteHandoff.vue
@@ -77919,7 +78410,6 @@ const initialsFor = (name: string) =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\CancelRetentionFlow.vue
@@ -78033,7 +78523,6 @@ const goTo = (next: 1 | 2) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\ChangedFilesList.vue
@@ -78127,7 +78616,6 @@ const totals = computed(() =>
   ),
 );
 </script>
-
 ```
 
 ## vue\ChangelogFeed.vue
@@ -78201,7 +78689,6 @@ const TONE: Record<string, string> = {
   amber: 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300',
 };
 </script>
-
 ```
 
 ## vue\ChangelogTimeline.vue
@@ -78325,7 +78812,6 @@ const toneFor = (tone?: ChangelogTagTone) => TONE_STYLES[tone ?? "sky"];
     </ol>
   </div>
 </template>
-
 ```
 
 ## vue\ChatMessageRow.vue
@@ -78390,7 +78876,6 @@ const props = withDefaults(
 
 const isUser = computed(() => props.role === "user");
 </script>
-
 ```
 
 ## vue\ChatPromptInput.vue
@@ -78590,7 +79075,6 @@ const handleSubmit = () => {
   }
 };
 </script>
-
 ```
 
 ## vue\ChatSessionList.vue
@@ -78744,7 +79228,6 @@ const initials = computed(() =>
     : ""
 );
 </script>
-
 ```
 
 ## vue\ClarifyQuestionCard.vue
@@ -78808,7 +79291,6 @@ const emit = defineEmits<{
   (e: 'next'): void;
 }>();
 </script>
-
 ```
 
 ## vue\CodeBlock.vue
@@ -78892,7 +79374,6 @@ async function handleCopy() {
   }
 }
 </script>
-
 ```
 
 ## vue\ColorPickerPopover.vue
@@ -79115,7 +79596,6 @@ const onChannel = (channel: 'r' | 'g' | 'b', raw: string) => {
   apply(next);
 };
 </script>
-
 ```
 
 ## vue\ColumnVisibilityMenu.vue
@@ -79223,7 +79703,6 @@ const toggle = (column: ColumnDef) => {
   emit('toggle', column.id, nextVisible);
 };
 </script>
-
 ```
 
 ## vue\ComboBox.vue
@@ -79354,7 +79833,6 @@ onBeforeUnmount(() => {
   document.removeEventListener('keydown', onDocKeyDown);
 });
 </script>
-
 ```
 
 ## vue\CommandPalette.vue
@@ -79525,7 +80003,6 @@ function onKey(e: KeyboardEvent) {
 onMounted(() => document.addEventListener("keydown", onKey));
 onUnmounted(() => document.removeEventListener("keydown", onKey));
 </script>
-
 ```
 
 ## vue\CommentThread.vue
@@ -79737,7 +80214,6 @@ function submitReply(parentId: string | number) {
   replyTo.value = null;
 }
 </script>
-
 ```
 
 ## vue\ConfirmDialog.vue
@@ -79885,7 +80361,6 @@ function onKey(e: KeyboardEvent) {
 onMounted(() => document.addEventListener("keydown", onKey));
 onUnmounted(() => document.removeEventListener("keydown", onKey));
 </script>
-
 ```
 
 ## vue\ConnectorGrid.vue
@@ -79959,7 +80434,6 @@ const connectedCount = props.connectors.filter((c) => c.connected).length;
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\ContentReviewTable.vue
@@ -80088,7 +80562,6 @@ const valid = props.rows.length - errors;
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\ContextUsageBadge.vue
@@ -80211,7 +80684,6 @@ function onBlur() {
   }, 200);
 }
 </script>
-
 ```
 
 ## vue\CookieConsent.vue
@@ -80325,7 +80797,6 @@ const alwaysIds = computed(() => props.categories.filter((c) => c.alwaysActive).
 
 const confirm = (accepted: string[]) => emit('confirm', accepted);
 </script>
-
 ```
 
 ## vue\CreationComposer.vue
@@ -80446,7 +80917,6 @@ const submit = (event: Event) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\CreditBalanceCard.vue
@@ -80562,7 +81032,6 @@ const onCoupon = () => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\DataTable.vue
@@ -80688,7 +81157,6 @@ const runBatch = (action: DataTableAction) => {
   selected.value = new Set();
 };
 </script>
-
 ```
 
 ## vue\DatePicker.vue
@@ -80848,7 +81316,6 @@ function selectToday() {
   emit('change', today);
 }
 </script>
-
 ```
 
 ## vue\DeliveryTrackingPanel.vue
@@ -81026,7 +81493,6 @@ const toggleDetails = () => { detailsOpen.value = !detailsOpen.value; };
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\DeploymentCard.vue
@@ -81100,7 +81566,6 @@ const emit = defineEmits<{
 const tone = computed(() => STATUS_TONE[props.status] || STATUS_TONE.queued);
 const terminal = computed(() => props.status === 'live' || props.status === 'failed' || props.status === 'canceled');
 </script>
-
 ```
 
 ## vue\DiffViewer.vue
@@ -81342,7 +81807,6 @@ const buildRows = (lines: DiffLine[], contextSize: number): RenderRow[] => {
 
 const rows = computed(() => buildRows(activeLines.value, props.contextSize));
 </script>
-
 ```
 
 ## vue\DocsPageLayout.vue
@@ -81578,7 +82042,6 @@ const tocCls = (item: DocsTocItem) =>
     </aside>
   </div>
 </template>
-
 ```
 
 ## vue\DriftEmbersBackdrop.vue
@@ -81835,7 +82298,6 @@ watch(
   () => { if (cleanup) cleanup(); cleanup = null; mount(); },
 );
 </script>
-
 ```
 
 ## vue\EditableHeading.vue
@@ -81909,7 +82371,6 @@ const cancel = () => {
   editing.value = false;
 };
 </script>
-
 ```
 
 ## vue\EditorToolPalette.vue
@@ -81968,7 +82429,6 @@ const emit = defineEmits<{
   (e: 'select', id: string): void;
 }>();
 </script>
-
 ```
 
 ## vue\EmptyState.vue
@@ -82010,7 +82470,6 @@ const emit = defineEmits<{
   (e: "action"): void;
 }>();
 </script>
-
 ```
 
 ## vue\EmptyStateStarter.vue
@@ -82070,7 +82529,6 @@ const ACTION_CLASS: Record<string, string> = {
 
 const actionClass = computed(() => ACTION_CLASS[props.actionVariant] || ACTION_CLASS.solid);
 </script>
-
 ```
 
 ## vue\EntityMultiSelectPicker.vue
@@ -82190,7 +82648,6 @@ const toggle = (id: string) => {
   picked.value = next;
 };
 </script>
-
 ```
 
 ## vue\EvalRunResults.vue
@@ -82369,7 +82826,6 @@ const styleFor = (status: string) => STATUS_STYLES[status] ?? STATUS_STYLES.unkn
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\EvalScoreTable.vue
@@ -82509,7 +82965,6 @@ const toneBar = (tone?: EvalScoreTone) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\EvalTurnBuilder.vue
@@ -82597,7 +83052,6 @@ const addLabel = (role: EvalTurnRole) =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\EventLogTable.vue
@@ -82730,7 +83184,6 @@ const sourceCls = (entry: LogEntry) =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\EventStreamPanel.vue
@@ -82903,7 +83356,6 @@ const select = (ev: StreamEvent) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\EventTagGrid.vue
@@ -83006,7 +83458,6 @@ const emit = defineEmits(["tag-click"]);
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\FalRunCard.vue
@@ -83079,7 +83530,6 @@ defineEmits(["duplicate", "rerun", "delete"]);
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\FederatedSearchResultsPanel.vue
@@ -83210,7 +83660,6 @@ const filtered = computed(() =>
   scopes.value.size ? props.results.filter((result) => !result.source || scopes.value.has(result.source)) : props.results,
 );
 </script>
-
 ```
 
 ## vue\FileAttachmentList.vue
@@ -83274,7 +83723,6 @@ function iconForType(type?: string, name?: string): string {
   return "paperclip";
 }
 </script>
-
 ```
 
 ## vue\FileDropzone.vue
@@ -83467,7 +83915,6 @@ function onChange(event: Event) {
   input.value = '';
 }
 </script>
-
 ```
 
 ## vue\FilterBar.vue
@@ -83591,7 +84038,6 @@ onBeforeUnmount(() => {
   document.removeEventListener('keydown', onKeyDown);
 });
 </script>
-
 ```
 
 ## vue\FilterQueryBuilder.vue
@@ -83680,7 +84126,6 @@ const addRow = () => {
   ]);
 };
 </script>
-
 ```
 
 ## vue\FilterToolbar.vue
@@ -83788,7 +84233,6 @@ const valueTone: Record<string, string> = {
   indigo: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300',
 };
 </script>
-
 ```
 
 ## vue\FineTuneJobList.vue
@@ -83868,7 +84312,6 @@ const isActive = (status: string) => status === "queued" || status === "training
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\FluidContourBackdrop.vue
@@ -84162,7 +84605,6 @@ onUnmounted(() => {
   if (cleanup) cleanup();
 });
 </script>
-
 ```
 
 ## vue\FooterSection.vue
@@ -84237,7 +84679,6 @@ withDefaults(
 );
 defineEmits<{ (e: 'link-click', link: FooterLink): void }>();
 </script>
-
 ```
 
 ## vue\ForecastTrendChart.vue
@@ -84330,7 +84771,6 @@ const deltaIcon = computed<IconName>(() =>
 const max = computed(() => Math.max(...props.points.map((point) => point.value), 0.0001));
 const heightOf = (value: number) => Math.max(4, Math.round((value / max.value) * 100));
 </script>
-
 ```
 
 ## vue\FormField.vue
@@ -84389,7 +84829,6 @@ withDefaults(
   { required: false, optional: false, className: '' }
 );
 </script>
-
 ```
 
 ## vue\FormTrackingDashboard.vue
@@ -84582,7 +85021,6 @@ const clampPct = (n: number) => Math.min(100, Math.max(0, n));
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\GammaImageDetail.vue
@@ -84634,7 +85072,6 @@ defineEmits(["download", "zoom", "delete", "like", "dislike"]);
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\GanttTimeline.vue
@@ -84774,7 +85211,6 @@ const handleClick = (task: GanttTask, index: number) => {
   emit('task-click', task, index);
 };
 </script>
-
 ```
 
 ## vue\GroupedBarCompare.vue
@@ -84868,7 +85304,6 @@ const props = withDefaults(
 const max = computed(() => Math.max(...props.rows.flatMap((row) => [row.estimated, row.actual]), 0.0001));
 const heightOf = (value: number) => Math.max(4, Math.round((value / max.value) * 100));
 </script>
-
 ```
 
 ## vue\GroupedTaskList.vue
@@ -85088,7 +85523,6 @@ const initials = (name: string) =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\GuardrailReviewQueue.vue
@@ -85205,7 +85639,6 @@ const pending = props.items.filter((i) => (i.verdict ?? 'pending') === 'pending'
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\HealthDonutStats.vue
@@ -85329,7 +85762,6 @@ const shareOf = (slice: HealthDonutSlice, slices: HealthDonutSlice[]) => {
   return total ? Math.round((slice.value / total) * 100) : 0;
 };
 </script>
-
 ```
 
 ## vue\HelpCenterHome.vue
@@ -85436,7 +85868,6 @@ const toggleTopic = (topic: HelpTopic) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\HelpResourcesPanel.vue
@@ -85511,7 +85942,6 @@ const badgeTone = (badge: string) =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\HeroSection.vue
@@ -85570,7 +86000,6 @@ withDefaults(
 );
 defineEmits<{ (e: 'primary'): void; (e: 'secondary'): void }>();
 </script>
-
 ```
 
 ## vue\HomepageDashboard.vue
@@ -85987,7 +86416,6 @@ const iconFor = (action: ImageMenuAction) =>
     </template>
   </div>
 </template>
-
 ```
 
 ## vue\ImageGenGallery.vue
@@ -86097,7 +86525,6 @@ const submit = () => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\ImageGenMetaBar.vue
@@ -86133,7 +86560,6 @@ const props = withDefaults(defineProps<ImageGenMetaBarProps>(), {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\InboxList.vue
@@ -86210,7 +86636,6 @@ const TAG_TONE: Record<string, string> = {
   indigo: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300',
 };
 </script>
-
 ```
 
 ## vue\IntegrationConnectGrid.vue
@@ -86316,7 +86741,132 @@ const toggle = (integration: IntegrationService) => {
     </div>
   </div>
 </template>
+```
 
+## vue\InviteTeammatesCard.vue
+
+```vue
+<template>
+  <div :class="$attrs.class" data-invite-teammates
+    class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+    <div class="border-b border-zinc-100 dark:border-zinc-800 px-5 py-4">
+      <h4 data-invite-teammates-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ title }}</h4>
+      <p data-invite-teammates-description class="mt-1 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+        {{ description }}
+      </p>
+    </div>
+
+    <div class="px-5 py-4">
+      <div data-invite-teammates-composer
+        class="flex items-center gap-2 rounded-md border border-zinc-200 bg-white px-2 py-1.5 focus-within:border-indigo-500 dark:border-zinc-700 dark:bg-zinc-900">
+        <input ref="inputEl" type="email" data-invite-teammates-input v-model="draft" :placeholder="emailPlaceholder"
+          class="min-w-0 flex-1 bg-transparent text-xs text-zinc-900 placeholder-zinc-400 focus:outline-none dark:text-zinc-50 dark:placeholder-zinc-500"
+          @keydown.enter.prevent="submit()" />
+        <select data-invite-teammates-role v-model="selectedRole" aria-label="Invite role"
+          class="shrink-0 rounded border border-zinc-200 bg-white px-1.5 py-1 text-[11px] text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 focus:outline-none">
+          <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
+        </select>
+        <button type="button" data-invite-teammates-add aria-label="Add teammate" @click="submit()"
+          class="shrink-0 rounded bg-zinc-900 p-1 text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          <UiIcon name="plus" :size="12" />
+        </button>
+      </div>
+      <p v-if="error" data-invite-teammates-error role="alert" class="mt-1.5 text-[11px] text-red-500">{{ error }}</p>
+
+      <ul v-if="pending.length > 0" data-invite-teammates-list class="mt-3 space-y-1.5">
+        <li v-for="invitee in pending" :key="invitee.email" :data-invite-teammates-row="invitee.email"
+          class="flex items-center gap-2 rounded-md border border-zinc-100 bg-zinc-50 px-2.5 py-1.5 dark:border-zinc-800 dark:bg-zinc-800/60">
+          <UiIcon name="mail" :size="13" class="shrink-0 text-zinc-400 dark:text-zinc-500" />
+          <span class="min-w-0 flex-1 truncate text-xs text-zinc-700 dark:text-zinc-200">{{ invitee.email }}</span>
+          <span class="shrink-0 rounded-full bg-zinc-200 px-1.5 py-0.5 text-[10px] font-medium text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">
+            {{ invitee.role }}
+          </span>
+          <button type="button" data-invite-teammates-remove :aria-label="`Remove ${invitee.email}`"
+            class="shrink-0 rounded p-0.5 text-zinc-400 transition-colors hover:text-red-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+            @click="emit('remove', invitee)">
+            <UiIcon name="x" :size="11" />
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="flex items-center gap-2 border-t border-zinc-100 dark:border-zinc-800 px-5 py-3">
+      <button type="button" data-invite-teammates-send :disabled="pending.length === 0"
+        :class="['rounded-md px-3 py-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
+          pending.length > 0
+            ? 'bg-indigo-600 text-white hover:bg-indigo-500'
+            : 'cursor-not-allowed bg-zinc-100 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500']"
+        @click="pending.length > 0 && emit('send', pending)">
+        {{ sendLabel }}
+      </button>
+      <button type="button" data-invite-teammates-skip
+        class="rounded-md px-3 py-1.5 text-xs font-medium text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+        @click="emit('skip')">
+        {{ skipLabel }}
+      </button>
+      <span class="ml-auto text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">{{ pending.length }} pending</span>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+export interface Invitee {
+  email: string;
+  role: string;
+}
+
+const props = withDefaults(defineProps<{
+  title?: string;
+  description?: string;
+  roles?: string[];
+  defaultRole?: string;
+  pending?: Invitee[];
+  emailPlaceholder?: string;
+  sendLabel?: string;
+  skipLabel?: string;
+}>(), {
+  title: 'Invite your teammates',
+  description: 'Collaboration is better together. Add teammates by email to get started.',
+  roles: () => ['Admin', 'Editor', 'Viewer'],
+  defaultRole: '',
+  pending: () => [],
+  emailPlaceholder: 'teammate@company.com',
+  sendLabel: 'Send invites',
+  skipLabel: 'Skip for now',
+});
+
+const emit = defineEmits<{
+  (e: 'invite', invitee: Invitee): void;
+  (e: 'remove', invitee: Invitee): void;
+  (e: 'send', invitees: Invitee[]): void;
+  (e: 'skip'): void;
+}>();
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const inputEl = ref<HTMLInputElement | null>(null);
+
+const draft = ref('');
+const error = ref('');
+const selectedRole = ref(props.defaultRole || props.roles[0] || 'Viewer');
+
+const submit = () => {
+  const email = draft.value.trim();
+  if (!email) return;
+  if (!EMAIL_RE.test(email)) {
+    error.value = 'Enter a valid email address.';
+    return;
+  }
+  if (props.pending.some((p) => p.email.toLowerCase() === email.toLowerCase())) {
+    error.value = 'That teammate is already on the list.';
+    return;
+  }
+  error.value = '';
+  draft.value = '';
+  emit('invite', { email, role: selectedRole.value });
+};
+</script>
 ```
 
 ## vue\InvoiceHistoryTable.vue
@@ -86414,7 +86964,6 @@ const paidTotal = computed(() => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\IterationActionBar.vue
@@ -86454,7 +87003,6 @@ const arrow = `${pill} border border-zinc-200 bg-white px-2.5 py-1.5 text-xs tex
     </span>
   </div>
 </template>
-
 ```
 
 ## vue\JumpBackIn.vue
@@ -86522,7 +87070,6 @@ const kindTones: Record<string, string> = {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\KanbanBoard.vue
@@ -86714,7 +87261,6 @@ function onKeydown(event: KeyboardEvent, card: KanbanCard) {
   move(card.id, next.id);
 }
 </script>
-
 ```
 
 ## vue\KnowledgeDrawer.vue
@@ -86850,7 +87396,6 @@ const emit = defineEmits<{
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\LiquidGlass.vue
@@ -87010,7 +87555,6 @@ const glareStyle = computed(() => {
   };
 });
 </script>
-
 ```
 
 ## vue\LiveTailLogConsole.vue
@@ -87102,7 +87646,6 @@ const toggleFollow = () => {
   emit('live-tail-change', follow.value);
 };
 </script>
-
 ```
 
 ## vue\LogoCloud.vue
@@ -87149,7 +87692,6 @@ const list = computed(() => (Array.isArray(props.logos) ? props.logos : []));
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\MapActivityList.vue
@@ -87279,7 +87821,6 @@ const pick = (a: MapActivity) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\MapPropertyCard.vue
@@ -87390,7 +87931,6 @@ const emit = defineEmits(["pin-click", "card-close", "card-like"]);
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\MarqueeWall.vue
@@ -87484,7 +88024,6 @@ onMounted(() => {
   document.head.appendChild(style);
 });
 </script>
-
 ```
 
 ## vue\MasonryDensityControls.vue
@@ -87590,7 +88129,6 @@ const ratioFor = (span?: number) => (span === 3 ? "3 / 4" : span === 2 ? "4 / 5"
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\McpConnectPanel.vue
@@ -87681,7 +88219,6 @@ onUnmounted(() => { if (copyTimer) clearTimeout(copyTimer); });
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\MembershipTierGrid.vue
@@ -87771,7 +88308,6 @@ const gridClass = () =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\MemoryPanel.vue
@@ -87880,7 +88416,6 @@ const submitEdit = () => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\MessageActionToolbar.vue
@@ -88005,7 +88540,6 @@ const handleThumb = (type: 'up' | 'down') => {
   if (next) emit('feedback', next);
 };
 </script>
-
 ```
 
 ## vue\MetricLineChart.vue
@@ -88295,7 +88829,6 @@ const pctX = (x: number) => `${(x / VIEW_W) * 100}%`;
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\MetricStrip.vue
@@ -88371,7 +88904,6 @@ const toneOf = (delta: number | undefined) => {
 const deltaIcon = (delta: number | undefined): IconName | null =>
   delta === undefined ? null : delta > 0 ? 'trending-up' : delta < 0 ? 'trending-down' : 'minus';
 </script>
-
 ```
 
 ## vue\Modal.vue
@@ -88433,7 +88965,6 @@ const onKey = (event: KeyboardEvent) => {
 onMounted(() => document.addEventListener('keydown', onKey));
 onBeforeUnmount(() => document.removeEventListener('keydown', onKey));
 </script>
-
 ```
 
 ## vue\ModelComparePane.vue
@@ -88514,7 +89045,6 @@ const ERROR_TEXT = "Generation failed — try again.";
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\ModelPricingCard.vue
@@ -88587,7 +89117,6 @@ const fmtPrice = (value: number | undefined) =>
     </dl>
   </div>
 </template>
-
 ```
 
 ## vue\ModelSelector.vue
@@ -88779,7 +89308,6 @@ onUnmounted(() => {
   document.removeEventListener("mousedown", handleClickOutside);
 });
 </script>
-
 ```
 
 ## vue\MonitorRunList.vue
@@ -88889,7 +89417,6 @@ const barHeight = (value: number) => `${Math.max(4, (value / max()) * 56)}px`;
     </table>
   </div>
 </template>
-
 ```
 
 ## vue\Navbar.vue
@@ -88992,7 +89519,6 @@ onBeforeUnmount(() => {
   document.removeEventListener('keydown', onDocKeyDown);
 });
 </script>
-
 ```
 
 ## vue\NoResultsState.vue
@@ -89046,7 +89572,6 @@ const emit = defineEmits<{
     <button type="button" data-noresults-clear class="rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800" @click="emit('clear-filters')">{{ props.clearLabel }}</button>
   </div>
 </template>
-
 ```
 
 ## vue\NotificationCenter.vue
@@ -89215,7 +89740,6 @@ function select(item: NotificationItem) {
   emit('select', item);
 }
 </script>
-
 ```
 
 ## vue\NotificationPrefsMatrix.vue
@@ -89300,7 +89824,6 @@ const onCell = (ev: NotificationPrefEvent, col: NotificationPrefColumn, target: 
     </table>
   </div>
 </template>
-
 ```
 
 ## vue\OnboardingChecklist.vue
@@ -89385,7 +89908,6 @@ const doneCount = computed(() => props.tasks.filter((task) => task.done).length)
 const percent = computed(() => (total.value === 0 ? 0 : Math.round((doneCount.value / total.value) * 100)));
 const allDone = computed(() => total.value > 0 && doneCount.value === total.value);
 </script>
-
 ```
 
 ## vue\OnboardingStepper.vue
@@ -89492,7 +90014,6 @@ const activeSegment = ref(0);
 const active = computed(() => Math.min(Math.max(props.current, 0), Math.max(props.steps.length - 1, 0)));
 const currentSegment = computed(() => props.segments[Math.min(activeSegment.value, Math.max(props.segments.length - 1, 0))]);
 </script>
-
 ```
 
 ## vue\OrderCard.vue
@@ -89590,7 +90111,6 @@ const emit = defineEmits<{
 
 const tone = computed(() => STATUS_TONE[props.status] || STATUS_TONE.placed);
 </script>
-
 ```
 
 ## vue\OrderSummaryPanel.vue
@@ -89689,7 +90209,6 @@ const submitPromo = () => {
   code.value = '';
 };
 </script>
-
 ```
 
 ## vue\OrderTracker.vue
@@ -89764,7 +90283,6 @@ const progress = computed(() => Math.round(((currentIndex.value + 1) / props.sta
 const reached = (index: number) => !canceled.value && index <= currentIndex.value;
 const isCurrent = (index: number) => !canceled.value && index === currentIndex.value;
 </script>
-
 ```
 
 ## vue\OtpInput.vue
@@ -89882,7 +90400,6 @@ const onPaste = (index: number, event: ClipboardEvent) => {
   }
 };
 </script>
-
 ```
 
 ## vue\PageHeader.vue
@@ -90002,7 +90519,6 @@ const handleTab = (tab: PageHeaderTab) => {
   emit('tab-change', tab);
 };
 </script>
-
 ```
 
 ## vue\Pagination.vue
@@ -90087,7 +90603,6 @@ const go = (next: number) => {
   emit('change', next);
 };
 </script>
-
 ```
 
 ## vue\PaymentMethodCard.vue
@@ -90147,7 +90662,6 @@ const key = computed(() => String(props.brand).toLowerCase());
 const brandLabel = computed(() => BRAND_LABEL[key.value] || String(props.brand).slice(0, 4).toUpperCase());
 const brandTone = computed(() => BRAND_TONE[key.value] || 'bg-zinc-700 text-white');
 </script>
-
 ```
 
 ## vue\PaywallDialog.vue
@@ -90366,7 +90880,6 @@ const dismiss = () => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\PermissionDeniedState.vue
@@ -90407,7 +90920,6 @@ const emit = defineEmits<{
     <a v-if="props.contactLabel" data-denied-contact :href="props.contactHref" class="text-xs font-medium text-zinc-500 underline-offset-2 hover:underline dark:text-zinc-400">{{ props.contactLabel }}</a>
   </div>
 </template>
-
 ```
 
 ## vue\PermissionMatrix.vue
@@ -90548,7 +91060,6 @@ const pickCell = (row: PermissionRow, role: string, state: PermissionCellState, 
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\PersonaPresetGrid.vue
@@ -90615,7 +91126,6 @@ const GRADIENTS = [
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\PipelineStageList.vue
@@ -90705,7 +91215,6 @@ const durationLabel = (ms?: number) => {
   return `${Math.floor(ms / 60000)}m ${Math.round((ms % 60000) / 1000)}s`;
 };
 </script>
-
 ```
 
 ## vue\PlanComparisonTable.vue
@@ -90813,7 +91322,6 @@ const cellValue = (row: { values: { value: boolean | string }[] }, idx: number) 
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\PointerRipples.vue
@@ -92120,7 +92628,6 @@ watch(
   }
 );
 </script>
-
 ```
 
 ## vue\PrReviewQueue.vue
@@ -92201,7 +92708,6 @@ const initials = (author: string) =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\PricingTable.vue
@@ -92248,7 +92754,6 @@ export interface PricingPlan {
 withDefaults(defineProps<{ plans: PricingPlan[] }>(), { plans: () => [] });
 defineEmits<{ (e: 'select', plan: PricingPlan): void }>();
 </script>
-
 ```
 
 ## vue\ProfileHeader.vue
@@ -92357,7 +92862,6 @@ const initialsFallback = computed(() =>
   ((props.initials || props.name || '?').trim().split(/\s+/).map((w) => w[0]).slice(0, 2).join('') || '?').toUpperCase()
 );
 </script>
-
 ```
 
 ## vue\ProjectGanttTimeline.vue
@@ -92507,7 +93011,6 @@ const statusCls = (status: string) => STATUS_STYLES[status] ?? STATUS_STYLES["In
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\PromptChips.vue
@@ -92543,7 +93046,6 @@ defineEmits<{
   (e: 'select', prompt: string): void;
 }>();
 </script>
-
 ```
 
 ## vue\PromptLibrary.vue
@@ -92657,7 +93159,6 @@ const visible = computed(() => {
   });
 });
 </script>
-
 ```
 
 ## vue\PromptPerformanceTable.vue
@@ -92752,7 +93253,6 @@ const emit = defineEmits<{
     </table>
   </div>
 </template>
-
 ```
 
 ## vue\PromptSaveDialog.vue
@@ -92866,7 +93366,6 @@ const varChip = (v: string) => `{{${v}}}`;
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\PromptTemplateGrid.vue
@@ -92922,7 +93421,6 @@ const emit = defineEmits<{
   (e: "use", template: PromptTemplate): void;
 }>();
 </script>
-
 ```
 
 ## vue\PromptTunerResult.vue
@@ -93000,7 +93498,6 @@ const onPick = (event: Event) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\PromptVariantDiff.vue
@@ -93122,7 +93619,6 @@ const segments = (text: string) =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\QaTestTable.vue
@@ -93242,7 +93738,6 @@ const ratingLabel: Record<string, string> = {
     </table>
   </div>
 </template>
-
 ```
 
 ## vue\QuoteMasonry.vue
@@ -93295,7 +93790,6 @@ withDefaults(
   { quotes: () => [], className: '' },
 );
 </script>
-
 ```
 
 ## vue\RankList.vue
@@ -93393,7 +93887,6 @@ const handleSelect = (index: number, item: RankListItem) => {
   emit('select', index, item);
 };
 </script>
-
 ```
 
 ## vue\ResourceList.vue
@@ -93496,7 +93989,6 @@ const handleKeydown = (event: KeyboardEvent, item: ResourceItem, index: number) 
   }
 };
 </script>
-
 ```
 
 ## vue\RichToolbar.vue
@@ -93545,7 +94037,6 @@ export interface RichToolbarGroup {
 withDefaults(defineProps<{ groups?: RichToolbarGroup[] }>(), { groups: () => [] });
 defineEmits<{ (e: 'action', id: string): void }>();
 </script>
-
 ```
 
 ## vue\RoadmapTimeline.vue
@@ -93654,7 +94145,6 @@ const emit = defineEmits<{
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\SchedulerSlots.vue
@@ -93781,7 +94271,6 @@ const groups = computed(() =>
 
 const openCount = computed(() => props.slots.filter((slot) => slot.available !== false).length);
 </script>
-
 ```
 
 ## vue\SearchInput.vue
@@ -93852,7 +94341,6 @@ onMounted(() => {
   if (props.autoFocus) inputRef.value?.focus();
 });
 </script>
-
 ```
 
 ## vue\SearchResultsPage.vue
@@ -94005,7 +94493,6 @@ const submit = () => emit("search-submit", term.value);
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\SearchTypeahead.vue
@@ -94124,7 +94611,6 @@ const markMatches = (label: string) => {
   return escaped;
 };
 </script>
-
 ```
 
 ## vue\SeatBillingTable.vue
@@ -94255,7 +94741,6 @@ const fmtCost = (cost: number) => `${props.currency}${cost.toFixed(2)}`;
     </table>
   </div>
 </template>
-
 ```
 
 ## vue\SegmentBreakdownBars.vue
@@ -94349,7 +94834,6 @@ const widthOf = (item: SegmentBreakdownItem) =>
   Math.min(100, Math.round((Math.max(0, item.value) / max.value) * 100));
 const shareOf = (item: SegmentBreakdownItem) => Math.max(0, item.value);
 </script>
-
 ```
 
 ## vue\ServiceStatusList.vue
@@ -94427,7 +94911,6 @@ const TONE: Record<string, { text: string; tone: string }> = {
 const toneLabel = (status: string) => TONE[status]?.text || 'Stopped';
 const toneText = (status: string) => TONE[status]?.tone || TONE.stopped.tone;
 </script>
-
 ```
 
 ## vue\SessionDeviceTable.vue
@@ -94558,7 +95041,6 @@ const iconFor = (os: string) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\SessionDiagnosticsPanel.vue
@@ -94707,7 +95189,6 @@ const onInput = (e: Event) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\SettingsPanel.vue
@@ -94800,7 +95281,6 @@ const select = (id: string) => {
   emit('section-change', id);
 };
 </script>
-
 ```
 
 ## vue\SettingsSideDrawer.vue
@@ -94940,7 +95420,6 @@ const BUTTON_TONE: Record<string, string> = {
   outline: 'border border-zinc-300 text-zinc-600 hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800',
 };
 </script>
-
 ```
 
 ## vue\ShareAccessDialog.vue
@@ -95094,7 +95573,6 @@ const initials = (name: string) =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\ShareChatDialog.vue
@@ -95203,7 +95681,6 @@ const emit = defineEmits<{
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\SharedChatViewer.vue
@@ -95266,7 +95743,6 @@ const emit = defineEmits<{ (e: "cta"): void }>();
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\ShortcutCheatSheet.vue
@@ -95353,7 +95829,6 @@ const sections = computed(() => {
   return Array.from(map.entries());
 });
 </script>
-
 ```
 
 ## vue\ShortcutsOverlay.vue
@@ -95524,7 +95999,6 @@ function onKey(e: KeyboardEvent) {
 onMounted(() => document.addEventListener("keydown", onKey));
 onUnmounted(() => document.removeEventListener("keydown", onKey));
 </script>
-
 ```
 
 ## vue\SideDrawer.vue
@@ -95613,7 +96087,6 @@ watch(
 
 onBeforeUnmount(() => document.removeEventListener('keydown', onKeyDown));
 </script>
-
 ```
 
 ## vue\SideNav.vue
@@ -95701,7 +96174,6 @@ const handleNavigate = (entry: SideNavEntry) => {
   emit('navigate', entry.id, entry);
 };
 </script>
-
 ```
 
 ## vue\SiteFooter.vue
@@ -95778,7 +96250,6 @@ const statusTone: Record<string, string> = {
   zinc: 'text-zinc-400',
 };
 </script>
-
 ```
 
 ## vue\SourcesCitation.vue
@@ -95852,7 +96323,6 @@ const getDomain = (url: string, siteName?: string) => {
   }
 };
 </script>
-
 ```
 
 ## vue\SpendTrendChart.vue
@@ -96049,7 +96519,6 @@ const pctX = (x: number) => `${(x / (padLeft + plotW)) * 100}%`;
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\SpotlightGlareCard.vue
@@ -96158,7 +96627,6 @@ const glareStyle = computed(() => ({
   mixBlendMode: "overlay" as const,
 }));
 </script>
-
 ```
 
 ## vue\StatCard.vue
@@ -96223,7 +96691,6 @@ const trendPoints = computed(() => {
     .join(' ');
 });
 </script>
-
 ```
 
 ## vue\StatsBand.vue
@@ -96273,7 +96740,6 @@ const columnsFor = (count: number) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\StatusCountTabs.vue
@@ -96321,7 +96787,6 @@ withDefaults(
 
 const emit = defineEmits<{ (e: 'change', id: string): void }>();
 </script>
-
 ```
 
 ## vue\StatusIndicator.vue
@@ -96401,7 +96866,6 @@ const config = computed(() => {
   }
 });
 </script>
-
 ```
 
 ## vue\StepSlider.vue
@@ -96473,7 +96937,6 @@ const onKeydown = (event: KeyboardEvent) => {
   if (event.key === 'End') emit('change', lastIndex.value, props.steps[lastIndex.value]);
 };
 </script>
-
 ```
 
 ## vue\Stepper.vue
@@ -96537,7 +97000,6 @@ const statusFor = (step: StepperStep, index: number): StepperStatus =>
 
 const clickable = (step: StepperStep, index: number) => statusFor(step, index) !== 'upcoming';
 </script>
-
 ```
 
 ## vue\StockPhotoPicker.vue
@@ -96644,7 +97106,6 @@ const clearSearch = () => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\StreamMarkdown.vue
@@ -96731,7 +97192,6 @@ const htmlContent = computed(() => {
   return marked.parse(props.content || '', { renderer, breaks: true, gfm: true });
 });
 </script>
-
 ```
 
 ## vue\StreamingProgressBar.vue
@@ -96782,7 +97242,6 @@ const STATUS_BAR: Record<string, string> = {
 };
 const barColor = computed(() => STATUS_BAR[props.status] || STATUS_BAR.streaming);
 </script>
-
 ```
 
 ## vue\SuccessToast.vue
@@ -96853,7 +97312,6 @@ watch(
   { immediate: true },
 );
 </script>
-
 ```
 
 ## vue\SystemPromptEditor.vue
@@ -96948,7 +97406,6 @@ const varChip = (v: string) => `{{${v}}}`;
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\TableSavedViews.vue
@@ -97030,7 +97487,6 @@ const switchTo = (view: SavedView) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\Tabs.vue
@@ -97113,7 +97569,6 @@ const move = (event: KeyboardEvent, index: number) => {
   }
 };
 </script>
-
 ```
 
 ## vue\Tag.vue
@@ -97174,7 +97629,6 @@ const CLS = computed(
     }`
 );
 </script>
-
 ```
 
 ## vue\TargetGauge.vue
@@ -97277,7 +97731,6 @@ const currentTone = computed<'rose' | 'amber' | 'emerald'>(() => {
   return found?.tone ?? 'rose';
 });
 </script>
-
 ```
 
 ## vue\TaskCardModal.vue
@@ -97491,7 +97944,6 @@ const submitComment = () => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\TaskDetailPanel.vue
@@ -97693,7 +98145,6 @@ const submit = () => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\TestimonialGrid.vue
@@ -97760,7 +98211,6 @@ const initials = (name: string) =>
     .map((part) => part[0].toUpperCase())
     .join('');
 </script>
-
 ```
 
 ## vue\ThemeToggle.vue
@@ -97875,7 +98325,6 @@ onMounted(() => {
   applyTheme(saved);
 });
 </script>
-
 ```
 
 ## vue\ThinkingBlock.vue
@@ -97987,7 +98436,6 @@ const formatDuration = (ms?: number) => {
   return ms >= 1000 ? `${(ms / 1000).toFixed(1)}s` : `${ms}ms`;
 };
 </script>
-
 ```
 
 ## vue\TimeSlotPicker.vue
@@ -98108,7 +98556,6 @@ const choose = (slot: TimeSlot) => {
   emit('select', { dayId: activeDayId.value, slotId: slot.id, slot });
 };
 </script>
-
 ```
 
 ## vue\TimeframePicker.vue
@@ -98208,7 +98655,6 @@ const handleStep = (direction: -1 | 1) => {
   emit('step', direction, current.value);
 };
 </script>
-
 ```
 
 ## vue\ToastStack.vue
@@ -98364,7 +98810,6 @@ onUnmounted(() => {
   for (const id of [...clocks.keys()]) stopClock(id);
 });
 </script>
-
 ```
 
 ## vue\ToggleSwitch.vue
@@ -98413,7 +98858,6 @@ const track = computed(() => (props.size === 'sm' ? 'h-4 w-8' : 'h-5 w-9'));
 const knob = computed(() => (props.size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'));
 const shift = computed(() => (props.size === 'sm' ? 'translate-x-4' : 'translate-x-4'));
 </script>
-
 ```
 
 ## vue\TokenCostBreakdown.vue
@@ -98528,7 +98972,6 @@ const percent =
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\ToolApprovalCard.vue
@@ -98624,7 +99067,6 @@ const argsText = computed(() =>
   typeof props.args === "string" ? props.args : props.args ? JSON.stringify(props.args, null, 2) : ""
 );
 </script>
-
 ```
 
 ## vue\ToolCallBadge.vue
@@ -98716,7 +99158,6 @@ const formattedOutput = computed(() => {
   return typeof props.output === 'object' ? JSON.stringify(props.output, null, 2) : props.output;
 });
 </script>
-
 ```
 
 ## vue\ToolSchemaEditor.vue
@@ -98830,7 +99271,6 @@ const TYPE_BADGE: Record<string, string> = {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\Tooltip.vue
@@ -98868,7 +99308,6 @@ const SIDE_CLASS: Record<TooltipSide, string> = {
 
 const id = useId();
 </script>
-
 ```
 
 ## vue\TopUpBalanceDialog.vue
@@ -99113,7 +99552,6 @@ const summary = computed(() => (props.balance + (valid.value ? parsed.value : 0)
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\TourTooltip.vue
@@ -99225,7 +99663,6 @@ const caretClass =
 
 void props;
 </script>
-
 ```
 
 ## vue\TraceSpanWaterfall.vue
@@ -99340,7 +99777,6 @@ const total = props.spans.length > 0 ? Math.max(...props.spans.map((s) => s.star
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\TrialBanner.vue
@@ -99403,7 +99839,6 @@ const messageText = () => props.message || `Your ${props.planName} trial ends so
     </button>
   </div>
 </template>
-
 ```
 
 ## vue\TrialExpiryNotice.vue
@@ -99540,7 +99975,6 @@ const subText = computed(() =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\TypingIndicator.vue
@@ -99590,7 +100024,6 @@ const gapClass = computed(() =>
   props.size === "sm" ? "gap-1" : props.size === "lg" ? "gap-2" : "gap-1.5"
 );
 </script>
-
 ```
 
 ## vue\UiIcon.vue
@@ -99607,7 +100040,6 @@ const shapes: Record<IconName, ReturnType<typeof p>[]> = {
  'alert-triangle':[p('path',{d:'M12 9v4'}),p('path',{d:'M12 17h.01'}),p('path',{d:'M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z'})], 'arrow-down':[p('path',{d:'m6 9 6 6 6-6'})], 'arrow-left':[p('path',{d:'m15 6-6 6 6 6'})], 'arrow-right':[p('path',{d:'m9 6 6 6-6 6'})], 'arrow-up':[p('path',{d:'m6 15 6-6 6 6'})], check:[p('path',{d:'m5 12 4 4L19 6'})], 'check-circle':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m8 12 2.5 2.5L16 9'})], 'chevron-down':[p('path',{d:'m6 9 6 6 6-6'})], 'chevron-left':[p('path',{d:'m14 6-6 6 6 6'})], 'chevron-right':[p('path',{d:'m10 6 6 6-6 6'})], 'chevron-up':[p('path',{d:'m6 15 6-6 6 6'})], 'circle-x':[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'m9 9 6 6m0-6-6 6'})], clock:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M12 7v5l3 3'})], code:[p('path',{d:'m8 9-3 3 3 3m8-6 3 3-3 3M14 5l-4 14'})], copy:[p('rect',{x:'8',y:'8',width:'11',height:'11',rx:'2'}),p('path',{d:'M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2'})], cpu:[p('rect',{x:'5',y:'5',width:'14',height:'14',rx:'2'}),p('path',{d:'M9 9h6v6H9zM9 1v4m6-4v4M9 19v4m6-4v4M1 9h4m-4 6h4M19 9h4m-4 6h4'})], eye:[p('path',{d:'M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z'}),p('circle',{cx:'12',cy:'12',r:'2.5'})], 'external-link':[p('path',{d:'M14 5h5v5M19 5l-8 8'}),p('path',{d:'M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3'})], globe:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18'})], 'git-branch':[p('path',{d:'M6 3v12a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9'}),p('circle',{cx:'6',cy:'3',r:'2'}),p('circle',{cx:'18',cy:'7',r:'2'}),p('circle',{cx:'12',cy:'18',r:'2'})], image:[p('rect',{x:'3',y:'4',width:'18',height:'16',rx:'2'}),p('circle',{cx:'8.5',cy:'9',r:'1.5'}),p('path',{d:'m21 15-4-4L5 20'})], layers:[p('path',{d:'m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5'})], lock:[p('rect',{x:'5',y:'10',width:'14',height:'11',rx:'2'}),p('path',{d:'M8 10V7a4 4 0 0 1 8 0v3'})], loader:[p('path',{d:'M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1'})], minus:[p('path',{d:'M5 12h14'})], moon:[p('path',{d:'M20 15.5A8 8 0 0 1 8.5 4 8 8 0 0 0 20 15.5Z'})], monitor:[p('rect',{x:'3',y:'4',width:'18',height:'13',rx:'2'}),p('path',{d:'M8 21h8m-4-4v4'})], paperclip:[p('path',{d:'m20 11-7.5 7.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-7.5 7.5a2 2 0 0 1-3-3L14 7'})], plus:[p('path',{d:'M12 5v14M5 12h14'})], refresh:[p('path',{d:'M20 11a8 8 0 0 0-14.5-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.5 4L21 14m0 5v-5h-5'})], search:[p('circle',{cx:'10',cy:'10',r:'7'}),p('path',{d:'m21 21-6-6'})], sliders:[p('path',{d:'M4 8h4m4 0h8M4 16h8m4 0h4M8 6v4m8 4v4'})], sparkles:[p('path',{d:'m12 3-1.2 4.8L6 9l4.8 1.2L12 15l1.2-4.8L18 9l-4.8-1.2L12 3Z'}),p('path',{d:'m19 15-.6 2.4L16 18l2.4.6L19 21l.6-2.4L22 18l-2.4-.6L19 15Z'})], square:[p('rect',{x:'6',y:'6',width:'12',height:'12',rx:'1'})], sun:[p('circle',{cx:'12',cy:'12',r:'4'}),p('path',{d:'M12 2v2m0 16v2M2 12h2m16 0h2'})], terminal:[p('path',{d:'m4 17 6-6-6-6m8 14h8'})], 'thumbs-down':[p('path',{d:'M7 10v10H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Zm0 0 3-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2h-7l-3-3'})], 'thumbs-up':[p('path',{d:'M7 14V4a2 2 0 0 1 2-2h2l1 6h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H9l-2-3H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2'})], tool:[p('path',{d:'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.2 2.2-2.7-.7-.7-2.7 2.2-2.2Z'})], user:[p('path',{d:'M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0'}),p('path',{d:'M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2'})], x:[p('path',{d:'m6 6 12 12M18 6 6 18'})], zap:[p('path',{d:'M13 3 4 14h7l-1 7 9-11h-7l1-7Z'})], 'trending-up':[p('path',{d:'m3 17 6-6 4 4 8-8'}),p('path',{d:'M14 7h7v7'})], 'trending-down':[p('path',{d:'m3 7 6 6 4-4 8 8'}),p('path',{d:'M14 17h7v-7'})], filter:[p('path',{d:'M4 4h16v2.2a2 2 0 0 1-.59 1.41L15 12v7l-6 2v-9L4.59 7.59A2 2 0 0 1 4 6.2V4Z'})], 'more-horizontal':[p('circle',{cx:'5',cy:'12',r:'1'}),p('circle',{cx:'12',cy:'12',r:'1'}),p('circle',{cx:'19',cy:'12',r:'1'})], trash:[p('path',{d:'M4 7h16M10 11v6M14 11v6'}),p('path',{d:'M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3'})], mail:[p('rect',{x:'3',y:'5',width:'18',height:'14',rx:'2'}),p('path',{d:'m3 7 9 6 9-6'})], settings:[p('path',{d:'M3 6h10m4 0h4M3 12h4m4 0h10M3 18h10m4 0h4'}),p('circle',{cx:'15',cy:'6',r:'2'}),p('circle',{cx:'9',cy:'12',r:'2'}),p('circle',{cx:'15',cy:'18',r:'2'})], users:[p('path',{d:'M9 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0'}),p('path',{d:'M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2'}),p('path',{d:'M16 3.1a4 4 0 0 1 0 7.8M21 21v-2a4 4 0 0 0-3-3.87'})], bell:[p('path',{d:'M10 5a2 2 0 1 1 4 0 7 7 0 0 1 4 6v3l1 2H5l1-2v-3a7 7 0 0 1 4-6Z'}),p('path',{d:'M9 19a3 3 0 0 0 6 0'})], calendar:[p('rect',{x:'4',y:'5',width:'16',height:'16',rx:'2'}),p('path',{d:'M16 3v4M8 3v4M4 11h16'})], upload:[p('path',{d:'M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2'}),p('path',{d:'m7 9 5-5 5 5M12 4v12'})], send:[p('path',{d:'m22 2-7 20-4-9-9-4 20-7Z'}),p('path',{d:'M22 2 11 13'})], star:[p('path',{d:'m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3Z'})], info:[p('circle',{cx:'12',cy:'12',r:'9'}),p('path',{d:'M12 11v5M12 8h.01'})], 'credit-card':[p('rect',{x:'3',y:'5',width:'18',height:'14',rx:'2'}),p('path',{d:'M3 10h18'})], mic:[p('rect',{x:'9',y:'3',width:'6',height:'11',rx:'3'}),p('path',{d:'M5 11a7 7 0 0 0 14 0M12 18v3'})]
 };
 </script>
-
 ```
 
 ## vue\UpgradeCheckoutPanel.vue
@@ -99745,7 +100177,6 @@ const hasSeats = () => props.seats !== undefined;
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\UpgradePromptCard.vue
@@ -99824,7 +100255,6 @@ const tone = computed(() =>
       : { bar: 'bg-emerald-500', text: 'text-emerald-600 dark:text-emerald-400', chip: 'bg-emerald-50 dark:bg-emerald-950/40' }
 );
 </script>
-
 ```
 
 ## vue\UsageCreditsDonut.vue
@@ -99986,7 +100416,6 @@ const setRange = (e: Event) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\UsageMeter.vue
@@ -100052,7 +100481,6 @@ const styles = computed(() => TONE[tone.value]);
 const percent = computed(() => Math.round(ratio.value * 100));
 const remaining = computed(() => Math.max(0, props.limit - props.used));
 </script>
-
 ```
 
 ## vue\UsagePricingBreakdown.vue
@@ -100145,7 +100573,6 @@ const rows = computed(() => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\UsageQuotaCard.vue
@@ -100201,7 +100628,6 @@ const valueLabel = computed(
   () => `${props.used}${props.unit ? ` ${props.unit}` : ''}${props.total ? ` of ${props.total}${props.unit ? ` ${props.unit}` : ''}` : ''}`,
 );
 </script>
-
 ```
 
 ## vue\VideoProjectSettings.vue
@@ -100363,7 +100789,6 @@ const thumbCls = (thumb: VideoThumbnail) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\VisionAnalysisCard.vue
@@ -100421,7 +100846,6 @@ defineEmits(["section-click"]);
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\VoiceModePanel.vue
@@ -100495,7 +100919,6 @@ const innerTone = computed(() => {
   return 'bg-zinc-200/50 dark:bg-zinc-700/40';
 });
 </script>
-
 ```
 
 ## vue\VoiceOrb.vue
@@ -100588,7 +101011,6 @@ const displayLabel = () => props.label ?? STATE_LABEL[props.state];
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\VoiceSessionHistory.vue
@@ -100691,7 +101113,6 @@ const statusLabel = (s: VoiceSession) =>
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\WebhookConfigPanel.vue
@@ -100792,7 +101213,6 @@ const deliveryCls = (status: number | string | undefined) => {
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\WeekCalendarGrid.vue
@@ -101009,7 +101429,6 @@ const nowTop = computed(() => ({ top: (props.nowHour - props.startHour) * HOUR_H
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\WizardSteps.vue
@@ -101118,7 +101537,211 @@ const handleClick = (index: number) => {
   emit('step-click', index);
 };
 </script>
+```
 
+## vue\WorkspaceSetupPanel.vue
+
+```vue
+<template>
+  <div :class="$attrs.class" data-workspace-setup
+    class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+    <div class="border-b border-zinc-100 dark:border-zinc-800 px-5 py-4">
+      <h4 data-workspace-setup-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ title }}</h4>
+      <p data-workspace-setup-count class="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">
+        {{ allDone ? 'All steps complete — your workspace is ready.' : `${doneCount} of ${totalCount} steps complete` }}
+      </p>
+    </div>
+
+    <div class="divide-y divide-zinc-100 dark:divide-zinc-800">
+      <div v-for="section in sections" :key="section.id" :data-workspace-setup-section="section.id" class="px-5 py-4">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold text-zinc-900 dark:text-zinc-100">{{ section.title }}</span>
+          <span :data-workspace-setup-section-count="section.id"
+            :class="['rounded-full px-1.5 py-0.5 text-[10px] font-medium tabular-nums',
+              sectionDone(section) === section.tasks.length
+                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400'
+                : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400']">
+            {{ sectionDone(section) }}/{{ section.tasks.length }}
+          </span>
+        </div>
+        <ul class="mt-2 space-y-1.5">
+          <li v-for="task in section.tasks" :key="task.id" :data-workspace-setup-task="task.id">
+            <button type="button"
+              class="flex w-full items-center gap-2 rounded-md px-1 py-0.5 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+              @click="emit('task-click', section, task)">
+              <span
+                :class="['flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border',
+                  task.done ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-zinc-300 dark:border-zinc-600']">
+                <UiIcon v-if="task.done" name="check" :size="8" />
+              </span>
+              <span
+                :class="['min-w-0 flex-1 truncate text-xs',
+                  task.done ? 'text-zinc-400 dark:text-zinc-500 line-through' : 'text-zinc-700 dark:text-zinc-200']">
+                {{ task.label }}
+              </span>
+              <UiIcon v-if="!task.done" name="arrow-right" :size="12" class="shrink-0 text-zinc-300 dark:text-zinc-600" />
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div v-if="upNext.length > 0" class="border-t border-zinc-100 dark:border-zinc-800 px-5 py-4">
+      <div class="text-[11px] font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">Up next</div>
+      <div data-workspace-setup-up-next class="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
+        <button v-for="card in upNext" :key="card.id" type="button" :data-workspace-setup-next-card="card.id"
+          class="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3 py-2.5 text-left transition-colors hover:border-indigo-400 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+          @click="emit('up-next', card)">
+          <div class="text-xs font-medium text-zinc-800 dark:text-zinc-200">{{ card.title }}</div>
+          <div v-if="card.description" class="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">
+            {{ card.description }}
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+import UiIcon from './UiIcon.vue';
+
+export interface SetupSection {
+  id: string;
+  title: string;
+  tasks: { id: string; label: string; done: boolean; href?: string }[];
+}
+
+export interface UpNextCard {
+  id: string;
+  title: string;
+  description?: string;
+}
+
+const props = withDefaults(defineProps<{
+  title?: string;
+  sections: SetupSection[];
+  upNext?: UpNextCard[];
+}>(), {
+  title: 'Workspace setup',
+  upNext: () => [],
+});
+
+const emit = defineEmits<{
+  (e: 'task-click', section: SetupSection, task: SetupSection['tasks'][number]): void;
+  (e: 'up-next', card: UpNextCard): void;
+}>();
+
+const sectionDone = (section: SetupSection): number =>
+  section.tasks.filter((t) => t.done).length;
+
+const totalCount = computed(() => props.sections.reduce((sum, s) => sum + s.tasks.length, 0));
+const doneCount = computed(() => props.sections.reduce((sum, s) => sum + sectionDone(s), 0));
+const allDone = computed(() => totalCount.value > 0 && doneCount.value === totalCount.value);
+</script>
+```
+
+## vue\WorkspaceSurveyCard.vue
+
+```vue
+<template>
+  <div :class="$attrs.class" data-workspace-survey
+    class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+    <div class="border-b border-zinc-100 dark:border-zinc-800 px-5 py-4">
+      <h4 data-workspace-survey-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ title }}</h4>
+      <p v-if="stepLabel" data-workspace-survey-step class="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">
+        {{ stepLabel }}
+      </p>
+      <div data-workspace-survey-dots class="mt-3 flex items-center gap-1.5">
+        <span v-for="q in questions" :key="q.id" :title="q.label"
+          :class="['h-1.5 w-6 rounded-full transition-colors', isFilled(q) ? 'bg-indigo-600' : 'bg-zinc-200 dark:bg-zinc-700']" />
+        <span class="ml-1 text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">
+          {{ answeredCount }}/{{ questions.length }}
+        </span>
+      </div>
+    </div>
+
+    <div class="divide-y divide-zinc-100 dark:divide-zinc-800">
+      <div v-for="q in questions" :key="q.id" :data-workspace-survey-question="q.id" class="px-5 py-4">
+        <div class="text-xs font-medium text-zinc-800 dark:text-zinc-200">{{ q.label }}</div>
+        <p v-if="q.description" class="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">{{ q.description }}</p>
+        <div :data-workspace-survey-options="q.id" :role="q.multi ? 'group' : 'radiogroup'" :aria-label="q.label"
+          class="mt-2.5 flex flex-wrap gap-1.5">
+          <button v-for="opt in q.options" :key="opt.id" type="button" :data-workspace-survey-option="opt.id"
+            :aria-pressed="q.multi ? selectedIds(q).includes(opt.id) : undefined"
+            :aria-checked="q.multi ? undefined : selectedIds(q).includes(opt.id)"
+            :class="['rounded-full border px-3 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
+              selectedIds(q).includes(opt.id)
+                ? 'border-indigo-600 bg-indigo-600 text-white'
+                : 'border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400']"
+            @click="emit('answer', q.id, opt.id)">
+            {{ opt.label }}
+          </button>
+        </div>
+        <input v-if="q.placeholder" type="text" :data-workspace-survey-input="q.id" :placeholder="q.placeholder"
+          class="mt-2.5 w-full rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-xs text-zinc-900 placeholder-zinc-400 focus:border-indigo-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder-zinc-500"
+          @input="emit('text', q.id, ($event.target)?.value ?? '')" />
+      </div>
+    </div>
+
+    <div class="border-t border-zinc-100 dark:border-zinc-800 px-5 py-3">
+      <button type="button" data-workspace-survey-next :disabled="!allAnswered"
+        :class="['w-full rounded-md px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
+          allAnswered
+            ? 'bg-indigo-600 text-white hover:bg-indigo-500'
+            : 'cursor-not-allowed bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500']"
+        @click="emit('next')">
+        {{ nextLabel }}
+      </button>
+      <p v-if="!allAnswered" class="mt-1.5 text-center text-[11px] text-zinc-400 dark:text-zinc-500">
+        Answer all {{ questions.length }} questions to continue.
+      </p>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+
+export interface SurveyQuestion {
+  id: string;
+  label: string;
+  description?: string;
+  options: { id: string; label: string }[];
+  multi?: boolean;
+  placeholder?: string;
+}
+
+const props = withDefaults(defineProps<{
+  title?: string;
+  stepLabel?: string;
+  questions: SurveyQuestion[];
+  answers?: Record<string, string | string[]>;
+  nextLabel?: string;
+}>(), {
+  title: 'Tell us about your workspace',
+  stepLabel: '',
+  answers: () => ({}),
+  nextLabel: 'Continue',
+});
+
+const emit = defineEmits<{
+  (e: 'answer', questionId: string, optionId: string): void;
+  (e: 'text', questionId: string, text: string): void;
+  (e: 'next'): void;
+}>();
+
+const selectedIds = (q: SurveyQuestion): string[] => {
+  const a = props.answers[q.id];
+  if (Array.isArray(a)) return a;
+  return typeof a === 'string' && a.length > 0 ? [a] : [];
+};
+
+const isFilled = (q: SurveyQuestion): boolean => selectedIds(q).length > 0;
+
+const answeredCount = computed(() => props.questions.filter((q) => isFilled(q)).length);
+const allAnswered = computed(() => props.questions.length > 0 && answeredCount.value === props.questions.length);
+</script>
 ```
 
 ## vue\WorkspaceSwitcherMenu.vue
@@ -101219,7 +101842,6 @@ const roleLine = (workspace: WorkspaceOption) => {
   return line;
 };
 </script>
-
 ```
 
 ## vue\WriterStyleGuide.vue
@@ -101295,7 +101917,6 @@ const tabs: Array<{ id: "company" | "team" | "my"; label: string }> = [
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\ZendeskFieldSuggest.vue
@@ -101352,7 +101973,6 @@ defineEmits(["apply", "dismiss"]);
     </div>
   </div>
 </template>
-
 ```
 
 ## vue\ZoomControlBar.vue
@@ -101452,7 +102072,6 @@ const change = (next: number) => {
   emit('zoom-change', clamped);
 };
 </script>
-
 ```
 
 ## vue\paper-theme.ts
@@ -101547,6 +102166,4 @@ export const PaperTrailThemeCSS = `
   background-size: auto, auto, 120px 120px, 120px 120px;
 }
 `;
-
 ```
-

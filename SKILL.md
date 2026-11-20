@@ -1419,6 +1419,21 @@ awesome-ui/
 - **Vanilla 用法**: `<trial-expiry-notice>` + `plan-name`/`days-left`/`tone`/`expires-on`/`extend-label`/`upgrade-label` 属性；properties `losingFeatures`/`keepingFeatures`；事件 `upgrade`/`extend`
 - **特性**: mono 倒计时大数、expiring（琥珀）/ urgent（红）双色调（auto 按 days-left≤3 判定）、截止日期 caption、锁定功能划线清单 vs 保留功能清单、Upgrade/Extend 双 CTA、role=alert。
 
+### 254. `WorkspaceSurveyCard` (工作区问卷卡)
+- **Props**: `title?='Tell us about your workspace'`, `stepLabel?`, `questions?: [{id,label,description?,options:[{id,label}],multi?,placeholder?}]`, `answers?: Record<string,string|string[]>`, `nextLabel?='Continue'`, `onAnswer?`, `onText?`, `onNext?`
+- **Vanilla 用法**: `<workspace-survey-card>` + `title`/`step-label`/`next-label` 属性；properties `questions` / `answers`；事件 `answer` detail {questionId,optionId} / `text` detail {questionId,text} / `next`
+- **特性**: 单选 pills（aria-checked）与多选 chips（aria-pressed）、可选开放输入行、进度点线 + 已答计数、答满解锁 Continue（未答禁用 + 提示行）、分组 divide-y 布局。
+
+### 255. `WorkspaceSetupPanel` (分区设置面板)
+- **Props**: `title?='Workspace setup'`, `sections?: [{id,title,tasks:[{id,label,done,href?}]}]`, `upNext?: [{id,title,description?}]`, `onTaskClick?`, `onUpNext?`
+- **Vanilla 用法**: `<workspace-setup-panel>` + `title` 属性；properties `sections` / `upNext`；事件 `task-click` detail {section,task} / `up-next` detail {card}
+- **特性**: 每分区 emerald n/m 计数徽章、完成行划线 + 圆形 check、未完成行箭头 affordance、全局 "N of M steps complete" caption（全完成换庆祝文案）、Up next 三卡网格 hover 高亮。
+
+### 256. `InviteTeammatesCard` (团队邀请卡)
+- **Props**: `title?='Invite your teammates'`, `description?`, `roles?=['Admin','Editor','Viewer']`, `defaultRole?`, `pending?: [{email,role}]`, `emailPlaceholder?`, `sendLabel?='Send invites'`, `skipLabel?='Skip for now'`, `onInvite?`, `onRemove?`, `onSend?`, `onSkip?`
+- **Vanilla 用法**: `<invite-teammates-card>` + `title`/`description`/`email-placeholder`/`send-label`/`skip-label`/`default-role` 属性；properties `roles` / `pending`；事件 `invite` detail {email,role} / `remove` / `send` detail pending / `skip`
+- **特性**: 邮箱输入 Enter/按钮双添加路径、邮箱格式 + 重复校验 role=alert、角色下拉随行添加、pending 行 mail 图标 + 角色 pill + 移除钮、Send 按待发数门控、pending 计数角标。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

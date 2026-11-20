@@ -1112,3 +1112,15 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/TrialExpiryNotice.tsx
    - Vue 3: vue/TrialExpiryNotice.vue
    - Vanilla: vanilla/TrialExpiryNotice.js (custom element `<trial-expiry-notice>`, attributes `plan-name`/`days-left`/`tone`/`expires-on`/`extend-label`/`upgrade-label`; properties `losingFeatures`/`keepingFeatures`; events `upgrade`/`extend`)
+254. WorkspaceSurveyCard: workspace onboarding survey card — question groups with single-select pills (aria-checked) and multi-select chips (aria-pressed), optional free-text input, progress-dot strip with answered counter, Continue button gated until all questions answered (fires answer {questionId,optionId} / text / next).
+   - React: react/WorkspaceSurveyCard.tsx
+   - Vue 3: vue/WorkspaceSurveyCard.vue
+   - Vanilla: vanilla/WorkspaceSurveyCard.js (custom element `<workspace-survey-card>`, attributes `title`/`step-label`/`next-label`; properties `questions` [{id,label,description,options,multi,placeholder}] / `answers`; events `answer`/`text`/`next`)
+255. WorkspaceSetupPanel: partitioned workspace setup board — per-section checklists with emerald n/m pills, strikethrough completed rows with arrow affordance, overall "N of M steps complete" caption and an Up next card grid (fires task-click {section,task} / up-next {card}).
+   - React: react/WorkspaceSetupPanel.tsx
+   - Vue 3: vue/WorkspaceSetupPanel.vue
+   - Vanilla: vanilla/WorkspaceSetupPanel.js (custom element `<workspace-setup-panel>`, attributes `title`; properties `sections` [{id,title,tasks:[{id,label,done,href}]}] / `upNext` [{id,title,description}]; events `task-click`/`up-next`)
+256. InviteTeammatesCard: onboarding invite composer — email input with Enter/button add, inline email + duplicate validation (role=alert), role select per pending row, removable pending list, Send invites gated on pending count and Skip for now (fires invite {email,role} / remove / send / skip).
+   - React: react/InviteTeammatesCard.tsx
+   - Vue 3: vue/InviteTeammatesCard.vue
+   - Vanilla: vanilla/InviteTeammatesCard.js (custom element `<invite-teammates-card>`, attributes `title`/`description`/`email-placeholder`/`send-label`/`skip-label`/`default-role`; properties `roles`/`pending`; events `invite`/`remove`/`send`/`skip`)
