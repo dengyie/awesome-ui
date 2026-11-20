@@ -1359,6 +1359,21 @@ awesome-ui/
 - **Vanilla 用法**: `<agent-env-var-editor>` + `title`/`description` 属性；property `vars`（JSON）；事件 `change {vars}`
 - **特性**: key/value 行 + secret 掩码（password）与 Show/Hide 切换、逐行 Delete、底部新增行（key+value+secret checkbox，空 key 禁用 Add）；任意编辑后 change 事件携带完整列表。
 
+### 242. `AgentScheduleEditor` (Agent 定时调度编辑器)
+- **Props**: `title?='Run schedule'`, `description?`, `frequencies?: [{id,label,expression}]`, `activeId?`, `time?='09:00'`, `nextRun?`, `timezone?`
+- **Vanilla 用法**: `<agent-schedule-editor>` + `title`/`description` 属性；properties `frequencies`/`activeId`/`time`/`nextRun`/`timezone`；事件 `save {frequency,time}`
+- **特性**: 频率 pill（hourly/daily/weekly）切 cron 表达式、time 输入 + 时区说明、cron + next-run 预览条、保存后 1600ms "Schedule saved" 反馈。
+
+### 243. `AgentGuardrailViolationCard` (护栏违规详情卡)
+- **Props**: `rule`, `severity?='medium'`, `runId?`, `time?`, `input?`, `match?`, `policyRef?`, `proceedLabel?`, `blockLabel?`
+- **Vanilla 用法**: `<agent-guardrail-violation-card>` + `rule`/`severity`/`run-id`/`time`/`input`/`match`/`policy-ref` 属性；事件 `proceed`/`block`
+- **特性**: role=alert、severity badge（low amber/medium orange/high rose）、触发输入摘要 + match 高亮 mark、policy 引用；操作后按钮区被裁决行替换。与 GuardrailReviewQueue (#35?) 区分：单条详情卡而非审核队列。
+
+### 244. `AgentModelFallbackList` (模型降级链)
+- **Props**: `title?='Model fallback chain'`, `description?`, `entries?: [{id,model,provider?,health?:'healthy'|'degraded'|'down',condition?,latency?}]`, `primaryId?`
+- **Vanilla 用法**: `<agent-model-fallback-list>` + `title`/`description` 属性；properties `entries`/`primaryId`；事件 `reorder {ids}`
+- **特性**: 优先级行 + 健康点（emerald/amber/rose）、Primary badge、provider+触发条件+延迟 caption、↑/↓ 重排 + "order updated" 闪示。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）

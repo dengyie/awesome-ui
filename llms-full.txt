@@ -1086,6 +1086,298 @@ export default function AgentErrorRecovery({
 }
 
 ====
+File: react/AgentGuardrailViolationCard.tsx
+====
+
+import React, { useState } from "react";
+
+export type ViolationSeverity = "low" | "medium" | "high";
+
+export interface AgentGuardrailViolationCardProps {
+  /** rule that was violated, e.g. "PII disclosure" */
+  rule: string;
+  severity?: ViolationSeverity;
+  /** agent / run that triggered it */
+  runId?: string;
+  time?: string;
+  /** truncated input that triggered the violation */
+  input?: string;
+  /** matched snippet highlighted inside the input */
+  match?: string;
+  /** policy reference, e.g. "policy/security#pii-1" */
+  policyRef?: string;
+  proceedLabel?: string;
+  blockLabel?: string;
+  onProceed?: () => void;
+  onBlock?: () => void;
+  className?: string;
+}
+
+const SEVERITY_STYLE: Record<ViolationSeverity, { badge: string; label: string }> = {
+  low: {
+    badge: "bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400",
+    label: "Low severity",
+  },
+  medium: {
+    badge: "bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-400",
+    label: "Medium severity",
+  },
+  high: {
+    badge: "bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400",
+    label: "High severity",
+  },
+};
+
+export default function AgentGuardrailViolationCard({
+  rule,
+  severity = "medium",
+  runId,
+  time,
+  input,
+  match,
+  policyRef,
+  proceedLabel = "Proceed anyway",
+  blockLabel = "Block run",
+  onProceed,
+  onBlock,
+  className = "",
+}: AgentGuardrailViolationCardProps) {
+  const [resolved, setResolved] = useState<null | "proceeded" | "blocked">(null);
+  const sev = SEVERITY_STYLE[severity];
+
+  const act = (kind: "proceeded" | "blocked") => {
+    setResolved(kind);
+    (kind === "proceeded" ? onProceed : onBlock)?.();
+  };
+
+  const renderInput = () => {
+    if (!input) return null;
+    if (match && input.includes(match)) {
+      const idx = input.indexOf(match);
+      return (
+        <>
+          {input.slice(0, idx)}
+          <mark data-violation-match className="rounded bg-rose-100 px-0.5 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300">
+            {match}
+          </mark>
+          {input.slice(idx + match.length)}
+        </>
+      );
+    }
+    return input;
+  };
+
+  return (
+    <div
+      data-guardrail-violation
+      role="alert"
+      className={`rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+    >
+      <div className="flex flex-wrap items-center gap-2">
+        <span data-violation-rule className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{rule}</span>
+        <span data-violation-severity className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${sev.badge}`}>
+          {sev.label}
+        </span>
+        {time ? <span data-violation-time className="ml-auto text-[11px] text-zinc-400 dark:text-zinc-500">{time}</span> : null}
+      </div>
+
+      {runId ? (
+        <p className="mt-1.5">
+          <code data-violation-run className="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-[11px] text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+            {runId}
+          </code>
+        </p>
+      ) : null}
+
+      {input ? (
+        <div data-violation-input className="mt-2.5 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-xs leading-relaxed text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-300">
+          {renderInput()}
+        </div>
+      ) : null}
+
+      {policyRef ? (
+        <p data-violation-policy className="mt-2 text-[11px] text-zinc-400 dark:text-zinc-500">
+          Policy: <code className="font-mono text-zinc-500 dark:text-zinc-400">{policyRef}</code>
+        </p>
+      ) : null}
+
+      {resolved ? (
+        <p data-violation-resolved className="mt-3 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">
+          {resolved === "blocked" ? "Run blocked by reviewer." : "Marked reviewed — proceeding anyway."}
+        </p>
+      ) : (
+        <div className="mt-3 flex items-center justify-end gap-2">
+          <button
+            type="button"
+            data-violation-block
+            onClick={() => act("blocked")}
+            className="rounded-md bg-rose-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-rose-500"
+          >
+            {blockLabel}
+          </button>
+          <button
+            type="button"
+            data-violation-proceed
+            onClick={() => act("proceeded")}
+            className="rounded-md border border-zinc-200 px-3 py-1.5 text-[11px] font-semibold text-zinc-600 transition-colors hover:border-zinc-300 hover:text-zinc-800 dark:border-zinc-700 dark:text-zinc-300 dark:hover:text-zinc-100"
+          >
+            {proceedLabel}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+====
+File: react/AgentModelFallbackList.tsx
+====
+
+import React, { useState } from "react";
+
+export type FallbackHealth = "healthy" | "degraded" | "down";
+
+export interface FallbackEntry {
+  id: string;
+  model: string;
+  /** provider label, e.g. "Anthropic" */
+  provider?: string;
+  health?: FallbackHealth;
+  /** when this fallback takes over, e.g. "on rate limit" or "on error 5xx" */
+  condition?: string;
+  latency?: string;
+}
+
+export interface AgentModelFallbackListProps {
+  title?: string;
+  description?: string;
+  entries?: FallbackEntry[];
+  /** id of the currently primary entry */
+  primaryId?: string;
+  onReorder?: (ids: string[]) => void;
+  className?: string;
+}
+
+const HEALTH_DOT: Record<FallbackHealth, string> = {
+  healthy: "bg-emerald-500",
+  degraded: "bg-amber-500",
+  down: "bg-rose-500",
+};
+
+const HEALTH_TEXT: Record<FallbackHealth, string> = {
+  healthy: "Healthy",
+  degraded: "Degraded",
+  down: "Down",
+};
+
+export default function AgentModelFallbackList({
+  title = "Model fallback chain",
+  description = "Requests try the primary model first, then walk down the chain when a fallback condition triggers.",
+  entries = [],
+  primaryId,
+  onReorder,
+  className = "",
+}: AgentModelFallbackListProps) {
+  const [ids, setIds] = useState<string[]>(entries.map((e) => e.id));
+  const [moveFlash, setMoveFlash] = useState<string | null>(null);
+
+  const ordered = ids
+    .map((id) => entries.find((e) => e.id === id))
+    .filter((e): e is FallbackEntry => Boolean(e));
+  const activePrimary = primaryId ?? ordered[0]?.id;
+
+  const move = (id: string, dir: -1 | 1) => {
+    const idx = ids.indexOf(id);
+    const next = idx + dir;
+    if (idx < 0 || next < 0 || next >= ids.length) return;
+    const list = [...ids];
+    list.splice(idx, 1);
+    list.splice(next, 0, id);
+    setIds(list);
+    setMoveFlash(id);
+    window.setTimeout(() => setMoveFlash(null), 1200);
+    onReorder?.(list);
+  };
+
+  return (
+    <div data-fallback-list className={`rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <p data-fallback-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</p>
+      <p data-fallback-description className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">{description}</p>
+
+      <div data-fallback-rows className="mt-3 space-y-2">
+        {ordered.map((entry, i) => {
+          const isPrimary = entry.id === activePrimary;
+          const health = entry.health ?? "healthy";
+          return (
+            <div
+              key={entry.id}
+              data-fallback-row={entry.id}
+              className={`flex items-center gap-2.5 rounded-lg border px-3 py-2 ${
+                isPrimary
+                  ? "border-indigo-200 bg-indigo-50/60 dark:border-indigo-500/30 dark:bg-indigo-500/10"
+                  : "border-zinc-200 dark:border-zinc-700"
+              }`}
+            >
+              <span data-fallback-rank className="w-4 text-center font-mono text-[11px] text-zinc-400 dark:text-zinc-500">
+                {i + 1}
+              </span>
+              <span className={`h-2 w-2 shrink-0 rounded-full ${HEALTH_DOT[health]}`} title={HEALTH_TEXT[health]} />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span data-fallback-model className="truncate text-xs font-semibold text-zinc-800 dark:text-zinc-100">{entry.model}</span>
+                  {isPrimary ? (
+                    <span data-fallback-primary className="rounded-full bg-indigo-600 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-white">
+                      Primary
+                    </span>
+                  ) : null}
+                  {moveFlash === entry.id ? (
+                    <span data-fallback-moved className="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">order updated</span>
+                  ) : null}
+                </div>
+                <p className="mt-0.5 truncate text-[11px] text-zinc-500 dark:text-zinc-400">
+                  {entry.provider ? `${entry.provider} · ` : ""}
+                  {entry.condition ?? "fallback"}
+                  {entry.latency ? ` · ${entry.latency}` : ""}
+                </p>
+              </div>
+              <div className="flex shrink-0 flex-col gap-0.5">
+                <button
+                  type="button"
+                  data-fallback-up
+                  title="Promote"
+                  aria-label={`Promote ${entry.model}`}
+                  disabled={i === 0}
+                  onClick={() => move(entry.id, -1)}
+                  className="rounded border border-zinc-200 px-1.5 text-[10px] leading-4 text-zinc-500 disabled:opacity-30 hover:border-zinc-300 hover:text-zinc-700 dark:border-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+                >
+                  ↑
+                </button>
+                <button
+                  type="button"
+                  data-fallback-down
+                  title="Demote"
+                  aria-label={`Demote ${entry.model}`}
+                  disabled={i === ordered.length - 1}
+                  onClick={() => move(entry.id, 1)}
+                  className="rounded border border-zinc-200 px-1.5 text-[10px] leading-4 text-zinc-500 disabled:opacity-30 hover:border-zinc-300 hover:text-zinc-700 dark:border-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+                >
+                  ↓
+                </button>
+              </div>
+            </div>
+          );
+        })}
+        {ordered.length === 0 ? (
+          <p data-fallback-empty className="rounded-lg border border-dashed border-zinc-200 px-3 py-4 text-center text-xs text-zinc-400 dark:border-zinc-700 dark:text-zinc-500">
+            No models in the fallback chain
+          </p>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+====
 File: react/AgentNotificationFeed.tsx
 ====
 
@@ -1314,6 +1606,127 @@ export const AgentRunLog: React.FC<AgentRunLogProps> = ({
 };
 
 export default AgentRunLog;
+
+====
+File: react/AgentScheduleEditor.tsx
+====
+
+import React, { useState } from "react";
+
+export interface ScheduleFrequency {
+  id: string;
+  label: string;
+  /** cron-like expression shown in the mono field when selected */
+  expression: string;
+}
+
+export interface AgentScheduleEditorProps {
+  title?: string;
+  description?: string;
+  frequencies?: ScheduleFrequency[];
+  /** index into frequencies of the active one */
+  activeId?: string;
+  time?: string;
+  nextRun?: string;
+  timezone?: string;
+  onSave?: (freq: ScheduleFrequency, time: string) => void;
+  className?: string;
+}
+
+const DEFAULT_FREQUENCIES: ScheduleFrequency[] = [
+  { id: "hourly", label: "Every hour", expression: "0 * * * *" },
+  { id: "daily", label: "Daily", expression: "0 9 * * *" },
+  { id: "weekly", label: "Weekly", expression: "0 9 * * 1" },
+];
+
+export default function AgentScheduleEditor({
+  title = "Run schedule",
+  description = "Configure when the agent runs automatically. The cron expression is derived from your selection.",
+  frequencies = DEFAULT_FREQUENCIES,
+  activeId,
+  time = "09:00",
+  nextRun,
+  timezone,
+  onSave,
+  className = "",
+}: AgentScheduleEditorProps) {
+  const [selectedId, setSelectedId] = useState(activeId ?? frequencies[0]?.id ?? "");
+  const [timeValue, setTimeValue] = useState(time);
+  const [saved, setSaved] = useState(false);
+
+  const selected = frequencies.find((f) => f.id === selectedId) ?? frequencies[0];
+
+  const handleSave = () => {
+    if (!selected) return;
+    setSaved(true);
+    window.setTimeout(() => setSaved(false), 1600);
+    onSave?.(selected, timeValue);
+  };
+
+  return (
+    <div data-schedule-editor className={`rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900 ${className}`}>
+      <p data-schedule-title className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</p>
+      <p data-schedule-description className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">{description}</p>
+
+      <div data-schedule-frequencies className="mt-3 flex flex-wrap gap-1.5">
+        {frequencies.map((f) => (
+          <button
+            key={f.id}
+            type="button"
+            data-schedule-frequency={f.id}
+            aria-pressed={f.id === selectedId}
+            onClick={() => setSelectedId(f.id)}
+            className={
+              f.id === selectedId
+                ? "rounded-full bg-indigo-600 px-3 py-1 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500"
+                : "rounded-full border border-zinc-200 px-3 py-1 text-[11px] font-semibold text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-700 dark:border-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+            }
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <label data-schedule-time-wrap className="flex items-center gap-2">
+          <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Run at</span>
+          <input
+            data-schedule-time
+            type="time"
+            value={timeValue}
+            onChange={(e) => setTimeValue(e.target.value)}
+            className="rounded-md border border-zinc-200 bg-white px-2 py-1.5 font-mono text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+          />
+        </label>
+        {timezone ? (
+          <span data-schedule-timezone className="text-[11px] text-zinc-400 dark:text-zinc-500">{timezone}</span>
+        ) : null}
+      </div>
+
+      <div className="mt-3 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-800/60">
+        <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Cron</span>
+        <code data-schedule-cron className="ml-2 font-mono text-xs text-zinc-700 dark:text-zinc-200">{selected?.expression ?? "—"}</code>
+        <span className="mx-2 text-zinc-300 dark:text-zinc-600">|</span>
+        <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Next run</span>
+        <span data-schedule-next className="ml-2 text-xs text-zinc-700 dark:text-zinc-200">{nextRun ?? "—"}</span>
+      </div>
+
+      <div className="mt-3 flex items-center justify-end gap-2">
+        {saved ? (
+          <span data-schedule-saved className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">Schedule saved</span>
+        ) : null}
+        <button
+          type="button"
+          data-schedule-save
+          onClick={handleSave}
+          className="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500"
+        >
+          Save schedule
+        </button>
+      </div>
+    </div>
+  );
+}
 
 ====
 File: react/AgentSessionTimeline.tsx
@@ -31973,6 +32386,248 @@ const emit = defineEmits<{
 </template>
 
 ====
+File: vue/AgentGuardrailViolationCard.vue
+====
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+export type ViolationSeverity = "low" | "medium" | "high";
+interface Props {
+  rule: string;
+  severity?: ViolationSeverity;
+  runId?: string;
+  time?: string;
+  input?: string;
+  match?: string;
+  policyRef?: string;
+  proceedLabel?: string;
+  blockLabel?: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  severity: "medium",
+  proceedLabel: "Proceed anyway",
+  blockLabel: "Block run",
+});
+const emit = defineEmits<{
+  (e: "proceed"): void;
+  (e: "block"): void;
+}>();
+
+const resolved = ref<null | "proceeded" | "blocked">(null);
+
+const act = (kind: "proceeded" | "blocked") => {
+  resolved.value = kind;
+  emit(kind === "proceeded" ? "proceed" : "block");
+};
+</script>
+
+<template>
+  <div
+    data-guardrail-violation
+    role="alert"
+    class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900"
+  >
+    <div class="flex flex-wrap items-center gap-2">
+      <span data-violation-rule class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.rule }}</span>
+      <span
+        data-violation-severity
+        :class="`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
+          props.severity === 'high'
+            ? 'bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400'
+            : props.severity === 'low'
+              ? 'bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400'
+              : 'bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-400'
+        }`"
+      >
+        {{ props.severity === "high" ? "High severity" : props.severity === "low" ? "Low severity" : "Medium severity" }}
+      </span>
+      <span v-if="props.time" data-violation-time class="ml-auto text-[11px] text-zinc-400 dark:text-zinc-500">{{ props.time }}</span>
+    </div>
+
+    <p v-if="props.runId" class="mt-1.5">
+      <code
+        data-violation-run
+        class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-[11px] text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
+      >{{ props.runId }}</code>
+    </p>
+
+    <div
+      v-if="props.input"
+      data-violation-input
+      class="mt-2.5 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-xs leading-relaxed text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-300"
+    >
+      <template v-if="props.match && props.input.includes(props.match)">
+        {{ props.input.slice(0, props.input.indexOf(props.match)) }}<mark
+          data-violation-match
+          class="rounded bg-rose-100 px-0.5 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300"
+        >{{ props.match }}</mark>{{ props.input.slice(props.input.indexOf(props.match) + props.match.length) }}
+      </template>
+      <template v-else>{{ props.input }}</template>
+    </div>
+
+    <p v-if="props.policyRef" data-violation-policy class="mt-2 text-[11px] text-zinc-400 dark:text-zinc-500">
+      Policy: <code class="font-mono text-zinc-500 dark:text-zinc-400">{{ props.policyRef }}</code>
+    </p>
+
+    <p v-if="resolved" data-violation-resolved class="mt-3 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">
+      {{ resolved === "blocked" ? "Run blocked by reviewer." : "Marked reviewed — proceeding anyway." }}
+    </p>
+    <div v-else class="mt-3 flex items-center justify-end gap-2">
+      <button
+        type="button"
+        data-violation-block
+        @click="act('blocked')"
+        class="rounded-md bg-rose-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-rose-500"
+      >
+        {{ props.blockLabel }}
+      </button>
+      <button
+        type="button"
+        data-violation-proceed
+        @click="act('proceeded')"
+        class="rounded-md border border-zinc-200 px-3 py-1.5 text-[11px] font-semibold text-zinc-600 transition-colors hover:border-zinc-300 hover:text-zinc-800 dark:border-zinc-700 dark:text-zinc-300 dark:hover:text-zinc-100"
+      >
+        {{ props.proceedLabel }}
+      </button>
+    </div>
+  </div>
+</template>
+
+====
+File: vue/AgentModelFallbackList.vue
+====
+
+<script setup lang="ts">
+import { ref, computed } from "vue";
+
+export type FallbackHealth = "healthy" | "degraded" | "down";
+export interface FallbackEntry {
+  id: string;
+  model: string;
+  provider?: string;
+  health?: FallbackHealth;
+  condition?: string;
+  latency?: string;
+}
+interface Props {
+  title?: string;
+  description?: string;
+  entries?: FallbackEntry[];
+  primaryId?: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  title: "Model fallback chain",
+  description: "Requests try the primary model first, then walk down the chain when a fallback condition triggers.",
+  entries: () => [],
+});
+const emit = defineEmits<{
+  (e: "reorder", ids: string[]): void;
+}>();
+
+const ids = ref<string[]>(props.entries.map((e) => e.id));
+const moveFlash = ref<string | null>(null);
+let flashTimer: ReturnType<typeof setTimeout> | undefined;
+
+const ordered = computed(() =>
+  ids.value
+    .map((id) => props.entries.find((e) => e.id === id))
+    .filter((e) => Boolean(e))
+);
+const activePrimary = computed(() => props.primaryId ?? ordered.value[0]?.id);
+
+const move = (id: string, dir: number) => {
+  const idx = ids.value.indexOf(id);
+  const next = idx + dir;
+  if (idx < 0 || next < 0 || next >= ids.value.length) return;
+  const list = [...ids.value];
+  list.splice(idx, 1);
+  list.splice(next, 0, id);
+  ids.value = list;
+  moveFlash.value = id;
+  if (flashTimer) clearTimeout(flashTimer);
+  flashTimer = setTimeout(() => (moveFlash.value = null), 1200);
+  emit("reorder", list);
+};
+</script>
+
+<template>
+  <div data-fallback-list class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+    <p data-fallback-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</p>
+    <p data-fallback-description class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">{{ props.description }}</p>
+
+    <div data-fallback-rows class="mt-3 space-y-2">
+      <div
+        v-for="(entry, i) in ordered"
+        :key="entry.id"
+        :data-fallback-row="entry.id"
+        :class="`flex items-center gap-2.5 rounded-lg border px-3 py-2 ${
+          entry.id === activePrimary
+            ? 'border-indigo-200 bg-indigo-50/60 dark:border-indigo-500/30 dark:bg-indigo-500/10'
+            : 'border-zinc-200 dark:border-zinc-700'
+        }`"
+      >
+        <span data-fallback-rank class="w-4 text-center font-mono text-[11px] text-zinc-400 dark:text-zinc-500">{{ i + 1 }}</span>
+        <span
+          class="h-2 w-2 shrink-0 rounded-full"
+          :title="entry.health === 'down' ? 'Down' : entry.health === 'degraded' ? 'Degraded' : 'Healthy'"
+          :class="entry.health === 'down' ? 'bg-rose-500' : entry.health === 'degraded' ? 'bg-amber-500' : 'bg-emerald-500'"
+        />
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-2">
+            <span data-fallback-model class="truncate text-xs font-semibold text-zinc-800 dark:text-zinc-100">{{ entry.model }}</span>
+            <span
+              v-if="entry.id === activePrimary"
+              data-fallback-primary
+              class="rounded-full bg-indigo-600 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-white"
+            >
+              Primary
+            </span>
+            <span v-if="moveFlash === entry.id" data-fallback-moved class="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">
+              order updated
+            </span>
+          </div>
+          <p class="mt-0.5 truncate text-[11px] text-zinc-500 dark:text-zinc-400">
+            {{ entry.provider ? entry.provider + " · " : "" }}{{ entry.condition ?? "fallback" }}{{ entry.latency ? " · " + entry.latency : "" }}
+          </p>
+        </div>
+        <div class="flex shrink-0 flex-col gap-0.5">
+          <button
+            type="button"
+            data-fallback-up
+            title="Promote"
+            :aria-label="'Promote ' + entry.model"
+            :disabled="i === 0"
+            @click="move(entry.id, -1)"
+            class="rounded border border-zinc-200 px-1.5 text-[10px] leading-4 text-zinc-500 disabled:opacity-30 hover:border-zinc-300 hover:text-zinc-700 dark:border-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+          >
+            ↑
+          </button>
+          <button
+            type="button"
+            data-fallback-down
+            title="Demote"
+            :aria-label="'Demote ' + entry.model"
+            :disabled="i === ordered.length - 1"
+            @click="move(entry.id, 1)"
+            class="rounded border border-zinc-200 px-1.5 text-[10px] leading-4 text-zinc-500 disabled:opacity-30 hover:border-zinc-300 hover:text-zinc-700 dark:border-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+          >
+            ↓
+          </button>
+        </div>
+      </div>
+      <p
+        v-if="ordered.length === 0"
+        data-fallback-empty
+        class="rounded-lg border border-dashed border-zinc-200 px-3 py-4 text-center text-xs text-zinc-400 dark:border-zinc-700 dark:text-zinc-500"
+      >
+        No models in the fallback chain
+      </p>
+    </div>
+  </div>
+</template>
+
+====
 File: vue/AgentNotificationFeed.vue
 ====
 
@@ -32125,6 +32780,114 @@ const toggle = (id: string) => {
   expanded.value = next;
 };
 </script>
+
+====
+File: vue/AgentScheduleEditor.vue
+====
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+export interface ScheduleFrequency {
+  id: string;
+  label: string;
+  expression: string;
+}
+interface Props {
+  title?: string;
+  description?: string;
+  frequencies?: ScheduleFrequency[];
+  activeId?: string;
+  time?: string;
+  nextRun?: string;
+  timezone?: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  title: "Run schedule",
+  description: "Configure when the agent runs automatically. The cron expression is derived from your selection.",
+  frequencies: () => [
+    { id: "hourly", label: "Every hour", expression: "0 * * * *" },
+    { id: "daily", label: "Daily", expression: "0 9 * * *" },
+    { id: "weekly", label: "Weekly", expression: "0 9 * * 1" },
+  ],
+  time: "09:00",
+});
+const emit = defineEmits<{
+  (e: "save", freq: ScheduleFrequency, time: string): void;
+}>();
+
+const selectedId = ref(props.activeId ?? props.frequencies[0]?.id ?? "");
+const timeValue = ref(props.time);
+const saved = ref(false);
+let savedTimer: ReturnType<typeof setTimeout> | undefined;
+
+const selected = () => props.frequencies.find((f) => f.id === selectedId.value) ?? props.frequencies[0];
+
+const save = () => {
+  const freq = selected();
+  if (!freq) return;
+  saved.value = true;
+  if (savedTimer) clearTimeout(savedTimer);
+  savedTimer = setTimeout(() => (saved.value = false), 1600);
+  emit("save", freq, timeValue.value);
+};
+</script>
+
+<template>
+  <div data-schedule-editor class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+    <p data-schedule-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{{ props.title }}</p>
+    <p data-schedule-description class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">{{ props.description }}</p>
+
+    <div data-schedule-frequencies class="mt-3 flex flex-wrap gap-1.5">
+      <button
+        v-for="f in props.frequencies"
+        :key="f.id"
+        type="button"
+        :data-schedule-frequency="f.id"
+        :aria-pressed="f.id === selectedId"
+        @click="selectedId = f.id"
+        :class="f.id === selectedId
+          ? 'rounded-full bg-indigo-600 px-3 py-1 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500'
+          : 'rounded-full border border-zinc-200 px-3 py-1 text-[11px] font-semibold text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-700 dark:border-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'"
+      >
+        {{ f.label }}
+      </button>
+    </div>
+
+    <div class="mt-3 flex flex-wrap items-center gap-2">
+      <label data-schedule-time-wrap class="flex items-center gap-2">
+        <span class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Run at</span>
+        <input
+          data-schedule-time
+          type="time"
+          v-model="timeValue"
+          class="rounded-md border border-zinc-200 bg-white px-2 py-1.5 font-mono text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+        />
+      </label>
+      <span v-if="props.timezone" data-schedule-timezone class="text-[11px] text-zinc-400 dark:text-zinc-500">{{ props.timezone }}</span>
+    </div>
+
+    <div class="mt-3 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-800/60">
+      <span class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Cron</span>
+      <code data-schedule-cron class="ml-2 font-mono text-xs text-zinc-700 dark:text-zinc-200">{{ selected()?.expression ?? "—" }}</code>
+      <span class="mx-2 text-zinc-300 dark:text-zinc-600">|</span>
+      <span class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Next run</span>
+      <span data-schedule-next class="ml-2 text-xs text-zinc-700 dark:text-zinc-200">{{ props.nextRun ?? "—" }}</span>
+    </div>
+
+    <div class="mt-3 flex items-center justify-end gap-2">
+      <span v-if="saved" data-schedule-saved class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">Schedule saved</span>
+      <button
+        type="button"
+        data-schedule-save
+        @click="save"
+        class="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500"
+      >
+        Save schedule
+      </button>
+    </div>
+  </div>
+</template>
 
 ====
 File: vue/AgentSessionTimeline.vue
@@ -58589,6 +59352,308 @@ if (!customElements.get('agent-error-recovery')) {
 }
 
 ====
+File: vanilla/AgentGuardrailViolationCard.js
+====
+
+/**
+ * AgentGuardrailViolationCard - Vanilla Web Component
+ * Single guardrail-violation detail card: severity badge, trigger input
+ * summary with highlighted match, policy ref and Proceed/Block actions.
+ *
+ * Usage: <agent-guardrail-violation-card rule="PII disclosure"></agent-guardrail-violation-card>
+ * Attributes: rule, severity (low|medium|high), run-id, time, input, match, policy-ref,
+ *             proceed-label, block-label
+ * Events: proceed, block
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const SEVERITY_BADGE = {
+  low: {
+    badge: 'bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400',
+    label: 'Low severity',
+  },
+  medium: {
+    badge: 'bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-400',
+    label: 'Medium severity',
+  },
+  high: {
+    badge: 'bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400',
+    label: 'High severity',
+  },
+};
+
+export class AgentGuardrailViolationCardElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['rule', 'severity', 'run-id', 'time', 'input', 'match', 'policy-ref', 'proceed-label', 'block-label'];
+  }
+
+  constructor() {
+    super();
+    this._resolved = null;
+    this._bound = false;
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        const blockBtn = event.target.closest('[data-violation-block]');
+        if (blockBtn) {
+          this._resolved = 'blocked';
+          this.render();
+          this.dispatchEvent(new CustomEvent('block'));
+          return;
+        }
+        const proceedBtn = event.target.closest('[data-violation-proceed]');
+        if (proceedBtn) {
+          this._resolved = 'proceeded';
+          this.render();
+          this.dispatchEvent(new CustomEvent('proceed'));
+        }
+      });
+    }
+  }
+
+  _renderInput() {
+    const input = this.getAttribute('input') || '';
+    if (!input) return '';
+    const match = this.getAttribute('match') || '';
+    const escaped = escapeAttribute(input);
+    if (match && input.includes(match)) {
+      const idx = input.indexOf(match);
+      const head = escapeAttribute(input.slice(0, idx));
+      const mark = escapeAttribute(match);
+      const tail = escapeAttribute(input.slice(idx + match.length));
+      return `${head}<mark data-violation-match class="rounded bg-rose-100 px-0.5 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300">${mark}</mark>${tail}`;
+    }
+    return escaped;
+  }
+
+  render() {
+    const rule = this.getAttribute('rule') || '';
+    if (!rule && this.innerHTML === '') {
+      // still render an empty shell so SSR/preview never collapses
+    }
+    const severity = ['low', 'medium', 'high'].includes(this.getAttribute('severity'))
+      ? this.getAttribute('severity')
+      : 'medium';
+    const sev = SEVERITY_BADGE[severity];
+    const runId = this.getAttribute('run-id') || '';
+    const time = this.getAttribute('time') || '';
+    const policyRef = this.getAttribute('policy-ref') || '';
+    const proceedLabel = this.getAttribute('proceed-label') || 'Proceed anyway';
+    const blockLabel = this.getAttribute('block-label') || 'Block run';
+    const inputBlock = this.getAttribute('input')
+      ? `<div data-violation-input class="mt-2.5 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-xs leading-relaxed text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-300">${this._renderInput()}</div>`
+      : '';
+    const resolvedText = this._resolved === 'blocked'
+      ? 'Run blocked by reviewer.'
+      : this._resolved === 'proceeded'
+        ? 'Marked reviewed — proceeding anyway.'
+        : '';
+    this.innerHTML = `
+      <div data-guardrail-violation role="alert" class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+        <div class="flex flex-wrap items-center gap-2">
+          <span data-violation-rule class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(rule)}</span>
+          <span data-violation-severity class="rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${sev.badge}">${sev.label}</span>
+          ${time ? `<span data-violation-time class="ml-auto text-[11px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(time)}</span>` : ''}
+        </div>
+        ${runId ? `<p class="mt-1.5"><code data-violation-run class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-[11px] text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">${escapeAttribute(runId)}</code></p>` : ''}
+        ${inputBlock}
+        ${policyRef ? `<p data-violation-policy class="mt-2 text-[11px] text-zinc-400 dark:text-zinc-500">Policy: <code class="font-mono text-zinc-500 dark:text-zinc-400">${escapeAttribute(policyRef)}</code></p>` : ''}
+        ${this._resolved
+          ? `<p data-violation-resolved class="mt-3 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">${resolvedText}</p>`
+          : `<div class="mt-3 flex items-center justify-end gap-2">
+              <button type="button" data-violation-block class="rounded-md bg-rose-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-rose-500">${escapeAttribute(blockLabel)}</button>
+              <button type="button" data-violation-proceed class="rounded-md border border-zinc-200 px-3 py-1.5 text-[11px] font-semibold text-zinc-600 transition-colors hover:border-zinc-300 hover:text-zinc-800 dark:border-zinc-700 dark:text-zinc-300 dark:hover:text-zinc-100">${escapeAttribute(proceedLabel)}</button>
+            </div>`}
+      </div>`;
+  }
+}
+
+export default AgentGuardrailViolationCardElement;
+
+if (!customElements.get('agent-guardrail-violation-card')) {
+  customElements.define('agent-guardrail-violation-card', AgentGuardrailViolationCardElement);
+}
+
+====
+File: vanilla/AgentModelFallbackList.js
+====
+
+/**
+ * AgentModelFallbackList - Vanilla Web Component
+ * Model fallback chain: ranked rows with health dot, primary badge,
+ * condition/latency caption and promote/demote reorder controls.
+ *
+ * Usage: <agent-model-fallback-list title="Model fallback chain"></agent-model-fallback-list>
+ * Properties: entries ([{id,model,provider?,health?,condition?,latency?}]), primaryId
+ * Attributes: title, description
+ * Events: reorder (detail {ids})
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+const HEALTH_DOT = {
+  healthy: 'bg-emerald-500',
+  degraded: 'bg-amber-500',
+  down: 'bg-rose-500',
+};
+const HEALTH_TEXT = {
+  healthy: 'Healthy',
+  degraded: 'Degraded',
+  down: 'Down',
+};
+
+export class AgentModelFallbackListElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'description'];
+  }
+
+  constructor() {
+    super();
+    this._entries = [];
+    this._ids = [];
+    this._primaryId = '';
+    this._moveFlash = null;
+    this._flashTimer = null;
+    this._bound = false;
+  }
+
+  get entries() {
+    return this._entries;
+  }
+
+  set entries(value) {
+    this._entries = Array.isArray(value) ? value.map((e) => ({ ...e })) : [];
+    this._ids = this._entries.map((e) => e.id);
+    this.render();
+  }
+
+  get primaryId() {
+    return this._primaryId || this._ids[0] || '';
+  }
+
+  set primaryId(value) {
+    this._primaryId = String(value || '');
+    this.render();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        const upBtn = event.target.closest('[data-fallback-up]');
+        const downBtn = event.target.closest('[data-fallback-down]');
+        if (!upBtn && !downBtn) return;
+        const row = (upBtn || downBtn).closest('[data-fallback-row]');
+        if (!row) return;
+        const id = row.getAttribute('data-fallback-row');
+        const dir = upBtn ? -1 : 1;
+        const idx = this._ids.indexOf(id);
+        const next = idx + dir;
+        if (idx < 0 || next < 0 || next >= this._ids.length) return;
+        const list = [...this._ids];
+        list.splice(idx, 1);
+        list.splice(next, 0, id);
+        this._ids = list;
+        this._moveFlash = id;
+        this.render();
+        if (this._flashTimer) clearTimeout(this._flashTimer);
+        this._flashTimer = setTimeout(() => {
+          this._moveFlash = null;
+          this.render();
+        }, 1200);
+        this.dispatchEvent(new CustomEvent('reorder', { detail: { ids: [...this._ids] } }));
+      });
+    }
+  }
+
+  _ordered() {
+    return this._ids
+      .map((id) => this._entries.find((e) => e.id === id))
+      .filter((e) => Boolean(e));
+  }
+
+  render() {
+    const title = this.getAttribute('title') || 'Model fallback chain';
+    const description = this.getAttribute('description') ||
+      'Requests try the primary model first, then walk down the chain when a fallback condition triggers.';
+    const ordered = this._ordered();
+    const primary = this.primaryId;
+    const rows = ordered.map((entry, i) => {
+      const isPrimary = entry.id === primary;
+      const health = HEALTH_DOT[entry.health] ? entry.health : 'healthy';
+      const caption = [
+        entry.provider,
+        entry.condition || 'fallback',
+        entry.latency,
+      ].filter(Boolean).join(' · ');
+      return `<div data-fallback-row="${escapeAttribute(entry.id)}"
+        class="flex items-center gap-2.5 rounded-lg border px-3 py-2 ${isPrimary
+          ? 'border-indigo-200 bg-indigo-50/60 dark:border-indigo-500/30 dark:bg-indigo-500/10'
+          : 'border-zinc-200 dark:border-zinc-700'}">
+          <span data-fallback-rank class="w-4 text-center font-mono text-[11px] text-zinc-400 dark:text-zinc-500">${i + 1}</span>
+          <span class="h-2 w-2 shrink-0 rounded-full ${HEALTH_DOT[health]}" title="${HEALTH_TEXT[health]}"></span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              <span data-fallback-model class="truncate text-xs font-semibold text-zinc-800 dark:text-zinc-100">${escapeAttribute(entry.model)}</span>
+              ${isPrimary ? '<span data-fallback-primary class="rounded-full bg-indigo-600 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-white">Primary</span>' : ''}
+              ${this._moveFlash === entry.id ? '<span data-fallback-moved class="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">order updated</span>' : ''}
+            </div>
+            <p class="mt-0.5 truncate text-[11px] text-zinc-500 dark:text-zinc-400">${escapeAttribute(caption)}</p>
+          </div>
+          <div class="flex shrink-0 flex-col gap-0.5">
+            <button type="button" data-fallback-up title="Promote" aria-label="Promote ${escapeAttribute(entry.model)}" ${i === 0 ? 'disabled' : ''}
+              class="rounded border border-zinc-200 px-1.5 text-[10px] leading-4 text-zinc-500 disabled:opacity-30 hover:border-zinc-300 hover:text-zinc-700 dark:border-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200">↑</button>
+            <button type="button" data-fallback-down title="Demote" aria-label="Demote ${escapeAttribute(entry.model)}" ${i === ordered.length - 1 ? 'disabled' : ''}
+              class="rounded border border-zinc-200 px-1.5 text-[10px] leading-4 text-zinc-500 disabled:opacity-30 hover:border-zinc-300 hover:text-zinc-700 dark:border-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200">↓</button>
+          </div>
+        </div>`;
+    }).join('');
+    this.innerHTML = `
+      <div data-fallback-list class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+        <p data-fallback-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</p>
+        <p data-fallback-description class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">${escapeAttribute(description)}</p>
+        <div data-fallback-rows class="mt-3 space-y-2">
+          ${rows || '<p data-fallback-empty class="rounded-lg border border-dashed border-zinc-200 px-3 py-4 text-center text-xs text-zinc-400 dark:border-zinc-700 dark:text-zinc-500">No models in the fallback chain</p>'}
+        </div>
+      </div>`;
+  }
+}
+
+export default AgentModelFallbackListElement;
+
+if (!customElements.get('agent-model-fallback-list')) {
+  customElements.define('agent-model-fallback-list', AgentModelFallbackListElement);
+}
+
+====
 File: vanilla/AgentNotificationFeed.js
 ====
 
@@ -58839,6 +59904,198 @@ if (typeof customElements !== 'undefined' && !customElements.get('agent-run-log'
   customElements.define('agent-run-log', AgentRunLogElement);
 }
 export default AgentRunLogElement;
+
+====
+File: vanilla/AgentScheduleEditor.js
+====
+
+/**
+ * AgentScheduleEditor - Vanilla Web Component
+ * Agent run schedule editor: frequency pills + time input + derived cron
+ * expression with next-run preview and a save action.
+ *
+ * Usage: <agent-schedule-editor title="Run schedule"></agent-schedule-editor>
+ * Properties: frequencies ([{id,label,expression}]), activeId, time, nextRun, timezone
+ * Attributes: title, description
+ * Events: save (detail {frequency, time})
+ */
+const escapeAttribute = (value) =>
+  String(value).replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+export class AgentScheduleEditorElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['title', 'description'];
+  }
+
+  constructor() {
+    super();
+    this._frequencies = [];
+    this._activeId = '';
+    this._time = '09:00';
+    this._nextRun = '';
+    this._timezone = '';
+    this._saved = false;
+    this._savedTimer = null;
+    this._bound = false;
+  }
+
+  get frequencies() {
+    return this._frequencies;
+  }
+
+  set frequencies(value) {
+    this._frequencies = Array.isArray(value) ? value.map((f) => ({ ...f })) : [];
+    if (!this._activeId && this._frequencies.length > 0) {
+      this._activeId = this._frequencies[0].id;
+    }
+    this.render();
+  }
+
+  get activeId() {
+    return this._activeId;
+  }
+
+  set activeId(value) {
+    this._activeId = String(value || '');
+    this.render();
+  }
+
+  get time() {
+    return this._time;
+  }
+
+  set time(value) {
+    this._time = String(value ?? '09:00');
+    this.render();
+  }
+
+  get nextRun() {
+    return this._nextRun;
+  }
+
+  set nextRun(value) {
+    this._nextRun = String(value ?? '');
+    this.render();
+  }
+
+  get timezone() {
+    return this._timezone;
+  }
+
+  set timezone(value) {
+    this._timezone = String(value ?? '');
+    this.render();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'title' || name === 'description') this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+    if (!this._bound) {
+      this._bound = true;
+      this.addEventListener('click', (event) => {
+        const freqBtn = event.target.closest('[data-schedule-frequency]');
+        if (freqBtn) {
+          this._activeId = freqBtn.getAttribute('data-schedule-frequency') || '';
+          this.render();
+          return;
+        }
+        const saveBtn = event.target.closest('[data-schedule-save]');
+        if (saveBtn) {
+          const freq = this._frequencies.find((f) => f.id === this._activeId) || this._frequencies[0];
+          if (freq) {
+            this._saved = true;
+            this.render();
+            if (this._savedTimer) clearTimeout(this._savedTimer);
+            this._savedTimer = setTimeout(() => {
+              this._saved = false;
+              this.render();
+            }, 1600);
+            this.dispatchEvent(new CustomEvent('save', {
+              detail: { frequency: { ...freq }, time: this._time },
+            }));
+          }
+        }
+      });
+      this.addEventListener('change', (event) => {
+        if (event.target && event.target.matches('[data-schedule-time]')) {
+          this._time = event.target.value;
+          // keep label in sync without full re-render (input holds focus)
+          const next = this.querySelector('[data-schedule-cron]');
+          if (next) next.textContent = this._cronFor(this._activeId);
+        }
+      });
+      this.addEventListener('input', (event) => {
+        if (event.target && event.target.matches('[data-schedule-time]')) {
+          this._time = event.target.value;
+        }
+      });
+    }
+  }
+
+  _cronFor(id) {
+    const freq = this._frequencies.find((f) => f.id === id) || this._frequencies[0];
+    return freq ? freq.expression : '—';
+  }
+
+  render() {
+    const title = this.getAttribute('title') || 'Run schedule';
+    const description = this.getAttribute('description') ||
+      'Configure when the agent runs automatically. The cron expression is derived from your selection.';
+    const freqPills = this._frequencies.map((f) => {
+      const active = f.id === this._activeId;
+      return `<button type="button" data-schedule-frequency="${escapeAttribute(f.id)}" aria-pressed="${active}"
+        class="${active
+          ? 'rounded-full bg-indigo-600 px-3 py-1 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500'
+          : 'rounded-full border border-zinc-200 px-3 py-1 text-[11px] font-semibold text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-700 dark:border-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'}">${escapeAttribute(f.label)}</button>`;
+    }).join('');
+    const tz = this._timezone
+      ? `<span data-schedule-timezone class="text-[11px] text-zinc-400 dark:text-zinc-500">${escapeAttribute(this._timezone)}</span>`
+      : '';
+    const nextRun = this._nextRun || '—';
+    this.innerHTML = `
+      <div data-schedule-editor class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+        <p data-schedule-title class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">${escapeAttribute(title)}</p>
+        <p data-schedule-description class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">${escapeAttribute(description)}</p>
+        <div data-schedule-frequencies class="mt-3 flex flex-wrap gap-1.5">${freqPills}</div>
+        <div class="mt-3 flex flex-wrap items-center gap-2">
+          <label data-schedule-time-wrap class="flex items-center gap-2">
+            <span class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Run at</span>
+            <input data-schedule-time type="time" value="${escapeAttribute(this._time)}"
+              class="rounded-md border border-zinc-200 bg-white px-2 py-1.5 font-mono text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200" />
+          </label>
+          ${tz}
+        </div>
+        <div class="mt-3 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-800/60">
+          <span class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Cron</span>
+          <code data-schedule-cron class="ml-2 font-mono text-xs text-zinc-700 dark:text-zinc-200">${escapeAttribute(this._cronFor(this._activeId))}</code>
+          <span class="mx-2 text-zinc-300 dark:text-zinc-600">|</span>
+          <span class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Next run</span>
+          <span data-schedule-next class="ml-2 text-xs text-zinc-700 dark:text-zinc-200">${escapeAttribute(nextRun)}</span>
+        </div>
+        <div class="mt-3 flex items-center justify-end gap-2">
+          ${this._saved ? '<span data-schedule-saved class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">Schedule saved</span>' : ''}
+          <button type="button" data-schedule-save
+            class="rounded-md bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-indigo-500">Save schedule</button>
+        </div>
+      </div>`;
+  }
+}
+
+export default AgentScheduleEditorElement;
+
+if (!customElements.get('agent-schedule-editor')) {
+  customElements.define('agent-schedule-editor', AgentScheduleEditorElement);
+}
 
 ====
 File: vanilla/AgentSessionTimeline.js

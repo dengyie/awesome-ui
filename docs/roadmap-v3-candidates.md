@@ -97,6 +97,13 @@
 - **AgentEnvVarEditor** (#241)：环境变量编辑器（secret 掩码 + reveal + 行级增删）。素材：references/agent。
 - 选型说明：延续 v3.3 Agent 工作台五件的自然进化，全部 Agent 域专用、零名称重叠；空态/通知/权限的通用形态分别由 #25/#125、#39、#24 已覆盖，本批不做通用变体。
 
+## 已消费批次 v3.5.0（Agent 工作台纵深批，#242-244）
+
+- **AgentScheduleEditor** (#242)：定时触发器编辑（频率 pill + cron/next-run 预览 + 保存反馈）。素材：references/workflow 129 / settings 110。SchedulerSlots (#48) 是预约时段选择，ContentReviewTable 仅 Schedule 按钮——cron 编辑全库空白。
+- **AgentGuardrailViolationCard** (#243)：单条护栏违规详情卡（severity badge + match 高亮 + Proceed/Block）。素材：references/ai-monitor 150 / security 125。与 GuardrailReviewQueue（列表+verdict 队列）形态区分。
+- **AgentModelFallbackList** (#244)：模型降级链（优先级行 + 健康点 + 重排）。素材：references/ai-monitor 51_Adaline Providers 行形态。
+- 选型说明：TokenBudgetBar 候选因与 UsageMeter/UsageQuotaCard（账户级汇总）形态趋同被放弃，改为上述三件 Agent 域纵深。
+
 ## 重叠跳过记录（选型时排除）
 
 - Outseta/Slite 通用空态 → #25/#125 已覆盖形态。

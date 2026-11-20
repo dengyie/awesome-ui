@@ -1064,3 +1064,15 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/AgentEnvVarEditor.tsx
    - Vue 3: vue/AgentEnvVarEditor.vue
    - Vanilla: vanilla/AgentEnvVarEditor.js (custom element `<agent-env-var-editor>`, attributes `title`/`description`; property `vars` [{key,value,secret?}]; event `change` detail {vars})
+242. AgentScheduleEditor: agent run schedule editor — frequency pills (hourly/daily/weekly), time input with timezone caption, a derived cron expression with next-run preview and a save action with transient "Schedule saved" feedback.
+   - React: react/AgentScheduleEditor.tsx
+   - Vue 3: vue/AgentScheduleEditor.vue
+   - Vanilla: vanilla/AgentScheduleEditor.js (custom element `<agent-schedule-editor>`, attributes `title`/`description`; properties `frequencies` [{id,label,expression}], `activeId`, `time`, `nextRun`, `timezone`; event `save` detail {frequency,time})
+243. AgentGuardrailViolationCard: single guardrail-violation detail card (role=alert) — severity badge (low amber / medium orange / high rose), run-id mono chip, trigger input summary with the matched snippet highlighted, policy reference and Proceed-anyway / Block-run actions; after acting the buttons are replaced by a resolution line.
+   - React: react/AgentGuardrailViolationCard.tsx
+   - Vue 3: vue/AgentGuardrailViolationCard.vue
+   - Vanilla: vanilla/AgentGuardrailViolationCard.js (custom element `<agent-guardrail-violation-card>`, attributes `rule`/`severity`/`run-id`/`time`/`input`/`match`/`policy-ref`/`proceed-label`/`block-label`; events `proceed`/`block`)
+244. AgentModelFallbackList: model fallback chain — ranked rows with health dot (healthy emerald/degraded amber/down rose), Primary badge on the active entry, provider + trigger-condition + latency caption and promote/demote controls that re-rank the chain and fire a reorder event with the new id order.
+   - React: react/AgentModelFallbackList.tsx
+   - Vue 3: vue/AgentModelFallbackList.vue
+   - Vanilla: vanilla/AgentModelFallbackList.js (custom element `<agent-model-fallback-list>`, attributes `title`/`description`; properties `entries` [{id,model,provider?,health?,condition?,latency?}] and `primaryId`; event `reorder` detail {ids})

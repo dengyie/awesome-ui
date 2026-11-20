@@ -240,6 +240,9 @@
 | **`AgentErrorRecovery`** | 失败恢复态 | 居中 alert + run-id mono chip、Retry / Start over 双按钮、reset-label 空隐藏次按钮、support 可选 |
 | **`AgentWorkspaceSettings`** | 工作区设置 | pill 分区 tab、描述前置 toggle 行（emerald 开关）、每组 N/M on 计数 |
 | **`AgentEnvVarEditor`** | 环境变量编辑器 | key/value 行 + secret 掩码与 Show/Hide、逐行删除、底部新增行、change 事件携带完整列表 |
+| **`AgentScheduleEditor`** | Agent 定时调度 | 频率 pill 切 cron、time+时区输入、cron/next-run 预览条、保存反馈 |
+| **`AgentGuardrailViolationCard`** | 护栏违规详情卡 | severity 三级 badge、触发输入摘要 + match 高亮、policy 引用、Proceed/Block 裁决 |
+| **`AgentModelFallbackList`** | 模型降级链 | 优先级行 + 健康点、Primary badge、条件/延迟 caption、↑/↓ 重排 + reorder 事件 |
 | **`UiIcon`** | 统一图标系统 | 零依赖 SVG 图标，React / Vue / Vanilla 同名 API，支持尺寸、线宽、颜色与无障碍标签 |
 
 ---
