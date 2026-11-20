@@ -1088,3 +1088,15 @@ When user requests AI chat, assistant, agent dashboard, or canvas interfaces:
    - React: react/SeatBillingTable.tsx
    - Vue 3: vue/SeatBillingTable.vue
    - Vanilla: vanilla/SeatBillingTable.js (custom element `<seat-billing-table>`, attributes `title`/`description`/`period`/`currency`/`searchable`; property `rows` [{id,user,email?,seat?,cost?,usage?,status?}]; event `seat-search` detail {query})
+248. CreditBalanceCard: prepaid credit balance card — mono balance headline with currency prefix and unit caption, plan status dot badge (emerald steady / amber low), low-balance warning line when balance falls under warn-below, and Buy More Credits / Apply Coupon actions that pulse and fire credit-buy / credit-coupon events.
+   - React: react/CreditBalanceCard.tsx
+   - Vue 3: vue/CreditBalanceCard.vue
+   - Vanilla: vanilla/CreditBalanceCard.js (custom element `<credit-balance-card>`, attributes `balance`/`unit`/`plan`/`currency`/`warn-below`/`buy-label`/`coupon-label`; events `credit-buy`/`credit-coupon`)
+249. SpendTrendChart: spend trend bar chart — mono total headline with granularity caption, Daily/Weekly segmented switch that re-renders the pure-SVG bars and fires granularity-change, dashed grid with y-axis tick labels, sparse x labels (every ceil(n/8) bar when dense) and an empty state.
+   - React: react/SpendTrendChart.tsx
+   - Vue 3: vue/SpendTrendChart.vue
+   - Vanilla: vanilla/SpendTrendChart.js (custom element `<spend-trend-chart>`, attributes `headline`/`unit`/`granularity`/`y-ticks`; property `points` { Daily: [{label,value}], Weekly: [...] }; event `granularity-change` detail {granularity})
+250. TopUpBalanceDialog: top-up dialog — Bill-to and Currency selects, amount input with quick-amount chips, live "new balance after top-up" summary, minimum-amount validation with role=alert error, confirmed success line and cancel/close paths firing topup-confirm / topup-cancel.
+   - React: react/TopUpBalanceDialog.tsx
+   - Vue 3: vue/TopUpBalanceDialog.vue
+   - Vanilla: vanilla/TopUpBalanceDialog.js (custom element `<topup-balance-dialog>`, attributes `trigger-label`/`title`/`balance`/`currency-symbol`/`min-amount`/`confirm-label`/`cancel-label`; properties `billToOptions`/`currencies`/`quickAmounts`; events `topup-confirm` detail {billTo,currency,amount} / `topup-cancel`)

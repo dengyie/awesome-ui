@@ -111,6 +111,13 @@
 - **SeatBillingTable** (#247)：席位计费表（用户行 + 席位/用量/费用 + 状态徽章 + 合计）。素材：references/66_Twenty "Usage by User" 表 + references 12_Slack per-seat 语境。PaymentMethodCard 是单卡、CancelRetentionFlow 是挽留流——seat 域此前 0 组件。
 - 选型说明：billing 池 153 张素材此前仅消费 2 件，本批三件全部零名称重叠；发票域已有 InvoiceHistoryTable 需避开，故取地址/环图/席位三个互补切面。
 
+## 已消费批次 v3.7.0（Billing 余额与消费批，#248-250）
+
+- **CreditBalanceCard** (#248)：余额头卡（mono 余额大数 + plan 状态点徽章 + warn-below 低额告警 + Buy/Coupon 双 CTA 脉冲）。素材：references/billing 72_Vapi PAYG Credit Balance。PaymentMethodCard 是卡管理单卡、BillingPanel 是整页面板——余额数字卡全库空白。
+- **SpendTrendChart** (#249)：消费趋势柱图（mono 总额 headline + Daily/Weekly 分段切换重绘 SVG 柱 + 虚线网格 y 刻度 + 稀疏 x 标签）。素材：references/billing 67_Rox 柱图 + 72_Vapi Usage 柱图。ForecastTrendChart 是 actual/forecast 对比、GroupedBarCompare 是分组对比——日期粒度切换消费柱图无。
+- **TopUpBalanceDialog** (#250)：充值弹窗（Bill-to/Currency 下拉 + 金额输入 + 快捷金额 chips + 实时新余额汇总 + 最低额校验 + 确认成功态）。素材：references/billing 51_Deel Top up balance 弹窗。既有 5 个 Dialog 均为分享/申诉/保存域，支付充值弹窗空白。
+- 选型说明：延续 v3.6.0 billing 纵深，取「余额状态 → 消费趋势 → 充值动作」三切面，全部零名称重叠；TopUpBalanceDialog 增加 defaultOpen prop/属性供 SSR 测试直接渲染打开态。
+
 ## 重叠跳过记录（选型时排除）
 
 - Outseta/Slite 通用空态 → #25/#125 已覆盖形态。

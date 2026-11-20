@@ -1389,6 +1389,21 @@ awesome-ui/
 - **Vanilla 用法**: `<seat-billing-table>` + `title`/`description`/`period`/`currency`/`searchable` 属性；property `rows`；事件 `seat-search` detail {query}
 - **特性**: 用户行 + email/席位/用量/费用、active/invited/suspended 徽章（suspended 不计费）、客户端搜索保焦、空搜索文案、billed seats 合计脚行。
 
+### 248. `CreditBalanceCard` (余额头卡)
+- **Props**: `balance?=0`, `unit?='credits'`, `plan?='Current plan'`, `currency?=''`, `warnBelow?`, `buyLabel?='Buy More Credits'`, `couponLabel?='Apply Coupon'`, `onBuy?`, `onCoupon?`
+- **Vanilla 用法**: `<credit-balance-card>` + `balance`/`unit`/`plan`/`currency`/`warn-below`/`buy-label`/`coupon-label` 属性；事件 `credit-buy` / `credit-coupon`
+- **特性**: mono 余额大数 + 币种前缀与 unit caption、plan 状态点徽章（emerald 常态 / amber 低额）、warn-below 低额告警行、Buy/Coupon 双 CTA 点击环脉冲。
+
+### 249. `SpendTrendChart` (消费趋势柱图)
+- **Props**: `headline?='Spend'`, `unit?='$'`, `granularities?=['Daily','Weekly']`, `defaultGranularity?`, `points?: Record<string, [{label,value}]>`, `maxY?`, `yTicks?=4`, `onGranularityChange?`
+- **Vanilla 用法**: `<spend-trend-chart>` + `headline`/`unit`/`granularity`/`y-ticks` 属性；property `points` { Daily: [...], Weekly: [...] }；事件 `granularity-change` detail {granularity}
+- **特性**: mono 总额 headline + 粒度 caption、Daily/Weekly 分段 tab 重绘 SVG 柱、虚线网格 + y 轴刻度标签、密集时每 ceil(n/8) 根柱出一个 x 标签、空态文案。
+
+### 250. `TopUpBalanceDialog` (充值弹窗)
+- **Props**: `title?='Top up balance'`, `billToOptions?`, `defaultBillTo?`, `currencies?`, `defaultCurrency?`, `balance?=0`, `currencySymbol?='$'`, `quickAmounts?=[50,100,250,500]`, `minAmount?=10`, `confirmLabel?`, `cancelLabel?`, `defaultOpen?`, `onConfirm?`, `onCancel?`
+- **Vanilla 用法**: `<topup-balance-dialog>` + `trigger-label`/`title`/`balance`/`currency-symbol`/`min-amount`/`confirm-label`/`cancel-label` 属性；properties `billToOptions`/`currencies`/`quickAmounts`；事件 `topup-confirm` detail {billTo,currency,amount} / `topup-cancel`
+- **特性**: Bill-to/Currency 下拉、金额输入 + 快捷金额 chips（选中高亮）、实时新余额汇总行、最低额校验 role=alert 错误、确认成功态 + Done 关闭、cancel/close 重置。
+
 ### LLMs 专属摄取通道
 - 紧凑索引: [`llms.txt`](./llms.txt)
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（单文件打包所有 React / Vue / Vanilla 源码，供 Agent 一次性载入上下文）
