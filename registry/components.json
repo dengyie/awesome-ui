@@ -1,0 +1,2252 @@
+{
+ "version": "1.0.0",
+ "updated": "2026-11-21",
+ "$comment": "awesome-ui component registry — one entry per ledger component (llms.txt 0..N). category is a single taxonomy id; tags are multi-value facet ids. Validated by tools/check_registry.py. Keep in sync with llms.txt on every new component batch.",
+ "count": 260,
+ "components": [
+  {
+   "n": 0,
+   "name": "UiIcon",
+   "category": "primitives",
+   "tags": [
+    "dark-mode"
+   ]
+  },
+  {
+   "n": 1,
+   "name": "ChatPromptInput",
+   "category": "ai-chat",
+   "tags": [
+    "image",
+    "picker",
+    "streaming",
+    "voice"
+   ]
+  },
+  {
+   "n": 2,
+   "name": "StreamMarkdown",
+   "category": "ai-artifacts",
+   "tags": [
+    "streaming"
+   ]
+  },
+  {
+   "n": 3,
+   "name": "ThinkingBlock",
+   "category": "ai-chat",
+   "tags": [
+    "animated",
+    "collapsible",
+    "streaming"
+   ]
+  },
+  {
+   "n": 4,
+   "name": "ToolCallBadge",
+   "category": "agent-ops",
+   "tags": [
+    "badge",
+    "streaming"
+   ]
+  },
+  {
+   "n": 5,
+   "name": "SourcesCitation",
+   "category": "ai-artifacts",
+   "tags": [
+    "card"
+   ]
+  },
+  {
+   "n": 6,
+   "name": "AutoScrollAnchor",
+   "category": "ai-chat",
+   "tags": [
+    "streaming"
+   ]
+  },
+  {
+   "n": 7,
+   "name": "ArtifactCanvas",
+   "category": "ai-artifacts",
+   "tags": [
+    "standalone",
+    "streaming"
+   ]
+  },
+  {
+   "n": 8,
+   "name": "MessageActionToolbar",
+   "category": "ai-chat",
+   "tags": [
+    "popover"
+   ]
+  },
+  {
+   "n": 9,
+   "name": "PromptChips",
+   "category": "ai-chat",
+   "tags": [
+    "prompt"
+   ]
+  },
+  {
+   "n": 10,
+   "name": "ThemeToggle",
+   "category": "theming",
+   "tags": [
+    "animated",
+    "dark-mode"
+   ]
+  },
+  {
+   "n": 11,
+   "name": "StatusIndicator",
+   "category": "feedback",
+   "tags": [
+    "animated",
+    "badge"
+   ]
+  },
+  {
+   "n": 12,
+   "name": "ContextUsageBadge",
+   "category": "primitives",
+   "tags": [
+    "animated",
+    "badge"
+   ]
+  },
+  {
+   "n": 13,
+   "name": "ModelSelector",
+   "category": "primitives",
+   "tags": [
+    "dropdown",
+    "search"
+   ]
+  },
+  {
+   "n": 14,
+   "name": "RoadmapTimeline",
+   "category": "content",
+   "tags": [
+    "animated",
+    "timeline"
+   ]
+  },
+  {
+   "n": 15,
+   "name": "KnowledgeDrawer",
+   "category": "content",
+   "tags": [
+    "modal",
+    "onboarding"
+   ]
+  },
+  {
+   "n": 16,
+   "name": "HomepageDashboard",
+   "category": "primitives",
+   "tags": [
+    "animated",
+    "card",
+    "search",
+    "settings"
+   ]
+  },
+  {
+   "n": 17,
+   "name": "CodeBlock",
+   "category": "ai-artifacts",
+   "tags": [
+    "keyboard"
+   ]
+  },
+  {
+   "n": 18,
+   "name": "TypingIndicator",
+   "category": "ai-chat",
+   "tags": [
+    "animated",
+    "streaming"
+   ]
+  },
+  {
+   "n": 19,
+   "name": "ChatMessageRow",
+   "category": "ai-chat",
+   "tags": [
+    "avatar",
+    "streaming"
+   ]
+  },
+  {
+   "n": 20,
+   "name": "CommandPalette",
+   "category": "overlays",
+   "tags": [
+    "keyboard",
+    "modal",
+    "search"
+   ]
+  },
+  {
+   "n": 21,
+   "name": "ToastStack",
+   "category": "feedback",
+   "tags": [
+    "animated"
+   ]
+  },
+  {
+   "n": 22,
+   "name": "ChatSessionList",
+   "category": "ai-chat",
+   "tags": [
+    "badge",
+    "keyboard",
+    "list"
+   ]
+  },
+  {
+   "n": 23,
+   "name": "DiffViewer",
+   "category": "ai-artifacts",
+   "tags": [
+    "collapsible"
+   ]
+  },
+  {
+   "n": 24,
+   "name": "ToolApprovalCard",
+   "category": "agent-ops",
+   "tags": [
+    "badge",
+    "security"
+   ]
+  },
+  {
+   "n": 25,
+   "name": "FileAttachmentList",
+   "category": "ai-artifacts",
+   "tags": [
+    "list"
+   ]
+  },
+  {
+   "n": 26,
+   "name": "StreamingProgressBar",
+   "category": "feedback",
+   "tags": [
+    "animated",
+    "streaming"
+   ]
+  },
+  {
+   "n": 27,
+   "name": "EmptyState",
+   "category": "feedback",
+   "tags": [
+    "empty-state"
+   ]
+  },
+  {
+   "n": 28,
+   "name": "AgentStepTimeline",
+   "category": "agent-ops",
+   "tags": [
+    "timeline"
+   ]
+  },
+  {
+   "n": 29,
+   "name": "PromptTemplateGrid",
+   "category": "data-display",
+   "tags": [
+    "card",
+    "prompt",
+    "search"
+   ]
+  },
+  {
+   "n": 30,
+   "name": "AgentTaskChecklist",
+   "category": "agent-ops",
+   "tags": [
+    "list"
+   ]
+  },
+  {
+   "n": 31,
+   "name": "PricingTable",
+   "category": "commerce",
+   "tags": [
+    "table"
+   ]
+  },
+  {
+   "n": 32,
+   "name": "StatCard",
+   "category": "data-display",
+   "tags": [
+    "animated",
+    "card"
+   ]
+  },
+  {
+   "n": 33,
+   "name": "DataTable",
+   "category": "data-display",
+   "tags": [
+    "filter",
+    "keyboard",
+    "table"
+   ]
+  },
+  {
+   "n": 34,
+   "name": "AgentRunLog",
+   "category": "agent-ops",
+   "tags": [
+    "list",
+    "streaming"
+   ]
+  },
+  {
+   "n": 35,
+   "name": "AuthForm",
+   "category": "forms",
+   "tags": [
+    "form-validation",
+    "security"
+   ]
+  },
+  {
+   "n": 36,
+   "name": "SettingsPanel",
+   "category": "layout",
+   "tags": [
+    "aria",
+    "settings"
+   ]
+  },
+  {
+   "n": 37,
+   "name": "OnboardingChecklist",
+   "category": "content",
+   "tags": [
+    "onboarding"
+   ]
+  },
+  {
+   "n": 38,
+   "name": "UpgradePromptCard",
+   "category": "billing",
+   "tags": [
+    "card",
+    "paywall"
+   ]
+  },
+  {
+   "n": 39,
+   "name": "ConfirmDialog",
+   "category": "overlays",
+   "tags": [
+    "modal"
+   ]
+  },
+  {
+   "n": 40,
+   "name": "ShortcutsOverlay",
+   "category": "overlays",
+   "tags": [
+    "keyboard",
+    "modal"
+   ]
+  },
+  {
+   "n": 41,
+   "name": "FileDropzone",
+   "category": "primitives",
+   "tags": [
+    "drag-drop"
+   ]
+  },
+  {
+   "n": 42,
+   "name": "NotificationCenter",
+   "category": "data-display",
+   "tags": [
+    "badge",
+    "filter",
+    "list"
+   ]
+  },
+  {
+   "n": 43,
+   "name": "CommentThread",
+   "category": "primitives",
+   "tags": [
+    "avatar",
+    "list"
+   ]
+  },
+  {
+   "n": 44,
+   "name": "DatePicker",
+   "category": "primitives",
+   "tags": [
+    "calendar",
+    "picker"
+   ]
+  },
+  {
+   "n": 45,
+   "name": "KanbanBoard",
+   "category": "data-display",
+   "tags": [
+    "drag-drop",
+    "kanban"
+   ]
+  },
+  {
+   "n": 46,
+   "name": "SideDrawer",
+   "category": "overlays",
+   "tags": [
+    "modal"
+   ]
+  },
+  {
+   "n": 47,
+   "name": "AccountSwitcher",
+   "category": "overlays",
+   "tags": [
+    "avatar",
+    "dropdown"
+   ]
+  },
+  {
+   "n": 48,
+   "name": "SchedulerSlots",
+   "category": "primitives",
+   "tags": [
+    "calendar",
+    "picker"
+   ]
+  },
+  {
+   "n": 49,
+   "name": "RichToolbar",
+   "category": "primitives",
+   "tags": [
+    "popover"
+   ]
+  },
+  {
+   "n": 50,
+   "name": "HeroSection",
+   "category": "content",
+   "tags": [
+    "animated",
+    "card"
+   ]
+  },
+  {
+   "n": 51,
+   "name": "FooterSection",
+   "category": "content",
+   "tags": [
+    "dark-mode"
+   ]
+  },
+  {
+   "n": 52,
+   "name": "TestimonialGrid",
+   "category": "content",
+   "tags": [
+    "avatar",
+    "card"
+   ]
+  },
+  {
+   "n": 53,
+   "name": "VoiceModePanel",
+   "category": "media",
+   "tags": [
+    "voice"
+   ]
+  },
+  {
+   "n": 54,
+   "name": "PromptLibrary",
+   "category": "ai-chat",
+   "tags": [
+    "card",
+    "prompt",
+    "search"
+   ]
+  },
+  {
+   "n": 55,
+   "name": "Tabs",
+   "category": "layout",
+   "tags": [
+    "tabs"
+   ]
+  },
+  {
+   "n": 56,
+   "name": "Accordion",
+   "category": "layout",
+   "tags": [
+    "animated",
+    "collapsible"
+   ]
+  },
+  {
+   "n": 57,
+   "name": "AvatarGroup",
+   "category": "primitives",
+   "tags": [
+    "avatar"
+   ]
+  },
+  {
+   "n": 58,
+   "name": "FilterBar",
+   "category": "primitives",
+   "tags": [
+    "filter"
+   ]
+  },
+  {
+   "n": 59,
+   "name": "Tooltip",
+   "category": "overlays",
+   "tags": [
+    "tooltip"
+   ]
+  },
+  {
+   "n": 60,
+   "name": "Breadcrumb",
+   "category": "layout",
+   "tags": [
+    "dark-mode"
+   ]
+  },
+  {
+   "n": 61,
+   "name": "Pagination",
+   "category": "layout",
+   "tags": [
+    "dark-mode"
+   ]
+  },
+  {
+   "n": 62,
+   "name": "AlertBanner",
+   "category": "feedback",
+   "tags": [
+    "badge"
+   ]
+  },
+  {
+   "n": 63,
+   "name": "ComboBox",
+   "category": "primitives",
+   "tags": [
+    "dropdown",
+    "search"
+   ]
+  },
+  {
+   "n": 64,
+   "name": "Navbar",
+   "category": "layout",
+   "tags": [
+    "dark-mode"
+   ]
+  },
+  {
+   "n": 65,
+   "name": "ActivityFeed",
+   "category": "data-display",
+   "tags": [
+    "list",
+    "timeline"
+   ]
+  },
+  {
+   "n": 66,
+   "name": "UsageMeter",
+   "category": "billing",
+   "tags": [
+    "animated",
+    "svg-chart"
+   ]
+  },
+  {
+   "n": 67,
+   "name": "ToggleSwitch",
+   "category": "primitives",
+   "tags": [
+    "aria"
+   ]
+  },
+  {
+   "n": 68,
+   "name": "Stepper",
+   "category": "primitives",
+   "tags": [
+    "wizard"
+   ]
+  },
+  {
+   "n": 69,
+   "name": "SearchInput",
+   "category": "primitives",
+   "tags": [
+    "search"
+   ]
+  },
+  {
+   "n": 70,
+   "name": "Tag",
+   "category": "primitives",
+   "tags": [
+    "badge"
+   ]
+  },
+  {
+   "n": 71,
+   "name": "Modal",
+   "category": "overlays",
+   "tags": [
+    "modal"
+   ]
+  },
+  {
+   "n": 72,
+   "name": "ProfileHeader",
+   "category": "primitives",
+   "tags": [
+    "avatar"
+   ]
+  },
+  {
+   "n": 73,
+   "name": "BillingPanel",
+   "category": "billing",
+   "tags": [
+    "card",
+    "settings"
+   ]
+  },
+  {
+   "n": 74,
+   "name": "StepSlider",
+   "category": "primitives",
+   "tags": [
+    "animated"
+   ]
+  },
+  {
+   "n": 75,
+   "name": "InboxList",
+   "category": "data-display",
+   "tags": [
+    "badge",
+    "list",
+    "search"
+   ]
+  },
+  {
+   "n": 76,
+   "name": "ChangelogFeed",
+   "category": "content",
+   "tags": [
+    "list"
+   ]
+  },
+  {
+   "n": 77,
+   "name": "MetricStrip",
+   "category": "charts",
+   "tags": [
+    "svg-chart"
+   ]
+  },
+  {
+   "n": 78,
+   "name": "RankList",
+   "category": "data-display",
+   "tags": [
+    "animated",
+    "list"
+   ]
+  },
+  {
+   "n": 79,
+   "name": "SideNav",
+   "category": "layout",
+   "tags": [
+    "collapsible"
+   ]
+  },
+  {
+   "n": 80,
+   "name": "PageHeader",
+   "category": "layout",
+   "tags": [
+    "standalone"
+   ]
+  },
+  {
+   "n": 81,
+   "name": "TimeframePicker",
+   "category": "primitives",
+   "tags": [
+    "picker"
+   ]
+  },
+  {
+   "n": 82,
+   "name": "WizardSteps",
+   "category": "primitives",
+   "tags": [
+    "wizard"
+   ]
+  },
+  {
+   "n": 83,
+   "name": "FormField",
+   "category": "forms",
+   "tags": [
+    "form-validation"
+   ]
+  },
+  {
+   "n": 84,
+   "name": "GanttTimeline",
+   "category": "data-display",
+   "tags": [
+    "gantt"
+   ]
+  },
+  {
+   "n": 85,
+   "name": "ApprovalCard",
+   "category": "data-display",
+   "tags": [
+    "card",
+    "security"
+   ]
+  },
+  {
+   "n": 86,
+   "name": "ResourceList",
+   "category": "data-display",
+   "tags": [
+    "list",
+    "search"
+   ]
+  },
+  {
+   "n": 87,
+   "name": "SegmentBreakdownBars",
+   "category": "charts",
+   "tags": [
+    "svg-chart"
+   ]
+  },
+  {
+   "n": 88,
+   "name": "TargetGauge",
+   "category": "charts",
+   "tags": [
+    "svg-chart"
+   ]
+  },
+  {
+   "n": 89,
+   "name": "HealthDonutStats",
+   "category": "charts",
+   "tags": [
+    "card",
+    "svg-chart"
+   ]
+  },
+  {
+   "n": 90,
+   "name": "ForecastTrendChart",
+   "category": "charts",
+   "tags": [
+    "svg-chart"
+   ]
+  },
+  {
+   "n": 91,
+   "name": "GroupedBarCompare",
+   "category": "charts",
+   "tags": [
+    "svg-chart"
+   ]
+  },
+  {
+   "n": 92,
+   "name": "QuoteMasonry",
+   "category": "content",
+   "tags": [
+    "card"
+   ]
+  },
+  {
+   "n": 93,
+   "name": "SiteFooter",
+   "category": "content",
+   "tags": [
+    "dark-mode"
+   ]
+  },
+  {
+   "n": 94,
+   "name": "MarqueeWall",
+   "category": "content",
+   "tags": [
+    "animated",
+    "avatar"
+   ]
+  },
+  {
+   "n": 95,
+   "name": "OnboardingStepper",
+   "category": "content",
+   "tags": [
+    "onboarding",
+    "wizard"
+   ]
+  },
+  {
+   "n": 96,
+   "name": "FilterToolbar",
+   "category": "primitives",
+   "tags": [
+    "filter"
+   ]
+  },
+  {
+   "n": 97,
+   "name": "OtpInput",
+   "category": "forms",
+   "tags": [
+    "form-validation",
+    "security"
+   ]
+  },
+  {
+   "n": 98,
+   "name": "SearchTypeahead",
+   "category": "primitives",
+   "tags": [
+    "dropdown",
+    "search"
+   ]
+  },
+  {
+   "n": 99,
+   "name": "TourTooltip",
+   "category": "overlays",
+   "tags": [
+    "onboarding",
+    "tooltip"
+   ]
+  },
+  {
+   "n": 100,
+   "name": "CookieConsent",
+   "category": "feedback",
+   "tags": [
+    "modal"
+   ]
+  },
+  {
+   "n": 101,
+   "name": "SettingsSideDrawer",
+   "category": "overlays",
+   "tags": [
+    "modal",
+    "settings"
+   ]
+  },
+  {
+   "n": 102,
+   "name": "ClarifyQuestionCard",
+   "category": "ai-chat",
+   "tags": [
+    "prompt"
+   ]
+  },
+  {
+   "n": 103,
+   "name": "AgentTaskProgress",
+   "category": "agent-ops",
+   "tags": [
+    "streaming"
+   ]
+  },
+  {
+   "n": 104,
+   "name": "UsageQuotaCard",
+   "category": "billing",
+   "tags": [
+    "card",
+    "svg-chart"
+   ]
+  },
+  {
+   "n": 105,
+   "name": "WorkspaceSwitcherMenu",
+   "category": "overlays",
+   "tags": [
+    "dropdown"
+   ]
+  },
+  {
+   "n": 106,
+   "name": "AttachmentChip",
+   "category": "primitives",
+   "tags": [
+    "badge"
+   ]
+  },
+  {
+   "n": 107,
+   "name": "DeploymentCard",
+   "category": "agent-ops",
+   "tags": [
+    "badge"
+   ]
+  },
+  {
+   "n": 108,
+   "name": "LiveTailLogConsole",
+   "category": "agent-ops",
+   "tags": [
+    "keyboard",
+    "streaming"
+   ]
+  },
+  {
+   "n": 109,
+   "name": "PipelineStageList",
+   "category": "agent-ops",
+   "tags": [
+    "animated",
+    "list"
+   ]
+  },
+  {
+   "n": 110,
+   "name": "ChangedFilesList",
+   "category": "data-display",
+   "tags": [
+    "list"
+   ]
+  },
+  {
+   "n": 111,
+   "name": "ServiceStatusList",
+   "category": "data-display",
+   "tags": [
+    "badge",
+    "list"
+   ]
+  },
+  {
+   "n": 112,
+   "name": "FilterQueryBuilder",
+   "category": "forms",
+   "tags": [
+    "dropdown",
+    "filter"
+   ]
+  },
+  {
+   "n": 113,
+   "name": "ColumnVisibilityMenu",
+   "category": "overlays",
+   "tags": [
+    "dropdown",
+    "table"
+   ]
+  },
+  {
+   "n": 114,
+   "name": "StatusCountTabs",
+   "category": "layout",
+   "tags": [
+    "badge",
+    "tabs"
+   ]
+  },
+  {
+   "n": 115,
+   "name": "EntityMultiSelectPicker",
+   "category": "primitives",
+   "tags": [
+    "avatar",
+    "dropdown",
+    "picker"
+   ]
+  },
+  {
+   "n": 116,
+   "name": "FederatedSearchResultsPanel",
+   "category": "data-display",
+   "tags": [
+    "card",
+    "search"
+   ]
+  },
+  {
+   "n": 117,
+   "name": "TimeSlotPicker",
+   "category": "primitives",
+   "tags": [
+    "calendar",
+    "picker"
+   ]
+  },
+  {
+   "n": 118,
+   "name": "OrderTracker",
+   "category": "commerce",
+   "tags": [
+    "timeline"
+   ]
+  },
+  {
+   "n": 119,
+   "name": "OrderSummaryPanel",
+   "category": "commerce",
+   "tags": [
+    "card"
+   ]
+  },
+  {
+   "n": 120,
+   "name": "PaymentMethodCard",
+   "category": "billing",
+   "tags": [
+    "card",
+    "security"
+   ]
+  },
+  {
+   "n": 121,
+   "name": "OrderCard",
+   "category": "commerce",
+   "tags": [
+    "card"
+   ]
+  },
+  {
+   "n": 122,
+   "name": "ColorPickerPopover",
+   "category": "forms",
+   "tags": [
+    "picker",
+    "popover"
+   ]
+  },
+  {
+   "n": 123,
+   "name": "EditorToolPalette",
+   "category": "layout",
+   "tags": [
+    "drag-drop"
+   ]
+  },
+  {
+   "n": 124,
+   "name": "ShortcutCheatSheet",
+   "category": "overlays",
+   "tags": [
+    "card",
+    "keyboard"
+   ]
+  },
+  {
+   "n": 125,
+   "name": "ZoomControlBar",
+   "category": "overlays",
+   "tags": [
+    "dropdown"
+   ]
+  },
+  {
+   "n": 126,
+   "name": "AIInlineMenu",
+   "category": "ai-chat",
+   "tags": [
+    "dropdown",
+    "prompt"
+   ]
+  },
+  {
+   "n": 127,
+   "name": "EmptyStateStarter",
+   "category": "feedback",
+   "tags": [
+    "empty-state"
+   ]
+  },
+  {
+   "n": 128,
+   "name": "AuthGatePrompt",
+   "category": "forms",
+   "tags": [
+    "modal",
+    "security"
+   ]
+  },
+  {
+   "n": 129,
+   "name": "AuthSplitPanel",
+   "category": "forms",
+   "tags": [
+    "card",
+    "security"
+   ]
+  },
+  {
+   "n": 130,
+   "name": "SuccessToast",
+   "category": "feedback",
+   "tags": [
+    "animated"
+   ]
+  },
+  {
+   "n": 131,
+   "name": "EditableHeading",
+   "category": "primitives",
+   "tags": [
+    "keyboard"
+   ]
+  },
+  {
+   "n": 132,
+   "name": "PlanComparisonTable",
+   "category": "billing",
+   "tags": [
+    "table"
+   ]
+  },
+  {
+   "n": 133,
+   "name": "UpgradeCheckoutPanel",
+   "category": "billing",
+   "tags": [
+    "form-validation",
+    "paywall"
+   ]
+  },
+  {
+   "n": 134,
+   "name": "TrialBanner",
+   "category": "billing",
+   "tags": [
+    "badge",
+    "paywall"
+   ]
+  },
+  {
+   "n": 135,
+   "name": "MembershipTierGrid",
+   "category": "billing",
+   "tags": [
+    "card",
+    "paywall"
+   ]
+  },
+  {
+   "n": 136,
+   "name": "AddonPicker",
+   "category": "billing",
+   "tags": [
+    "paywall",
+    "picker"
+   ]
+  },
+  {
+   "n": 137,
+   "name": "ImageGenGallery",
+   "category": "media",
+   "tags": [
+    "card",
+    "image"
+   ]
+  },
+  {
+   "n": 138,
+   "name": "SharedChatViewer",
+   "category": "ai-chat",
+   "tags": [
+    "streaming"
+   ]
+  },
+  {
+   "n": 139,
+   "name": "MemoryPanel",
+   "category": "ai-chat",
+   "tags": [
+    "settings"
+   ]
+  },
+  {
+   "n": 140,
+   "name": "ConnectorGrid",
+   "category": "data-display",
+   "tags": [
+    "card"
+   ]
+  },
+  {
+   "n": 141,
+   "name": "ModelComparePane",
+   "category": "primitives",
+   "tags": [
+    "streaming"
+   ]
+  },
+  {
+   "n": 142,
+   "name": "SystemPromptEditor",
+   "category": "primitives",
+   "tags": [
+    "form-validation",
+    "prompt"
+   ]
+  },
+  {
+   "n": 143,
+   "name": "ToolSchemaEditor",
+   "category": "primitives",
+   "tags": [
+    "prompt"
+   ]
+  },
+  {
+   "n": 144,
+   "name": "FineTuneJobList",
+   "category": "data-display",
+   "tags": [
+    "badge",
+    "list"
+   ]
+  },
+  {
+   "n": 145,
+   "name": "PersonaPresetGrid",
+   "category": "data-display",
+   "tags": [
+    "card",
+    "prompt"
+   ]
+  },
+  {
+   "n": 146,
+   "name": "AgentBuilderCard",
+   "category": "agent-ops",
+   "tags": [
+    "card"
+   ]
+  },
+  {
+   "n": 147,
+   "name": "VoiceOrb",
+   "category": "media",
+   "tags": [
+    "animated",
+    "voice"
+   ]
+  },
+  {
+   "n": 148,
+   "name": "ShareChatDialog",
+   "category": "ai-chat",
+   "tags": [
+    "modal"
+   ]
+  },
+  {
+   "n": 149,
+   "name": "BrandPromptTable",
+   "category": "data-display",
+   "tags": [
+    "prompt",
+    "table"
+   ]
+  },
+  {
+   "n": 150,
+   "name": "PromptSaveDialog",
+   "category": "overlays",
+   "tags": [
+    "modal"
+   ]
+  },
+  {
+   "n": 151,
+   "name": "AiTemplatePicker",
+   "category": "ai-artifacts",
+   "tags": [
+    "card",
+    "picker"
+   ]
+  },
+  {
+   "n": 152,
+   "name": "CreationComposer",
+   "category": "ai-artifacts",
+   "tags": [
+    "image",
+    "prompt"
+   ]
+  },
+  {
+   "n": 153,
+   "name": "TraceSpanWaterfall",
+   "category": "agent-ops",
+   "tags": [
+    "svg-chart",
+    "timeline"
+   ]
+  },
+  {
+   "n": 154,
+   "name": "EvalScoreTable",
+   "category": "agent-ops",
+   "tags": [
+    "table"
+   ]
+  },
+  {
+   "n": 155,
+   "name": "TokenCostBreakdown",
+   "category": "billing",
+   "tags": [
+    "svg-chart"
+   ]
+  },
+  {
+   "n": 156,
+   "name": "AudioWaveVisualizer",
+   "category": "media",
+   "tags": [
+    "animated",
+    "audio"
+   ]
+  },
+  {
+   "n": 157,
+   "name": "PromptVariantDiff",
+   "category": "primitives",
+   "tags": [
+    "prompt"
+   ]
+  },
+  {
+   "n": 158,
+   "name": "GuardrailReviewQueue",
+   "category": "agent-ops",
+   "tags": [
+    "list",
+    "security"
+   ]
+  },
+  {
+   "n": 159,
+   "name": "ContentReviewTable",
+   "category": "data-display",
+   "tags": [
+    "table"
+   ]
+  },
+  {
+   "n": 160,
+   "name": "QaTestTable",
+   "category": "data-display",
+   "tags": [
+    "table"
+   ]
+  },
+  {
+   "n": 161,
+   "name": "AppealRestrictionDialog",
+   "category": "overlays",
+   "tags": [
+    "modal"
+   ]
+  },
+  {
+   "n": 162,
+   "name": "ModelPricingCard",
+   "category": "billing",
+   "tags": [
+    "card",
+    "table"
+   ]
+  },
+  {
+   "n": 163,
+   "name": "AiResearchPanel",
+   "category": "ai-artifacts",
+   "tags": [
+    "streaming"
+   ]
+  },
+  {
+   "n": 164,
+   "name": "ApiKeyTable",
+   "category": "data-display",
+   "tags": [
+    "security",
+    "table"
+   ]
+  },
+  {
+   "n": 165,
+   "name": "VoiceSessionHistory",
+   "category": "media",
+   "tags": [
+    "list",
+    "voice"
+   ]
+  },
+  {
+   "n": 166,
+   "name": "AiRewriteMenu",
+   "category": "ai-chat",
+   "tags": [
+    "dropdown",
+    "prompt"
+   ]
+  },
+  {
+   "n": 167,
+   "name": "PromptPerformanceTable",
+   "category": "agent-ops",
+   "tags": [
+    "prompt",
+    "table"
+   ]
+  },
+  {
+   "n": 168,
+   "name": "ShareAccessDialog",
+   "category": "overlays",
+   "tags": [
+    "modal"
+   ]
+  },
+  {
+   "n": 169,
+   "name": "AiNoteAnswer",
+   "category": "ai-chat",
+   "tags": [
+    "card",
+    "streaming"
+   ]
+  },
+  {
+   "n": 170,
+   "name": "AudioNotePlayer",
+   "category": "media",
+   "tags": [
+    "audio"
+   ]
+  },
+  {
+   "n": 171,
+   "name": "ImageActionMenu",
+   "category": "media",
+   "tags": [
+    "dropdown",
+    "image"
+   ]
+  },
+  {
+   "n": 172,
+   "name": "FalRunCard",
+   "category": "agent-ops",
+   "tags": [
+    "card",
+    "image"
+   ]
+  },
+  {
+   "n": 173,
+   "name": "ImageGenMetaBar",
+   "category": "media",
+   "tags": [
+    "image"
+   ]
+  },
+  {
+   "n": 174,
+   "name": "GammaImageDetail",
+   "category": "ai-artifacts",
+   "tags": [
+    "image"
+   ]
+  },
+  {
+   "n": 175,
+   "name": "WriterStyleGuide",
+   "category": "ai-artifacts",
+   "tags": [
+    "prompt"
+   ]
+  },
+  {
+   "n": 176,
+   "name": "CampsiteHandoff",
+   "category": "primitives",
+   "tags": [
+    "avatar",
+    "list"
+   ]
+  },
+  {
+   "n": 177,
+   "name": "ZendeskFieldSuggest",
+   "category": "ai-artifacts",
+   "tags": [
+    "prompt"
+   ]
+  },
+  {
+   "n": 178,
+   "name": "AiSuggestionCard",
+   "category": "ai-chat",
+   "tags": [
+    "card",
+    "prompt"
+   ]
+  },
+  {
+   "n": 179,
+   "name": "JumpBackIn",
+   "category": "ai-chat",
+   "tags": [
+    "card"
+   ]
+  },
+  {
+   "n": 180,
+   "name": "HelpResourcesPanel",
+   "category": "content",
+   "tags": [
+    "card",
+    "search"
+   ]
+  },
+  {
+   "n": 181,
+   "name": "VisionAnalysisCard",
+   "category": "ai-chat",
+   "tags": [
+    "card",
+    "streaming"
+   ]
+  },
+  {
+   "n": 182,
+   "name": "PrReviewQueue",
+   "category": "agent-ops",
+   "tags": [
+    "avatar",
+    "list"
+   ]
+  },
+  {
+   "n": 183,
+   "name": "IterationActionBar",
+   "category": "agent-ops",
+   "tags": [
+    "prompt"
+   ]
+  },
+  {
+   "n": 184,
+   "name": "MonitorRunList",
+   "category": "agent-ops",
+   "tags": [
+    "badge",
+    "list"
+   ]
+  },
+  {
+   "n": 185,
+   "name": "EvalTurnBuilder",
+   "category": "agent-ops",
+   "tags": [
+    "drag-drop"
+   ]
+  },
+  {
+   "n": 186,
+   "name": "AgentSessionTimeline",
+   "category": "agent-ops",
+   "tags": [
+    "timeline"
+   ]
+  },
+  {
+   "n": 187,
+   "name": "EvalRunResults",
+   "category": "agent-ops",
+   "tags": [
+    "table"
+   ]
+  },
+  {
+   "n": 188,
+   "name": "EventTagGrid",
+   "category": "content",
+   "tags": [
+    "badge",
+    "card"
+   ]
+  },
+  {
+   "n": 189,
+   "name": "PromptTunerResult",
+   "category": "agent-ops",
+   "tags": [
+    "prompt"
+   ]
+  },
+  {
+   "n": 190,
+   "name": "AuditLogTable",
+   "category": "data-display",
+   "tags": [
+    "security",
+    "table"
+   ]
+  },
+  {
+   "n": 191,
+   "name": "ChangelogTimeline",
+   "category": "content",
+   "tags": [
+    "timeline"
+   ]
+  },
+  {
+   "n": 192,
+   "name": "SessionDeviceTable",
+   "category": "data-display",
+   "tags": [
+    "security",
+    "table"
+   ]
+  },
+  {
+   "n": 193,
+   "name": "TaskDetailPanel",
+   "category": "data-display",
+   "tags": [
+    "card",
+    "list"
+   ]
+  },
+  {
+   "n": 194,
+   "name": "DeliveryTrackingPanel",
+   "category": "commerce",
+   "tags": [
+    "timeline"
+   ]
+  },
+  {
+   "n": 195,
+   "name": "MapPropertyCard",
+   "category": "data-display",
+   "tags": [
+    "card",
+    "map"
+   ]
+  },
+  {
+   "n": 196,
+   "name": "ApiReferenceViewer",
+   "category": "ai-artifacts",
+   "tags": [
+    "standalone"
+   ]
+  },
+  {
+   "n": 197,
+   "name": "WeekCalendarGrid",
+   "category": "data-display",
+   "tags": [
+    "calendar",
+    "picker"
+   ]
+  },
+  {
+   "n": 198,
+   "name": "VideoProjectSettings",
+   "category": "media",
+   "tags": [
+    "settings",
+    "video"
+   ]
+  },
+  {
+   "n": 199,
+   "name": "EventStreamPanel",
+   "category": "agent-ops",
+   "tags": [
+    "list",
+    "streaming"
+   ]
+  },
+  {
+   "n": 200,
+   "name": "ProjectGanttTimeline",
+   "category": "data-display",
+   "tags": [
+    "gantt"
+   ]
+  },
+  {
+   "n": 201,
+   "name": "GroupedTaskList",
+   "category": "data-display",
+   "tags": [
+    "card",
+    "list"
+   ]
+  },
+  {
+   "n": 202,
+   "name": "EventLogTable",
+   "category": "data-display",
+   "tags": [
+    "table"
+   ]
+  },
+  {
+   "n": 203,
+   "name": "DocsPageLayout",
+   "category": "ai-artifacts",
+   "tags": [
+    "search",
+    "standalone"
+   ]
+  },
+  {
+   "n": 204,
+   "name": "TaskCardModal",
+   "category": "overlays",
+   "tags": [
+    "modal"
+   ]
+  },
+  {
+   "n": 205,
+   "name": "FormTrackingDashboard",
+   "category": "forms",
+   "tags": [
+    "card",
+    "table"
+   ]
+  },
+  {
+   "n": 206,
+   "name": "AudioPlaylistPage",
+   "category": "media",
+   "tags": [
+    "audio",
+    "list",
+    "standalone"
+   ]
+  },
+  {
+   "n": 207,
+   "name": "BlogPostArticle",
+   "category": "content",
+   "tags": [
+    "card",
+    "standalone"
+   ]
+  },
+  {
+   "n": 208,
+   "name": "PermissionMatrix",
+   "category": "forms",
+   "tags": [
+    "security",
+    "settings"
+   ]
+  },
+  {
+   "n": 209,
+   "name": "StockPhotoPicker",
+   "category": "media",
+   "tags": [
+    "image",
+    "picker",
+    "search"
+   ]
+  },
+  {
+   "n": 210,
+   "name": "MapActivityList",
+   "category": "data-display",
+   "tags": [
+    "list",
+    "map"
+   ]
+  },
+  {
+   "n": 211,
+   "name": "SearchResultsPage",
+   "category": "layout",
+   "tags": [
+    "card",
+    "search",
+    "standalone"
+   ]
+  },
+  {
+   "n": 212,
+   "name": "SessionDiagnosticsPanel",
+   "category": "data-display",
+   "tags": [
+    "badge",
+    "card"
+   ]
+  },
+  {
+   "n": 213,
+   "name": "HelpCenterHome",
+   "category": "content",
+   "tags": [
+    "card",
+    "search",
+    "standalone"
+   ]
+  },
+  {
+   "n": 214,
+   "name": "AccountSecurityPanel",
+   "category": "data-display",
+   "tags": [
+    "security",
+    "settings"
+   ]
+  },
+  {
+   "n": 215,
+   "name": "MasonryDensityControls",
+   "category": "theming",
+   "tags": [
+    "picker"
+   ]
+  },
+  {
+   "n": 216,
+   "name": "LiquidGlass",
+   "category": "theming",
+   "tags": [
+    "animated",
+    "backdrop",
+    "glass"
+   ]
+  },
+  {
+   "n": 217,
+   "name": "AnimatedCounter",
+   "category": "charts",
+   "tags": [
+    "animated"
+   ]
+  },
+  {
+   "n": 218,
+   "name": "SpotlightGlareCard",
+   "category": "theming",
+   "tags": [
+    "animated",
+    "card",
+    "spotlight"
+   ]
+  },
+  {
+   "n": 219,
+   "name": "PointerRipples",
+   "category": "theming",
+   "tags": [
+    "animated",
+    "spotlight"
+   ]
+  },
+  {
+   "n": 220,
+   "name": "FluidContourBackdrop",
+   "category": "theming",
+   "tags": [
+    "animated",
+    "backdrop"
+   ]
+  },
+  {
+   "n": 221,
+   "name": "PaperTheme",
+   "category": "theming",
+   "tags": [
+    "standalone"
+   ]
+  },
+  {
+   "n": 222,
+   "name": "InvoiceHistoryTable",
+   "category": "billing",
+   "tags": [
+    "table"
+   ]
+  },
+  {
+   "n": 223,
+   "name": "UsagePricingBreakdown",
+   "category": "billing",
+   "tags": [
+    "svg-chart",
+    "table"
+   ]
+  },
+  {
+   "n": 224,
+   "name": "CancelRetentionFlow",
+   "category": "billing",
+   "tags": [
+    "paywall",
+    "wizard"
+   ]
+  },
+  {
+   "n": 225,
+   "name": "WebhookConfigPanel",
+   "category": "data-display",
+   "tags": [
+    "security",
+    "settings"
+   ]
+  },
+  {
+   "n": 226,
+   "name": "IntegrationConnectGrid",
+   "category": "data-display",
+   "tags": [
+    "card",
+    "settings"
+   ]
+  },
+  {
+   "n": 227,
+   "name": "NotificationPrefsMatrix",
+   "category": "forms",
+   "tags": [
+    "settings"
+   ]
+  },
+  {
+   "n": 228,
+   "name": "PermissionDeniedState",
+   "category": "feedback",
+   "tags": [
+    "empty-state",
+    "security"
+   ]
+  },
+  {
+   "n": 229,
+   "name": "NoResultsState",
+   "category": "feedback",
+   "tags": [
+    "empty-state",
+    "search"
+   ]
+  },
+  {
+   "n": 230,
+   "name": "TableSavedViews",
+   "category": "layout",
+   "tags": [
+    "filter",
+    "table"
+   ]
+  },
+  {
+   "n": 231,
+   "name": "BottomTabBar",
+   "category": "layout",
+   "tags": [
+    "badge"
+   ]
+  },
+  {
+   "n": 232,
+   "name": "BentoFeatureGrid",
+   "category": "content",
+   "tags": [
+    "card"
+   ]
+  },
+  {
+   "n": 233,
+   "name": "LogoCloud",
+   "category": "content",
+   "tags": [
+    "card"
+   ]
+  },
+  {
+   "n": 234,
+   "name": "StatsBand",
+   "category": "charts",
+   "tags": [
+    "animated"
+   ]
+  },
+  {
+   "n": 235,
+   "name": "AmberEmbersBackdrop",
+   "category": "theming",
+   "tags": [
+    "animated",
+    "backdrop"
+   ]
+  },
+  {
+   "n": 236,
+   "name": "DriftEmbersBackdrop",
+   "category": "theming",
+   "tags": [
+    "animated",
+    "backdrop"
+   ]
+  },
+  {
+   "n": 237,
+   "name": "McpConnectPanel",
+   "category": "agent-ops",
+   "tags": [
+    "keyboard",
+    "wizard"
+   ]
+  },
+  {
+   "n": 238,
+   "name": "AgentNotificationFeed",
+   "category": "agent-ops",
+   "tags": [
+    "list"
+   ]
+  },
+  {
+   "n": 239,
+   "name": "AgentErrorRecovery",
+   "category": "agent-ops",
+   "tags": [
+    "empty-state"
+   ]
+  },
+  {
+   "n": 240,
+   "name": "AgentWorkspaceSettings",
+   "category": "agent-ops",
+   "tags": [
+    "settings"
+   ]
+  },
+  {
+   "n": 241,
+   "name": "AgentEnvVarEditor",
+   "category": "agent-ops",
+   "tags": [
+    "security",
+    "settings"
+   ]
+  },
+  {
+   "n": 242,
+   "name": "AgentScheduleEditor",
+   "category": "agent-ops",
+   "tags": [
+    "calendar",
+    "settings"
+   ]
+  },
+  {
+   "n": 243,
+   "name": "AgentGuardrailViolationCard",
+   "category": "agent-ops",
+   "tags": [
+    "security"
+   ]
+  },
+  {
+   "n": 244,
+   "name": "AgentModelFallbackList",
+   "category": "agent-ops",
+   "tags": [
+    "list"
+   ]
+  },
+  {
+   "n": 245,
+   "name": "BillingAddressForm",
+   "category": "billing",
+   "tags": [
+    "form-validation"
+   ]
+  },
+  {
+   "n": 246,
+   "name": "UsageCreditsDonut",
+   "category": "billing",
+   "tags": [
+    "svg-chart"
+   ]
+  },
+  {
+   "n": 247,
+   "name": "SeatBillingTable",
+   "category": "billing",
+   "tags": [
+    "table"
+   ]
+  },
+  {
+   "n": 248,
+   "name": "CreditBalanceCard",
+   "category": "billing",
+   "tags": [
+    "animated",
+    "card"
+   ]
+  },
+  {
+   "n": 249,
+   "name": "SpendTrendChart",
+   "category": "billing",
+   "tags": [
+    "svg-chart"
+   ]
+  },
+  {
+   "n": 250,
+   "name": "TopUpBalanceDialog",
+   "category": "billing",
+   "tags": [
+    "modal"
+   ]
+  },
+  {
+   "n": 251,
+   "name": "MetricLineChart",
+   "category": "charts",
+   "tags": [
+    "animated",
+    "svg-chart"
+   ]
+  },
+  {
+   "n": 252,
+   "name": "PaywallDialog",
+   "category": "billing",
+   "tags": [
+    "modal",
+    "paywall"
+   ]
+  },
+  {
+   "n": 253,
+   "name": "TrialExpiryNotice",
+   "category": "billing",
+   "tags": [
+    "animated",
+    "paywall"
+   ]
+  },
+  {
+   "n": 254,
+   "name": "WorkspaceSurveyCard",
+   "category": "forms",
+   "tags": [
+    "aria",
+    "onboarding",
+    "wizard"
+   ]
+  },
+  {
+   "n": 255,
+   "name": "WorkspaceSetupPanel",
+   "category": "forms",
+   "tags": [
+    "onboarding",
+    "settings"
+   ]
+  },
+  {
+   "n": 256,
+   "name": "InviteTeammatesCard",
+   "category": "forms",
+   "tags": [
+    "avatar",
+    "form-validation",
+    "onboarding"
+   ]
+  },
+  {
+   "n": 257,
+   "name": "ProfileEditForm",
+   "category": "forms",
+   "tags": [
+    "avatar",
+    "form-validation",
+    "settings"
+   ]
+  },
+  {
+   "n": 258,
+   "name": "AvatarCropDialog",
+   "category": "overlays",
+   "tags": [
+    "image",
+    "modal"
+   ]
+  },
+  {
+   "n": 259,
+   "name": "FollowSuggestionsCard",
+   "category": "data-display",
+   "tags": [
+    "animated",
+    "avatar",
+    "card"
+   ]
+  }
+ ]
+}

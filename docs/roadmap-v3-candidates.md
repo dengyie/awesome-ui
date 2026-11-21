@@ -139,6 +139,14 @@
 - **FollowSuggestionsCard** (#259)：推荐关注卡（可折叠头部 + 人员卡网格 + Follow→Following 切换 + Dismiss × + 空态兜底）。素材：references/profile 05_GoFundMe "Discover more people"。AvatarGroup (#57) 是重叠头像堆、testimonial 家族是推荐语域——推荐关注卡网格无。
 - 选型说明：Oyster 09 团队成员访问表（Invited 徽章 + Actions Revoke/Reinvite）因与 #247 SeatBillingTable（用户行 + 状态徽章）和 #256 InviteTeammatesCard（邀请域）双重趋同被放弃。本批从未消费的 profile 池（135 张，此前仅消费 #72 一件）切入，构成「档案编辑 → 头像上传 → 社交推荐」profile 纵深闭环，全部零名称重叠。
 
+## 已消费批次 v3.10.1（全库分类体系 registry，2026-11-21）
+
+- **registry/taxonomy.json**：分类词表 1.0.0——15 个互斥主分类（primitives/layout/data-display/charts/overlays/feedback/forms/ai-chat/ai-artifacts/agent-ops/billing/commerce/content/media/theming）+ 42 个分面 tags（5 个分面组：interaction/visual/content-form/behavior/domain）。
+- **registry/components.json**：260 组件逐条显式映射 `{n, name, category, tags}`（规则分类器初稿 + 人工复核 7 处修正 + 全量 tag 补齐），与账本 0..259 严格对齐；tag 覆盖率 100%、词表零死标签。
+- **tools/check_registry.py**：零依赖校验器——账本双向对齐、category/tag 词表合法、每组件 ≥1 tag、无死标签；与 check_llms_ledger.py 双双全绿。
+- **Gallery 集成**：TOC 分类下拉筛选（含计数）+ 138 sections 标题动态挂分类/标签徽章 + TOC 分类色点；registry 数据内嵌 `#gallery-registry-data`。
+- **文档**：llms.txt 头部新增 Taxonomy 索引段（15 类全列组件名）；README 新增「分类体系」章节；SKILL.md 新增维护铁律（新组件必须同步 registry）。
+
 ## 重叠跳过记录（选型时排除）
 
 - Outseta/Slite 通用空态 → #25/#125 已覆盖形态。

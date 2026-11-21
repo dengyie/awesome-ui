@@ -1,0 +1,106 @@
+#!/usr/bin/env python3
+"""registry consistency check (CI + local).
+
+Verifies the component registry (registry/) matches the ledger and taxonomy:
+  1. Alignment: registry component names exactly match llms.txt ledger names
+     (no missing, no extra, no duplicates), in the same order.
+  2. Category validity: every category id exists in taxonomy.json categories.
+  3. Tag validity: every tag id exists in taxonomy.json tags.
+  4. Non-empty: every component has at least one tag.
+  5. Facet coverage: every taxonomy tag is used by at least one component
+     (guards against dead vocabulary).
+
+Exit code 0 = consistent, 1 = drift detected. Zero dependencies.
+"""
+import json
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+LEDGER = ROOT / "llms.txt"
+TAXONOMY = ROOT / "registry" / "taxonomy.json"
+COMPONENTS = ROOT / "registry" / "components.json"
+
+ENTRY_RE = re.compile(r"^(\d+)\. ([A-Za-z0-9]+):")
+
+
+def main() -> int:
+    errors: list[str] = []
+
+    for f in (TAXONOMY, COMPONENTS):
+        if not f.exists():
+            print(f"FAIL: {f} not found")
+            return 1
+
+    tax = json.loads(TAXONOMY.read_text(encoding="utf-8"))
+    reg = json.loads(COMPONENTS.read_text(encoding="utf-8"))
+    valid_cats = {c["id"] for c in tax["categories"]}
+    valid_tags = {t["id"] for t in tax["tags"]}
+
+    ledger_names: list[str] = []
+    if LEDGER.exists():
+        for line in LEDGER.read_text(encoding="utf-8").splitlines():
+            m = ENTRY_RE.match(line)
+            if m:
+                ledger_names.append(m.group(2))
+    else:
+        errors.append("llms.txt not found; cannot align registry against ledger")
+
+    comps = reg.get("components", [])
+    reg_names = [c.get("name", "") for c in comps]
+
+    # 1. alignment with ledger
+    if ledger_names and reg_names != ledger_names:
+        ledger_set, reg_set = set(ledger_names), set(reg_names)
+        for i, (ln, rn) in enumerate(zip(ledger_names, reg_names)):
+            if ln != rn:
+                errors.append(f"entry {i}: ledger has {ln!r}, registry has {rn!r}")
+        for name in ledger_set - reg_set:
+            errors.append(f"missing from registry: {name}")
+        for name in reg_set - ledger_set:
+            errors.append(f"not in ledger: {name}")
+
+    dupes = sorted({n for n in reg_names if reg_names.count(n) > 1})
+    if dupes:
+        errors.append(f"duplicate registry names: {dupes}")
+    nums = [c.get("n") for c in comps]
+    if nums and nums != sorted(nums):
+        errors.append("registry numbering out of order")
+    if nums and nums != list(range(nums[0], nums[0] + len(nums))):
+        errors.append("registry numbering has gaps")
+
+    # 2-4. per-component validity
+    used_tags: set[str] = set()
+    for c in comps:
+        name = c.get("name", "?")
+        if c.get("category") not in valid_cats:
+            errors.append(f"{name}: invalid category {c.get('category')!r}")
+        tags = c.get("tags")
+        if not isinstance(tags, list) or not tags:
+            errors.append(f"{name}: missing or empty tags")
+            continue
+        for t in tags:
+            if t not in valid_tags:
+                errors.append(f"{name}: invalid tag {t!r}")
+            used_tags.add(t)
+
+    # 5. dead vocabulary guard
+    dead = sorted(valid_tags - used_tags)
+    if dead:
+        errors.append(f"unused tags in taxonomy (dead vocabulary): {dead}")
+
+    if errors:
+        print(f"FAIL: {len(errors)} registry drift issue(s):")
+        for e in errors:
+            print(f"  - {e}")
+        return 1
+    print(
+        f"OK: {len(comps)} components aligned with ledger, "
+        f"{len(valid_cats)} categories + {len(valid_tags)} tags valid, full tag coverage"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

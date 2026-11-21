@@ -16,6 +16,18 @@
 
 ---
 
+## 🗂️ 分类体系 (registry/ · v3.10.0 起)
+
+全部 260 个组件已建立机器可读分类，供 Agent 按类检索与 Gallery 按类筛选：
+
+- **`registry/taxonomy.json`** — 词表：15 个互斥主分类（category，单值）+ 42 个分面标签（tags，多值，kebab-case），含中英文标签与 5 个分面组（interaction / visual / content-form / behavior / domain）。
+- **`registry/components.json`** — 映射：每组件一条 `{n, name, category, tags}`，与 llms.txt 账本 0..259 严格对齐。
+- **`tools/check_registry.py`** — 校验器（零依赖）：① 与账本双向对齐（无多无漏）② category/tag 均在词表内 ③ 每组件至少 1 个 tag ④ 词表无死标签。本地即可跑：`python -I tools/check_registry.py`。
+
+主分类分布：data-display 35 · primitives 31 · agent-ops 31 · billing 23 · content 18 · overlays 18 · ai-chat 19 · ai-artifacts 14 · forms 14 · media 11 · layout 13 · feedback 10 · theming 9 · charts 9 · commerce 5。
+
+Gallery 左侧 TOC 已内置「分类下拉筛选 + 分类色点 + 每个 section 标题的分类/标签徽章」，数据由 `index.html` 内嵌 `#gallery-registry-data` 提供。
+
 ## 📦 组件列表 (精选 AI 场景与基础 UI)
 
 | 组件 | 对应场景 | 核心特性 |
