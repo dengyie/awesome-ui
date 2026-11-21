@@ -1440,7 +1440,10 @@
       ],
       "desc": "Formatting toolbar with separated button groups (dividers), icon-or-text glyph buttons, `active` toggle state (`aria-pressed`), disabled items and optional `shortcut` tooltips; `role=\"toolbar\"` per group.",
       "aliases": [
-        "rich toolbar"
+        "rich toolbar",
+        "tool palette",
+        "工具面板",
+        "工具栏"
       ],
       "api": {
         "props": [
@@ -1643,7 +1646,11 @@
         "collapsible"
       ],
       "desc": "Disclosure list with optional icons and descriptions, single-open or `allowMultiple` behavior, animated chevron and `aria-expanded` + region semantics.",
-      "aliases": [],
+      "aliases": [
+        "collapsible panel",
+        "手风琴",
+        "折叠面板"
+      ],
       "api": {
         "props": [
           "allowMultiple",
@@ -1850,7 +1857,10 @@
         "dark-mode"
       ],
       "desc": "Site navigation bar with multi-column mega menu panels (headings, icons, badges), plain links, and a CTA button; panels close on outside click or Escape.",
-      "aliases": [],
+      "aliases": [
+        "navigation bar",
+        "导航栏"
+      ],
       "api": {
         "props": [
           "brand",
@@ -2009,7 +2019,10 @@
         "badge"
       ],
       "desc": "Pill label in six tones (neutral/indigo/emerald/amber/rose/sky) with sm/md sizing, optional icon, removable variant (remove event) and clickable variant (tag-click event).",
-      "aliases": [],
+      "aliases": [
+        "chip",
+        "标签"
+      ],
       "api": {
         "props": [
           "className",
@@ -2311,7 +2324,8 @@
       ],
       "desc": "Dashboard page header with title, emerald Live status pill, description, action button group (primary/secondary/ghost variants, optional icons) and underline tab nav with optional count badges; emits action and tab-change.",
       "aliases": [
-        "page header"
+        "page header",
+        "页头"
       ],
       "api": {
         "props": [
@@ -3110,7 +3124,8 @@
       ],
       "desc": "Compact file chip with kind tone badge (pdf=rose / doc=sky / csv=emerald / image=violet), mono glyph, name + size/meta line and round black X remove button.",
       "aliases": [
-        "attachment chip"
+        "attachment chip",
+        "标签"
       ],
       "api": {
         "props": [
@@ -3649,7 +3664,10 @@
       ],
       "desc": "Floating canvas tool picker with per-tool kbd number hints, blue active-tool highlight, selection count badge, horizontal pill or vertical rail orientation.",
       "aliases": [
-        "editor tool palette"
+        "editor tool palette",
+        "tool palette",
+        "工具面板",
+        "工具栏"
       ],
       "api": {
         "props": [
@@ -7122,7 +7140,9 @@
       ],
       "desc": "mobile-style bottom navigation — icon + label tabs, active top indicator, optional red badge count and safe-area padding (mobile web navigation pattern).",
       "aliases": [
-        "bottom tab bar"
+        "bottom tab bar",
+        "navigation bar",
+        "导航栏"
       ],
       "api": {
         "props": [
@@ -7999,7 +8019,9 @@
         "弹窗",
         "对话框",
         "upload",
-        "裁剪"
+        "cropper",
+        "裁剪",
+        "剪裁"
       ],
       "api": {
         "props": [
