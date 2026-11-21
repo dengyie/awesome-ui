@@ -105,7 +105,8 @@ def main() -> int:
     # 6. Gallery embed sync: #gallery-registry-data payload must match the registry
     index = ROOT / "index.html"
     if index.exists():
-        m = re.search(r'id="gallery-registry-data">(\{.*?\})</script>', index.read_text(encoding="utf-8"), re.S)
+        html = index.read_text(encoding="utf-8")
+        m = re.search(r'id="gallery-registry-data">(\{.*?\})</script>', html, re.S)
         if not m:
             errors.append("index.html: #gallery-registry-data marker missing")
         else:
@@ -125,6 +126,35 @@ def main() -> int:
                     )
             except json.JSONDecodeError as e:
                 errors.append(f"index.html embed: invalid JSON ({e})")
+
+        # 7. Gallery section-id integrity: every <section id="section-N"> must use the
+        #    component's ledger number (n) — never a display number or placeholder.
+        #    Anchored by the component NAME in the nearby <h2>, not the h2 number
+        #    (h2 numbers are display numbers and have drifted before).
+        sec_ids: list[int] = []
+        name_of_n = {c["n"]: c["name"] for c in comps}
+        for sm in re.finditer(r'<section id="section-(\d+)"', html):
+            n = int(sm.group(1))
+            sec_ids.append(n)
+            seg = html[sm.start():sm.start() + 1500]
+            h2 = re.search(r'>\s*\d+\s*[·.]\s*([A-Za-z0-9]+)', seg)
+            if not h2:
+                errors.append(f"index.html section-{n}: no component <h2> found nearby")
+                continue
+            true_n = next((c["n"] for c in comps if c["name"] == h2.group(1)), None)
+            if true_n is None:
+                errors.append(f"index.html section-{n}: h2 name {h2.group(1)!r} not in registry")
+            elif true_n != n:
+                errors.append(
+                    f"index.html section-{n}: id mismatch — h2 component {h2.group(1)!r} "
+                    f"has ledger #{true_n} (rename id to section-{true_n})"
+                )
+        dup = sorted({n for n in sec_ids if sec_ids.count(n) > 1})
+        if dup:
+            errors.append(f"index.html: duplicate section ids: {[f'section-{n}' for n in dup]}")
+        orphan = sorted(n for n in sec_ids if n not in name_of_n)
+        if orphan:
+            errors.append(f"index.html: section ids outside ledger range: {orphan}")
 
     if errors:
         print(f"FAIL: {len(errors)} registry drift issue(s):")

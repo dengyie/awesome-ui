@@ -15,6 +15,7 @@ Zero dependencies; reads registry/components.json + registry/taxonomy.json.
 """
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -55,7 +56,14 @@ def main() -> int:
                 print(f"#{c['n']} {c['name']}")
                 print(f"  category: {c['category']} ({labels.get(c['category'], '')})")
                 print(f"  tags:     {', '.join(c['tags'])}")
-                print(f"  files:    react/{c['name']}.tsx · vue/{c['name']}.vue · vanilla/{c['name']}.js")
+                # Files follow kebab-case of the name, except shared-CSS theme
+                # assets (e.g. PaperTheme) which live at their own lowercase path.
+                kebab = re.sub(r'(?<!^)(?=[A-Z])', '_', c["name"]).lower().replace('_', '-')
+                guesses = [f"react/{kebab}.ts", f"react/{kebab}.tsx", f"react/{c['name']}.tsx",
+                           f"vue/{kebab}.ts", f"vue/{kebab}.vue", f"vue/{c['name']}.vue",
+                           f"vanilla/{kebab}.js", f"vanilla/{c['name']}.js"]
+                found = [g for g in guesses if (ROOT / g).exists()]
+                print(f"  files:    {' · '.join(found) if found else 'not found — check ledger entry'}")
                 return 0
         print(f"not found: {args.name}", file=sys.stderr)
         return 1
