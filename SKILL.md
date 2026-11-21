@@ -27,7 +27,7 @@ description: Use when building AI-native Web applications, chat interfaces, gene
 
 260 个组件全部标注机器可读分类，Agent 按类/按 tag 检索时先查：
 
-- **`registry/taxonomy.json`**：15 个互斥主分类（primitives / layout / data-display / charts / overlays / feedback / forms / ai-chat / ai-artifacts / agent-ops / billing / commerce / content / media / theming）+ 42 个分面 tags（modal / dropdown / keyboard / animated / backdrop / streaming / table / settings / paywall …，kebab-case 多值）。
+- **`registry/taxonomy.json`**：15 个互斥主分类（primitives / layout / data-display / charts / overlays / feedback / forms / ai-chat / ai-artifacts / agent-ops / billing / commerce / content / media / theming）+ 43 个分面 tags（modal / dropdown / keyboard / animated / backdrop / streaming / table / settings / paywall …，kebab-case 多值）。
 - **`registry/components.json`**：每组件 `{n, name, category, tags}`，与 llms.txt 账本编号严格对齐。
 - **`tools/check_registry.py`**：一致性校验（账本双向对齐 + 词表合法 + 无死标签），新增组件批次后必须跑通。
 - **维护铁律**：每新增一个组件，除账本外必须同步在 `registry/components.json` 追加条目；新增 tag 必须先在 `taxonomy.json` 登记。Gallery TOC 分类下拉数据来自 index.html 内嵌 `#gallery-registry-data`（由 components.json 生成）。

@@ -47,7 +47,19 @@ def main() -> int:
     else:
         errors.append("llms.txt not found; cannot align registry against ledger")
 
+    # 0. taxonomy internal consistency: $facets must exactly cover the tag vocabulary
+    facet_tags = {t for group in tax.get("$facets", {}).values() for t in group}
+    if facet_tags != valid_tags:
+        errors.append(
+            f"$facets != tags vocabulary: missing in facets {sorted(valid_tags - facet_tags)}, "
+            f"unknown in facets {sorted(facet_tags - valid_tags)}"
+        )
+    # metadata sanity
     comps = reg.get("components", [])
+    if not reg.get("version"):
+        errors.append("registry/components.json missing 'version'")
+    if reg.get("count") != len(comps):
+        errors.append(f"registry 'count' field ({reg.get('count')}) != actual components ({len(comps)})")
     reg_names = [c.get("name", "") for c in comps]
 
     # 1. alignment with ledger
@@ -89,6 +101,30 @@ def main() -> int:
     dead = sorted(valid_tags - used_tags)
     if dead:
         errors.append(f"unused tags in taxonomy (dead vocabulary): {dead}")
+
+    # 6. Gallery embed sync: #gallery-registry-data payload must match the registry
+    index = ROOT / "index.html"
+    if index.exists():
+        m = re.search(r'id="gallery-registry-data">(\{.*?\})</script>', index.read_text(encoding="utf-8"), re.S)
+        if not m:
+            errors.append("index.html: #gallery-registry-data marker missing")
+        else:
+            try:
+                payload = json.loads(m.group(1))
+                labels = {c["id"]: c["label"] for c in tax["categories"]}
+                expected = {c["name"]: [c["category"], "|".join(c["tags"])] for c in comps}
+                if payload.get("cats") != labels:
+                    errors.append("index.html embed: category labels out of sync with taxonomy.json")
+                if payload.get("comps") != expected:
+                    drifted = sorted(
+                        set(payload.get("comps", {})) ^ set(expected)
+                    )
+                    errors.append(
+                        f"index.html embed: component data out of sync with registry/components.json "
+                        f"(run tools/gen_registry_embed.py; differing/missing: {drifted[:8]})"
+                    )
+            except json.JSONDecodeError as e:
+                errors.append(f"index.html embed: invalid JSON ({e})")
 
     if errors:
         print(f"FAIL: {len(errors)} registry drift issue(s):")
