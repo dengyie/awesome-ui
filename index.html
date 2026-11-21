@@ -7969,7 +7969,7 @@ FAIL tests/ui.test.mjs
           }
           h2.appendChild(wrap);
         }
-        return { a, s, label, cat: meta ? meta[0] : '' };
+        return { a, s, label, cat: meta ? meta[0] : '', tags: meta ? (meta[1] ? meta[1].split('|') : []) : [] };
       });
       // Category dropdown from taxonomy order
       for (const id of Object.keys(cats)) {
@@ -7987,7 +7987,9 @@ FAIL tests/ui.test.mjs
         const cat = catSel.value;
         let visible = 0;
         for (const item of items) {
-          const hit = (!q || item.label.toLowerCase().includes(q)) && (!cat || item.cat === cat);
+          // Search matches component name, category label and facet tags
+          const catLabel = (cats[item.cat] || '').toLowerCase();
+          const hit = (!q || item.label.toLowerCase().includes(q) || catLabel.includes(q) || item.tags.some((t) => t.includes(q))) && (!cat || item.cat === cat);
           item.a.classList.toggle('hidden', !hit);
           if (hit) visible += 1;
         }

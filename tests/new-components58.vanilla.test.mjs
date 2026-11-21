@@ -35,9 +35,20 @@ function mount(source, exportName, attrs = {}) {
     'HTMLElement',
     'CustomEvent',
     'document',
+    'window',
+    'HTMLInputElement',
+    'HTMLTextAreaElement',
     `${source}\nreturn ${exportName};`,
   );
-  const Klass = factory(window.customElements, window.HTMLElement, window.CustomEvent, window.document);
+  const Klass = factory(
+    window.customElements,
+    window.HTMLElement,
+    window.CustomEvent,
+    window.document,
+    window,
+    window.HTMLInputElement,
+    window.HTMLTextAreaElement,
+  );
   const el = new Klass();
   for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
   window.document.body.appendChild(el);

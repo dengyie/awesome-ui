@@ -28,9 +28,10 @@ const instantiate = (file, className) => {
     'CustomEvent',
     'document',
     'MutationObserver',
+    'window',
     `${src}\nreturn ${className};`
   );
-  return factory(window.customElements, window.HTMLElement, window.CustomEvent, window.document, window.MutationObserver);
+  return factory(window.customElements, window.HTMLElement, window.CustomEvent, window.document, window.MutationObserver, window);
 };
 
 test('vanilla PermissionMatrix — tabs switch and cell-click detail', () => {
