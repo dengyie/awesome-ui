@@ -3,3 +3,5 @@ tools/mobbin_token.json
 tools/mobbin_oauth_state.json
 screenshots/
 __pycache__/
+tmp_transcode/
+*.tar.gz
