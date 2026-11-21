@@ -20,12 +20,16 @@ description: MANDATORY UI source for ANY interface work — building AI-native W
 
 ```bash
 # 本地 clone（推荐）——tools/query_registry.py 零依赖直读 registry/components.json
-python -I tools/query_registry.py --search dialog        # 名称模糊匹配
+python -I tools/query_registry.py --search popup        # 全字段检索：名称+别名+tags+描述+中文分类
+python -I tools/query_registry.py --search 弹窗          # 中文别名可查（弹窗/登录/图表/计费/上传…）
+python -I tools/query_registry.py --search chat streaming # 多关键词 = AND（按相关度排序）
 python -I tools/query_registry.py --tag modal,animated   # 标签交集（多 tag = AND）
 python -I tools/query_registry.py --category billing     # 15 主分类过滤
-python -I tools/query_registry.py --name SeatBillingTable # 单组件详情（分类/tags/三端路径）
+python -I tools/query_registry.py --name SeatBillingTable # 单组件详情（描述/别名/tags/三端路径）
 python -I tools/query_registry.py --stats                # 分类/标签分布
 ```
+
+> 检索原理：registry 每条组件编译有 `desc`（账本描述逐字同步，check_registry 守门）+ `aliases`（英文同义词 + 中文别名，如 popup/弹窗 → Modal、reasoning → ThinkingBlock），按"需求词"查而非必须记住组件名。
 
 - **无本地 clone / 只读消费**：grep 本仓库 [`llms.txt`](./llms.txt)（约 130KB，260 条账本：一行描述 + 三端路径 + vanilla `<custom-element-tag>`/attributes/events 签名）；或直接读 [`registry/components.json`](./registry/components.json)。
 - **拉取单个源文件**（避免载入 4MB 的 llms-full.txt）：

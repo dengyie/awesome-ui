@@ -1,2271 +1,3949 @@
 {
- "version": "1.0.1",
- "updated": "2026-11-21",
- "$comment": "awesome-ui component registry — one entry per ledger component (llms.txt 0..N). category is a single taxonomy id; tags are multi-value facet ids. Validated by tools/check_registry.py. Keep in sync with llms.txt on every new component batch.",
- "count": 260,
- "components": [
-  {
-   "n": 0,
-   "name": "UiIcon",
-   "category": "primitives",
-   "tags": [
-    "dark-mode"
-   ]
-  },
-  {
-   "n": 1,
-   "name": "ChatPromptInput",
-   "category": "ai-chat",
-   "tags": [
-    "image",
-    "picker",
-    "streaming",
-    "voice"
-   ]
-  },
-  {
-   "n": 2,
-   "name": "StreamMarkdown",
-   "category": "ai-artifacts",
-   "tags": [
-    "streaming"
-   ]
-  },
-  {
-   "n": 3,
-   "name": "ThinkingBlock",
-   "category": "ai-chat",
-   "tags": [
-    "animated",
-    "collapsible",
-    "streaming"
-   ]
-  },
-  {
-   "n": 4,
-   "name": "ToolCallBadge",
-   "category": "agent-ops",
-   "tags": [
-    "badge",
-    "streaming"
-   ]
-  },
-  {
-   "n": 5,
-   "name": "SourcesCitation",
-   "category": "ai-artifacts",
-   "tags": [
-    "card"
-   ]
-  },
-  {
-   "n": 6,
-   "name": "AutoScrollAnchor",
-   "category": "ai-chat",
-   "tags": [
-    "streaming"
-   ]
-  },
-  {
-   "n": 7,
-   "name": "ArtifactCanvas",
-   "category": "ai-artifacts",
-   "tags": [
-    "standalone",
-    "streaming"
-   ]
-  },
-  {
-   "n": 8,
-   "name": "MessageActionToolbar",
-   "category": "ai-chat",
-   "tags": [
-    "popover"
-   ]
-  },
-  {
-   "n": 9,
-   "name": "PromptChips",
-   "category": "ai-chat",
-   "tags": [
-    "prompt"
-   ]
-  },
-  {
-   "n": 10,
-   "name": "ThemeToggle",
-   "category": "theming",
-   "tags": [
-    "animated",
-    "dark-mode"
-   ]
-  },
-  {
-   "n": 11,
-   "name": "StatusIndicator",
-   "category": "feedback",
-   "tags": [
-    "animated",
-    "badge"
-   ]
-  },
-  {
-   "n": 12,
-   "name": "ContextUsageBadge",
-   "category": "primitives",
-   "tags": [
-    "animated",
-    "badge"
-   ]
-  },
-  {
-   "n": 13,
-   "name": "ModelSelector",
-   "category": "primitives",
-   "tags": [
-    "dropdown",
-    "search"
-   ]
-  },
-  {
-   "n": 14,
-   "name": "RoadmapTimeline",
-   "category": "content",
-   "tags": [
-    "animated",
-    "timeline"
-   ]
-  },
-  {
-   "n": 15,
-   "name": "KnowledgeDrawer",
-   "category": "content",
-   "tags": [
-    "modal",
-    "onboarding"
-   ]
-  },
-  {
-   "n": 16,
-   "name": "HomepageDashboard",
-   "category": "data-display",
-   "tags": [
-    "animated",
-    "card",
-    "search",
-    "settings"
-   ]
-  },
-  {
-   "n": 17,
-   "name": "CodeBlock",
-   "category": "ai-artifacts",
-   "tags": [
-    "keyboard"
-   ]
-  },
-  {
-   "n": 18,
-   "name": "TypingIndicator",
-   "category": "ai-chat",
-   "tags": [
-    "animated",
-    "streaming"
-   ]
-  },
-  {
-   "n": 19,
-   "name": "ChatMessageRow",
-   "category": "ai-chat",
-   "tags": [
-    "avatar",
-    "streaming"
-   ]
-  },
-  {
-   "n": 20,
-   "name": "CommandPalette",
-   "category": "overlays",
-   "tags": [
-    "keyboard",
-    "modal",
-    "search"
-   ]
-  },
-  {
-   "n": 21,
-   "name": "ToastStack",
-   "category": "feedback",
-   "tags": [
-    "animated"
-   ]
-  },
-  {
-   "n": 22,
-   "name": "ChatSessionList",
-   "category": "ai-chat",
-   "tags": [
-    "badge",
-    "keyboard",
-    "list"
-   ]
-  },
-  {
-   "n": 23,
-   "name": "DiffViewer",
-   "category": "ai-artifacts",
-   "tags": [
-    "collapsible"
-   ]
-  },
-  {
-   "n": 24,
-   "name": "ToolApprovalCard",
-   "category": "agent-ops",
-   "tags": [
-    "badge",
-    "security"
-   ]
-  },
-  {
-   "n": 25,
-   "name": "FileAttachmentList",
-   "category": "ai-artifacts",
-   "tags": [
-    "list"
-   ]
-  },
-  {
-   "n": 26,
-   "name": "StreamingProgressBar",
-   "category": "feedback",
-   "tags": [
-    "animated",
-    "streaming"
-   ]
-  },
-  {
-   "n": 27,
-   "name": "EmptyState",
-   "category": "feedback",
-   "tags": [
-    "empty-state"
-   ]
-  },
-  {
-   "n": 28,
-   "name": "AgentStepTimeline",
-   "category": "agent-ops",
-   "tags": [
-    "timeline"
-   ]
-  },
-  {
-   "n": 29,
-   "name": "PromptTemplateGrid",
-   "category": "data-display",
-   "tags": [
-    "card",
-    "prompt",
-    "search"
-   ]
-  },
-  {
-   "n": 30,
-   "name": "AgentTaskChecklist",
-   "category": "agent-ops",
-   "tags": [
-    "list"
-   ]
-  },
-  {
-   "n": 31,
-   "name": "PricingTable",
-   "category": "commerce",
-   "tags": [
-    "table"
-   ]
-  },
-  {
-   "n": 32,
-   "name": "StatCard",
-   "category": "data-display",
-   "tags": [
-    "animated",
-    "card"
-   ]
-  },
-  {
-   "n": 33,
-   "name": "DataTable",
-   "category": "data-display",
-   "tags": [
-    "filter",
-    "keyboard",
-    "table"
-   ]
-  },
-  {
-   "n": 34,
-   "name": "AgentRunLog",
-   "category": "agent-ops",
-   "tags": [
-    "list",
-    "streaming"
-   ]
-  },
-  {
-   "n": 35,
-   "name": "AuthForm",
-   "category": "forms",
-   "tags": [
-    "form-validation",
-    "security"
-   ]
-  },
-  {
-   "n": 36,
-   "name": "SettingsPanel",
-   "category": "layout",
-   "tags": [
-    "aria",
-    "panel",
-    "settings"
-   ]
-  },
-  {
-   "n": 37,
-   "name": "OnboardingChecklist",
-   "category": "forms",
-   "tags": [
-    "onboarding"
-   ]
-  },
-  {
-   "n": 38,
-   "name": "UpgradePromptCard",
-   "category": "billing",
-   "tags": [
-    "card",
-    "paywall"
-   ]
-  },
-  {
-   "n": 39,
-   "name": "ConfirmDialog",
-   "category": "overlays",
-   "tags": [
-    "modal"
-   ]
-  },
-  {
-   "n": 40,
-   "name": "ShortcutsOverlay",
-   "category": "overlays",
-   "tags": [
-    "keyboard",
-    "modal"
-   ]
-  },
-  {
-   "n": 41,
-   "name": "FileDropzone",
-   "category": "primitives",
-   "tags": [
-    "drag-drop"
-   ]
-  },
-  {
-   "n": 42,
-   "name": "NotificationCenter",
-   "category": "data-display",
-   "tags": [
-    "badge",
-    "filter",
-    "list"
-   ]
-  },
-  {
-   "n": 43,
-   "name": "CommentThread",
-   "category": "primitives",
-   "tags": [
-    "avatar",
-    "list"
-   ]
-  },
-  {
-   "n": 44,
-   "name": "DatePicker",
-   "category": "primitives",
-   "tags": [
-    "calendar",
-    "picker"
-   ]
-  },
-  {
-   "n": 45,
-   "name": "KanbanBoard",
-   "category": "data-display",
-   "tags": [
-    "drag-drop",
-    "kanban"
-   ]
-  },
-  {
-   "n": 46,
-   "name": "SideDrawer",
-   "category": "overlays",
-   "tags": [
-    "modal"
-   ]
-  },
-  {
-   "n": 47,
-   "name": "AccountSwitcher",
-   "category": "overlays",
-   "tags": [
-    "avatar",
-    "dropdown"
-   ]
-  },
-  {
-   "n": 48,
-   "name": "SchedulerSlots",
-   "category": "primitives",
-   "tags": [
-    "calendar",
-    "picker"
-   ]
-  },
-  {
-   "n": 49,
-   "name": "RichToolbar",
-   "category": "primitives",
-   "tags": [
-    "popover"
-   ]
-  },
-  {
-   "n": 50,
-   "name": "HeroSection",
-   "category": "content",
-   "tags": [
-    "animated",
-    "card"
-   ]
-  },
-  {
-   "n": 51,
-   "name": "FooterSection",
-   "category": "content",
-   "tags": [
-    "dark-mode"
-   ]
-  },
-  {
-   "n": 52,
-   "name": "TestimonialGrid",
-   "category": "content",
-   "tags": [
-    "avatar",
-    "card"
-   ]
-  },
-  {
-   "n": 53,
-   "name": "VoiceModePanel",
-   "category": "media",
-   "tags": [
-    "panel",
-    "voice"
-   ]
-  },
-  {
-   "n": 54,
-   "name": "PromptLibrary",
-   "category": "ai-chat",
-   "tags": [
-    "card",
-    "prompt",
-    "search"
-   ]
-  },
-  {
-   "n": 55,
-   "name": "Tabs",
-   "category": "layout",
-   "tags": [
-    "tabs"
-   ]
-  },
-  {
-   "n": 56,
-   "name": "Accordion",
-   "category": "layout",
-   "tags": [
-    "animated",
-    "collapsible"
-   ]
-  },
-  {
-   "n": 57,
-   "name": "AvatarGroup",
-   "category": "primitives",
-   "tags": [
-    "avatar"
-   ]
-  },
-  {
-   "n": 58,
-   "name": "FilterBar",
-   "category": "primitives",
-   "tags": [
-    "filter"
-   ]
-  },
-  {
-   "n": 59,
-   "name": "Tooltip",
-   "category": "overlays",
-   "tags": [
-    "tooltip"
-   ]
-  },
-  {
-   "n": 60,
-   "name": "Breadcrumb",
-   "category": "layout",
-   "tags": [
-    "dark-mode"
-   ]
-  },
-  {
-   "n": 61,
-   "name": "Pagination",
-   "category": "layout",
-   "tags": [
-    "dark-mode"
-   ]
-  },
-  {
-   "n": 62,
-   "name": "AlertBanner",
-   "category": "feedback",
-   "tags": [
-    "badge"
-   ]
-  },
-  {
-   "n": 63,
-   "name": "ComboBox",
-   "category": "primitives",
-   "tags": [
-    "dropdown",
-    "search"
-   ]
-  },
-  {
-   "n": 64,
-   "name": "Navbar",
-   "category": "layout",
-   "tags": [
-    "dark-mode"
-   ]
-  },
-  {
-   "n": 65,
-   "name": "ActivityFeed",
-   "category": "data-display",
-   "tags": [
-    "list",
-    "timeline"
-   ]
-  },
-  {
-   "n": 66,
-   "name": "UsageMeter",
-   "category": "billing",
-   "tags": [
-    "animated",
-    "svg-chart"
-   ]
-  },
-  {
-   "n": 67,
-   "name": "ToggleSwitch",
-   "category": "primitives",
-   "tags": [
-    "aria"
-   ]
-  },
-  {
-   "n": 68,
-   "name": "Stepper",
-   "category": "primitives",
-   "tags": [
-    "wizard"
-   ]
-  },
-  {
-   "n": 69,
-   "name": "SearchInput",
-   "category": "primitives",
-   "tags": [
-    "search"
-   ]
-  },
-  {
-   "n": 70,
-   "name": "Tag",
-   "category": "primitives",
-   "tags": [
-    "badge"
-   ]
-  },
-  {
-   "n": 71,
-   "name": "Modal",
-   "category": "overlays",
-   "tags": [
-    "modal"
-   ]
-  },
-  {
-   "n": 72,
-   "name": "ProfileHeader",
-   "category": "primitives",
-   "tags": [
-    "avatar"
-   ]
-  },
-  {
-   "n": 73,
-   "name": "BillingPanel",
-   "category": "billing",
-   "tags": [
-    "card",
-    "panel",
-    "settings"
-   ]
-  },
-  {
-   "n": 74,
-   "name": "StepSlider",
-   "category": "primitives",
-   "tags": [
-    "animated"
-   ]
-  },
-  {
-   "n": 75,
-   "name": "InboxList",
-   "category": "data-display",
-   "tags": [
-    "badge",
-    "list",
-    "search"
-   ]
-  },
-  {
-   "n": 76,
-   "name": "ChangelogFeed",
-   "category": "content",
-   "tags": [
-    "list"
-   ]
-  },
-  {
-   "n": 77,
-   "name": "MetricStrip",
-   "category": "charts",
-   "tags": [
-    "svg-chart"
-   ]
-  },
-  {
-   "n": 78,
-   "name": "RankList",
-   "category": "data-display",
-   "tags": [
-    "animated",
-    "list"
-   ]
-  },
-  {
-   "n": 79,
-   "name": "SideNav",
-   "category": "layout",
-   "tags": [
-    "collapsible"
-   ]
-  },
-  {
-   "n": 80,
-   "name": "PageHeader",
-   "category": "layout",
-   "tags": [
-    "standalone"
-   ]
-  },
-  {
-   "n": 81,
-   "name": "TimeframePicker",
-   "category": "primitives",
-   "tags": [
-    "picker"
-   ]
-  },
-  {
-   "n": 82,
-   "name": "WizardSteps",
-   "category": "primitives",
-   "tags": [
-    "wizard"
-   ]
-  },
-  {
-   "n": 83,
-   "name": "FormField",
-   "category": "forms",
-   "tags": [
-    "form-validation"
-   ]
-  },
-  {
-   "n": 84,
-   "name": "GanttTimeline",
-   "category": "data-display",
-   "tags": [
-    "gantt"
-   ]
-  },
-  {
-   "n": 85,
-   "name": "ApprovalCard",
-   "category": "data-display",
-   "tags": [
-    "card",
-    "security"
-   ]
-  },
-  {
-   "n": 86,
-   "name": "ResourceList",
-   "category": "data-display",
-   "tags": [
-    "list",
-    "search"
-   ]
-  },
-  {
-   "n": 87,
-   "name": "SegmentBreakdownBars",
-   "category": "charts",
-   "tags": [
-    "svg-chart"
-   ]
-  },
-  {
-   "n": 88,
-   "name": "TargetGauge",
-   "category": "charts",
-   "tags": [
-    "svg-chart"
-   ]
-  },
-  {
-   "n": 89,
-   "name": "HealthDonutStats",
-   "category": "charts",
-   "tags": [
-    "card",
-    "svg-chart"
-   ]
-  },
-  {
-   "n": 90,
-   "name": "ForecastTrendChart",
-   "category": "charts",
-   "tags": [
-    "svg-chart"
-   ]
-  },
-  {
-   "n": 91,
-   "name": "GroupedBarCompare",
-   "category": "charts",
-   "tags": [
-    "svg-chart"
-   ]
-  },
-  {
-   "n": 92,
-   "name": "QuoteMasonry",
-   "category": "content",
-   "tags": [
-    "card"
-   ]
-  },
-  {
-   "n": 93,
-   "name": "SiteFooter",
-   "category": "content",
-   "tags": [
-    "dark-mode"
-   ]
-  },
-  {
-   "n": 94,
-   "name": "MarqueeWall",
-   "category": "content",
-   "tags": [
-    "animated",
-    "avatar"
-   ]
-  },
-  {
-   "n": 95,
-   "name": "OnboardingStepper",
-   "category": "forms",
-   "tags": [
-    "onboarding",
-    "wizard"
-   ]
-  },
-  {
-   "n": 96,
-   "name": "FilterToolbar",
-   "category": "primitives",
-   "tags": [
-    "filter"
-   ]
-  },
-  {
-   "n": 97,
-   "name": "OtpInput",
-   "category": "forms",
-   "tags": [
-    "form-validation",
-    "security"
-   ]
-  },
-  {
-   "n": 98,
-   "name": "SearchTypeahead",
-   "category": "primitives",
-   "tags": [
-    "dropdown",
-    "search"
-   ]
-  },
-  {
-   "n": 99,
-   "name": "TourTooltip",
-   "category": "overlays",
-   "tags": [
-    "onboarding",
-    "tooltip"
-   ]
-  },
-  {
-   "n": 100,
-   "name": "CookieConsent",
-   "category": "feedback",
-   "tags": [
-    "modal"
-   ]
-  },
-  {
-   "n": 101,
-   "name": "SettingsSideDrawer",
-   "category": "overlays",
-   "tags": [
-    "modal",
-    "settings"
-   ]
-  },
-  {
-   "n": 102,
-   "name": "ClarifyQuestionCard",
-   "category": "ai-chat",
-   "tags": [
-    "prompt"
-   ]
-  },
-  {
-   "n": 103,
-   "name": "AgentTaskProgress",
-   "category": "agent-ops",
-   "tags": [
-    "streaming"
-   ]
-  },
-  {
-   "n": 104,
-   "name": "UsageQuotaCard",
-   "category": "billing",
-   "tags": [
-    "card",
-    "svg-chart"
-   ]
-  },
-  {
-   "n": 105,
-   "name": "WorkspaceSwitcherMenu",
-   "category": "overlays",
-   "tags": [
-    "dropdown"
-   ]
-  },
-  {
-   "n": 106,
-   "name": "AttachmentChip",
-   "category": "primitives",
-   "tags": [
-    "badge"
-   ]
-  },
-  {
-   "n": 107,
-   "name": "DeploymentCard",
-   "category": "agent-ops",
-   "tags": [
-    "badge"
-   ]
-  },
-  {
-   "n": 108,
-   "name": "LiveTailLogConsole",
-   "category": "agent-ops",
-   "tags": [
-    "keyboard",
-    "streaming"
-   ]
-  },
-  {
-   "n": 109,
-   "name": "PipelineStageList",
-   "category": "agent-ops",
-   "tags": [
-    "animated",
-    "list"
-   ]
-  },
-  {
-   "n": 110,
-   "name": "ChangedFilesList",
-   "category": "data-display",
-   "tags": [
-    "list"
-   ]
-  },
-  {
-   "n": 111,
-   "name": "ServiceStatusList",
-   "category": "data-display",
-   "tags": [
-    "badge",
-    "list"
-   ]
-  },
-  {
-   "n": 112,
-   "name": "FilterQueryBuilder",
-   "category": "forms",
-   "tags": [
-    "dropdown",
-    "filter"
-   ]
-  },
-  {
-   "n": 113,
-   "name": "ColumnVisibilityMenu",
-   "category": "overlays",
-   "tags": [
-    "dropdown",
-    "table"
-   ]
-  },
-  {
-   "n": 114,
-   "name": "StatusCountTabs",
-   "category": "layout",
-   "tags": [
-    "badge",
-    "tabs"
-   ]
-  },
-  {
-   "n": 115,
-   "name": "EntityMultiSelectPicker",
-   "category": "primitives",
-   "tags": [
-    "avatar",
-    "dropdown",
-    "picker"
-   ]
-  },
-  {
-   "n": 116,
-   "name": "FederatedSearchResultsPanel",
-   "category": "data-display",
-   "tags": [
-    "card",
-    "panel",
-    "search"
-   ]
-  },
-  {
-   "n": 117,
-   "name": "TimeSlotPicker",
-   "category": "primitives",
-   "tags": [
-    "calendar",
-    "picker"
-   ]
-  },
-  {
-   "n": 118,
-   "name": "OrderTracker",
-   "category": "commerce",
-   "tags": [
-    "timeline"
-   ]
-  },
-  {
-   "n": 119,
-   "name": "OrderSummaryPanel",
-   "category": "commerce",
-   "tags": [
-    "card",
-    "panel"
-   ]
-  },
-  {
-   "n": 120,
-   "name": "PaymentMethodCard",
-   "category": "billing",
-   "tags": [
-    "card",
-    "security"
-   ]
-  },
-  {
-   "n": 121,
-   "name": "OrderCard",
-   "category": "commerce",
-   "tags": [
-    "card"
-   ]
-  },
-  {
-   "n": 122,
-   "name": "ColorPickerPopover",
-   "category": "forms",
-   "tags": [
-    "picker",
-    "popover"
-   ]
-  },
-  {
-   "n": 123,
-   "name": "EditorToolPalette",
-   "category": "layout",
-   "tags": [
-    "drag-drop"
-   ]
-  },
-  {
-   "n": 124,
-   "name": "ShortcutCheatSheet",
-   "category": "overlays",
-   "tags": [
-    "card",
-    "keyboard",
-    "panel"
-   ]
-  },
-  {
-   "n": 125,
-   "name": "ZoomControlBar",
-   "category": "overlays",
-   "tags": [
-    "dropdown"
-   ]
-  },
-  {
-   "n": 126,
-   "name": "AIInlineMenu",
-   "category": "ai-chat",
-   "tags": [
-    "dropdown",
-    "prompt"
-   ]
-  },
-  {
-   "n": 127,
-   "name": "EmptyStateStarter",
-   "category": "feedback",
-   "tags": [
-    "empty-state"
-   ]
-  },
-  {
-   "n": 128,
-   "name": "AuthGatePrompt",
-   "category": "forms",
-   "tags": [
-    "modal",
-    "security"
-   ]
-  },
-  {
-   "n": 129,
-   "name": "AuthSplitPanel",
-   "category": "forms",
-   "tags": [
-    "card",
-    "panel",
-    "security"
-   ]
-  },
-  {
-   "n": 130,
-   "name": "SuccessToast",
-   "category": "feedback",
-   "tags": [
-    "animated"
-   ]
-  },
-  {
-   "n": 131,
-   "name": "EditableHeading",
-   "category": "primitives",
-   "tags": [
-    "keyboard"
-   ]
-  },
-  {
-   "n": 132,
-   "name": "PlanComparisonTable",
-   "category": "billing",
-   "tags": [
-    "table"
-   ]
-  },
-  {
-   "n": 133,
-   "name": "UpgradeCheckoutPanel",
-   "category": "billing",
-   "tags": [
-    "form-validation",
-    "panel",
-    "paywall"
-   ]
-  },
-  {
-   "n": 134,
-   "name": "TrialBanner",
-   "category": "billing",
-   "tags": [
-    "badge",
-    "paywall"
-   ]
-  },
-  {
-   "n": 135,
-   "name": "MembershipTierGrid",
-   "category": "billing",
-   "tags": [
-    "card",
-    "paywall"
-   ]
-  },
-  {
-   "n": 136,
-   "name": "AddonPicker",
-   "category": "billing",
-   "tags": [
-    "paywall",
-    "picker"
-   ]
-  },
-  {
-   "n": 137,
-   "name": "ImageGenGallery",
-   "category": "media",
-   "tags": [
-    "card",
-    "image"
-   ]
-  },
-  {
-   "n": 138,
-   "name": "SharedChatViewer",
-   "category": "ai-chat",
-   "tags": [
-    "streaming"
-   ]
-  },
-  {
-   "n": 139,
-   "name": "MemoryPanel",
-   "category": "ai-chat",
-   "tags": [
-    "panel",
-    "settings"
-   ]
-  },
-  {
-   "n": 140,
-   "name": "ConnectorGrid",
-   "category": "data-display",
-   "tags": [
-    "card"
-   ]
-  },
-  {
-   "n": 141,
-   "name": "ModelComparePane",
-   "category": "primitives",
-   "tags": [
-    "streaming"
-   ]
-  },
-  {
-   "n": 142,
-   "name": "SystemPromptEditor",
-   "category": "primitives",
-   "tags": [
-    "form-validation",
-    "prompt"
-   ]
-  },
-  {
-   "n": 143,
-   "name": "ToolSchemaEditor",
-   "category": "primitives",
-   "tags": [
-    "prompt"
-   ]
-  },
-  {
-   "n": 144,
-   "name": "FineTuneJobList",
-   "category": "data-display",
-   "tags": [
-    "badge",
-    "list"
-   ]
-  },
-  {
-   "n": 145,
-   "name": "PersonaPresetGrid",
-   "category": "data-display",
-   "tags": [
-    "card",
-    "prompt"
-   ]
-  },
-  {
-   "n": 146,
-   "name": "AgentBuilderCard",
-   "category": "agent-ops",
-   "tags": [
-    "card"
-   ]
-  },
-  {
-   "n": 147,
-   "name": "VoiceOrb",
-   "category": "media",
-   "tags": [
-    "animated",
-    "voice"
-   ]
-  },
-  {
-   "n": 148,
-   "name": "ShareChatDialog",
-   "category": "ai-chat",
-   "tags": [
-    "modal"
-   ]
-  },
-  {
-   "n": 149,
-   "name": "BrandPromptTable",
-   "category": "data-display",
-   "tags": [
-    "prompt",
-    "table"
-   ]
-  },
-  {
-   "n": 150,
-   "name": "PromptSaveDialog",
-   "category": "overlays",
-   "tags": [
-    "modal"
-   ]
-  },
-  {
-   "n": 151,
-   "name": "AiTemplatePicker",
-   "category": "ai-artifacts",
-   "tags": [
-    "card",
-    "picker"
-   ]
-  },
-  {
-   "n": 152,
-   "name": "CreationComposer",
-   "category": "ai-artifacts",
-   "tags": [
-    "image",
-    "prompt"
-   ]
-  },
-  {
-   "n": 153,
-   "name": "TraceSpanWaterfall",
-   "category": "agent-ops",
-   "tags": [
-    "svg-chart",
-    "timeline"
-   ]
-  },
-  {
-   "n": 154,
-   "name": "EvalScoreTable",
-   "category": "agent-ops",
-   "tags": [
-    "table"
-   ]
-  },
-  {
-   "n": 155,
-   "name": "TokenCostBreakdown",
-   "category": "billing",
-   "tags": [
-    "svg-chart"
-   ]
-  },
-  {
-   "n": 156,
-   "name": "AudioWaveVisualizer",
-   "category": "media",
-   "tags": [
-    "animated",
-    "audio"
-   ]
-  },
-  {
-   "n": 157,
-   "name": "PromptVariantDiff",
-   "category": "primitives",
-   "tags": [
-    "prompt"
-   ]
-  },
-  {
-   "n": 158,
-   "name": "GuardrailReviewQueue",
-   "category": "agent-ops",
-   "tags": [
-    "list",
-    "security"
-   ]
-  },
-  {
-   "n": 159,
-   "name": "ContentReviewTable",
-   "category": "data-display",
-   "tags": [
-    "table"
-   ]
-  },
-  {
-   "n": 160,
-   "name": "QaTestTable",
-   "category": "data-display",
-   "tags": [
-    "table"
-   ]
-  },
-  {
-   "n": 161,
-   "name": "AppealRestrictionDialog",
-   "category": "overlays",
-   "tags": [
-    "modal"
-   ]
-  },
-  {
-   "n": 162,
-   "name": "ModelPricingCard",
-   "category": "billing",
-   "tags": [
-    "card",
-    "table"
-   ]
-  },
-  {
-   "n": 163,
-   "name": "AiResearchPanel",
-   "category": "ai-artifacts",
-   "tags": [
-    "panel",
-    "streaming"
-   ]
-  },
-  {
-   "n": 164,
-   "name": "ApiKeyTable",
-   "category": "data-display",
-   "tags": [
-    "security",
-    "table"
-   ]
-  },
-  {
-   "n": 165,
-   "name": "VoiceSessionHistory",
-   "category": "media",
-   "tags": [
-    "list",
-    "voice"
-   ]
-  },
-  {
-   "n": 166,
-   "name": "AiRewriteMenu",
-   "category": "ai-chat",
-   "tags": [
-    "dropdown",
-    "prompt"
-   ]
-  },
-  {
-   "n": 167,
-   "name": "PromptPerformanceTable",
-   "category": "data-display",
-   "tags": [
-    "prompt",
-    "table"
-   ]
-  },
-  {
-   "n": 168,
-   "name": "ShareAccessDialog",
-   "category": "overlays",
-   "tags": [
-    "modal"
-   ]
-  },
-  {
-   "n": 169,
-   "name": "AiNoteAnswer",
-   "category": "ai-chat",
-   "tags": [
-    "card",
-    "streaming"
-   ]
-  },
-  {
-   "n": 170,
-   "name": "AudioNotePlayer",
-   "category": "media",
-   "tags": [
-    "audio"
-   ]
-  },
-  {
-   "n": 171,
-   "name": "ImageActionMenu",
-   "category": "media",
-   "tags": [
-    "dropdown",
-    "image"
-   ]
-  },
-  {
-   "n": 172,
-   "name": "FalRunCard",
-   "category": "agent-ops",
-   "tags": [
-    "card",
-    "image"
-   ]
-  },
-  {
-   "n": 173,
-   "name": "ImageGenMetaBar",
-   "category": "media",
-   "tags": [
-    "image"
-   ]
-  },
-  {
-   "n": 174,
-   "name": "GammaImageDetail",
-   "category": "ai-artifacts",
-   "tags": [
-    "image"
-   ]
-  },
-  {
-   "n": 175,
-   "name": "WriterStyleGuide",
-   "category": "ai-artifacts",
-   "tags": [
-    "prompt"
-   ]
-  },
-  {
-   "n": 176,
-   "name": "CampsiteHandoff",
-   "category": "primitives",
-   "tags": [
-    "avatar",
-    "list"
-   ]
-  },
-  {
-   "n": 177,
-   "name": "ZendeskFieldSuggest",
-   "category": "ai-artifacts",
-   "tags": [
-    "prompt"
-   ]
-  },
-  {
-   "n": 178,
-   "name": "AiSuggestionCard",
-   "category": "ai-chat",
-   "tags": [
-    "card",
-    "prompt"
-   ]
-  },
-  {
-   "n": 179,
-   "name": "JumpBackIn",
-   "category": "ai-chat",
-   "tags": [
-    "card"
-   ]
-  },
-  {
-   "n": 180,
-   "name": "HelpResourcesPanel",
-   "category": "content",
-   "tags": [
-    "card",
-    "panel",
-    "search"
-   ]
-  },
-  {
-   "n": 181,
-   "name": "VisionAnalysisCard",
-   "category": "ai-chat",
-   "tags": [
-    "card",
-    "streaming"
-   ]
-  },
-  {
-   "n": 182,
-   "name": "PrReviewQueue",
-   "category": "agent-ops",
-   "tags": [
-    "avatar",
-    "list"
-   ]
-  },
-  {
-   "n": 183,
-   "name": "IterationActionBar",
-   "category": "agent-ops",
-   "tags": [
-    "prompt"
-   ]
-  },
-  {
-   "n": 184,
-   "name": "MonitorRunList",
-   "category": "agent-ops",
-   "tags": [
-    "badge",
-    "list"
-   ]
-  },
-  {
-   "n": 185,
-   "name": "EvalTurnBuilder",
-   "category": "agent-ops",
-   "tags": [
-    "drag-drop"
-   ]
-  },
-  {
-   "n": 186,
-   "name": "AgentSessionTimeline",
-   "category": "agent-ops",
-   "tags": [
-    "timeline"
-   ]
-  },
-  {
-   "n": 187,
-   "name": "EvalRunResults",
-   "category": "agent-ops",
-   "tags": [
-    "table"
-   ]
-  },
-  {
-   "n": 188,
-   "name": "EventTagGrid",
-   "category": "content",
-   "tags": [
-    "badge",
-    "card"
-   ]
-  },
-  {
-   "n": 189,
-   "name": "PromptTunerResult",
-   "category": "agent-ops",
-   "tags": [
-    "prompt"
-   ]
-  },
-  {
-   "n": 190,
-   "name": "AuditLogTable",
-   "category": "data-display",
-   "tags": [
-    "security",
-    "table"
-   ]
-  },
-  {
-   "n": 191,
-   "name": "ChangelogTimeline",
-   "category": "content",
-   "tags": [
-    "timeline"
-   ]
-  },
-  {
-   "n": 192,
-   "name": "SessionDeviceTable",
-   "category": "data-display",
-   "tags": [
-    "security",
-    "table"
-   ]
-  },
-  {
-   "n": 193,
-   "name": "TaskDetailPanel",
-   "category": "data-display",
-   "tags": [
-    "card",
-    "list",
-    "panel"
-   ]
-  },
-  {
-   "n": 194,
-   "name": "DeliveryTrackingPanel",
-   "category": "commerce",
-   "tags": [
-    "panel",
-    "timeline"
-   ]
-  },
-  {
-   "n": 195,
-   "name": "MapPropertyCard",
-   "category": "data-display",
-   "tags": [
-    "card",
-    "map"
-   ]
-  },
-  {
-   "n": 196,
-   "name": "ApiReferenceViewer",
-   "category": "ai-artifacts",
-   "tags": [
-    "standalone"
-   ]
-  },
-  {
-   "n": 197,
-   "name": "WeekCalendarGrid",
-   "category": "data-display",
-   "tags": [
-    "calendar",
-    "picker"
-   ]
-  },
-  {
-   "n": 198,
-   "name": "VideoProjectSettings",
-   "category": "media",
-   "tags": [
-    "settings",
-    "video"
-   ]
-  },
-  {
-   "n": 199,
-   "name": "EventStreamPanel",
-   "category": "agent-ops",
-   "tags": [
-    "list",
-    "panel",
-    "streaming"
-   ]
-  },
-  {
-   "n": 200,
-   "name": "ProjectGanttTimeline",
-   "category": "data-display",
-   "tags": [
-    "gantt"
-   ]
-  },
-  {
-   "n": 201,
-   "name": "GroupedTaskList",
-   "category": "data-display",
-   "tags": [
-    "card",
-    "list"
-   ]
-  },
-  {
-   "n": 202,
-   "name": "EventLogTable",
-   "category": "data-display",
-   "tags": [
-    "table"
-   ]
-  },
-  {
-   "n": 203,
-   "name": "DocsPageLayout",
-   "category": "ai-artifacts",
-   "tags": [
-    "search",
-    "standalone"
-   ]
-  },
-  {
-   "n": 204,
-   "name": "TaskCardModal",
-   "category": "overlays",
-   "tags": [
-    "modal"
-   ]
-  },
-  {
-   "n": 205,
-   "name": "FormTrackingDashboard",
-   "category": "forms",
-   "tags": [
-    "card",
-    "table"
-   ]
-  },
-  {
-   "n": 206,
-   "name": "AudioPlaylistPage",
-   "category": "media",
-   "tags": [
-    "audio",
-    "list",
-    "standalone"
-   ]
-  },
-  {
-   "n": 207,
-   "name": "BlogPostArticle",
-   "category": "content",
-   "tags": [
-    "card",
-    "standalone"
-   ]
-  },
-  {
-   "n": 208,
-   "name": "PermissionMatrix",
-   "category": "forms",
-   "tags": [
-    "security",
-    "settings"
-   ]
-  },
-  {
-   "n": 209,
-   "name": "StockPhotoPicker",
-   "category": "media",
-   "tags": [
-    "image",
-    "picker",
-    "search"
-   ]
-  },
-  {
-   "n": 210,
-   "name": "MapActivityList",
-   "category": "data-display",
-   "tags": [
-    "list",
-    "map"
-   ]
-  },
-  {
-   "n": 211,
-   "name": "SearchResultsPage",
-   "category": "layout",
-   "tags": [
-    "card",
-    "search",
-    "standalone"
-   ]
-  },
-  {
-   "n": 212,
-   "name": "SessionDiagnosticsPanel",
-   "category": "data-display",
-   "tags": [
-    "badge",
-    "card",
-    "panel"
-   ]
-  },
-  {
-   "n": 213,
-   "name": "HelpCenterHome",
-   "category": "content",
-   "tags": [
-    "card",
-    "search",
-    "standalone"
-   ]
-  },
-  {
-   "n": 214,
-   "name": "AccountSecurityPanel",
-   "category": "data-display",
-   "tags": [
-    "panel",
-    "security",
-    "settings"
-   ]
-  },
-  {
-   "n": 215,
-   "name": "MasonryDensityControls",
-   "category": "theming",
-   "tags": [
-    "picker"
-   ]
-  },
-  {
-   "n": 216,
-   "name": "LiquidGlass",
-   "category": "theming",
-   "tags": [
-    "animated",
-    "backdrop",
-    "glass"
-   ]
-  },
-  {
-   "n": 217,
-   "name": "AnimatedCounter",
-   "category": "data-display",
-   "tags": [
-    "animated"
-   ]
-  },
-  {
-   "n": 218,
-   "name": "SpotlightGlareCard",
-   "category": "theming",
-   "tags": [
-    "animated",
-    "card",
-    "spotlight"
-   ]
-  },
-  {
-   "n": 219,
-   "name": "PointerRipples",
-   "category": "theming",
-   "tags": [
-    "animated",
-    "spotlight"
-   ]
-  },
-  {
-   "n": 220,
-   "name": "FluidContourBackdrop",
-   "category": "theming",
-   "tags": [
-    "animated",
-    "backdrop"
-   ]
-  },
-  {
-   "n": 221,
-   "name": "PaperTheme",
-   "category": "theming",
-   "tags": [
-    "standalone"
-   ]
-  },
-  {
-   "n": 222,
-   "name": "InvoiceHistoryTable",
-   "category": "billing",
-   "tags": [
-    "table"
-   ]
-  },
-  {
-   "n": 223,
-   "name": "UsagePricingBreakdown",
-   "category": "billing",
-   "tags": [
-    "svg-chart",
-    "table"
-   ]
-  },
-  {
-   "n": 224,
-   "name": "CancelRetentionFlow",
-   "category": "billing",
-   "tags": [
-    "paywall",
-    "wizard"
-   ]
-  },
-  {
-   "n": 225,
-   "name": "WebhookConfigPanel",
-   "category": "data-display",
-   "tags": [
-    "panel",
-    "security",
-    "settings"
-   ]
-  },
-  {
-   "n": 226,
-   "name": "IntegrationConnectGrid",
-   "category": "data-display",
-   "tags": [
-    "card",
-    "settings"
-   ]
-  },
-  {
-   "n": 227,
-   "name": "NotificationPrefsMatrix",
-   "category": "forms",
-   "tags": [
-    "settings"
-   ]
-  },
-  {
-   "n": 228,
-   "name": "PermissionDeniedState",
-   "category": "feedback",
-   "tags": [
-    "empty-state",
-    "security"
-   ]
-  },
-  {
-   "n": 229,
-   "name": "NoResultsState",
-   "category": "feedback",
-   "tags": [
-    "empty-state",
-    "search"
-   ]
-  },
-  {
-   "n": 230,
-   "name": "TableSavedViews",
-   "category": "layout",
-   "tags": [
-    "filter",
-    "table"
-   ]
-  },
-  {
-   "n": 231,
-   "name": "BottomTabBar",
-   "category": "layout",
-   "tags": [
-    "badge"
-   ]
-  },
-  {
-   "n": 232,
-   "name": "BentoFeatureGrid",
-   "category": "content",
-   "tags": [
-    "card"
-   ]
-  },
-  {
-   "n": 233,
-   "name": "LogoCloud",
-   "category": "content",
-   "tags": [
-    "card"
-   ]
-  },
-  {
-   "n": 234,
-   "name": "StatsBand",
-   "category": "data-display",
-   "tags": [
-    "animated"
-   ]
-  },
-  {
-   "n": 235,
-   "name": "AmberEmbersBackdrop",
-   "category": "theming",
-   "tags": [
-    "animated",
-    "backdrop"
-   ]
-  },
-  {
-   "n": 236,
-   "name": "DriftEmbersBackdrop",
-   "category": "theming",
-   "tags": [
-    "animated",
-    "backdrop"
-   ]
-  },
-  {
-   "n": 237,
-   "name": "McpConnectPanel",
-   "category": "agent-ops",
-   "tags": [
-    "keyboard",
-    "panel",
-    "wizard"
-   ]
-  },
-  {
-   "n": 238,
-   "name": "AgentNotificationFeed",
-   "category": "agent-ops",
-   "tags": [
-    "list"
-   ]
-  },
-  {
-   "n": 239,
-   "name": "AgentErrorRecovery",
-   "category": "agent-ops",
-   "tags": [
-    "empty-state"
-   ]
-  },
-  {
-   "n": 240,
-   "name": "AgentWorkspaceSettings",
-   "category": "agent-ops",
-   "tags": [
-    "settings"
-   ]
-  },
-  {
-   "n": 241,
-   "name": "AgentEnvVarEditor",
-   "category": "agent-ops",
-   "tags": [
-    "security",
-    "settings"
-   ]
-  },
-  {
-   "n": 242,
-   "name": "AgentScheduleEditor",
-   "category": "agent-ops",
-   "tags": [
-    "calendar",
-    "settings"
-   ]
-  },
-  {
-   "n": 243,
-   "name": "AgentGuardrailViolationCard",
-   "category": "agent-ops",
-   "tags": [
-    "security"
-   ]
-  },
-  {
-   "n": 244,
-   "name": "AgentModelFallbackList",
-   "category": "agent-ops",
-   "tags": [
-    "list"
-   ]
-  },
-  {
-   "n": 245,
-   "name": "BillingAddressForm",
-   "category": "billing",
-   "tags": [
-    "form-validation"
-   ]
-  },
-  {
-   "n": 246,
-   "name": "UsageCreditsDonut",
-   "category": "billing",
-   "tags": [
-    "svg-chart"
-   ]
-  },
-  {
-   "n": 247,
-   "name": "SeatBillingTable",
-   "category": "billing",
-   "tags": [
-    "table"
-   ]
-  },
-  {
-   "n": 248,
-   "name": "CreditBalanceCard",
-   "category": "billing",
-   "tags": [
-    "animated",
-    "card"
-   ]
-  },
-  {
-   "n": 249,
-   "name": "SpendTrendChart",
-   "category": "billing",
-   "tags": [
-    "svg-chart"
-   ]
-  },
-  {
-   "n": 250,
-   "name": "TopUpBalanceDialog",
-   "category": "billing",
-   "tags": [
-    "modal"
-   ]
-  },
-  {
-   "n": 251,
-   "name": "MetricLineChart",
-   "category": "charts",
-   "tags": [
-    "animated",
-    "svg-chart"
-   ]
-  },
-  {
-   "n": 252,
-   "name": "PaywallDialog",
-   "category": "billing",
-   "tags": [
-    "modal",
-    "paywall"
-   ]
-  },
-  {
-   "n": 253,
-   "name": "TrialExpiryNotice",
-   "category": "billing",
-   "tags": [
-    "animated",
-    "paywall"
-   ]
-  },
-  {
-   "n": 254,
-   "name": "WorkspaceSurveyCard",
-   "category": "forms",
-   "tags": [
-    "aria",
-    "onboarding",
-    "wizard"
-   ]
-  },
-  {
-   "n": 255,
-   "name": "WorkspaceSetupPanel",
-   "category": "forms",
-   "tags": [
-    "onboarding",
-    "panel",
-    "settings"
-   ]
-  },
-  {
-   "n": 256,
-   "name": "InviteTeammatesCard",
-   "category": "forms",
-   "tags": [
-    "avatar",
-    "form-validation",
-    "onboarding"
-   ]
-  },
-  {
-   "n": 257,
-   "name": "ProfileEditForm",
-   "category": "forms",
-   "tags": [
-    "avatar",
-    "form-validation",
-    "settings"
-   ]
-  },
-  {
-   "n": 258,
-   "name": "AvatarCropDialog",
-   "category": "overlays",
-   "tags": [
-    "image",
-    "modal"
-   ]
-  },
-  {
-   "n": 259,
-   "name": "FollowSuggestionsCard",
-   "category": "data-display",
-   "tags": [
-    "animated",
-    "avatar",
-    "card"
-   ]
-  }
- ]
+  "version": "1.1.0",
+  "updated": "2026-11-21",
+  "$comment": "awesome-ui component registry — one entry per ledger component (llms.txt 0..N). category is a single taxonomy id; tags are multi-value facet ids. Validated by tools/check_registry.py. Keep in sync with llms.txt on every new component batch.",
+  "count": 260,
+  "components": [
+    {
+      "n": 0,
+      "name": "UiIcon",
+      "category": "primitives",
+      "tags": [
+        "dark-mode"
+      ],
+      "desc": "Zero-dependency, accessible SVG icon system shared by all three stacks.",
+      "aliases": [
+        "ui icon",
+        "图标"
+      ]
+    },
+    {
+      "n": 1,
+      "name": "ChatPromptInput",
+      "category": "ai-chat",
+      "tags": [
+        "image",
+        "picker",
+        "streaming",
+        "voice"
+      ],
+      "desc": "Multi-modal auto-resizing prompt input with file/image attachments, submit/stop state, and an optional bottom chips row (`chips: [{ id, label, icon?, active? }]`, event `chip`).",
+      "aliases": [
+        "chat prompt input",
+        "聊天",
+        "对话",
+        "提示词"
+      ]
+    },
+    {
+      "n": 2,
+      "name": "StreamMarkdown",
+      "category": "ai-artifacts",
+      "tags": [
+        "streaming"
+      ],
+      "desc": "High-performance streaming markdown renderer with syntax highlighting, code copy, and pulsing cursor.",
+      "aliases": [
+        "stream markdown"
+      ]
+    },
+    {
+      "n": 3,
+      "name": "ThinkingBlock",
+      "category": "ai-chat",
+      "tags": [
+        "animated",
+        "collapsible",
+        "streaming"
+      ],
+      "desc": "DeepSeek R1 / OpenAI o1 reasoning chain accordion with shimmer timer, smooth collapse, optional step timeline (`steps: [{ id, label, durationMs? }]` with connectors and duration badges), and a collapsed one-line summary (running step pulses amber; finished shows last step + duration).",
+      "aliases": [
+        "thinking block",
+        "reasoning",
+        "chain of thought",
+        "推理",
+        "思维链"
+      ]
+    },
+    {
+      "n": 4,
+      "name": "ToolCallBadge",
+      "category": "agent-ops",
+      "tags": [
+        "badge",
+        "streaming"
+      ],
+      "desc": "Agent tool invocation badge with running/success/error status and argument/output inspection drawer.",
+      "aliases": [
+        "tool call badge",
+        "徽标",
+        "角标",
+        "agent",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 5,
+      "name": "SourcesCitation",
+      "category": "ai-artifacts",
+      "tags": [
+        "card"
+      ],
+      "desc": "Perplexity/RAG style search source citations with domain pills, snippets, and grid layout.",
+      "aliases": [
+        "sources citation",
+        "引用来源"
+      ]
+    },
+    {
+      "n": 6,
+      "name": "AutoScrollAnchor",
+      "category": "ai-chat",
+      "tags": [
+        "streaming"
+      ],
+      "desc": "Smart auto-scrolling anchor that smoothly follows streaming output and pauses on user back-scroll.",
+      "aliases": [
+        "auto scroll anchor"
+      ]
+    },
+    {
+      "n": 7,
+      "name": "ArtifactCanvas",
+      "category": "ai-artifacts",
+      "tags": [
+        "standalone",
+        "streaming"
+      ],
+      "desc": "Claude Artifacts-style split-pane live preview with code view and sandboxed iframe rendering.",
+      "aliases": [
+        "artifact canvas"
+      ]
+    },
+    {
+      "n": 8,
+      "name": "MessageActionToolbar",
+      "category": "ai-chat",
+      "tags": [
+        "popover"
+      ],
+      "desc": "Assistant message footer toolbar with copy, regenerate, thumbs feedback, and branch pagination.",
+      "aliases": [
+        "message action toolbar"
+      ]
+    },
+    {
+      "n": 9,
+      "name": "PromptChips",
+      "category": "ai-chat",
+      "tags": [
+        "prompt"
+      ],
+      "desc": "Suggested follow-up prompts and chips for interactive guidance.",
+      "aliases": [
+        "prompt chips",
+        "chat",
+        "聊天",
+        "对话",
+        "提示词"
+      ]
+    },
+    {
+      "n": 10,
+      "name": "ThemeToggle",
+      "category": "theming",
+      "tags": [
+        "animated",
+        "dark-mode"
+      ],
+      "desc": "3-state theme mode switcher (Auto/Light/Dark) with system color-scheme and time perception.",
+      "aliases": [
+        "theme toggle",
+        "dark mode",
+        "主题",
+        "暗色模式",
+        "深色模式"
+      ]
+    },
+    {
+      "n": 11,
+      "name": "StatusIndicator",
+      "category": "feedback",
+      "tags": [
+        "animated",
+        "badge"
+      ],
+      "desc": "Node/Service health status badge with live ping ms and breathing glow.",
+      "aliases": [
+        "status indicator"
+      ]
+    },
+    {
+      "n": 12,
+      "name": "ContextUsageBadge",
+      "category": "primitives",
+      "tags": [
+        "animated",
+        "badge"
+      ],
+      "desc": "LLM token usage telemetry badge with tiered threshold colors (<70% green, 70-90% amber, >=90% rose) and token breakdown popover.",
+      "aliases": [
+        "context usage badge",
+        "徽标",
+        "角标",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 13,
+      "name": "ModelSelector",
+      "category": "primitives",
+      "tags": [
+        "dropdown",
+        "search"
+      ],
+      "desc": "Model routing switcher with instant search, provider badges, context window size tags, and dropdown drawer.",
+      "aliases": [
+        "model selector",
+        "picker",
+        "选择器",
+        "dropdown",
+        "下拉"
+      ]
+    },
+    {
+      "n": 14,
+      "name": "RoadmapTimeline",
+      "category": "content",
+      "tags": [
+        "animated",
+        "timeline"
+      ],
+      "desc": "Trail/Roadmap milestone progression with diamond pins, 8-stage color palette, and completion states.",
+      "aliases": [
+        "roadmap timeline",
+        "时间线",
+        "marketing",
+        "landing",
+        "营销",
+        "落地页"
+      ]
+    },
+    {
+      "n": 15,
+      "name": "KnowledgeDrawer",
+      "category": "content",
+      "tags": [
+        "modal",
+        "onboarding"
+      ],
+      "desc": "Sliding knowledge graph drawer with dependency badges, stage color accent, and primary action CTA.",
+      "aliases": [
+        "knowledge drawer",
+        "抽屉",
+        "ticket",
+        "support",
+        "工单",
+        "客服"
+      ]
+    },
+    {
+      "n": 16,
+      "name": "HomepageDashboard",
+      "category": "data-display",
+      "tags": [
+        "animated",
+        "card",
+        "search",
+        "settings"
+      ],
+      "desc": "fenced/copy-paste homelab/startpage dashboard inspired by gethomepage/homepage — grouped service cards, collapsible groups, live clock, instant search filter, status dots/pills, version footer.",
+      "aliases": [
+        "homepage dashboard",
+        "仪表盘",
+        "看板"
+      ]
+    },
+    {
+      "n": 17,
+      "name": "CodeBlock",
+      "category": "ai-artifacts",
+      "tags": [
+        "keyboard"
+      ],
+      "desc": "Standalone code card with language badge, filename, one-click copy feedback, optional line numbers, and max-height scrolling. All code text is entity-escaped.",
+      "aliases": [
+        "code block",
+        "代码"
+      ]
+    },
+    {
+      "n": 18,
+      "name": "TypingIndicator",
+      "category": "ai-chat",
+      "tags": [
+        "animated",
+        "streaming"
+      ],
+      "desc": "AI composing / first-token-wait loading indicator with staggered bouncing dots or pulse variant, three sizes, and role=\"status\" accessibility.",
+      "aliases": [
+        "typing indicator",
+        "spinner",
+        "loading",
+        "加载",
+        "加载中"
+      ]
+    },
+    {
+      "n": 19,
+      "name": "ChatMessageRow",
+      "category": "ai-chat",
+      "tags": [
+        "avatar",
+        "streaming"
+      ],
+      "desc": "Conversation bubble row with user/assistant/system roles, avatar (custom or icon fallback), sender name, and timestamp. All text entity-escaped; vanilla supports both `content` attribute and property.",
+      "aliases": [
+        "chat message row",
+        "聊天",
+        "对话"
+      ]
+    },
+    {
+      "n": 20,
+      "name": "CommandPalette",
+      "category": "overlays",
+      "tags": [
+        "keyboard",
+        "modal",
+        "search"
+      ],
+      "desc": "Cmd+K command palette with instant search filter, group headers, keyboard navigation (arrows/Enter/Escape), icon and shortcut hints, backdrop dismiss, and a bottom shortcut hint bar (Navigate / Select / Close kbd hints).",
+      "aliases": [
+        "command palette",
+        "command menu",
+        "命令面板"
+      ]
+    },
+    {
+      "n": 21,
+      "name": "ToastStack",
+      "category": "feedback",
+      "tags": [
+        "animated"
+      ],
+      "desc": "Global notification stack with success/error/warning/info types, manual dismiss, auto-dismiss (default 4000ms, `duration=\"0\"` disables), aria-live announcements, and a bottom countdown bar that shrinks with remaining time (hover pauses, leave resumes).",
+      "aliases": [
+        "toast stack",
+        "提示条",
+        "通知条"
+      ]
+    },
+    {
+      "n": 22,
+      "name": "ChatSessionList",
+      "category": "ai-chat",
+      "tags": [
+        "badge",
+        "keyboard",
+        "list"
+      ],
+      "desc": "Conversation history sidebar with active highlight, hover-reveal delete, keyboard-selectable rows, empty state, session count badge, collapsible `group` headers (ungrouped sessions go to a \"Recent\" bucket), and a bottom user card (`user: { name, email?, avatarUrl? }`, event `user-click`).",
+      "aliases": [
+        "chat session list",
+        "列表",
+        "聊天",
+        "对话"
+      ]
+    },
+    {
+      "n": 23,
+      "name": "DiffViewer",
+      "category": "ai-artifacts",
+      "tags": [
+        "collapsible"
+      ],
+      "desc": "AI code-edit diff view with add/remove/context line highlighting, +/- summary counts, dual old/new line numbers, filename/language badges, multi-file tab bar (`files: [{ filename, language?, lines }]`, per-tab +/- counts), and long-context hunk folding (\"⋯ N unchanged lines\" rows expand in place, `contextSize` default 3; legacy `lines` API kept).",
+      "aliases": [
+        "diff viewer",
+        "差异对比"
+      ]
+    },
+    {
+      "n": 24,
+      "name": "ToolApprovalCard",
+      "category": "agent-ops",
+      "tags": [
+        "badge",
+        "security"
+      ],
+      "desc": "Agent human-in-the-loop permission prompt with Approve/Reject actions, low/high risk tiers, JSON args preview, and resolved-state badges.",
+      "aliases": [
+        "tool approval card",
+        "卡片",
+        "permission",
+        "rbac",
+        "权限",
+        "agent",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 25,
+      "name": "FileAttachmentList",
+      "category": "ai-artifacts",
+      "tags": [
+        "list"
+      ],
+      "desc": "Prompt attachment chips with per-type icons (image/code/file), B/KB/MB size formatting, and removable chips. Pairs with ChatPromptInput.",
+      "aliases": [
+        "file attachment list",
+        "列表"
+      ]
+    },
+    {
+      "n": 26,
+      "name": "StreamingProgressBar",
+      "category": "feedback",
+      "tags": [
+        "animated",
+        "streaming"
+      ],
+      "desc": "Generation progress bar with determinate (clamped 0-100) and indeterminate pulse modes, streaming/done/error status colors, and role=\"progressbar\".",
+      "aliases": [
+        "streaming progress bar",
+        "spinner",
+        "loading",
+        "加载",
+        "加载中"
+      ]
+    },
+    {
+      "n": 27,
+      "name": "EmptyState",
+      "category": "feedback",
+      "tags": [
+        "empty-state"
+      ],
+      "desc": "Zero-result placeholder with icon, title, description, and optional CTA action button. All text entity-escaped.",
+      "aliases": [
+        "empty state",
+        "空状态"
+      ]
+    },
+    {
+      "n": 28,
+      "name": "AgentStepTimeline",
+      "category": "agent-ops",
+      "tags": [
+        "timeline"
+      ],
+      "desc": "Multi-step agent execution trace with pending/running/done/error status icons, tinted connectors, and duration badges.",
+      "aliases": [
+        "agent step timeline",
+        "时间线",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 29,
+      "name": "PromptTemplateGrid",
+      "category": "data-display",
+      "tags": [
+        "card",
+        "prompt",
+        "search"
+      ],
+      "desc": "Prompt template card grid with tag badges and hover Use action; clicking a card emits the full template including its prompt text.",
+      "aliases": [
+        "prompt template grid",
+        "提示词"
+      ]
+    },
+    {
+      "n": 30,
+      "name": "AgentTaskChecklist",
+      "category": "agent-ops",
+      "tags": [
+        "list"
+      ],
+      "desc": "Agent task plan with done/total progress counter, status icons (done strike-through, active spinner), and optional toggle interaction.",
+      "aliases": [
+        "agent task checklist",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 31,
+      "name": "PricingTable",
+      "category": "commerce",
+      "tags": [
+        "table"
+      ],
+      "desc": "SaaS pricing table with 3-column plan cards, highlighted recommended plan (ring + \"Most popular\" badge), price/period, check-marked feature list, and per-plan CTA.",
+      "aliases": [
+        "pricing table",
+        "表格",
+        "定价",
+        "价格"
+      ]
+    },
+    {
+      "n": 32,
+      "name": "StatCard",
+      "category": "data-display",
+      "tags": [
+        "animated",
+        "card"
+      ],
+      "desc": "Dashboard stat card with label, large value, signed delta % (emerald/red), optional zero-dependency SVG sparkline (from `trend` array), and optional icon.",
+      "aliases": [
+        "stat card",
+        "卡片"
+      ]
+    },
+    {
+      "n": 33,
+      "name": "DataTable",
+      "category": "data-display",
+      "tags": [
+        "filter",
+        "keyboard",
+        "table"
+      ],
+      "desc": "Data table with sortable columns (clickable headers), right-aligned numeric cells, hover-revealed row actions, optional multi-select with floating batch-action bar, and empty state.",
+      "aliases": [
+        "data table",
+        "表格"
+      ]
+    },
+    {
+      "n": 34,
+      "name": "AgentRunLog",
+      "category": "agent-ops",
+      "tags": [
+        "list",
+        "streaming"
+      ],
+      "desc": "Agent execution log with status timeline (pending/running/done/error icons + connector line), duration chip, click-to-expand dark terminal detail block, and done/total counter.",
+      "aliases": [
+        "agent run log",
+        "日志",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 35,
+      "name": "AuthForm",
+      "category": "forms",
+      "tags": [
+        "form-validation",
+        "security"
+      ],
+      "desc": "Sign-in / sign-up card with SSO provider buttons (image or letter fallback), \"or\" divider, email/password fields (plus optional name in signup mode), inline error alert, loading spinner, and footer link.",
+      "aliases": [
+        "auth form",
+        "login",
+        "signin",
+        "log in",
+        "登录",
+        "认证",
+        "表单"
+      ]
+    },
+    {
+      "n": 36,
+      "name": "SettingsPanel",
+      "category": "layout",
+      "tags": [
+        "aria",
+        "panel",
+        "settings"
+      ],
+      "desc": "Two-column settings shell — anchor nav (icon + title, `aria-current` on the active section) beside a card whose rows show label/description/value plus an inline action link, with an optional footer save row and loading state.",
+      "aliases": [
+        "settings panel",
+        "面板"
+      ]
+    },
+    {
+      "n": 37,
+      "name": "OnboardingChecklist",
+      "category": "forms",
+      "tags": [
+        "onboarding"
+      ],
+      "desc": "Activation checklist with done/total counter, progress bar, strikethrough completed tasks, per-task action link, and an all-done celebration state.",
+      "aliases": [
+        "onboarding checklist",
+        "tour",
+        "引导",
+        "新手引导"
+      ]
+    },
+    {
+      "n": 38,
+      "name": "UpgradePromptCard",
+      "category": "billing",
+      "tags": [
+        "card",
+        "paywall"
+      ],
+      "desc": "Usage-based upsell card with threshold-colored progress bar (emerald <70%, amber <90%, red ≥90%), used/limit formatting, feature checklist, and upgrade CTA. Clamps to 0–100% and guards a zero limit.",
+      "aliases": [
+        "upgrade prompt card",
+        "卡片",
+        "提示词",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 39,
+      "name": "ConfirmDialog",
+      "category": "overlays",
+      "tags": [
+        "modal"
+      ],
+      "desc": "Destructive-action guard with danger/warning/default tones, optional type-to-confirm gate (`requireText`), loading lock that disables both buttons and ignores Esc/backdrop, Esc + backdrop close. Renders nothing while `isOpen` is false.",
+      "aliases": [
+        "confirm dialog",
+        "popup",
+        "弹窗",
+        "对话框"
+      ]
+    },
+    {
+      "n": 40,
+      "name": "ShortcutsOverlay",
+      "category": "overlays",
+      "tags": [
+        "keyboard",
+        "modal"
+      ],
+      "desc": "Keyboard cheat sheet with grouped shortcut sections, kbd keycaps, live search over labels and keys, Esc/backdrop close. Accepts either `groups` or a flat `shortcuts` list bucketed by `item.group` (fallback \"General\").",
+      "aliases": [
+        "shortcuts overlay"
+      ]
+    },
+    {
+      "n": 41,
+      "name": "FileDropzone",
+      "category": "primitives",
+      "tags": [
+        "drag-drop"
+      ],
+      "desc": "Drag-and-drop upload zone with click and keyboard activation, `accept` type filtering (extensions, exact MIME, `type/*` wildcards), `maxSizeMb` size guard, per-file rows with formatted sizes and remove buttons, and an inline `role=\"alert\"` error line. Exports `matchesAccept(file, accept)` and `formatBytes` helpers.",
+      "aliases": [
+        "file dropzone",
+        "upload",
+        "上传"
+      ]
+    },
+    {
+      "n": 42,
+      "name": "NotificationCenter",
+      "category": "data-display",
+      "tags": [
+        "badge",
+        "filter",
+        "list"
+      ],
+      "desc": "Inbox panel with unread badge (\"N new\"), All/Unread filter row with inline counts, per-item read state, \"Mark all read\", typed icon chips (info/success/warning/error), an empty state and an optional preferences gear (show-prefs-button → open-preferences). Renders nothing while `isOpen` is false.",
+      "aliases": [
+        "notification center",
+        "通知"
+      ]
+    },
+    {
+      "n": 43,
+      "name": "CommentThread",
+      "category": "primitives",
+      "tags": [
+        "avatar",
+        "list"
+      ],
+      "desc": "Nested discussion built from a flat `comments` array linked by `parentId` (auto-nested up to 3 levels), with initials/avatar, like counts, inline reply composer, resolve/reopen toggle and a root composer. Exports `flattenComments(comments)` returning `{comment, depth}` rows.",
+      "aliases": [
+        "comment thread"
+      ]
+    },
+    {
+      "n": 44,
+      "name": "DatePicker",
+      "category": "primitives",
+      "tags": [
+        "calendar",
+        "picker"
+      ],
+      "desc": "Month-grid date picker with prev/next month navigation, ISO `YYYY-MM-DD` values, `min`/`max` day blocking, configurable `weekStartsOn` (0 = Sunday, 1 = Monday) and an optional Today shortcut.",
+      "aliases": [
+        "date picker",
+        "selector",
+        "选择器"
+      ]
+    },
+    {
+      "n": 45,
+      "name": "KanbanBoard",
+      "category": "data-display",
+      "tags": [
+        "drag-drop",
+        "kanban"
+      ],
+      "desc": "Drag-and-drop kanban board over flat `columns` + `cards` data (cards reference `columnId`), WIP `limit` counters, priority chips, tag chips, assignee initials, and ArrowLeft/ArrowRight keyboard moves.",
+      "aliases": [
+        "kanban board",
+        "看板"
+      ]
+    },
+    {
+      "n": 46,
+      "name": "SideDrawer",
+      "category": "overlays",
+      "tags": [
+        "modal"
+      ],
+      "desc": "Right- or left-anchored modal drawer with `sm`/`md`/`lg` widths, header + scrollable body + footer slots, Esc and backdrop dismissal, `role=\"dialog\"`/`aria-modal` semantics.",
+      "aliases": [
+        "side drawer",
+        "sidebar",
+        "侧边栏",
+        "抽屉"
+      ]
+    },
+    {
+      "n": 47,
+      "name": "AccountSwitcher",
+      "category": "overlays",
+      "tags": [
+        "avatar",
+        "dropdown"
+      ],
+      "desc": "Workspace switcher trigger showing the current account with a dropdown of all accounts (role · plan meta), add-account and sign-out actions, and outside-click/Escape dismissal.",
+      "aliases": [
+        "account switcher",
+        "dropdown",
+        "select",
+        "下拉"
+      ]
+    },
+    {
+      "n": 48,
+      "name": "SchedulerSlots",
+      "category": "primitives",
+      "tags": [
+        "calendar",
+        "picker"
+      ],
+      "desc": "Appointment slot picker grouped into morning/afternoon/evening with 12-hour labels, an open-slot count, blocked slots (lock icon + disabled), optional per-group notes and a timezone caption.",
+      "aliases": [
+        "scheduler slots",
+        "calendar",
+        "日历"
+      ]
+    },
+    {
+      "n": 49,
+      "name": "RichToolbar",
+      "category": "primitives",
+      "tags": [
+        "popover"
+      ],
+      "desc": "Formatting toolbar with separated button groups (dividers), icon-or-text glyph buttons, `active` toggle state (`aria-pressed`), disabled items and optional `shortcut` tooltips; `role=\"toolbar\"` per group.",
+      "aliases": [
+        "rich toolbar"
+      ]
+    },
+    {
+      "n": 50,
+      "name": "HeroSection",
+      "category": "content",
+      "tags": [
+        "animated",
+        "card"
+      ],
+      "desc": "Marketing hero with an eyebrow pill, headline, description, primary/secondary CTAs and a check-mark highlight row; centered or left-aligned.",
+      "aliases": [
+        "hero section",
+        "marketing",
+        "landing",
+        "营销",
+        "落地页"
+      ]
+    },
+    {
+      "n": 51,
+      "name": "FooterSection",
+      "category": "content",
+      "tags": [
+        "dark-mode"
+      ],
+      "desc": "Marketing footer with a brand block + tagline, multi-column link lists, a social-icons row and a generated-or-custom copyright line.",
+      "aliases": [
+        "footer section",
+        "marketing",
+        "landing",
+        "营销",
+        "落地页"
+      ]
+    },
+    {
+      "n": 52,
+      "name": "TestimonialGrid",
+      "category": "content",
+      "tags": [
+        "avatar",
+        "card"
+      ],
+      "desc": "Customer quote cards in a 2- or 3-column grid with star ratings, avatar-or-initials attribution and role/company meta; empty state included.",
+      "aliases": [
+        "testimonial grid",
+        "marketing",
+        "landing",
+        "营销",
+        "落地页"
+      ]
+    },
+    {
+      "n": 53,
+      "name": "VoiceModePanel",
+      "category": "media",
+      "tags": [
+        "panel",
+        "voice"
+      ],
+      "desc": "Voice-conversation surface with a four-state orb (idle / listening / thinking / speaking), pulsing halo, animated waveform bars, live transcript and reply lines, and an optional end-session action.",
+      "aliases": [
+        "voice mode panel",
+        "面板",
+        "speech",
+        "语音"
+      ]
+    },
+    {
+      "n": 54,
+      "name": "PromptLibrary",
+      "category": "ai-chat",
+      "tags": [
+        "card",
+        "prompt",
+        "search"
+      ],
+      "desc": "Saved-prompt browser with free-text search across title/description/body/tags, category chips, favorite stars, monospace prompt previews and a Use action.",
+      "aliases": [
+        "prompt library",
+        "提示词"
+      ]
+    },
+    {
+      "n": 55,
+      "name": "Tabs",
+      "category": "layout",
+      "tags": [
+        "tabs"
+      ],
+      "desc": "Accessible tab strip in underline or pills form with icons, badges, disabled tabs, controlled or uncontrolled selection and Arrow/Home/End keyboard navigation.",
+      "aliases": [
+        "标签页",
+        "选项卡"
+      ]
+    },
+    {
+      "n": 56,
+      "name": "Accordion",
+      "category": "layout",
+      "tags": [
+        "animated",
+        "collapsible"
+      ],
+      "desc": "Disclosure list with optional icons and descriptions, single-open or `allowMultiple` behavior, animated chevron and `aria-expanded` + region semantics.",
+      "aliases": []
+    },
+    {
+      "n": 57,
+      "name": "AvatarGroup",
+      "category": "primitives",
+      "tags": [
+        "avatar"
+      ],
+      "desc": "Overlapping collaborator avatars with initials/image/user-icon fallbacks, +N overflow chip, optional presence dots and sm/md/lg sizes.",
+      "aliases": [
+        "avatar group",
+        "头像"
+      ]
+    },
+    {
+      "n": 58,
+      "name": "FilterBar",
+      "category": "primitives",
+      "tags": [
+        "filter"
+      ],
+      "desc": "Multi-select filter chips with dropdown option lists, per-option counts, active-count badges, Clear all, and outside-click/Escape dismissal.",
+      "aliases": [
+        "filter bar",
+        "筛选",
+        "过滤器"
+      ]
+    },
+    {
+      "n": 59,
+      "name": "Tooltip",
+      "category": "overlays",
+      "tags": [
+        "tooltip"
+      ],
+      "desc": "Hover/focus hint bubble positioned on any of four sides, linked to its trigger via `aria-describedby`, with pure-CSS fade and light-DOM children preserved.",
+      "aliases": [
+        "工具提示",
+        "悬浮提示"
+      ]
+    },
+    {
+      "n": 60,
+      "name": "Breadcrumb",
+      "category": "layout",
+      "tags": [
+        "dark-mode"
+      ],
+      "desc": "Trail navigation with icon + label crumbs rendered as links, buttons or the current page, optional `maxItems` middle collapse and `aria-current=\"page\"`.",
+      "aliases": [
+        "面包屑"
+      ]
+    },
+    {
+      "n": 61,
+      "name": "Pagination",
+      "category": "layout",
+      "tags": [
+        "dark-mode"
+      ],
+      "desc": "Page-number navigation with ellipsis gaps, adjustable sibling count, optional first/last jump buttons, disabled bounds and `aria-current=\"page\"`.",
+      "aliases": [
+        "pager",
+        "分页"
+      ]
+    },
+    {
+      "n": 62,
+      "name": "AlertBanner",
+      "category": "feedback",
+      "tags": [
+        "badge"
+      ],
+      "desc": "Inline status banner in info/success/warning/danger tones with optional action and dismiss buttons, using `role=\"status\"` or `role=\"alert\"` by severity.",
+      "aliases": [
+        "alert banner"
+      ]
+    },
+    {
+      "n": 63,
+      "name": "ComboBox",
+      "category": "primitives",
+      "tags": [
+        "dropdown",
+        "search"
+      ],
+      "desc": "Searchable dropdown select with input filtering, ArrowUp/Down + Enter keyboard navigation, selected check, clear button, and outside-click/Escape dismissal.",
+      "aliases": [
+        "combo box",
+        "picker",
+        "selector",
+        "选择器",
+        "dropdown",
+        "select",
+        "下拉"
+      ]
+    },
+    {
+      "n": 64,
+      "name": "Navbar",
+      "category": "layout",
+      "tags": [
+        "dark-mode"
+      ],
+      "desc": "Site navigation bar with multi-column mega menu panels (headings, icons, badges), plain links, and a CTA button; panels close on outside click or Escape.",
+      "aliases": []
+    },
+    {
+      "n": 65,
+      "name": "ActivityFeed",
+      "category": "data-display",
+      "tags": [
+        "list",
+        "timeline"
+      ],
+      "desc": "Timeline feed with six event kinds (event/comment/merge/deploy/flag/alert) mapped to tone chips, vertical connector line, monospace target pills, detail lines and relative timestamps.",
+      "aliases": [
+        "activity feed",
+        "list",
+        "列表"
+      ]
+    },
+    {
+      "n": 66,
+      "name": "UsageMeter",
+      "category": "billing",
+      "tags": [
+        "animated",
+        "svg-chart"
+      ],
+      "desc": "Quota progress bar with 70%/90% threshold tones (indigo/amber/rose), percent + used/limit caption and optional remaining legend; safe at limit<=0.",
+      "aliases": [
+        "usage meter",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 67,
+      "name": "ToggleSwitch",
+      "category": "primitives",
+      "tags": [
+        "aria"
+      ],
+      "desc": "Accessible switch (role=switch + aria-checked) with sm/md track sizes, optional label/description block, disabled state; fires change with { checked }.",
+      "aliases": [
+        "toggle switch",
+        "开关"
+      ]
+    },
+    {
+      "n": 68,
+      "name": "Stepper",
+      "category": "primitives",
+      "tags": [
+        "wizard"
+      ],
+      "desc": "Horizontal progress flow with complete/current/upcoming/error circle states, colored connectors, optional descriptions, click-to-jump for non-upcoming steps and a static read-only mode.",
+      "aliases": [
+        "wizard",
+        "步骤",
+        "向导"
+      ]
+    },
+    {
+      "n": 69,
+      "name": "SearchInput",
+      "category": "primitives",
+      "tags": [
+        "search"
+      ],
+      "desc": "Search field with controlled/uncontrolled modes, ⌘K shortcut hint chip, clear button once a query exists, loading spinner, Enter→search and Escape→clear semantics.",
+      "aliases": [
+        "search input",
+        "搜索"
+      ]
+    },
+    {
+      "n": 70,
+      "name": "Tag",
+      "category": "primitives",
+      "tags": [
+        "badge"
+      ],
+      "desc": "Pill label in six tones (neutral/indigo/emerald/amber/rose/sky) with sm/md sizing, optional icon, removable variant (remove event) and clickable variant (tag-click event).",
+      "aliases": []
+    },
+    {
+      "n": 71,
+      "name": "Modal",
+      "category": "overlays",
+      "tags": [
+        "modal"
+      ],
+      "desc": "Centered dialog over blurred backdrop with title/description header, body children, footer slot bar, close button, Escape/backdrop dismissal gated by dismissible and show-close flags.",
+      "aliases": [
+        "popup",
+        "弹窗",
+        "对话框"
+      ]
+    },
+    {
+      "n": 72,
+      "name": "ProfileHeader",
+      "category": "primitives",
+      "tags": [
+        "avatar"
+      ],
+      "desc": "Profile page header with gradient cover and Pro pill, overlapping avatar (image or initials), status dot + text, stats as definition list, action buttons (primary/secondary/ghost), and tab row with aria-current.",
+      "aliases": [
+        "profile header",
+        "avatar",
+        "头像"
+      ]
+    },
+    {
+      "n": 73,
+      "name": "BillingPanel",
+      "category": "billing",
+      "tags": [
+        "card",
+        "panel",
+        "settings"
+      ],
+      "desc": "Upgrade/billing panel with monthly/annual period toggle (aria-pressed), price block, feature checklist, line items as definition list with emphasized total row, primary CTA and info note.",
+      "aliases": [
+        "billing panel",
+        "面板",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 74,
+      "name": "StepSlider",
+      "category": "primitives",
+      "tags": [
+        "animated"
+      ],
+      "desc": "Discrete slider with per-stop buttons, filled track portion, ArrowLeft/Right/Home/End keyboard support on role=slider, highlight-from forward markers, and aria-valuetext from the step labels.",
+      "aliases": [
+        "step slider"
+      ]
+    },
+    {
+      "n": 75,
+      "name": "InboxList",
+      "category": "data-display",
+      "tags": [
+        "badge",
+        "list",
+        "search"
+      ],
+      "desc": "Inbox rows with unread dot, sender column, optional tag pill (rose/emerald/indigo), subject + snippet truncation, monospace date, active row highlight via active-id, and empty state.",
+      "aliases": [
+        "inbox list",
+        "列表"
+      ]
+    },
+    {
+      "n": 76,
+      "name": "ChangelogFeed",
+      "category": "content",
+      "tags": [
+        "list"
+      ],
+      "desc": "Changelog aside with sparkles header, badge-toned entries (rose/emerald/indigo/amber) in a divided list, optional selectable rows, footer link button and empty state.",
+      "aliases": [
+        "changelog feed",
+        "list",
+        "列表",
+        "marketing",
+        "landing",
+        "营销",
+        "落地页"
+      ]
+    },
+    {
+      "n": 77,
+      "name": "MetricStrip",
+      "category": "charts",
+      "tags": [
+        "svg-chart"
+      ],
+      "desc": "One-row KPI strip with divided clickable cells, optional leading icon, delta chip (trending-up emerald / trending-down rose / minus zinc) formatted `+N%` or custom deltaLabel, active cell highlight via activeIndex, and empty render without metrics.",
+      "aliases": [
+        "metric strip",
+        "chart",
+        "graph",
+        "图表"
+      ]
+    },
+    {
+      "n": 78,
+      "name": "RankList",
+      "category": "data-display",
+      "tags": [
+        "animated",
+        "list"
+      ],
+      "desc": "Ranked value list with peak-normalized inline ratio bars (4% minimum clamp), optional row icons, monospace value column, value-header column caption, maxItems truncation, optional row selection and empty state.",
+      "aliases": [
+        "rank list",
+        "列表"
+      ]
+    },
+    {
+      "n": 79,
+      "name": "SideNav",
+      "category": "layout",
+      "tags": [
+        "collapsible"
+      ],
+      "desc": "Grouped sidebar navigation with uppercase group titles, icon + truncated label entries, count badges (rose when >0, zinc when 0), active entry highlight via activeId and navigate event.",
+      "aliases": [
+        "side nav",
+        "sidebar",
+        "侧边栏"
+      ]
+    },
+    {
+      "n": 80,
+      "name": "PageHeader",
+      "category": "layout",
+      "tags": [
+        "standalone"
+      ],
+      "desc": "Dashboard page header with title, emerald Live status pill, description, action button group (primary/secondary/ghost variants, optional icons) and underline tab nav with optional count badges; emits action and tab-change.",
+      "aliases": [
+        "page header"
+      ]
+    },
+    {
+      "n": 81,
+      "name": "TimeframePicker",
+      "category": "primitives",
+      "tags": [
+        "picker"
+      ],
+      "desc": "Segmented timeframe presets with aria-pressed active state, previous/next period step buttons flanking a calendar range label, disabled state styling and change/step events.",
+      "aliases": [
+        "timeframe picker",
+        "selector",
+        "选择器"
+      ]
+    },
+    {
+      "n": 82,
+      "name": "WizardSteps",
+      "category": "primitives",
+      "tags": [
+        "wizard"
+      ],
+      "desc": "Multi-step form wizard navigator with a vertical variant (numbered circles in done/active/todo states, connector lines, optional \"(Optional)\" tags, clickable completed steps for back navigation) and a bar variant (\"N of M steps | Next: …\" caption over a violet progressbar).",
+      "aliases": [
+        "wizard steps",
+        "步骤",
+        "向导"
+      ]
+    },
+    {
+      "n": 83,
+      "name": "FormField",
+      "category": "forms",
+      "tags": [
+        "form-validation"
+      ],
+      "desc": "Single labeled field skeleton with required star / \"(Optional)\" tag, error (alert icon + aria-invalid) or hint paragraph, N/M character counter, helper footer note and a default slot for the control (vanilla preserves live control state across re-renders).",
+      "aliases": [
+        "form field",
+        "表单"
+      ]
+    },
+    {
+      "n": 84,
+      "name": "GanttTimeline",
+      "category": "data-display",
+      "tags": [
+        "gantt"
+      ],
+      "desc": "Table-shaped gantt chart with row labels (depth indentation), numbered column headers, task bars in four tones with optional progress overlay + percent label, a rose \"today\" marker line and optional task-click.",
+      "aliases": [
+        "gantt timeline",
+        "时间线",
+        "甘特图"
+      ]
+    },
+    {
+      "n": 85,
+      "name": "ApprovalCard",
+      "category": "data-display",
+      "tags": [
+        "card",
+        "security"
+      ],
+      "desc": "Approval panel with stacked initials avatars + approved/total counter, due date row, decision line in approved (emerald) / rejected (rose) / pending (zinc) tones, optional note and Approve / Request change buttons (always rendered while decision is pending; request-change plus-button appears with an onRequestChange handler).",
+      "aliases": [
+        "approval card",
+        "卡片",
+        "permission",
+        "rbac",
+        "权限"
+      ]
+    },
+    {
+      "n": 86,
+      "name": "ResourceList",
+      "category": "data-display",
+      "tags": [
+        "list",
+        "search"
+      ],
+      "desc": "Data-resource list rows with icon tile, name + monospace path, time label and kind badge (zinc/indigo/emerald/amber), header with total count, maxItems truncation, optional row selection and empty state.",
+      "aliases": [
+        "resource list",
+        "列表"
+      ]
+    },
+    {
+      "n": 87,
+      "name": "SegmentBreakdownBars",
+      "category": "charts",
+      "tags": [
+        "svg-chart"
+      ],
+      "desc": "Headline metric + per-segment horizontal bars with value column and vs-total delta column (green/red pp), five bar tones and a share footer.",
+      "aliases": [
+        "segment breakdown bars",
+        "chart",
+        "graph",
+        "图表"
+      ]
+    },
+    {
+      "n": 88,
+      "name": "TargetGauge",
+      "category": "charts",
+      "tags": [
+        "svg-chart"
+      ],
+      "desc": "Semicircle KPI gauge with three zone bands (rose/amber/emerald), rotating needle, min/value-chip/max scale labels and an optional remaining line.",
+      "aliases": [
+        "target gauge",
+        "chart",
+        "graph",
+        "图表",
+        "仪表盘"
+      ]
+    },
+    {
+      "n": 89,
+      "name": "HealthDonutStats",
+      "category": "charts",
+      "tags": [
+        "card",
+        "svg-chart"
+      ],
+      "desc": "Card grid of conic-gradient donuts with center percent, per-slice legend with shares, captions and optional action buttons.",
+      "aliases": [
+        "health donut stats",
+        "chart",
+        "graph",
+        "图表",
+        "gauge",
+        "仪表盘"
+      ]
+    },
+    {
+      "n": 90,
+      "name": "ForecastTrendChart",
+      "category": "charts",
+      "tags": [
+        "svg-chart"
+      ],
+      "desc": "Column trend that distinguishes solid actual bars from dashed forecast columns, with headline + delta badge (trending icon), note line and Actual/Forecast legend.",
+      "aliases": [
+        "forecast trend chart",
+        "graph",
+        "图表"
+      ]
+    },
+    {
+      "n": 91,
+      "name": "GroupedBarCompare",
+      "category": "charts",
+      "tags": [
+        "svg-chart"
+      ],
+      "desc": "Grouped two-bar comparison chart (violet estimated vs lime actual) with per-bar value labels, row names and a legend header.",
+      "aliases": [
+        "grouped bar compare"
+      ]
+    },
+    {
+      "n": 92,
+      "name": "QuoteMasonry",
+      "category": "content",
+      "tags": [
+        "card"
+      ],
+      "desc": "Customer quote wall in a CSS-columns masonry (columns-1 sm:columns-2 lg:columns-3, break-inside-avoid) with curly quote marks (opt out via marked:false), uppercase name attribution and company badge.",
+      "aliases": [
+        "quote masonry",
+        "marketing",
+        "landing",
+        "营销",
+        "落地页"
+      ]
+    },
+    {
+      "n": 93,
+      "name": "SiteFooter",
+      "category": "content",
+      "tags": [
+        "dark-mode"
+      ],
+      "desc": "Dark site footer (bg-zinc-950) with link columns, compliance badge circles (icon + emerald/amber/zinc status text) and a tagline + copyright bottom row.",
+      "aliases": [
+        "site footer",
+        "marketing",
+        "landing",
+        "营销",
+        "落地页"
+      ]
+    },
+    {
+      "n": 94,
+      "name": "MarqueeWall",
+      "category": "content",
+      "tags": [
+        "animated",
+        "avatar"
+      ],
+      "desc": "Alternating marquee rows of testimonial cards (keyframes marquee-scroll, odd rows reversed, cards doubled for seamless loop), hover pauses, `paused` attribute freezes, initials avatars, anonymous cards hide the handle.",
+      "aliases": [
+        "marquee wall",
+        "marketing",
+        "landing",
+        "营销",
+        "落地页"
+      ]
+    },
+    {
+      "n": 95,
+      "name": "OnboardingStepper",
+      "category": "forms",
+      "tags": [
+        "onboarding",
+        "wizard"
+      ],
+      "desc": "Onboarding step chain (`>` separators, current step underlined indigo, progress bar at ((active+1)/total)%) with a segmented description control (role=tablist), example rows and a continue button.",
+      "aliases": [
+        "onboarding stepper",
+        "wizard",
+        "步骤",
+        "向导",
+        "tour",
+        "引导",
+        "新手引导"
+      ]
+    },
+    {
+      "n": 96,
+      "name": "FilterToolbar",
+      "category": "primitives",
+      "tags": [
+        "filter"
+      ],
+      "desc": "Filter chip toolbar with tone value pills (rose/emerald/amber/indigo), removable chips (× buttons), search input, list/grid view toggle (view:\"none\" hides it; React renders the toggle when viewOnChange is provided) and an action button.",
+      "aliases": [
+        "filter toolbar",
+        "筛选",
+        "过滤器"
+      ]
+    },
+    {
+      "n": 97,
+      "name": "OtpInput",
+      "category": "forms",
+      "tags": [
+        "form-validation",
+        "security"
+      ],
+      "desc": "Verification code entry with six cells (auto-advance, backspace to previous, full-code paste auto-submit), error state (rose cells + alert line), Continue button and resend hint.",
+      "aliases": [
+        "otp input",
+        "security",
+        "安全",
+        "verification code",
+        "验证码"
+      ]
+    },
+    {
+      "n": 98,
+      "name": "SearchTypeahead",
+      "category": "primitives",
+      "tags": [
+        "dropdown",
+        "search"
+      ],
+      "desc": "Page-level search with underline input, yellow <mark> substring highlighting, suggestion rows with mono type badges, grouped Top results with badges, footer hint + Help Center link and a clear button.",
+      "aliases": [
+        "search typeahead",
+        "搜索"
+      ]
+    },
+    {
+      "n": 99,
+      "name": "TourTooltip",
+      "category": "overlays",
+      "tags": [
+        "onboarding",
+        "tooltip"
+      ],
+      "desc": "Anchored coach-mark card with triangular caret (top/bottom/none), Step N of M counter, light/dark themes, optional thumbs feedback, Previous hidden on step 1 and \"Finish tour\" on the last step.",
+      "aliases": [
+        "tour tooltip",
+        "工具提示",
+        "悬浮提示",
+        "onboarding",
+        "引导",
+        "新手引导"
+      ]
+    },
+    {
+      "n": 100,
+      "name": "CookieConsent",
+      "category": "feedback",
+      "tags": [
+        "modal"
+      ],
+      "desc": "Cookie preference dialog with collapsible <details> categories, \"Always Active\" locked rows, mono cookie-name lists and Accept All / Reject All / Confirm bulk actions emitting the accepted id list.",
+      "aliases": [
+        "cookie consent"
+      ]
+    },
+    {
+      "n": 101,
+      "name": "SettingsSideDrawer",
+      "category": "overlays",
+      "tags": [
+        "modal",
+        "settings"
+      ],
+      "desc": "Side-anchored settings panel gated by the `open` attribute / `isOpen` prop (closed by default) over a fixed overlay with tab strip, setting rows (title + description + toggle/select/3-tone button controls) and a sticky footer (primary + secondary).",
+      "aliases": [
+        "settings side drawer",
+        "sidebar",
+        "侧边栏",
+        "抽屉"
+      ]
+    },
+    {
+      "n": 102,
+      "name": "ClarifyQuestionCard",
+      "category": "ai-chat",
+      "tags": [
+        "prompt"
+      ],
+      "desc": "Indigo-bordered clarification card with \"?\" badge, paging \"N of M\" (only when total > 1), answered state pill vs Enter-to-answer input and an emerald check + step label footer.",
+      "aliases": [
+        "clarify question card",
+        "卡片"
+      ]
+    },
+    {
+      "n": 103,
+      "name": "AgentTaskProgress",
+      "category": "agent-ops",
+      "tags": [
+        "streaming"
+      ],
+      "desc": "Agent task progress with context banner, hint line, stacked step cards (done play icon / active spinner + substeps rail / pending chevron) and feedback + Refine/Next footer.",
+      "aliases": [
+        "agent task progress",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 104,
+      "name": "UsageQuotaCard",
+      "category": "billing",
+      "tags": [
+        "card",
+        "svg-chart"
+      ],
+      "desc": "Credit/quota meter in card variant (label, used-of-total, sky progress bar, upgrade line, full-width CTA) or emerald banner variant with inline CTA.",
+      "aliases": [
+        "usage quota card",
+        "卡片",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 105,
+      "name": "WorkspaceSwitcherMenu",
+      "category": "overlays",
+      "tags": [
+        "dropdown"
+      ],
+      "desc": "Workspace picker with gradient-initials or logo rows, \"N members · You are an Admin/Editor\" role lines, current highlight, create button and footer user row with logout.",
+      "aliases": [
+        "workspace switcher menu",
+        "dropdown",
+        "select",
+        "下拉"
+      ]
+    },
+    {
+      "n": 106,
+      "name": "AttachmentChip",
+      "category": "primitives",
+      "tags": [
+        "badge"
+      ],
+      "desc": "Compact file chip with kind tone badge (pdf=rose / doc=sky / csv=emerald / image=violet), mono glyph, name + size/meta line and round black X remove button.",
+      "aliases": [
+        "attachment chip"
+      ]
+    },
+    {
+      "n": 107,
+      "name": "DeploymentCard",
+      "category": "agent-ops",
+      "tags": [
+        "badge"
+      ],
+      "desc": "Single deployment record with status pill (building pulse / live / failed), mono commit sha + message line, source + relative time, Cancel deploy while building and Visit on terminal states.",
+      "aliases": [
+        "deployment card",
+        "卡片",
+        "部署"
+      ]
+    },
+    {
+      "n": 108,
+      "name": "LiveTailLogConsole",
+      "category": "agent-ops",
+      "tags": [
+        "keyboard",
+        "streaming"
+      ],
+      "desc": "Dark streaming log terminal with source-filter select, search input, Live tail follow toggle, timezone chip and severity-dot log lines (info/warn/error/success) capped by maxLines.",
+      "aliases": [
+        "live tail log console",
+        "日志"
+      ]
+    },
+    {
+      "n": 109,
+      "name": "PipelineStageList",
+      "category": "agent-ops",
+      "tags": [
+        "animated",
+        "list"
+      ],
+      "desc": "Grouped CI pipeline accordion with phase headers (dashed circle or running spinner, current step, summed duration) and nested stage rows with mono status (Pending/Running/Completed/Failed) + per-stage durations.",
+      "aliases": [
+        "pipeline stage list",
+        "列表",
+        "deploy",
+        "部署"
+      ]
+    },
+    {
+      "n": 110,
+      "name": "ChangedFilesList",
+      "category": "data-display",
+      "tags": [
+        "list"
+      ],
+      "desc": "PR changed-file card with collapsible header (title + total +N/−N diffstat), file rows (extension badge, mono path, status tag, per-file diffstat) and optional folder grouping.",
+      "aliases": [
+        "changed files list",
+        "列表"
+      ]
+    },
+    {
+      "n": 111,
+      "name": "ServiceStatusList",
+      "category": "data-display",
+      "tags": [
+        "badge",
+        "list"
+      ],
+      "desc": "Dev-environment service table (name, command code chip, running/stopped/failed/starting status, dark URL chip) with a verification checklist below (green check + code + detail or gray dot) and a duration footer.",
+      "aliases": [
+        "service status list",
+        "列表"
+      ]
+    },
+    {
+      "n": 112,
+      "name": "FilterQueryBuilder",
+      "category": "forms",
+      "tags": [
+        "dropdown",
+        "filter"
+      ],
+      "desc": "Filter row builder with conjunction chips (where/and), field select, mono operator select (=, <>, >, <, ~, >=, <=), borderless value input and round X remove; \"+ Add filter\" ghost button with maxRows cap and \"Clear filters\" link.",
+      "aliases": [
+        "filter query builder",
+        "筛选",
+        "过滤器"
+      ]
+    },
+    {
+      "n": 113,
+      "name": "ColumnVisibilityMenu",
+      "category": "overlays",
+      "tags": [
+        "dropdown",
+        "table"
+      ],
+      "desc": "Column visibility popover with \"Showing X of Y\" header, reset link, grip/lock/eye/reorder rows and optional apply-button mode (draft set + footer Apply).",
+      "aliases": [
+        "column visibility menu",
+        "dropdown",
+        "select",
+        "下拉"
+      ]
+    },
+    {
+      "n": 114,
+      "name": "StatusCountTabs",
+      "category": "layout",
+      "tags": [
+        "badge",
+        "tabs"
+      ],
+      "desc": "Segmented tab strip with live counts that docks flush onto a table card (rounded-t-lg, border-b-0); active tab is white with inset bottom shadow.",
+      "aliases": [
+        "status count tabs",
+        "标签页",
+        "选项卡"
+      ]
+    },
+    {
+      "n": 115,
+      "name": "EntityMultiSelectPicker",
+      "category": "primitives",
+      "tags": [
+        "avatar",
+        "dropdown",
+        "picker"
+      ],
+      "desc": "Searchable checkbox multi-pick with avatar rows (image / rotating-tone initials / system dot tile), blue-50 selected rows and Cancel / \"Insert results\" footer.",
+      "aliases": [
+        "entity multi select picker",
+        "selector",
+        "选择器",
+        "dropdown",
+        "下拉"
+      ]
+    },
+    {
+      "n": 116,
+      "name": "FederatedSearchResultsPanel",
+      "category": "data-display",
+      "tags": [
+        "card",
+        "panel",
+        "search"
+      ],
+      "desc": "Full-text federated search overlay with source filter chips (toggle set, aria-pressed), snippet results with `<mark>` highlight and keyboard legend + \"Press Tab to Ask AI\" pill.",
+      "aliases": [
+        "federated search results panel",
+        "搜索",
+        "面板"
+      ]
+    },
+    {
+      "n": 117,
+      "name": "TimeSlotPicker",
+      "category": "primitives",
+      "tags": [
+        "calendar",
+        "picker"
+      ],
+      "desc": "Appointment booking with horizontal date chip strip, Morning/Afternoon/Evening grouped slot grids, availability counts (green N available / gray Fully booked) and indigo selected slot.",
+      "aliases": [
+        "time slot picker",
+        "calendar",
+        "日历",
+        "selector",
+        "选择器"
+      ]
+    },
+    {
+      "n": 118,
+      "name": "OrderTracker",
+      "category": "commerce",
+      "tags": [
+        "timeline"
+      ],
+      "desc": "Order fulfillment tracker with dot-connector variant (green check dots, current ring, ETA line, Track shipment link) and bar variant (continuous progress + stage labels); canceled state goes all-gray with reason copy.",
+      "aliases": [
+        "order tracker",
+        "订单"
+      ]
+    },
+    {
+      "n": 119,
+      "name": "OrderSummaryPanel",
+      "category": "commerce",
+      "tags": [
+        "card",
+        "panel"
+      ],
+      "desc": "Checkout price breakdown with kind-toned rows (discount/fee green, total bold with top border, strikeValue, notes), applied promo chips, promo input (Enter/Apply) and dark pill CTA carrying amount + trust footer.",
+      "aliases": [
+        "order summary panel",
+        "面板",
+        "订单"
+      ]
+    },
+    {
+      "n": 120,
+      "name": "PaymentMethodCard",
+      "category": "billing",
+      "tags": [
+        "card",
+        "security"
+      ],
+      "desc": "Saved payment method with brand tile (VISA blue / MC black / AMEX sky), masked \"Ending in\" number, expiry, optional right-aligned amount, billing holder block and Change / \"+ Add new payment\" actions.",
+      "aliases": [
+        "payment method card",
+        "卡片",
+        "支付"
+      ]
+    },
+    {
+      "n": 121,
+      "name": "OrderCard",
+      "category": "commerce",
+      "tags": [
+        "card"
+      ],
+      "desc": "Purchase-history card with gray header strip (Order# + Placed + View details pill), fulfillment verb + bold ETA + store line, six-state status badge, item thumbnails with qty/price and Buy it again / Total footer.",
+      "aliases": [
+        "order card",
+        "卡片",
+        "订单"
+      ]
+    },
+    {
+      "n": 122,
+      "name": "ColorPickerPopover",
+      "category": "forms",
+      "tags": [
+        "picker",
+        "popover"
+      ],
+      "desc": "Solid color picker with 6-row hue shade grid (selected ring + check, light swatches auto-gray check), live hex input, R/G/B channel inputs, eyedropper button, Document colors / Custom colors sections with dashed add tile.",
+      "aliases": [
+        "color picker popover",
+        "popup",
+        "弹窗",
+        "对话框",
+        "selector",
+        "选择器"
+      ]
+    },
+    {
+      "n": 123,
+      "name": "EditorToolPalette",
+      "category": "layout",
+      "tags": [
+        "drag-drop"
+      ],
+      "desc": "Floating canvas tool picker with per-tool kbd number hints, blue active-tool highlight, selection count badge, horizontal pill or vertical rail orientation.",
+      "aliases": [
+        "editor tool palette"
+      ]
+    },
+    {
+      "n": 124,
+      "name": "ShortcutCheatSheet",
+      "category": "overlays",
+      "tags": [
+        "card",
+        "keyboard",
+        "panel"
+      ],
+      "desc": "Two-column grouped editor shortcut list with icons, markdown-syntax mono hints, keycap chip groups (bordered, subtle bottom shadow), live search filter with empty state.",
+      "aliases": [
+        "shortcut cheat sheet"
+      ]
+    },
+    {
+      "n": 125,
+      "name": "ZoomControlBar",
+      "category": "overlays",
+      "tags": [
+        "dropdown"
+      ],
+      "desc": "Canvas viewport zoom in three variants (stepper −/%/+, dropdown with upward preset menu + Fit, slider with live label), optional undo/redo pair with divider, value clamped to [min,max].",
+      "aliases": [
+        "zoom control bar",
+        "dropdown",
+        "select",
+        "下拉"
+      ]
+    },
+    {
+      "n": 126,
+      "name": "AIInlineMenu",
+      "category": "ai-chat",
+      "tags": [
+        "dropdown",
+        "prompt"
+      ],
+      "desc": "Selection-anchored floating AI pill with sparkle badge chip (indigo or brand-emerald tone), action buttons with upward option menus, loading pulse + \"Working…\", red error border, dismiss round button.",
+      "aliases": [
+        "a i inline menu"
+      ]
+    },
+    {
+      "n": 127,
+      "name": "EmptyStateStarter",
+      "category": "feedback",
+      "tags": [
+        "empty-state"
+      ],
+      "desc": "First-run \"nothing here yet\" starter with illustration slot, plain/dashed/card variants, md/sm sizes and solid/outline/link action styles.",
+      "aliases": [
+        "empty state starter",
+        "empty state",
+        "空状态"
+      ]
+    },
+    {
+      "n": 128,
+      "name": "AuthGatePrompt",
+      "category": "forms",
+      "tags": [
+        "modal",
+        "security"
+      ],
+      "desc": "Soft contextual sign-in gate with SSO pill stack (white/#1877F2/dark tones), hairline divider, secondary outlined pill and \"Not now\" guest-skip link.",
+      "aliases": [
+        "auth gate prompt",
+        "login",
+        "signin",
+        "log in",
+        "登录",
+        "认证",
+        "提示词",
+        "permission",
+        "rbac",
+        "权限"
+      ]
+    },
+    {
+      "n": 129,
+      "name": "AuthSplitPanel",
+      "category": "forms",
+      "tags": [
+        "card",
+        "panel",
+        "security"
+      ],
+      "desc": "Two-column welcome/auth shell — tinted brand panel (title + subtitle) or dark cover variant beside auth content, with blue legal footer links.",
+      "aliases": [
+        "auth split panel",
+        "login",
+        "signin",
+        "log in",
+        "登录",
+        "认证",
+        "面板"
+      ]
+    },
+    {
+      "n": 130,
+      "name": "SuccessToast",
+      "category": "feedback",
+      "tags": [
+        "animated"
+      ],
+      "desc": "Self-dismissing mint confirmation toast (emerald-100 bg + dark-green check icon), fixed top-right or bottom-right, auto-dismiss timer reset on message change, close button.",
+      "aliases": [
+        "success toast",
+        "提示条",
+        "通知条"
+      ]
+    },
+    {
+      "n": 131,
+      "name": "EditableHeading",
+      "category": "primitives",
+      "tags": [
+        "keyboard"
+      ],
+      "desc": "Inline-editable object title — heading when idle, click switches to highlighted input (yellow bg + teal focus ring), Enter/blur commits, Esc cancels, breadcrumb + meta rows around it.",
+      "aliases": [
+        "editable heading"
+      ]
+    },
+    {
+      "n": 132,
+      "name": "PlanComparisonTable",
+      "category": "billing",
+      "tags": [
+        "table"
+      ],
+      "desc": "Linear/Sprig style feature-comparison matrix — grouped section headers (dark band), per-cell check / note values (\"G Suite + SAML\"), highlighted plan column with tinted bg and per-plan CTA row.",
+      "aliases": [
+        "plan comparison table",
+        "表格",
+        "pricing",
+        "定价",
+        "价格"
+      ]
+    },
+    {
+      "n": 133,
+      "name": "UpgradeCheckoutPanel",
+      "category": "billing",
+      "tags": [
+        "form-validation",
+        "panel",
+        "paywall"
+      ],
+      "desc": "Clockwise/Attio style upgrade checkout — billing cadence segmented switch, seat stepper (min/max clamp), line-item summary with strikethrough list price, discount row, terms fine print and confirm CTA.",
+      "aliases": [
+        "upgrade checkout panel",
+        "面板",
+        "billing",
+        "计费",
+        "账单",
+        "payment",
+        "支付",
+        "结算"
+      ]
+    },
+    {
+      "n": 134,
+      "name": "TrialBanner",
+      "category": "billing",
+      "tags": [
+        "badge",
+        "paywall"
+      ],
+      "desc": "Later style trial countdown banner — days-left pill (pulses when <=3 days), plan-aware default message, unlock CTA, dismissible variant with X button and `show()` restore.",
+      "aliases": [
+        "trial banner",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 135,
+      "name": "MembershipTierGrid",
+      "category": "billing",
+      "tags": [
+        "card",
+        "paywall"
+      ],
+      "desc": "Patreon style creator membership tiers — cover image, price + period, \"Limited (N remaining)\" stock note, trial CTA, badge chip and perk bullet list.",
+      "aliases": [
+        "membership tier grid",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 136,
+      "name": "AddonPicker",
+      "category": "billing",
+      "tags": [
+        "paywall",
+        "picker"
+      ],
+      "desc": "User Interviews/Attio style add-on selector — checkbox rows with price or \"Let's talk\" contact link, disabled rows, checked indigo fill and running total footer.",
+      "aliases": [
+        "addon picker",
+        "selector",
+        "选择器",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 137,
+      "name": "ImageGenGallery",
+      "category": "media",
+      "tags": [
+        "card",
+        "image"
+      ],
+      "desc": "AI image studio — prompt bar with Generate CTA, tile grid (aspect ratios, model badges), hover actions (download / variant / delete) and pulsing generating skeleton.",
+      "aliases": [
+        "image gen gallery",
+        "图片",
+        "图像"
+      ]
+    },
+    {
+      "n": 138,
+      "name": "SharedChatViewer",
+      "category": "ai-chat",
+      "tags": [
+        "streaming"
+      ],
+      "desc": "public read-only page for a shared AI conversation — brand header with meta, user/assistant bubbles and a bottom \"Try it yourself\" CTA bar.",
+      "aliases": [
+        "shared chat viewer",
+        "聊天",
+        "对话"
+      ]
+    },
+    {
+      "n": 139,
+      "name": "MemoryPanel",
+      "category": "ai-chat",
+      "tags": [
+        "panel",
+        "settings"
+      ],
+      "desc": "ChatGPT-style memory manager — remembered facts with source captions, inline editing (Save/Cancel), per-row delete, add input and clear-all.",
+      "aliases": [
+        "memory panel",
+        "面板"
+      ]
+    },
+    {
+      "n": 140,
+      "name": "ConnectorGrid",
+      "category": "data-display",
+      "tags": [
+        "card"
+      ],
+      "desc": "\"Apps & Connectors\" integration panel — icon cards with description, Connect / Connected toggle buttons and a live N/M connected badge.",
+      "aliases": [
+        "connector grid"
+      ]
+    },
+    {
+      "n": 141,
+      "name": "ModelComparePane",
+      "category": "primitives",
+      "tags": [
+        "streaming"
+      ],
+      "desc": "LMArena style side-by-side model comparison — shared prompt chip, two model output columns (streaming dots / error state) and an A / Tie / B vote bar.",
+      "aliases": [
+        "model compare pane"
+      ]
+    },
+    {
+      "n": 142,
+      "name": "SystemPromptEditor",
+      "category": "primitives",
+      "tags": [
+        "form-validation",
+        "prompt"
+      ],
+      "desc": "system prompt workspace — version chip, Saved/Unsaved dirty state, live token estimate, {{variable}} chips and a temperature slider (0–2); Save disabled while clean.",
+      "aliases": [
+        "system prompt editor",
+        "提示词"
+      ]
+    },
+    {
+      "n": 143,
+      "name": "ToolSchemaEditor",
+      "category": "primitives",
+      "tags": [
+        "prompt"
+      ],
+      "desc": "agent tool registry — tool cards with method badge (GET/POST), endpoint, typed parameter chips (string/number/boolean, required marker), enable toggles with N/M count badge and per-tool schema validation.",
+      "aliases": [
+        "tool schema editor",
+        "agent",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 144,
+      "name": "FineTuneJobList",
+      "category": "data-display",
+      "tags": [
+        "badge",
+        "list"
+      ],
+      "desc": "fine-tune job list — status chips (queued/training/completed/failed), training progress bar with %, cost + ETA meta, cancel link for active jobs, \"New fine-tune\" CTA and empty state.",
+      "aliases": [
+        "fine tune job list",
+        "列表"
+      ]
+    },
+    {
+      "n": 145,
+      "name": "PersonaPresetGrid",
+      "category": "data-display",
+      "tags": [
+        "card",
+        "prompt"
+      ],
+      "desc": "persona preset cards — gradient emoji tiles, name + description, per-persona `temp` chip, moving selection ring (indigo border + ring-2 + check bubble).",
+      "aliases": [
+        "persona preset grid"
+      ]
+    },
+    {
+      "n": 146,
+      "name": "AgentBuilderCard",
+      "category": "agent-ops",
+      "tags": [
+        "card"
+      ],
+      "desc": "agent workflow card — vertical node chain (trigger/tool/llm/output icons + type chips), status dots (active pulse / done / error), node count, Edit button and Run agent CTA disabled while running.",
+      "aliases": [
+        "agent builder card",
+        "卡片",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 147,
+      "name": "VoiceOrb",
+      "category": "media",
+      "tags": [
+        "animated",
+        "voice"
+      ],
+      "desc": "voice conversation orb — gradient disc per conversation state (listening sky/indigo, speaking emerald/teal, thinking amber/orange, idle zinc), waveform bars, Mute / End call controls; sizes sm/md/lg.",
+      "aliases": [
+        "voice orb",
+        "speech",
+        "语音"
+      ]
+    },
+    {
+      "n": 148,
+      "name": "ShareChatDialog",
+      "category": "ai-chat",
+      "tags": [
+        "modal"
+      ],
+      "desc": "share conversation dialog — private vs public-link option cards, link code row with Copy link, Create link CTA when shared but no link yet; renders nothing when closed.",
+      "aliases": [
+        "share chat dialog",
+        "popup",
+        "弹窗",
+        "对话框",
+        "聊天",
+        "对话"
+      ]
+    },
+    {
+      "n": 149,
+      "name": "BrandPromptTable",
+      "category": "data-display",
+      "tags": [
+        "prompt",
+        "table"
+      ],
+      "desc": "AI brand-visibility prompt table — visibility %, sentiment score color coded (>=70 emerald, >=50 amber, else red), rank position, quota badge N / M prompts, + Add Prompt CTA, empty state.",
+      "aliases": [
+        "brand prompt table",
+        "表格",
+        "提示词"
+      ]
+    },
+    {
+      "n": 150,
+      "name": "PromptSaveDialog",
+      "category": "overlays",
+      "tags": [
+        "modal"
+      ],
+      "desc": "save prompt dialog — folder picker, title input + prompt body, {{variable}} chips, visibility note, Cancel / Save prompt actions.",
+      "aliases": [
+        "prompt save dialog",
+        "popup",
+        "弹窗",
+        "对话框",
+        "提示词"
+      ]
+    },
+    {
+      "n": 151,
+      "name": "AiTemplatePicker",
+      "category": "ai-artifacts",
+      "tags": [
+        "card",
+        "picker"
+      ],
+      "desc": "AI template picker — category rail with count badges, Try-it template card grid filtered by category, Run custom AI prompt footer.",
+      "aliases": [
+        "ai template picker",
+        "selector",
+        "选择器"
+      ]
+    },
+    {
+      "n": 152,
+      "name": "CreationComposer",
+      "category": "ai-artifacts",
+      "tags": [
+        "image",
+        "prompt"
+      ],
+      "desc": "floating creation composer — Image Assist switch, prompt textarea, resolution/count selects, violet Create CTA.",
+      "aliases": [
+        "creation composer"
+      ]
+    },
+    {
+      "n": 153,
+      "name": "TraceSpanWaterfall",
+      "category": "agent-ops",
+      "tags": [
+        "svg-chart",
+        "timeline"
+      ],
+      "desc": "horizontal span timeline waterfall for agent/LLM traces — depth-indented rows, LLM/tool/retrieval color coding, duration + cost labels.",
+      "aliases": [
+        "trace span waterfall"
+      ]
+    },
+    {
+      "n": 154,
+      "name": "EvalScoreTable",
+      "category": "agent-ops",
+      "tags": [
+        "table"
+      ],
+      "desc": "evaluation report — runs table with tone-colored score chips + bars, test-criteria cards, Add criteria dashed CTA.",
+      "aliases": [
+        "eval score table",
+        "表格",
+        "evaluation",
+        "评测"
+      ]
+    },
+    {
+      "n": 155,
+      "name": "TokenCostBreakdown",
+      "category": "billing",
+      "tags": [
+        "svg-chart"
+      ],
+      "desc": "spend breakdown — stacked cost bar with per-segment legend (amount/percent) and token usage rows.",
+      "aliases": [
+        "token cost breakdown",
+        "chart",
+        "graph",
+        "图表",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 156,
+      "name": "AudioWaveVisualizer",
+      "category": "media",
+      "tags": [
+        "animated",
+        "audio"
+      ],
+      "desc": "audio playback visualizer — animated bar-wave canvas that reacts to isPlaying, per-call color theming and static idle state (voice assistant pattern).",
+      "aliases": [
+        "audio wave visualizer",
+        "voice",
+        "speech",
+        "语音"
+      ]
+    },
+    {
+      "n": 157,
+      "name": "PromptVariantDiff",
+      "category": "primitives",
+      "tags": [
+        "prompt"
+      ],
+      "desc": "side-by-side prompt version A/B comparison — {{var}} chip highlighting, +N/−N/~text change stats, per-version apply buttons.",
+      "aliases": [
+        "prompt variant diff",
+        "提示词",
+        "差异对比"
+      ]
+    },
+    {
+      "n": 158,
+      "name": "GuardrailReviewQueue",
+      "category": "agent-ops",
+      "tags": [
+        "list",
+        "security"
+      ],
+      "desc": "moderation review queue for AI-flagged content — cards with author, confidence + rule chips, reason tags, approve/reject actions, resolved items collapse to one line.",
+      "aliases": [
+        "guardrail review queue",
+        "permission",
+        "rbac",
+        "权限"
+      ]
+    },
+    {
+      "n": 159,
+      "name": "ContentReviewTable",
+      "category": "data-display",
+      "tags": [
+        "table"
+      ],
+      "desc": "pre-publish content review table — numbered rows with validity icons, tag chips + extra count, posting times, valid/error header counts, Save as Drafts / Schedule Posts CTAs.",
+      "aliases": [
+        "content review table",
+        "表格"
+      ]
+    },
+    {
+      "n": 160,
+      "name": "QaTestTable",
+      "category": "data-display",
+      "tags": [
+        "table"
+      ],
+      "desc": "AI agent QA answer-test table — row checkboxes, answer-status icons, Good / Acceptable / Poor rating chips, answered-count header (Intercom Fin \"Test\" pattern).",
+      "aliases": [
+        "qa test table",
+        "表格"
+      ]
+    },
+    {
+      "n": 161,
+      "name": "AppealRestrictionDialog",
+      "category": "overlays",
+      "tags": [
+        "modal"
+      ],
+      "desc": "content moderation restriction appeal dialog — reason card, 180-day appeal note, policy link, rose Appeal CTA (TikTok pattern).",
+      "aliases": [
+        "appeal restriction dialog",
+        "popup",
+        "弹窗",
+        "对话框",
+        "ticket",
+        "support",
+        "工单",
+        "客服"
+      ]
+    },
+    {
+      "n": 162,
+      "name": "ModelPricingCard",
+      "category": "billing",
+      "tags": [
+        "card",
+        "table"
+      ],
+      "desc": "AI gateway model pricing card — copyable Model ID, per-million-token input / output pricing rows (Cloudflare AI Playground pattern).",
+      "aliases": [
+        "model pricing card",
+        "卡片",
+        "定价",
+        "价格"
+      ]
+    },
+    {
+      "n": 163,
+      "name": "AiResearchPanel",
+      "category": "ai-artifacts",
+      "tags": [
+        "panel",
+        "streaming"
+      ],
+      "desc": "AI prospecting research panel — stacked template cards with per-card Try it CTA, Run custom AI prompt footer action, close button and empty state (Apollo pattern).",
+      "aliases": [
+        "ai research panel",
+        "面板"
+      ]
+    },
+    {
+      "n": 164,
+      "name": "ApiKeyTable",
+      "category": "data-display",
+      "tags": [
+        "security",
+        "table"
+      ],
+      "desc": "developer platform API keys management table — masked key previews, created dates, Active / Revoked status badges, per-row Copy / Revoke actions, Create key CTA with active count header (OpenAI Platform pattern).",
+      "aliases": [
+        "api key table",
+        "表格",
+        "security",
+        "安全"
+      ]
+    },
+    {
+      "n": 165,
+      "name": "VoiceSessionHistory",
+      "category": "media",
+      "tags": [
+        "list",
+        "voice"
+      ],
+      "desc": "voice AI session history sidebar — title / date / duration rows, Completed / Running / Failed status badges, per-row replay buttons, session count header and empty state (ElevenLabs Voice pattern).",
+      "aliases": [
+        "voice session history",
+        "speech",
+        "语音"
+      ]
+    },
+    {
+      "n": 166,
+      "name": "AiRewriteMenu",
+      "category": "ai-chat",
+      "tags": [
+        "dropdown",
+        "prompt"
+      ],
+      "desc": "Intercom composer AI rewrite menu — trigger button toggles popover of writing actions (Expand, Rephrase, tone variants, Fix grammar, Translate) with feature badge, select/toggle events.",
+      "aliases": [
+        "ai rewrite menu",
+        "chat",
+        "聊天",
+        "对话"
+      ]
+    },
+    {
+      "n": 167,
+      "name": "PromptPerformanceTable",
+      "category": "data-display",
+      "tags": [
+        "prompt",
+        "table"
+      ],
+      "desc": "Peec AI prompt tracking table — Visibility %, Sentiment score with trend mark, Position #, Mentions columns, row click + Export CTA, empty state.",
+      "aliases": [
+        "prompt performance table",
+        "表格",
+        "提示词"
+      ]
+    },
+    {
+      "n": 168,
+      "name": "ShareAccessDialog",
+      "category": "overlays",
+      "tags": [
+        "modal"
+      ],
+      "desc": "Superhuman (open/isOpen prop required to render; dialogs default closed) — Superhuman share dialog — invite input, people-with-access rows (avatar/name/email/role + remove), Copy link footer, open/close control.",
+      "aliases": [
+        "share access dialog",
+        "popup",
+        "弹窗",
+        "对话框"
+      ]
+    },
+    {
+      "n": 169,
+      "name": "AiNoteAnswer",
+      "category": "ai-chat",
+      "tags": [
+        "card",
+        "streaming"
+      ],
+      "desc": "Voicenotes Ask AI answer card — waveform question row with play button, answer paragraph, \"Other sources\" link list and Copy pill.",
+      "aliases": [
+        "ai note answer",
+        "chat",
+        "聊天",
+        "对话"
+      ]
+    },
+    {
+      "n": 170,
+      "name": "AudioNotePlayer",
+      "category": "media",
+      "tags": [
+        "audio"
+      ],
+      "desc": "Voicenotes audio note player — play/pause toggle button, waveform strip (played half highlights while playing) and title/duration metadata row.",
+      "aliases": [
+        "audio note player",
+        "voice",
+        "speech",
+        "语音"
+      ]
+    },
+    {
+      "n": 171,
+      "name": "ImageActionMenu",
+      "category": "media",
+      "tags": [
+        "dropdown",
+        "image"
+      ],
+      "desc": "Krea generated-image context menu — Fullscreen/Vary/Edit/Upscale & enhance/Make video/Download actions with per-action icons, divider before Download, open/close control.",
+      "aliases": [
+        "image action menu",
+        "图片",
+        "图像"
+      ]
+    },
+    {
+      "n": 172,
+      "name": "FalRunCard",
+      "category": "agent-ops",
+      "tags": [
+        "card",
+        "image"
+      ],
+      "desc": "fal generate-run info card — task type badge, model count + relative time header, prompt paragraph, Aspect Ratio / Total Cost metadata rows and duplicate/rerun/delete/share actions.",
+      "aliases": [
+        "fal run card",
+        "卡片"
+      ]
+    },
+    {
+      "n": 173,
+      "name": "ImageGenMetaBar",
+      "category": "media",
+      "tags": [
+        "image"
+      ],
+      "desc": "fal generation result footer — model badge pill overlay plus mono metadata row with job id, duration and per-image cost.",
+      "aliases": [
+        "image gen meta bar",
+        "图片",
+        "图像"
+      ]
+    },
+    {
+      "n": 174,
+      "name": "GammaImageDetail",
+      "category": "ai-artifacts",
+      "tags": [
+        "image"
+      ],
+      "desc": "Gamma AI-images detail pane — large preview, download/zoom/delete + like/dislike toolbar and the full generation prompt in a bordered block.",
+      "aliases": [
+        "gamma image detail",
+        "图片",
+        "图像"
+      ]
+    },
+    {
+      "n": 175,
+      "name": "WriterStyleGuide",
+      "category": "ai-artifacts",
+      "tags": [
+        "prompt"
+      ],
+      "desc": "Writer term/style guide card — Company/Team/My tabs, numbered guide entries with title, description and reading time, dashed Add guideline CTA.",
+      "aliases": [
+        "writer style guide",
+        "docs",
+        "文档"
+      ]
+    },
+    {
+      "n": 176,
+      "name": "CampsiteHandoff",
+      "category": "primitives",
+      "tags": [
+        "avatar",
+        "list"
+      ],
+      "desc": "Campsite design handoff panel — checklist with done state, assignee initials avatar and due date, x/y done counter and an AI summary block.",
+      "aliases": [
+        "campsite handoff"
+      ]
+    },
+    {
+      "n": 177,
+      "name": "ZendeskFieldSuggest",
+      "category": "ai-artifacts",
+      "tags": [
+        "prompt"
+      ],
+      "desc": "Zendesk AI ticket-field suggestion bar — amber bar with field chips (label: value + confidence %) that apply on click, plus an Ignore dismiss.",
+      "aliases": [
+        "zendesk field suggest",
+        "ticket",
+        "support",
+        "工单",
+        "客服"
+      ]
+    },
+    {
+      "n": 178,
+      "name": "AiSuggestionCard",
+      "category": "ai-chat",
+      "tags": [
+        "card",
+        "prompt"
+      ],
+      "desc": "Mindtrip proactive suggestion card — sparkle avatar, message paragraph, follow-up action chips and a dismiss close button.",
+      "aliases": [
+        "ai suggestion card",
+        "卡片",
+        "chat",
+        "聊天",
+        "对话"
+      ]
+    },
+    {
+      "n": 179,
+      "name": "JumpBackIn",
+      "category": "ai-chat",
+      "tags": [
+        "card"
+      ],
+      "desc": "Mindtrip \"Jump back in\" resume cards — thumbnail (or gradient placeholder), kind badge, title and subtitle per card.",
+      "aliases": [
+        "jump back in"
+      ]
+    },
+    {
+      "n": 180,
+      "name": "HelpResourcesPanel",
+      "category": "content",
+      "tags": [
+        "card",
+        "panel",
+        "search"
+      ],
+      "desc": "Graphite help resources panel — Reference/Tutorial badge cards with optional reading time and footer link rows.",
+      "aliases": [
+        "help resources panel",
+        "面板",
+        "ticket",
+        "support",
+        "工单",
+        "客服"
+      ]
+    },
+    {
+      "n": 181,
+      "name": "VisionAnalysisCard",
+      "category": "ai-chat",
+      "tags": [
+        "card",
+        "streaming"
+      ],
+      "desc": "Claude image-analysis structured reply — clickable section headings over key/value attribute row grids.",
+      "aliases": [
+        "vision analysis card",
+        "卡片"
+      ]
+    },
+    {
+      "n": 182,
+      "name": "PrReviewQueue",
+      "category": "agent-ops",
+      "tags": [
+        "avatar",
+        "list"
+      ],
+      "desc": "Graphite grouped PR review queue — collapsible groups with count badges, author-initial rows and `author · repo #n` meta.",
+      "aliases": [
+        "pr review queue"
+      ]
+    },
+    {
+      "n": 183,
+      "name": "IterationActionBar",
+      "category": "agent-ops",
+      "tags": [
+        "prompt"
+      ],
+      "desc": "Luma iteration bar — Show More / Brainstorm / Reply pills, overflow slot and prev/next pager with page label.",
+      "aliases": [
+        "iteration action bar"
+      ]
+    },
+    {
+      "n": 184,
+      "name": "MonitorRunList",
+      "category": "agent-ops",
+      "tags": [
+        "badge",
+        "list"
+      ],
+      "desc": "Adaline monitor run history — filter + time-range pills over a request histogram, run rows with status icon and latency.",
+      "aliases": [
+        "monitor run list",
+        "列表"
+      ]
+    },
+    {
+      "n": 185,
+      "name": "EvalTurnBuilder",
+      "category": "agent-ops",
+      "tags": [
+        "drag-drop"
+      ],
+      "desc": "Vapi evals turn builder — role-tagged system/user/assistant/tool turns with mock tags, turn numbers and an add-turn footer.",
+      "aliases": [
+        "eval turn builder",
+        "evaluation",
+        "评测"
+      ]
+    },
+    {
+      "n": 186,
+      "name": "AgentSessionTimeline",
+      "category": "agent-ops",
+      "tags": [
+        "timeline"
+      ],
+      "desc": "Browserbase agent session — summary chips + segmented activity strip, Reason/Tool step list and request panel.",
+      "aliases": [
+        "agent session timeline",
+        "时间线",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 187,
+      "name": "EvalRunResults",
+      "category": "agent-ops",
+      "tags": [
+        "table"
+      ],
+      "desc": "Adaline evals run — pass-rate header with counters, status filter chip and per-evaluator result tables (status pill, reason, response, variable chips).",
+      "aliases": [
+        "eval run results",
+        "evaluation",
+        "评测"
+      ]
+    },
+    {
+      "n": 188,
+      "name": "EventTagGrid",
+      "category": "content",
+      "tags": [
+        "badge",
+        "card"
+      ],
+      "desc": "Sentry event tags — scope pills over a two-column key/value grid with mono keys and link-styled searchable values.",
+      "aliases": [
+        "event tag grid"
+      ]
+    },
+    {
+      "n": 189,
+      "name": "PromptTunerResult",
+      "category": "agent-ops",
+      "tags": [
+        "prompt"
+      ],
+      "desc": "Cohere prompt tuner — optimized-prompt dark code panel with copy action, completion selector and completion text viewer.",
+      "aliases": [
+        "prompt tuner result",
+        "提示词"
+      ]
+    },
+    {
+      "n": 190,
+      "name": "AuditLogTable",
+      "category": "data-display",
+      "tags": [
+        "security",
+        "table"
+      ],
+      "desc": "audit/system log — date & keyword filter bar, mini bar-chart trend, event count with a view segmented switch and a four-column time/actor/event/target table with status badges (Okta System Log pattern).",
+      "aliases": [
+        "audit log table",
+        "表格",
+        "日志"
+      ]
+    },
+    {
+      "n": 191,
+      "name": "ChangelogTimeline",
+      "category": "content",
+      "tags": [
+        "timeline"
+      ],
+      "desc": "product changelog — left date rail with category tags (sky/emerald/amber/violet), rich entry body with like/view/share meta, search box and filters control (Canny Changelog pattern).",
+      "aliases": [
+        "changelog timeline",
+        "时间线",
+        "marketing",
+        "landing",
+        "营销",
+        "落地页"
+      ]
+    },
+    {
+      "n": 192,
+      "name": "SessionDeviceTable",
+      "category": "data-display",
+      "tags": [
+        "security",
+        "table"
+      ],
+      "desc": "login sessions / devices list — header with helper text and \"log out all\" action, six-column OS/application/location/IP/last-active/status table with Current and Logged-out badges, pager and rows-per-page control (Airwallex Login Sessions pattern).",
+      "aliases": [
+        "session device table",
+        "表格"
+      ]
+    },
+    {
+      "n": 193,
+      "name": "TaskDetailPanel",
+      "category": "data-display",
+      "tags": [
+        "card",
+        "list",
+        "panel"
+      ],
+      "desc": "task/milestone detail panel — type pill header with Ask AI / Share, AI suggestion bar, status pill with two-column field grid (assignees/dates/priority/time estimate/sprint points/tags), description block, action list and an activity column with comment box (ClickUp task detail pattern).",
+      "aliases": [
+        "task detail panel",
+        "面板"
+      ]
+    },
+    {
+      "n": 194,
+      "name": "DeliveryTrackingPanel",
+      "category": "commerce",
+      "tags": [
+        "panel",
+        "timeline"
+      ],
+      "desc": "delivery tracking — map placeholder with floating back/help/zoom controls, ETA header, four-step progress stepper (done/active/pending), courier card with call/message buttons, collapsible order details with items, gift share block and Copy link / Text me the link actions (DoorDash delivery pattern).",
+      "aliases": [
+        "delivery tracking panel",
+        "面板"
+      ]
+    },
+    {
+      "n": 195,
+      "name": "MapPropertyCard",
+      "category": "data-display",
+      "tags": [
+        "card",
+        "map"
+      ],
+      "desc": "map property bubble — price pins over a map placeholder and a floating preview card with image dots, like/close buttons, title + rating, subtitle and price range with dates (Airbnb map property pattern).",
+      "aliases": [
+        "map property card",
+        "卡片",
+        "地图"
+      ]
+    },
+    {
+      "n": 196,
+      "name": "ApiReferenceViewer",
+      "category": "ai-artifacts",
+      "tags": [
+        "standalone"
+      ],
+      "desc": "API reference section — method-badge endpoint header, query parameter definitions with type/meta rows, collapsible responses list and a right code panel with language select, sample request and JSON response (GitBook API Reference pattern).",
+      "aliases": [
+        "api reference viewer",
+        "docs",
+        "文档"
+      ]
+    },
+    {
+      "n": 197,
+      "name": "WeekCalendarGrid",
+      "category": "data-display",
+      "tags": [
+        "calendar",
+        "picker"
+      ],
+      "desc": "week-view calendar grid — hour gutter, day columns with solid/dashed event blocks, red current-time line, Day/Week segmented toggle, \"Find time\" button and schedule composer (Clockwise week calendar pattern).",
+      "aliases": [
+        "week calendar grid",
+        "日历"
+      ]
+    },
+    {
+      "n": 198,
+      "name": "VideoProjectSettings",
+      "category": "media",
+      "tags": [
+        "settings",
+        "video"
+      ],
+      "desc": "video project settings side panel — Chapters side panel with empty state and \"Add a chapter\" action, main form with Title input, Description textarea, Thumbnail selector and storage usage badge (Vimeo video settings pattern).",
+      "aliases": [
+        "video project settings",
+        "视频"
+      ]
+    },
+    {
+      "n": 199,
+      "name": "EventStreamPanel",
+      "category": "agent-ops",
+      "tags": [
+        "list",
+        "panel",
+        "streaming"
+      ],
+      "desc": "audit event stream — filter input, two-column event list (event name / date), right metadata panel with \"View event\" button, event details JSON block with line numbers and Previous/Next pager (WorkOS Events pattern).",
+      "aliases": [
+        "event stream panel",
+        "面板",
+        "log",
+        "日志"
+      ]
+    },
+    {
+      "n": 200,
+      "name": "ProjectGanttTimeline",
+      "category": "data-display",
+      "tags": [
+        "gantt"
+      ],
+      "desc": "project gantt timeline — month tick header with week sub-ticks and red Today pill, project rows with emoji/status/pts badges and horizontal duration bars spanning start..end months, current-date marker line (Linear projects timeline pattern).",
+      "aliases": [
+        "project gantt timeline",
+        "时间线",
+        "甘特图"
+      ]
+    },
+    {
+      "n": 201,
+      "name": "GroupedTaskList",
+      "category": "data-display",
+      "tags": [
+        "card",
+        "list"
+      ],
+      "desc": "grouped task list with split detail pane — collapsible sections (To Do / In Progress / Done), task rows with completion circle, counts and assignee avatar, right detail with fields grid, tags and comment composer (Asana list view pattern).",
+      "aliases": [
+        "grouped task list",
+        "列表"
+      ]
+    },
+    {
+      "n": 202,
+      "name": "EventLogTable",
+      "category": "data-display",
+      "tags": [
+        "table"
+      ],
+      "desc": "administrative event log — dropdown filter row (Type / Source / Action / Target) with date-range and Export CSV actions, six-column log table with muted rows for older entries (Vanta event log pattern).",
+      "aliases": [
+        "event log table",
+        "表格",
+        "日志"
+      ]
+    },
+    {
+      "n": 203,
+      "name": "DocsPageLayout",
+      "category": "ai-artifacts",
+      "tags": [
+        "search",
+        "standalone"
+      ],
+      "desc": "documentation page shell — left nav with top links and grouped sections, center article with Copy page button, callout, cards grid and code examples, right \"On this page\" TOC with active highlight (Mintlify docs pattern).",
+      "aliases": [
+        "docs page layout",
+        "文档"
+      ]
+    },
+    {
+      "n": 204,
+      "name": "TaskCardModal",
+      "category": "overlays",
+      "tags": [
+        "modal"
+      ],
+      "desc": "task card modal overlay — backdrop dialog gated by the `open` attribute / `isOpen` prop (closed by default), completion checkbox header and close, Members avatars / Labels chips / Dates range attribute rows, description, link & file attachments, checklist with % progress bar, and a comments & activity column with composer (Trello card modal pattern).",
+      "aliases": [
+        "task card modal",
+        "popup",
+        "弹窗",
+        "对话框"
+      ]
+    },
+    {
+      "n": 205,
+      "name": "FormTrackingDashboard",
+      "category": "forms",
+      "tags": [
+        "card",
+        "table"
+      ],
+      "desc": "form tracking dashboard — back header with title, Active pill and Options sort dropdown, four stat cards with tone dots, values and % progress bars, two-column form details grid and a client requests table with avatar rows and Completed / To be completed / Not completed status pills (Fresha form tracking pattern).",
+      "aliases": [
+        "form tracking dashboard",
+        "仪表盘",
+        "看板"
+      ]
+    },
+    {
+      "n": 206,
+      "name": "AudioPlaylistPage",
+      "category": "media",
+      "tags": [
+        "audio",
+        "list",
+        "standalone"
+      ],
+      "desc": "music playlist page — gradient cover with Play/Share, track rows with index/cover/version pill/duration/Remix dropdown and like toggles, header reactions row, bottom player bar with progress and right Queue panel with drop zone (Suno audio workspace pattern).",
+      "aliases": [
+        "audio playlist page",
+        "voice",
+        "speech",
+        "语音"
+      ]
+    },
+    {
+      "n": 207,
+      "name": "BlogPostArticle",
+      "category": "content",
+      "tags": [
+        "card",
+        "standalone"
+      ],
+      "desc": "blog article page — top bar with site name, ⌘K search pill and theme toggle, left \"On this page\" TOC with active highlight and collapse hint, article body with title/subtitle/meta, paragraphs, headings, bullet lists and a dark code block with Copy button (Hashnode article pattern).",
+      "aliases": [
+        "blog post article",
+        "marketing",
+        "landing",
+        "营销",
+        "落地页"
+      ]
+    },
+    {
+      "n": 208,
+      "name": "PermissionMatrix",
+      "category": "forms",
+      "tags": [
+        "security",
+        "settings"
+      ],
+      "desc": "roles × permissions matrix — title + description, Overview / Permission details tabs, grouped permission rows (group header spans the table) and per-role cells with Edit / View only / No access / N/A states (Vanta roles pattern).",
+      "aliases": [
+        "permission matrix",
+        "rbac",
+        "权限"
+      ]
+    },
+    {
+      "n": 209,
+      "name": "StockPhotoPicker",
+      "category": "media",
+      "tags": [
+        "image",
+        "picker",
+        "search"
+      ],
+      "desc": "media picker modal — title bar with close button, search input with clear, \"Powered by\" caption and masonry photo grid with hover author name + Add button, Esc closes (Substack stock photos pattern).",
+      "aliases": [
+        "stock photo picker",
+        "selector",
+        "选择器"
+      ]
+    },
+    {
+      "n": 210,
+      "name": "MapActivityList",
+      "category": "data-display",
+      "tags": [
+        "list",
+        "map"
+      ],
+      "desc": "map + activity list split view — left column with filter chips and scrollable activity cards (image/emoji, title, duration, rating, strikethrough old price), right map placeholder with rating pin bubbles and Close map button (GetYourGuide pattern).",
+      "aliases": [
+        "map activity list",
+        "列表",
+        "地图"
+      ]
+    },
+    {
+      "n": 211,
+      "name": "SearchResultsPage",
+      "category": "layout",
+      "tags": [
+        "card",
+        "search",
+        "standalone"
+      ],
+      "desc": "knowledge-base search results page — top search bar with submit button, filter select row, \"Related searches\" chip grid and result entries with icon title, breadcrumb meta (space • type • author • updated) and summary snippet (Confluence search pattern).",
+      "aliases": [
+        "search results page",
+        "搜索"
+      ]
+    },
+    {
+      "n": 212,
+      "name": "SessionDiagnosticsPanel",
+      "category": "data-display",
+      "tags": [
+        "badge",
+        "card",
+        "panel"
+      ],
+      "desc": "connection diagnostics panel — browser/OS device info cards, per-track media quality timeline bars with good/poor/bad windows, searchable event log rows (Whereby insights pattern).",
+      "aliases": [
+        "session diagnostics panel",
+        "面板"
+      ]
+    },
+    {
+      "n": 213,
+      "name": "HelpCenterHome",
+      "category": "content",
+      "tags": [
+        "card",
+        "search",
+        "standalone"
+      ],
+      "desc": "help center home — centered welcome title, search input with submit button, \"Or browse by topic\" rows that expand into article links (GetYourGuide help pattern).",
+      "aliases": [
+        "help center home",
+        "ticket",
+        "support",
+        "工单",
+        "客服"
+      ]
+    },
+    {
+      "n": 214,
+      "name": "AccountSecurityPanel",
+      "category": "data-display",
+      "tags": [
+        "panel",
+        "security",
+        "settings"
+      ],
+      "desc": "account settings security tab — settings tab row, Password row with masked value + Edit CTA, \"Manage verified sessions\" card with per-device rows and remove buttons (Podia account pattern).",
+      "aliases": [
+        "account security panel",
+        "面板",
+        "安全"
+      ]
+    },
+    {
+      "n": 215,
+      "name": "MasonryDensityControls",
+      "category": "theming",
+      "tags": [
+        "picker"
+      ],
+      "desc": "immersive masonry gallery — floating Size / Padding dual sliders that live-adjust column count and gutter, meta readout and close button, CSS columns masonry (Savee discovery wall pattern).",
+      "aliases": [
+        "masonry density controls"
+      ]
+    },
+    {
+      "n": 216,
+      "name": "LiquidGlass",
+      "category": "theming",
+      "tags": [
+        "animated",
+        "backdrop",
+        "glass"
+      ],
+      "desc": "Apple Liquid Glass material container — backdrop blur, specular rim reflection, optional pointer tilt/refraction caustics; capsule/rect variants (Apple material pattern).",
+      "aliases": [
+        "liquid glass",
+        "backdrop",
+        "background",
+        "背景",
+        "背景特效",
+        "glassmorphism",
+        "玻璃拟态"
+      ]
+    },
+    {
+      "n": 217,
+      "name": "AnimatedCounter",
+      "category": "data-display",
+      "tags": [
+        "animated"
+      ],
+      "desc": "animated number counter — counts up to target on view with duration/delay easing, prefix/suffix slots (stat card pattern).",
+      "aliases": [
+        "animated counter",
+        "spinner",
+        "loading",
+        "加载",
+        "加载中"
+      ]
+    },
+    {
+      "n": 218,
+      "name": "SpotlightGlareCard",
+      "category": "theming",
+      "tags": [
+        "animated",
+        "card",
+        "spotlight"
+      ],
+      "desc": "pointer-tracking spotlight glare card — cursor-follow radial highlight with optional 3D tilt (hero card pattern).",
+      "aliases": [
+        "spotlight glare card",
+        "卡片",
+        "backdrop",
+        "background",
+        "背景",
+        "背景特效"
+      ]
+    },
+    {
+      "n": 219,
+      "name": "PointerRipples",
+      "category": "theming",
+      "tags": [
+        "animated",
+        "spotlight"
+      ],
+      "desc": "WebGL Navier-Stokes pointer ripples backdrop — rainbow dye splats, vorticity swirls, 3D diffuse shading, idle auto-settle (hero background pattern).",
+      "aliases": [
+        "pointer ripples",
+        "backdrop",
+        "background",
+        "背景",
+        "背景特效"
+      ]
+    },
+    {
+      "n": 220,
+      "name": "FluidContourBackdrop",
+      "category": "theming",
+      "tags": [
+        "animated",
+        "backdrop"
+      ],
+      "desc": "animated fluid ink contour backdrop — flowing marbled lines with speed/interactive controls and ink/paper colors (ambient background pattern).",
+      "aliases": [
+        "fluid contour backdrop",
+        "background",
+        "背景",
+        "背景特效"
+      ]
+    },
+    {
+      "n": 221,
+      "name": "PaperTheme",
+      "category": "theming",
+      "tags": [
+        "standalone"
+      ],
+      "desc": "shared theme asset (file paper-theme) — Paper Atelier & Trail theme system (aitubook.cn style) — pure-CSS design tokens: paper/ink palette, 8-stage milestone colors, dark-mode overrides, topography texture background. Inject the exported `PaperTrailThemeCSS` string into a <style> tag or Tailwind layer.",
+      "aliases": [
+        "paper theme",
+        "dark mode",
+        "主题",
+        "暗色模式",
+        "深色模式"
+      ]
+    },
+    {
+      "n": 222,
+      "name": "InvoiceHistoryTable",
+      "category": "billing",
+      "tags": [
+        "table"
+      ],
+      "desc": "billing invoice history — header with currency chip, table of invoices (billing period / id / amount / status badge / date / download) with a paid-total footer (Contractbook / Remote billing pattern).",
+      "aliases": [
+        "invoice history table",
+        "表格",
+        "billing",
+        "计费",
+        "账单",
+        "发票"
+      ]
+    },
+    {
+      "n": 223,
+      "name": "UsagePricingBreakdown",
+      "category": "billing",
+      "tags": [
+        "svg-chart",
+        "table"
+      ],
+      "desc": "metered usage pricing — tiered unit-price table (tier range / usage / unit price / subtotal) with the current tier highlighted and an estimated-total footer (usage-based billing pattern).",
+      "aliases": [
+        "usage pricing breakdown",
+        "chart",
+        "graph",
+        "图表",
+        "定价",
+        "价格",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 224,
+      "name": "CancelRetentionFlow",
+      "category": "billing",
+      "tags": [
+        "paywall",
+        "wizard"
+      ],
+      "desc": "plan-cancellation retention — step 1 reason radio cards with Continue gating, step 2 discounted keep-plan offer card with Keep plan primary and Confirm cancel destructive ghost (SaaS downgrade retention pattern).",
+      "aliases": [
+        "cancel retention flow"
+      ]
+    },
+    {
+      "n": 225,
+      "name": "WebhookConfigPanel",
+      "category": "data-display",
+      "tags": [
+        "panel",
+        "security",
+        "settings"
+      ],
+      "desc": "webhook endpoint management — endpoint rows with active checkbox / mono URL / event chips / last-delivery status badge / Test action, plus an available-events legend (webhook settings pattern).",
+      "aliases": [
+        "webhook config panel",
+        "面板"
+      ]
+    },
+    {
+      "n": 226,
+      "name": "IntegrationConnectGrid",
+      "category": "data-display",
+      "tags": [
+        "card",
+        "settings"
+      ],
+      "desc": "settings integrations — category filter tabs and responsive service cards with logo initial, Connected / Not connected badge and Connect / Disconnect action (integration settings pattern).",
+      "aliases": [
+        "integration connect grid"
+      ]
+    },
+    {
+      "n": 227,
+      "name": "NotificationPrefsMatrix",
+      "category": "forms",
+      "tags": [
+        "settings"
+      ],
+      "desc": "notification preference matrix — event rows × channel columns (In-app / Email / Push) as checkboxes with per-cell toggles (notification settings pattern).",
+      "aliases": [
+        "notification prefs matrix",
+        "通知"
+      ]
+    },
+    {
+      "n": 228,
+      "name": "PermissionDeniedState",
+      "category": "feedback",
+      "tags": [
+        "empty-state",
+        "security"
+      ],
+      "desc": "permission-restricted empty state — lock illustration slot, title/description, Request access primary CTA and optional contact-admin link (permission denied pattern).",
+      "aliases": [
+        "permission denied state",
+        "empty state",
+        "空状态",
+        "rbac",
+        "权限"
+      ]
+    },
+    {
+      "n": 229,
+      "name": "NoResultsState",
+      "category": "feedback",
+      "tags": [
+        "empty-state",
+        "search"
+      ],
+      "desc": "search zero-results empty state — illustration slot, quoted original query, Did-you-mean suggestion chips and a clear-filters ghost action (search zero-results pattern).",
+      "aliases": [
+        "no results state",
+        "empty state",
+        "空状态"
+      ]
+    },
+    {
+      "n": 230,
+      "name": "TableSavedViews",
+      "category": "layout",
+      "tags": [
+        "filter",
+        "table"
+      ],
+      "desc": "data-table saved views bar — view tabs, active-view filter chips, No filters placeholder and Save view / Share actions (Attio / Rows table views pattern).",
+      "aliases": [
+        "table saved views"
+      ]
+    },
+    {
+      "n": 231,
+      "name": "BottomTabBar",
+      "category": "layout",
+      "tags": [
+        "badge"
+      ],
+      "desc": "mobile-style bottom navigation — icon + label tabs, active top indicator, optional red badge count and safe-area padding (mobile web navigation pattern).",
+      "aliases": [
+        "bottom tab bar"
+      ]
+    },
+    {
+      "n": 232,
+      "name": "BentoFeatureGrid",
+      "category": "content",
+      "tags": [
+        "card"
+      ],
+      "desc": "marketing bento grid — mixed-span feature tiles (1-3 cols) with icon / title / description and optional media image, CSS grid layout (Krea AI / Magnific bento pattern).",
+      "aliases": [
+        "bento feature grid",
+        "marketing",
+        "landing",
+        "营销",
+        "落地页"
+      ]
+    },
+    {
+      "n": 233,
+      "name": "LogoCloud",
+      "category": "content",
+      "tags": [
+        "card"
+      ],
+      "desc": "\"Trusted by\" logo wall — kicker line and responsive grayscale logo tiles by name or image src with hover emphasis (logo cloud social proof pattern).",
+      "aliases": [
+        "logo cloud",
+        "日志",
+        "marketing",
+        "landing",
+        "营销",
+        "落地页"
+      ]
+    },
+    {
+      "n": 234,
+      "name": "StatsBand",
+      "category": "data-display",
+      "tags": [
+        "animated"
+      ],
+      "desc": "marketing metrics band — 2-4 column big-number stats with labels and optional trend footnotes, divider-separated band (landing social proof pattern).",
+      "aliases": [
+        "stats band",
+        "chart",
+        "graph",
+        "图表"
+      ]
+    },
+    {
+      "n": 235,
+      "name": "AmberEmbersBackdrop",
+      "category": "theming",
+      "tags": [
+        "animated",
+        "backdrop"
+      ],
+      "desc": "ambient backdrop inspired by a dark golden-hour valley — warm olive/charcoal vertical gradient, soft amber bloom pooled bottom-center, edge vignette and sparse glowing embers drifting upward with a gentle twinkle; zero-dependency Canvas 2D (works without WebGL, ArkZero-style atmospheric background pattern).",
+      "aliases": [
+        "amber embers backdrop",
+        "background",
+        "背景",
+        "背景特效"
+      ]
+    },
+    {
+      "n": 236,
+      "name": "DriftEmbersBackdrop",
+      "category": "theming",
+      "tags": [
+        "animated",
+        "backdrop"
+      ],
+      "desc": "ambient backdrop inspired by the post-login dispersal of a warm flower valley — cool charcoal-to-olive vertical field, warm olive band across the middle, glow pooled mid-left, and a cloud of mixed gold + neutral ash motes slowly settling with fine grain and a light vignette; zero-dependency Canvas 2D (ArkZero-style drift/past-bloom background pattern).",
+      "aliases": [
+        "drift embers backdrop",
+        "background",
+        "背景",
+        "背景特效"
+      ]
+    },
+    {
+      "n": 237,
+      "name": "McpConnectPanel",
+      "category": "agent-ops",
+      "tags": [
+        "keyboard",
+        "panel",
+        "wizard"
+      ],
+      "desc": "MCP (Model Context Protocol) server connection guide — per-client tabs (ChatGPT / Claude Desktop / Cursor), numbered setup steps and a copyable config snippet block with copy feedback, in the Customer.io settings style.",
+      "aliases": [
+        "mcp connect panel",
+        "面板",
+        "agent",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 238,
+      "name": "AgentNotificationFeed",
+      "category": "agent-ops",
+      "tags": [
+        "list"
+      ],
+      "desc": "agent run/training notification feed — status-dot rows (started sky/completed emerald/failed rose/info zinc) with title + highlighted status text, caption line, relative time and unread markers with an \"N new\" badge; clicking a row marks it read (Delphi/Jira notifications style).",
+      "aliases": [
+        "agent notification feed",
+        "通知",
+        "list",
+        "列表",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 239,
+      "name": "AgentErrorRecovery",
+      "category": "agent-ops",
+      "tags": [
+        "empty-state"
+      ],
+      "desc": "agent run failure recovery state — centered alert with warning icon, error headline, optional run-id mono chip, Retry / Start-over actions and an optional support line (Typeform/Rive error-state style); reset-label=\"\" hides the secondary action.",
+      "aliases": [
+        "agent error recovery",
+        "empty state",
+        "空状态",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 240,
+      "name": "AgentWorkspaceSettings",
+      "category": "agent-ops",
+      "tags": [
+        "settings"
+      ],
+      "desc": "agent workspace settings page body — optional pill section tabs, titled groups with description and description-led toggle rows (emerald switches) with a per-group on-count, in the Uxcel/Contra settings style.",
+      "aliases": [
+        "agent workspace settings",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 241,
+      "name": "AgentEnvVarEditor",
+      "category": "agent-ops",
+      "tags": [
+        "security",
+        "settings"
+      ],
+      "desc": "agent environment variable editor — key/value rows with secret masking (password input) + reveal toggle, per-row delete and an add-row input (key, value, secret checkbox); fires a change event with the full list after any edit.",
+      "aliases": [
+        "agent env var editor",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 242,
+      "name": "AgentScheduleEditor",
+      "category": "agent-ops",
+      "tags": [
+        "calendar",
+        "settings"
+      ],
+      "desc": "agent run schedule editor — frequency pills (hourly/daily/weekly), time input with timezone caption, a derived cron expression with next-run preview and a save action with transient \"Schedule saved\" feedback.",
+      "aliases": [
+        "agent schedule editor",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 243,
+      "name": "AgentGuardrailViolationCard",
+      "category": "agent-ops",
+      "tags": [
+        "security"
+      ],
+      "desc": "single guardrail-violation detail card (role=alert) — severity badge (low amber / medium orange / high rose), run-id mono chip, trigger input summary with the matched snippet highlighted, policy reference and Proceed-anyway / Block-run actions; after acting the buttons are replaced by a resolution line.",
+      "aliases": [
+        "agent guardrail violation card",
+        "卡片",
+        "permission",
+        "rbac",
+        "权限",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 244,
+      "name": "AgentModelFallbackList",
+      "category": "agent-ops",
+      "tags": [
+        "list"
+      ],
+      "desc": "model fallback chain — ranked rows with health dot (healthy emerald/degraded amber/down rose), Primary badge on the active entry, provider + trigger-condition + latency caption and promote/demote controls that re-rank the chain and fire a reorder event with the new id order.",
+      "aliases": [
+        "agent model fallback list",
+        "列表",
+        "tool call",
+        "智能体",
+        "工具调用"
+      ]
+    },
+    {
+      "n": 245,
+      "name": "BillingAddressForm",
+      "category": "billing",
+      "tags": [
+        "form-validation"
+      ],
+      "desc": "billing address form — country select, address lines with optional-row \"optional\" tags, city/ZIP two-column grid, required-field gating that disables submit until address1/city/zip are filled and a saved confirmation line (data-billing-address-saved) after submit with a billing-address-submit event.",
+      "aliases": [
+        "billing address form",
+        "表单",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 246,
+      "name": "UsageCreditsDonut",
+      "category": "billing",
+      "tags": [
+        "svg-chart"
+      ],
+      "desc": "credit-usage donut chart — pure-SVG arcs with slice gaps and 6-color palette fallback, hover-linked legend that dims non-active arcs and swaps the center text to the active slice label/value, total summary line and a range dropdown that fires a range-change event.",
+      "aliases": [
+        "usage credits donut",
+        "chart",
+        "graph",
+        "图表",
+        "gauge",
+        "仪表盘",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 247,
+      "name": "SeatBillingTable",
+      "category": "billing",
+      "tags": [
+        "table"
+      ],
+      "desc": "per-seat billing table — user rows with email, seat type, usage snapshot and cost, active/invited/suspended status badges, client-side search that keeps focus after re-render, empty-search message and a billed-seats total footer that excludes suspended seats.",
+      "aliases": [
+        "seat billing table",
+        "表格",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 248,
+      "name": "CreditBalanceCard",
+      "category": "billing",
+      "tags": [
+        "animated",
+        "card"
+      ],
+      "desc": "prepaid credit balance card — mono balance headline with currency prefix and unit caption, plan status dot badge (emerald steady / amber low), low-balance warning line when balance falls under warn-below, and Buy More Credits / Apply Coupon actions that pulse and fire credit-buy / credit-coupon events.",
+      "aliases": [
+        "credit balance card",
+        "卡片",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 249,
+      "name": "SpendTrendChart",
+      "category": "billing",
+      "tags": [
+        "svg-chart"
+      ],
+      "desc": "spend trend bar chart — mono total headline with granularity caption, Daily/Weekly segmented switch that re-renders the pure-SVG bars and fires granularity-change, dashed grid with y-axis tick labels, sparse x labels (every ceil(n/8) bar when dense) and an empty state.",
+      "aliases": [
+        "spend trend chart",
+        "graph",
+        "图表",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 250,
+      "name": "TopUpBalanceDialog",
+      "category": "billing",
+      "tags": [
+        "modal"
+      ],
+      "desc": "top-up dialog — Bill-to and Currency selects, amount input with quick-amount chips, live \"new balance after top-up\" summary, minimum-amount validation with role=alert error, confirmed success line and cancel/close paths firing topup-confirm / topup-cancel.",
+      "aliases": [
+        "top up balance dialog",
+        "popup",
+        "弹窗",
+        "对话框",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 251,
+      "name": "MetricLineChart",
+      "category": "charts",
+      "tags": [
+        "animated",
+        "svg-chart"
+      ],
+      "desc": "metric line chart — headline value with delta chip (up/down/flat tones), time-range pill group firing range-change, multi-series smooth SVG lines (Catmull-Rom to bezier), hover column guides with per-series tooltip, dashed grid, legend for 2+ series and HTML-overlay labels that survive preserveAspectRatio=\"none\".",
+      "aliases": [
+        "metric line chart",
+        "graph",
+        "图表"
+      ]
+    },
+    {
+      "n": 252,
+      "name": "PaywallDialog",
+      "category": "billing",
+      "tags": [
+        "modal",
+        "paywall"
+      ],
+      "desc": "intercepting paywall dialog — glyph tile, Monthly/Yearly cadence toggle with note chips and live per-cadence price swap, plan cards (featured dark card, badge chip, strikethrough original price, perk checklist), discount corner badge, upgrade CTA with cadence echo and \"Maybe later\" dismiss; backdrop click closes, defaultOpen/default-open for SSR-open state.",
+      "aliases": [
+        "paywall dialog",
+        "popup",
+        "弹窗",
+        "对话框",
+        "pricing",
+        "定价",
+        "价格"
+      ]
+    },
+    {
+      "n": 253,
+      "name": "TrialExpiryNotice",
+      "category": "billing",
+      "tags": [
+        "animated",
+        "paywall"
+      ],
+      "desc": "trial expiration warning card — big mono countdown, expiring (amber) vs urgent (red) tone resolved from days-left <=3 or explicit tone, deadline caption, locked-feature strikethrough list vs kept features, Upgrade / Extend trial CTA pair firing upgrade / extend.",
+      "aliases": [
+        "trial expiry notice",
+        "billing",
+        "计费",
+        "账单"
+      ]
+    },
+    {
+      "n": 254,
+      "name": "WorkspaceSurveyCard",
+      "category": "forms",
+      "tags": [
+        "aria",
+        "onboarding",
+        "wizard"
+      ],
+      "desc": "workspace onboarding survey card — question groups with single-select pills (aria-checked) and multi-select chips (aria-pressed), optional free-text input, progress-dot strip with answered counter, Continue button gated until all questions answered (fires answer {questionId,optionId} / text / next).",
+      "aliases": [
+        "workspace survey card",
+        "卡片"
+      ]
+    },
+    {
+      "n": 255,
+      "name": "WorkspaceSetupPanel",
+      "category": "forms",
+      "tags": [
+        "onboarding",
+        "panel",
+        "settings"
+      ],
+      "desc": "partitioned workspace setup board — per-section checklists with emerald n/m pills, strikethrough completed rows with arrow affordance, overall \"N of M steps complete\" caption and an Up next card grid (fires task-click {section,task} / up-next {card}).",
+      "aliases": [
+        "workspace setup panel",
+        "面板"
+      ]
+    },
+    {
+      "n": 256,
+      "name": "InviteTeammatesCard",
+      "category": "forms",
+      "tags": [
+        "avatar",
+        "form-validation",
+        "onboarding"
+      ],
+      "desc": "onboarding invite composer — email input with Enter/button add, inline email + duplicate validation (role=alert), role select per pending row, removable pending list, Send invites gated on pending count and Skip for now (fires invite {email,role} / remove / send / skip).",
+      "aliases": [
+        "invite teammates card",
+        "卡片"
+      ]
+    },
+    {
+      "n": 257,
+      "name": "ProfileEditForm",
+      "category": "forms",
+      "tags": [
+        "avatar",
+        "form-validation",
+        "settings"
+      ],
+      "desc": "profile editing form — handle caption, country select + city input row, bio textarea with live n/limit counter, show-email switch (role=switch), social link rows and a saved confirmation line (fires profile-save {handle,country,city,bio,showEmail,socials} / profile-cancel).",
+      "aliases": [
+        "profile edit form",
+        "表单"
+      ]
+    },
+    {
+      "n": 258,
+      "name": "AvatarCropDialog",
+      "category": "overlays",
+      "tags": [
+        "image",
+        "modal"
+      ],
+      "desc": "avatar crop dialog (open/isOpen prop required to render; dialogs default closed) — circular preview with initials/image fallback, zoom slider with −/+ steppers clamped to range, upload hint line and an \"Avatar updated\" confirmation state (fires avatar-crop-confirm {zoom} / avatar-crop-cancel).",
+      "aliases": [
+        "avatar crop dialog",
+        "popup",
+        "弹窗",
+        "对话框",
+        "upload",
+        "裁剪"
+      ]
+    },
+    {
+      "n": 259,
+      "name": "FollowSuggestionsCard",
+      "category": "data-display",
+      "tags": [
+        "animated",
+        "avatar",
+        "card"
+      ],
+      "desc": "\"Discover more people\" follow rail — collapsible header with aria-expanded, person cards with avatar/initials + handle, Follow → Following toggle (aria-pressed) and dismiss × with empty-state fallback (fires follow-suggest-follow {person} / follow-suggest-dismiss {person}).",
+      "aliases": [
+        "follow suggestions card",
+        "卡片"
+      ]
+    }
+  ]
 }

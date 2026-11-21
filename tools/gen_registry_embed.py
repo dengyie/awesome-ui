@@ -29,7 +29,17 @@ def main() -> int:
     tax = json.loads(TAXONOMY.read_text(encoding="utf-8"))
     reg = json.loads(COMPONENTS.read_text(encoding="utf-8"))
     labels = {c["id"]: c["label"] for c in tax["categories"]}
-    comps = {c["name"]: [c["category"], "|".join(c["tags"])] for c in reg["components"]}
+    # [category, tags, desc, aliases] — desc/aliases power the TOC search
+    # (agents/users type needs like "popup"/"弹窗", not component names).
+    comps = {
+        c["name"]: [
+            c["category"],
+            "|".join(c["tags"]),
+            c.get("desc", ""),
+            "|".join(c.get("aliases", [])),
+        ]
+        for c in reg["components"]
+    }
     payload = json.dumps({"cats": labels, "comps": comps}, ensure_ascii=False, separators=(",", ":"))
     html = INDEX.read_text(encoding="utf-8")
     m = MARKER.search(html)

@@ -97,6 +97,34 @@ def main() -> int:
                 errors.append(f"{name}: invalid tag {t!r}")
             used_tags.add(t)
 
+    # 8. retrieval metadata: desc must exist and match the ledger verbatim
+    #    (the search CLI and Gallery embed match on it; drift = stale retrieval),
+    #    aliases must be a list of unique non-empty strings.
+    ledger_desc = {}
+    if LEDGER.exists():
+        desc_re = re.compile(r"^\d+\. ([A-Za-z0-9]+): (.+)$")
+        for line in LEDGER.read_text(encoding="utf-8").splitlines():
+            m = desc_re.match(line)
+            if m:
+                ledger_desc[m.group(1)] = m.group(2).strip()
+        for c in comps:
+            name = c.get("name", "?")
+            want = ledger_desc.get(name)
+            got = c.get("desc")
+            if got is None:
+                errors.append(f"{name}: missing desc (run tools/gen_registry_aliases.py)")
+            elif want is not None and got != want:
+                errors.append(f"{name}: desc out of sync with llms.txt ledger (run tools/gen_registry_aliases.py)")
+            aliases = c.get("aliases")
+            if not isinstance(aliases, list):
+                errors.append(f"{name}: missing aliases list (run tools/gen_registry_aliases.py)")
+            else:
+                if len(aliases) != len(set(aliases)):
+                    errors.append(f"{name}: duplicate aliases")
+                bad = [a for a in aliases if not isinstance(a, str) or not a.strip()]
+                if bad:
+                    errors.append(f"{name}: empty/non-string aliases {bad[:4]}")
+
     # 5. dead vocabulary guard
     dead = sorted(valid_tags - used_tags)
     if dead:
@@ -113,7 +141,15 @@ def main() -> int:
             try:
                 payload = json.loads(m.group(1))
                 labels = {c["id"]: c["label"] for c in tax["categories"]}
-                expected = {c["name"]: [c["category"], "|".join(c["tags"])] for c in comps}
+                expected = {
+                    c["name"]: [
+                        c["category"],
+                        "|".join(c["tags"]),
+                        c.get("desc", ""),
+                        "|".join(c.get("aliases", [])),
+                    ]
+                    for c in comps
+                }
                 if payload.get("cats") != labels:
                     errors.append("index.html embed: category labels out of sync with taxonomy.json")
                 if payload.get("comps") != expected:
