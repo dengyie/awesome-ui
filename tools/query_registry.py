@@ -27,13 +27,49 @@ REG = ROOT / "registry" / "components.json"
 TAX = ROOT / "registry" / "taxonomy.json"
 
 
+def levenshtein(a: str, b: str) -> int:
+    """Plain DP edit distance (no deps). Inputs are short words, O(len^2) fine."""
+    if a == b:
+        return 0
+    if not a or not b:
+        return max(len(a), len(b))
+    prev = list(range(len(b) + 1))
+    for i, ca in enumerate(a, 1):
+        cur = [i]
+        for j, cb in enumerate(b, 1):
+            cur.append(min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (ca != cb)))
+        prev = cur
+    return prev[-1]
+
+
+def typo_fix(kw: str, vocab: list[str]) -> str | None:
+    """Map a mistyped keyword to the closest known vocabulary word.
+
+    Only fires when the keyword found nothing by itself, so it can never
+    override an exact/substring hit. Threshold scales with word length.
+    """
+    best, best_d = None, 99
+    for w in vocab:
+        d = levenshtein(kw, w)
+        if d < best_d:
+            best, best_d = w, d
+    limit = 1 if len(kw) <= 4 else (2 if len(kw) <= 8 else 3)
+    return best if best_d <= limit else None
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Filter the awesome-ui component registry.")
     ap.add_argument("--category", help="exact category id (e.g. billing)")
     ap.add_argument("--tag", help="comma-separated tag ids; components must carry ALL of them")
     ap.add_argument("--search", help="space-separated keywords, all must match; searches "
-                                     "name, aliases (incl. CJK), tags, description and "
-                                     "category label; results ranked")
+                                     "name, aliases (incl. CJK), tags, description, "
+                                     "category label, props and events; results ranked; "
+                                     "typos auto-corrected against the registry vocabulary")
+    ap.add_argument("--event", help="exact custom-event name (e.g. select); "
+                                    "components that emit it")
+    ap.add_argument("--prop", help="exact prop name (e.g. rows); components accepting it")
+    ap.add_argument("--similar", help="component name; nearest components ranked by "
+                                      "shared tags/category/API overlap (composition helper)")
     ap.add_argument("--name", help="exact component name; prints full detail")
     ap.add_argument("--stats", action="store_true", help="print category/tag distribution instead of entries")
     args = ap.parse_args()
@@ -82,31 +118,92 @@ def main() -> int:
     if want_tags:
         results = [c for c in results if want_tags <= set(c["tags"])]
 
+    if args.similar:
+        base = next((c for c in comps if c["name"].lower() == args.similar.lower()), None)
+        if base is None:
+            print(f"not found: {args.similar}", file=sys.stderr)
+            return 1
+        bset = set(base["tags"]) | {base["category"]}
+        bapi = set(base.get("api", {}).get("props", [])) | set(base.get("api", {}).get("events", []))
+        ranked = []
+        for c in comps:
+            if c["name"] == base["name"]:
+                continue
+            cset = set(c["tags"]) | {c["category"]}
+            capi = set(c.get("api", {}).get("props", [])) | set(c.get("api", {}).get("events", []))
+            jaccard = len(bset & cset) / len(bset | cset)
+            api_overlap = len(bapi & capi) / max(len(bapi | capi), 1)
+            ranked.append((jaccard + 0.5 * api_overlap, c))
+        ranked.sort(key=lambda t: (-t[0], t[1]["n"]))
+        print(f"components similar to {base['name']} (tags+category+API overlap):")
+        results = [c for _, c in ranked[:15]]
+        for score, c in ranked[:15]:
+            print(f"{c['n']:3d} {c['name']} ({c['category']}) {', '.join(c['tags'])}  [{score:.2f}]")
+        print(f"-- {len(results)} component(s)")
+        return 0
+
+    if args.event or args.prop:
+        if args.event:
+            results = [c for c in results if args.event in c.get("api", {}).get("events", [])]
+        if args.prop:
+            results = [c for c in results if args.prop in c.get("api", {}).get("props", [])]
+
     if args.search:
         # Every keyword must hit in at least one searchable field.
-        # Rank: exact name hit (3) > alias hit (2) > tag/desc/category hit (1).
+        # Rank: exact name hit (3) > alias hit (2) > tag/desc/category/props/events hit (1).
         def fields(c):
-            name = c["name"].lower()
+            api = c.get("api", {})
             return (
-                name,
+                c["name"].lower(),
                 [a.lower() for a in c.get("aliases", [])],
                 " ".join(c["tags"]).lower(),
                 c.get("desc", "").lower(),
                 labels.get(c["category"], "").lower(),
+                " ".join(api.get("props", [])).lower(),
+                " ".join(api.get("events", [])).lower(),
             )
+
+        notes = []
+        keywords = args.search.lower().split()
+        # Typo correction is keyword-level, not per-component: resolve each
+        # keyword against the vocabulary ONCE before matching (a naive
+        # per-component call would run the full edit-distance sweep 260x).
+        vocab = sorted({
+            w
+            for c in comps
+            for w in fields(c)[0].split() + fields(c)[1] + fields(c)[2].split()
+                       + fields(c)[3].split() + fields(c)[5].split() + fields(c)[6].split()
+        })
+        resolved = []
+        for kw in keywords:
+            if any(
+                kw in f[0] or kw in f[2] or kw in f[3] or kw in f[4] or kw in f[5] or kw in f[6]
+                or any(kw in a for a in f[1])
+                for f in (fields(c) for c in comps)
+            ):
+                resolved.append(kw)
+            else:
+                fix = typo_fix(kw, vocab)
+                if fix is None:
+                    resolved.append(kw)  # keep as-is; it will simply match nothing
+                else:
+                    notes.append(f"'{kw}' -> '{fix}'")
+                    resolved.append(fix)
+        for n in dict.fromkeys(notes):
+            print(f"(typo-corrected: {n})", file=sys.stderr)
 
         ranked = []
         for c in results:
             f = fields(c)
             score = 0
             matched_all = True
-            for kw in args.search.lower().split():
+            for kw in resolved:
                 hit = 0
                 if kw in f[0]:
                     hit = max(hit, 3)
                 elif any(kw in a for a in f[1]):
                     hit = max(hit, 2)
-                elif kw in f[2] or kw in f[3] or kw in f[4]:
+                elif kw in f[2] or kw in f[3] or kw in f[4] or kw in f[5] or kw in f[6]:
                     hit = max(hit, 1)
                 if not hit:
                     matched_all = False

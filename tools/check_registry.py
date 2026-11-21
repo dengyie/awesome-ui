@@ -124,6 +124,26 @@ def main() -> int:
                 bad = [a for a in aliases if not isinstance(a, str) or not a.strip()]
                 if bad:
                     errors.append(f"{name}: empty/non-string aliases {bad[:4]}")
+            api = c.get("api")
+            if not isinstance(api, dict) or "props" not in api or "events" not in api:
+                errors.append(f"{name}: missing api {{props, events}} (run tools/gen_registry_api.py)")
+            else:
+                for k in ("props", "events"):
+                    v = api[k]
+                    if not isinstance(v, list) or any(not isinstance(x, str) or not x.strip() for x in v):
+                        errors.append(f"{name}: api.{k} must be a list of non-empty strings")
+                    elif len(v) != len(set(v)):
+                        errors.append(f"{name}: duplicate entries in api.{k}")
+                # callback props (onX) must surface as events for cross-stack parity
+                orphan_cbs = [
+                    p for p in api["props"]
+                    if re.fullmatch(r"on[A-Z]\w*", p) and p[2:].lower() not in api["events"]
+                ]
+                if orphan_cbs:
+                    errors.append(
+                        f"{name}: callback props without matching events "
+                        f"(run tools/gen_registry_api.py): {orphan_cbs[:6]}"
+                    )
 
     # 5. dead vocabulary guard
     dead = sorted(valid_tags - used_tags)

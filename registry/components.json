@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "updated": "2026-11-21",
   "$comment": "awesome-ui component registry — one entry per ledger component (llms.txt 0..N). category is a single taxonomy id; tags are multi-value facet ids. Validated by tools/check_registry.py. Keep in sync with llms.txt on every new component batch.",
   "count": 260,
@@ -15,7 +15,11 @@
       "aliases": [
         "ui icon",
         "图标"
-      ]
+      ],
+      "api": {
+        "props": [],
+        "events": []
+      }
     },
     {
       "n": 1,
@@ -33,7 +37,35 @@
         "聊天",
         "对话",
         "提示词"
-      ]
+      ],
+      "api": {
+        "props": [
+          "allowAttachments",
+          "attachments",
+          "chips",
+          "className",
+          "disabled",
+          "isGenerating",
+          "onAddAttachment",
+          "onChange",
+          "onChipClick",
+          "onRemoveAttachment",
+          "onStop",
+          "onSubmit",
+          "placeholder",
+          "value"
+        ],
+        "events": [
+          "addattachment",
+          "attachments",
+          "change",
+          "chip",
+          "chipclick",
+          "removeattachment",
+          "stop",
+          "submit"
+        ]
+      }
     },
     {
       "n": 2,
@@ -45,7 +77,15 @@
       "desc": "High-performance streaming markdown renderer with syntax highlighting, code copy, and pulsing cursor.",
       "aliases": [
         "stream markdown"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "content",
+          "isStreaming"
+        ],
+        "events": []
+      }
     },
     {
       "n": 3,
@@ -63,7 +103,18 @@
         "chain of thought",
         "推理",
         "思维链"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "content",
+          "defaultExpanded",
+          "durationSeconds",
+          "isThinking",
+          "steps"
+        ],
+        "events": []
+      }
     },
     {
       "n": 4,
@@ -82,7 +133,18 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "args",
+          "className",
+          "error",
+          "name",
+          "output",
+          "status"
+        ],
+        "events": []
+      }
     },
     {
       "n": 5,
@@ -95,7 +157,14 @@
       "aliases": [
         "sources citation",
         "引用来源"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "sources"
+        ],
+        "events": []
+      }
     },
     {
       "n": 6,
@@ -107,7 +176,14 @@
       "desc": "Smart auto-scrolling anchor that smoothly follows streaming output and pauses on user back-scroll.",
       "aliases": [
         "auto scroll anchor"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "isStreaming"
+        ],
+        "events": []
+      }
     },
     {
       "n": 7,
@@ -120,7 +196,20 @@
       "desc": "Claude Artifacts-style split-pane live preview with code view and sandboxed iframe rendering.",
       "aliases": [
         "artifact canvas"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "code",
+          "isOpen",
+          "language",
+          "onClose",
+          "title"
+        ],
+        "events": [
+          "close"
+        ]
+      }
     },
     {
       "n": 8,
@@ -132,7 +221,24 @@
       "desc": "Assistant message footer toolbar with copy, regenerate, thumbs feedback, and branch pagination.",
       "aliases": [
         "message action toolbar"
-      ]
+      ],
+      "api": {
+        "props": [
+          "branchIndex",
+          "className",
+          "content",
+          "onBranchChange",
+          "onFeedback",
+          "onRetry",
+          "role",
+          "totalBranches"
+        ],
+        "events": [
+          "branchchange",
+          "feedback",
+          "retry"
+        ]
+      }
     },
     {
       "n": 9,
@@ -148,7 +254,17 @@
         "聊天",
         "对话",
         "提示词"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onSelect",
+          "suggestions"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 10,
@@ -165,7 +281,17 @@
         "主题",
         "暗色模式",
         "深色模式"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onChange",
+          "storageKey"
+        ],
+        "events": [
+          "change"
+        ]
+      }
     },
     {
       "n": 11,
@@ -178,7 +304,17 @@
       "desc": "Node/Service health status badge with live ping ms and breathing glow.",
       "aliases": [
         "status indicator"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "label",
+          "pingMs",
+          "showDot",
+          "status"
+        ],
+        "events": []
+      }
     },
     {
       "n": 12,
@@ -196,7 +332,19 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "breakdown",
+          "className",
+          "compact",
+          "contextWindow",
+          "maxTokens",
+          "modelName",
+          "usedTokens"
+        ],
+        "events": []
+      }
     },
     {
       "n": 13,
@@ -213,7 +361,21 @@
         "选择器",
         "dropdown",
         "下拉"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "disabled",
+          "models",
+          "onSelect",
+          "placeholder",
+          "selectedId",
+          "showSearch"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 14,
@@ -231,7 +393,19 @@
         "landing",
         "营销",
         "落地页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeId",
+          "className",
+          "nodes",
+          "onNodeClick"
+        ],
+        "events": [
+          "node-click",
+          "nodeclick"
+        ]
+      }
     },
     {
       "n": 15,
@@ -249,7 +423,26 @@
         "support",
         "工单",
         "客服"
-      ]
+      ],
+      "api": {
+        "props": [
+          "actionLabel",
+          "className",
+          "conceptText",
+          "dependencies",
+          "index",
+          "isOpen",
+          "onAction",
+          "onClose",
+          "subtitle",
+          "themeColor",
+          "title"
+        ],
+        "events": [
+          "action",
+          "close"
+        ]
+      }
     },
     {
       "n": 16,
@@ -266,7 +459,26 @@
         "homepage dashboard",
         "仪表盘",
         "看板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "collapsible",
+          "groups",
+          "headerStyle",
+          "onToggleGroup",
+          "searchPlaceholder",
+          "showClock",
+          "showSearch",
+          "statusStyle",
+          "subtitle",
+          "title",
+          "version"
+        ],
+        "events": [
+          "togglegroup"
+        ]
+      }
     },
     {
       "n": 17,
@@ -279,7 +491,19 @@
       "aliases": [
         "code block",
         "代码"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "code",
+          "filename",
+          "language",
+          "maxHeight",
+          "showCopy",
+          "showLineNumbers"
+        ],
+        "events": []
+      }
     },
     {
       "n": 18,
@@ -296,7 +520,16 @@
         "loading",
         "加载",
         "加载中"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "label",
+          "size",
+          "variant"
+        ],
+        "events": []
+      }
     },
     {
       "n": 19,
@@ -311,7 +544,19 @@
         "chat message row",
         "聊天",
         "对话"
-      ]
+      ],
+      "api": {
+        "props": [
+          "avatar",
+          "children",
+          "className",
+          "content",
+          "name",
+          "role",
+          "timestamp"
+        ],
+        "events": []
+      }
     },
     {
       "n": 20,
@@ -327,7 +572,21 @@
         "command palette",
         "command menu",
         "命令面板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "isOpen",
+          "items",
+          "onClose",
+          "onSelect",
+          "placeholder"
+        ],
+        "events": [
+          "close",
+          "select"
+        ]
+      }
     },
     {
       "n": 21,
@@ -341,7 +600,18 @@
         "toast stack",
         "提示条",
         "通知条"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "duration",
+          "onDismiss",
+          "toasts"
+        ],
+        "events": [
+          "dismiss"
+        ]
+      }
     },
     {
       "n": 22,
@@ -358,7 +628,26 @@
         "列表",
         "聊天",
         "对话"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeId",
+          "className",
+          "emptyText",
+          "onDelete",
+          "onSelect",
+          "onUserClick",
+          "sessions",
+          "title",
+          "user"
+        ],
+        "events": [
+          "delete",
+          "select",
+          "user-click",
+          "userclick"
+        ]
+      }
     },
     {
       "n": 23,
@@ -371,7 +660,19 @@
       "aliases": [
         "diff viewer",
         "差异对比"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "contextSize",
+          "filename",
+          "files",
+          "language",
+          "lines",
+          "showLineNumbers"
+        ],
+        "events": []
+      }
     },
     {
       "n": 24,
@@ -392,7 +693,23 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "args",
+          "className",
+          "description",
+          "onApprove",
+          "onReject",
+          "risk",
+          "status",
+          "toolName"
+        ],
+        "events": [
+          "approve",
+          "reject"
+        ]
+      }
     },
     {
       "n": 25,
@@ -405,7 +722,17 @@
       "aliases": [
         "file attachment list",
         "列表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "files",
+          "onRemove"
+        ],
+        "events": [
+          "remove"
+        ]
+      }
     },
     {
       "n": 26,
@@ -422,7 +749,16 @@
         "loading",
         "加载",
         "加载中"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "label",
+          "status",
+          "value"
+        ],
+        "events": []
+      }
     },
     {
       "n": 27,
@@ -435,7 +771,20 @@
       "aliases": [
         "empty state",
         "空状态"
-      ]
+      ],
+      "api": {
+        "props": [
+          "actionLabel",
+          "className",
+          "description",
+          "icon",
+          "onAction",
+          "title"
+        ],
+        "events": [
+          "action"
+        ]
+      }
     },
     {
       "n": 28,
@@ -451,7 +800,14 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "steps"
+        ],
+        "events": []
+      }
     },
     {
       "n": 29,
@@ -466,7 +822,17 @@
       "aliases": [
         "prompt template grid",
         "提示词"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onUse",
+          "templates"
+        ],
+        "events": [
+          "use"
+        ]
+      }
     },
     {
       "n": 30,
@@ -481,7 +847,18 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "items",
+          "onToggle",
+          "title"
+        ],
+        "events": [
+          "toggle"
+        ]
+      }
     },
     {
       "n": 31,
@@ -496,7 +873,17 @@
         "表格",
         "定价",
         "价格"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onSelect",
+          "plans"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 32,
@@ -510,7 +897,19 @@
       "aliases": [
         "stat card",
         "卡片"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "delta",
+          "deltaLabel",
+          "icon",
+          "label",
+          "trend",
+          "value"
+        ],
+        "events": []
+      }
     },
     {
       "n": 33,
@@ -525,7 +924,23 @@
       "aliases": [
         "data table",
         "表格"
-      ]
+      ],
+      "api": {
+        "props": [
+          "actions",
+          "className",
+          "columns",
+          "emptyText",
+          "onSort",
+          "rows",
+          "selectable"
+        ],
+        "events": [
+          "action",
+          "batch",
+          "sort"
+        ]
+      }
     },
     {
       "n": 34,
@@ -542,7 +957,18 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "autoExpandRunning",
+          "className",
+          "steps",
+          "title"
+        ],
+        "events": [
+          "toggle"
+        ]
+      }
     },
     {
       "n": 35,
@@ -561,7 +987,30 @@
         "登录",
         "认证",
         "表单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "error",
+          "footerText",
+          "loading",
+          "mode",
+          "onFooterClick",
+          "onProviderClick",
+          "onSubmit",
+          "providers",
+          "submitText",
+          "subtitle",
+          "title"
+        ],
+        "events": [
+          "footer",
+          "footerclick",
+          "provider",
+          "providerclick",
+          "submit"
+        ]
+      }
     },
     {
       "n": 36,
@@ -576,7 +1025,26 @@
       "aliases": [
         "settings panel",
         "面板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeId",
+          "className",
+          "onItemAction",
+          "onSave",
+          "onSectionChange",
+          "saveText",
+          "saving",
+          "sections"
+        ],
+        "events": [
+          "item-action",
+          "itemaction",
+          "save",
+          "section-change",
+          "sectionchange"
+        ]
+      }
     },
     {
       "n": 37,
@@ -591,7 +1059,21 @@
         "tour",
         "引导",
         "新手引导"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onTaskAction",
+          "onToggle",
+          "tasks",
+          "title"
+        ],
+        "events": [
+          "action",
+          "taskaction",
+          "toggle"
+        ]
+      }
     },
     {
       "n": 38,
@@ -609,7 +1091,23 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "ctaText",
+          "features",
+          "limit",
+          "onUpgrade",
+          "planName",
+          "title",
+          "unit",
+          "used"
+        ],
+        "events": [
+          "upgrade"
+        ]
+      }
     },
     {
       "n": 39,
@@ -624,7 +1122,26 @@
         "popup",
         "弹窗",
         "对话框"
-      ]
+      ],
+      "api": {
+        "props": [
+          "cancelText",
+          "className",
+          "confirmText",
+          "description",
+          "isOpen",
+          "loading",
+          "onCancel",
+          "onConfirm",
+          "requireText",
+          "title",
+          "tone"
+        ],
+        "events": [
+          "cancel",
+          "confirm"
+        ]
+      }
     },
     {
       "n": 40,
@@ -637,7 +1154,21 @@
       "desc": "Keyboard cheat sheet with grouped shortcut sections, kbd keycaps, live search over labels and keys, Esc/backdrop close. Accepts either `groups` or a flat `shortcuts` list bucketed by `item.group` (fallback \"General\").",
       "aliases": [
         "shortcuts overlay"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "groups",
+          "isOpen",
+          "onClose",
+          "placeholder",
+          "shortcuts",
+          "title"
+        ],
+        "events": [
+          "close"
+        ]
+      }
     },
     {
       "n": 41,
@@ -651,7 +1182,26 @@
         "file dropzone",
         "upload",
         "上传"
-      ]
+      ],
+      "api": {
+        "props": [
+          "accept",
+          "className",
+          "disabled",
+          "files",
+          "hint",
+          "maxSizeMb",
+          "multiple",
+          "onFiles",
+          "onReject",
+          "onRemove"
+        ],
+        "events": [
+          "files",
+          "reject",
+          "remove"
+        ]
+      }
     },
     {
       "n": 42,
@@ -666,7 +1216,33 @@
       "aliases": [
         "notification center",
         "通知"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "emptyText",
+          "isOpen",
+          "notifications",
+          "onClose",
+          "onMarkAllRead",
+          "onMarkRead",
+          "onOpenPreferences",
+          "onSelect",
+          "showFilter",
+          "showPrefsButton",
+          "title"
+        ],
+        "events": [
+          "close",
+          "mark-all-read",
+          "mark-read",
+          "markallread",
+          "markread",
+          "open-preferences",
+          "openpreferences",
+          "select"
+        ]
+      }
     },
     {
       "n": 43,
@@ -679,7 +1255,25 @@
       "desc": "Nested discussion built from a flat `comments` array linked by `parentId` (auto-nested up to 3 levels), with initials/avatar, like counts, inline reply composer, resolve/reopen toggle and a root composer. Exports `flattenComments(comments)` returning `{comment, depth}` rows.",
       "aliases": [
         "comment thread"
-      ]
+      ],
+      "api": {
+        "props": [
+          "allowComment",
+          "className",
+          "comments",
+          "emptyText",
+          "onLike",
+          "onResolve",
+          "onSubmit",
+          "placeholder",
+          "submitText"
+        ],
+        "events": [
+          "like",
+          "resolve",
+          "submit"
+        ]
+      }
     },
     {
       "n": 44,
@@ -694,7 +1288,22 @@
         "date picker",
         "selector",
         "选择器"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "disabled",
+          "max",
+          "min",
+          "onChange",
+          "showToday",
+          "value",
+          "weekStartsOn"
+        ],
+        "events": [
+          "change"
+        ]
+      }
     },
     {
       "n": 45,
@@ -708,7 +1317,24 @@
       "aliases": [
         "kanban board",
         "看板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "cards",
+          "className",
+          "columns",
+          "onAddCard",
+          "onCardClick",
+          "onMoveCard"
+        ],
+        "events": [
+          "add-card",
+          "addcard",
+          "card-click",
+          "cardclick",
+          "movecard"
+        ]
+      }
     },
     {
       "n": 46,
@@ -723,7 +1349,23 @@
         "sidebar",
         "侧边栏",
         "抽屉"
-      ]
+      ],
+      "api": {
+        "props": [
+          "children",
+          "className",
+          "description",
+          "footer",
+          "isOpen",
+          "onClose",
+          "side",
+          "size",
+          "title"
+        ],
+        "events": [
+          "close"
+        ]
+      }
     },
     {
       "n": 47,
@@ -739,7 +1381,27 @@
         "dropdown",
         "select",
         "下拉"
-      ]
+      ],
+      "api": {
+        "props": [
+          "accounts",
+          "className",
+          "currentId",
+          "onAddAccount",
+          "onOpenChange",
+          "onSignOut",
+          "onSwitch"
+        ],
+        "events": [
+          "add-account",
+          "addaccount",
+          "open-change",
+          "openchange",
+          "sign-out",
+          "signout",
+          "switch"
+        ]
+      }
     },
     {
       "n": 48,
@@ -754,7 +1416,20 @@
         "scheduler slots",
         "calendar",
         "日历"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "date",
+          "onSelect",
+          "selectedId",
+          "slots",
+          "timezone"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 49,
@@ -766,7 +1441,17 @@
       "desc": "Formatting toolbar with separated button groups (dividers), icon-or-text glyph buttons, `active` toggle state (`aria-pressed`), disabled items and optional `shortcut` tooltips; `role=\"toolbar\"` per group.",
       "aliases": [
         "rich toolbar"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "groups",
+          "onAction"
+        ],
+        "events": [
+          "action"
+        ]
+      }
     },
     {
       "n": 50,
@@ -783,7 +1468,25 @@
         "landing",
         "营销",
         "落地页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "align",
+          "className",
+          "description",
+          "eyebrow",
+          "highlights",
+          "onPrimary",
+          "onSecondary",
+          "primaryCta",
+          "secondaryCta",
+          "title"
+        ],
+        "events": [
+          "primary",
+          "secondary"
+        ]
+      }
     },
     {
       "n": 51,
@@ -799,7 +1502,22 @@
         "landing",
         "营销",
         "落地页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "brand",
+          "className",
+          "columns",
+          "copyright",
+          "onLinkClick",
+          "socials",
+          "tagline"
+        ],
+        "events": [
+          "link-click",
+          "linkclick"
+        ]
+      }
     },
     {
       "n": 52,
@@ -816,7 +1534,18 @@
         "landing",
         "营销",
         "落地页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "columns",
+          "onSelect",
+          "testimonials"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 53,
@@ -832,7 +1561,21 @@
         "面板",
         "speech",
         "语音"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onEnd",
+          "onToggle",
+          "reply",
+          "state",
+          "transcript"
+        ],
+        "events": [
+          "end",
+          "toggle"
+        ]
+      }
     },
     {
       "n": 54,
@@ -847,7 +1590,22 @@
       "aliases": [
         "prompt library",
         "提示词"
-      ]
+      ],
+      "api": {
+        "props": [
+          "categories",
+          "className",
+          "onToggleFavorite",
+          "onUse",
+          "prompts",
+          "searchable"
+        ],
+        "events": [
+          "toggle-favorite",
+          "togglefavorite",
+          "use"
+        ]
+      }
     },
     {
       "n": 55,
@@ -860,7 +1618,21 @@
       "aliases": [
         "标签页",
         "选项卡"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeId",
+          "ariaLabel",
+          "className",
+          "defaultActiveId",
+          "onChange",
+          "tabs",
+          "variant"
+        ],
+        "events": [
+          "change"
+        ]
+      }
     },
     {
       "n": 56,
@@ -871,7 +1643,19 @@
         "collapsible"
       ],
       "desc": "Disclosure list with optional icons and descriptions, single-open or `allowMultiple` behavior, animated chevron and `aria-expanded` + region semantics.",
-      "aliases": []
+      "aliases": [],
+      "api": {
+        "props": [
+          "allowMultiple",
+          "className",
+          "defaultOpenIds",
+          "items",
+          "onToggle"
+        ],
+        "events": [
+          "toggle"
+        ]
+      }
     },
     {
       "n": 57,
@@ -884,7 +1668,20 @@
       "aliases": [
         "avatar group",
         "头像"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "max",
+          "members",
+          "onMemberClick",
+          "size"
+        ],
+        "events": [
+          "member-click",
+          "memberclick"
+        ]
+      }
     },
     {
       "n": 58,
@@ -898,7 +1695,20 @@
         "filter bar",
         "筛选",
         "过滤器"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "filters",
+          "onChange",
+          "onClear",
+          "selected"
+        ],
+        "events": [
+          "change",
+          "clear"
+        ]
+      }
     },
     {
       "n": 59,
@@ -911,7 +1721,16 @@
       "aliases": [
         "工具提示",
         "悬浮提示"
-      ]
+      ],
+      "api": {
+        "props": [
+          "children",
+          "className",
+          "content",
+          "side"
+        ],
+        "events": []
+      }
     },
     {
       "n": 60,
@@ -923,7 +1742,19 @@
       "desc": "Trail navigation with icon + label crumbs rendered as links, buttons or the current page, optional `maxItems` middle collapse and `aria-current=\"page\"`.",
       "aliases": [
         "面包屑"
-      ]
+      ],
+      "api": {
+        "props": [
+          "ariaLabel",
+          "className",
+          "items",
+          "maxItems",
+          "onNavigate"
+        ],
+        "events": [
+          "navigate"
+        ]
+      }
     },
     {
       "n": 61,
@@ -936,7 +1767,21 @@
       "aliases": [
         "pager",
         "分页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "ariaLabel",
+          "className",
+          "onChange",
+          "page",
+          "pageCount",
+          "showEdges",
+          "siblingCount"
+        ],
+        "events": [
+          "change"
+        ]
+      }
     },
     {
       "n": 62,
@@ -948,7 +1793,23 @@
       "desc": "Inline status banner in info/success/warning/danger tones with optional action and dismiss buttons, using `role=\"status\"` or `role=\"alert\"` by severity.",
       "aliases": [
         "alert banner"
-      ]
+      ],
+      "api": {
+        "props": [
+          "actionText",
+          "className",
+          "description",
+          "dismissible",
+          "onAction",
+          "onDismiss",
+          "title",
+          "tone"
+        ],
+        "events": [
+          "action",
+          "dismiss"
+        ]
+      }
     },
     {
       "n": 63,
@@ -967,7 +1828,19 @@
         "dropdown",
         "select",
         "下拉"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "emptyText",
+          "onChange",
+          "options",
+          "placeholder"
+        ],
+        "events": [
+          "change"
+        ]
+      }
     },
     {
       "n": 64,
@@ -977,7 +1850,21 @@
         "dark-mode"
       ],
       "desc": "Site navigation bar with multi-column mega menu panels (headings, icons, badges), plain links, and a CTA button; panels close on outside click or Escape.",
-      "aliases": []
+      "aliases": [],
+      "api": {
+        "props": [
+          "brand",
+          "className",
+          "ctaText",
+          "links",
+          "menus",
+          "onCtaClick"
+        ],
+        "events": [
+          "cta",
+          "ctaclick"
+        ]
+      }
     },
     {
       "n": 65,
@@ -992,7 +1879,15 @@
         "activity feed",
         "list",
         "列表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "entries",
+          "title"
+        ],
+        "events": []
+      }
     },
     {
       "n": 66,
@@ -1008,7 +1903,18 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "label",
+          "limit",
+          "showLegend",
+          "unit",
+          "used"
+        ],
+        "events": []
+      }
     },
     {
       "n": 67,
@@ -1021,7 +1927,21 @@
       "aliases": [
         "toggle switch",
         "开关"
-      ]
+      ],
+      "api": {
+        "props": [
+          "checked",
+          "className",
+          "description",
+          "disabled",
+          "label",
+          "onChange",
+          "size"
+        ],
+        "events": [
+          "change"
+        ]
+      }
     },
     {
       "n": 68,
@@ -1035,7 +1955,19 @@
         "wizard",
         "步骤",
         "向导"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "current",
+          "onStepClick",
+          "steps"
+        ],
+        "events": [
+          "step-click",
+          "stepclick"
+        ]
+      }
     },
     {
       "n": 69,
@@ -1048,7 +1980,26 @@
       "aliases": [
         "search input",
         "搜索"
-      ]
+      ],
+      "api": {
+        "props": [
+          "autoFocus",
+          "className",
+          "defaultValue",
+          "loading",
+          "onChange",
+          "onClear",
+          "onSearch",
+          "placeholder",
+          "shortcut",
+          "value"
+        ],
+        "events": [
+          "change",
+          "clear",
+          "search"
+        ]
+      }
     },
     {
       "n": 70,
@@ -1058,7 +2009,24 @@
         "badge"
       ],
       "desc": "Pill label in six tones (neutral/indigo/emerald/amber/rose/sky) with sm/md sizing, optional icon, removable variant (remove event) and clickable variant (tag-click event).",
-      "aliases": []
+      "aliases": [],
+      "api": {
+        "props": [
+          "className",
+          "icon",
+          "label",
+          "onClick",
+          "onRemove",
+          "removable",
+          "size",
+          "tone"
+        ],
+        "events": [
+          "click",
+          "remove",
+          "tag-click"
+        ]
+      }
     },
     {
       "n": 71,
@@ -1072,7 +2040,23 @@
         "popup",
         "弹窗",
         "对话框"
-      ]
+      ],
+      "api": {
+        "props": [
+          "children",
+          "className",
+          "description",
+          "dismissible",
+          "footer",
+          "onClose",
+          "open",
+          "showClose",
+          "title"
+        ],
+        "events": [
+          "close"
+        ]
+      }
     },
     {
       "n": 72,
@@ -1086,7 +2070,31 @@
         "profile header",
         "avatar",
         "头像"
-      ]
+      ],
+      "api": {
+        "props": [
+          "actions",
+          "activeTab",
+          "avatarUrl",
+          "className",
+          "coverClass",
+          "handle",
+          "headline",
+          "initials",
+          "name",
+          "onAction",
+          "onTabChange",
+          "stats",
+          "statusText",
+          "statusTone",
+          "tabs"
+        ],
+        "events": [
+          "action",
+          "tab-change",
+          "tabchange"
+        ]
+      }
     },
     {
       "n": 73,
@@ -1103,7 +2111,27 @@
         "面板",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "ctaLabel",
+          "features",
+          "lineItems",
+          "note",
+          "onCta",
+          "onPeriodChange",
+          "period",
+          "planName",
+          "price",
+          "priceSuffix"
+        ],
+        "events": [
+          "cta",
+          "period-change",
+          "periodchange"
+        ]
+      }
     },
     {
       "n": 74,
@@ -1115,7 +2143,21 @@
       "desc": "Discrete slider with per-stop buttons, filled track portion, ArrowLeft/Right/Home/End keyboard support on role=slider, highlight-from forward markers, and aria-valuetext from the step labels.",
       "aliases": [
         "step slider"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "disabled",
+          "highlightFrom",
+          "label",
+          "onChange",
+          "steps",
+          "value"
+        ],
+        "events": [
+          "change"
+        ]
+      }
     },
     {
       "n": 75,
@@ -1130,7 +2172,19 @@
       "aliases": [
         "inbox list",
         "列表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeId",
+          "className",
+          "emptyText",
+          "messages",
+          "onSelect"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 76,
@@ -1148,7 +2202,23 @@
         "landing",
         "营销",
         "落地页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "emptyText",
+          "entries",
+          "footerLink",
+          "onFooterClick",
+          "onSelect",
+          "title"
+        ],
+        "events": [
+          "footer-click",
+          "footerclick",
+          "select"
+        ]
+      }
     },
     {
       "n": 77,
@@ -1163,7 +2233,19 @@
         "chart",
         "graph",
         "图表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeIndex",
+          "className",
+          "metrics",
+          "onMetricClick"
+        ],
+        "events": [
+          "metric-click",
+          "metricclick"
+        ]
+      }
     },
     {
       "n": 78,
@@ -1177,7 +2259,22 @@
       "aliases": [
         "rank list",
         "列表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "emptyText",
+          "items",
+          "maxItems",
+          "onSelect",
+          "showRatio",
+          "title",
+          "valueHeader"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 79,
@@ -1191,7 +2288,19 @@
         "side nav",
         "sidebar",
         "侧边栏"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeId",
+          "className",
+          "groups",
+          "heading",
+          "onNavigate"
+        ],
+        "events": [
+          "navigate"
+        ]
+      }
     },
     {
       "n": 80,
@@ -1203,7 +2312,25 @@
       "desc": "Dashboard page header with title, emerald Live status pill, description, action button group (primary/secondary/ghost variants, optional icons) and underline tab nav with optional count badges; emits action and tab-change.",
       "aliases": [
         "page header"
-      ]
+      ],
+      "api": {
+        "props": [
+          "actions",
+          "activeTab",
+          "className",
+          "description",
+          "onAction",
+          "onTabChange",
+          "statusText",
+          "tabs",
+          "title"
+        ],
+        "events": [
+          "action",
+          "tab-change",
+          "tabchange"
+        ]
+      }
     },
     {
       "n": 81,
@@ -1217,7 +2344,22 @@
         "timeframe picker",
         "selector",
         "选择器"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "disabled",
+          "onChange",
+          "onStep",
+          "presets",
+          "rangeLabel",
+          "value"
+        ],
+        "events": [
+          "change",
+          "step"
+        ]
+      }
     },
     {
       "n": 82,
@@ -1231,7 +2373,21 @@
         "wizard steps",
         "步骤",
         "向导"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "current",
+          "nextLabel",
+          "onStepClick",
+          "steps",
+          "variant"
+        ],
+        "events": [
+          "step-click",
+          "stepclick"
+        ]
+      }
     },
     {
       "n": 83,
@@ -1244,7 +2400,22 @@
       "aliases": [
         "form field",
         "表单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "children",
+          "className",
+          "counter",
+          "error",
+          "helperFooter",
+          "hint",
+          "htmlFor",
+          "label",
+          "optional",
+          "required"
+        ],
+        "events": []
+      }
     },
     {
       "n": 84,
@@ -1258,7 +2429,23 @@
         "gantt timeline",
         "时间线",
         "甘特图"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "columnLabel",
+          "columns",
+          "emptyText",
+          "onTaskClick",
+          "rowLabel",
+          "tasks",
+          "today"
+        ],
+        "events": [
+          "task-click",
+          "taskclick"
+        ]
+      }
     },
     {
       "n": 85,
@@ -1275,7 +2462,26 @@
         "permission",
         "rbac",
         "权限"
-      ]
+      ],
+      "api": {
+        "props": [
+          "approvedCount",
+          "approvers",
+          "className",
+          "decision",
+          "dueDate",
+          "note",
+          "onApprove",
+          "onReject",
+          "onRequestChange",
+          "title"
+        ],
+        "events": [
+          "approve",
+          "reject",
+          "requestchange"
+        ]
+      }
     },
     {
       "n": 86,
@@ -1289,7 +2495,20 @@
       "aliases": [
         "resource list",
         "列表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "emptyText",
+          "items",
+          "maxItems",
+          "onSelect",
+          "title"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 87,
@@ -1304,7 +2523,18 @@
         "chart",
         "graph",
         "图表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "caption",
+          "className",
+          "headline",
+          "headlineUnit",
+          "items",
+          "unit"
+        ],
+        "events": []
+      }
     },
     {
       "n": 88,
@@ -1320,7 +2550,20 @@
         "graph",
         "图表",
         "仪表盘"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "label",
+          "remainingLabel",
+          "target",
+          "value",
+          "valuePrefix",
+          "valueSuffix",
+          "zones"
+        ],
+        "events": []
+      }
     },
     {
       "n": 89,
@@ -1338,7 +2581,16 @@
         "图表",
         "gauge",
         "仪表盘"
-      ]
+      ],
+      "api": {
+        "props": [
+          "cards",
+          "className"
+        ],
+        "events": [
+          "action-click"
+        ]
+      }
     },
     {
       "n": 90,
@@ -1352,7 +2604,19 @@
         "forecast trend chart",
         "graph",
         "图表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "deltaLabel",
+          "deltaTone",
+          "headline",
+          "note",
+          "points",
+          "unit"
+        ],
+        "events": []
+      }
     },
     {
       "n": 91,
@@ -1364,7 +2628,18 @@
       "desc": "Grouped two-bar comparison chart (violet estimated vs lime actual) with per-bar value labels, row names and a legend header.",
       "aliases": [
         "grouped bar compare"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "legendActual",
+          "legendEstimated",
+          "rows",
+          "title",
+          "unit"
+        ],
+        "events": []
+      }
     },
     {
       "n": 92,
@@ -1380,7 +2655,15 @@
         "landing",
         "营销",
         "落地页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "columns",
+          "quotes"
+        ],
+        "events": []
+      }
     },
     {
       "n": 93,
@@ -1396,7 +2679,17 @@
         "landing",
         "营销",
         "落地页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "badges",
+          "className",
+          "columns",
+          "copyright",
+          "tagline"
+        ],
+        "events": []
+      }
     },
     {
       "n": 94,
@@ -1413,7 +2706,16 @@
         "landing",
         "营销",
         "落地页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "paused",
+          "rows",
+          "speedSeconds"
+        ],
+        "events": []
+      }
     },
     {
       "n": 95,
@@ -1432,7 +2734,24 @@
         "tour",
         "引导",
         "新手引导"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "continueLabel",
+          "current",
+          "onContinue",
+          "onStepClick",
+          "segments",
+          "steps",
+          "title"
+        ],
+        "events": [
+          "continue",
+          "step-click",
+          "stepclick"
+        ]
+      }
     },
     {
       "n": 96,
@@ -1446,7 +2765,28 @@
         "filter toolbar",
         "筛选",
         "过滤器"
-      ]
+      ],
+      "api": {
+        "props": [
+          "actionLabel",
+          "chips",
+          "className",
+          "onAction",
+          "onChipRemove",
+          "onSearch",
+          "searchPlaceholder",
+          "searchValue",
+          "view",
+          "viewOnChange"
+        ],
+        "events": [
+          "action",
+          "chip-remove",
+          "chipremove",
+          "search",
+          "view-change"
+        ]
+      }
     },
     {
       "n": 97,
@@ -1463,7 +2803,27 @@
         "安全",
         "verification code",
         "验证码"
-      ]
+      ],
+      "api": {
+        "props": [
+          "continueLabel",
+          "errorText",
+          "heading",
+          "length",
+          "onChange",
+          "onComplete",
+          "resendHint",
+          "status",
+          "subtext",
+          "value"
+        ],
+        "events": [
+          "change",
+          "complete",
+          "continue",
+          "resend"
+        ]
+      }
     },
     {
       "n": 98,
@@ -1477,7 +2837,24 @@
       "aliases": [
         "search typeahead",
         "搜索"
-      ]
+      ],
+      "api": {
+        "props": [
+          "footerHint",
+          "highlight",
+          "onSelect",
+          "onSubmit",
+          "placeholder",
+          "query",
+          "results",
+          "resultsHeading",
+          "suggestions"
+        ],
+        "events": [
+          "select",
+          "submit"
+        ]
+      }
     },
     {
       "n": 99,
@@ -1495,7 +2872,28 @@
         "onboarding",
         "引导",
         "新手引导"
-      ]
+      ],
+      "api": {
+        "props": [
+          "body",
+          "caret",
+          "feedback",
+          "onDismiss",
+          "onFeedback",
+          "onNext",
+          "onPrev",
+          "step",
+          "theme",
+          "title",
+          "totalSteps"
+        ],
+        "events": [
+          "dismiss",
+          "feedback",
+          "next",
+          "prev"
+        ]
+      }
     },
     {
       "n": 100,
@@ -1507,7 +2905,22 @@
       "desc": "Cookie preference dialog with collapsible <details> categories, \"Always Active\" locked rows, mono cookie-name lists and Accept All / Reject All / Confirm bulk actions emitting the accepted id list.",
       "aliases": [
         "cookie consent"
-      ]
+      ],
+      "api": {
+        "props": [
+          "acceptLabel",
+          "categories",
+          "description",
+          "onConfirm",
+          "policyLabel",
+          "rejectLabel",
+          "saveLabel",
+          "title"
+        ],
+        "events": [
+          "confirm"
+        ]
+      }
     },
     {
       "n": 101,
@@ -1523,7 +2936,35 @@
         "sidebar",
         "侧边栏",
         "抽屉"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeTab",
+          "footerPrimary",
+          "footerSecondary",
+          "isOpen",
+          "onClose",
+          "onFooterPrimary",
+          "onRowAction",
+          "onRowToggle",
+          "onTabChange",
+          "sections",
+          "side",
+          "tabs",
+          "title"
+        ],
+        "events": [
+          "close",
+          "footer-primary",
+          "footerprimary",
+          "row-action",
+          "row-toggle",
+          "rowaction",
+          "rowtoggle",
+          "tab-change",
+          "tabchange"
+        ]
+      }
     },
     {
       "n": 102,
@@ -1536,7 +2977,27 @@
       "aliases": [
         "clarify question card",
         "卡片"
-      ]
+      ],
+      "api": {
+        "props": [
+          "answered",
+          "index",
+          "onAnswer",
+          "onNext",
+          "onPrev",
+          "placeholder",
+          "question",
+          "stepLabel",
+          "title",
+          "total",
+          "value"
+        ],
+        "events": [
+          "answer",
+          "next",
+          "prev"
+        ]
+      }
     },
     {
       "n": 103,
@@ -1551,7 +3012,25 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "contextLabel",
+          "contextText",
+          "feedbackLabel",
+          "hint",
+          "nextLabel",
+          "onNext",
+          "onRefine",
+          "refineLabel",
+          "steps",
+          "title"
+        ],
+        "events": [
+          "next",
+          "refine"
+        ]
+      }
     },
     {
       "n": 104,
@@ -1568,7 +3047,24 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "banner",
+          "ctaLabel",
+          "ctaTone",
+          "label",
+          "onCta",
+          "summary",
+          "total",
+          "unit",
+          "upgradeLine",
+          "used"
+        ],
+        "events": [
+          "cta"
+        ]
+      }
     },
     {
       "n": 105,
@@ -1583,7 +3079,27 @@
         "dropdown",
         "select",
         "下拉"
-      ]
+      ],
+      "api": {
+        "props": [
+          "createLabel",
+          "footerUser",
+          "logoutLabel",
+          "onCreateNew",
+          "onLogout",
+          "onSelect",
+          "subtitle",
+          "title",
+          "variant",
+          "workspaces"
+        ],
+        "events": [
+          "create-new",
+          "createnew",
+          "logout",
+          "select"
+        ]
+      }
     },
     {
       "n": 106,
@@ -1595,7 +3111,19 @@
       "desc": "Compact file chip with kind tone badge (pdf=rose / doc=sky / csv=emerald / image=violet), mono glyph, name + size/meta line and round black X remove button.",
       "aliases": [
         "attachment chip"
-      ]
+      ],
+      "api": {
+        "props": [
+          "kind",
+          "meta",
+          "name",
+          "onRemove",
+          "size"
+        ],
+        "events": [
+          "remove"
+        ]
+      }
     },
     {
       "n": 107,
@@ -1609,7 +3137,23 @@
         "deployment card",
         "卡片",
         "部署"
-      ]
+      ],
+      "api": {
+        "props": [
+          "commit",
+          "createdAt",
+          "deployId",
+          "onCancel",
+          "onVisit",
+          "source",
+          "status",
+          "url"
+        ],
+        "events": [
+          "cancel",
+          "visit"
+        ]
+      }
     },
     {
       "n": 108,
@@ -1623,7 +3167,25 @@
       "aliases": [
         "live tail log console",
         "日志"
-      ]
+      ],
+      "api": {
+        "props": [
+          "lines",
+          "liveTail",
+          "maxLines",
+          "onLiveTailChange",
+          "onSearch",
+          "searchPlaceholder",
+          "sources",
+          "timezone"
+        ],
+        "events": [
+          "live-tail-change",
+          "livetailchange",
+          "search",
+          "source-change"
+        ]
+      }
     },
     {
       "n": 109,
@@ -1639,7 +3201,21 @@
         "列表",
         "deploy",
         "部署"
-      ]
+      ],
+      "api": {
+        "props": [
+          "collapsible",
+          "defaultExpanded",
+          "groups",
+          "onStageClick",
+          "showDuration"
+        ],
+        "events": [
+          "group-toggle",
+          "stage-click",
+          "stageclick"
+        ]
+      }
     },
     {
       "n": 110,
@@ -1652,7 +3228,22 @@
       "aliases": [
         "changed files list",
         "列表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "defaultExpanded",
+          "files",
+          "grouped",
+          "onFileClick",
+          "showDiffstat",
+          "title"
+        ],
+        "events": [
+          "file-click",
+          "fileclick",
+          "toggle"
+        ]
+      }
     },
     {
       "n": 111,
@@ -1666,7 +3257,19 @@
       "aliases": [
         "service status list",
         "列表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "checks",
+          "durationLabel",
+          "onServiceClick",
+          "services"
+        ],
+        "events": [
+          "service-click",
+          "serviceclick"
+        ]
+      }
     },
     {
       "n": 112,
@@ -1681,7 +3284,24 @@
         "filter query builder",
         "筛选",
         "过滤器"
-      ]
+      ],
+      "api": {
+        "props": [
+          "addLabel",
+          "clearLabel",
+          "fields",
+          "maxRows",
+          "onApply",
+          "onChange",
+          "onClear",
+          "rows"
+        ],
+        "events": [
+          "apply",
+          "change",
+          "clear"
+        ]
+      }
     },
     {
       "n": 113,
@@ -1697,7 +3317,27 @@
         "dropdown",
         "select",
         "下拉"
-      ]
+      ],
+      "api": {
+        "props": [
+          "applyLabel",
+          "applyMode",
+          "columns",
+          "onApply",
+          "onReorder",
+          "onReset",
+          "onToggle",
+          "resetLabel",
+          "showReorderHandles",
+          "visibleIds"
+        ],
+        "events": [
+          "apply",
+          "reorder",
+          "reset",
+          "toggle"
+        ]
+      }
     },
     {
       "n": 114,
@@ -1712,7 +3352,19 @@
         "status count tabs",
         "标签页",
         "选项卡"
-      ]
+      ],
+      "api": {
+        "props": [
+          "fullWidth",
+          "onChange",
+          "size",
+          "tabs",
+          "value"
+        ],
+        "events": [
+          "change"
+        ]
+      }
     },
     {
       "n": 115,
@@ -1730,7 +3382,25 @@
         "选择器",
         "dropdown",
         "下拉"
-      ]
+      ],
+      "api": {
+        "props": [
+          "cancelLabel",
+          "confirmLabel",
+          "emptyMessage",
+          "onDismiss",
+          "onSearch",
+          "onSelect",
+          "options",
+          "searchable",
+          "selected"
+        ],
+        "events": [
+          "dismiss",
+          "search",
+          "select"
+        ]
+      }
     },
     {
       "n": 116,
@@ -1746,7 +3416,29 @@
         "federated search results panel",
         "搜索",
         "面板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "askAiLabel",
+          "onQueryChange",
+          "onResultSelect",
+          "onSourceChange",
+          "query",
+          "results",
+          "searchPlaceholder",
+          "selectedSources",
+          "showKeyboardLegend",
+          "sourceFilters"
+        ],
+        "events": [
+          "query-change",
+          "querychange",
+          "result-select",
+          "resultselect",
+          "source-change",
+          "sourcechange"
+        ]
+      }
     },
     {
       "n": 117,
@@ -1763,7 +3455,20 @@
         "日历",
         "selector",
         "选择器"
-      ]
+      ],
+      "api": {
+        "props": [
+          "days",
+          "daysLabel",
+          "onSelect",
+          "slotsLabel",
+          "timezone",
+          "value"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 118,
@@ -1776,7 +3481,22 @@
       "aliases": [
         "order tracker",
         "订单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "canceledReason",
+          "current",
+          "eta",
+          "onTrack",
+          "stages",
+          "trackingNumber",
+          "trackingUrl",
+          "variant"
+        ],
+        "events": [
+          "track"
+        ]
+      }
     },
     {
       "n": 119,
@@ -1791,7 +3511,28 @@
         "order summary panel",
         "面板",
         "订单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "appliedPromos",
+          "ctaAmount",
+          "ctaLabel",
+          "heading",
+          "onApplyPromo",
+          "onCta",
+          "onRemovePromo",
+          "promoPlaceholder",
+          "rows",
+          "trustFooter"
+        ],
+        "events": [
+          "apply-promo",
+          "applypromo",
+          "cta",
+          "remove-promo",
+          "removepromo"
+        ]
+      }
     },
     {
       "n": 120,
@@ -1806,7 +3547,27 @@
         "payment method card",
         "卡片",
         "支付"
-      ]
+      ],
+      "api": {
+        "props": [
+          "addNewLabel",
+          "amount",
+          "brand",
+          "changeLabel",
+          "exp",
+          "holder",
+          "holderLabel",
+          "last4",
+          "onAddNew",
+          "onChange",
+          "showAddNew"
+        ],
+        "events": [
+          "add-new",
+          "addnew",
+          "change"
+        ]
+      }
     },
     {
       "n": 121,
@@ -1820,7 +3581,24 @@
         "order card",
         "卡片",
         "订单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "fulfillment",
+          "items",
+          "onAction",
+          "onOpen",
+          "orderNumber",
+          "placedAt",
+          "status",
+          "statusNote",
+          "total"
+        ],
+        "events": [
+          "action",
+          "open"
+        ]
+      }
     },
     {
       "n": 122,
@@ -1838,7 +3616,29 @@
         "对话框",
         "selector",
         "选择器"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "customColors",
+          "documentColors",
+          "onAddCustom",
+          "onChange",
+          "onEyedropperClick",
+          "showEyedropper",
+          "showHexInput",
+          "showRgbInputs",
+          "swatches",
+          "value"
+        ],
+        "events": [
+          "add-custom",
+          "addcustom",
+          "change",
+          "eyedropper-click",
+          "eyedropperclick"
+        ]
+      }
     },
     {
       "n": 123,
@@ -1850,7 +3650,21 @@
       "desc": "Floating canvas tool picker with per-tool kbd number hints, blue active-tool highlight, selection count badge, horizontal pill or vertical rail orientation.",
       "aliases": [
         "editor tool palette"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeCount",
+          "activeId",
+          "className",
+          "onSelect",
+          "orientation",
+          "showKbdHints",
+          "tools"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 124,
@@ -1864,7 +3678,17 @@
       "desc": "Two-column grouped editor shortcut list with icons, markdown-syntax mono hints, keycap chip groups (bordered, subtle bottom shadow), live search filter with empty state.",
       "aliases": [
         "shortcut cheat sheet"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "columns",
+          "searchable",
+          "shortcuts",
+          "title"
+        ],
+        "events": []
+      }
     },
     {
       "n": 125,
@@ -1879,7 +3703,31 @@
         "dropdown",
         "select",
         "下拉"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "max",
+          "min",
+          "onFit",
+          "onRedo",
+          "onUndo",
+          "onZoomChange",
+          "presets",
+          "showFit",
+          "showUndoRedo",
+          "step",
+          "value",
+          "variant"
+        ],
+        "events": [
+          "fit",
+          "redo",
+          "undo",
+          "zoom-change",
+          "zoomchange"
+        ]
+      }
     },
     {
       "n": 126,
@@ -1892,7 +3740,22 @@
       "desc": "Selection-anchored floating AI pill with sparkle badge chip (indigo or brand-emerald tone), action buttons with upward option menus, loading pulse + \"Working…\", red error border, dismiss round button.",
       "aliases": [
         "a i inline menu"
-      ]
+      ],
+      "api": {
+        "props": [
+          "actions",
+          "className",
+          "error",
+          "loading",
+          "onAction",
+          "onDismiss",
+          "tone"
+        ],
+        "events": [
+          "action",
+          "dismiss"
+        ]
+      }
     },
     {
       "n": 127,
@@ -1906,7 +3769,23 @@
         "empty state starter",
         "empty state",
         "空状态"
-      ]
+      ],
+      "api": {
+        "props": [
+          "actionLabel",
+          "actionVariant",
+          "className",
+          "description",
+          "illustration",
+          "onAction",
+          "size",
+          "title",
+          "variant"
+        ],
+        "events": [
+          "action"
+        ]
+      }
     },
     {
       "n": 128,
@@ -1928,7 +3807,24 @@
         "permission",
         "rbac",
         "权限"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "dividerText",
+          "onProvider",
+          "onSkip",
+          "providers",
+          "secondaryAction",
+          "skipLabel",
+          "title"
+        ],
+        "events": [
+          "provider",
+          "secondary",
+          "skip"
+        ]
+      }
     },
     {
       "n": 129,
@@ -1948,7 +3844,20 @@
         "登录",
         "认证",
         "面板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "children",
+          "className",
+          "footerLinks",
+          "media",
+          "mediaBackground",
+          "mediaSide",
+          "mediaSubtitle",
+          "mediaTitle"
+        ],
+        "events": []
+      }
     },
     {
       "n": 130,
@@ -1962,7 +3871,20 @@
         "success toast",
         "提示条",
         "通知条"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "duration",
+          "icon",
+          "message",
+          "onClose",
+          "position"
+        ],
+        "events": [
+          "close"
+        ]
+      }
     },
     {
       "n": 131,
@@ -1974,7 +3896,22 @@
       "desc": "Inline-editable object title — heading when idle, click switches to highlighted input (yellow bg + teal focus ring), Enter/blur commits, Esc cancels, breadcrumb + meta rows around it.",
       "aliases": [
         "editable heading"
-      ]
+      ],
+      "api": {
+        "props": [
+          "breadcrumb",
+          "className",
+          "defaultValue",
+          "meta",
+          "onChange",
+          "size",
+          "value"
+        ],
+        "events": [
+          "cancel",
+          "change"
+        ]
+      }
     },
     {
       "n": 132,
@@ -1990,7 +3927,19 @@
         "pricing",
         "定价",
         "价格"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "ctaText",
+          "onSelect",
+          "plans",
+          "sections"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 133,
@@ -2011,7 +3960,37 @@
         "payment",
         "支付",
         "结算"
-      ]
+      ],
+      "api": {
+        "props": [
+          "billingPeriod",
+          "className",
+          "confirmText",
+          "discount",
+          "discountLabel",
+          "lineItems",
+          "maxSeats",
+          "minSeats",
+          "onBillingPeriodChange",
+          "onConfirm",
+          "onSeatsChange",
+          "planName",
+          "processing",
+          "seats",
+          "terms",
+          "title",
+          "total",
+          "totalLabel",
+          "totalNote"
+        ],
+        "events": [
+          "billing-period-change",
+          "billingperiodchange",
+          "confirm",
+          "seats-change",
+          "seatschange"
+        ]
+      }
     },
     {
       "n": 134,
@@ -2027,7 +4006,24 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "ctaText",
+          "daysLeft",
+          "dismissible",
+          "message",
+          "onCta",
+          "onDismiss",
+          "planName",
+          "tone"
+        ],
+        "events": [
+          "cta",
+          "dismiss"
+        ]
+      }
     },
     {
       "n": 135,
@@ -2043,7 +4039,19 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onSelect",
+          "subtitle",
+          "tiers",
+          "title"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 136,
@@ -2061,7 +4069,21 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onChange",
+          "options",
+          "selectedIds",
+          "title",
+          "totalLabel",
+          "totalText"
+        ],
+        "events": [
+          "change"
+        ]
+      }
     },
     {
       "n": 137,
@@ -2076,7 +4098,24 @@
         "image gen gallery",
         "图片",
         "图像"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "generateText",
+          "images",
+          "onGenerate",
+          "onTileAction",
+          "placeholder",
+          "prompt",
+          "title"
+        ],
+        "events": [
+          "generate",
+          "tile-action",
+          "tileaction"
+        ]
+      }
     },
     {
       "n": 138,
@@ -2090,7 +4129,22 @@
         "shared chat viewer",
         "聊天",
         "对话"
-      ]
+      ],
+      "api": {
+        "props": [
+          "appName",
+          "className",
+          "ctaNote",
+          "ctaText",
+          "messages",
+          "meta",
+          "onCta",
+          "title"
+        ],
+        "events": [
+          "cta"
+        ]
+      }
     },
     {
       "n": 139,
@@ -2104,7 +4158,28 @@
       "aliases": [
         "memory panel",
         "面板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "addPlaceholder",
+          "addText",
+          "className",
+          "items",
+          "note",
+          "onAdd",
+          "onClearAll",
+          "onDelete",
+          "onEdit",
+          "title"
+        ],
+        "events": [
+          "add",
+          "clear",
+          "clearall",
+          "delete",
+          "edit"
+        ]
+      }
     },
     {
       "n": 140,
@@ -2116,7 +4191,20 @@
       "desc": "\"Apps & Connectors\" integration panel — icon cards with description, Connect / Connected toggle buttons and a live N/M connected badge.",
       "aliases": [
         "connector grid"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "connectText",
+          "connectedText",
+          "connectors",
+          "onToggle",
+          "title"
+        ],
+        "events": [
+          "toggle"
+        ]
+      }
     },
     {
       "n": 141,
@@ -2128,7 +4216,26 @@
       "desc": "LMArena style side-by-side model comparison — shared prompt chip, two model output columns (streaming dots / error state) and an A / Tie / B vote bar.",
       "aliases": [
         "model compare pane"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "modelA",
+          "modelB",
+          "onVote",
+          "outputA",
+          "outputB",
+          "prompt",
+          "statusA",
+          "statusB",
+          "voteLabelA",
+          "voteLabelB",
+          "voteLabelTie"
+        ],
+        "events": [
+          "vote"
+        ]
+      }
     },
     {
       "n": 142,
@@ -2142,7 +4249,28 @@
       "aliases": [
         "system prompt editor",
         "提示词"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onReset",
+          "onSave",
+          "onTemperatureChange",
+          "placeholder",
+          "savedValue",
+          "temperature",
+          "title",
+          "value",
+          "variables",
+          "version"
+        ],
+        "events": [
+          "reset",
+          "save",
+          "temperature-change",
+          "temperaturechange"
+        ]
+      }
     },
     {
       "n": 143,
@@ -2158,7 +4286,20 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onToggle",
+          "onValidate",
+          "title",
+          "tools"
+        ],
+        "events": [
+          "toggle",
+          "validate"
+        ]
+      }
     },
     {
       "n": 144,
@@ -2172,7 +4313,21 @@
       "aliases": [
         "fine tune job list",
         "列表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "jobs",
+          "newText",
+          "onCancel",
+          "onNew",
+          "title"
+        ],
+        "events": [
+          "cancel",
+          "new"
+        ]
+      }
     },
     {
       "n": 145,
@@ -2185,7 +4340,18 @@
       "desc": "persona preset cards — gradient emoji tiles, name + description, per-persona `temp` chip, moving selection ring (indigo border + ring-2 + check bubble).",
       "aliases": [
         "persona preset grid"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onSelect",
+          "presets",
+          "title"
+        ],
+        "events": [
+          "select"
+        ]
+      }
     },
     {
       "n": 146,
@@ -2201,7 +4367,23 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "agentName",
+          "className",
+          "nodes",
+          "onEdit",
+          "onRun",
+          "runText",
+          "running",
+          "title"
+        ],
+        "events": [
+          "edit",
+          "run"
+        ]
+      }
     },
     {
       "n": 147,
@@ -2216,7 +4398,25 @@
         "voice orb",
         "speech",
         "语音"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "hint",
+          "label",
+          "muted",
+          "onEnd",
+          "onToggleMute",
+          "showControls",
+          "size",
+          "state"
+        ],
+        "events": [
+          "end",
+          "toggle-mute",
+          "togglemute"
+        ]
+      }
     },
     {
       "n": 148,
@@ -2233,7 +4433,30 @@
         "对话框",
         "聊天",
         "对话"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "description",
+          "link",
+          "onClose",
+          "onCopyLink",
+          "onCreateLink",
+          "onToggleShared",
+          "open",
+          "shared",
+          "title"
+        ],
+        "events": [
+          "close",
+          "copy-link",
+          "copylink",
+          "create-link",
+          "createlink",
+          "toggle-shared",
+          "toggleshared"
+        ]
+      }
     },
     {
       "n": 149,
@@ -2248,7 +4471,24 @@
         "brand prompt table",
         "表格",
         "提示词"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onAddPrompt",
+          "onRowClick",
+          "quotaTotal",
+          "quotaUsed",
+          "rows",
+          "title"
+        ],
+        "events": [
+          "add-prompt",
+          "addprompt",
+          "row-click",
+          "rowclick"
+        ]
+      }
     },
     {
       "n": 150,
@@ -2264,7 +4504,26 @@
         "弹窗",
         "对话框",
         "提示词"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "description",
+          "folder",
+          "onCancel",
+          "onClose",
+          "onSave",
+          "open",
+          "prompt",
+          "title",
+          "variables"
+        ],
+        "events": [
+          "cancel",
+          "close",
+          "save"
+        ]
+      }
     },
     {
       "n": 151,
@@ -2279,7 +4538,29 @@
         "ai template picker",
         "selector",
         "选择器"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeCategory",
+          "categories",
+          "className",
+          "onCategoryChange",
+          "onClose",
+          "onRunCustom",
+          "onTry",
+          "open",
+          "templates",
+          "title"
+        ],
+        "events": [
+          "category-change",
+          "categorychange",
+          "close",
+          "run-custom",
+          "runcustom",
+          "try"
+        ]
+      }
     },
     {
       "n": 152,
@@ -2292,7 +4573,32 @@
       "desc": "floating creation composer — Image Assist switch, prompt textarea, resolution/count selects, violet Create CTA.",
       "aliases": [
         "creation composer"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "count",
+          "counts",
+          "imageAssist",
+          "onCountChange",
+          "onImageAssistChange",
+          "onResolutionChange",
+          "onSubmit",
+          "open",
+          "placeholder",
+          "resolution",
+          "resolutions"
+        ],
+        "events": [
+          "count-change",
+          "countchange",
+          "image-assist-change",
+          "imageassistchange",
+          "resolution-change",
+          "resolutionchange",
+          "submit"
+        ]
+      }
     },
     {
       "n": 153,
@@ -2305,7 +4611,19 @@
       "desc": "horizontal span timeline waterfall for agent/LLM traces — depth-indented rows, LLM/tool/retrieval color coding, duration + cost labels.",
       "aliases": [
         "trace span waterfall"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onSpanSelect",
+          "spans",
+          "title"
+        ],
+        "events": [
+          "span-select",
+          "spanselect"
+        ]
+      }
     },
     {
       "n": 154,
@@ -2320,7 +4638,23 @@
         "表格",
         "evaluation",
         "评测"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "criteria",
+          "onAddCriteria",
+          "onRunSelect",
+          "runs",
+          "title"
+        ],
+        "events": [
+          "add-criteria",
+          "addcriteria",
+          "run-select",
+          "runselect"
+        ]
+      }
     },
     {
       "n": 155,
@@ -2338,7 +4672,22 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onSegmentSelect",
+          "segments",
+          "spendTotal",
+          "spendUsed",
+          "title",
+          "usageRows"
+        ],
+        "events": [
+          "segment-select",
+          "segmentselect"
+        ]
+      }
     },
     {
       "n": 156,
@@ -2354,7 +4703,16 @@
         "voice",
         "speech",
         "语音"
-      ]
+      ],
+      "api": {
+        "props": [
+          "barCount",
+          "className",
+          "color",
+          "isActive"
+        ],
+        "events": []
+      }
     },
     {
       "n": 157,
@@ -2368,7 +4726,19 @@
         "prompt variant diff",
         "提示词",
         "差异对比"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onApply",
+          "title",
+          "variables",
+          "variants"
+        ],
+        "events": [
+          "apply"
+        ]
+      }
     },
     {
       "n": 158,
@@ -2384,7 +4754,20 @@
         "permission",
         "rbac",
         "权限"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "items",
+          "onApprove",
+          "onReject",
+          "title"
+        ],
+        "events": [
+          "approve",
+          "reject"
+        ]
+      }
     },
     {
       "n": 159,
@@ -2397,7 +4780,26 @@
       "aliases": [
         "content review table",
         "表格"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "draftsLabel",
+          "onRowSelect",
+          "onSaveDrafts",
+          "onSchedule",
+          "rows",
+          "scheduleLabel",
+          "title"
+        ],
+        "events": [
+          "row-select",
+          "rowselect",
+          "save-drafts",
+          "savedrafts",
+          "schedule"
+        ]
+      }
     },
     {
       "n": 160,
@@ -2410,7 +4812,22 @@
       "aliases": [
         "qa test table",
         "表格"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onRowCheck",
+          "onRowSelect",
+          "rows",
+          "title"
+        ],
+        "events": [
+          "row-check",
+          "row-select",
+          "rowcheck",
+          "rowselect"
+        ]
+      }
     },
     {
       "n": 161,
@@ -2429,7 +4846,26 @@
         "support",
         "工单",
         "客服"
-      ]
+      ],
+      "api": {
+        "props": [
+          "appealLabel",
+          "backLabel",
+          "className",
+          "onAppeal",
+          "onBack",
+          "onClose",
+          "open",
+          "policyLabel",
+          "reasonDetail",
+          "reasonTitle"
+        ],
+        "events": [
+          "appeal",
+          "back",
+          "close"
+        ]
+      }
     },
     {
       "n": 162,
@@ -2445,7 +4881,21 @@
         "卡片",
         "定价",
         "价格"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "currency",
+          "modelId",
+          "modelName",
+          "onCopyId",
+          "pricing"
+        ],
+        "events": [
+          "copy-id",
+          "copyid"
+        ]
+      }
     },
     {
       "n": 163,
@@ -2459,7 +4909,25 @@
       "aliases": [
         "ai research panel",
         "面板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onClose",
+          "onRun",
+          "onRunCustom",
+          "open",
+          "runLabel",
+          "templates",
+          "title"
+        ],
+        "events": [
+          "close",
+          "run",
+          "run-custom",
+          "runcustom"
+        ]
+      }
     },
     {
       "n": 164,
@@ -2475,7 +4943,23 @@
         "表格",
         "security",
         "安全"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "createLabel",
+          "keys",
+          "onCopy",
+          "onCreate",
+          "onRevoke",
+          "title"
+        ],
+        "events": [
+          "copy",
+          "create",
+          "revoke"
+        ]
+      }
     },
     {
       "n": 165,
@@ -2490,7 +4974,21 @@
         "voice session history",
         "speech",
         "语音"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "emptyLabel",
+          "onPlay",
+          "onSelect",
+          "sessions",
+          "title"
+        ],
+        "events": [
+          "play",
+          "select"
+        ]
+      }
     },
     {
       "n": 166,
@@ -2506,7 +5004,21 @@
         "chat",
         "聊天",
         "对话"
-      ]
+      ],
+      "api": {
+        "props": [
+          "actions",
+          "className",
+          "onSelect",
+          "onToggle",
+          "open",
+          "triggerLabel"
+        ],
+        "events": [
+          "select",
+          "toggle"
+        ]
+      }
     },
     {
       "n": 167,
@@ -2521,7 +5033,22 @@
         "prompt performance table",
         "表格",
         "提示词"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "exportLabel",
+          "onExport",
+          "onRowClick",
+          "rows",
+          "title"
+        ],
+        "events": [
+          "export",
+          "row-click",
+          "rowclick"
+        ]
+      }
     },
     {
       "n": 168,
@@ -2536,7 +5063,28 @@
         "popup",
         "弹窗",
         "对话框"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "copyLabel",
+          "description",
+          "onClose",
+          "onCopyLink",
+          "onRemovePerson",
+          "open",
+          "people",
+          "title",
+          "url"
+        ],
+        "events": [
+          "close",
+          "copy-link",
+          "copylink",
+          "remove-person",
+          "removeperson"
+        ]
+      }
     },
     {
       "n": 169,
@@ -2552,7 +5100,25 @@
         "chat",
         "聊天",
         "对话"
-      ]
+      ],
+      "api": {
+        "props": [
+          "answer",
+          "className",
+          "onCopy",
+          "onPlay",
+          "onSourceClick",
+          "question",
+          "sources",
+          "waveform"
+        ],
+        "events": [
+          "copy",
+          "play",
+          "source-click",
+          "sourceclick"
+        ]
+      }
     },
     {
       "n": 170,
@@ -2567,7 +5133,21 @@
         "voice",
         "speech",
         "语音"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "duration",
+          "onTogglePlay",
+          "playing",
+          "title",
+          "waveform"
+        ],
+        "events": [
+          "toggle-play",
+          "toggleplay"
+        ]
+      }
     },
     {
       "n": 171,
@@ -2582,7 +5162,20 @@
         "image action menu",
         "图片",
         "图像"
-      ]
+      ],
+      "api": {
+        "props": [
+          "actions",
+          "className",
+          "onAction",
+          "onClose",
+          "open"
+        ],
+        "events": [
+          "action",
+          "close"
+        ]
+      }
     },
     {
       "n": 172,
@@ -2596,7 +5189,27 @@
       "aliases": [
         "fal run card",
         "卡片"
-      ]
+      ],
+      "api": {
+        "props": [
+          "aspect",
+          "className",
+          "cost",
+          "costTone",
+          "models",
+          "onDelete",
+          "onDuplicate",
+          "onRerun",
+          "prompt",
+          "time",
+          "type"
+        ],
+        "events": [
+          "delete",
+          "duplicate",
+          "rerun"
+        ]
+      }
     },
     {
       "n": 173,
@@ -2610,7 +5223,17 @@
         "image gen meta bar",
         "图片",
         "图像"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "cost",
+          "duration",
+          "jobId",
+          "model"
+        ],
+        "events": []
+      }
     },
     {
       "n": 174,
@@ -2624,7 +5247,28 @@
         "gamma image detail",
         "图片",
         "图像"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "liked",
+          "onDelete",
+          "onDislike",
+          "onDownload",
+          "onLike",
+          "onZoom",
+          "preview",
+          "prompt",
+          "title"
+        ],
+        "events": [
+          "delete",
+          "dislike",
+          "download",
+          "like",
+          "zoom"
+        ]
+      }
     },
     {
       "n": 175,
@@ -2638,7 +5282,22 @@
         "writer style guide",
         "docs",
         "文档"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeTab",
+          "className",
+          "entries",
+          "onEntryClick",
+          "onTabChange"
+        ],
+        "events": [
+          "entry-click",
+          "entryclick",
+          "tab-change",
+          "tabchange"
+        ]
+      }
     },
     {
       "n": 176,
@@ -2651,7 +5310,18 @@
       "desc": "Campsite design handoff panel — checklist with done state, assignee initials avatar and due date, x/y done counter and an AI summary block.",
       "aliases": [
         "campsite handoff"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "items",
+          "onToggle",
+          "summary"
+        ],
+        "events": [
+          "toggle"
+        ]
+      }
     },
     {
       "n": 177,
@@ -2667,7 +5337,19 @@
         "support",
         "工单",
         "客服"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "fields",
+          "onApply",
+          "onDismiss"
+        ],
+        "events": [
+          "apply",
+          "dismiss"
+        ]
+      }
     },
     {
       "n": 178,
@@ -2684,7 +5366,21 @@
         "chat",
         "聊天",
         "对话"
-      ]
+      ],
+      "api": {
+        "props": [
+          "chips",
+          "className",
+          "message",
+          "onChipClick",
+          "onClose"
+        ],
+        "events": [
+          "chip-click",
+          "chipclick",
+          "close"
+        ]
+      }
     },
     {
       "n": 179,
@@ -2696,7 +5392,18 @@
       "desc": "Mindtrip \"Jump back in\" resume cards — thumbnail (or gradient placeholder), kind badge, title and subtitle per card.",
       "aliases": [
         "jump back in"
-      ]
+      ],
+      "api": {
+        "props": [
+          "cards",
+          "className",
+          "onCardClick"
+        ],
+        "events": [
+          "card-click",
+          "cardclick"
+        ]
+      }
     },
     {
       "n": 180,
@@ -2715,7 +5422,22 @@
         "support",
         "工单",
         "客服"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "links",
+          "onLinkClick",
+          "onResourceClick",
+          "resources"
+        ],
+        "events": [
+          "link-click",
+          "linkclick",
+          "resource-click",
+          "resourceclick"
+        ]
+      }
     },
     {
       "n": 181,
@@ -2729,7 +5451,18 @@
       "aliases": [
         "vision analysis card",
         "卡片"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onSectionClick",
+          "sections"
+        ],
+        "events": [
+          "section-click",
+          "sectionclick"
+        ]
+      }
     },
     {
       "n": 182,
@@ -2742,7 +5475,18 @@
       "desc": "Graphite grouped PR review queue — collapsible groups with count badges, author-initial rows and `author · repo #n` meta.",
       "aliases": [
         "pr review queue"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "groups",
+          "onPrClick"
+        ],
+        "events": [
+          "pr-click",
+          "prclick"
+        ]
+      }
     },
     {
       "n": 183,
@@ -2754,7 +5498,21 @@
       "desc": "Luma iteration bar — Show More / Brainstorm / Reply pills, overflow slot and prev/next pager with page label.",
       "aliases": [
         "iteration action bar"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onAction",
+          "onPageChange",
+          "page",
+          "totalPages"
+        ],
+        "events": [
+          "action",
+          "page-change",
+          "pagechange"
+        ]
+      }
     },
     {
       "n": 184,
@@ -2768,7 +5526,24 @@
       "aliases": [
         "monitor run list",
         "列表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeRange",
+          "className",
+          "histogram",
+          "onRangeChange",
+          "onRunClick",
+          "ranges",
+          "runs"
+        ],
+        "events": [
+          "range-change",
+          "rangechange",
+          "run-click",
+          "runclick"
+        ]
+      }
     },
     {
       "n": 185,
@@ -2782,7 +5557,21 @@
         "eval turn builder",
         "evaluation",
         "评测"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onAddTurn",
+          "onTurnRemove",
+          "turns"
+        ],
+        "events": [
+          "add-turn",
+          "addturn",
+          "turn-remove",
+          "turnremove"
+        ]
+      }
     },
     {
       "n": 186,
@@ -2798,7 +5587,23 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "duration",
+          "onStepClick",
+          "requests",
+          "status",
+          "steps",
+          "stepsCount",
+          "title"
+        ],
+        "events": [
+          "step-click",
+          "stepclick"
+        ]
+      }
     },
     {
       "n": 187,
@@ -2812,7 +5617,23 @@
         "eval run results",
         "evaluation",
         "评测"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "counters",
+          "filterLabel",
+          "filterValue",
+          "onResultClick",
+          "passLabel",
+          "passRate",
+          "sections"
+        ],
+        "events": [
+          "result-click",
+          "resultclick"
+        ]
+      }
     },
     {
       "n": 188,
@@ -2825,7 +5646,22 @@
       "desc": "Sentry event tags — scope pills over a two-column key/value grid with mono keys and link-styled searchable values.",
       "aliases": [
         "event tag grid"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeScope",
+          "className",
+          "groups",
+          "onTagClick",
+          "scopes",
+          "title"
+        ],
+        "events": [
+          "scope-change",
+          "tag-click",
+          "tagclick"
+        ]
+      }
     },
     {
       "n": 189,
@@ -2838,7 +5674,23 @@
       "aliases": [
         "prompt tuner result",
         "提示词"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeCompletionId",
+          "className",
+          "completions",
+          "onCompletionChange",
+          "onCopyPrompt",
+          "optimizedPrompt"
+        ],
+        "events": [
+          "completion-change",
+          "completionchange",
+          "copy-prompt",
+          "copyprompt"
+        ]
+      }
     },
     {
       "n": 190,
@@ -2853,7 +5705,26 @@
         "audit log table",
         "表格",
         "日志"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeView",
+          "className",
+          "events",
+          "filters",
+          "onEventClick",
+          "onViewChange",
+          "title",
+          "trend",
+          "views"
+        ],
+        "events": [
+          "event-click",
+          "eventclick",
+          "view-change",
+          "viewchange"
+        ]
+      }
     },
     {
       "n": 191,
@@ -2870,7 +5741,22 @@
         "landing",
         "营销",
         "落地页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "entries",
+          "filterLabel",
+          "onEntryClick",
+          "searchPlaceholder",
+          "subtitle",
+          "title"
+        ],
+        "events": [
+          "entry-click",
+          "entryclick"
+        ]
+      }
     },
     {
       "n": 192,
@@ -2884,7 +5770,30 @@
       "aliases": [
         "session device table",
         "表格"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "description",
+          "learnMoreLabel",
+          "logoutAllLabel",
+          "onLogoutAll",
+          "onSessionClick",
+          "page",
+          "pageLabel",
+          "rowsPerPage",
+          "rowsPerPageLabel",
+          "sessions",
+          "title"
+        ],
+        "events": [
+          "logout-all",
+          "logoutall",
+          "rows-per-page-change",
+          "session-click",
+          "sessionclick"
+        ]
+      }
     },
     {
       "n": 193,
@@ -2899,7 +5808,31 @@
       "aliases": [
         "task detail panel",
         "面板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "actions",
+          "activity",
+          "activityTitle",
+          "aiBarActions",
+          "aiBarText",
+          "className",
+          "commentPlaceholder",
+          "description",
+          "fields",
+          "onActionClick",
+          "onCommentSubmit",
+          "statusLabel",
+          "title",
+          "type"
+        ],
+        "events": [
+          "action-click",
+          "actionclick",
+          "comment-submit",
+          "commentsubmit"
+        ]
+      }
     },
     {
       "n": 194,
@@ -2913,7 +5846,38 @@
       "aliases": [
         "delivery tracking panel",
         "面板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "copyLinkLabel",
+          "courierName",
+          "courierRole",
+          "eta",
+          "etaPrefix",
+          "giftMessage",
+          "giftRecipient",
+          "items",
+          "onCopyLink",
+          "onCourierCall",
+          "onCourierMessage",
+          "onTextLink",
+          "orderName",
+          "orderSummary",
+          "shareDescription",
+          "shareTitle",
+          "statusText",
+          "steps",
+          "textLinkLabel",
+          "title"
+        ],
+        "events": [
+          "copylink",
+          "couriercall",
+          "couriermessage",
+          "textlink"
+        ]
+      }
     },
     {
       "n": 195,
@@ -2928,7 +5892,28 @@
         "map property card",
         "卡片",
         "地图"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activePinId",
+          "card",
+          "className",
+          "closeLabel",
+          "likeLabel",
+          "onCardClose",
+          "onCardLike",
+          "onPinClick",
+          "pins"
+        ],
+        "events": [
+          "card-close",
+          "card-like",
+          "cardclose",
+          "cardlike",
+          "pin-click",
+          "pinclick"
+        ]
+      }
     },
     {
       "n": 196,
@@ -2942,7 +5927,30 @@
         "api reference viewer",
         "docs",
         "文档"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeLanguageId",
+          "className",
+          "endpoint",
+          "languages",
+          "method",
+          "onLanguageChange",
+          "onParamClick",
+          "params",
+          "paramsTitle",
+          "responseTitle",
+          "responses",
+          "responsesTitle",
+          "title"
+        ],
+        "events": [
+          "language-change",
+          "languagechange",
+          "param-click",
+          "paramclick"
+        ]
+      }
     },
     {
       "n": 197,
@@ -2956,7 +5964,33 @@
       "aliases": [
         "week calendar grid",
         "日历"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeDayId",
+          "className",
+          "composerPlaceholder",
+          "days",
+          "endHour",
+          "events",
+          "nowHour",
+          "onEventClick",
+          "onFindTime",
+          "onViewChange",
+          "startHour",
+          "timeZone",
+          "view"
+        ],
+        "events": [
+          "compose-submit",
+          "event-click",
+          "eventclick",
+          "find-time",
+          "findtime",
+          "view-change",
+          "viewchange"
+        ]
+      }
     },
     {
       "n": 198,
@@ -2970,7 +6004,39 @@
       "aliases": [
         "video project settings",
         "视频"
-      ]
+      ],
+      "api": {
+        "props": [
+          "addChapterLabel",
+          "chapters",
+          "className",
+          "descriptionLabel",
+          "descriptionValue",
+          "onAddChapter",
+          "onDescriptionChange",
+          "onThumbnailSelect",
+          "onTitleChange",
+          "panelEmptyText",
+          "panelTitle",
+          "selectedThumbnailId",
+          "storageTotal",
+          "storageUsed",
+          "thumbnailLabel",
+          "thumbnails",
+          "titleLabel",
+          "titleValue"
+        ],
+        "events": [
+          "add-chapter",
+          "addchapter",
+          "description-change",
+          "descriptionchange",
+          "thumbnail-select",
+          "thumbnailselect",
+          "title-change",
+          "titlechange"
+        ]
+      }
     },
     {
       "n": 199,
@@ -2987,7 +6053,30 @@
         "面板",
         "log",
         "日志"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "dateColumnLabel",
+          "detailsLines",
+          "detailsTitle",
+          "eventColumnLabel",
+          "events",
+          "filterPlaceholder",
+          "metadataTitle",
+          "onEventSelect",
+          "onFilterChange",
+          "onViewEvent"
+        ],
+        "events": [
+          "event-select",
+          "eventselect",
+          "filter-change",
+          "filterchange",
+          "view-event",
+          "viewevent"
+        ]
+      }
     },
     {
       "n": 200,
@@ -3001,7 +6090,21 @@
         "project gantt timeline",
         "时间线",
         "甘特图"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "months",
+          "onProjectClick",
+          "projects",
+          "todayFraction",
+          "todayMonth"
+        ],
+        "events": [
+          "project-click",
+          "projectclick"
+        ]
+      }
     },
     {
       "n": 201,
@@ -3015,7 +6118,27 @@
       "aliases": [
         "grouped task list",
         "列表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "addTaskLabel",
+          "className",
+          "commentPlaceholder",
+          "detail",
+          "onCommentSubmit",
+          "onSectionToggle",
+          "onTaskClick",
+          "sections"
+        ],
+        "events": [
+          "comment-submit",
+          "commentsubmit",
+          "section-toggle",
+          "sectiontoggle",
+          "task-click",
+          "taskclick"
+        ]
+      }
     },
     {
       "n": 202,
@@ -3029,7 +6152,29 @@
         "event log table",
         "表格",
         "日志"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "columnLabels",
+          "dateRangeLabel",
+          "description",
+          "entries",
+          "exportLabel",
+          "filters",
+          "onEntryClick",
+          "onExport",
+          "onFilterSelect",
+          "title"
+        ],
+        "events": [
+          "entry-click",
+          "entryclick",
+          "export",
+          "filter-select",
+          "filterselect"
+        ]
+      }
     },
     {
       "n": 203,
@@ -3043,7 +6188,30 @@
       "aliases": [
         "docs page layout",
         "文档"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeTocId",
+          "blocks",
+          "className",
+          "copyLabel",
+          "navGroups",
+          "onCopyPage",
+          "onNavClick",
+          "onTocClick",
+          "title",
+          "toc",
+          "topLinks"
+        ],
+        "events": [
+          "copy-page",
+          "copypage",
+          "nav-click",
+          "navclick",
+          "toc-click",
+          "tocclick"
+        ]
+      }
     },
     {
       "n": 204,
@@ -3058,7 +6226,37 @@
         "popup",
         "弹窗",
         "对话框"
-      ]
+      ],
+      "api": {
+        "props": [
+          "attachments",
+          "checklist",
+          "className",
+          "commentPlaceholder",
+          "comments",
+          "completed",
+          "dates",
+          "description",
+          "isOpen",
+          "labels",
+          "members",
+          "onCardClose",
+          "onChecklistToggle",
+          "onCommentSubmit",
+          "onCompleteToggle",
+          "title"
+        ],
+        "events": [
+          "card-close",
+          "cardclose",
+          "checklist-toggle",
+          "checklisttoggle",
+          "comment-submit",
+          "commentsubmit",
+          "complete-toggle",
+          "completetoggle"
+        ]
+      }
     },
     {
       "n": 205,
@@ -3073,7 +6271,28 @@
         "form tracking dashboard",
         "仪表盘",
         "看板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "active",
+          "className",
+          "details",
+          "onBack",
+          "onRequestClick",
+          "onSortChange",
+          "requests",
+          "sortOptions",
+          "stats",
+          "title"
+        ],
+        "events": [
+          "back",
+          "request-click",
+          "requestclick",
+          "sort-change",
+          "sortchange"
+        ]
+      }
     },
     {
       "n": 206,
@@ -3090,7 +6309,30 @@
         "voice",
         "speech",
         "语音"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeTrackId",
+          "className",
+          "coverUrl",
+          "onLike",
+          "onQueueClick",
+          "onRemix",
+          "onTrackClick",
+          "queue",
+          "subtitle",
+          "title",
+          "tracks"
+        ],
+        "events": [
+          "like",
+          "queue-click",
+          "queueclick",
+          "remix",
+          "track-click",
+          "trackclick"
+        ]
+      }
     },
     {
       "n": 207,
@@ -3107,7 +6349,29 @@
         "landing",
         "营销",
         "落地页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeHeadingId",
+          "blocks",
+          "className",
+          "codeLabel",
+          "copiedLabel",
+          "meta",
+          "onCopyCode",
+          "onHeadingClick",
+          "siteName",
+          "subtitle",
+          "title",
+          "toc"
+        ],
+        "events": [
+          "copy-code",
+          "copycode",
+          "heading-click",
+          "headingclick"
+        ]
+      }
     },
     {
       "n": 208,
@@ -3122,7 +6386,20 @@
         "permission matrix",
         "rbac",
         "权限"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "description",
+          "groups",
+          "onCellClick",
+          "roles",
+          "title"
+        ],
+        "events": [
+          "cellclick"
+        ]
+      }
     },
     {
       "n": 209,
@@ -3138,7 +6415,25 @@
         "stock photo picker",
         "selector",
         "选择器"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onAdd",
+          "onClose",
+          "onSearch",
+          "open",
+          "photos",
+          "placeholder",
+          "poweredBy",
+          "title"
+        ],
+        "events": [
+          "add",
+          "close",
+          "search"
+        ]
+      }
     },
     {
       "n": 210,
@@ -3153,7 +6448,26 @@
         "map activity list",
         "列表",
         "地图"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activities",
+          "className",
+          "filters",
+          "onActivityClick",
+          "onCloseMap",
+          "onFilterClick",
+          "title"
+        ],
+        "events": [
+          "activity-click",
+          "activityclick",
+          "close-map",
+          "closemap",
+          "filter-click",
+          "filterclick"
+        ]
+      }
     },
     {
       "n": 211,
@@ -3168,7 +6482,29 @@
       "aliases": [
         "search results page",
         "搜索"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "filterSelects",
+          "onFilterChange",
+          "onRelatedClick",
+          "onResultClick",
+          "onSearchSubmit",
+          "query",
+          "relatedSearches",
+          "results"
+        ],
+        "events": [
+          "filterchange",
+          "related-click",
+          "relatedclick",
+          "result-click",
+          "resultclick",
+          "search-submit",
+          "searchsubmit"
+        ]
+      }
     },
     {
       "n": 212,
@@ -3183,7 +6519,23 @@
       "aliases": [
         "session diagnostics panel",
         "面板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "devices",
+          "events",
+          "onEventClick",
+          "onSearch",
+          "title",
+          "tracks"
+        ],
+        "events": [
+          "event-click",
+          "eventclick",
+          "search"
+        ]
+      }
     },
     {
       "n": 213,
@@ -3201,7 +6553,26 @@
         "support",
         "工单",
         "客服"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onArticleClick",
+          "onSearchSubmit",
+          "onTopicClick",
+          "searchPlaceholder",
+          "title",
+          "topics"
+        ],
+        "events": [
+          "article-click",
+          "articleclick",
+          "search-submit",
+          "searchsubmit",
+          "topic-click",
+          "topicclick"
+        ]
+      }
     },
     {
       "n": 214,
@@ -3217,7 +6588,28 @@
         "account security panel",
         "面板",
         "安全"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onEditPassword",
+          "onRemoveSession",
+          "onTabClick",
+          "passwordValue",
+          "sessions",
+          "sessionsDescription",
+          "sessionsTitle",
+          "tabs"
+        ],
+        "events": [
+          "edit-password",
+          "editpassword",
+          "remove-session",
+          "removesession",
+          "tab-click",
+          "tabclick"
+        ]
+      }
     },
     {
       "n": 215,
@@ -3229,7 +6621,24 @@
       "desc": "immersive masonry gallery — floating Size / Padding dual sliders that live-adjust column count and gutter, meta readout and close button, CSS columns masonry (Savee discovery wall pattern).",
       "aliases": [
         "masonry density controls"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "columns",
+          "items",
+          "onClose",
+          "onItemClick",
+          "padding",
+          "title"
+        ],
+        "events": [
+          "close",
+          "density-change",
+          "item-click",
+          "itemclick"
+        ]
+      }
     },
     {
       "n": 216,
@@ -3249,7 +6658,24 @@
         "背景特效",
         "glassmorphism",
         "玻璃拟态"
-      ]
+      ],
+      "api": {
+        "props": [
+          "children",
+          "className",
+          "enableTilt",
+          "glareOpacity",
+          "intensity",
+          "interactive",
+          "maxTilt",
+          "onClick",
+          "style",
+          "variant"
+        ],
+        "events": [
+          "click"
+        ]
+      }
     },
     {
       "n": 217,
@@ -3265,7 +6691,20 @@
         "loading",
         "加载",
         "加载中"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "delay",
+          "duration",
+          "prefix",
+          "start",
+          "style",
+          "suffix",
+          "target"
+        ],
+        "events": []
+      }
     },
     {
       "n": 218,
@@ -3284,7 +6723,22 @@
         "background",
         "背景",
         "背景特效"
-      ]
+      ],
+      "api": {
+        "props": [
+          "children",
+          "className",
+          "enableTilt",
+          "glareOpacity",
+          "glareRadius",
+          "maxTilt",
+          "onClick",
+          "style"
+        ],
+        "events": [
+          "click"
+        ]
+      }
     },
     {
       "n": 219,
@@ -3301,7 +6755,32 @@
         "background",
         "背景",
         "背景特效"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "colorIntensity",
+          "colorSaturation",
+          "colorSpeed",
+          "colorStep",
+          "colorValue",
+          "curl",
+          "densityDissipation",
+          "dyeResolution",
+          "idleMs",
+          "maxPixelRatio",
+          "opacity",
+          "pressure",
+          "pressureIterations",
+          "shading",
+          "simResolution",
+          "splatForce",
+          "splatRadius",
+          "style",
+          "velocityDissipation"
+        ],
+        "events": []
+      }
     },
     {
       "n": 220,
@@ -3317,7 +6796,18 @@
         "background",
         "背景",
         "背景特效"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "inkColor",
+          "interactive",
+          "paperColor",
+          "speed",
+          "style"
+        ],
+        "events": []
+      }
     },
     {
       "n": 221,
@@ -3333,7 +6823,11 @@
         "主题",
         "暗色模式",
         "深色模式"
-      ]
+      ],
+      "api": {
+        "props": [],
+        "events": []
+      }
     },
     {
       "n": 222,
@@ -3350,7 +6844,21 @@
         "计费",
         "账单",
         "发票"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "currency",
+          "downloadLabel",
+          "invoices",
+          "onDownload",
+          "title"
+        ],
+        "events": [
+          "download",
+          "invoice-download"
+        ]
+      }
     },
     {
       "n": 223,
@@ -3371,7 +6879,17 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "currency",
+          "footerNote",
+          "tiers",
+          "title"
+        ],
+        "events": []
+      }
     },
     {
       "n": 224,
@@ -3384,7 +6902,29 @@
       "desc": "plan-cancellation retention — step 1 reason radio cards with Continue gating, step 2 discounted keep-plan offer card with Keep plan primary and Confirm cancel destructive ghost (SaaS downgrade retention pattern).",
       "aliases": [
         "cancel retention flow"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "confirmLabel",
+          "keepLabel",
+          "offer",
+          "onConfirmCancel",
+          "onKeep",
+          "onStepChange",
+          "reasons",
+          "reasonsLabel",
+          "stepLabel",
+          "title"
+        ],
+        "events": [
+          "confirm-cancel",
+          "confirmcancel",
+          "keep",
+          "step-change",
+          "stepchange"
+        ]
+      }
     },
     {
       "n": 225,
@@ -3399,7 +6939,26 @@
       "aliases": [
         "webhook config panel",
         "面板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "description",
+          "endpoints",
+          "events",
+          "eventsLabel",
+          "onTest",
+          "onToggle",
+          "testLabel",
+          "title"
+        ],
+        "events": [
+          "test",
+          "toggle",
+          "webhook-test",
+          "webhook-toggle"
+        ]
+      }
     },
     {
       "n": 226,
@@ -3412,7 +6971,22 @@
       "desc": "settings integrations — category filter tabs and responsive service cards with logo initial, Connected / Not connected badge and Connect / Disconnect action (integration settings pattern).",
       "aliases": [
         "integration connect grid"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "connectLabel",
+          "description",
+          "disconnectLabel",
+          "integrations",
+          "onToggle",
+          "title"
+        ],
+        "events": [
+          "integration-toggle",
+          "toggle"
+        ]
+      }
     },
     {
       "n": 227,
@@ -3425,7 +6999,21 @@
       "aliases": [
         "notification prefs matrix",
         "通知"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "columns",
+          "description",
+          "events",
+          "onChange",
+          "title"
+        ],
+        "events": [
+          "change",
+          "pref-change"
+        ]
+      }
     },
     {
       "n": 228,
@@ -3442,7 +7030,23 @@
         "空状态",
         "rbac",
         "权限"
-      ]
+      ],
+      "api": {
+        "props": [
+          "children",
+          "className",
+          "contactHref",
+          "contactLabel",
+          "ctaLabel",
+          "description",
+          "onRequestAccess",
+          "title"
+        ],
+        "events": [
+          "request-access",
+          "requestaccess"
+        ]
+      }
     },
     {
       "n": 229,
@@ -3457,7 +7061,24 @@
         "no results state",
         "empty state",
         "空状态"
-      ]
+      ],
+      "api": {
+        "props": [
+          "children",
+          "className",
+          "clearLabel",
+          "didYouMeanLabel",
+          "onClearFilters",
+          "onSuggestion",
+          "query",
+          "suggestions"
+        ],
+        "events": [
+          "clear-filters",
+          "clearfilters",
+          "suggestion"
+        ]
+      }
     },
     {
       "n": 230,
@@ -3470,7 +7091,27 @@
       "desc": "data-table saved views bar — view tabs, active-view filter chips, No filters placeholder and Save view / Share actions (Attio / Rows table views pattern).",
       "aliases": [
         "table saved views"
-      ]
+      ],
+      "api": {
+        "props": [
+          "active",
+          "className",
+          "onSaveView",
+          "onShareView",
+          "onViewChange",
+          "saveLabel",
+          "shareLabel",
+          "views"
+        ],
+        "events": [
+          "saveview",
+          "shareview",
+          "view-change",
+          "view-save",
+          "view-share",
+          "viewchange"
+        ]
+      }
     },
     {
       "n": 231,
@@ -3482,7 +7123,20 @@
       "desc": "mobile-style bottom navigation — icon + label tabs, active top indicator, optional red badge count and safe-area padding (mobile web navigation pattern).",
       "aliases": [
         "bottom tab bar"
-      ]
+      ],
+      "api": {
+        "props": [
+          "active",
+          "className",
+          "label",
+          "onChange",
+          "tabs"
+        ],
+        "events": [
+          "change",
+          "tab-change"
+        ]
+      }
     },
     {
       "n": 232,
@@ -3498,7 +7152,20 @@
         "landing",
         "营销",
         "落地页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "description",
+          "onTileClick",
+          "tiles",
+          "title"
+        ],
+        "events": [
+          "tile-click",
+          "tileclick"
+        ]
+      }
     },
     {
       "n": 233,
@@ -3515,7 +7182,15 @@
         "landing",
         "营销",
         "落地页"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "kicker",
+          "logos"
+        ],
+        "events": []
+      }
     },
     {
       "n": 234,
@@ -3530,7 +7205,14 @@
         "chart",
         "graph",
         "图表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "stats"
+        ],
+        "events": []
+      }
     },
     {
       "n": 235,
@@ -3546,7 +7228,21 @@
         "background",
         "背景",
         "背景特效"
-      ]
+      ],
+      "api": {
+        "props": [
+          "baseColor",
+          "bloomColor",
+          "className",
+          "density",
+          "emberColor",
+          "interactive",
+          "paused",
+          "speed",
+          "style"
+        ],
+        "events": []
+      }
     },
     {
       "n": 236,
@@ -3562,7 +7258,22 @@
         "background",
         "背景",
         "背景特效"
-      ]
+      ],
+      "api": {
+        "props": [
+          "ashColor",
+          "baseColor",
+          "bloomColor",
+          "className",
+          "density",
+          "emberColor",
+          "interactive",
+          "paused",
+          "speed",
+          "style"
+        ],
+        "events": []
+      }
     },
     {
       "n": 237,
@@ -3581,7 +7292,19 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "clients",
+          "description",
+          "onCopy",
+          "title"
+        ],
+        "events": [
+          "copy"
+        ]
+      }
     },
     {
       "n": 238,
@@ -3599,7 +7322,18 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "items",
+          "onOpen",
+          "title"
+        ],
+        "events": [
+          "open"
+        ]
+      }
     },
     {
       "n": 239,
@@ -3616,7 +7350,24 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "description",
+          "onReset",
+          "onRetry",
+          "resetLabel",
+          "retryLabel",
+          "runId",
+          "supportText",
+          "title"
+        ],
+        "events": [
+          "reset",
+          "retry"
+        ]
+      }
     },
     {
       "n": 240,
@@ -3631,7 +7382,20 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onToggle",
+          "sections",
+          "subtitle",
+          "tabs",
+          "title"
+        ],
+        "events": [
+          "toggle"
+        ]
+      }
     },
     {
       "n": 241,
@@ -3647,7 +7411,19 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "description",
+          "onChange",
+          "title",
+          "vars"
+        ],
+        "events": [
+          "change"
+        ]
+      }
     },
     {
       "n": 242,
@@ -3663,7 +7439,23 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "activeId",
+          "className",
+          "description",
+          "frequencies",
+          "nextRun",
+          "onSave",
+          "time",
+          "timezone",
+          "title"
+        ],
+        "events": [
+          "save"
+        ]
+      }
     },
     {
       "n": 243,
@@ -3682,7 +7474,27 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "blockLabel",
+          "className",
+          "input",
+          "match",
+          "onBlock",
+          "onProceed",
+          "policyRef",
+          "proceedLabel",
+          "rule",
+          "runId",
+          "severity",
+          "time"
+        ],
+        "events": [
+          "block",
+          "proceed"
+        ]
+      }
     },
     {
       "n": 244,
@@ -3698,7 +7510,20 @@
         "tool call",
         "智能体",
         "工具调用"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "description",
+          "entries",
+          "onReorder",
+          "primaryId",
+          "title"
+        ],
+        "events": [
+          "reorder"
+        ]
+      }
     },
     {
       "n": 245,
@@ -3713,7 +7538,23 @@
         "表单",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "countries",
+          "defaultValue",
+          "labels",
+          "onSubmit",
+          "showOptional",
+          "submitLabel",
+          "title"
+        ],
+        "events": [
+          "billing-address-submit",
+          "submit"
+        ]
+      }
     },
     {
       "n": 246,
@@ -3733,7 +7574,21 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "defaultRange",
+          "ranges",
+          "slices",
+          "title",
+          "total",
+          "unit"
+        ],
+        "events": [
+          "range-change"
+        ]
+      }
     },
     {
       "n": 247,
@@ -3748,7 +7603,21 @@
         "表格",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "currency",
+          "description",
+          "period",
+          "rows",
+          "searchable",
+          "title"
+        ],
+        "events": [
+          "seat-search"
+        ]
+      }
     },
     {
       "n": 248,
@@ -3765,7 +7634,27 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "balance",
+          "buyLabel",
+          "className",
+          "couponLabel",
+          "currency",
+          "onBuy",
+          "onCoupon",
+          "plan",
+          "unit",
+          "warnBelow"
+        ],
+        "events": [
+          "buy",
+          "coupon",
+          "credit-buy",
+          "credit-coupon"
+        ]
+      }
     },
     {
       "n": 249,
@@ -3782,7 +7671,24 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "defaultGranularity",
+          "granularities",
+          "headline",
+          "maxY",
+          "onGranularityChange",
+          "points",
+          "unit",
+          "yTicks"
+        ],
+        "events": [
+          "granularity-change",
+          "granularitychange"
+        ]
+      }
     },
     {
       "n": 250,
@@ -3800,7 +7706,31 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "balance",
+          "billToOptions",
+          "cancelLabel",
+          "className",
+          "confirmLabel",
+          "currencies",
+          "currencySymbol",
+          "defaultBillTo",
+          "defaultCurrency",
+          "defaultOpen",
+          "minAmount",
+          "onCancel",
+          "onConfirm",
+          "quickAmounts",
+          "title"
+        ],
+        "events": [
+          "cancel",
+          "confirm",
+          "topup-cancel"
+        ]
+      }
     },
     {
       "n": 251,
@@ -3815,7 +7745,26 @@
         "metric line chart",
         "graph",
         "图表"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "defaultRange",
+          "delta",
+          "deltaTone",
+          "headline",
+          "labels",
+          "onRangeChange",
+          "ranges",
+          "series",
+          "unit",
+          "value"
+        ],
+        "events": [
+          "range-change",
+          "rangechange"
+        ]
+      }
     },
     {
       "n": 252,
@@ -3834,7 +7783,30 @@
         "pricing",
         "定价",
         "价格"
-      ]
+      ],
+      "api": {
+        "props": [
+          "cadenceNote",
+          "cadencePrices",
+          "cadences",
+          "className",
+          "ctaLabel",
+          "defaultCadence",
+          "defaultOpen",
+          "description",
+          "discountBadge",
+          "glyph",
+          "onDismiss",
+          "onUpgrade",
+          "plans",
+          "title"
+        ],
+        "events": [
+          "cadence-change",
+          "dismiss",
+          "upgrade"
+        ]
+      }
     },
     {
       "n": 253,
@@ -3850,7 +7822,26 @@
         "billing",
         "计费",
         "账单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "daysLeft",
+          "expiresOn",
+          "extendLabel",
+          "keepingFeatures",
+          "losingFeatures",
+          "onExtend",
+          "onUpgrade",
+          "planName",
+          "tone",
+          "upgradeLabel"
+        ],
+        "events": [
+          "extend",
+          "upgrade"
+        ]
+      }
     },
     {
       "n": 254,
@@ -3865,7 +7856,25 @@
       "aliases": [
         "workspace survey card",
         "卡片"
-      ]
+      ],
+      "api": {
+        "props": [
+          "answers",
+          "className",
+          "nextLabel",
+          "onAnswer",
+          "onNext",
+          "onText",
+          "questions",
+          "stepLabel",
+          "title"
+        ],
+        "events": [
+          "answer",
+          "next",
+          "text"
+        ]
+      }
     },
     {
       "n": 255,
@@ -3880,7 +7889,23 @@
       "aliases": [
         "workspace setup panel",
         "面板"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "onTaskClick",
+          "onUpNext",
+          "sections",
+          "title",
+          "upNext"
+        ],
+        "events": [
+          "task-click",
+          "taskclick",
+          "up-next",
+          "upnext"
+        ]
+      }
     },
     {
       "n": 256,
@@ -3895,7 +7920,30 @@
       "aliases": [
         "invite teammates card",
         "卡片"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "defaultRole",
+          "description",
+          "emailPlaceholder",
+          "onInvite",
+          "onRemove",
+          "onSend",
+          "onSkip",
+          "pending",
+          "roles",
+          "sendLabel",
+          "skipLabel",
+          "title"
+        ],
+        "events": [
+          "invite",
+          "remove",
+          "send",
+          "skip"
+        ]
+      }
     },
     {
       "n": 257,
@@ -3910,7 +7958,31 @@
       "aliases": [
         "profile edit form",
         "表单"
-      ]
+      ],
+      "api": {
+        "props": [
+          "bio",
+          "bioLimit",
+          "cancelLabel",
+          "className",
+          "countries",
+          "defaultCity",
+          "defaultCountry",
+          "defaultShowEmail",
+          "handle",
+          "onCancel",
+          "onSave",
+          "saveLabel",
+          "showEmailLabel",
+          "socials",
+          "title"
+        ],
+        "events": [
+          "cancel",
+          "profile-cancel",
+          "save"
+        ]
+      }
     },
     {
       "n": 258,
@@ -3928,7 +8000,30 @@
         "对话框",
         "upload",
         "裁剪"
-      ]
+      ],
+      "api": {
+        "props": [
+          "avatarUrl",
+          "cancelLabel",
+          "className",
+          "confirmLabel",
+          "defaultOpen",
+          "defaultZoom",
+          "hint",
+          "initials",
+          "maxZoom",
+          "minZoom",
+          "onCancel",
+          "onConfirm",
+          "title"
+        ],
+        "events": [
+          "avatar-crop-cancel",
+          "avatar-crop-confirm",
+          "cancel",
+          "confirm"
+        ]
+      }
     },
     {
       "n": 259,
@@ -3943,7 +8038,25 @@
       "aliases": [
         "follow suggestions card",
         "卡片"
-      ]
+      ],
+      "api": {
+        "props": [
+          "className",
+          "emptyText",
+          "followLabel",
+          "followingLabel",
+          "onDismiss",
+          "onFollow",
+          "suggestions",
+          "title"
+        ],
+        "events": [
+          "dismiss",
+          "follow",
+          "follow-suggest-dismiss",
+          "follow-suggest-follow"
+        ]
+      }
     }
   ]
 }
