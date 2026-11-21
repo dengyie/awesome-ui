@@ -3,72 +3,325 @@
   "version": "1.0.0",
   "updated": "2026-11-21",
   "categories": [
-    { "id": "primitives",     "label": "基础控件",   "labelEn": "Primitives",        "desc": "原子级交互控件:输入、开关、选择器、滑杆、标签" },
-    { "id": "layout",         "label": "布局导航",   "labelEn": "Layout & Nav",      "desc": "页面骨架与导航:侧栏、页头、面包屑、抽屉、分页" },
-    { "id": "data-display",   "label": "数据展示",   "labelEn": "Data Display",      "desc": "结构化信息呈现:表格、列表、徽章、时间线、统计" },
-    { "id": "charts",         "label": "图表可视化", "labelEn": "Charts",            "desc": "SVG 图表与数据可视化:柱图、折线、环图、瀑布" },
-    { "id": "overlays",       "label": "浮层",       "labelEn": "Overlays",          "desc": "模态浮层:弹窗、侧滑、菜单、popover、命令面板" },
-    { "id": "feedback",       "label": "反馈",       "labelEn": "Feedback",          "desc": "操作反馈:toast、进度、空态、加载、警示条" },
-    { "id": "forms",          "label": "表单录入",   "labelEn": "Forms",             "desc": "复合录入流程:校验表单、问卷、向导、矩阵选择" },
-    { "id": "ai-chat",        "label": "AI 对话",    "labelEn": "AI Chat",           "desc": "对话域:输入框、消息行、思考链、会话列表、建议" },
-    { "id": "ai-artifacts",   "label": "AI 工件",    "labelEn": "AI Artifacts",      "desc": "工件与富输出:画布、渲染器、引用、内联改写" },
-    { "id": "agent-ops",      "label": "Agent 运维", "labelEn": "Agent Ops",         "desc": "Agent 运行域:工具审批、执行时间线、护栏、监控" },
-    { "id": "billing",        "label": "计费",       "labelEn": "Billing",           "desc": "计费域:发票、余额、用量、席位、付费墙" },
-    { "id": "commerce",       "label": "交易",       "labelEn": "Commerce",          "desc": "交易域:订单、支付、物流、订阅方案" },
-    { "id": "content",        "label": "内容营销",   "labelEn": "Content & Marketing", "desc": "内容与营销页:落地页、页脚、博客、更新日志" },
-    { "id": "media",          "label": "媒体",       "labelEn": "Media",             "desc": "音视频与图像:播放器、波形、图库、素材选择" },
-    { "id": "theming",        "label": "主题动效",   "labelEn": "Theming & Motion",  "desc": "主题基建与装饰动效:主题切换、背景、光效、玻璃" }
+    {
+      "id": "primitives",
+      "label": "基础控件",
+      "labelEn": "Primitives",
+      "desc": "原子级交互控件:输入、开关、选择器、滑杆、标签"
+    },
+    {
+      "id": "layout",
+      "label": "布局导航",
+      "labelEn": "Layout & Nav",
+      "desc": "页面骨架与导航:侧栏、页头、面包屑、抽屉、分页"
+    },
+    {
+      "id": "data-display",
+      "label": "数据展示",
+      "labelEn": "Data Display",
+      "desc": "结构化信息呈现:表格、列表、徽章、时间线、统计"
+    },
+    {
+      "id": "charts",
+      "label": "图表可视化",
+      "labelEn": "Charts",
+      "desc": "SVG 图表与数据可视化:柱图、折线、环图、瀑布"
+    },
+    {
+      "id": "overlays",
+      "label": "浮层",
+      "labelEn": "Overlays",
+      "desc": "模态浮层:弹窗、侧滑、菜单、popover、命令面板"
+    },
+    {
+      "id": "feedback",
+      "label": "反馈",
+      "labelEn": "Feedback",
+      "desc": "操作反馈:toast、进度、空态、加载、警示条"
+    },
+    {
+      "id": "forms",
+      "label": "表单录入",
+      "labelEn": "Forms",
+      "desc": "复合录入流程:校验表单、问卷、向导、矩阵选择"
+    },
+    {
+      "id": "ai-chat",
+      "label": "AI 对话",
+      "labelEn": "AI Chat",
+      "desc": "对话域:输入框、消息行、思考链、会话列表、建议"
+    },
+    {
+      "id": "ai-artifacts",
+      "label": "AI 工件",
+      "labelEn": "AI Artifacts",
+      "desc": "工件与富输出:画布、渲染器、引用、内联改写"
+    },
+    {
+      "id": "agent-ops",
+      "label": "Agent 运维",
+      "labelEn": "Agent Ops",
+      "desc": "Agent 运行域:工具审批、执行时间线、护栏、监控"
+    },
+    {
+      "id": "billing",
+      "label": "计费",
+      "labelEn": "Billing",
+      "desc": "计费域:发票、余额、用量、席位、付费墙"
+    },
+    {
+      "id": "commerce",
+      "label": "交易",
+      "labelEn": "Commerce",
+      "desc": "交易域:订单、支付、物流、订阅方案"
+    },
+    {
+      "id": "content",
+      "label": "内容营销",
+      "labelEn": "Content & Marketing",
+      "desc": "内容与营销页:落地页、页脚、博客、更新日志"
+    },
+    {
+      "id": "media",
+      "label": "媒体",
+      "labelEn": "Media",
+      "desc": "音视频与图像:播放器、波形、图库、素材选择"
+    },
+    {
+      "id": "theming",
+      "label": "主题动效",
+      "labelEn": "Theming & Motion",
+      "desc": "主题基建与装饰动效:主题切换、背景、光效、玻璃"
+    }
   ],
   "tags": [
-    { "id": "modal",          "label": "弹层" },
-    { "id": "dropdown",       "label": "下拉" },
-    { "id": "collapsible",    "label": "折叠" },
-    { "id": "keyboard",       "label": "键盘交互" },
-    { "id": "drag-drop",      "label": "拖放" },
-    { "id": "streaming",      "label": "流式" },
-    { "id": "animated",       "label": "动效" },
-    { "id": "backdrop",       "label": "背景" },
-    { "id": "svg-chart",      "label": "SVG 图表" },
-    { "id": "table",          "label": "表格" },
-    { "id": "timeline",       "label": "时间线" },
-    { "id": "wizard",         "label": "分步" },
-    { "id": "form-validation", "label": "表单校验" },
-    { "id": "aria",           "label": "无障碍" },
-    { "id": "dark-mode",      "label": "暗色适配" },
-    { "id": "glass",          "label": "玻璃拟态" },
-    { "id": "spotlight",      "label": "光效" },
-    { "id": "empty-state",    "label": "空态" },
-    { "id": "avatar",         "label": "头像" },
-    { "id": "badge",          "label": "徽章" },
-    { "id": "search",         "label": "搜索" },
-    { "id": "filter",         "label": "筛选" },
-    { "id": "list",           "label": "列表" },
-    { "id": "card",           "label": "卡片" },
-    { "id": "settings",       "label": "设置域" },
-    { "id": "security",       "label": "安全域" },
-    { "id": "onboarding",     "label": "新手引导" },
-    { "id": "paywall",        "label": "付费转化" },
-    { "id": "prompt",         "label": "Prompt 域" },
-    { "id": "voice",          "label": "语音" },
-    { "id": "image",          "label": "图像" },
-    { "id": "audio",          "label": "音频" },
-    { "id": "video",          "label": "视频" },
-    { "id": "map",            "label": "地图" },
-    { "id": "kanban",         "label": "看板" },
-    { "id": "gantt",          "label": "甘特" },
-    { "id": "calendar",       "label": "日历" },
-    { "id": "picker",         "label": "选择器" },
-    { "id": "popover",        "label": "气泡" },
-    { "id": "tooltip",        "label": "提示浮层" },
-    { "id": "tabs",           "label": "标签页" },
-    { "id": "standalone",     "label": "独立页面" }
+    {
+      "id": "modal",
+      "label": "弹层"
+    },
+    {
+      "id": "dropdown",
+      "label": "下拉"
+    },
+    {
+      "id": "collapsible",
+      "label": "折叠"
+    },
+    {
+      "id": "keyboard",
+      "label": "键盘交互"
+    },
+    {
+      "id": "drag-drop",
+      "label": "拖放"
+    },
+    {
+      "id": "streaming",
+      "label": "流式"
+    },
+    {
+      "id": "animated",
+      "label": "动效"
+    },
+    {
+      "id": "backdrop",
+      "label": "背景"
+    },
+    {
+      "id": "svg-chart",
+      "label": "SVG 图表"
+    },
+    {
+      "id": "table",
+      "label": "表格"
+    },
+    {
+      "id": "timeline",
+      "label": "时间线"
+    },
+    {
+      "id": "wizard",
+      "label": "分步"
+    },
+    {
+      "id": "form-validation",
+      "label": "表单校验"
+    },
+    {
+      "id": "aria",
+      "label": "无障碍"
+    },
+    {
+      "id": "dark-mode",
+      "label": "暗色适配"
+    },
+    {
+      "id": "glass",
+      "label": "玻璃拟态"
+    },
+    {
+      "id": "spotlight",
+      "label": "光效"
+    },
+    {
+      "id": "empty-state",
+      "label": "空态"
+    },
+    {
+      "id": "avatar",
+      "label": "头像"
+    },
+    {
+      "id": "badge",
+      "label": "徽章"
+    },
+    {
+      "id": "search",
+      "label": "搜索"
+    },
+    {
+      "id": "filter",
+      "label": "筛选"
+    },
+    {
+      "id": "list",
+      "label": "列表"
+    },
+    {
+      "id": "card",
+      "label": "卡片"
+    },
+    {
+      "id": "settings",
+      "label": "设置域"
+    },
+    {
+      "id": "security",
+      "label": "安全域"
+    },
+    {
+      "id": "onboarding",
+      "label": "新手引导"
+    },
+    {
+      "id": "paywall",
+      "label": "付费转化"
+    },
+    {
+      "id": "prompt",
+      "label": "Prompt 域"
+    },
+    {
+      "id": "voice",
+      "label": "语音"
+    },
+    {
+      "id": "image",
+      "label": "图像"
+    },
+    {
+      "id": "audio",
+      "label": "音频"
+    },
+    {
+      "id": "video",
+      "label": "视频"
+    },
+    {
+      "id": "map",
+      "label": "地图"
+    },
+    {
+      "id": "kanban",
+      "label": "看板"
+    },
+    {
+      "id": "gantt",
+      "label": "甘特"
+    },
+    {
+      "id": "calendar",
+      "label": "日历"
+    },
+    {
+      "id": "picker",
+      "label": "选择器"
+    },
+    {
+      "id": "popover",
+      "label": "气泡"
+    },
+    {
+      "id": "panel",
+      "label": "面板"
+    },
+    {
+      "id": "tooltip",
+      "label": "提示浮层"
+    },
+    {
+      "id": "tabs",
+      "label": "标签页"
+    },
+    {
+      "id": "standalone",
+      "label": "独立页面"
+    }
   ],
-  "$tagRules": "tags 控制在 ≤42 个;新增 tag 必须先在此登记;category 互斥单值,tag 多值。",
+  "$tagRules": "tags 控制在 ≤43 个;新增 tag 必须先在此登记;category 互斥单值,tag 多值。",
   "$facets": {
-    "interaction": ["modal", "dropdown", "collapsible", "keyboard", "drag-drop", "wizard", "picker", "popover", "tooltip", "tabs"],
-    "visual": ["animated", "backdrop", "glass", "spotlight", "dark-mode", "badge", "avatar", "card", "empty-state"],
-    "content-form": ["svg-chart", "table", "timeline", "list", "kanban", "gantt", "calendar", "streaming"],
-    "behavior": ["form-validation", "aria", "search", "filter", "standalone"],
-    "domain": ["settings", "security", "onboarding", "paywall", "prompt", "voice", "image", "audio", "video", "map"]
+    "interaction": [
+      "modal",
+      "dropdown",
+      "collapsible",
+      "keyboard",
+      "drag-drop",
+      "wizard",
+      "picker",
+      "popover",
+      "tooltip",
+      "panel",
+      "tabs"
+    ],
+    "visual": [
+      "animated",
+      "backdrop",
+      "glass",
+      "spotlight",
+      "dark-mode",
+      "badge",
+      "avatar",
+      "card",
+      "empty-state"
+    ],
+    "content-form": [
+      "svg-chart",
+      "table",
+      "timeline",
+      "list",
+      "kanban",
+      "gantt",
+      "calendar",
+      "streaming"
+    ],
+    "behavior": [
+      "form-validation",
+      "aria",
+      "search",
+      "filter",
+      "standalone"
+    ],
+    "domain": [
+      "settings",
+      "security",
+      "onboarding",
+      "paywall",
+      "prompt",
+      "voice",
+      "image",
+      "audio",
+      "video",
+      "map"
+    ]
   }
 }

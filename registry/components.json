@@ -1,5 +1,5 @@
 {
- "version": "1.0.0",
+ "version": "1.0.1",
  "updated": "2026-11-21",
  "$comment": "awesome-ui component registry — one entry per ledger component (llms.txt 0..N). category is a single taxonomy id; tags are multi-value facet ids. Validated by tools/check_registry.py. Keep in sync with llms.txt on every new component batch.",
  "count": 260,
@@ -148,7 +148,7 @@
   {
    "n": 16,
    "name": "HomepageDashboard",
-   "category": "primitives",
+   "category": "data-display",
    "tags": [
     "animated",
     "card",
@@ -329,13 +329,14 @@
    "category": "layout",
    "tags": [
     "aria",
+    "panel",
     "settings"
    ]
   },
   {
    "n": 37,
    "name": "OnboardingChecklist",
-   "category": "content",
+   "category": "forms",
    "tags": [
     "onboarding"
    ]
@@ -476,6 +477,7 @@
    "name": "VoiceModePanel",
    "category": "media",
    "tags": [
+    "panel",
     "voice"
    ]
   },
@@ -643,6 +645,7 @@
    "category": "billing",
    "tags": [
     "card",
+    "panel",
     "settings"
    ]
   },
@@ -824,7 +827,7 @@
   {
    "n": 95,
    "name": "OnboardingStepper",
-   "category": "content",
+   "category": "forms",
    "tags": [
     "onboarding",
     "wizard"
@@ -1009,6 +1012,7 @@
    "category": "data-display",
    "tags": [
     "card",
+    "panel",
     "search"
    ]
   },
@@ -1034,7 +1038,8 @@
    "name": "OrderSummaryPanel",
    "category": "commerce",
    "tags": [
-    "card"
+    "card",
+    "panel"
    ]
   },
   {
@@ -1077,7 +1082,8 @@
    "category": "overlays",
    "tags": [
     "card",
-    "keyboard"
+    "keyboard",
+    "panel"
    ]
   },
   {
@@ -1120,6 +1126,7 @@
    "category": "forms",
    "tags": [
     "card",
+    "panel",
     "security"
    ]
   },
@@ -1153,6 +1160,7 @@
    "category": "billing",
    "tags": [
     "form-validation",
+    "panel",
     "paywall"
    ]
   },
@@ -1205,6 +1213,7 @@
    "name": "MemoryPanel",
    "category": "ai-chat",
    "tags": [
+    "panel",
     "settings"
    ]
   },
@@ -1408,6 +1417,7 @@
    "name": "AiResearchPanel",
    "category": "ai-artifacts",
    "tags": [
+    "panel",
     "streaming"
    ]
   },
@@ -1441,7 +1451,7 @@
   {
    "n": 167,
    "name": "PromptPerformanceTable",
-   "category": "agent-ops",
+   "category": "data-display",
    "tags": [
     "prompt",
     "table"
@@ -1554,6 +1564,7 @@
    "category": "content",
    "tags": [
     "card",
+    "panel",
     "search"
    ]
   },
@@ -1665,7 +1676,8 @@
    "category": "data-display",
    "tags": [
     "card",
-    "list"
+    "list",
+    "panel"
    ]
   },
   {
@@ -1673,6 +1685,7 @@
    "name": "DeliveryTrackingPanel",
    "category": "commerce",
    "tags": [
+    "panel",
     "timeline"
    ]
   },
@@ -1717,6 +1730,7 @@
    "category": "agent-ops",
    "tags": [
     "list",
+    "panel",
     "streaming"
    ]
   },
@@ -1834,7 +1848,8 @@
    "category": "data-display",
    "tags": [
     "badge",
-    "card"
+    "card",
+    "panel"
    ]
   },
   {
@@ -1852,6 +1867,7 @@
    "name": "AccountSecurityPanel",
    "category": "data-display",
    "tags": [
+    "panel",
     "security",
     "settings"
    ]
@@ -1877,7 +1893,7 @@
   {
    "n": 217,
    "name": "AnimatedCounter",
-   "category": "charts",
+   "category": "data-display",
    "tags": [
     "animated"
    ]
@@ -1949,6 +1965,7 @@
    "name": "WebhookConfigPanel",
    "category": "data-display",
    "tags": [
+    "panel",
     "security",
     "settings"
    ]
@@ -2024,7 +2041,7 @@
   {
    "n": 234,
    "name": "StatsBand",
-   "category": "charts",
+   "category": "data-display",
    "tags": [
     "animated"
    ]
@@ -2053,6 +2070,7 @@
    "category": "agent-ops",
    "tags": [
     "keyboard",
+    "panel",
     "wizard"
    ]
   },
@@ -2206,6 +2224,7 @@
    "category": "forms",
    "tags": [
     "onboarding",
+    "panel",
     "settings"
    ]
   },

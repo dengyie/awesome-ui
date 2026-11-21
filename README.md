@@ -24,7 +24,7 @@
 - **`registry/components.json`** — 映射：每组件一条 `{n, name, category, tags}`，与 llms.txt 账本 0..259 严格对齐。
 - **`tools/check_registry.py`** — 校验器（零依赖）：① 与账本双向对齐（无多无漏）② category/tag 均在词表内 ③ 每组件至少 1 个 tag ④ 词表无死标签。本地即可跑：`python -I tools/check_registry.py`。
 
-主分类分布：data-display 35 · primitives 31 · agent-ops 31 · billing 23 · content 18 · overlays 18 · ai-chat 19 · ai-artifacts 14 · forms 14 · media 11 · layout 13 · feedback 10 · theming 9 · charts 9 · commerce 5。
+主分类分布：data-display 39 · primitives 30 · agent-ops 30 · billing 23 · content 16 · overlays 18 · ai-chat 19 · ai-artifacts 14 · forms 16 · media 11 · layout 13 · feedback 10 · theming 9 · charts 7 · commerce 5。
 
 Gallery 左侧 TOC 已内置「分类下拉筛选 + 分类色点 + 每个 section 标题的分类/标签徽章」，数据由 `index.html` 内嵌 `#gallery-registry-data` 提供。
 

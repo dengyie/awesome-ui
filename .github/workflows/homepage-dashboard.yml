@@ -34,3 +34,7 @@ jobs:
       - name: Ledger consistency check (llms.txt)
         run: python3 -I tools/check_llms_ledger.py
         working-directory: .
+
+      - name: Registry consistency check (taxonomy + components)
+        run: python3 -I tools/check_registry.py
+        working-directory: .
