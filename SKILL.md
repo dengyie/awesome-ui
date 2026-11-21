@@ -72,7 +72,8 @@ awesome-ui/
 │   ├── query_registry.py    #   分类/标签/名称检索 CLI（零依赖，见上方强制门控）
 │   ├── check_registry.py    #   一致性校验（账本对齐/词表/内嵌数据/section-id 门禁）
 │   ├── check_llms_ledger.py #   账本格式校验
-│   └── gen_registry_embed.py#   Gallery 内嵌数据重建
+│   ├── gen_registry_embed.py#   Gallery 内嵌数据重建
+│   └── deploy.sh            #   生产站一条命令部署（打包→上传→原子换目录→三方 MD5 验收，--rollback 应急回滚）
 ├── react/                   # React 18/19 + Tailwind 单文件组件 ×259（TSX）
 ├── vue/                     # Vue 3 SFC 单文件组件 ×259
 ├── vanilla/                 # 原生 JS / Web Components 单文件 ×260（含 UiIcon.js）
@@ -1426,3 +1427,9 @@ awesome-ui/
 - 全量单文件源码: [`llms-full.txt`](./llms-full.txt)（约 4MB，780 文件打包，仅供需要连续大段源码上下文的场景；日常检索勿拉）
 - 单文件直取: `https://raw.githubusercontent.com/dengyie/awesome-ui/main/<stack>/<Component>.<ext>`
 - 分类检索: [`registry/components.json`](./registry/components.json) + `python -I tools/query_registry.py`（用法见「组件检索（强制门控）」）
+
+## 生产部署（维护者）
+- 线上站: https://awesome-ui.mangoqwq.com（CF 隧道 → 阿里云北京 Caddy :18080 → 静态 webroot，file_server 即时生效无需重启）
+- **一条命令发布**: `bash tools/deploy.sh` — preflight 一致性门 → 打包(~2MB) → scp 上传 → 服务器原子换目录(site.new→site, 旧版轮转为 site.old) → 三方 MD5 验收(本地=服务器=CF 穿透, 不一致自动提示回滚) → 抽检(llms.txt/UiIcon 三端) → 清理
+- 应急回滚: `bash tools/deploy.sh --rollback`（site.old 一键换回 + 公网验证）
+- 前置: SSH key `~/.ssh/aliyun_bj_ed25519` 可达 `root@182.92.198.142`（运维细节见 Obsidian 知识库）
