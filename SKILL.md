@@ -113,7 +113,7 @@ awesome-ui/
 ## API 速查导航（按分类 · 先扫这里定位，再按组件号 grep 下钻对应条目）
 
 - **data-display** (39): `HomepageDashboard` `PromptTemplateGrid` `StatCard` `DataTable` `NotificationCenter` `KanbanBoard` `ActivityFeed` `InboxList` `RankList` `GanttTimeline` `ApprovalCard` `ResourceList` `ChangedFilesList` `ServiceStatusList` `FederatedSearchResultsPanel` `ConnectorGrid` `FineTuneJobList` `PersonaPresetGrid` `BrandPromptTable` `ContentReviewTable` `QaTestTable` `ApiKeyTable` `PromptPerformanceTable` `AuditLogTable` `SessionDeviceTable` `TaskDetailPanel` `MapPropertyCard` `WeekCalendarGrid` `ProjectGanttTimeline` `GroupedTaskList` `EventLogTable` `MapActivityList` `SessionDiagnosticsPanel` `AccountSecurityPanel` `AnimatedCounter` `WebhookConfigPanel` `IntegrationConnectGrid` `StatsBand` `FollowSuggestionsCard`
-- **primitives** (29): `ContextUsageBadge` `ModelSelector` `FileDropzone` `CommentThread` `DatePicker` `SchedulerSlots` `RichToolbar` `AvatarGroup` `FilterBar` `ComboBox` `ToggleSwitch` `Stepper` `SearchInput` `Tag` `ProfileHeader` `StepSlider` `TimeframePicker` `WizardSteps` `FilterToolbar` `SearchTypeahead` `AttachmentChip` `EntityMultiSelectPicker` `TimeSlotPicker` `EditableHeading` `ModelComparePane` `SystemPromptEditor` `ToolSchemaEditor` `PromptVariantDiff` `CampsiteHandoff`
+- **primitives** (30): `UiIcon` `ContextUsageBadge` `ModelSelector` `FileDropzone` `CommentThread` `DatePicker` `SchedulerSlots` `RichToolbar` `AvatarGroup` `FilterBar` `ComboBox` `ToggleSwitch` `Stepper` `SearchInput` `Tag` `ProfileHeader` `StepSlider` `TimeframePicker` `WizardSteps` `FilterToolbar` `SearchTypeahead` `AttachmentChip` `EntityMultiSelectPicker` `TimeSlotPicker` `EditableHeading` `ModelComparePane` `SystemPromptEditor` `ToolSchemaEditor` `PromptVariantDiff` `CampsiteHandoff`
 - **agent-ops** (30): `ToolCallBadge` `ToolApprovalCard` `AgentStepTimeline` `AgentTaskChecklist` `AgentRunLog` `AgentTaskProgress` `DeploymentCard` `LiveTailLogConsole` `PipelineStageList` `AgentBuilderCard` `TraceSpanWaterfall` `EvalScoreTable` `GuardrailReviewQueue` `FalRunCard` `PrReviewQueue` `IterationActionBar` `MonitorRunList` `EvalTurnBuilder` `AgentSessionTimeline` `EvalRunResults` `PromptTunerResult` `EventStreamPanel` `McpConnectPanel` `AgentNotificationFeed` `AgentErrorRecovery` `AgentWorkspaceSettings` `AgentEnvVarEditor` `AgentScheduleEditor` `AgentGuardrailViolationCard` `AgentModelFallbackList`
 - **billing** (23): `UpgradePromptCard` `UsageMeter` `BillingPanel` `UsageQuotaCard` `PaymentMethodCard` `PlanComparisonTable` `UpgradeCheckoutPanel` `TrialBanner` `MembershipTierGrid` `AddonPicker` `TokenCostBreakdown` `ModelPricingCard` `InvoiceHistoryTable` `UsagePricingBreakdown` `CancelRetentionFlow` `BillingAddressForm` `UsageCreditsDonut` `SeatBillingTable` `CreditBalanceCard` `SpendTrendChart` `TopUpBalanceDialog` `PaywallDialog` `TrialExpiryNotice`
 - **ai-chat** (19): `ChatPromptInput` `ThinkingBlock` `AutoScrollAnchor` `MessageActionToolbar` `PromptChips` `TypingIndicator` `ChatMessageRow` `ChatSessionList` `PromptLibrary` `ClarifyQuestionCard` `AIInlineMenu` `SharedChatViewer` `MemoryPanel` `ShareChatDialog` `AiRewriteMenu` `AiNoteAnswer` `AiSuggestionCard` `JumpBackIn` `VisionAnalysisCard`
@@ -124,13 +124,18 @@ awesome-ui/
 - **layout** (13): `SettingsPanel` `Tabs` `Accordion` `Breadcrumb` `Pagination` `Navbar` `SideNav` `PageHeader` `StatusCountTabs` `EditorToolPalette` `SearchResultsPage` `TableSavedViews` `BottomTabBar`
 - **media** (11): `VoiceModePanel` `ImageGenGallery` `VoiceOrb` `AudioWaveVisualizer` `VoiceSessionHistory` `AudioNotePlayer` `ImageActionMenu` `ImageGenMetaBar` `VideoProjectSettings` `AudioPlaylistPage` `StockPhotoPicker`
 - **feedback** (10): `StatusIndicator` `ToastStack` `StreamingProgressBar` `EmptyState` `AlertBanner` `CookieConsent` `EmptyStateStarter` `SuccessToast` `PermissionDeniedState` `NoResultsState`
-- **theming** (8): `ThemeToggle` `MasonryDensityControls` `LiquidGlass` `SpotlightGlareCard` `PointerRipples` `FluidContourBackdrop` `AmberEmbersBackdrop` `DriftEmbersBackdrop`
+- **theming** (9): `ThemeToggle` `MasonryDensityControls` `LiquidGlass` `SpotlightGlareCard` `PointerRipples` `FluidContourBackdrop` `PaperTheme` `AmberEmbersBackdrop` `DriftEmbersBackdrop`
 - **charts** (7): `MetricStrip` `SegmentBreakdownBars` `TargetGauge` `HealthDonutStats` `ForecastTrendChart` `GroupedBarCompare` `MetricLineChart`
 - **commerce** (5): `PricingTable` `OrderTracker` `OrderSummaryPanel` `OrderCard` `DeliveryTrackingPanel`
 
 ---
 
 ## 组件 API 速查表
+
+### 0. `UiIcon` (零依赖 SVG 图标系统)
+- **Props**: `name: UiIconName`, `size?: number | string`（默认 20）, `strokeWidth?: number`（默认 1.8）, 其余透传 SVG 属性
+- **Vanilla 用法**: `<ui-icon name="check">`（全局注册，所有组件内部已依赖）
+- **特性**: 单文件内嵌 SVG 路径注册表；复制任何组件时必须连带本组件，漏带直接白屏
 
 ### 1. `ChatPromptInput` (多模态输入框)
 - **Props**: `value: string`, `onChange: (val: string) => void`, `onSubmit: (text: string, files?: File[]) => void`, `onStop?: () => void`, `isGenerating?: boolean`, `allowAttachments?: boolean`, `placeholder?: string`, `className?: string`

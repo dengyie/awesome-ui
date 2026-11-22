@@ -98,6 +98,9 @@ def main() -> int:
                 print(f"  category: {c['category']} ({labels.get(c['category'], '')})")
                 print(f"  tags:     {', '.join(c['tags'])}")
                 print(f"  aliases:  {', '.join(c.get('aliases', [])) or '(none)'}")
+                api = c.get("api", {})
+                print(f"  props:    {', '.join(api.get('props', [])) or '(none)'}")
+                print(f"  events:   {', '.join(api.get('events', [])) or '(none)'}")
                 print(f"  desc:     {c.get('desc', '(not compiled — run tools/gen_registry_aliases.py)')}")
                 # Files follow kebab-case of the name, except shared-CSS theme
                 # assets (e.g. PaperTheme) which live at their own lowercase path.
