@@ -76,7 +76,8 @@
       ],
       "desc": "High-performance streaming markdown renderer with syntax highlighting, code copy, and pulsing cursor.",
       "aliases": [
-        "stream markdown"
+        "stream markdown",
+        "复制"
       ],
       "api": {
         "props": [
@@ -102,7 +103,8 @@
         "reasoning",
         "chain of thought",
         "推理",
-        "思维链"
+        "思维链",
+        "折叠"
       ],
       "api": {
         "props": [
@@ -175,7 +177,9 @@
       ],
       "desc": "Smart auto-scrolling anchor that smoothly follows streaming output and pauses on user back-scroll.",
       "aliases": [
-        "auto scroll anchor"
+        "auto scroll anchor",
+        "跳转",
+        "锚点"
       ],
       "api": {
         "props": [
@@ -195,7 +199,8 @@
       ],
       "desc": "Claude Artifacts-style split-pane live preview with code view and sandboxed iframe rendering.",
       "aliases": [
-        "artifact canvas"
+        "artifact canvas",
+        "预览"
       ],
       "api": {
         "props": [
@@ -220,7 +225,8 @@
       ],
       "desc": "Assistant message footer toolbar with copy, regenerate, thumbs feedback, and branch pagination.",
       "aliases": [
-        "message action toolbar"
+        "message action toolbar",
+        "复制"
       ],
       "api": {
         "props": [
@@ -457,7 +463,9 @@
       "aliases": [
         "homepage dashboard",
         "仪表盘",
-        "看板"
+        "看板",
+        "复制",
+        "折叠"
       ],
       "api": {
         "props": [
@@ -489,7 +497,8 @@
       "desc": "Standalone code card with language badge, filename, one-click copy feedback, optional line numbers, and max-height scrolling. All code text is entity-escaped.",
       "aliases": [
         "code block",
-        "代码"
+        "代码",
+        "复制"
       ],
       "api": {
         "props": [
@@ -626,7 +635,9 @@
         "chat session list",
         "列表",
         "聊天",
-        "对话"
+        "对话",
+        "删除",
+        "折叠"
       ],
       "api": {
         "props": [
@@ -657,7 +668,10 @@
       "desc": "AI code-edit diff view with add/remove/context line highlighting, +/- summary counts, dual old/new line numbers, filename/language badges, multi-file tab bar (`files: [{ filename, language?, lines }]`, per-tab +/- counts), and long-context hunk folding (\"⋯ N unchanged lines\" rows expand in place, `contextSize` default 3; legacy `lines` API kept).",
       "aliases": [
         "diff viewer",
-        "差异对比"
+        "差异对比",
+        "删除",
+        "编辑",
+        "展开"
       ],
       "api": {
         "props": [
@@ -690,7 +704,8 @@
         "agent",
         "tool call",
         "智能体",
-        "工具调用"
+        "工具调用",
+        "预览"
       ],
       "api": {
         "props": [
@@ -746,7 +761,8 @@
         "spinner",
         "loading",
         "加载",
-        "加载中"
+        "加载中",
+        "进度"
       ],
       "api": {
         "props": [
@@ -844,7 +860,8 @@
         "agent task checklist",
         "tool call",
         "智能体",
-        "工具调用"
+        "工具调用",
+        "进度"
       ],
       "api": {
         "props": [
@@ -921,7 +938,10 @@
       "desc": "Data table with sortable columns (clickable headers), right-aligned numeric cells, hover-revealed row actions, optional multi-select with floating batch-action bar, and empty state.",
       "aliases": [
         "data table",
-        "表格"
+        "表格",
+        "排序",
+        "批量",
+        "批处理"
       ],
       "api": {
         "props": [
@@ -954,7 +974,8 @@
         "日志",
         "tool call",
         "智能体",
-        "工具调用"
+        "工具调用",
+        "展开"
       ],
       "api": {
         "props": [
@@ -1022,7 +1043,9 @@
       "desc": "Two-column settings shell — anchor nav (icon + title, `aria-current` on the active section) beside a card whose rows show label/description/value plus an inline action link, with an optional footer save row and loading state.",
       "aliases": [
         "settings panel",
-        "面板"
+        "面板",
+        "跳转",
+        "锚点"
       ],
       "api": {
         "props": [
@@ -1054,7 +1077,8 @@
         "onboarding checklist",
         "tour",
         "引导",
-        "新手引导"
+        "新手引导",
+        "进度"
       ],
       "api": {
         "props": [
@@ -1086,7 +1110,8 @@
         "提示词",
         "billing",
         "计费",
-        "账单"
+        "账单",
+        "进度"
       ],
       "api": {
         "props": [
@@ -1117,7 +1142,8 @@
         "confirm dialog",
         "popup",
         "弹窗",
-        "对话框"
+        "对话框",
+        "确认"
       ],
       "api": {
         "props": [
@@ -1177,7 +1203,10 @@
       "aliases": [
         "file dropzone",
         "upload",
-        "上传"
+        "上传",
+        "拖拽",
+        "拖放",
+        "删除"
       ],
       "api": {
         "props": [
@@ -1309,7 +1338,9 @@
       "desc": "Drag-and-drop kanban board over flat `columns` + `cards` data (cards reference `columnId`), WIP `limit` counters, priority chips, tag chips, assignee initials, and ArrowLeft/ArrowRight keyboard moves.",
       "aliases": [
         "kanban board",
-        "看板"
+        "看板",
+        "拖拽",
+        "拖放"
       ],
       "api": {
         "props": [
@@ -1579,7 +1610,8 @@
       "desc": "Saved-prompt browser with free-text search across title/description/body/tags, category chips, favorite stars, monospace prompt previews and a Use action.",
       "aliases": [
         "prompt library",
-        "提示词"
+        "提示词",
+        "收藏"
       ],
       "api": {
         "props": [
@@ -1635,7 +1667,8 @@
       "aliases": [
         "collapsible panel",
         "手风琴",
-        "折叠面板"
+        "折叠面板",
+        "展开"
       ],
       "api": {
         "props": [
@@ -1686,7 +1719,8 @@
       "aliases": [
         "filter bar",
         "筛选",
-        "过滤器"
+        "过滤器",
+        "清空"
       ],
       "api": {
         "props": [
@@ -1758,7 +1792,8 @@
       "desc": "Page-number navigation with ellipsis gaps, adjustable sibling count, optional first/last jump buttons, disabled bounds and `aria-current=\"page\"`.",
       "aliases": [
         "pager",
-        "分页"
+        "分页",
+        "跳转"
       ],
       "api": {
         "props": [
@@ -1819,7 +1854,8 @@
         "选择器",
         "dropdown",
         "select",
-        "下拉"
+        "下拉",
+        "清空"
       ],
       "api": {
         "props": [
@@ -1897,7 +1933,8 @@
         "usage meter",
         "billing",
         "计费",
-        "账单"
+        "账单",
+        "进度"
       ],
       "api": {
         "props": [
@@ -1949,7 +1986,9 @@
       "aliases": [
         "wizard",
         "步骤",
-        "向导"
+        "向导",
+        "进度",
+        "跳转"
       ],
       "api": {
         "props": [
@@ -1973,7 +2012,8 @@
       "desc": "Search field with controlled/uncontrolled modes, ⌘K shortcut hint chip, clear button once a query exists, loading spinner, Enter→search and Escape→clear semantics.",
       "aliases": [
         "search input",
-        "搜索"
+        "搜索",
+        "清空"
       ],
       "api": {
         "props": [
@@ -2005,7 +2045,8 @@
       "desc": "Pill label in six tones (neutral/indigo/emerald/amber/rose/sky) with sm/md sizing, optional icon, removable variant (remove event) and clickable variant (tag-click event).",
       "aliases": [
         "chip",
-        "标签"
+        "标签",
+        "删除"
       ],
       "api": {
         "props": [
@@ -2420,7 +2461,8 @@
       "aliases": [
         "gantt timeline",
         "时间线",
-        "甘特图"
+        "甘特图",
+        "进度"
       ],
       "api": {
         "props": [
@@ -2724,7 +2766,8 @@
         "向导",
         "tour",
         "引导",
-        "新手引导"
+        "新手引导",
+        "进度"
       ],
       "api": {
         "props": [
@@ -2825,7 +2868,8 @@
       "desc": "Page-level search with underline input, yellow <mark> substring highlighting, suggestion rows with mono type badges, grouped Top results with badges, footer hint + Help Center link and a clear button.",
       "aliases": [
         "search typeahead",
-        "搜索"
+        "搜索",
+        "清空"
       ],
       "api": {
         "props": [
@@ -2893,7 +2937,11 @@
       ],
       "desc": "Cookie preference dialog with collapsible <details> categories, \"Always Active\" locked rows, mono cookie-name lists and Accept All / Reject All / Confirm bulk actions emitting the accepted id list.",
       "aliases": [
-        "cookie consent"
+        "cookie consent",
+        "确认",
+        "批量",
+        "批处理",
+        "折叠"
       ],
       "api": {
         "props": [
@@ -2996,7 +3044,8 @@
         "agent task progress",
         "tool call",
         "智能体",
-        "工具调用"
+        "工具调用",
+        "进度"
       ],
       "api": {
         "props": [
@@ -3031,7 +3080,8 @@
         "卡片",
         "billing",
         "计费",
-        "账单"
+        "账单",
+        "进度"
       ],
       "api": {
         "props": [
@@ -3063,7 +3113,8 @@
         "workspace switcher menu",
         "dropdown",
         "select",
-        "下拉"
+        "下拉",
+        "编辑"
       ],
       "api": {
         "props": [
@@ -3095,7 +3146,8 @@
       "desc": "Compact file chip with kind tone badge (pdf=rose / doc=sky / csv=emerald / image=violet), mono glyph, name + size/meta line and round black X remove button.",
       "aliases": [
         "attachment chip",
-        "标签"
+        "标签",
+        "删除"
       ],
       "api": {
         "props": [
@@ -3210,7 +3262,8 @@
       "desc": "PR changed-file card with collapsible header (title + total +N/−N diffstat), file rows (extension badge, mono path, status tag, per-file diffstat) and optional folder grouping.",
       "aliases": [
         "changed files list",
-        "列表"
+        "列表",
+        "折叠"
       ],
       "api": {
         "props": [
@@ -3264,7 +3317,9 @@
       "aliases": [
         "filter query builder",
         "筛选",
-        "过滤器"
+        "过滤器",
+        "删除",
+        "清空"
       ],
       "api": {
         "props": [
@@ -3297,7 +3352,8 @@
         "column visibility menu",
         "dropdown",
         "select",
-        "下拉"
+        "下拉",
+        "重置"
       ],
       "api": {
         "props": [
@@ -3458,7 +3514,9 @@
       "desc": "Order fulfillment tracker with dot-connector variant (green check dots, current ring, ETA line, Track shipment link) and bar variant (continuous progress + stage labels); canceled state goes all-gray with reason copy.",
       "aliases": [
         "order tracker",
-        "订单"
+        "订单",
+        "进度",
+        "复制"
       ],
       "api": {
         "props": [
@@ -3653,7 +3711,8 @@
       ],
       "desc": "Two-column grouped editor shortcut list with icons, markdown-syntax mono hints, keycap chip groups (bordered, subtle bottom shadow), live search filter with empty state.",
       "aliases": [
-        "shortcut cheat sheet"
+        "shortcut cheat sheet",
+        "编辑"
       ],
       "api": {
         "props": [
@@ -3678,7 +3737,10 @@
         "zoom control bar",
         "dropdown",
         "select",
-        "下拉"
+        "下拉",
+        "撤销",
+        "缩放",
+        "放大"
       ],
       "api": {
         "props": [
@@ -3870,7 +3932,8 @@
       ],
       "desc": "Inline-editable object title — heading when idle, click switches to highlighted input (yellow bg + teal focus ring), Enter/blur commits, Esc cancels, breadcrumb + meta rows around it.",
       "aliases": [
-        "editable heading"
+        "editable heading",
+        "编辑"
       ],
       "api": {
         "props": [
@@ -3934,7 +3997,8 @@
         "账单",
         "payment",
         "支付",
-        "结算"
+        "结算",
+        "确认"
       ],
       "api": {
         "props": [
@@ -4070,7 +4134,9 @@
       "aliases": [
         "image gen gallery",
         "图片",
-        "图像"
+        "图像",
+        "删除",
+        "骨架屏"
       ],
       "api": {
         "props": [
@@ -4129,7 +4195,10 @@
       "desc": "ChatGPT-style memory manager — remembered facts with source captions, inline editing (Save/Cancel), per-row delete, add input and clear-all.",
       "aliases": [
         "memory panel",
-        "面板"
+        "面板",
+        "删除",
+        "编辑",
+        "清空"
       ],
       "api": {
         "props": [
@@ -4283,7 +4352,8 @@
       "desc": "fine-tune job list — status chips (queued/training/completed/failed), training progress bar with %, cost + ETA meta, cancel link for active jobs, \"New fine-tune\" CTA and empty state.",
       "aliases": [
         "fine tune job list",
-        "列表"
+        "列表",
+        "进度"
       ],
       "api": {
         "props": [
@@ -4337,7 +4407,8 @@
         "卡片",
         "tool call",
         "智能体",
-        "工具调用"
+        "工具调用",
+        "编辑"
       ],
       "api": {
         "props": [
@@ -4368,7 +4439,8 @@
       "aliases": [
         "voice orb",
         "speech",
-        "语音"
+        "语音",
+        "静音"
       ],
       "api": {
         "props": [
@@ -4402,7 +4474,8 @@
         "弹窗",
         "对话框",
         "聊天",
-        "对话"
+        "对话",
+        "复制"
       ],
       "api": {
         "props": [
@@ -4659,7 +4732,8 @@
         "audio wave visualizer",
         "voice",
         "speech",
-        "语音"
+        "语音",
+        "播放"
       ],
       "api": {
         "props": [
@@ -4710,7 +4784,8 @@
         "guardrail review queue",
         "permission",
         "rbac",
-        "权限"
+        "权限",
+        "折叠"
       ],
       "api": {
         "props": [
@@ -4893,7 +4968,8 @@
         "api key table",
         "表格",
         "security",
-        "安全"
+        "安全",
+        "复制"
       ],
       "api": {
         "props": [
@@ -4954,7 +5030,8 @@
         "ai rewrite menu",
         "chat",
         "聊天",
-        "对话"
+        "对话",
+        "展开"
       ],
       "api": {
         "props": [
@@ -5012,7 +5089,9 @@
         "share access dialog",
         "popup",
         "弹窗",
-        "对话框"
+        "对话框",
+        "复制",
+        "删除"
       ],
       "api": {
         "props": [
@@ -5047,7 +5126,9 @@
         "ai note answer",
         "chat",
         "聊天",
-        "对话"
+        "对话",
+        "复制",
+        "播放"
       ],
       "api": {
         "props": [
@@ -5079,7 +5160,9 @@
         "audio note player",
         "voice",
         "speech",
-        "语音"
+        "语音",
+        "播放",
+        "暂停"
       ],
       "api": {
         "props": [
@@ -5107,7 +5190,8 @@
       "aliases": [
         "image action menu",
         "图片",
-        "图像"
+        "图像",
+        "编辑"
       ],
       "api": {
         "props": [
@@ -5134,7 +5218,8 @@
       "desc": "fal generate-run info card — task type badge, model count + relative time header, prompt paragraph, Aspect Ratio / Total Cost metadata rows and duplicate/rerun/delete/share actions.",
       "aliases": [
         "fal run card",
-        "卡片"
+        "卡片",
+        "删除"
       ],
       "api": {
         "props": [
@@ -5192,7 +5277,9 @@
       "aliases": [
         "gamma image detail",
         "图片",
-        "图像"
+        "图像",
+        "预览",
+        "删除"
       ],
       "api": {
         "props": [
@@ -5334,7 +5421,8 @@
       ],
       "desc": "Mindtrip \"Jump back in\" resume cards — thumbnail (or gradient placeholder), kind badge, title and subtitle per card.",
       "aliases": [
-        "jump back in"
+        "jump back in",
+        "跳转"
       ],
       "api": {
         "props": [
@@ -5413,7 +5501,8 @@
       ],
       "desc": "Graphite grouped PR review queue — collapsible groups with count badges, author-initial rows and `author · repo #n` meta.",
       "aliases": [
-        "pr review queue"
+        "pr review queue",
+        "折叠"
       ],
       "api": {
         "props": [
@@ -5603,7 +5692,8 @@
       "desc": "Cohere prompt tuner — optimized-prompt dark code panel with copy action, completion selector and completion text viewer.",
       "aliases": [
         "prompt tuner result",
-        "提示词"
+        "提示词",
+        "复制"
       ],
       "api": {
         "props": [
@@ -5766,7 +5856,10 @@
       "desc": "delivery tracking — map placeholder with floating back/help/zoom controls, ETA header, four-step progress stepper (done/active/pending), courier card with call/message buttons, collapsible order details with items, gift share block and Copy link / Text me the link actions (DoorDash delivery pattern).",
       "aliases": [
         "delivery tracking panel",
-        "面板"
+        "面板",
+        "进度",
+        "复制",
+        "折叠"
       ],
       "api": {
         "props": [
@@ -5812,7 +5905,8 @@
       "aliases": [
         "map property card",
         "卡片",
-        "地图"
+        "地图",
+        "预览"
       ],
       "api": {
         "props": [
@@ -5844,7 +5938,8 @@
       "aliases": [
         "api reference viewer",
         "docs",
-        "文档"
+        "文档",
+        "折叠"
       ],
       "api": {
         "props": [
@@ -6022,7 +6117,9 @@
       "desc": "grouped task list with split detail pane — collapsible sections (To Do / In Progress / Done), task rows with completion circle, counts and assignee avatar, right detail with fields grid, tags and comment composer (Asana list view pattern).",
       "aliases": [
         "grouped task list",
-        "列表"
+        "列表",
+        "进度",
+        "折叠"
       ],
       "api": {
         "props": [
@@ -6087,7 +6184,8 @@
       "desc": "documentation page shell — left nav with top links and grouped sections, center article with Copy page button, callout, cards grid and code examples, right \"On this page\" TOC with active highlight (Mintlify docs pattern).",
       "aliases": [
         "docs page layout",
-        "文档"
+        "文档",
+        "复制"
       ],
       "api": {
         "props": [
@@ -6122,7 +6220,8 @@
         "task card modal",
         "popup",
         "弹窗",
-        "对话框"
+        "对话框",
+        "进度"
       ],
       "api": {
         "props": [
@@ -6163,7 +6262,9 @@
       "aliases": [
         "form tracking dashboard",
         "仪表盘",
-        "看板"
+        "看板",
+        "排序",
+        "进度"
       ],
       "api": {
         "props": [
@@ -6199,7 +6300,9 @@
         "audio playlist page",
         "voice",
         "speech",
-        "语音"
+        "语音",
+        "进度",
+        "播放"
       ],
       "api": {
         "props": [
@@ -6237,7 +6340,9 @@
         "marketing",
         "landing",
         "营销",
-        "落地页"
+        "落地页",
+        "复制",
+        "折叠"
       ],
       "api": {
         "props": [
@@ -6272,7 +6377,8 @@
       "aliases": [
         "permission matrix",
         "rbac",
-        "权限"
+        "权限",
+        "编辑"
       ],
       "api": {
         "props": [
@@ -6301,7 +6407,8 @@
       "aliases": [
         "stock photo picker",
         "selector",
-        "选择器"
+        "选择器",
+        "清空"
       ],
       "api": {
         "props": [
@@ -6432,7 +6539,8 @@
         "ticket",
         "support",
         "工单",
-        "客服"
+        "客服",
+        "展开"
       ],
       "api": {
         "props": [
@@ -6464,7 +6572,9 @@
       "aliases": [
         "account security panel",
         "面板",
-        "安全"
+        "安全",
+        "删除",
+        "编辑"
       ],
       "api": {
         "props": [
@@ -6774,7 +6884,8 @@
       ],
       "desc": "plan-cancellation retention — step 1 reason radio cards with Continue gating, step 2 discounted keep-plan offer card with Keep plan primary and Confirm cancel destructive ghost (SaaS downgrade retention pattern).",
       "aliases": [
-        "cancel retention flow"
+        "cancel retention flow",
+        "确认"
       ],
       "api": {
         "props": [
@@ -6930,7 +7041,8 @@
       "aliases": [
         "no results state",
         "empty state",
-        "空状态"
+        "空状态",
+        "清空"
       ],
       "api": {
         "props": [
@@ -7160,7 +7272,8 @@
         "agent",
         "tool call",
         "智能体",
-        "工具调用"
+        "工具调用",
+        "复制"
       ],
       "api": {
         "props": [
@@ -7218,7 +7331,8 @@
         "空状态",
         "tool call",
         "智能体",
-        "工具调用"
+        "工具调用",
+        "重置"
       ],
       "api": {
         "props": [
@@ -7279,7 +7393,9 @@
         "agent env var editor",
         "tool call",
         "智能体",
-        "工具调用"
+        "工具调用",
+        "删除",
+        "编辑"
       ],
       "api": {
         "props": [
@@ -7307,7 +7423,9 @@
         "agent schedule editor",
         "tool call",
         "智能体",
-        "工具调用"
+        "工具调用",
+        "预览",
+        "编辑"
       ],
       "api": {
         "props": [
@@ -7406,7 +7524,8 @@
         "billing address form",
         "表单",
         "计费",
-        "账单"
+        "账单",
+        "确认"
       ],
       "api": {
         "props": [
@@ -7574,7 +7693,8 @@
         "对话框",
         "billing",
         "计费",
-        "账单"
+        "账单",
+        "确认"
       ],
       "api": {
         "props": [
@@ -7723,7 +7843,8 @@
       "desc": "workspace onboarding survey card — question groups with single-select pills (aria-checked) and multi-select chips (aria-pressed), optional free-text input, progress-dot strip with answered counter, Continue button gated until all questions answered (fires answer {questionId,optionId} / text / next).",
       "aliases": [
         "workspace survey card",
-        "卡片"
+        "卡片",
+        "进度"
       ],
       "api": {
         "props": [
@@ -7785,7 +7906,8 @@
       "desc": "onboarding invite composer — email input with Enter/button add, inline email + duplicate validation (role=alert), role select per pending row, removable pending list, Send invites gated on pending count and Skip for now (fires invite {email,role} / remove / send / skip).",
       "aliases": [
         "invite teammates card",
-        "卡片"
+        "卡片",
+        "删除"
       ],
       "api": {
         "props": [
@@ -7823,7 +7945,9 @@
       "desc": "profile editing form — handle caption, country select + city input row, bio textarea with live n/limit counter, show-email switch (role=switch), social link rows and a saved confirmation line (fires profile-save {handle,country,city,bio,showEmail,socials} / profile-cancel).",
       "aliases": [
         "profile edit form",
-        "表单"
+        "表单",
+        "确认",
+        "编辑"
       ],
       "api": {
         "props": [
@@ -7867,7 +7991,10 @@
         "upload",
         "cropper",
         "裁剪",
-        "剪裁"
+        "剪裁",
+        "缩放",
+        "预览",
+        "确认"
       ],
       "api": {
         "props": [
@@ -7905,7 +8032,9 @@
       "desc": "\"Discover more people\" follow rail — collapsible header with aria-expanded, person cards with avatar/initials + handle, Follow → Following toggle (aria-pressed) and dismiss × with empty-state fallback (fires follow-suggest-follow {person} / follow-suggest-dismiss {person}).",
       "aliases": [
         "follow suggestions card",
-        "卡片"
+        "卡片",
+        "折叠",
+        "展开"
       ],
       "api": {
         "props": [

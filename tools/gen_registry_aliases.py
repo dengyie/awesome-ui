@@ -107,6 +107,45 @@ GROUPS = [
     (["citation", "sources"], ["引用来源"], r"SourcesCitation"),
 ]
 
+# Capability aliases: functional VERBS ("能排序的表格", "可拖拽的看板") are
+# behavior, not identity — GROUPS' name-pattern matching can never express
+# them, and the ledger desc is English-only, so Chinese verb queries had 23
+# zero-hit blind spots (86-word audit, 2026-11-23). A component earns a verb
+# alias when its ledger DESC (human-authored semantic summary) matches the
+# signal pattern; props/events are deliberately NOT scanned (generic words
+# like `show`/`visibility`/`paused` pollute precision). Patterns are tight
+# (word-bounded, multiword phrases) and VERB_EXCLUDE filters desc hits that
+# are false friends ("muted rows" ≠ 静音, "skeleton" form layout ≠ 骨架屏,
+# "timer reset" ≠ 重置). Same derived-data contract as GROUPS: regenerated,
+# check_registry enforces sync, CI diff gate blocks drift.
+CAPABILITY_ALIASES = [
+    ("排序", r"\bsort(?:able|ing|ed)?\b", []),
+    ("拖拽", r"\bdrag(?:gable|ging|ged)?\b", []),
+    ("拖放", r"\bdrag(?:gable|ging|ged)?\b", []),
+    ("进度", r"\bprogress\b", []),
+    ("复制", r"\bcopy(?:ing|ied)?\b", []),
+    ("撤销", r"\b(?:undo|redo)\b", []),
+    ("收藏", r"\b(?:favorite|bookmark)(?:d|s)?\b", []),
+    ("缩放", r"\bzoom\b", ["GammaImageDetail", "DeliveryTrackingPanel"]),  # zoom = crop/scale imagery, not viewport zoom
+    ("放大", r"\bzoom in\b", []),
+    ("预览", r"\bpreview(?:ing|ed)?\b", []),
+    ("确认", r"\bconfirm(?:ation|ing|ed)?\b", ["SuccessToast"]),  # "timer reset"/visual confirmation, not confirm action
+    ("删除", r"\b(?:delet(?:e|ed|ion)|remov(?:e|ed|al))\b", []),
+    ("编辑", r"\bedit(?:able|ed|ing|or)?\b", []),
+    ("批量", r"\b(?:batch|bulk)\b", []),
+    ("批处理", r"\b(?:batch|bulk)\b", []),
+    ("重置", r"\breset\b", ["SuccessToast"]),  # auto-dismiss timer reset
+    ("清空", r"\bclear(?:ed|ing)?\b", []),
+    ("折叠", r"\bcollaps(?:e|ed|ible|ing)\b", ["Breadcrumb"]),  # maxItems overflow collapse ≠ collapsible panel
+    ("展开", r"\bexpand(?:ed|ing|able)?\b", []),
+    ("跳转", r"\b(?:anchor|jump|scroll[\s-]?to)\b", []),
+    ("锚点", r"\banchor\b", []),
+    ("播放", r"\bplay(?:ing|back)?\b", ["AgentTaskProgress"]),  # "playing state" of a stepper, not media playback
+    ("暂停", r"\bpaus(?:e|ed|ing)\b", ["MarqueeWall"]),  # hover-pause marquee ≠ media pause control
+    ("静音", r"\bmut(?:e|ed|ing)\b", ["EventLogTable"]),  # "muted rows" styling
+    ("骨架屏", r"\bskeleton\b", ["FormField"]),  # field placeholder layout, not loading skeleton
+]
+
 
 def spaced(name: str) -> str:
     """camelCase -> spaced lowercase ('ChatPromptInput' -> 'chat prompt input')."""
@@ -125,7 +164,7 @@ def main() -> int:
     comps = reg["components"]
     names_lower = {c["name"].lower() for c in comps}
 
-    stats = {"desc": 0, "alias_total": 0, "group_hits": 0, "missing_desc": []}
+    stats = {"desc": 0, "alias_total": 0, "group_hits": 0, "cap_hits": 0, "missing_desc": []}
     for c in comps:
         # desc: exact ledger text, enforced by check_registry
         d = desc.get(c["name"])
@@ -150,6 +189,13 @@ def main() -> int:
                         continue  # would shadow another component's name
                     if a not in al:
                         al.append(a)
+        # capability verbs: desc-driven (behavior, not identity) — see
+        # CAPABILITY_ALIASES docstring for the false-friend exclusion policy
+        d_lower = (d or "").lower()
+        for zh, sig, exclude in CAPABILITY_ALIASES:
+            if c["name"] not in exclude and sig and re.search(sig, d_lower) and zh not in al:
+                al.append(zh)
+                stats["cap_hits"] += 1
         c["aliases"] = al
         stats["alias_total"] += len(al)
 
@@ -162,7 +208,7 @@ def main() -> int:
     if stats["missing_desc"]:
         print(f"MISSING desc: {stats['missing_desc']}")
     print(f"aliases: {stats['alias_total']} total ({stats['alias_total']/len(comps):.1f}/comp), "
-          f"group hits {stats['group_hits']}")
+          f"group hits {stats['group_hits']}, capability hits {stats['cap_hits']}")
     return 1 if stats["missing_desc"] else 0
 
 

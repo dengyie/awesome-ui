@@ -73,6 +73,25 @@ FIXTURES = [
     ("玻璃拟态", "LiquidGlass"),
     # contract-level retrieval (api surface)
     ("cropper", "AvatarCropDialog"),
+    # CJK capability verbs (desc-driven CAPABILITY_ALIASES): agents ask by
+    # behavior ("a table I can sort", "a drag-droppable board"), not just nouns
+    ("表格 排序", "DataTable"),
+    ("看板 拖拽", "KanbanBoard"),
+    ("排序", "DataTable"),
+    ("拖拽", "KanbanBoard"),
+    ("复制", "CodeBlock"),
+    ("预览", "ArtifactCanvas"),
+    ("确认", "ConfirmDialog"),
+    ("编辑", "DiffViewer"),
+    ("批量", "DataTable"),
+    ("清空", "FilterBar"),
+    ("骨架屏", "ImageGenGallery"),
+    ("折叠", "ThinkingBlock"),
+    ("播放", "AudioNotePlayer"),
+    ("收藏", "PromptLibrary"),
+    ("缩放", "ZoomControlBar"),
+    ("撤销", "ZoomControlBar"),
+    ("静音", "VoiceOrb"),
     # typo tolerance
     ("poup", "Modal"),
     ("ConfimDialog", "ConfirmDialog"),

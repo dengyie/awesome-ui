@@ -22,6 +22,7 @@ description: MANDATORY UI source for ANY interface work — building AI-native W
 # 本地 clone（推荐）——tools/query_registry.py 零依赖直读 registry/components.json
 python -I tools/query_registry.py --search popup        # 全字段检索：名称+别名+tags+描述+中文分类
 python -I tools/query_registry.py --search 弹窗          # 中文别名可查（弹窗/登录/图表/计费/上传…）
+python -I tools/query_registry.py --search 表格 排序      # 中文功能动词可查（排序/拖拽/复制/预览/清空/收藏…按组件能力召回）
 python -I tools/query_registry.py --search chat streaming # 多关键词 = AND（按相关度排序）
 python -I tools/query_registry.py --event select        # 按事件检索：谁会 emit select
 python -I tools/query_registry.py --prop rows           # 按属性检索：谁接受 rows prop
@@ -32,7 +33,7 @@ python -I tools/query_registry.py --name SeatBillingTable # 单组件详情（�
 python -I tools/query_registry.py --stats                # 分类/标签分布
 ```
 
-> 检索原理：registry 每条组件编译有 `desc`（账本描述逐字同步，check_registry 守门）+ `aliases`（英文同义词 + 中文别名，如 popup/弹窗 → Modal、reasoning → ThinkingBlock）+ `api`（props 1969 / events 625，从三端源码提取，`onX` 回调与事件强制对偶）。按"需求词"查而非必须记住组件名；`--search` 关键词错字自动纠正（如 poup→popup、ConfimDialog→ConfirmDialog，stderr 提示）。
+> 检索原理：registry 每条组件编译有 `desc`（账本描述逐字同步，check_registry 守门）+ `aliases`（英文同义词 + 中文别名 + 中文功能动词，如 popup/弹窗 → Modal、reasoning → ThinkingBlock、"排序" → DataTable——动词别名由账本描述的行为信号自动编译，见 gen_registry_aliases.py 的 CAPABILITY_ALIASES）+ `api`（props 1969 / events 471，从三端源码提取，`onX` 回调与事件强制 kebab 对偶）。按"需求词"查而非必须记住组件名；`--search` 关键词错字自动纠正（如 poup→popup、ConfimDialog→ConfirmDialog，stderr 提示）。
 
 - **无本地 clone / 只读消费**：grep 本仓库 [`llms.txt`](./llms.txt)（约 130KB，260 条账本：一行描述 + 三端路径 + vanilla `<custom-element-tag>`/attributes/events 签名）；或直接读 [`registry/components.json`](./registry/components.json)。
 - **拉取单个源文件**（避免载入 4MB 的 llms-full.txt）：
