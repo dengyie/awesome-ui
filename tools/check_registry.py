@@ -135,9 +135,11 @@ def main() -> int:
                     elif len(v) != len(set(v)):
                         errors.append(f"{name}: duplicate entries in api.{k}")
                 # callback props (onX) must surface as events for cross-stack parity
+                # (events are kebab-case: onMoveCard -> move-card, matching vanilla CustomEvents)
                 orphan_cbs = [
                     p for p in api["props"]
-                    if re.fullmatch(r"on[A-Z]\w*", p) and p[2:].lower() not in api["events"]
+                    if re.fullmatch(r"on[A-Z]\w*", p)
+                    and re.sub(r"(?<!^)([A-Z])", r"-\1", p[2:]).lower() not in api["events"]
                 ]
                 if orphan_cbs:
                     errors.append(

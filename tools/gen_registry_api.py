@@ -29,6 +29,14 @@ ROOT = Path(__file__).resolve().parent.parent
 COMPONENTS = ROOT / "registry" / "components.json"
 
 
+def camel_to_kebab(name: str) -> str:
+    """onMoveCard -> move-card. Vanilla CustomEvent names are kebab-case, so
+    react callback props normalize to the same canonical form — otherwise the
+    same logical event lands twice ('movecard' vs 'move-card') and
+    --event lookups miss one stack."""
+    return re.sub(r"(?<!^)([A-Z])", r"-\1", name).lower()
+
+
 def react_props(src: str) -> list[str]:
     """Names declared in the component's `interface XProps { ... }` block."""
     m = re.search(r'(?:export\s+)?(?:default\s+)?interface\s+\w*Props\s*\{', src)
@@ -48,9 +56,17 @@ def react_props(src: str) -> list[str]:
 
 
 def vanilla_events(src: str) -> list[str]:
-    """Custom event names dispatched by the vanilla element."""
+    """Custom event names dispatched by the vanilla element.
+
+    Handles both literal dispatch sites and helper wrappers where the event
+    name is a string argument at the call site (e.g.
+    `dispatchIf('data-x', 'copy-link')` / `emit('change')`).
+    """
     evs = set(re.findall(r"dispatchEvent\(new CustomEvent\(\s*['\"]([a-z][a-z0-9-]*)['\"]", src))
     evs |= set(re.findall(r"emit\(\s*['\"]([a-z][a-z0-9-]*)['\"]", src))
+    # helper-invocation form: fn(<attr>, 'event-name') — second string literal
+    # passed to a known local dispatcher keeps event names out of a regex audit
+    evs |= set(re.findall(r"dispatch(?:Event|If)\([^,]+,\s*['\"]([a-z][a-z0-9-]*)['\"]", src))
     return sorted(evs)
 
 
@@ -64,7 +80,7 @@ def main() -> int:
         if name not in names:
             continue
         props = sorted(set(react_props(Path(f).read_text(encoding="utf-8", errors="ignore"))))
-        events = sorted({p[2:].lower() for p in props if re.fullmatch(r"on[A-Z]\w*", p)})
+        events = sorted({camel_to_kebab(p[2:]) for p in props if re.fullmatch(r"on[A-Z]\w*", p)})
         api[name] = {"props": props, "events": events}
     for f in glob.glob(str(ROOT / "vanilla" / "*.js")):
         name = os.path.basename(f)[: -len(".js")]
