@@ -14,6 +14,8 @@
       "desc": "Zero-dependency, accessible SVG icon system shared by all three stacks.",
       "aliases": [
         "ui icon",
+        "svg icon",
+        "icon library",
         "图标"
       ],
       "api": {
@@ -887,7 +889,13 @@
         "pricing table",
         "表格",
         "定价",
-        "价格"
+        "价格",
+        "comparison",
+        "compare",
+        "price comparison",
+        "price",
+        "对比",
+        "比较"
       ],
       "api": {
         "props": [
@@ -1143,6 +1151,10 @@
         "popup",
         "弹窗",
         "对话框",
+        "destructive",
+        "confirm action",
+        "危险操作",
+        "确认操作",
         "确认"
       ],
       "api": {
@@ -1402,7 +1414,12 @@
         "account switcher",
         "dropdown",
         "select",
-        "下拉"
+        "下拉",
+        "user profile",
+        "profile",
+        "profile card",
+        "user card",
+        "用户资料"
       ],
       "api": {
         "props": [
@@ -1611,6 +1628,7 @@
       "aliases": [
         "prompt library",
         "提示词",
+        "素材库",
         "收藏"
       ],
       "api": {
@@ -1693,7 +1711,12 @@
       "desc": "Overlapping collaborator avatars with initials/image/user-icon fallbacks, +N overflow chip, optional presence dots and sm/md/lg sizes.",
       "aliases": [
         "avatar group",
-        "头像"
+        "头像",
+        "user profile",
+        "profile",
+        "profile card",
+        "user card",
+        "用户资料"
       ],
       "api": {
         "props": [
@@ -2107,7 +2130,11 @@
       "aliases": [
         "profile header",
         "avatar",
-        "头像"
+        "头像",
+        "user profile",
+        "profile card",
+        "user card",
+        "用户资料"
       ],
       "api": {
         "props": [
@@ -2660,7 +2687,12 @@
       ],
       "desc": "Grouped two-bar comparison chart (violet estimated vs lime actual) with per-bar value labels, row names and a legend header.",
       "aliases": [
-        "grouped bar compare"
+        "grouped bar compare",
+        "comparison",
+        "price comparison",
+        "price",
+        "对比",
+        "比较"
       ],
       "api": {
         "props": [
@@ -3964,7 +3996,12 @@
         "表格",
         "pricing",
         "定价",
-        "价格"
+        "价格",
+        "compare",
+        "price comparison",
+        "price",
+        "对比",
+        "比较"
       ],
       "api": {
         "props": [
@@ -4256,7 +4293,12 @@
       ],
       "desc": "LMArena style side-by-side model comparison — shared prompt chip, two model output columns (streaming dots / error state) and an A / Tie / B vote bar.",
       "aliases": [
-        "model compare pane"
+        "model compare pane",
+        "comparison",
+        "price comparison",
+        "price",
+        "对比",
+        "比较"
       ],
       "api": {
         "props": [
@@ -4756,7 +4798,13 @@
       "aliases": [
         "prompt variant diff",
         "提示词",
-        "差异对比"
+        "差异对比",
+        "comparison",
+        "compare",
+        "price comparison",
+        "price",
+        "对比",
+        "比较"
       ],
       "api": {
         "props": [
@@ -6885,6 +6933,10 @@
       "desc": "plan-cancellation retention — step 1 reason radio cards with Continue gating, step 2 discounted keep-plan offer card with Keep plan primary and Confirm cancel destructive ghost (SaaS downgrade retention pattern).",
       "aliases": [
         "cancel retention flow",
+        "destructive",
+        "confirm action",
+        "危险操作",
+        "确认操作",
         "确认"
       ],
       "api": {
@@ -7770,7 +7822,11 @@
         "对话框",
         "pricing",
         "定价",
-        "价格"
+        "价格",
+        "destructive",
+        "confirm action",
+        "危险操作",
+        "确认操作"
       ],
       "api": {
         "props": [
@@ -7946,6 +8002,10 @@
       "aliases": [
         "profile edit form",
         "表单",
+        "user profile",
+        "profile card",
+        "user card",
+        "用户资料",
         "确认",
         "编辑"
       ],
@@ -7992,6 +8052,7 @@
         "cropper",
         "裁剪",
         "剪裁",
+        "上传",
         "缩放",
         "预览",
         "确认"

@@ -92,6 +92,15 @@ FIXTURES = [
     ("缩放", "ZoomControlBar"),
     ("撤销", "ZoomControlBar"),
     ("静音", "VoiceOrb"),
+    # natural-language composition: stopwords/inflection/concept groups let
+    # agents ask in prose instead of keyword-speak
+    ("a modal for destructive confirmation", "ConfirmDialog"),
+    ("data table with sorting and filtering", "DataTable"),
+    ("user profile card", "ProfileHeader"),
+    ("price comparison table", "PlanComparisonTable"),
+    ("icon library svg", "UiIcon"),
+    ("文件上传 裁剪", "AvatarCropDialog"),
+    ("i need a component for chat streaming", "ChatPromptInput"),
     # typo tolerance
     ("poup", "Modal"),
     ("ConfimDialog", "ConfirmDialog"),

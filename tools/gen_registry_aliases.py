@@ -38,7 +38,7 @@ GROUPS = [
     (["command menu"], ["命令面板"], r"CommandPalette"),
     (["login", "signin", "log in"], ["登录", "认证"], r"Auth"),
     (["upload"], ["上传"], r"Dropzone"),
-    (["upload", "crop", "cropper"], ["裁剪", "剪裁"], r"AvatarCropDialog"),
+    (["upload", "crop", "cropper"], ["裁剪", "剪裁", "上传"], r"AvatarCropDialog"),
     (["reasoning", "chain of thought"], ["推理", "思维链"], r"ThinkingBlock"),
     (["chart", "graph"], ["图表"], r"Chart|Gauge|Donut|Bars$|MetricStrip|StatsBand|Breakdown"),
     (["gauge"], ["仪表盘"], r"Gauge|Donut"),
@@ -68,7 +68,7 @@ GROUPS = [
     (["calendar"], ["日历"], r"Calendar|SchedulerSlots|TimeSlotPicker"),
     (["picker", "selector"], ["选择器"], r"Picker$|Selector$|ComboBox|ColorPicker"),
     (["dropdown", "select"], ["下拉"], r"Dropdown|ComboBox|EntityMultiSelectPicker|ModelSelector|AccountSwitcher|WorkspaceSwitcher|ColumnVisibility|ZoomControl"),
-    (["icon"], ["图标"], r"UiIcon"),
+    (["icon", "svg icon", "icon library"], ["图标"], r"UiIcon"),
     (["search"], ["搜索"], r"Search"),
     (["filter"], ["筛选", "过滤器"], r"Filter"),
     (["dashboard"], ["仪表盘", "看板"], r"Dashboard"),
@@ -105,6 +105,15 @@ GROUPS = [
     (["marketing", "landing"], ["营销", "落地页"], r"Hero|Testimonial|Bento|LogoCloud|Marquee|Quote|Footer|Roadmap|Changelog|Blog"),
     (["docs"], ["文档"], r"Docs|ApiReference|WriterStyleGuide"),
     (["citation", "sources"], ["引用来源"], r"SourcesCitation"),
+    # Concept groups for multi-word queries: agents compose natural-language
+    # phrases ("user profile card", "price comparison table", "a modal for
+    # destructive confirmation"); the AND path needs every word co-occurring
+    # on ONE component. These aliases bridge concept vocabulary that names/
+    # descs use differently (profile ≠ user, comparison ≠ pricing).
+    (["user profile", "profile", "profile card", "user card"], ["用户资料"], r"ProfileHeader|ProfileEditForm|AvatarGroup|AccountSwitcher"),
+    (["destructive", "confirm action"], ["危险操作", "确认操作"], r"ConfirmDialog|CancelRetentionFlow|PaywallDialog"),
+    (["comparison", "compare", "price comparison", "price"], ["对比", "比较"], r"PlanComparisonTable|PricingTable|ModelComparePane|GroupedBarCompare|PromptVariantDiff"),
+    (["library"], ["素材库"], r"PromptLibrary"),
 ]
 
 # Capability aliases: functional VERBS ("能排序的表格", "可拖拽的看板") are

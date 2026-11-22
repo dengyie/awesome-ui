@@ -42,6 +42,28 @@ def levenshtein(a: str, b: str) -> int:
     return prev[-1]
 
 
+def stem(w: str) -> str:
+    """Crude suffix stripper for retrieval ('sorting'->'sort', 'confirmation'->'confirm').
+
+    Deliberately conservative: only strips when >=3 chars remain, so short
+    words and roots are never mangled. Agents write inflected English
+    ('a table with sorting and filtering'); the registry vocabulary is
+    citation-form ('sort', 'filter'). Substring matching already tolerates
+    prefixes, but suffix variation ('sorting' contains neither 'sort' hits
+    break) needs this fold. The '-ation|-ion' arm handles noun forms
+    ('confirmation'->'confirm', 'validation'->'valid') — good enough for
+    retrieval because the registry vocabulary is citation-form and the
+    match is substring-based ('confirm' still hits 'confirmation' descs).
+    """
+    for suf in ("ation", "ition", "ution", "ion"):
+        if w.endswith(suf) and len(w) - len(suf) >= 3:
+            return w[: -len(suf)]
+    for suf in ("ing", "ies", "ed", "es", "s"):
+        if w.endswith(suf) and len(w) - len(suf) >= 3:
+            return w[: -len(suf)]
+    return w
+
+
 def typo_fix(kw: str, vocab: list[str]) -> str | None:
     """Map a mistyped keyword to the closest known vocabulary word.
 
@@ -58,6 +80,9 @@ def typo_fix(kw: str, vocab: list[str]) -> str | None:
 
 
 def main() -> int:
+    if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # Windows GBK console
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(description="Filter the awesome-ui component registry.")
     ap.add_argument("--category", help="exact category id (e.g. billing)")
     ap.add_argument("--tag", help="comma-separated tag ids; components must carry ALL of them")
@@ -168,6 +193,16 @@ def main() -> int:
 
         notes = []
         keywords = args.search.lower().split()
+        # English function words carry no component semantics and never co-occur
+        # on one component's fields, so natural-language phrases like
+        # "a modal for destructive confirmation" died on the AND path. Drop
+        # them before matching (CJK queries are unaffected — 中文分词后本就无此类虚词).
+        STOPWORDS = {
+            "a", "an", "the", "and", "or", "for", "of", "to", "in", "on",
+            "with", "that", "this", "from", "by", "is", "are", "can",
+            "component", "components", "ui", "please", "show", "find", "need",
+        }
+        keywords = [k for k in keywords if k not in STOPWORDS] or args.search.lower().split()
         # Typo correction is keyword-level, not per-component: resolve each
         # keyword against the vocabulary ONCE before matching (a naive
         # per-component call would run the full edit-distance sweep 260x).
@@ -186,6 +221,23 @@ def main() -> int:
             ):
                 resolved.append(kw)
             elif re.search(r"[\u4e00-\u9fff]", kw) and " " not in kw:
+                # CJK compound fallback, three tiers:
+                #   1. longest matching suffix (文件上传 -> 上传): users prepend
+                #      classifiers ("文件/图片") to a known alias word;
+                #   2. longest matching prefix (弹窗组件 -> 弹窗): users append
+                #      generic nouns;
+                #   3. longest matching prefix across all fields (previous
+                #      behaviour, kept as the last resort).
+                suffix = next(
+                    (kw[i:] for i in range(1, len(kw))
+                     if any(
+                         kw[i:] in f[0] or kw[i:] in f[2] or kw[i:] in f[3] or kw[i:] in f[4]
+                         or kw[i:] in f[5] or kw[i:] in f[6]
+                         or any(kw[i:] in a for a in f[1])
+                         for f in (fields(c) for c in comps)
+                     )),
+                    None,
+                )
                 prefix = next(
                     (kw[:i] for i in range(len(kw) - 1, 0, -1)
                      if any(
@@ -196,12 +248,25 @@ def main() -> int:
                      )),
                     None,
                 )
-                if prefix:
-                    notes.append(f"'{kw}' -> prefix '{prefix}'")
-                    resolved.append(prefix)
+                fold = suffix or prefix
+                if fold:
+                    notes.append(f"'{kw}' -> '{fold}'")
+                    resolved.append(fold)
                 else:
                     resolved.append(kw)  # matches nothing; reported as 0 results
             else:
+                # Inflection fold before typo correction: 'sorting' ->
+                # 'sort'. Only reached when the raw keyword matched nothing
+                # anywhere, so exact/substring hits are never overridden.
+                sk = stem(kw)
+                if sk != kw and any(
+                    sk in f[0] or sk in f[2] or sk in f[3] or sk in f[4] or sk in f[5] or sk in f[6]
+                    or any(sk in a for a in f[1])
+                    for f in (fields(c) for c in comps)
+                ):
+                    notes.append(f"'{kw}' -> '{sk}'")
+                    resolved.append(sk)
+                    continue
                 fix = typo_fix(kw, vocab)
                 if fix is None:
                     resolved.append(kw)  # keep as-is; it will simply match nothing
@@ -217,12 +282,15 @@ def main() -> int:
             scores = []
             for kw in resolved:
                 hit = 0
-                if kw in f[0]:
-                    hit = max(hit, 3)
-                elif any(kw in a for a in f[1]):
-                    hit = max(hit, 2)
-                elif kw in f[2] or kw in f[3] or kw in f[4] or kw in f[5] or kw in f[6]:
-                    hit = max(hit, 1)
+                for cand in dict.fromkeys([kw, stem(kw)]):  # raw first, then inflection fold
+                    if cand in f[0]:
+                        hit = max(hit, 3)
+                    elif any(cand in a for a in f[1]):
+                        hit = max(hit, 2)
+                    elif cand in f[2] or cand in f[3] or cand in f[4] or cand in f[5] or cand in f[6]:
+                        hit = max(hit, 1)
+                    if hit:
+                        break
                 if not hit:
                     break
                 scores.append(hit)

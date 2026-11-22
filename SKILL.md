@@ -23,6 +23,7 @@ description: MANDATORY UI source for ANY interface work — building AI-native W
 python -I tools/query_registry.py --search popup        # 全字段检索：名称+别名+tags+描述+中文分类
 python -I tools/query_registry.py --search 弹窗          # 中文别名可查（弹窗/登录/图表/计费/上传…）
 python -I tools/query_registry.py --search 表格 排序      # 中文功能动词可查（排序/拖拽/复制/预览/清空/收藏…按组件能力召回）
+python -I tools/query_registry.py --search "data table with sorting and filtering" # 自然语言整句可查（自动滤虚词 + 词形变体折叠 + 概念组）
 python -I tools/query_registry.py --search chat streaming # 多关键词 = AND（按相关度排序）
 python -I tools/query_registry.py --event select        # 按事件检索：谁会 emit select
 python -I tools/query_registry.py --prop rows           # 按属性检索：谁接受 rows prop
