@@ -182,6 +182,22 @@ def main() -> int:
                 for f in (fields(c) for c in comps)
             ):
                 resolved.append(kw)
+            elif re.search(r"[\u4e00-\u9fff]", kw) and " " not in kw:
+                prefix = next(
+                    (kw[:i] for i in range(len(kw) - 1, 0, -1)
+                     if any(
+                         kw[:i] in f[0] or kw[:i] in f[2] or kw[:i] in f[3] or kw[:i] in f[4]
+                         or kw[:i] in f[5] or kw[:i] in f[6]
+                         or any(kw[:i] in a for a in f[1])
+                         for f in (fields(c) for c in comps)
+                     )),
+                    None,
+                )
+                if prefix:
+                    notes.append(f"'{kw}' -> prefix '{prefix}'")
+                    resolved.append(prefix)
+                else:
+                    resolved.append(kw)  # matches nothing; reported as 0 results
             else:
                 fix = typo_fix(kw, vocab)
                 if fix is None:
@@ -195,8 +211,7 @@ def main() -> int:
         ranked = []
         for c in results:
             f = fields(c)
-            score = 0
-            matched_all = True
+            scores = []
             for kw in resolved:
                 hit = 0
                 if kw in f[0]:
@@ -206,11 +221,14 @@ def main() -> int:
                 elif kw in f[2] or kw in f[3] or kw in f[4] or kw in f[5] or kw in f[6]:
                     hit = max(hit, 1)
                 if not hit:
-                    matched_all = False
                     break
-                score += hit
-            if matched_all:
-                ranked.append((score, c))
+                scores.append(hit)
+            if len(scores) == len(resolved):
+                # Weakest-link ranking: the LOWEST per-keyword score dominates
+                # (a component matching every keyword by name outranks one
+                # matching one by name and the rest only in descriptions).
+                # Sum acts as tiebreak; n gives stable output order.
+                ranked.append((min(scores) * 100 + sum(scores), c))
         ranked.sort(key=lambda t: (-t[0], t[1]["n"]))
         results = [c for _, c in ranked]
 

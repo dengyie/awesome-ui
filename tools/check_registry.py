@@ -167,6 +167,8 @@ def main() -> int:
                         "|".join(c["tags"]),
                         c.get("desc", ""),
                         "|".join(c.get("aliases", [])),
+                        "|".join(c.get("api", {}).get("props", [])),
+                        "|".join(c.get("api", {}).get("events", [])),
                     ]
                     for c in comps
                 }

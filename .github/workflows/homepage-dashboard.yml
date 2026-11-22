@@ -38,3 +38,7 @@ jobs:
       - name: Registry consistency check (taxonomy + components)
         run: python3 -I tools/check_registry.py
         working-directory: .
+
+      - name: Retrieval quality gate (expected-recall fixtures)
+        run: python3 -I tools/check_retrieval.py
+        working-directory: .

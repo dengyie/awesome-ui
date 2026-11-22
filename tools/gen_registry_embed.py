@@ -29,14 +29,17 @@ def main() -> int:
     tax = json.loads(TAXONOMY.read_text(encoding="utf-8"))
     reg = json.loads(COMPONENTS.read_text(encoding="utf-8"))
     labels = {c["id"]: c["label"] for c in tax["categories"]}
-    # [category, tags, desc, aliases] — desc/aliases power the TOC search
-    # (agents/users type needs like "popup"/"弹窗", not component names).
+    # [category, tags, desc, aliases, props, events] — desc/aliases power the
+    # TOC search (agents/users type needs like "popup"/"弹窗"); props/events
+    # extend it to contract-level ("one that emits select").
     comps = {
         c["name"]: [
             c["category"],
             "|".join(c["tags"]),
             c.get("desc", ""),
             "|".join(c.get("aliases", [])),
+            "|".join(c.get("api", {}).get("props", [])),
+            "|".join(c.get("api", {}).get("events", [])),
         ]
         for c in reg["components"]
     }
