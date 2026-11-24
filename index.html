@@ -7982,27 +7982,60 @@ FAIL tests/ui.test.mjs
       }
       const updateCount = (visible) => { countEl.textContent = visible + ' / ' + items.length + ' components'; };
       updateCount(items.length);
+      // Retrieval parity with tools/query_registry.py (keep semantics in sync —
+      // check_retrieval.py fixtures must pass on BOTH sides):
+      // 1. STOPWORDS — English function words never co-occur on one component's
+      //    fields, so prose queries ("a modal for destructive confirmation")
+      //    die on the AND path. Dropped before matching; if everything is
+      //    filtered, fall back to the raw split (same as the CLI).
+      // 2. stem() — conservative suffix stripper so inflected English
+      //    ("sorting", "confirmation") folds to citation form ("sort",
+      //    "confirm"). Two-phase consistent: matching tries raw first, then
+      //    the stem (>=3 chars must remain).
+      // 3. CJK compound fallback, suffix-first ("文件上传"->"上传", never
+      //    the bogus "文" prefix fold), then prefix ("弹窗组件"->"弹窗").
+      const STOPWORDS = new Set(['a','an','the','and','or','for','of','to','in','on','with','that','this','from','by','is','are','can','component','components','ui','please','show','find','need']);
+      const stem = (w) => {
+        for (const suf of ['ation','ition','ution','ion']) {
+          if (w.endsWith(suf) && w.length - suf.length >= 3) return w.slice(0, -suf.length);
+        }
+        for (const suf of ['ing','ies','ed','es','s']) {
+          if (w.endsWith(suf) && w.length - suf.length >= 3) return w.slice(0, -suf.length);
+        }
+        return w;
+      };
       const applyFilter = () => {
-        const q = search.value.trim().toLowerCase();
+        const raw = search.value.trim().toLowerCase();
         const cat = catSel.value;
+        let kws = raw ? raw.split(/\s+/) : [];
+        const kept = kws.filter((k) => !STOPWORDS.has(k));
+        if (kept.length) kws = kept;
         let visible = 0;
         for (const item of items) {
-          // Search matches component name, aliases (incl. CJK), description,
-          // category label, facet tags, props and events; every keyword must
-          // hit somewhere. Unspaced CJK queries ("弹窗组件") get a prefix
-          // fallback: the longest prefix of the query that matches anywhere.
           const catLabel = (cats[item.cat] || '').toLowerCase();
           const hay = (item.label + ' ' + (item.desc || '') + ' ' + (item.aliases || '') + ' ' + catLabel + ' ' + item.tags.join(' ') + ' ' + (item.props || '') + ' ' + (item.events || '')).toLowerCase();
-          let hit = false;
-          if (!q) {
+          let hit;
+          if (!kws.length) {
             hit = true;
           } else {
-            const kws = q.split(/\s+/);
-            hit = kws.every((k) => hay.includes(k));
-            if (!hit && /[\u4e00-\u9fff]/.test(q) && !q.includes(' ')) {
-              for (let len = q.length - 1; len >= 1 && !hit; len--) {
-                hit = hay.includes(q.slice(0, len));
+            hit = kws.every((k) => {
+              // raw first, then inflection fold — mirrors the CLI's two-try match
+              const sk = stem(k);
+              return hay.includes(k) || (sk !== k && hay.includes(sk));
+            });
+            if (!hit && /[\u4e00-\u9fff]/.test(raw) && !raw.includes(' ')) {
+              // suffix-first three-tier fallback (CLI parity): longest matching
+              // suffix beats longest matching prefix beats nothing
+              let fold = null;
+              for (let i = 1; i < raw.length && !fold; i++) {
+                if (hay.includes(raw.slice(i))) fold = raw.slice(i);
               }
+              if (!fold) {
+                for (let len = raw.length - 1; len >= 1 && !fold; len--) {
+                  if (hay.includes(raw.slice(0, len))) fold = raw.slice(0, len);
+                }
+              }
+              hit = fold !== null;
             }
           }
           hit = hit && (!cat || item.cat === cat);
