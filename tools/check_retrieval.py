@@ -101,6 +101,10 @@ FIXTURES = [
     ("icon library svg", "UiIcon"),
     ("文件上传 裁剪", "AvatarCropDialog"),
     ("i need a component for chat streaming", "ChatPromptInput"),
+    # CJK compound fold must stay >=2 chars: "弹窗组件" folds to the suffix
+    # "件" (44 junk hits via 附件/条件/组件) without the length floor, instead
+    # of the correct prefix "弹窗" (aba5150)
+    ("弹窗组件", "ConfirmDialog"),
     # typo tolerance
     ("poup", "Modal"),
     ("ConfimDialog", "ConfirmDialog"),
