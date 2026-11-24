@@ -8025,13 +8025,16 @@ FAIL tests/ui.test.mjs
             });
             if (!hit && /[\u4e00-\u9fff]/.test(raw) && !raw.includes(' ')) {
               // suffix-first three-tier fallback (CLI parity): longest matching
-              // suffix beats longest matching prefix beats nothing
+              // suffix beats longest matching prefix beats nothing. Both folds
+              // require >=2 chars — single-CJK-char folds are pure noise
+              // ("件" hits 附件/条件/组件 descs, "文" hits 文档), so
+              // "弹窗组件" folds to the correct prefix "弹窗", not "件".
               let fold = null;
-              for (let i = 1; i < raw.length && !fold; i++) {
+              for (let i = 1; i < raw.length - 1 && !fold; i++) {
                 if (hay.includes(raw.slice(i))) fold = raw.slice(i);
               }
               if (!fold) {
-                for (let len = raw.length - 1; len >= 1 && !fold; len--) {
+                for (let len = raw.length - 1; len >= 2 && !fold; len--) {
                   if (hay.includes(raw.slice(0, len))) fold = raw.slice(0, len);
                 }
               }

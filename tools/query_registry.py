@@ -228,8 +228,12 @@ def main() -> int:
                 #      generic nouns;
                 #   3. longest matching prefix across all fields (previous
                 #      behaviour, kept as the last resort).
+                # Both folds require >=2 chars: single-CJK-char folds are pure
+                # noise ("件" hits 44 descs via 附件/条件/组件, "文" hits 3 via
+                # 文档/文案), so "弹窗组件" used to fold to suffix "件" (44 junk
+                # hits) instead of the correct prefix "弹窗".
                 suffix = next(
-                    (kw[i:] for i in range(1, len(kw))
+                    (kw[i:] for i in range(1, len(kw) - 1)
                      if any(
                          kw[i:] in f[0] or kw[i:] in f[2] or kw[i:] in f[3] or kw[i:] in f[4]
                          or kw[i:] in f[5] or kw[i:] in f[6]
