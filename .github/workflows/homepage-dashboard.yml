@@ -43,6 +43,10 @@ jobs:
         run: python3 -I tools/check_retrieval.py
         working-directory: .
 
+      - name: Gallery coverage gate (registry ↔ page reachability + icon vocabulary)
+        run: python3 -I tools/check_gallery_coverage.py
+        working-directory: .
+
       - name: Generated-artifacts consistency (roster/embed/aliases/api vs registry)
         working-directory: .
         run: |
