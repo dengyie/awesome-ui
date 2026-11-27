@@ -80,12 +80,24 @@ say "Acceptance: three-way MD5 (local = server = public via CF)"
 LOCAL_MD5=$(md5sum index.html | awk '{print $1}')
 SERVER_MD5=$(run_ssh "md5sum $WEBROOT/index.html" | awk '{print $1}')
 NOCACHE="nocache_$(date +%s)_$RANDOM"
-PUBLIC_MD5=$(curl -s "$URL/index.html?$NOCACHE" | md5sum | awk '{print $1}')
+# --compressed is mandatory: CF/caddy gzip the body (~185KB vs 603KB raw), and
+# md5sum of the encoded bytes never matches the on-disk file (2026-11-27 round
+# tripped on this — SSH-side verification with --compressed proved all three
+# copies identical while this script reported a false mismatch).
+PUBLIC_MD5=$(curl -s --compressed "$URL/index.html?$NOCACHE" | md5sum | awk '{print $1}')
 HTTP_CODE=$(curl -s -o /dev/null -w '%{http_code}' "$URL/?$NOCACHE")
 
 printf '  local   %s\n  server  %s\n  public  %s  (HTTP %s)\n' \
   "$LOCAL_MD5" "$SERVER_MD5" "$PUBLIC_MD5" "$HTTP_CODE"
 
+if [[ -z "$PUBLIC_MD5" ]]; then
+  # Distinguish network failure from real mismatch: suggesting a rollback here
+  # would revert a GOOD release (2026-11-27: local egress down -> curl rc=35 ->
+  # empty digest -> script falsely blamed the deploy).
+  echo "FAIL: public fetch returned no body (network/egress issue, not a bad release)."
+  echo "Deploy is already swapped; verify manually via SSH before considering a rollback."
+  exit 1
+fi
 if [[ "$LOCAL_MD5" != "$SERVER_MD5" || "$LOCAL_MD5" != "$PUBLIC_MD5" ]]; then
   echo "FAIL: MD5 mismatch — run 'bash tools/deploy.sh --rollback' to restore."
   exit 1
