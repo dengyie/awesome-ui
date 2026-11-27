@@ -333,7 +333,9 @@
     </section>
     <script type="module">
       import uiIcon from './vanilla/UiIcon.js';
-      const names = ['sparkles','send','search','user','settings','bell','calendar','upload','copy','code','terminal','image','mic','star','check','check-circle','x','circle-x','info','alert-triangle','trash','mail','eye','lock','globe','git-branch','layers','filter','sliders','more-horizontal','thumbs-up','thumbs-down','refresh','external-link','paperclip','clock','cpu','zap','trending-up','trending-down','credit-card','plus','minus','arrow-up','arrow-down','chevron-down','moon','sun','monitor','tool','users','loader'];
+      // Full 58-icon ICONS vocabulary — kept in sync with vanilla/UiIcon.js,
+      // react/UiIcon.tsx (UiIconName) and vue/UiIcon.vue (IconName) unions.
+      const names = ['alert-triangle','arrow-down','arrow-left','arrow-right','arrow-up','bell','calendar','check','check-circle','chevron-down','chevron-left','chevron-right','chevron-up','circle-x','clock','code','copy','cpu','credit-card','external-link','eye','filter','git-branch','globe','image','info','layers','loader','lock','mail','mic','minus','monitor','more-horizontal','moon','paperclip','plus','refresh','search','send','settings','sliders','sparkles','square','star','sun','terminal','thumbs-down','thumbs-up','tool','trending-down','trending-up','trash','upload','user','users','x','zap'];
       const host = document.getElementById('demo-uiicons');
       if (host) {
         host.innerHTML = names
